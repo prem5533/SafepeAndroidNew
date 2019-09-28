@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FontTextView">
+        <attr name="fa_brand_icon" format="boolean" />
+        <attr name="fa_solid_icon" format="boolean" />
+    </declare-styleable>
+</resources>

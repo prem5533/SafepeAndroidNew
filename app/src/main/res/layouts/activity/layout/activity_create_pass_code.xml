@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<include layout="@layout/toolbar_transparent"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:src="@drawable/logo_big" />
+
+    <TextView
+        android:id="@+id/promptview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter your passcode"
+        android:textSize="18.0sp"
+        android:gravity="center"
+        android:padding="20.0dp" />
+
+    <com.safepayu.wallet.custom_view.passcodeview.PasscodeTextView
+        android:id="@+id/otp_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorPrimary"
+        app:bar_active_color="@color/colorPrimary"
+        app:bar_enabled="true"
+        app:bar_error_color="@color/red_600"
+        app:bar_height="1.5dp"
+        app:bar_inactive_color="@color/whiteoff"
+        app:bar_margin_bottom="0dp"
+        app:bar_margin_left="2dp"
+        app:bar_margin_right="2dp"
+        app:bar_success_color="@color/green_800"
+        app:box_margin="0dp"
+        app:height="40dp"
+        app:pass_code_focusable="false"
+        app:hide_otp="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:length="4"
+        app:pass_code=""
+        app:otp_text_size="20dp"
+        app:width="40dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <fragment
+        android:layout_width="match_parent"
+        android:id="@+id/example_keyboard"
+        android:layout_marginTop="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        tools:layout="@layout/number_bard_fragment"
+        class="com.safepayu.wallet.fragment.NumberBoard"/>
+
+</LinearLayout>

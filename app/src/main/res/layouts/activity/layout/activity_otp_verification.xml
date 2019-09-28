@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".activity.OtpVerification">
+
+    <include layout="@layout/toolbar_transparent" />
+
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_big"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="30dp"
+        android:adjustViewBounds="true" />
+
+    <com.safepayu.wallet.custom_view.CustomTextView
+        android:layout_width="wrap_content"
+        app:fontCustom="@string/Roboto"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:text="@string/verification" />
+
+    <com.safepayu.wallet.custom_view.CustomTextView
+        android:layout_width="wrap_content"
+        app:fontCustom="@string/Roboto"
+        android:textStyle="normal"
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:text="@string/otp_message" />
+    <com.safepayu.wallet.custom_view.CustomTextView
+        android:layout_width="wrap_content"
+        app:fontCustom="@string/Roboto"
+        android:id="@+id/tv.mobileNo"
+        android:textStyle="normal"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:text="+91 " />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="50dp"
+        android:layout_height="wrap_content">
+
+        <com.safepayu.wallet.custom_view.CustomTextView
+            android:id="@+id/tv.otpReadRemainingTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            app:fontCustom="@string/Roboto"
+            android:text="00:00"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            style="@style/TextAppearance.AppCompat.Medium" />
+
+        <EditText
+            android:id="@+id/et.otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/edit_text_border_default"
+            android:padding="10dp"
+            style="@style/defaultEditTextStyle"
+            android:inputType="textPassword"
+            android:hint="OTP" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:text="@string/verify"
+        style="@style/buttonDefault"
+        android:id="@+id/btn.verify" />
+
+    <LinearLayout
+        android:id="@+id/layout.resendAgainLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <com.safepayu.wallet.custom_view.CustomTextView
+            android:layout_width="wrap_content"
+            app:fontCustom="@string/Roboto"
+            android:textStyle="normal"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:text="@string/don_t_receive_otp" />
+
+        <com.safepayu.wallet.custom_view.CustomTextView
+            android:layout_width="wrap_content"
+            app:fontCustom="@string/Roboto"
+            android:textStyle="bold"
+            android:id="@+id/btn.resendOtp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/blue_700"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:text="@string/referral_code" />
+    </LinearLayout>
+</LinearLayout>

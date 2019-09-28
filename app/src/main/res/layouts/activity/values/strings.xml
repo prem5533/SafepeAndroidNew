@@ -1,0 +1,38 @@
+<resources>
+    <string name="setting">Setting</string>
+    <string name="ok">Ok</string>
+    <string name="permission_granted">Permission has now been granted</string>
+    <string name="permission_not_granted">Permission was NOT granted</string>
+    <string name="permission_read_phone_state">Read Phone State Permission is needed to Read OTP.</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="currency">\u20B9</string>
+    <string name="currency_text">\u20A8</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_buy_package">Buy Package</string>
+    <string name="menu_Rough">Rough</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="digit_one">1</string>
+    <string name="digit_two">2</string>
+    <string name="digit_three">3</string>
+    <string name="digit_four">4</string>
+    <string name="digit_five">5</string>
+    <string name="digit_six">6</string>
+    <string name="digit_seven">7</string>
+    <string name="digit_eight">8</string>
+    <string name="digit_nine">9</string>
+    <string name="digit_zero">0</string>
+    <string name="create">Create</string>
+
+    <string name="clear">Clear</string>
+</resources>
