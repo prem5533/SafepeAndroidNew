@@ -208,7 +208,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                                     startActivity(new Intent(LoginActivity.this, CreatePassCodeActivity.class));
                                     break;
                                 case 4:
-                                    startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                                    startActivity(new Intent(LoginActivity.this,Navigation.class));
                                     finish();
                                     break;
                             }

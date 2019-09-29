@@ -23,7 +23,7 @@ public class Splash extends AppCompatActivity {
         @Override
         public void run() {
             if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN) != null) {
-                startActivity(new Intent(Splash.this, HomeActivity.class));
+                startActivity(new Intent(Splash.this, Navigation.class));
             } else {
                 startActivity(new Intent(Splash.this, LoginActivity.class));
             }

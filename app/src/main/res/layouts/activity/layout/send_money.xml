@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/send_back_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_arrow_back_white_24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text="Send Money"
+            android:textColor="#fff"
+            android:textSize="20dp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/get_membership"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:textSize="14sp"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="10dp"
+                    android:layout_marginHorizontal="30sp"
+                    android:text="Withdrawl service is only available for active members."/>
+
+
+
+                <TextView
+                    android:id="@+id/get_mem_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/rounded_buttons"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Get Membership "
+                    android:layout_marginHorizontal="30sp"
+                    android:layout_marginVertical="10dp"/>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+
+                android:id="@+id/withdrawl_area"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="#F9f9f9">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Daily withdrawal limit"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:gravity="end"
+                        android:text="₹ 8000"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="#F9f9f9"
+                    android:paddingBottom="3dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="0dp"
+                        android:text="Minimum withdrawal amount"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="20dp"
+                        android:gravity="end"
+                        android:text="₹ 100"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/colorPrimaryLight"
+                    android:layout_height="wrap_content"
+                    android:text="Select Beneficiary"
+                    android:layout_gravity="left"/>
+
+
+                <RadioGroup
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:padding="10dp">
+
+                    <RadioButton
+                        android:id="@+id/upiradiobtn"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="UPI"/>
+
+
+                    <RadioButton
+                        android:id="@+id/bankradiobtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="BANK ACCOUNT"/>
+                </RadioGroup>
+
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:paddingBottom="4dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/bluedark"
+                    android:layout_height="wrap_content"
+                    android:text="UPI"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="20dp"/>
+
+                <Spinner
+                    android:visibility="gone"
+                    android:id="@+id/upiBenSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/edittext_rounded"></Spinner>
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:paddingBottom="4dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/bluedark"
+                    android:layout_height="wrap_content"
+                    android:text="Bank"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="20dp"/>
+                <Spinner
+                    android:id="@+id/bankBenSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="0dp"
+                    android:background="@drawable/edittext_rounded"></Spinner>
+                <ListView
+                    android:visibility="gone"
+                    android:id="@+id/listViewupi_ben"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    tools:layout_editor_absoluteY="0dp"
+                    tools:layout_editor_absoluteX="0dp" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="4dp"
+                    android:visibility="gone"
+                    android:layout_margin="20dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <RelativeLayout
+                            android:visibility="visible"
+                            android:id="@+id/paytmBenAddLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="0dp"
+                            android:background="@drawable/login_input_bg"
+                            android:orientation="horizontal"
+                            android:padding="20dp"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="70dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/paytm_logo" />
+
+                            <Button
+                                android:id="@+id/paytmBenAddBtn"
+                                android:layout_width="80dp"
+                                android:layout_height="30dp"
+                                android:textSize="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="end"
+                                android:background="@color/colorSecondaryDark"
+                                android:text="ADD"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:visibility="visible"
+                            android:id="@+id/paytmBenSelectLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="0dp"
+                            android:background="@drawable/login_input_bg"
+                            android:padding="20dp"
+                            android:layout_marginTop="0dp">
+
+                            <ImageView
+                                android:id="@+id/paytmlogo2"
+                                android:layout_width="70dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/paytm_logo" />
+                            <TextView
+                                android:id="@+id/paytmBenNumber"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/paytmlogo2"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/black"
+                                android:text="9759781207"/>
+
+                            <Button
+                                android:id="@+id/paytmBenSelectBtn"
+                                android:layout_width="80dp"
+                                android:layout_height="30dp"
+                                android:textSize="10dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="end"
+                                android:layout_centerVertical="true"
+                                android:background="@color/colorPrimaryDark"
+                                android:text="SELECT"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:visibility="visible"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="0dp"
+                            android:background="@drawable/login_input_bg"
+                            android:orientation="horizontal"
+                            android:padding="20dp"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="70dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/upi_logo" />
+
+                            <Button
+                                android:layout_width="80dp"
+                                android:layout_height="30dp"
+                                android:textSize="10dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="end"
+                                android:layout_centerVertical="true"
+                                android:background="@color/colorSecondaryDark"
+                                android:text="ADD"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:visibility="visible"
+                            android:id="@+id/upiBenSelectLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="0dp"
+                            android:background="@drawable/login_input_bg"
+                            android:padding="20dp"
+                            android:layout_marginTop="0dp">
+
+                            <ImageView
+                                android:id="@+id/upilogo2"
+                                android:layout_width="70dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/upi_logo" />
+                            <TextView
+                                android:id="@+id/UpiBenNumber"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/upilogo2"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/black"
+                                android:text="9759781207@ybl"/>
+
+                            <Button
+                                android:id="@+id/upiBenSelectBtn"
+                                android:layout_width="80dp"
+                                android:layout_height="30dp"
+                                android:textSize="10dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="end"
+                                android:background="@color/colorPrimaryDark"
+                                android:layout_centerVertical="true"
+                                android:text="SELECT"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:visibility="visible"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="0dp"
+                            android:background="@drawable/login_input_bg"
+                            android:orientation="horizontal"
+                            android:padding="20dp"
+                            android:weightSum="10">
+
+                            <ImageView
+                                android:layout_width="70dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/banktansfer" />
+
+                            <Button
+                                android:layout_width="80dp"
+                                android:layout_height="30dp"
+                                android:textSize="10dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_gravity="end"
+                                android:background="@color/colorSecondaryDark"
+                                android:layout_centerVertical="true"
+                                android:text="ADD"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/BankBenSelectLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="0dp"
+                            android:background="@drawable/login_input_bg"
+                            android:visibility="visible"
+                            android:padding="20dp"
+                            android:layout_marginTop="0dp">
+
+                            <ImageView
+                                android:id="@+id/bankLogo2"
+                                android:layout_width="70dp"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/banktansfer" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/bankLogo2"
+                                android:layout_marginLeft="10dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/BankBenName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@id/bankLogo2"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="0dp"
+                                    android:textColor="@color/black"
+                                    android:layout_above="@id/BankBenNumber"
+                                    android:text="Abhshek Sirohi"/>
+                                <TextView
+                                    android:id="@+id/BankBenNumber"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@id/bankLogo2"
+                                    android:layout_marginLeft="0dp"
+                                    android:textColor="@color/black"
+                                    android:layout_marginTop="0dp"
+                                    android:textStyle="bold"
+                                    android:text="9759781207"/>
+                            </LinearLayout>
+
+
+                            <Button
+                                android:id="@+id/BankBenSelectBtn"
+                                android:layout_width="80dp"
+                                android:layout_height="30dp"
+                                android:textSize="10dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:background="@color/colorPrimaryDark"
+                                android:text="SELECT"
+                                android:textColor="@color/white"
+                                />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="4dp"
+                    android:visibility="gone"
+                    android:layout_margin="20dp">
+
+
+
+                    <RelativeLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="20dp">
+
+                            <RadioButton
+                                android:id="@+id/radioButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="55dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="end"
+                                android:layout_marginTop="16dp"
+                                android:checked="false"
+                                android:gravity="end" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="55dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="end"
+                                android:layout_marginTop="55dp"
+                                android:checked="false"
+                                android:gravity="end" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="55dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="end"
+                                android:layout_marginTop="60dp"
+                                android:checked="false"
+                                android:gravity="end" />
+                        </RadioGroup>
+
+                        <RelativeLayout
+                            android:id="@+id/top1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="20dp"
+                            android:layout_marginBottom="10dp">
+
+                            <ImageView
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/paytm" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="end"
+                                android:gravity="end"
+                                android:text=""
+                                android:visibility="gone" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/top1"
+                            android:background="@color/grey" />
+
+                        <RelativeLayout
+                            android:id="@+id/top2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/top1"
+                            android:padding="20dp">
+
+                            <ImageView
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/upi" />
+
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="end"
+                                android:gravity="end"
+                                android:text=""
+                                android:visibility="gone" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/top2"
+                            android:background="@color/grey" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/top2"
+                            android:padding="20dp">
+
+                            <ImageView
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/bank" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="end"
+                                android:gravity="end"
+                                android:text=""
+                                android:visibility="gone" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+
+
+                <LinearLayout
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/withdrawAmountlayout"
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:padding="0dp">
+
+                        <EditText
+                            android:id="@+id/withdrawAmount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="0dp"
+                            android:background="@drawable/login_input_bg"
+                            android:hint="Enter Amount"
+                            android:textColor="#000000"
+                            android:maxLength="5"
+                            android:inputType="number"
+                            android:paddingLeft="15dp"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="null"
+                            android:visibility="gone"
+                            android:id="@+id/beneficiaryId"/>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:hint="Amount reflect in your account"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:paddingLeft="5dp"
+                            android:gravity="left"/>
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:id="@+id/calculatedamount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:text="Enter amount"
+                            android:textColor="@color/blue"
+                            android:paddingLeft="0dp"
+                            android:gravity="right"/>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnWithdraw"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/rounded_buttons"
+                        android:text="Withdraw Money"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="30dp"
+                        android:textSize="18sp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/red"
+                        android:layout_gravity="center"
+                        android:text="Transaction fee: 3.56% or Minimum ₹ 10 "
+                        android:layout_marginBottom="20dp"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="4dp"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/colorPrimaryLight"
+                    android:layout_height="wrap_content"
+                    android:text="Add New Bank Account"
+                    android:layout_gravity="left"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp">
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:id="@+id/upimBenAddlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#FAFAFA"
+                        android:orientation="horizontal"
+                        android:padding="0dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:src="@drawable/upi_logo"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerInParent="true"/>
+
+                        <Button
+                            android:id="@+id/upiBenAddBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textSize="10dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_centerVertical="true"
+                            android:background="#00ffffff"
+
+                            android:textColor="@color/white" >
+                        </Button>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:visibility="visible"
+                        android:id="@+id/BankBenAddlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="0dp"
+                        android:background="@drawable/deactive_rounded_buttons"
+                        android:orientation="horizontal"
+                        android:padding="0dp"
+                        android:layout_weight="1"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/banktansfer" />
+
+                        <Button
+                            android:id="@+id/BankBenAddBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="10dp"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:background="#00ffffff"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:layout_marginTop="20dp"
+        android:layout_above="@id/darkline"
+        android:id="@+id/lightline"
+        android:background="@color/lightLine"/>
+    <View
+        android:id="@+id/darkline"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="7dp"
+        android:background="@color/darkLine"/>
+</RelativeLayout>

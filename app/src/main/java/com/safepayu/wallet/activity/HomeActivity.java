@@ -99,7 +99,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(new Intent(this, BuyMemberShip.class));
                 break;
             case R.id.nav_rough:
-                navController.navigate(R.id.nav_rough);
+
                 break;
         }
         return true;

@@ -15,21 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.gson.Gson;
-import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.CreatePassCodeActivity;
-import com.safepayu.wallet.activity.HomeActivity;
-import com.safepayu.wallet.activity.LoginActivity;
-import com.safepayu.wallet.api.ApiClient;
-import com.safepayu.wallet.api.ApiService;
-import com.safepayu.wallet.models.request.Login;
-import com.safepayu.wallet.models.response.User;
-import com.safepayu.wallet.models.response.UserResponse;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment {
     private Context context;

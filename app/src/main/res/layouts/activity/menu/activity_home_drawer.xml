@@ -3,21 +3,74 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="none">
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:icon="@drawable/menu_home"
+            android:iconTint="#ff99d066"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/profile"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_show_package"
+            android:icon="@drawable/membership"
+            android:title="Package Details" />
         <item
             android:id="@+id/nav_buy_packge"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_buy_package" />
-        <item
-            android:id="@+id/nav_rough"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_Rough" />
-    </group>
+            android:icon="@drawable/pckage"
+            android:title="Buy Package" />
 
+        <item
+            android:id="@+id/commission"
+            android:icon="@drawable/rupies"
+            android:title="Commission" />
+
+        <item
+            android:id="@+id/wallet"
+            android:icon="@drawable/wallet1"
+            android:title="My Wallet" />
+        <item
+            android:id="@+id/shoping"
+            android:icon="@drawable/order1"
+            android:title="Shopping" />
+        <item
+            android:id="@+id/passcode"
+            android:icon="@drawable/pinlock1"
+            android:title="Change Passcode" />
+        <item
+            android:id="@+id/orders"
+            android:icon="@drawable/tracking"
+            android:title="My Orders" />
+        <item
+            android:id="@+id/history"
+            android:icon="@drawable/history"
+            android:title="History" />
+
+        <item
+            android:id="@+id/geneology"
+            android:icon="@drawable/refer"
+            android:title="Geneology" />
+        <item
+            android:id="@+id/refer"
+            android:icon="@drawable/refer"
+            android:title="Refer and Earn" />
+        <item
+            android:id="@+id/kyc"
+            android:icon="@drawable/curve"
+            android:title="Update KYC" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/logout"
+            android:title="Logout" />
+
+
+        <item
+            android:id="@+id/contact"
+            android:icon="@drawable/ic_forum_black_24dp"
+            android:title="Contact Us" />
+    </group>
 
 
 </menu>

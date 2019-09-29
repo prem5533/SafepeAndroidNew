@@ -1,0 +1,171 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/send_back_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_arrow_back_white_24dp" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="#fff"
+            android:textSize="20dp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/addBankBenLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account Holder Name"
+                    android:textColor="@color/colorPrimary"/>
+
+                <EditText
+                    android:id="@+id/accountName"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:layout_marginBottom="20dp"
+                    android:inputType="text"
+                    android:maxLength="40"
+                    android:background="@drawable/blue_border"
+                    android:hint="Enter Name"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:text="Account Number"/>
+
+                <EditText
+                    android:id="@+id/accountNumber"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:padding="16dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/blue_border"
+                    android:hint="Enter Account Number"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirm Account Number"
+                    android:textColor="@color/colorPrimary"/>
+
+                <EditText
+                    android:id="@+id/confirmAccountNumber"
+                    android:layout_marginTop="4dp"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/blue_border"
+                    android:hint="Confirm Account Number"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:text="Bank IFSC Code"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+
+                    <EditText
+                        android:id="@+id/ifscCode"
+                        android:layout_marginTop="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:padding="16dp"
+                        android:layout_marginBottom="0dp"
+                        android:background="@drawable/blue_border"
+                        android:hint="Bank IFSC"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:textColor="@color/blue"
+                        android:textSize="18sp"
+                        android:layout_centerVertical="true"
+                        android:onClick="verifyIfscCode"
+                        android:text="Verify"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/ifscres"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/bluedark"
+                    android:textSize="13sp"
+                    android:text=""/>
+
+
+                <Button
+                    android:id="@+id/bankAddBtn"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_buttons"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="40dp"
+                    android:text="Add Beneficiary"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
