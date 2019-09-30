@@ -1,11 +1,13 @@
 package com.safepayu.wallet.activity;
 
 import android.os.Bundle;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseActivity;
@@ -24,6 +26,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static android.view.View.VISIBLE;
+
 public class BuyMemberShip extends BaseActivity implements PackageListAdapter.OnPackageSelectListener, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private LoadingDialog loadingDialog;
@@ -32,6 +36,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     private PackageListAdapter mAdapter;
     private PackageListData packageListData;
     private RadioGroup paymentMode;
+    private CardView cardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +44,9 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
 
         loadingDialog = new LoadingDialog(this);
 
-        setToolbar(true, "Buy Member Ship", true);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        setToolbar(false, "Buy Member Ship", false);
 
+        cardView = findViewById(R.id.bankdetails);
         packageListView = findViewById(R.id.list_packageListView);
         layoutManager = new RecyclerLayoutManager(2, RecyclerLayoutManager.VERTICAL);
         layoutManager.setScrollEnabled(false);
@@ -58,11 +58,12 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         paymentMode = findViewById(R.id.rg_paymentMode);
         findViewById(R.id.btn_proceed).setOnClickListener(this);
 
-        ((TextView) findViewById(R.id.tv_packageName)).setText("");
+        ((TextView) findViewById(R.id.tv_packageName)).setText("Package");
         ((TextView) findViewById(R.id.tv_packageAmount)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(0d));
         ((TextView) findViewById(R.id.tv_totalAmountPay)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(0d));
 
         paymentMode.setOnCheckedChangeListener(this);
+        findViewById(R.id.backbtn_from_membership).setOnClickListener(this);
     }
 
     public void showPackageDetails(PackageListData.Packages selectedPackage) {
@@ -126,6 +127,10 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                     BaseApp.getInstance().toastHelper().showSnackBar(mToolbar, "Please Select Pacakage", false);
                 }
                 break;
+
+            case R.id.backbtn_from_membership:
+                finish();
+                break;
         }
     }
 
@@ -133,9 +138,11 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rb_walled:
-
+                cardView.setVisibility(View.GONE);
                 break;
             case R.id.rb_bank:
+
+                cardView.setVisibility(VISIBLE);
 
                 break;
         }

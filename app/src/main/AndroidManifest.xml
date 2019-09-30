@@ -28,6 +28,20 @@
         <activity android:name=".activity.AddBeneficiary"/>
         <activity android:name=".activity.WalletAddMoney"/>
         <activity android:name=".activity.PaymentType"/>
+        <activity android:name=".activity.recharge.MobileRecharge"/>
+        <activity android:name=".activity.recharge.DthRecharge"/>
+        <activity android:name=".activity.recharge.PostpaidLandlineBillpay"/>
+        <activity android:name=".activity.recharge.WaterBillPay"/>
+        <activity android:name=".activity.recharge.ElectricityPay"/>
+        <activity android:name=".activity.recharge.GasPay"/>
+        <activity android:name=".activity.Profile"/>
+        <activity android:name=".activity.Commission"/>
+        <activity android:name=".activity.TransferCommissionToWallet"/>
+        <activity android:name=".activity.Geneology"/>
+        <activity android:name=".activity.PackageDetails"/>
+        <activity android:name=".activity.ContactUs"/>
+        <activity android:name=".activity.ReferAndEarn"/>
+        <activity android:name=".ChangePasscode"/>
         <activity android:name=".activity.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

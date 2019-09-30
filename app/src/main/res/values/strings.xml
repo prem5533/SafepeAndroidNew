@@ -43,4 +43,7 @@
     <string name="pin_code">Pin Code</string>
     <string name="country">Country</string>
 
+    <string name="bankdetails">To buy package through bank transfer. You have to make a fund transfer to the account mentioned below</string>
+    <string name="payment">Once done. Click on proceed to fill the payment details.</string>
+
 </resources>

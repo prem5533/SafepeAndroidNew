@@ -18,7 +18,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
+import com.safepayu.wallet.ChangePasscode;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.recharge.DthRecharge;
+import com.safepayu.wallet.activity.recharge.ElectricityPay;
+import com.safepayu.wallet.activity.recharge.GasPay;
+import com.safepayu.wallet.activity.recharge.MobileRecharge;
+import com.safepayu.wallet.activity.recharge.PostpaidLandlineBillpay;
+import com.safepayu.wallet.activity.recharge.WaterBillPay;
 
 public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
 
@@ -84,6 +91,10 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         dth.setOnClickListener(this);
         payShop.setOnClickListener(this);
         sendToBank.setOnClickListener(this);
+        layout_broadband.setOnClickListener(this);
+        layout_water.setOnClickListener(this);
+        layout_electricity.setOnClickListener(this);
+        layout_gas.setOnClickListener(this);
 
         walletLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,31 +131,28 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
 
         } else if (id == R.id.nav_profile) {
-          //  startActivity(new Intent(Navigation.this, Profile.class));
+            startActivity(new Intent(Navigation.this, Profile.class));
         } else if (id == R.id.nav_show_package) {
-            //startActivity(new Intent(Navigation.this, PackageDetailsActivity.class));
+            startActivity(new Intent(Navigation.this, PackageDetails.class));
         } else if (id == R.id.nav_buy_packge) {
             startActivity(new Intent(Navigation.this, BuyMemberShip.class));
-           // overridePendingTransition(R.xml.right_to_left, R.xml.left_to_right);
         } else if (id == R.id.wallet) {
-            //startActivity(new Intent(Navigation.this, WalletActivity.class));
+            startActivity(new Intent(Navigation.this, WalletActivity.class));
         } else if (id == R.id.shoping) {
             Toast.makeText(this, "Coming Sooon", Toast.LENGTH_SHORT).show();
             drawer.closeDrawers();
         } else if (id == R.id.orders) {
             Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_LONG).show();
-            // startActivity(new Intent(Navigation.this, OrderActivity.class));
         } else if (id == R.id.passcode) {
-           // startActivity(new Intent(Navigation.this, ChangePasscodeActivity.class));
+          startActivity(new Intent(Navigation.this, ChangePasscode.class));
         } else if (id == R.id.history) {
            // startActivity(new Intent(Navigation.this, HistoryActivity.class));
         } else if (id == R.id.geneology) {
 
             startActivity(new Intent(Navigation.this, Geneology.class));
-            overridePendingTransition(R.xml.right_to_left, R.xml.left_to_right);
+
         } else if (id == R.id.refer) {
-            //Intent intent = new Intent(getApplicationContext(), ReferralActivity.class);
-            //startActivity(intent);
+            startActivity(new Intent(Navigation.this, ReferAndEarn.class));
 
         } else if (id == R.id.kyc) {
             Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_LONG).show();
@@ -155,11 +163,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             finish();
 
         } else if (id == R.id.contact) {
-            //Intent intent = new Intent(getApplicationContext(), ContactUs.class);
-            //startActivity(intent);
+            startActivity(new Intent(Navigation.this, ContactUs.class));
         } else if (id == R.id.commission) {
-            //Intent intent = new Intent(getApplicationContext(), Commission.class);
-            //startActivity(intent);
+            startActivity(new Intent(Navigation.this, Commission.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -169,6 +175,37 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
     @Override
     public void onClick(View view) {
+
+        LinearLayout l = (LinearLayout) view;
+        switch (l.getId()) {
+            case R.id.layout_recharge:
+                startActivity(new Intent(Navigation.this, MobileRecharge.class));
+                break;
+
+            case R.id.layout_pay_bill:
+                startActivity(new Intent(Navigation.this, PostpaidLandlineBillpay.class));
+                break;
+
+            case R.id.layout_broadband:
+                startActivity(new Intent(Navigation.this, PostpaidLandlineBillpay.class));
+                break;
+
+            case R.id.layout_dth:
+                startActivity(new Intent(Navigation.this, DthRecharge.class));
+                break;
+
+            case R.id.layout_water:
+                startActivity(new Intent(Navigation.this, WaterBillPay.class));
+                break;
+
+            case R.id.layout_electricity:
+                startActivity(new Intent(Navigation.this, ElectricityPay.class));
+                break;
+
+            case R.id.layout_gas_recharge:
+                startActivity(new Intent(Navigation.this, GasPay.class));
+                break;
+        }
 
     }
 
