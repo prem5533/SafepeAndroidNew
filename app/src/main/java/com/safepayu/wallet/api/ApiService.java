@@ -1,12 +1,17 @@
 package com.safepayu.wallet.api;
 
+import com.safepayu.wallet.models.request.ChangePassword;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.Register;
+import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.PackageListData;
+import com.safepayu.wallet.models.response.UpdateAddressResponse;
 import com.safepayu.wallet.models.response.User;
 import com.safepayu.wallet.models.response.UserResponse;
+
+import org.json.JSONObject;
 
 import io.reactivex.Single;
 import retrofit2.http.Body;
@@ -39,4 +44,13 @@ public interface ApiService {
     // All Packages listing
     @GET("api/safepe/getUser")
     Single<UserResponse> getUserDetails();
+
+    @POST("api/safepe/updateUserAddress")
+    Single<UpdateAddressResponse>updateAddress(@Body UpdateAddress updateAddress);
+
+    @POST("api/safepe/changePassword")
+    Single<UserResponse>changePwd(@Body ChangePassword changePassword);
+
+
+
 }

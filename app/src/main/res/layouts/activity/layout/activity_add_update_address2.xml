@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/addUpdateAddressLayout"
     android:background="@color/white">
 
 
@@ -88,8 +89,8 @@
                     android:layout_gravity="center"
                     android:orientation="horizontal">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/location"
+                    <EditText
+                        android:id="@+id/update_location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
@@ -125,7 +126,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/city"
+                        android:id="@+id/update_city"
                         android:layout_width="match_parent"
                         android:padding="10dp"
                         android:background="@drawable/edittext_rounded"
@@ -164,7 +165,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/state"
+                        android:id="@+id/update_state"
                         android:layout_width="match_parent"
                         android:padding="10dp"
                         android:background="@drawable/edittext_rounded"
@@ -202,7 +203,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/pin"
+                        android:id="@+id/update_pin"
                         android:layout_width="match_parent"
                         android:padding="10dp"
                         android:background="@drawable/edittext_rounded"
@@ -236,7 +237,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/country"
+                        android:id="@+id/update_country"
                         android:layout_width="match_parent"
                         android:padding="10dp"
                         android:background="@drawable/edittext_rounded"
@@ -279,6 +280,19 @@
                     android:layout_marginBottom="20dp"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:text="Add new Address"/>
+                <Button
+                    android:id="@+id/edit_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/rounded_buttons"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="20dp"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:text="Update Address"
+                    android:visibility="gone"/>
+
 
             </LinearLayout>
 
