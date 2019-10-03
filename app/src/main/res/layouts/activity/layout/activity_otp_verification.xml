@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:id="@+id/otpLayout"
     tools:context=".activity.OtpVerification">
 
     <include layout="@layout/toolbar_transparent" />

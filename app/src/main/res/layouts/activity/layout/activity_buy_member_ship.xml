@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.LoginActivity">
+    android:id="@+id/buy_packageId">
 
     <RelativeLayout
         android:id="@+id/headerbar"
@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:gravity="center"
-            android:text="Profile"
+            android:text="Buy Package"
             android:textColor="#fff"
             android:textSize="20dp" />
     </RelativeLayout>
@@ -112,7 +112,7 @@
                                     app:fontCustom="@string/Roboto"
                                     android:textSize="16sp"
                                     android:textStyle="normal"
-                                    android:text="Diamond" />
+                                    android:text="Package Name" />
 
                                 <com.safepayu.wallet.custom_view.CustomTextView
                                     android:layout_width="wrap_content"

@@ -42,6 +42,8 @@
         <activity android:name=".activity.ContactUs"/>
         <activity android:name=".activity.ReferAndEarn"/>
         <activity android:name=".ChangePasscode"/>
+        <activity android:name=".activity.ForgotPasscode"/>
+        <activity android:name=".activity.MemberBankAddPackages"/>
         <activity android:name=".activity.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

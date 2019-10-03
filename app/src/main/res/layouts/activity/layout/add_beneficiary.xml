@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/addBeneficiaryLayout"
     android:background="@color/white">
 
     <RelativeLayout
@@ -68,7 +69,8 @@
                     android:padding="16dp"
                     android:layout_marginBottom="20dp"
                     android:inputType="text"
-                    android:maxLength="40"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
                     android:background="@drawable/blue_border"
                     android:hint="Enter Name"/>
 
@@ -84,6 +86,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
                     android:padding="16dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/blue_border"
@@ -95,16 +99,48 @@
                     android:text="Confirm Account Number"
                     android:textColor="@color/colorPrimary"/>
 
-                <EditText
-                    android:id="@+id/confirmAccountNumber"
-                    android:layout_marginTop="4dp"
-                    android:inputType="number"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal"
                     android:background="@drawable/blue_border"
-                    android:hint="Confirm Account Number"/>
+                    android:layout_marginBottom="20dp">
+
+                    <EditText
+                        android:id="@+id/confirmAccountNumber"
+                        android:layout_marginTop="4dp"
+                        android:inputType="numberPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
+                        android:background="@null"
+                        android:hint="Confirm Account Number"
+                        android:layout_toLeftOf="@+id/password_visible"/>
+
+                    <ImageView
+                        android:id="@+id/password_visible"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_visibility_black_24dp"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/password_invisible"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_visibility_off_black_24dp"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,6 +159,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"
                         android:padding="16dp"
                         android:layout_marginBottom="0dp"
                         android:background="@drawable/blue_border"
@@ -138,7 +176,8 @@
                         android:textSize="18sp"
                         android:layout_centerVertical="true"
                         android:onClick="verifyIfscCode"
-                        android:text="Verify"/>
+                        android:text="Verify"
+                        android:visibility="gone"/>
 
                 </RelativeLayout>
 

@@ -16,6 +16,7 @@ public class SharedPref {
     public final String ACCESS_TOKEN = "accessToken";
     public final String ACCESS_TOKEN_EXPIRE_IN = "accessTokenExpiresIn";
     public final String USER_ID = "userId";
+    public final String PASSCODE = "passcode";
 
     public SharedPref(Context context) {
         this.context = context;

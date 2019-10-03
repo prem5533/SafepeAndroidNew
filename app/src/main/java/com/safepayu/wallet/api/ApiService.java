@@ -1,17 +1,22 @@
 package com.safepayu.wallet.api;
 
+import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
+import com.safepayu.wallet.models.request.BuyPackage;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.Register;
+import com.safepayu.wallet.models.request.ResetPasscodeModel;
+import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
+import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
+import com.safepayu.wallet.models.response.BuyPackageResponse;
+import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.PackageListData;
-import com.safepayu.wallet.models.response.User;
 import com.safepayu.wallet.models.response.UserResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface ApiService {
@@ -39,4 +44,19 @@ public interface ApiService {
     // All Packages listing
     @GET("api/safepe/getUser")
     Single<UserResponse> getUserDetails();
+
+    @POST("api/safepe/buyPackage")
+    Single<BuyPackageResponse> buyPackage(@Body BuyPackage buyPackage);
+
+    @POST("api/safepe/resetPasscode")
+    Single<BaseResponse> resetPasscode(@Body ResetPasscodeModel resetPasscodeModel);
+
+    @POST("api/safepe/saveBeneficiary")
+    Single<AddBeneficiaryResponse> addBeneficiary(@Body AddBeneficiaryRequest addBeneficiaryRequest);
+
+    @POST("api/safepe/getBeneficiaryDetails")
+    Single<GetBeneficiaryResponse> getBeneficiary();;
+
+    @POST("api/safepe/transferWalletToBank")
+    Single<BaseResponse> transferWalletToBank(@Body TransferWalletToBankRequest transferWalletToBankRequest);
 }

@@ -3,6 +3,7 @@ package com.safepayu.wallet.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.ChangePasscode;
@@ -26,6 +28,13 @@ import com.safepayu.wallet.activity.recharge.GasPay;
 import com.safepayu.wallet.activity.recharge.MobileRecharge;
 import com.safepayu.wallet.activity.recharge.PostpaidLandlineBillpay;
 import com.safepayu.wallet.activity.recharge.WaterBillPay;
+import com.safepayu.wallet.api.ApiClient;
+import com.safepayu.wallet.api.ApiService;
+import com.safepayu.wallet.models.response.UserResponse;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
 
@@ -33,7 +42,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     private DrawerLayout drawer;
     private AlertDialog.Builder alertNetwork;
     private boolean doubleBackToExitPressedOnce = false;
-    private LinearLayout addMoney, sendMoney, recharge, payBill, dth, payShop, sendToBank;
+    private LinearLayout addMoney, sendMoney, recharge, payBill, dth, payShop, sendToBank,Upi_Pay;
     LinearLayout layout_electricity, layout_gas, layout_water, layout_broadband;
     private LinearLayout payLayout,walletLayout,send;
 
@@ -72,6 +81,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         addMoney = findViewById(R.id.layout_add_money);
         sendMoney = findViewById(R.id.layout_send_money);
         recharge = findViewById(R.id.layout_recharge);
+        Upi_Pay = findViewById(R.id.upi_layout1);
         payBill = findViewById(R.id.layout_pay_bill);
         dth = findViewById(R.id.layout_dth);
         send = findViewById(R.id.send);
@@ -112,6 +122,15 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             }
         });
 
+        Upi_Pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.drawer_layout),"Coming Soon!",false);
+            }
+        });
+
+        getUserDetails();
+
     }
 
     private View.OnClickListener nav_iconListner = new View.OnClickListener() {
@@ -144,7 +163,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         } else if (id == R.id.orders) {
             Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_LONG).show();
         } else if (id == R.id.passcode) {
-          startActivity(new Intent(Navigation.this, ChangePasscode.class));
+          startActivity(new Intent(Navigation.this, ForgotPasscode.class));
         } else if (id == R.id.history) {
            // startActivity(new Intent(Navigation.this, HistoryActivity.class));
         } else if (id == R.id.geneology) {
@@ -158,7 +177,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_LONG).show();
         } else if (id == R.id.logout) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            //SharedPrefManager.getInstance(getApplicationContext()).logout();
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN,"");
             startActivity(intent);
             finish();
 
@@ -233,6 +253,32 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.drawer_layout),"No Internet Connection!",false);
         }
+    }
+
+    private void getUserDetails() {
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getUserDetails()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<UserResponse>() {
+                    @Override
+                    public void onSuccess(UserResponse response) {
+                        BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
+
+                        //BaseApp.getInstance().toastHelper().log(HomeActivity.class, BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER));
+
+                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE,response.getUser().getPassCode());
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+
+                        BaseApp.getInstance().toastHelper().showApiExpectation(drawer, true, e);
+                    }
+                }));
     }
 
 

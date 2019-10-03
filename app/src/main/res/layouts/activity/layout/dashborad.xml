@@ -76,7 +76,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/head"
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:weightSum="4">
+
 
             <LinearLayout
                 android:id="@+id/pay_layout"
@@ -98,6 +99,30 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="4dp"
                     android:text="Pay"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/upi_layout1"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/ic_pay_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp"
+                    android:text="UPI"
                     android:textColor="@color/white" />
 
             </LinearLayout>

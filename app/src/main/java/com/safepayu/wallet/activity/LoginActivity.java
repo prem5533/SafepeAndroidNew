@@ -54,8 +54,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         mobileNo = findViewById(R.id.et_mobileNo);
         password = findViewById(R.id.et_password);
         mobileNo.addTextChangedListener(new MobileEditTextWatcher(mobileNo));
-        mobileNo.setText("+91 8750110867");
-        password.setText("qwerty123");
+        mobileNo.setText("+91 9811871855");
+        password.setText("adarsh515");
         mobileNo.setSelection(mobileNo.getText().length());
         findViewById(R.id.btn_login).setOnClickListener(this);
         findViewById(R.id.btn_forgetPass).setOnClickListener(this);

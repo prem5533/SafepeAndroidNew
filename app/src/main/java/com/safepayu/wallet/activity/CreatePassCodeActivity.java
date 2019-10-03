@@ -114,8 +114,10 @@ public class CreatePassCodeActivity extends BaseActivity implements NumberBoard.
                     public void onSuccess(UserResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                            startActivity(new Intent(CreatePassCodeActivity.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            startActivity(new Intent(CreatePassCodeActivity.this, Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             finish();
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.createPasscode),response.getMessage(),false);
                         }
                     }
 
@@ -123,7 +125,7 @@ public class CreatePassCodeActivity extends BaseActivity implements NumberBoard.
                     public void onError(Throwable e) {
                         Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.createPasscode), true, e);
                     }
                 }));
     }

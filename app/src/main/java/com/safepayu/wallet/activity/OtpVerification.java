@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -43,6 +44,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, true);
+
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +105,11 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_verify:
-                Toast.makeText(this, getResources().getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(otp.getText().toString().trim())){
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.otpLayout),"Please Enter OTP",false);
+                }else {
+                    verifyOtp(otp.getText().toString().trim());
+                }
                 break;
             case R.id.btn_resendOtp:
                 startTimer();
@@ -186,7 +192,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                         if (response.getStatus()) {
                             BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
                             if (response.getUser().getPassCode() == null) {
-                                startActivity(new Intent(OtpVerification.this, HomeActivity.class));
+                                startActivity(new Intent(OtpVerification.this, Navigation.class));
                             }
                             finish();
                         }
