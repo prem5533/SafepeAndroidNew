@@ -25,6 +25,7 @@ import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
 import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
+import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
 
 import java.util.ArrayList;
 
@@ -212,13 +213,14 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         BaseApp.getInstance().getDisposable().add(apiService.transferWalletToBank(transferWalletToBankRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                .subscribeWith(new DisposableSingleObserver<TransferWalletToBankResponse>() {
                     @Override
-                    public void onSuccess(BaseResponse response) {
+                    public void onSuccess(TransferWalletToBankResponse response) {
                         loadingDialog.hideDialog();
-                        if (response.getStatus()) {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),false);
-                            finish();
+                        if (response.isStatus()) {
+
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getTransaction()+"\n"+response.getMessage(),false);
+
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),false);
                         }

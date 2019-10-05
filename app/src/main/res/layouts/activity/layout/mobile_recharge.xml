@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:id="@+id/mobileRechargeLayout"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -112,7 +112,7 @@
                         android:layout_below="@+id/textView5"
                         android:layout_marginLeft="0dp"
                         android:layout_marginRight="0dp"
-                        android:nextFocusForward="@+id/username"></Spinner>
+                        android:nextFocusForward="@+id/username"/>
                 </LinearLayout>
 
 
@@ -135,7 +135,7 @@
                     android:layout_marginBottom="20dp">
 
                     <EditText
-                        android:id="@+id/amount"
+                        android:id="@+id/amountRecharge"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/textView"
@@ -161,7 +161,6 @@
                         android:layout_marginRight="20dp"
                         android:background="@color/colorPrimary"
                         android:gravity="center"
-                        android:onClick="OffersClick"
                         android:padding="10dp"
                         android:text="Browse Plan"
                         android:textColor="@color/white"

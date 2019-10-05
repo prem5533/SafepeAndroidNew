@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/electricityBillLayout"
     android:background="@color/white">
 
     <RelativeLayout
@@ -61,7 +62,7 @@
                 android:textSize="15dp" />
 
             <EditText
-                android:id="@+id/mobile"
+                android:id="@+id/electricityBillId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView2"
@@ -165,11 +166,11 @@
                 android:background="@drawable/white_button_grayborder">
 
                 <Spinner
-                    android:id="@+id/operator"
+                    android:id="@+id/operatorelElectricity"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@+id/textView5"
-                    android:nextFocusForward="@+id/amount"></Spinner>
+                    android:nextFocusForward="@+id/amount"/>
 
             </LinearLayout>
 
@@ -187,7 +188,7 @@
                 android:textSize="15dp" />
 
             <EditText
-                android:id="@+id/amount"
+                android:id="@+id/amountElectricity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView"

@@ -2,22 +2,43 @@ package com.safepayu.wallet.api;
 
 import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.BuyPackage;
+import com.safepayu.wallet.models.request.ChangePassword;
+import com.safepayu.wallet.models.request.HashKeyRequest;
 import com.safepayu.wallet.models.request.Login;
+import com.safepayu.wallet.models.request.RechargeRequest;
 import com.safepayu.wallet.models.request.Register;
 import com.safepayu.wallet.models.request.ResetPasscodeModel;
+import com.safepayu.wallet.models.request.SendToWalletRequest;
 import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
+import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BuyPackageResponse;
+import com.safepayu.wallet.models.response.CustOperatorResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
+import com.safepayu.wallet.models.response.HashKeyResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
+import com.safepayu.wallet.models.response.MobileOffersResponseModel;
+import com.safepayu.wallet.models.response.OperatorResponse;
+import com.safepayu.wallet.models.response.PackageDetailsResponse;
 import com.safepayu.wallet.models.response.PackageListData;
+import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
+import com.safepayu.wallet.models.response.UpdateAddressResponse;
+import com.safepayu.wallet.models.response.User;
 import com.safepayu.wallet.models.response.UserResponse;
+import com.safepayu.wallet.models.response.WalletResponse;
+
+import org.json.JSONObject;
 
 import io.reactivex.Single;
+import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ApiService {
 //    @Header("X-Bearer-Token") String authorization
@@ -58,5 +79,38 @@ public interface ApiService {
     Single<GetBeneficiaryResponse> getBeneficiary();;
 
     @POST("api/safepe/transferWalletToBank")
-    Single<BaseResponse> transferWalletToBank(@Body TransferWalletToBankRequest transferWalletToBankRequest);
+    Single<TransferWalletToBankResponse> transferWalletToBank(@Body TransferWalletToBankRequest transferWalletToBankRequest);
+
+    @POST("api/safepe/updateUserAddress")
+    Single<UpdateAddressResponse>updateAddress(@Body UpdateAddress updateAddress);
+
+    @POST("api/safepe/changePassword")
+    Single<UserResponse>changePwd(@Body ChangePassword changePassword);
+
+    @POST("api/safepe/walletToWallet")
+    Single<BaseResponse> transferWalletToWallet(@Body SendToWalletRequest sendToWalletRequest);
+
+    @POST("api/safepe/getWalletDetails")
+    Single<WalletResponse> getWalletDetails();;
+
+    @POST("api/safepe/getLatestUserBuyPackage")
+    Single<PackageDetailsResponse> getPackageDetails();
+
+    @POST("api/safepe/recharge")
+    Single<BaseResponse> doRecharge(@Body RechargeRequest rechargeRequest);
+
+    @POST("api/safepe/hasKey")
+    Single<HashKeyResponse> getHashKey(@Body HashKeyRequest hashKeyRequest);
+
+    @FormUrlEncoded
+    @POST("api/safepe/getAllOperators")
+    Single<OperatorResponse> getOperators(@Field("operator_type") String operator_type);
+
+    @FormUrlEncoded
+    @POST("api/safepe/getCustOperator")
+    Single<CustOperatorResponse> getMobileOperator(@Field("number") String number);
+
+    @FormUrlEncoded
+    @POST("MobileOffer")
+    Call<MobileOffersResponseModel> getMobileOffer(@Field("mobile") String mobile);
 }

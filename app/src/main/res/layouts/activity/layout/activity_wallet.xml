@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/white"
+    android:id="@+id/walletLayout"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -13,7 +14,7 @@
         android:paddingBottom="5dp">
 
         <Button
-            android:id="@+id/sendmoney_back_btn"
+            android:id="@+id/wallet_back_btn"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"

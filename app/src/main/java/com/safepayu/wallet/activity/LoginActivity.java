@@ -197,6 +197,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN_EXPIRE_IN, response.getTokenExpiresIn());
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
                             switch (response.getStatusCode()) {
+                                case 0:
+                                    startActivity(new Intent(LoginActivity.this,Navigation.class));
+                                    finish();
+                                    break;
                                 case 1:
                                     BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false);
                                     break;

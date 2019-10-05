@@ -3,6 +3,8 @@ package com.safepayu.wallet.api;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.safepayu.wallet.BaseApp;
 
@@ -62,7 +64,7 @@ public class ApiClient {
                 // Adding Authorization token (API Key)
                 // Requests will be denied without API key
                 if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN)!=null) {
-                    requestBuilder.addHeader("Authorization", "Bearer "+BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN));
+                        requestBuilder.addHeader("Authorization", "Bearer "+BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN));
                 }
 
                 Request request = requestBuilder.build();

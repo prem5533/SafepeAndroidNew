@@ -23,7 +23,8 @@ public class BaseApp extends Application {
     private CommonUtils commonUtils;
     private DateUtil dateUtil;
     private SharedPref sharedPref;
-private Handler handler;
+    private Handler handler;
+
     @Override
     public void onCreate() {
         super.onCreate();

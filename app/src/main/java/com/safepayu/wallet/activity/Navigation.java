@@ -105,6 +105,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         layout_water.setOnClickListener(this);
         layout_electricity.setOnClickListener(this);
         layout_gas.setOnClickListener(this);
+        payLayout.setOnClickListener(this);
 
         walletLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,6 +226,10 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             case R.id.layout_gas_recharge:
                 startActivity(new Intent(Navigation.this, GasPay.class));
                 break;
+
+            case R.id.pay_layout:
+                startActivity(new Intent(Navigation.this, SendMoneyToWallet.class));
+                break;
         }
 
     }
@@ -269,7 +274,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         //BaseApp.getInstance().toastHelper().log(HomeActivity.class, BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER));
 
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE,response.getUser().getPassCode());
-
+                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_EMAIL,response.getUser().getEmail());
+                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME,response.getUser().getFirstName());
+                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME,response.getUser().getLastName());
                     }
 
                     @Override

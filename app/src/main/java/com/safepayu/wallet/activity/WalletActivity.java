@@ -1,27 +1,48 @@
 package com.safepayu.wallet.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.safepayu.wallet.BaseActivity;
+import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.api.ApiClient;
+import com.safepayu.wallet.api.ApiService;
+import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
+import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
+import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
+import com.safepayu.wallet.models.response.WalletResponse;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class WalletActivity extends BaseActivity {
 
-    TextView AddMoneyToWallet,SendMoney;
-    Button BackBtn;
+    private TextView AddMoneyToWallet,SendMoney,AmountTV;
+    private Button BackBtn;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, false);
 
+        loadingDialog = new LoadingDialog(this);
+
         AddMoneyToWallet=findViewById(R.id.tv_addMoneyToSafepe);
         SendMoney=findViewById(R.id.send_txt);
-        BackBtn=findViewById(R.id.sendmoney_back_btn);
+        BackBtn=findViewById(R.id.wallet_back_btn);
+        AmountTV=findViewById(R.id.tv_walletAmount);
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,4 +79,54 @@ public class WalletActivity extends BaseActivity {
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
 
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (isNetworkAvailable()){
+            getWalletMethod();
+        }else {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.walletLayout),"No Internet Connection",false);
+        }
+
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void getWalletMethod( ){
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getWalletDetails()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<WalletResponse>() {
+                    @Override
+                    public void onSuccess(WalletResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+                            AmountTV.setText(String.valueOf(response.getWallet().getAmount()));
+
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.walletLayout), true, e);
+                    }
+                }));
+
+    }
+
 }

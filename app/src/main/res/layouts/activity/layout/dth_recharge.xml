@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:id="@+id/dthRechargeLayout"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -68,11 +69,12 @@
                 android:layout_marginRight="20dp"
                 android:background="@drawable/white_button_grayborder"
                 android:inputType="number"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:text="3028965547"
                 android:nextFocusForward="@+id/amount"
                 android:padding="15dp"
                 android:textColor="#373836"
-
                 android:textSize="15dp" />
 
             <TextView
@@ -97,7 +99,7 @@
                 android:background="@drawable/white_button_grayborder">
 
                 <Spinner
-                    android:id="@+id/operator"
+                    android:id="@+id/operatorDTH"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_below="@+id/textView5"
@@ -118,7 +120,7 @@
                 android:textColor="#373836"
                 android:textSize="15dp" />
             <EditText
-                android:id="@+id/amountid"
+                android:id="@+id/amountDTH"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -129,7 +131,8 @@
                 android:inputType="numberDecimal"
                 android:padding="15dp"
                 android:textColor="#373836"
-
+                android:singleLine="true"
+                android:imeOptions="actionDone"
                 android:textSize="15dp" />
 
 

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/gasPayLayout"
     android:background="@color/white">
 
     <RelativeLayout
@@ -57,7 +58,7 @@
                 android:textSize="15dp" />
 
             <EditText
-                android:id="@+id/mobile"
+                android:id="@+id/gasID"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@+id/textView2"
@@ -126,7 +127,7 @@
                 android:background="@drawable/white_button_grayborder">
 
                 <Spinner
-                    android:id="@+id/operators"
+                    android:id="@+id/operatorsGas"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_below="@+id/textView5"
@@ -148,7 +149,7 @@
                 android:textSize="15dp" />
 
             <EditText
-                android:id="@+id/amount"
+                android:id="@+id/amountGas"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@+id/textView"

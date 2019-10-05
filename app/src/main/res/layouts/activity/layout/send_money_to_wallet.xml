@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/sendMoneyToWalletLayout">
+
+    <RelativeLayout
+        android:id="@+id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/sendmoney_back_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_arrow_back_white_24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text="Send money"
+            android:textColor="#fff"
+            android:textSize="20dp" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="80dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/money_icon" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dip"
+                android:gravity="center"
+                android:text="Transfer Money"
+                android:id="@+id/text_wallet_money_sendmoney"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/mobile_num"
+                        android:background="@drawable/edittext_rounded"
+                        android:padding="12dp"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:paddingLeft="40dp"
+                        android:layout_marginLeft="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:hint="Enter Mobile Number "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="+91"
+                        android:textSize="18dp"
+                        android:textColor="@color/blue"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="0dp" />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/error"
+                    android:paddingTop="5dp"
+                    android:textColor="#cd4354"
+                    android:textSize="12sp"
+                    android:textAlignment="viewEnd"
+                    android:text=""/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="25dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="₹"
+                            android:textSize="24dp"
+                            android:textColor="@color/blue"/>
+
+
+                        <EditText
+                            android:id="@+id/edit_send_money"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_toRightOf="@+id/rs"
+                            android:background="@drawable/edittext_rounded"
+                            android:hint="Enter Amount"
+                            android:inputType="number"
+                            android:padding="12dp"
+                            android:singleLine="true"
+                            android:imeOptions="actionDone"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="18sp"
+                            android:textColor="#000" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/send_50"
+                            android:layout_width="80dp"
+                            android:layout_height="35dp"
+                            android:background="@drawable/edittextbg"
+                            android:gravity="center"
+                            android:textSize="18sp"
+                            android:text="+ 50" />
+
+                        <TextView
+                            android:id="@+id/send_500"
+                            android:layout_width="80dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/edittextbg"
+                            android:gravity="center"
+                            android:textSize="18sp"
+                            android:text="+ 500" />
+
+                        <TextView
+                            android:id="@+id/send_1000"
+                            android:layout_width="80dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/edittextbg"
+                            android:gravity="center"
+                            android:textSize="18sp"
+                            android:text="+ 1000" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/messageText" />
+
+                    <Button
+                        android:id="@+id/send_money_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/rounded_buttons"
+                        android:paddingLeft="40dp"
+                        android:paddingRight="40dp"
+                        android:text="Send"
+                        android:textColor="#fff"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:layout_marginTop="20dp"
+        android:layout_above="@id/darkline"
+        android:id="@+id/lightline"
+        android:background="@color/lightLine"/>
+    <View
+        android:id="@+id/darkline"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="7dp"
+        android:background="@color/darkLine"/>
+</RelativeLayout>

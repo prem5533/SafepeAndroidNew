@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:id="@+id/postpaidBillLayout"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -63,7 +64,7 @@
                 android:textSize="15dp" />
 
             <EditText
-                android:id="@+id/mobile"
+                android:id="@+id/mobilePostpaid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView2"
@@ -103,7 +104,7 @@
                 android:background="@drawable/white_button_grayborder">
 
                 <Spinner
-                    android:id="@+id/operator"
+                    android:id="@+id/operatorPostpaid"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_below="@+id/textView5"
@@ -125,7 +126,7 @@
                 android:visibility="gone"/>
 
             <EditText
-                android:id="@+id/amount"
+                android:id="@+id/amountPostpaid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView"
