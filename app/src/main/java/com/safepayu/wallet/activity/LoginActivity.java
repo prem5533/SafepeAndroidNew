@@ -1,15 +1,23 @@
 package com.safepayu.wallet.activity;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.telephony.PhoneNumberUtils;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -25,7 +33,9 @@ import com.safepayu.wallet.halper.Config;
 import com.safepayu.wallet.listener.MobileEditTextWatcher;
 import com.safepayu.wallet.listener.SnackBarActionClickListener;
 import com.safepayu.wallet.models.request.Login;
+import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
+import com.safepayu.wallet.models.response.UserResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -36,6 +46,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private EditText mobileNo, password;
     private ApiService apiService;
     private LoadingDialog loadingDialog;
+
+    //Otp Dialog
+    TextView TimerTV;
+    EditText OtpED;
+    Button continueButton, resendButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +99,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.btn_login:
                 BaseApp.getInstance().commonUtils().hideKeyboard(this);
                 if (checkPermission() && validate()) {
-                    loginUser();
+
+                    resendOtp();
+
                 }
                 break;
             case R.id.btn_forgetPass:
@@ -193,6 +210,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onSuccess(LoginResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE, mobileNo.getText().toString().split(" ")[1]);
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, response.getAccessToken());
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN_EXPIRE_IN, response.getTokenExpiresIn());
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
@@ -216,6 +234,121 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                                     finish();
                                     break;
                             }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
+                    }
+                }));
+    }
+
+    public void showDialog(Activity activity) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.otp_dialog);
+
+        TimerTV = dialog.findViewById(R.id.timerLogin);
+        OtpED = dialog.findViewById(R.id.enter_otpLogin);
+
+        continueButton = (Button) dialog.findViewById(R.id.continue_otpLogin);
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (TextUtils.isEmpty(OtpED.getText().toString().trim())) {
+                    OtpED.setError("Please Enter Otp");
+                    //BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout),"Please Enter Otp",false);
+                } else {
+                    verifyOtp(OtpED.getText().toString().trim());
+                    dialog.dismiss();
+                }
+
+
+            }
+        });
+
+        resendButton = (Button) dialog.findViewById(R.id.resend_otpLogin);
+        resendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resendOtp();
+                dialog.dismiss();
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
+    }
+
+    private void resendOtp() {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        Login request = new Login(mobileNo.getText().toString().split(" ")[1], null);
+
+        BaseApp.getInstance().getDisposable().add(apiService.resendOtp(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.getStatus()) {
+                            showDialog(LoginActivity.this);
+                            TimerTV.setVisibility(View.VISIBLE);
+
+                            new CountDownTimer(59000, 1000) {
+
+                                public void onTick(long millisUntilFinished) {
+
+                                    TimerTV.setText("00:" + millisUntilFinished / 1000);
+                                    //here you can have your logic to set text to edittext
+                                }
+
+                                public void onFinish() {
+                                    TimerTV.setVisibility(View.GONE);
+                                    resendButton.setVisibility(View.VISIBLE);
+                                }
+
+                            }.start();
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(), false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
+                    }
+                }));
+    }
+
+    private void verifyOtp(String otp) {
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        Login request = new Login(mobileNo.getText().toString().split(" ")[1], null);
+        request.setOtp(otp);
+        BaseApp.getInstance().getDisposable().add(apiService.verifyOTP(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<UserResponse>() {
+                    @Override
+                    public void onSuccess(UserResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.getStatus()) {
+                            loginUser();
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(), false);
                         }
                     }
 

@@ -1,9 +1,5 @@
 package com.safepayu.wallet.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,9 +8,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.PhoneNumberUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseActivity;
@@ -28,6 +30,7 @@ import com.safepayu.wallet.enums.ButtonActions;
 import com.safepayu.wallet.listener.MobileEditTextWatcher;
 import com.safepayu.wallet.listener.SnackBarActionClickListener;
 import com.safepayu.wallet.models.request.Register;
+import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -57,6 +60,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         dob = findViewById(R.id.et_dob);
         referralCode = findViewById(R.id.et_referralCode);
         password = findViewById(R.id.et_password);
+
         mobileNo.addTextChangedListener(new MobileEditTextWatcher(mobileNo));
         mobileNo.setText("+91 ");
         mobileNo.setSelection(mobileNo.getText().length());
@@ -64,6 +68,31 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
 
         findViewById(R.id.btn_process).setOnClickListener(this);
         dob.setOnClickListener(this);
+
+        referralCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+
+                if (s.length() == 10) {
+
+                    getReferralDetails();
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                // TODO Auto-generated method stub
+            }
+        });
 
         checkPermission();
     }
@@ -216,10 +245,43 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     public void onError(Throwable e) {
                         Log.e(BaseApp.getInstance().toastHelper().getTag(NewAccount.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.newAccountLayout), true, e);
 
                     }
                 }));
+    }
+
+    private void getReferralDetails() {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getReferralDetails(referralCode.getText().toString().trim())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ReferralCodeResponse>() {
+                    @Override
+                    public void onSuccess(ReferralCodeResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+
+                            referralCode.setText(response.getPackages());
+                            referralCode.setSelection(referralCode.getText().toString().length());
+                        } else {
+
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout), "Wrong Referral Code", false);
+                            referralCode.setText("");
+                            referralCode.requestFocus();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.newAccountLayout), true, e);
+                    }
+                }));
+
     }
 
     @Override

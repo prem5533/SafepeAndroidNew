@@ -39,7 +39,7 @@ public class PackageListData extends BaseResponse {
         this.bankDetails = bankDetails;
     }
 
-    public class Packages {
+    public static class Packages {
         @SerializedName("id")
         String id;
         @SerializedName("package_name")

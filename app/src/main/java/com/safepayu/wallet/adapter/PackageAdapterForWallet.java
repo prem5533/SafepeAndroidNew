@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
@@ -16,20 +17,16 @@ import com.safepayu.wallet.models.response.PackageListData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter.PackagesListingViewHolder> {
+public class PackageAdapterForWallet extends RecyclerView.Adapter<PackageAdapterForWallet.PackagesListingViewHolder> {
     private final Context context;
     private final LayoutInflater inflater;
     private List<PackageListData.Packages> mItem;
 
     private int selectedPackagePosition = -1;
     private View selectedPackageView = null;
-    private OnPackageSelectListener callback;
+    private PackageListAdapter.OnPackageSelectListener callback;
 
-    public interface OnPackageSelectListener {
-        void onPackageSelect(int position, PackageListData.Packages selectedPackage);
-    }
-
-    public PackageListAdapter(Context context, OnPackageSelectListener callback) {
+    public PackageAdapterForWallet(Context context, PackageListAdapter.OnPackageSelectListener callback) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.mItem = new ArrayList<>();
@@ -66,16 +63,15 @@ public class PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter.
 
     @NonNull
     @Override
-    public PackagesListingViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewtype) {
-        return new PackagesListingViewHolder(inflater.inflate(R.layout.packages_item_view, viewGroup, false));
+    public PackageAdapterForWallet.PackagesListingViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewtype) {
+        return new PackageAdapterForWallet.PackagesListingViewHolder(inflater.inflate(R.layout.packages_item_view, viewGroup, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final PackagesListingViewHolder packagesListingViewHolder, int position) {
+    public void onBindViewHolder(@NonNull final PackageAdapterForWallet.PackagesListingViewHolder packagesListingViewHolder, int position) {
         packagesListingViewHolder.bindData(position);
 
     }
-
 
     @Override
     public int getItemCount() {
@@ -83,9 +79,14 @@ public class PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter.
     }
 
 
+    public interface OnPackageSelectListener {
+        void onPackageSelect(int position, PackageListData.Packages selectedPackage);
+    }
+
     class PackagesListingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView packageName, packageAmount;
+        CardView cardView;
 
 
         public PackagesListingViewHolder(@NonNull View itemView) {
@@ -93,15 +94,14 @@ public class PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter.
 
             packageName = itemView.findViewById(R.id.tv_packageName);
             packageAmount = itemView.findViewById(R.id.tv_packageAmount);
+            cardView = itemView.findViewById(R.id.packageItem);
 
             itemView.setOnClickListener(this);
         }
 
         private void bindData(final int position) {
-
             packageName.setText(mItem.get(position).getPackageName());
             packageAmount.setText(context.getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(mItem.get(position).getPackageAmount()));
-
         }
 
         @Override

@@ -9,6 +9,7 @@ import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.RechargeRequest;
 import com.safepayu.wallet.models.request.Register;
 import com.safepayu.wallet.models.request.ResetPasscodeModel;
+import com.safepayu.wallet.models.request.SendPaymentGatewayDetailsRequest;
 import com.safepayu.wallet.models.request.SendToWalletRequest;
 import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
 import com.safepayu.wallet.models.request.UpdateAddress;
@@ -22,6 +23,8 @@ import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.OperatorResponse;
 import com.safepayu.wallet.models.response.PackageDetailsResponse;
 import com.safepayu.wallet.models.response.PackageListData;
+import com.safepayu.wallet.models.response.ReferralCodeResponse;
+import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
 import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
 import com.safepayu.wallet.models.response.UserResponse;
@@ -106,6 +109,17 @@ public interface ApiService {
 
     @POST("api/safepe/forgotPassword")
     Single<BaseResponse> getForgetPassword(@Body ForgetPasswordRequest forgetPasswordResponse);
+
+    @POST("api/safepe/addBankToWallet")
+    Single<SendPaymentGatewayDetailsResponse> addBankToWallet(@Body SendPaymentGatewayDetailsRequest sendPaymentGatewayDetailsRequest);
+
+    @FormUrlEncoded
+    @POST("api/safepe/commitionToWallet")
+    Single<BaseResponse> transferCommWalletToMainWallet(@Field("amount") String amount);
+
+    @FormUrlEncoded
+    @POST("api/safepe/findVenificairyName")
+    Single<ReferralCodeResponse> getReferralDetails(@Field("referral_code") String referral_code);
 
     @FormUrlEncoded
     @POST("api/safepe/sendVerifyEmailLink")

@@ -5,171 +5,178 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/newAccountLayout"
     tools:context=".activity.LoginActivity">
 
     <include layout="@layout/toolbar_transparent" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
 
-            <ImageView
-                android:layout_width="80dp"
+            <Button
+                android:id="@+id/btn.process"
+                style="@style/buttonDefault"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/logo_big"
-                android:adjustViewBounds="true" />
+                android:layout_marginTop="20dp"
+                android:text="@string/process" />
 
-            <com.safepayu.wallet.custom_view.CustomTextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                style="@style/TextAppearance.AppCompat.Headline"
-                app:fontCustom="@string/Roboto"
-                android:textStyle="bold"
-                android:text="@string/create_new_account" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/logo_big" />
+
+                <com.safepayu.wallet.custom_view.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/create_new_account"
+                    android:textStyle="bold"
+                    app:fontCustom="@string/Roboto" />
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/et.firstName"
+                    style="@style/defaultEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/first_name"
+                    android:inputType="textCapSentences"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/et.lastName"
+                    style="@style/defaultEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/last_name"
+                    android:inputType="textCapSentences"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/et.email"
+                    style="@style/defaultEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/et.mobileNo"
+                    style="@style/defaultEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_mobile"
+                    android:inputType="number"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et.dob"
+                    style="@style/defaultEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/dob_hint"
+                    android:inputType="text"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et.password"
+                    style="@style/defaultEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_password"
+                    android:inputType="textPassword"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/et.referralCode"
+                    style="@style/defaultEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/referral_code"
+                    android:inputType="number"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.safepayu.wallet.custom_view.CustomTextView
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/create_account_text_hint"
+                android:textStyle="normal"
+                app:fontCustom="@string/Roboto" />
+
+            <com.safepayu.wallet.custom_view.CustomTextView
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/opt_send_message"
+                android:textColor="@color/red_400"
+                android:textStyle="normal"
+                app:fontCustom="@string/Roboto" />
         </LinearLayout>
-
-        <com.safepayu.wallet.custom_view.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            style="@style/TextAppearance.AppCompat.Large"
-            app:fontCustom="@string/Roboto"
-            android:textStyle="normal"
-            android:text="@string/create_account_text_hint" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/et.firstName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                style="@style/defaultEditTextStyle"
-                android:inputType="textCapSentences"
-                android:hint="@string/first_name" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/et.lastName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/defaultEditTextStyle"
-                android:textSize="18sp"
-                android:inputType="textCapSentences"
-                android:hint="@string/last_name" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/et.email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:inputType="textEmailAddress"
-                style="@style/defaultEditTextStyle"
-                android:hint="@string/email" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/et.mobileNo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:inputType="number"
-                style="@style/defaultEditTextStyle"
-                android:hint="@string/enter_mobile" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.safepayu.wallet.custom_view.CustomTextView
-            android:layout_width="match_parent"
-            app:fontCustom="@string/Roboto"
-            android:textStyle="normal"
-            android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Caption"
-            android:textColor="@color/red_400"
-            android:text="@string/opt_send_message" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/et.dob"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:focusable="false"
-                android:clickable="true"
-                style="@style/defaultEditTextStyle"
-                android:inputType="text"
-                android:hint="@string/dob_hint" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/et.password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                style="@style/defaultEditTextStyle"
-                android:inputType="textPassword"
-                android:hint="@string/enter_password" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/et.referralCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:inputType="number"
-                style="@style/defaultEditTextStyle"
-                android:hint="@string/referral_code" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/btn.process"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/process"
-            android:layout_marginTop="20dp"
-            style="@style/buttonDefault" />
-    </LinearLayout>
+    </ScrollView>
 
     <View
         android:layout_width="match_parent"

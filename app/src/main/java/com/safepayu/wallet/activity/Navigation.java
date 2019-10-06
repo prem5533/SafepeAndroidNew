@@ -20,7 +20,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
-import com.safepayu.wallet.ChangePasscode;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
@@ -179,7 +178,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         } else if (id == R.id.logout) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN,"");
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, null);
             startActivity(intent);
             finish();
 

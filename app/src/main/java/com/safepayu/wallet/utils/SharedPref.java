@@ -20,6 +20,7 @@ public class SharedPref {
     public final String USER_FIRST_NAME = "User_first_name";
     public final String USER_LAST_NAME = "User_last_name";
     public final String PASSCODE = "passcode";
+    public final String MOBILE = "mobile";
 
     public SharedPref(Context context) {
         this.context = context;
