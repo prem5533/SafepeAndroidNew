@@ -266,6 +266,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
 
                             referralCode.setText(response.getPackages());
                             referralCode.setSelection(referralCode.getText().toString().length());
+                            //
                         } else {
 
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout), "Wrong Referral Code", false);
