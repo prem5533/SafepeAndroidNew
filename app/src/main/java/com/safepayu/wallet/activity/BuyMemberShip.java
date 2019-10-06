@@ -2,13 +2,10 @@ package com.safepayu.wallet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.telecom.Call;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,15 +19,9 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.halper.RecyclerLayoutManager;
 import com.safepayu.wallet.models.request.BuyPackage;
-import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.models.response.PackageListData;
-import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
-import com.safepayu.wallet.utils.PasscodeDialog;
-
-import java.util.Calendar;
-import java.util.Date;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -60,6 +51,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
 
         cardView = findViewById(R.id.bankdetails);
         packageListView = findViewById(R.id.list_packageListView);
+
         layoutManager = new RecyclerLayoutManager(2, RecyclerLayoutManager.VERTICAL);
         layoutManager.setScrollEnabled(false);
         packageListView.setLayoutManager(layoutManager);

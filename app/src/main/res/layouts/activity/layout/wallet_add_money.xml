@@ -105,20 +105,6 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
 
-                <Button
-                    android:id="@+id/btn_addMoneyType"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/rounded_buttons"
-                    android:text="Proceed to Add money"
-                    android:textColor="#fff"
-                    android:textAllCaps="false"
-                    style="@style/TextAppearance.AppCompat.Small" />
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -256,10 +242,34 @@
                                     android:textStyle="bold"
                                     app:fontCustom="@string/Roboto" />
                             </LinearLayout>
-
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btn_addMoneyType"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/rounded_buttons"
+                    android:text="Proceed to Add money"
+                    android:textAllCaps="false"
+                    android:textColor="#fff" />
+
+                <com.safepayu.wallet.custom_view.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="@string/select_package"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:fontCustom="@string/Roboto" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list.packageListView"
@@ -278,17 +288,6 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
                     android:textStyle="normal"
-                    app:fontCustom="@string/Roboto" />
-
-                <com.safepayu.wallet.custom_view.CustomTextView
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center"
-                    android:text="@string/select_package"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     app:fontCustom="@string/Roboto" />
             </LinearLayout>
         </LinearLayout>
