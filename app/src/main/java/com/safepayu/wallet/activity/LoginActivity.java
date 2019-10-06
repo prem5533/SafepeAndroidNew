@@ -88,7 +88,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }
                 break;
             case R.id.btn_forgetPass:
-
+                startActivity(new Intent(this, ForgetPassword.class));
                 break;
             case R.id.btn_newAccount:
                 startActivity(new Intent(this, NewAccount.class));

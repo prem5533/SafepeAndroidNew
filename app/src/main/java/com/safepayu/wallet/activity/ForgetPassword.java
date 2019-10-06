@@ -18,8 +18,8 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ForgetPasswordRequest;
 import com.safepayu.wallet.models.request.Login;
-import com.safepayu.wallet.models.request.ResetPasscodeModel;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
@@ -31,7 +31,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ForgetPassword extends AppCompatActivity {
 
-    EditText edit_number, enter_otp, enter_password;
+    EditText edit_number, enter_otp, enter_password, confrimPasswordED;
     Button btn_request_otp, btn_continue, btn_conform_password, resend_btn;
     TextView timer, label, back_forgot_password;
     String str_edit_otp, str_edit_conf_pass, str_edit_number, password = "918429";
@@ -55,6 +55,7 @@ public class ForgetPassword extends AppCompatActivity {
         timer = findViewById(R.id.timer);
         enter_otp = (EditText) findViewById(R.id.enter_otp);
         enter_password = (EditText) findViewById(R.id.enter_password);
+        confrimPasswordED = findViewById(R.id.confirm_password);
 
         otpToSend = 0;
         Random r = new Random();
@@ -94,7 +95,9 @@ public class ForgetPassword extends AppCompatActivity {
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                continueOtp();
+                //continueOtp();
+
+                conformPassword();
             }
         });
         btn_conform_password.setOnClickListener(new View.OnClickListener() {
@@ -126,14 +129,38 @@ public class ForgetPassword extends AppCompatActivity {
 
     void conformPassword() {
         str_edit_conf_pass = enter_password.getText().toString().trim();
+        String confrimPass = confrimPasswordED.getText().toString().trim();
 
-        if (TextUtils.isEmpty(str_edit_conf_pass) || enter_password.getText().toString().trim().length() < 4) {
+        if (TextUtils.isEmpty(str_edit_conf_pass)) {
 
-            enter_password.setError("Please Enter Valid Passcode");
+            enter_password.setError("Please Enter Password");
             enter_password.requestFocus();
+            confrimPasswordED.setSelection(enter_password.getText().toString().length());
             return;
         } else {
-            resetPasscode(str_edit_conf_pass);
+            if (TextUtils.isEmpty(confrimPass)) {
+                confrimPasswordED.setError("Please Enter Password To Confirm");
+                confrimPasswordED.requestFocus();
+                confrimPasswordED.setSelection(confrimPasswordED.getText().toString().length());
+            } else {
+                if (str_edit_conf_pass.equals(confrimPass)) {
+
+                    //enter_password.setError("Both Password Did Not Match");
+
+                    //confrimPasswordED.setError("Both Password Did Not Match");
+
+                } else {
+
+                }
+
+                ForgetPasswordRequest forgetPasswordRequest = new ForgetPasswordRequest();
+                forgetPasswordRequest.setMobile(str_edit_number);
+                forgetPasswordRequest.setOtp(Integer.parseInt(enter_otp.getText().toString().trim()));
+                forgetPasswordRequest.setPassword(str_edit_conf_pass);
+                forgetPasswordRequest.setPassword_confirmation(confrimPass);
+
+                resetPassword(forgetPasswordRequest);
+            }
         }
 
     }
@@ -211,13 +238,11 @@ public class ForgetPassword extends AppCompatActivity {
                 }));
     }
 
-    private void resetPasscode(final String Passcode) {
+    private void resetPassword(ForgetPasswordRequest forgetPasswordRequest) {
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-        ResetPasscodeModel resetPasscodeModel=new ResetPasscodeModel();
-        resetPasscodeModel.setPasscode(Passcode);
 
-        BaseApp.getInstance().getDisposable().add(apiService.resetPasscode(resetPasscodeModel)
+        BaseApp.getInstance().getDisposable().add(apiService.getForgetPassword(forgetPasswordRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<BaseResponse>() {

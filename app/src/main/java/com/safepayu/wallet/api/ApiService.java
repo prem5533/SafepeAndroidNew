@@ -3,6 +3,7 @@ package com.safepayu.wallet.api;
 import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.BuyPackage;
 import com.safepayu.wallet.models.request.ChangePassword;
+import com.safepayu.wallet.models.request.ForgetPasswordRequest;
 import com.safepayu.wallet.models.request.HashKeyRequest;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.RechargeRequest;
@@ -18,27 +19,20 @@ import com.safepayu.wallet.models.response.CustOperatorResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
 import com.safepayu.wallet.models.response.HashKeyResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
-import com.safepayu.wallet.models.response.MobileOffersResponseModel;
 import com.safepayu.wallet.models.response.OperatorResponse;
 import com.safepayu.wallet.models.response.PackageDetailsResponse;
 import com.safepayu.wallet.models.response.PackageListData;
 import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
-import com.safepayu.wallet.models.response.User;
 import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
 
-import org.json.JSONObject;
-
 import io.reactivex.Single;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface ApiService {
 //    @Header("X-Bearer-Token") String authorization
@@ -110,7 +104,10 @@ public interface ApiService {
     @POST("api/safepe/getCustOperator")
     Single<CustOperatorResponse> getMobileOperator(@Field("number") String number);
 
+    @POST("api/safepe/forgotPassword")
+    Single<BaseResponse> getForgetPassword(@Body ForgetPasswordRequest forgetPasswordResponse);
+
     @FormUrlEncoded
-    @POST("MobileOffer")
-    Call<MobileOffersResponseModel> getMobileOffer(@Field("mobile") String mobile);
+    @POST("api/safepe/sendVerifyEmailLink")
+    Single<BaseResponse> verifyEmail(@Field("email") String email);
 }
