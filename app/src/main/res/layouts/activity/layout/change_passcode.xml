@@ -9,7 +9,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -28,8 +28,9 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Change Passcode"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -42,7 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -53,7 +53,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp">
 
                     <ImageView
                         android:id="@+id/imgIco"
@@ -61,7 +62,7 @@
                         android:layout_height="64dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="30dp"
-                        android:layout_marginBottom="40dp"
+                        android:layout_marginBottom="20dp"
                         android:src="@drawable/pinlock1"
                         android:tint="@color/colorPrimaryDark" />
 
@@ -70,14 +71,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="20dp"
-                        android:backgroundTint="@color/darker_gray"
+                        android:backgroundTint="@color/green_theme"
                         android:gravity="center"
                         android:hint="Old Passcode"
                         android:inputType="numberPassword"
                         android:maxLength="4"
-                        android:textColor="@color/hint_foreground_light"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        />
 
                     <EditText
                         android:id="@+id/old_pass"
@@ -86,14 +88,14 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginBottom="20dp"
-                        android:backgroundTint="@color/darker_gray"
+                        android:backgroundTint="@color/green_theme"
                         android:gravity="center"
                         android:hint="Create Passcode"
                         android:inputType="numberPassword"
                         android:maxLength="4"
-                        android:textColor="@color/hint_foreground_light"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"/>
 
                     <EditText
                         android:id="@+id/edtxConfPassCode"
@@ -102,19 +104,19 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginBottom="20dp"
-                        android:backgroundTint="@color/darker_gray"
+                        android:backgroundTint="@color/green_theme"
                         android:gravity="center"
                         android:hint="Confirm Passcode"
                         android:inputType="numberPassword"
                         android:maxLength="4"
-                        android:textColor="@color/hint_foreground_light"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular" />
 
                     <Button
                         android:id="@+id/create_password"
                         android:layout_width="250dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:background="@drawable/rounded_buttons"
                         android:clickable="true"
@@ -122,7 +124,8 @@
                         android:paddingLeft="40dp"
                         android:paddingRight="40dp"
                         android:text="Save"
-                        android:textSize="18sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="15sp"
                         android:textColor="@color/white" />
 
                 </LinearLayout>

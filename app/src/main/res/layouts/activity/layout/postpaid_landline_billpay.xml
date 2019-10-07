@@ -10,7 +10,7 @@
         android:id="@+id/l1_send"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -29,8 +29,9 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Pay Bill"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -60,7 +61,8 @@
                 android:gravity="center"
                 android:text="Enter Mobile"
                 android:textColor="#373836"
-                android:textSize="15dp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"/>
 
             <EditText
                 android:id="@+id/mobile"
@@ -79,7 +81,8 @@
                 android:padding="10dp"
                 android:textColor="#373836"
 
-                android:textSize="15dp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"/>
 
             <TextView
                 android:id="@+id/textView5"
@@ -87,12 +90,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView6"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
                 android:text="Select Operator"
                 android:textColor="#373836"
-                android:textSize="15dp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,12 +153,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/mobile"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
                 android:text="Bill Amount"
                 android:textColor="#373836"
-                android:textSize="15dp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular" />
 
             <TextView
                 android:id="@+id/amountBill"
@@ -171,7 +176,8 @@
                 android:nextFocusForward="@+id/btn"
                 android:padding="10dp"
                 android:textColor="#373836"
-                android:textSize="15dp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular" />
 
             <Button
                 android:id="@+id/Paybtn"
@@ -188,36 +194,32 @@
                 android:textColor="#fff"
                 android:layout_marginBottom="30dp"
                 android:visibility="gone"
-                android:textSize="15dp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular" />
 
             <Button
                 android:id="@+id/btnCheckBill"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_below="@+id/amount"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/rounded_buttons"
                 android:padding="10dp"
                 android:text="Check Bill"
                 android:textColor="#fff"
                 android:layout_marginBottom="30dp"
-                android:textSize="15dp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular" />
         </LinearLayout>
     </ScrollView>
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="20dp"
-        android:layout_above="@id/darkline"
-        android:id="@+id/lightline"
-        android:background="@color/lightLine"/>
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
+        android:layout_height="14dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="7dp"
-        android:background="@color/darkLine"/>
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
+
 </RelativeLayout>

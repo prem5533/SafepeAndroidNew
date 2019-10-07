@@ -10,7 +10,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -29,8 +29,9 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Transfer Commission"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp"/>
     </RelativeLayout>
 
 
@@ -39,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="center"
-        android:background="@color/colorPrimary"
+        android:background="@color/green_theme"
         android:gravity="center"
         android:text="Withdraw in main wallet"
         android:textColor="@color/white"
@@ -71,7 +72,8 @@
                 android:layout_marginRight="20dp"
                 android:hint="Enter Amount"
                 android:inputType="numberDecimal"
-                android:paddingLeft="15dp"
+                android:paddingLeft="15sp"
+                android:fontFamily="@font/roboto_regular"
                 android:textColor="#000000"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -87,8 +89,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Amount Reflect In Your Main Wallet"
-                android:textColor="@color/blue"
-                android:textSize="15dp" />
+                android:textColor="@color/green_theme"
+                android:textSize="14sp"
+                android:fontFamily="@font/roboto_regular"
+                />
             <TextView
                 android:id="@+id/text_2"
                 android:layout_width="match_parent"
@@ -113,7 +117,7 @@
             <Button
                 android:id="@+id/sendToWalletBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:background="@drawable/rounded_buttons"
                 android:clickable="true"
@@ -121,6 +125,8 @@
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:text="withdraw"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -220,17 +226,10 @@
         android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/sp" />
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="20dp"
-        android:layout_above="@id/darkline"
-        android:id="@+id/lightline"
-        android:background="@color/lightLine"/>
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
+        android:layout_height="14dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="7dp"
-        android:background="@color/darkLine"/>
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
 </LinearLayout>

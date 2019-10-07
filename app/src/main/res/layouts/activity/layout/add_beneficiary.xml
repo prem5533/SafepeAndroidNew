@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -29,9 +29,11 @@
             android:layout_marginStart="2dp"
             android:layout_marginLeft="5dp"
             android:gravity="center"
-            android:text=""
+            android:text="Add Bank Account"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp"  />
+
     </RelativeLayout>
 
     <ScrollView
@@ -58,6 +60,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Account Holder Name"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"
                     android:textColor="@color/colorPrimary"/>
 
                 <EditText
@@ -65,17 +69,22 @@
                     android:layout_marginTop="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
                     android:layout_marginBottom="20dp"
                     android:inputType="text"
                     android:maxLength="40"
-                    android:background="@drawable/blue_border"
+                    android:padding="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:background="@drawable/edittext_rounded"
                     android:hint="Enter Name"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"
                     android:text="Account Number"/>
 
                 <EditText
@@ -85,14 +94,19 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:padding="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:background="@drawable/edittext_rounded"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/blue_border"
                     android:hint="Enter Account Number"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Confirm Account Number"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"
                     android:textColor="@color/colorPrimary"/>
 
                 <EditText
@@ -102,14 +116,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:background="@drawable/edittext_rounded"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/blue_border"
                     android:hint="Confirm Account Number"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"
                     android:text="Bank IFSC Code"/>
 
                 <RelativeLayout
@@ -124,8 +143,11 @@
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         android:padding="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:background="@drawable/edittext_rounded"
                         android:layout_marginBottom="0dp"
-                        android:background="@drawable/blue_border"
                         android:hint="Bank IFSC"/>
 
                     <TextView
@@ -134,8 +156,8 @@
                         android:gravity="end"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="20dp"
-                        android:textColor="@color/blue"
-                        android:textSize="18sp"
+                        android:textColor="@color/green_theme"
+                        android:textSize="16sp"
                         android:layout_centerVertical="true"
                         android:onClick="verifyIfscCode"
                         android:text="Verify"/>
@@ -157,10 +179,10 @@
                     android:id="@+id/bankAddBtn"
                     android:layout_marginTop="30dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:background="@drawable/rounded_buttons"
                     android:textColor="@color/white"
-                    android:textSize="16dp"
+                    android:textSize="15sp"
                     android:textAllCaps="false"
                     android:layout_marginBottom="40dp"
                     android:text="Add Beneficiary"/>

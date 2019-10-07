@@ -7,6 +7,11 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".activity.Splash">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@drawable/button_background_gradient_diagonal">
+    </LinearLayout>
 
     <ImageView
         android:layout_width="200dp"
@@ -21,6 +26,7 @@
         android:gravity="center"
         android:paddingLeft="100dp"
         android:text="@string/splash_tag"
+        android:fontFamily="@font/roboto_bold"
         android:textColor="@color/bue_A800"
         style="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold" />
@@ -36,7 +42,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/splash_tag_2"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/blue_theme"
         style="@style/TextAppearance.AppCompat.Headline" />
 
     <TextView
@@ -46,7 +52,7 @@
         android:gravity="center"
         android:layout_marginLeft="40dp"
         android:text="@string/splash_tag_3"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/green_theme"
         style="@style/TextAppearance.AppCompat.Medium" />
 
     <View
@@ -99,5 +105,10 @@
 
     </LinearLayout>
 
-    <include layout="@layout/bottom_lines" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@drawable/splas_gradient">
+</LinearLayout>
+
 </LinearLayout>

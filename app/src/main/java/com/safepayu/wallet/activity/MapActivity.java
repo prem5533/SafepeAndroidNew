@@ -8,7 +8,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
@@ -18,6 +20,10 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -38,8 +44,9 @@ import com.safepayu.wallet.R;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, View.OnClickListener {
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     GoogleApiClient mGoogleApiClient;
@@ -47,21 +54,31 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     private GoogleMap mMap;
+    List<Address> listAddresses;
+    Geocoder geocoder;
+    private LinearLayout liSelectLocation;
+    private  String address,city,state,country,postalCode,knownName,subLocality,subAdmin1,subAdmin,subAdmin2,first,second;
+    private TextView tvLatLong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        tvLatLong = findViewById(R.id.tv_map_lat_long);
+        liSelectLocation = findViewById(R.id.li_select_location);
+        liSelectLocation.setOnClickListener(this);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
-
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getSupportFragmentManager()
                         .findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
+
+
+
     }
 
 
@@ -85,7 +102,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             mMap.setMyLocationEnabled(true);
         }
     }
-
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -94,7 +110,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 .build();
         mGoogleApiClient.connect();
     }
-
+    @Override
+    public void onConnected(Bundle bundle) {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                    mLocationRequest, this);
+        }
+    }
+    @Override
+    public void onConnectionSuspended(int i) {
+    }
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
@@ -103,11 +134,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
 //Showing Current Location Marker on Map
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        LocationManager locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         String provider = locationManager.getBestProvider(new Criteria(), true);
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -117,60 +146,105 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
         Location locations = locationManager.getLastKnownLocation(provider);
         List<String> providerList = locationManager.getAllProviders();
-        if (null != locations && null != providerList && providerList.size() > 0) {
-            double longitude = locations.getLongitude();
-            double latitude = locations.getLatitude();
-            Geocoder geocoder = new Geocoder(getApplicationContext(),
-                    Locale.getDefault());
+    //    if (null != locations && null != providerList && providerList.size() > 0) {
+            double longitude = location.getLongitude();
+            double latitude = location.getLatitude();
+
+
+             geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
             try {
-                List<Address> listAddresses = geocoder.getFromLocation(latitude,
-                        longitude, 1);
+                listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
                 if (null != listAddresses && listAddresses.size() > 0) {
-                    String state = listAddresses.get(0).getAdminArea();
-                    String country = listAddresses.get(0).getCountryName();
-                    String subLocality = listAddresses.get(0).getSubLocality();
+                    address = listAddresses.get(0).getAddressLine(0);
+                    subLocality = listAddresses.get(0).getSubLocality();
+                    city = listAddresses.get(0).getLocality();
+                    state = listAddresses.get(0).getAdminArea();
+                    country = listAddresses.get(0).getCountryName();
+                    postalCode = listAddresses.get(0).getPostalCode();
+                    knownName = listAddresses.get(0).getFeatureName();
+                    subAdmin = listAddresses.get(0).getSubAdminArea();
+                    subAdmin1 = listAddresses.get(0).getSubThoroughfare();
+                    subAdmin2 = listAddresses.get(0).getPremises();
+
+
+                    String[] separated = address.split(",");
+                     first = separated[0];// this will contain "Fruit"
+                     second = separated[1];
+                    Log.d("DDRE",first+second);
                     markerOptions.title("" + latLng + "," + subLocality + "," + state
                             + "," + country);
+                    tvLatLong.setText(address);
+                    Toast.makeText(getApplicationContext(),address, Toast.LENGTH_SHORT).show();
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
+                Log.e("Location Address Loader", "Unable connect to Geocoder", e);
                 e.printStackTrace();
             }
-        }
+    //    }
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
+        mCurrLocationMarker = mMap.addMarker(markerOptions.draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
         if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,
+                    this);
         }
 
-    }
+        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+                Log.d("System out", "onMarkerDragStart..."+marker.getPosition().latitude+"..."+marker.getPosition().longitude);
+             //   Toast.makeText(MapActivity.this, String.format("Drag from"+marker.getPosition().latitude + marker.getPosition().longitude),Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onMarkerDrag(Marker marker) {
+                Log.i("System out", "onMarkerDrag...");
+            //    Toast.makeText(MapActivity.this, String.format("Drag To"+marker.getPosition().latitude + marker.getPosition().longitude),Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                Log.d("System out", "onMarkerDragEnd..."+marker.getPosition().latitude+"..."+marker.getPosition().longitude);
+           //     Toast.makeText(MapActivity.this, String.format("Drag end"+marker.getPosition().latitude + marker.getPosition().longitude),Toast.LENGTH_SHORT).show();
+                geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                try {
+                    listAddresses = geocoder.getFromLocation(marker.getPosition().latitude, marker.getPosition().longitude, 1);
+                    if (null != listAddresses && listAddresses.size() > 0) {
+                        address = listAddresses.get(0).getAddressLine(0);
+                        subLocality = listAddresses.get(0).getSubLocality();
+                        city = listAddresses.get(0).getLocality();
+                        state = listAddresses.get(0).getAdminArea();
+                        country = listAddresses.get(0).getCountryName();
+                        postalCode = listAddresses.get(0).getPostalCode();
+                        knownName = listAddresses.get(0).getFeatureName();
+                         subAdmin = listAddresses.get(0).getSubAdminArea();
+                         subAdmin1 = listAddresses.get(0).getSubThoroughfare();
+
+
+                        String[] separated = address.split(",");
+                        first = separated[0];// this will contain "Fruit"
+                        second = separated[1];
+
+                        tvLatLong.setText(address);
+                        Toast.makeText(getApplicationContext(),address, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Log.e("Location Address Loader", "Unable connect to Geocoder", e);
+                    e.printStackTrace();
+                }
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+            }
+        });
+
+
+
+    }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(1000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, MapActivity.this);
-        }
+    public void onConnectionFailed(ConnectionResult connectionResult) {
     }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -207,11 +281,36 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                         mMap.setMyLocationEnabled(true);
                     }
                 } else {
-                    Toast.makeText(this, "permission denied",
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
         }
     }
-}
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.li_select_location:
+                Toast.makeText(this, "Location select", Toast.LENGTH_LONG).show();
+
+
+                Intent intent = new Intent(MapActivity.this,AddUpdateAddress.class);
+                if (subLocality==null){
+                    intent.putExtra("select_locality",knownName +" "+second);
+                }
+                else {
+                    intent.putExtra("select_locality",knownName +" "+second+ " "+subLocality);
+                }
+
+                intent.putExtra("select_country",country);
+                intent.putExtra("select_pincode",postalCode);
+                intent.putExtra("select_state",state);
+                intent.putExtra("select_city",city);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+
+                break;
+            }
+        }
+    }

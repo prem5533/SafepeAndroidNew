@@ -4,14 +4,15 @@
     <string name="splash_tag_2">SafePe करिये</string>
     <string name="splash_tag_3">Secure रहिये</string>
     <string name="coming_soon">This feature is coming soon</string>
+    <string name="Rs">\u20B9</string>
     <!--Fonts-->
     <string name="Roboto">Roboto</string>
 
     <string name="loading_message">Please Wait...</string>
     <string name="select_package">Select Package</string>
     <string name="gst_charge_on_package">Additional 18% GST will be charged from the total amount</string>
-    <string name="total_amount_to_pay">Total Amount to Pay</string>
-    <string name="mobile_number">Mobile Number</string>
+    <string name="total_amount_to_pay">Total Amount to Pay:</string>
+    <string name="mobile_number">Mobile Number:</string>
     <string name="opt_send_message">We will send you a <b>One Time Password</b> on your mobile number</string>
     <string name="login">Login</string>
     <string name="login_text_hint">Enter Registered Safepe Mobile Number</string>
@@ -45,5 +46,6 @@
 
     <string name="bankdetails">To buy package through bank transfer. You have to make a fund transfer to the account mentioned below</string>
     <string name="payment">Once done. Click on proceed to fill the payment details.</string>
+    <string name="movie">Movie\nTickets</string>
 
 </resources>

@@ -10,7 +10,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -29,8 +29,9 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Mobile Recharge"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <ScrollView
@@ -48,9 +49,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-
-
-
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
@@ -64,7 +62,8 @@
 
                     android:text="Enter Mobile"
                     android:textColor="#373836"
-                    android:textSize="15dp" />
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"/>
 
                 <EditText
                     android:id="@+id/mobile_recharge"
@@ -79,9 +78,11 @@
                     android:inputType="number"
                     android:maxLength="10"
                     android:nextFocusForward="@+id/amount"
-                    android:padding="15dp"
+                    android:padding="10dp"
+                    android:hint="Mobile*"
                     android:textColor="#373836"
-                    android:textSize="15dp" />
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"/>
 
                 <TextView
                     android:id="@+id/textView5"
@@ -89,26 +90,26 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView6"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
                     android:gravity="center"
                     android:text="Select Operator"
                     android:textColor="#373836"
-                    android:textSize="15dp" />
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="4dp"
-                    android:padding="5dp"
                     android:layout_marginRight="20dp"
                     android:orientation="vertical"
                     android:background="@drawable/white_button_grayborder">
                     <Spinner
                         android:id="@+id/operator"
                         android:layout_width="match_parent"
-                        android:layout_height="42dp"
+                        android:layout_height="40dp"
                         android:layout_below="@+id/textView5"
                         android:layout_marginLeft="0dp"
                         android:layout_marginRight="0dp"
@@ -127,7 +128,8 @@
                     android:gravity="center"
                     android:text="Enter Amount"
                     android:textColor="#373836"
-                    android:textSize="15dp" />
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -148,24 +150,26 @@
                         android:imeOptions="actionDone"
                         android:inputType="number"
                         android:nextFocusForward="@+id/btn"
-                        android:padding="15dp"
+                        android:padding="10dp"
                         android:hint="Amount*"
                         android:textColor="#373836"
-                        android:textSize="15dp" />
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"/>
 
                     <TextView
                         android:id="@+id/Offersbtn"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="0dp"
                         android:layout_marginRight="20dp"
                         android:background="@color/colorPrimary"
                         android:gravity="center"
                         android:onClick="OffersClick"
-                        android:padding="10dp"
+                        android:padding="7dp"
                         android:text="Browse Plan"
                         android:textColor="@color/white"
-                        android:textSize="15dp" />
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"/>
                 </LinearLayout>
 
                 <Button
@@ -175,14 +179,15 @@
                     android:layout_below="@+id/amount"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="30dp"
                     android:background="@drawable/rounded_buttons"
                     android:padding="10dp"
                     android:text="Recharge"
                     android:textColor="#fff"
-                    android:textSize="15dp" />
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"/>
 
 
             </LinearLayout>
@@ -197,18 +202,12 @@
         </RelativeLayout>
     </ScrollView>
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="20dp"
-        android:layout_above="@id/darkline"
-        android:id="@+id/lightline"
-        android:background="@color/lightLine"/>
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
+        android:layout_height="14dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="7dp"
-        android:background="@color/darkLine"/>
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
+
 
 </RelativeLayout>

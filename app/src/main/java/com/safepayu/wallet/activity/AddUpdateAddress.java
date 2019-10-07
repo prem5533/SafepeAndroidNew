@@ -1,5 +1,6 @@
 package com.safepayu.wallet.activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -8,6 +9,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -50,11 +52,13 @@ import java.util.Locale;
 public class AddUpdateAddress extends BaseActivity implements View.OnClickListener {
 
     private EditText etLocation, etCity, etState, etPincode, etCountry;
-    private String Location, City, State, Country, Pincode;
+    private String Location, City, State, Country, Pincode,mapSelectLocality,mapSelectCity,mapSelectState,mapSelectPincode,mapSelectCountry;
     private Button add_address, update_address;
     private LoadingDialog loadingDialog;
     private CheckBox current_location;
+    boolean b =false;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    public int STATIC_INTEGER_VALUE = 1;
 
 
     @Override
@@ -76,7 +80,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         current_location = findViewById(R.id.current_location);
         add_address.setOnClickListener(this);
         update_address.setOnClickListener(this);
-
+        current_location.setChecked(false);
 
         //*******************get data *****************
         Location = getIntent().getStringExtra("location");
@@ -85,30 +89,64 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         Country = getIntent().getStringExtra("country");
         Pincode = getIntent().getStringExtra("pincode");
 
+       // Log.e("add",mapSelectAddress);
+
+
         //***************set text*********************
+
         etLocation.setText(Location);
         etCity.setText(City);
         etState.setText(State);
         etCountry.setText(Country);
         etPincode.setText(Pincode);
 
-        if (Location != null && City != null && State != null && Country != null && etPincode != null) {
+       /* if (Location== null && City == null && State == null && Country == null && Pincode == null) {
+
+        }*/
+
+        if (Location != null && City != null && State != null && Country != null && Pincode != null) {
             update_address.setVisibility(View.VISIBLE);
             add_address.setVisibility(View.GONE);
+
         }
 
         current_location.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
-                Intent intent = new Intent( AddUpdateAddress.this, MapActivity.class);
-                startActivity(intent);
+               if (isChecked){
+                   Intent intent = new Intent( AddUpdateAddress.this, MapActivity.class);
+                   startActivityForResult(intent, STATIC_INTEGER_VALUE);
+               }
+
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (1):
+                if (resultCode == Activity.RESULT_OK) {
+                  //  String newText = data.getStringExtra(PUBLIC_STATIC_STRING_IDENTIFIER);
+                     mapSelectLocality = data.getStringExtra("select_locality");
+                     mapSelectCity = data.getStringExtra("select_city");
+                     mapSelectState = data.getStringExtra("select_state");
+                     mapSelectPincode = data.getStringExtra("select_pincode");
+                     mapSelectCountry = data.getStringExtra("select_country");
 
+                    etLocation.setText(mapSelectLocality);
+                    etCity.setText(mapSelectCity);
+                    etState.setText(mapSelectState);
+                    etCountry.setText(mapSelectCountry);
+                    etPincode.setText(mapSelectPincode);
+                    // TODO Update your TextView.
+                }
+                break;
 
+        }
+    }
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_add_update_address2;

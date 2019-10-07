@@ -10,7 +10,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -28,8 +28,9 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Payment For Water"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <ScrollView
@@ -48,13 +49,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="0dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
                 android:text="Select Operator"
                 android:textColor="#373836"
-                android:textSize="15dp"
-                android:visibility="gone"/>
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"
+               />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,7 +67,7 @@
                 <Spinner
                     android:id="@+id/operator"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/textView5"
                     android:layout_marginTop="4dp"
                     android:nextFocusForward="@+id/textView"/>
@@ -77,7 +79,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginLeft="0dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="0dp"
                 android:gravity="center"
                 android:text="Customer Id "
@@ -96,7 +98,7 @@
                 android:background="@drawable/white_button_grayborder"
                 android:inputType="number"
                 android:nextFocusForward="@+id/amount"
-                android:padding="15dp"
+                android:padding="10dp"
                 android:textColor="#373836"
 
                 android:textSize="15dp" />
@@ -109,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/mobile"
                 android:layout_marginLeft="0dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
                 android:text="Amount"
@@ -125,20 +127,21 @@
                 android:layout_marginRight="0dp"
                 android:background="@drawable/white_button_grayborder"
                 android:inputType="number"
-                android:padding="15dp"
+                android:padding="10dp"
                 android:textColor="#373836"
 
-                android:textSize="15dp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular" />
 
 
             <Button
                 android:id="@+id/waterPaybtn"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_below="@+id/amount"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginRight="0dp"
                 android:background="@drawable/rounded_buttons"
@@ -146,7 +149,8 @@
                 android:textAllCaps="false"
                 android:text="Process Recharge"
                 android:textColor="#fff"
-                android:textSize="18dp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular" />
 
 
         </LinearLayout>
@@ -154,18 +158,12 @@
 
     </ScrollView>
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="20dp"
-        android:layout_above="@id/darkline"
-        android:id="@+id/lightline"
-        android:background="@color/lightLine"/>
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
+        android:layout_height="14dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="7dp"
-        android:background="@color/darkLine"/>
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
+
 
 </RelativeLayout>

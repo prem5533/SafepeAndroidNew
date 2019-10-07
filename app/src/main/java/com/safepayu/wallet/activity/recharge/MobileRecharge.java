@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.PaidOrderActivity;
 import com.safepayu.wallet.activity.PaymentType;
 
 public class MobileRecharge extends BaseActivity {
@@ -31,9 +32,10 @@ public class MobileRecharge extends BaseActivity {
         RechargeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), PaymentType.class));
+               /* startActivity(new Intent(getApplicationContext(), PaymentType.class));
                 overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
-                finish();
+                finish();*/
+                startActivity(new Intent(getApplicationContext(), PaidOrderActivity.class));
             }
         });
 

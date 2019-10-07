@@ -1,6 +1,8 @@
 package com.safepayu.wallet.activity;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -24,7 +26,10 @@ import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -69,6 +74,17 @@ public class Profile extends BaseActivity implements View.OnClickListener {
         UpdateAddressBtn.setOnClickListener(this);
         ChangePassBtn.setOnClickListener(this);
         btnChangePassSubmit.setOnClickListener(this);
+
+      /*  Geocoder geocoder = new Geocoder(Profile.this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(23.322, 43.23232, 1);
+            String address = addresses.get(0).getAddressLine(0);
+
+            Log.d("mylog", "Complete Address: " + addresses.toString());
+            Log.d("mylog", "Address: " + address);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
     }
 

@@ -12,7 +12,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -31,8 +31,9 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Profile"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <ScrollView
@@ -110,27 +111,52 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-
-                    <TextView
-                        android:id="@+id/username1"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         android:gravity="center"
-                        android:text="Prem"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/username1"
+                            android:layout_width="34dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="Prem"
+                            android:textColor="@color/bue_A800"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_face"
+                            android:layout_marginLeft="5dp"></ImageView>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginTop="30dp"
+                        android:layout_marginLeft="10dp"
+                       >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="0dp"
                             android:text="Phone"
-                            android:textSize="12sp"/>
+                            android:textColor="@color/blue_theme"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:id="@+id/p_mobile"
@@ -138,24 +164,35 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="0987654321"
-                            android:textColor="#222"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/blue_grey_500"
                             android:textStyle="bold"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp"
+                          />
                     </LinearLayout>
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="0dp"
                             android:text="Email"
-                            android:textSize="12sp"/>
+                            android:textColor="@color/blue_theme"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:id="@+id/p_mail"
@@ -163,46 +200,68 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="asdf@gmail.com"
-                            android:textColor="#222"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/blue_grey_500"
                             android:textStyle="bold"
                             android:textSize="16sp" />
                     </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="0dp"
                             android:text="Date of birth"
-                            android:textSize="12sp"/>
+                            android:textColor="@color/blue_theme"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:id="@+id/p_dob"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:focusable="false"
                             android:clickable="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/roboto_regular"
                             android:gravity="center"
-                            android:textColor="#222"
                             android:text="03/09/2000"
-                            android:textStyle="bold"
-                            android:textSize="16sp" />
+                            android:textColor="@color/blue_grey_500"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Address"
-                            android:textSize="13dp"/>
+                            android:textColor="@color/blue_theme"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="13sp" />
 
                         <TextView
                             android:id="@+id/p_address"
@@ -211,22 +270,33 @@
                             android:background="#00FFFFFF"
                             android:hint=""
                             android:focusable="false"
+                            android:fontFamily="@font/roboto_regular"
                             android:gravity="center"
-                            android:textColor="#222"
+                            android:textColor="@color/blue_grey_500"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Pincode"
-                            android:textSize="12sp"/>
+                            android:textColor="@color/blue_theme"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:id="@+id/p_pincode"
@@ -236,10 +306,18 @@
                             android:hint=""
                             android:focusable="false"
                             android:gravity="center"
-                            android:textColor="#222"
+                            android:textColor="@color/blue_grey_500"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                          />
                     </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"/>
 
 
                     <!--
@@ -489,6 +567,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:padding="0dp"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/white"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_gravity="center"
                 android:background="@drawable/blue_border"/>
@@ -504,7 +585,7 @@
                 android:layout_marginRight="20dp"
                 android:padding="12dp"
                 android:gravity="center"
-                android:background="@drawable/blue_border"
+                android:background="@drawable/green_border"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/changePassBtn"
@@ -512,7 +593,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="datetime"
                     android:text="Change Password"
-                    android:textColor="#222"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
                     android:textStyle="normal" />
                 <ImageView
                     android:layout_width="wrap_content"
@@ -522,14 +605,15 @@
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/change_pass_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:orientation="vertical"
                 android:padding="10dp"
                 android:background="@drawable/edittext_rounded">
                 <LinearLayout
@@ -539,11 +623,17 @@
                     <TextView
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:text="Old Password :"/>
+                        android:text="Old Password :"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/bue_A800"/>
                     <EditText
                         android:id="@+id/old_password_id"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -552,11 +642,17 @@
                     <TextView
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:text="New Password : "/>
+                        android:text="New Password : "
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/bue_A800"/>
                     <EditText
                         android:id="@+id/new_password_id"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -565,11 +661,17 @@
                     <TextView
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:text="Confirm Password : "/>
+                        android:text="Confirm Password : "
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/bue_A800"/>
                     <EditText
                         android:id="@+id/confirm_password_id"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -584,6 +686,8 @@
                         android:textColor="@color/white"
                         android:paddingLeft="90dp"
                         android:paddingRight="90dp"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
                         android:background="@drawable/rounded_buttons"/>
                 </LinearLayout>
 
@@ -635,17 +739,11 @@
         </LinearLayout>
     </ScrollView>
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="0dp"
-        android:layout_above="@id/darkline"
-        android:id="@+id/lightline"
-        android:background="@color/lightLine"/>
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
+        android:layout_height="14dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="7dp"
-        android:background="@color/darkLine"/>
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
+
 </RelativeLayout>

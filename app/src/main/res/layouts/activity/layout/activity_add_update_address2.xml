@@ -12,7 +12,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -31,8 +31,9 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Address"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp"  />
     </RelativeLayout>
 
 
@@ -42,23 +43,14 @@
         android:layout_below="@id/headerbar">
 
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/headerbar"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            app:cardCornerRadius="4dp"
-            android:elevation="1dp"
-            >
+
 
             <LinearLayout
                 android:layout_below="@id/headerbar"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
 
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
@@ -67,27 +59,37 @@
                     android:id="@+id/heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
                     android:layout_gravity="center"
-                    android:textSize="16sp"
+                    android:textColor="@color/bue_A800"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/roboto_bold"
                     android:layout_marginBottom="20dp"
                     android:text="Add your address"/>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_marginTop="10dp"/>
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="6dp"
-                    android:text="Flat/House location"/>
+                    android:text="Flat/House location"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"/>
 
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    >
 
                     <EditText
                         android:id="@+id/update_location"
@@ -97,8 +99,10 @@
                         android:background="@drawable/edittext_rounded"
                         android:hint="Street 23, PS Colony"
                         android:padding="10dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_gravity="left"
-                        android:textSize="13sp" />
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="13sp"/>
 
                     <ImageView
                         android:layout_width="25dp"
@@ -107,7 +111,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="5dp"
                         android:alpha="0.3"
-                        android:src="@drawable/home" />
+                        android:src="@drawable/ic_placeholder" />
 
 
                 </FrameLayout>
@@ -117,7 +121,11 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"
                     android:layout_marginBottom="6dp"
-                    android:text="City"/>
+                    android:text="City"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"/>
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -131,7 +139,9 @@
                         android:padding="10dp"
                         android:background="@drawable/edittext_rounded"
                         android:hint="Knight Place"
+                        android:fontFamily="@font/roboto_regular"
                         android:textSize="13sp"
+                        android:layout_marginLeft="10dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"/>
 
@@ -142,7 +152,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="5dp"
                         android:alpha="0.3"
-                        android:src="@drawable/home" />
+                        android:src="@drawable/ic_skyline" />
 
 
                 </FrameLayout>
@@ -155,7 +165,10 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"
                     android:layout_marginBottom="6dp"
-
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
                     android:text="State"/>
 
                 <FrameLayout
@@ -171,7 +184,9 @@
                         android:background="@drawable/edittext_rounded"
                         android:layout_height="wrap_content"
                         android:hint="Kerela"
+                        android:fontFamily="@font/roboto_regular"
                         android:textSize="13sp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginBottom="10dp"/>
 
                     <ImageView
@@ -181,7 +196,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="5dp"
                         android:alpha="0.3"
-                        android:src="@drawable/home" />
+                        android:src="@drawable/ic_home" />
 
 
                 </FrameLayout>
@@ -191,10 +206,12 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"
                     android:layout_marginBottom="6dp"
-                    android:text="Pincode"/>
-
-
-
+                    android:text="Pincode"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -209,7 +226,9 @@
                         android:background="@drawable/edittext_rounded"
                         android:layout_height="wrap_content"
                         android:hint="121320"
+                        android:fontFamily="@font/roboto_regular"
                         android:textSize="13sp"
+                        android:layout_marginLeft="10dp"
                         android:maxLength="6"
                         android:layout_marginBottom="6dp"/>
 
@@ -220,7 +239,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="5dp"
                         android:alpha="0.3"
-                        android:src="@drawable/home" />
+                        android:src="@drawable/ic_pincode" />
 
 
                 </FrameLayout>
@@ -229,7 +248,12 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"
                     android:layout_marginBottom="6dp"
-                    android:text="Country"/>
+                    android:text="Country"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    />
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -243,7 +267,9 @@
                         android:background="@drawable/edittext_rounded"
                         android:layout_height="wrap_content"
                         android:hint="India"
+                        android:fontFamily="@font/roboto_regular"
                         android:textSize="13sp"
+                        android:layout_marginLeft="10dp"
                         android:maxLength="6"
                         android:layout_marginBottom="20dp"/>
 
@@ -254,7 +280,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="5dp"
                         android:alpha="0.3"
-                        android:src="@drawable/home" />
+                        android:src="@drawable/ic_flag" />
 
 
                 </FrameLayout>
@@ -264,10 +290,14 @@
                     android:id="@+id/current_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:textColor="@color/blue"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/green_theme"
                     android:layout_marginBottom="10dp"
-                    android:text="Use current location"/>
+                    android:text="Use current location"
+                    android:checked="false"
+                    android:buttonTint="@color/green_theme"/>
 
                 <Button
                     android:id="@+id/add_address"
@@ -276,7 +306,8 @@
                     android:background="@drawable/rounded_buttons"
                     android:textColor="@color/white"
                     android:textAllCaps="false"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
                     android:layout_marginBottom="20dp"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:text="Add new Address"/>
@@ -287,7 +318,8 @@
                     android:background="@drawable/rounded_buttons"
                     android:textColor="@color/white"
                     android:textAllCaps="false"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
                     android:layout_marginBottom="20dp"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:text="Update Address"
@@ -297,7 +329,6 @@
             </LinearLayout>
 
 
-        </androidx.cardview.widget.CardView>
     </ScrollView>
 
     <ProgressBar

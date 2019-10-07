@@ -9,7 +9,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -28,8 +28,9 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Geneology"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
         <Button
             android:id="@+id/refresh_btn"
             android:layout_width="25dp"

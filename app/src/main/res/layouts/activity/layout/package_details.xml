@@ -11,7 +11,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -29,8 +29,9 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Package Summary"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp"  />
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView
@@ -38,9 +39,9 @@
         android:layout_height="wrap_content"
         app:cardElevation="4dp"
         app:cardCornerRadius="4dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp">
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <LinearLayout
             android:layout_below="@id/header"
@@ -49,28 +50,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="6dp">
+            android:padding="6dp"
+            android:layout_margin="10dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:textColor="@color/bue_A800"
+                android:textSize="18sp"
+                android:fontFamily="@font/roboto_bold"
                 android:text="Summary"
                 />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_marginTop="10dp"/>
             <LinearLayout
-                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:text="Package Name"/>
+                    android:text="Package Name:"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/txtPckgName"
@@ -78,14 +89,18 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textAlignment="viewEnd"
-                    android:text=""
-                    android:textSize="22sp"
-                    android:textColor="#dd5406"
-                    android:fontFamily="sans-serif-black"/>
+                    android:text="Package Name"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/blue"
+                    android:singleLine="true"
+                    android:layout_marginRight="10dp"
+                  />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -94,7 +109,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:text="Package Amount"/>
+                    android:text="Package Amount:"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/txtPckgAmount"
@@ -103,13 +121,17 @@
                     android:layout_weight="1"
                     android:textAlignment="viewEnd"
                     android:text=""
-                    android:textSize="22sp"
                     android:textColor="@color/blue"
-                    android:fontFamily="sans-serif-black"/>
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:singleLine="true"
+                    android:layout_marginRight="10dp"
+                    />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -118,7 +140,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:text="Bonus Amount"/>
+                    android:text="Bonus Amount:"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/txtPckgBonusAmnt"
@@ -127,13 +152,16 @@
                     android:layout_weight="1"
                     android:textAlignment="viewEnd"
                     android:text=""
-                    android:textSize="22sp"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/blue"
-                    android:fontFamily="sans-serif-black"/>
+                    android:singleLine="true"
+                    android:layout_marginRight="10dp"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -142,7 +170,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:text="Balance Amount "/>
+                    android:text="Balance Amount:"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/txtPckgAmountBalance"
@@ -151,13 +182,17 @@
                     android:layout_weight="1"
                     android:textAlignment="viewEnd"
                     android:text=""
-                    android:textSize="22sp"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/blue"
-                    android:fontFamily="sans-serif-black"/>
+                    android:singleLine="true"
+                    android:layout_marginRight="10dp"
+              />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -166,18 +201,23 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:text="Bonus Credited"/>
+                    android:text="Bonus Credited:"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/txtPckgAmountCredit"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto_regular"
+                    android:singleLine="true"
+                    android:text="Bonus Credited"
                     android:textAlignment="viewEnd"
-                    android:text=""
-                    android:textSize="22sp"
                     android:textColor="@color/blue"
-                    android:fontFamily="sans-serif-black"/>
+                    android:textSize="15sp" />
             </LinearLayout>
 
         </LinearLayout>
