@@ -28,17 +28,13 @@ import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.LoginActivity;
+import com.safepayu.wallet.activity.PaidOrderActivity;
 import com.safepayu.wallet.activity.PaymentType;
-import com.safepayu.wallet.activity.SendMoney;
 import com.safepayu.wallet.adapter.OfferAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.listener.RecyclerTouchListener;
-import com.safepayu.wallet.models.request.RechargeRequest;
-import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.CustOperatorResponse;
-import com.safepayu.wallet.models.response.MobileOffersResponseModel;
 import com.safepayu.wallet.models.response.Offer;
 import com.safepayu.wallet.models.response.OperatorResponse;
 
@@ -56,9 +52,6 @@ import java.util.ArrayList;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOfferSelectListener{
 
@@ -139,6 +132,10 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         RechargeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               /* startActivity(new Intent(getApplicationContext(), PaymentType.class));
+                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                finish();*/
+                startActivity(new Intent(getApplicationContext(), PaidOrderActivity.class));
                 CheckValidate();
             }
         });

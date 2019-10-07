@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="5dp"
-    android:layout_margin="5dp"
     android:id="@+id/packageItem"
+    android:layout_margin="10dp"
     app:cardElevation="2dp">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_height="match_parent"
+        android:background="#f5f7fc">
 
         <com.safepayu.wallet.custom_view.CustomTextView
             android:layout_width="match_parent"
@@ -22,9 +22,10 @@
             android:layout_height="wrap_content"
             style="@style/TextAppearance.AppCompat.Medium"
             app:fontCustom="@string/Roboto"
-            android:textSize="16sp"
+            android:layout_marginTop="5dp"
             android:textStyle="bold"
-            android:text="package Name" />
+            android:text="package Name"
+            android:textSize="14sp" />
 
         <com.safepayu.wallet.custom_view.CustomTextView
             android:layout_width="match_parent"
@@ -32,10 +33,13 @@
             android:gravity="center"
             android:id="@+id/tv.packageAmount"
             android:padding="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="package Name"
             style="@style/TextAppearance.AppCompat.Small"
             app:fontCustom="@string/Roboto"
             android:textStyle="normal"
-            android:text="package Name" />
+            android:textColor="@color/green_theme"
+            android:textSize="14sp" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

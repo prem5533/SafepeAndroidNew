@@ -7,11 +7,17 @@
     android:id="@+id/withMoneyLayout"
     android:background="@color/white">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/splas_gradient"></LinearLayout>
+
     <RelativeLayout
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -30,11 +36,13 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Send Money"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
-    <ScrollView
+
+    <androidx.core.widget.NestedScrollView
         android:layout_below="@id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -92,70 +100,178 @@
                 android:orientation="vertical">
 
 
-
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="#F9f9f9">
+                    android:id="@+id/withdrawAmountlayout"
+                    android:orientation="vertical"
+                    android:layout_marginTop="15dp">
+
+                    <Button
+                        android:id="@+id/btnWithdraw"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/rounded_buttons"
+                        android:text="Withdraw Money"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:hint="Amount reflect in your account"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:paddingLeft="5dp"
+                            android:gravity="left" />
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:id="@+id/calculatedamount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:text="Enter amount"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/green_theme"
+                            android:textSize="12sp"
+                            android:paddingLeft="0dp"
+                            android:gravity="right" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:padding="0dp">
+
+                        <EditText
+                            android:id="@+id/withdrawAmount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="0dp"
+                            android:background="@drawable/white_button_grayborder"
+                            android:hint="Enter Amount"
+                            android:textColor="@color/black"
+                            android:maxLength="4"
+                            android:inputType="number"
+                            android:fontFamily="@font/roboto_regular"
+                            android:paddingLeft="15sp"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="null"
+                            android:visibility="gone"
+                            android:id="@+id/beneficiaryId" />
+                    </RelativeLayout>
+
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Daily withdrawal limit"
-                        android:textSize="15sp" />
+                        android:textColor="@color/red"
+                        android:layout_gravity="center"
+                        android:text="Transaction fee: 3.56% or Minimum ₹ 10 "
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="20dp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="20dp"
-                        android:gravity="end"
-                        android:text="₹ 8000"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="#F9f9f9"
-                    android:paddingBottom="3dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="0dp"
-                        android:text="Minimum withdrawal amount"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginEnd="20dp"
-                        android:gravity="end"
-                        android:text="₹ 100"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:textSize="18sp"
                     android:layout_marginLeft="20dp"
-                    android:textColor="@color/colorPrimaryLight"
-                    android:layout_height="wrap_content"
-                    android:text="Select Beneficiary"
-                    android:layout_gravity="left"/>
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp">
+
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:id="@+id/upimBenAddlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#FAFAFA"
+                        android:orientation="horizontal"
+                        android:padding="0dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:src="@drawable/upi_logo"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerInParent="true" />
+
+                        <Button
+                            android:id="@+id/upiBenAddBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textSize="10dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_centerVertical="true"
+                            android:background="#00ffffff"
+
+                            android:textColor="@color/white"></Button>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:visibility="visible"
+                        android:id="@+id/BankBenAddlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="0dp"
+                        android:background="@drawable/deactive_rounded_buttons"
+                        android:orientation="horizontal"
+                        android:padding="0dp"
+                        android:layout_weight="1"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/banktansfer" />
+
+                        <Button
+                            android:id="@+id/BankBenAddBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="10dp"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:background="#00ffffff"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+
+                </LinearLayout>
 
 
                 <RadioGroup
@@ -180,6 +296,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:buttonTint="@color/green_theme"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
                         android:text="BANK ACCOUNT"/>
                 </RadioGroup>
 
@@ -220,7 +340,7 @@
                 <Spinner
                     android:id="@+id/bankBenSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="0dp"
@@ -615,197 +735,112 @@
                 </androidx.cardview.widget.CardView>
 
 
-
-                <LinearLayout
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/withdrawAmountlayout"
-                    android:orientation="vertical"
-                    android:layout_marginTop="30dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:padding="0dp">
-
-                        <EditText
-                            android:id="@+id/withdrawAmount"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="0dp"
-                            android:background="@drawable/login_input_bg"
-                            android:hint="Enter Amount"
-                            android:textColor="@color/black"
-                            android:maxLength="4"
-                            android:inputType="number"
-                            android:paddingLeft="15dp"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="null"
-                            android:visibility="gone"
-                            android:id="@+id/beneficiaryId"/>
-                    </RelativeLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:hint="Amount reflect in your account"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            android:paddingLeft="5dp"
-                            android:gravity="left"/>
-
-                        <TextView
-                            android:layout_weight="1"
-                            android:id="@+id/calculatedamount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:text="Enter amount"
-                            android:textColor="@color/blue"
-                            android:paddingLeft="0dp"
-                            android:gravity="right"/>
-
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/btnWithdraw"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_gravity="bottom"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="20dp"
-                        android:background="@drawable/rounded_buttons"
-                        android:text="Withdraw Money"
-                        android:textAllCaps="false"
-                        android:textColor="@android:color/white"
-                        android:layout_marginBottom="30dp"
-                        android:textSize="18sp" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/red"
-                        android:layout_gravity="center"
-                        android:text="Transaction fee: 3.56% or Minimum ₹ 10 "
-                        android:layout_marginBottom="20dp"/>
-
-                </LinearLayout>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:paddingTop="10dp"
                     android:paddingBottom="4dp"
                     android:textSize="16sp"
+                    android:fontFamily="@font/roboto_bold"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:textColor="@color/colorPrimaryLight"
+                    android:textColor="@color/bue_A800"
                     android:layout_height="wrap_content"
                     android:text="Add New Bank Account"
-                    android:layout_gravity="left"/>
+                    android:layout_gravity="left" />
 
-                <LinearLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:paddingTop="10dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/bue_A800"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content"
+                    android:text="Select Beneficiary"
+                    android:layout_gravity="left" />
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp">
-                    <RelativeLayout
-                        android:visibility="gone"
-                        android:id="@+id/upimBenAddlayout"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="10dp">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#FAFAFA"
-                        android:orientation="horizontal"
-                        android:padding="0dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:weightSum="10">
+                        android:layout_height="wrap_content"
+                        android:background="#f7f6f8"
+                        android:orientation="vertical"
+                        android:padding="5dp">
 
-                        <ImageView
-                            android:src="@drawable/upi_logo"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_centerInParent="true"/>
-
-                        <Button
-                            android:id="@+id/upiBenAddBtn"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textSize="10dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="end"
-                            android:layout_centerVertical="true"
-                            android:background="#00ffffff"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="#F9f9f9"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp">
 
-                            android:textColor="@color/white" >
-                        </Button>
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:visibility="visible"
-                        android:id="@+id/BankBenAddlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="0dp"
-                        android:background="@drawable/deactive_rounded_buttons"
-                        android:orientation="horizontal"
-                        android:padding="0dp"
-                        android:layout_weight="1"
-                        android:weightSum="10">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Daily withdrawal limit"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
 
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_weight="1"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/banktansfer" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="20dp"
+                                android:gravity="end"
+                                android:text="₹ 8000"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/grey_500"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
-                        <Button
-                            android:id="@+id/BankBenAddBtn"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textSize="10dp"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="end"
-                            android:background="#00ffffff"
-                            android:textColor="@color/white" />
-                    </RelativeLayout>
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp">
 
-                </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Minimum withdrawal amount"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="20dp"
+                                android:gravity="end"
+                                android:text="₹ 100"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/red"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@color/divider" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="20dp"
-        android:layout_above="@id/darkline"
-        android:id="@+id/lightline"
-        android:background="@color/lightLine"/>
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="7dp"
-        android:background="@color/darkLine"/>
 </RelativeLayout>

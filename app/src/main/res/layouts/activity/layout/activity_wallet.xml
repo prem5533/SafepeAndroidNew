@@ -2,37 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:id="@+id/walletLayout"
     android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:id="@+id/headerbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
-        android:paddingBottom="5dp">
-
-        <Button
-            android:id="@+id/wallet_back_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
-
-        <TextView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:text="SafePe Wallet"
-            android:textColor="#fff"
-            android:textSize="20dp" />
-    </RelativeLayout>
-
 
     <LinearLayout
         android:layout_below="@id/headerbar"
@@ -52,15 +25,12 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:padding="10dp"
-                    android:textColor="@color/colorPrimaryLight"
-                    android:text="Available amount in wallet"
-                    android:textSize="18sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/splas_gradient"></LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_walletAmount"
@@ -72,74 +42,56 @@
                     android:textSize="38sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_addMoneyToSafepe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Add money to Safepe Wallet"
-                    android:textColor="@color/colorPrimaryDark"
-                    style="@style/TextAppearance.AppCompat.Small" />
-
-                <View
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/grey" />
-
-                <TextView
-                    android:id="@+id/send_txt"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Send Money to Bank"
-                    android:textColor="@color/colorPrimaryDark"
-                    style="@style/TextAppearance.AppCompat.Small" />
+                    android:background="@color/grey_100"
+                    android:padding="15dp">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="7dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@color/lightLine"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="7dp"
-                    android:background="@color/darkLine"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Recent Transactions"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Recent Transactions"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:padding="4dp">
 
-                    <LinearLayout
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/divider" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:cardElevation="2dp">
+
+                        <LinearLayout
                         android:id="@+id/wallet_history"
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:layout_margin="5dp"
+                            android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="">
+                            android:background="@drawable/card_bg"
+                            android:padding="5dp">
 
                         <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="70dp"
+                            android:layout_width="80dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:foregroundGravity="left"
                             android:layout_marginTop="0dp"
-                            android:src="@drawable/money_icon" />
+                            android:padding="5dp"
+                            android:src="@drawable/ic_wallet_history" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -151,9 +103,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="0dp"
-                                android:textColor="@color/cardview_dark_background"
+                                android:fontFamily="@font/roboto_regular"
                                 style="@style/TextAppearance.AppCompat.Medium"
                                 android:layout_weight="0.8"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
                                 android:text="Wallet History" />
 
                             <ImageView
@@ -167,28 +121,29 @@
                         </LinearLayout>
 
                     </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginLeft="30dp"
-                        android:background="@color/grey"/>
+                    </androidx.cardview.widget.CardView>
 
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:cardElevation="2dp">
                     <LinearLayout
                         android:id="@+id/recharge_history"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
-                        android:layout_margin="5dp"
-                        android:layout_marginTop="20dp"
-                        android:orientation="horizontal">
+                        android:background="@drawable/card_bg"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
 
                         <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="70dp"
+                            android:layout_width="80dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:foregroundGravity="left"
                             android:layout_marginTop="0dp"
-                            android:src="@drawable/rechargehistory" />
+                            android:padding="5dp"
+                            android:src="@drawable/ic_mobile" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -201,7 +156,8 @@
                                 android:layout_marginTop="0dp"
                                 android:textColor="@color/cardview_dark_background"
                                 style="@style/TextAppearance.AppCompat.Medium"
-
+                                android:fontFamily="@font/roboto_regular"
+                                android:textSize="14sp"
                                 android:layout_weight="0.8"
                                 android:text="Recharge History" />
 
@@ -216,12 +172,61 @@
                         </LinearLayout>
 
                     </LinearLayout>
+                    </androidx.cardview.widget.CardView>
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:padding="10dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Available amount in wallet"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_addMoneyToSafepe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Add money to Safepe Wallet"
+                    android:textColor="@color/bue_A800"
+                    android:textSize="15sp"
+                    style="@style/TextAppearance.AppCompat.Small" />
+
+                <TextView
+                    android:id="@+id/send_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Send Money to Bank"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    style="@style/TextAppearance.AppCompat.Small" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/divider" />
 
             </LinearLayout>
 
         </ScrollView>
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/splas_gradient"></LinearLayout>
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -231,19 +236,33 @@
         android:visibility="gone"/>
 
 
-    <View
+    <RelativeLayout
+        android:id="@+id/headerbar"
         android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="20dp"
-        android:layout_above="@id/darkline"
-        android:id="@+id/lightline"
-        android:background="@color/lightLine"/>
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="7dp"
-        android:background="@color/darkLine"/>
+        android:layout_height="?actionBarSize"
+        android:background="@color/blue_theme"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/wallet_back_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_arrow_back_white_24dp" />
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text="SafePe Wallet"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </RelativeLayout>
 
 
 </RelativeLayout>

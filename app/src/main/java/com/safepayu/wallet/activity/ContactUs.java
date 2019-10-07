@@ -12,7 +12,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +34,7 @@ public class ContactUs extends BaseActivity {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, false);
 
-        ImageView clear_btn=(ImageView)findViewById(R.id.clear_btn_contactUs);
+        Button clear_btn = (Button) findViewById(R.id.recharge_back_btn);
         editEmail=(EditText)findViewById(R.id.contactus_email);
         visit_website=(TextView) findViewById(R.id.visit_website);
         editSubject=(EditText)findViewById(R.id.contactus_subject);

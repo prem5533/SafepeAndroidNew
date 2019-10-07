@@ -8,7 +8,7 @@
     <color name="lightLine">#42aad8</color>
     <color name="darkLine">#0f5865</color>
     <color name="grey">#c1c4c6</color>
-    <color name="red">#DC143C</color>
+    <color name="red">#fb1311</color>
     <color name="bluedark">#375796</color>
     <color name="lightBlue">#81D4FA</color>
     <color name="blue">#039BE5</color>
@@ -138,4 +138,7 @@
     <color name="blue_grey_700">#455A64</color>
     <color name="blue_grey_800">#37474F</color>
     <color name="blue_grey_900">#263238</color>
+
+    <color name="blue_theme">#03017e</color>
+    <color name="green_theme">#3db7c2</color>
 </resources>

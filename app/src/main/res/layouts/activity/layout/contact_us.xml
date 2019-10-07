@@ -1,57 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/splas_gradient"></LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/blue_theme"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/recharge_back_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_arrow_back_white_24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="Contact Us"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </RelativeLayout>
 
     <ScrollView
+        android:layout_below="@id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-        <LinearLayout
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical"
-            >
-            <com.google.android.material.appbar.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/white"
-                android:id="@+id/view2">
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@null"
-                    >
-                    <ImageView
-                        android:id="@+id/clear_btn_contactUs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
-                        android:background="@drawable/ic_clear_black_24dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:text="    Back To Home"
-                        />
-                </androidx.appcompat.widget.Toolbar>
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Contact Us"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="30dp"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/colorPrimary" />
-
+                android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -125,30 +133,56 @@
                 android:layout_marginBottom="5dp"
                 android:textColor="#000"
                 />
-            <TextView
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Safepe Payments "
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:textIsSelectable="true"
-                android:textSize="18dp"
-                android:layout_marginTop="30dp"
-                android:textColor="#000"
-                />
-            <TextView
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Copyright © 2019 Safepe Payments"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="All Rights Reserved"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:textIsSelectable="true"
+                        android:paddingLeft="20dp"
+                        android:gravity="center"
+                        android:background="@null"
+                        android:paddingRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+                <TextView
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Address :- "
                 android:layout_gravity="center"
-                android:textSize="14dp"
-                android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"
                 android:layout_marginBottom="10dp"
-                android:textColor="#000"
+                    android:textSize="14sp"
                 />
             <TextView
                 android:id="@+id/sendmail"
@@ -159,12 +193,11 @@
                 android:text="Email ID: support@safepayu.com"
                 android:layout_gravity="center"
                 android:textIsSelectable="true"
-                android:textSize="16dp"
+                android:fontFamily="@font/roboto_regular"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:textColor="#000"
+                android:textColor="@color/blue_theme"
+                android:textSize="15sp"
                 />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -172,31 +205,51 @@
                 android:layout_gravity="center"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:textSize="12dp"
-                android:layout_marginTop="25dp"
-                android:textColor="#000"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/green_theme"
+                android:textSize="12sp"
                 />
-
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:text="Whatsapp and Call"
-                android:textSize="12dp"
-                android:textColor="#333"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
                 android:layout_gravity="center"
-                android:textIsSelectable="true"/>
+                android:textSize="14sp" />
 
-            <TextView
+
+                <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="+91 8376097766, +91 9867967827"
-                android:textSize="16dp"
-                android:textColor="#29B6F6"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_regular"
                 android:layout_gravity="center"
                 android:textStyle="bold"
-                android:textIsSelectable="true"/>
+                    android:textColor="@color/green_theme"
+                    android:textIsSelectable="true"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/visit_website"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Visit Our Website"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@color/blue_theme"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="16sp" />
             <LinearLayout
                 android:visibility="gone"
                 android:layout_width="match_parent"
@@ -255,69 +308,25 @@
                     />
             </LinearLayout>
             <TextView
-                android:id="@+id/visit_website"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Visit Our Website"
-                android:layout_gravity="center"
-                android:textSize="16dp"
-                android:gravity="center"
+                android:text="Safepe Payments "
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:textColor="#0f15d1"
-                />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="30dp"
-                android:orientation="vertical"
-                >
-                <TextView
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Copyright © 2019 Safepe Payments"
-                    android:layout_gravity="center"
-                    android:textSize="12dp"
-                    android:gravity="center"
-                    android:textColor="#000"
-                    />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="All Rights Reserved"
-                    android:textSize="12dp"
-                    android:textColor="#000"
-                    android:textIsSelectable="true"
-                    android:paddingLeft="20dp"
-                    android:gravity="center"
-                    android:background="@null"
-                    android:paddingRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+                android:textIsSelectable="true"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center"
+                android:textColor="@color/bue_A800"
+                android:textSize="18sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="20dp"
-        android:layout_above="@id/darkline"
-        android:id="@+id/lightline"
-        android:background="@color/lightLine"/>
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="7dp"
-        android:background="@color/darkLine"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/divider" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </ScrollView>
 
 </RelativeLayout>

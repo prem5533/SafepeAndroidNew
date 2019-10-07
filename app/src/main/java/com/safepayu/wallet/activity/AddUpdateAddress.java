@@ -1,26 +1,7 @@
 package com.safepayu.wallet.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
-
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Criteria;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,34 +9,33 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
+import androidx.annotation.Nullable;
+
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.models.request.Register;
 import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
-import com.safepayu.wallet.models.response.UserResponse;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class AddUpdateAddress extends BaseActivity implements View.OnClickListener {
 
     private EditText etLocation, etCity, etState, etPincode, etCountry;
-    private String Location, City, State, Country, Pincode;
+    public int STATIC_INTEGER_VALUE = 1;
     private Button add_address, update_address;
     private LoadingDialog loadingDialog;
     private CheckBox current_location;
+    boolean b = false;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-
+    private String Location, City, State, Country, Pincode, mapSelectLocality, mapSelectCity, mapSelectState, mapSelectPincode, mapSelectCountry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +56,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         current_location = findViewById(R.id.current_location);
         add_address.setOnClickListener(this);
         update_address.setOnClickListener(this);
-
+        current_location.setChecked(false);
 
         //*******************get data *****************
         Location = getIntent().getStringExtra("location");
@@ -86,13 +66,15 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         Pincode = getIntent().getStringExtra("pincode");
 
         //***************set text*********************
+
         etLocation.setText(Location);
         etCity.setText(City);
         etState.setText(State);
         etCountry.setText(Country);
         etPincode.setText(Pincode);
 
-        if (Location != null && City != null && State != null && Country != null && etPincode != null) {
+
+        if (Location != null && City != null && State != null && Country != null && Pincode != null) {
             update_address.setVisibility(View.VISIBLE);
             add_address.setVisibility(View.GONE);
         }
@@ -101,14 +83,39 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
-                Intent intent = new Intent( AddUpdateAddress.this, MapActivity.class);
-                startActivity(intent);
+                if (isChecked) {
+                    Intent intent = new Intent(AddUpdateAddress.this, MapActivity.class);
+                    startActivityForResult(intent, STATIC_INTEGER_VALUE);
+                }
+
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (1):
+                if (resultCode == Activity.RESULT_OK) {
+                    //  String newText = data.getStringExtra(PUBLIC_STATIC_STRING_IDENTIFIER);
+                    mapSelectLocality = data.getStringExtra("select_locality");
+                    mapSelectCity = data.getStringExtra("select_city");
+                    mapSelectState = data.getStringExtra("select_state");
+                    mapSelectPincode = data.getStringExtra("select_pincode");
+                    mapSelectCountry = data.getStringExtra("select_country");
 
+                    etLocation.setText(mapSelectLocality);
+                    etCity.setText(mapSelectCity);
+                    etState.setText(mapSelectState);
+                    etCountry.setText(mapSelectCountry);
+                    etPincode.setText(mapSelectPincode);
+                    // TODO Update your TextView.
+                }
+                break;
 
+        }
+    }
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_add_update_address2;
@@ -182,6 +189,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
                     public void onSuccess(UpdateAddressResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()){
+                            Toast.makeText(AddUpdateAddress.this, "Address Updated Successfully", Toast.LENGTH_SHORT).show();
                             finish();
 
                         }else {
@@ -199,4 +207,4 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
     }
 
 
-   }
+}

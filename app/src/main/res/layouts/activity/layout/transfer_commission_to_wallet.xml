@@ -5,11 +5,103 @@
     android:id="@+id/commisionToWallet"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/layout.withdraw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Amount Reflect In Your Main Wallet"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/green_theme"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/text_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:text=""
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/sendToWalletBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/rounded_buttons"
+                android:clickable="true"
+                android:gravity="center"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:text="withdraw"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="15sp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/withdrawAmount_commWallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Enter Amount"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:singleLine="true"
+                android:paddingLeft="15dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/splas_gradient"></LinearLayout>
+
+
     <RelativeLayout
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -28,104 +120,10 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="Transfer Commission"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
     </RelativeLayout>
-
-
-    <TextView
-        android:id="@+id/txt_dia"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_gravity="center"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="Withdraw in main wallet"
-        android:textColor="@color/white"
-        android:textSize="18dp"
-        android:visibility="visible"
-        android:textStyle="bold" />
-
-
-
-    <LinearLayout
-        android:id="@+id/layout.withdraw"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical"
-        android:visibility="visible">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/withdrawAmount_commWallet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:hint="Enter Amount"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:singleLine="true"
-                android:paddingLeft="15dp"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Amount Reflect In Your Main Wallet"
-                android:textColor="@color/blue"
-                android:textSize="15dp" />
-            <TextView
-                android:id="@+id/text_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:gravity="center"
-                android:layout_marginTop="5dp"
-                android:text=""
-                android:textColor="@color/colorPrimary"
-                android:textSize="16dp" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/sendToWalletBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:background="@drawable/rounded_buttons"
-                android:clickable="true"
-                android:gravity="center"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
-                android:text="withdraw"
-                android:textColor="@color/white" />
-
-        </LinearLayout>
-    </LinearLayout>
     <LinearLayout
         android:id="@+id/layout.messageView"
         android:layout_width="match_parent"
@@ -221,17 +219,17 @@
         android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/sp" />
-    <View
+
+    <TextView
+        android:id="@+id/txt_dia"
         android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="20dp"
-        android:layout_above="@id/darkline"
-        android:id="@+id/lightline"
-        android:background="@color/lightLine"/>
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="7dp"
-        android:background="@color/darkLine"/>
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center"
+        android:background="@color/green_theme"
+        android:gravity="center"
+        android:text="Withdraw in main wallet"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:visibility="visible"
+        android:textStyle="bold" />
 </LinearLayout>

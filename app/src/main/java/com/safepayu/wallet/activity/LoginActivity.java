@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -226,12 +227,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                                     BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false, getResources().getString(R.string.verify), ButtonActions.VERIFY_MOBILE, LoginActivity.this);
                                     break;
                                 case 3:
-//                                    BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false, getResources().getString(R.string.verify), ButtonActions.VERIFY_MOBILE, LoginActivity.this);
+                                    Toast.makeText(LoginActivity.this, "Please First Set Passcode", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(LoginActivity.this, CreatePassCodeActivity.class));
                                     break;
                                 case 4:
-                                    startActivity(new Intent(LoginActivity.this,Navigation.class));
-                                    finish();
+                                    Toast.makeText(LoginActivity.this, "Please First Set Address", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(LoginActivity.this, AddUpdateAddress.class));
                                     break;
                             }
                         }
