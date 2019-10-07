@@ -7,8 +7,8 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.safepayu.wallet.BaseActivity;
@@ -17,9 +17,6 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
-import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
-import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,6 +28,7 @@ public class WalletActivity extends BaseActivity {
     private TextView AddMoneyToWallet,SendMoney,AmountTV;
     private Button BackBtn;
     private LoadingDialog loadingDialog;
+    private LinearLayout WalletHistoryLayout, RechargeHistoryLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +41,8 @@ public class WalletActivity extends BaseActivity {
         SendMoney=findViewById(R.id.send_txt);
         BackBtn=findViewById(R.id.wallet_back_btn);
         AmountTV=findViewById(R.id.tv_walletAmount);
+        WalletHistoryLayout = findViewById(R.id.wallet_history);
+        RechargeHistoryLayout = findViewById(R.id.recharge_history);
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +68,26 @@ public class WalletActivity extends BaseActivity {
                 finish();
             }
         });
+
+        WalletHistoryLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(WalletActivity.this, WalletHistory.class);
+                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                startActivity(intent);
+            }
+        });
+
+        RechargeHistoryLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(WalletActivity.this, RechargeHistory.class);
+                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override

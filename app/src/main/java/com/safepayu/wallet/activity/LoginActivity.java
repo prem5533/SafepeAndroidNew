@@ -234,6 +234,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                                     Toast.makeText(LoginActivity.this, "Please First Set Address", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(LoginActivity.this, AddUpdateAddress.class));
                                     break;
+                                case 5:
+                                    sendVerifyLink();
+                                    break;
                             }
                         }
                     }
@@ -348,6 +351,34 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
                             loginUser();
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(), false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
+                    }
+                }));
+    }
+
+    private void sendVerifyLink() {
+
+        String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        BaseApp.getInstance().getDisposable().add(apiService.verifyEmail(UserId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.getStatus()) {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage() + "\n" + "Please Verify From Your Email Account", false);
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(), false);
                         }

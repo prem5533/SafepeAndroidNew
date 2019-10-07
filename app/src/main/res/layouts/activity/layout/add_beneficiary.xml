@@ -29,8 +29,8 @@
             android:layout_marginStart="2dp"
             android:layout_marginLeft="5dp"
             android:gravity="center"
-            android:fontFamily="@font/roboto_bold"
             android:text="Add Bank Account"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
             android:textSize="18sp" />
 
@@ -58,41 +58,25 @@
 
                 <Button
                     android:id="@+id/bankAddBtn"
-                    android:layout_marginTop="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/rounded_buttons"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textAllCaps="false"
+                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="40dp"
-                    android:text="Add Beneficiary" />
+                    android:background="@drawable/rounded_buttons"
+                    android:text="Add Beneficiary"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/accountNumber"
-                    android:layout_marginTop="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:singleLine="true"
-                    android:imeOptions="actionNext"
-                    android:padding="16dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="20dp"
-                    android:hint="Enter Account Number" />
-
-                <EditText
-                    android:id="@+id/confirmAccountNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/edittext_rounded"
                     android:fontFamily="@font/roboto_regular"
-                    android:hint="Confirm Account Number"
+                    android:hint="Enter Account Number"
                     android:inputType="number"
                     android:padding="16dp"
                     android:textColor="@color/black"
@@ -105,14 +89,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:inputType="text"
-                    android:singleLine="true"
-                    android:imeOptions="actionNext"
-                    android:background="@drawable/edittext_rounded"
-                    android:fontFamily="@font/roboto_regular"
                     android:maxLength="40"
                     android:padding="16dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:background="@drawable/edittext_rounded"
+                    android:fontFamily="@font/roboto_regular"
                     android:hint="Enter Name"/>
 
                 <RelativeLayout
@@ -122,31 +104,29 @@
 
                     <EditText
                         android:id="@+id/ifscCode"
-                        android:layout_marginTop="4dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:singleLine="true"
-                        android:imeOptions="actionDone"
-                        android:padding="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="0dp"
                         android:background="@drawable/edittext_rounded"
                         android:fontFamily="@font/roboto_regular"
+                        android:hint="Bank IFSC"
+                        android:inputType="text"
+                        android:padding="16dp"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="0dp"
-                        android:hint="Bank IFSC" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="20dp"
-                        android:textColor="@color/green_theme"
-                        android:textSize="16sp"
                         android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:gravity="end"
                         android:onClick="verifyIfscCode"
                         android:text="Verify"
+                        android:textColor="@color/green_theme"
+                        android:textSize="16sp"
                         android:visibility="gone" />
 
                 </RelativeLayout>
@@ -155,7 +135,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@drawable/blue_border"
+                    android:background="@drawable/edittext_rounded"
                     android:layout_marginBottom="20dp">
 
                     <EditText
@@ -192,14 +172,13 @@
                         android:visibility="gone" />
                 </RelativeLayout>
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
                     android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:text="Account Number" />
+                    android:text="Account Number"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -214,8 +193,8 @@
                     android:layout_height="wrap_content"
                     android:text="Account Holder Name"
                     android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/ifscres"
@@ -231,10 +210,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Confirm Account Number"
                     android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="Confirm Account Number"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13sp" />
             </LinearLayout>
 
         </LinearLayout>

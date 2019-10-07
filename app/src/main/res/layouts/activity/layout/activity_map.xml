@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MapActivity">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,12 +23,11 @@
                     android:id="@+id/li_select_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginBottom="30dp"
                     android:background="@color/green_theme"
                     android:gravity="center|end"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="30dp"
                     android:orientation="horizontal">
-
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
@@ -39,12 +37,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="SELECT"
+                        android:textColor="@color/white"
                         android:layout_marginRight="10dp"
                         android:fontFamily="@font/roboto_regular"
                         android:gravity="center"
                         android:padding="10dp"
-                        android:text="SELECT"
-                        android:textColor="@color/white"
                         android:textSize="15sp"></TextView>
 
                 </LinearLayout>
@@ -64,7 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@drawable/button_background_gradient_diagonal">
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

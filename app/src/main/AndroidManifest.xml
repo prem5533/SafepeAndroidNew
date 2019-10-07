@@ -49,6 +49,8 @@
         <activity android:name=".activity.MemberBankAddPackages"/>
         <activity android:name=".activity.SendMoneyToWallet"/>
         <activity android:name=".activity.ForgetPassword"/>
+        <activity android:name=".activity.WalletHistory" />
+        <activity android:name=".activity.RechargeHistory" />
         <activity android:name=".activity.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

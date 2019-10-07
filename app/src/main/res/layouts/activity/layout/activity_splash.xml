@@ -6,11 +6,11 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".activity.Splash">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:background="@drawable/button_background_gradient_diagonal"></LinearLayout>
+        android:background="@drawable/button_background_gradient_diagonal"
+        android:visibility="gone"></LinearLayout>
 
     <ImageView
         android:layout_width="200dp"
@@ -100,13 +100,13 @@
 
     <TextView
         android:layout_width="match_parent"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
         android:gravity="center"
         android:paddingLeft="100dp"
         android:text="@string/splash_tag"
-        android:fontFamily="@font/roboto_bold"
         android:textColor="@color/bue_A800"
-        style="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold" />
 
 </LinearLayout>

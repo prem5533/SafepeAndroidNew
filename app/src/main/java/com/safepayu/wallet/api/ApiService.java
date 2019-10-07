@@ -23,11 +23,13 @@ import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.OperatorResponse;
 import com.safepayu.wallet.models.response.PackageDetailsResponse;
 import com.safepayu.wallet.models.response.PackageListData;
+import com.safepayu.wallet.models.response.RechargeHistoryResponse;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
 import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
 import com.safepayu.wallet.models.response.UserResponse;
+import com.safepayu.wallet.models.response.WalletHistoryResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
 
 import io.reactivex.Single;
@@ -123,5 +125,11 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/safepe/sendVerifyEmailLink")
-    Single<BaseResponse> verifyEmail(@Field("email") String email);
+    Single<BaseResponse> verifyEmail(@Field("userid") String userid);
+
+    @GET("api/safepe/rechargeHistory")
+    Single<RechargeHistoryResponse> getRechargeHistory();
+
+    @GET("api/safepe/wallletHistory")
+    Single<WalletHistoryResponse> getWalletHistory();
 }

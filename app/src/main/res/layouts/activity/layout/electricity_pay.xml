@@ -7,12 +7,6 @@
     android:id="@+id/electricityBillLayout"
     android:background="@color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="14dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/splas_gradient"></LinearLayout>
-
     <RelativeLayout
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
@@ -41,6 +35,12 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/splas_gradient"></LinearLayout>
+
     <ScrollView
         android:layout_below="@id/headerbar"
         android:layout_width="match_parent"
@@ -60,15 +60,15 @@
                 android:layout_below="@+id/amount"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_buttons"
-                android:textAllCaps="false"
                 android:text="Pay Bill"
+                android:textAllCaps="false"
                 android:textColor="#fff"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular" />
 
             <EditText
                 android:id="@+id/city"
@@ -80,11 +80,11 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/white_button_grayborder"
+                android:fontFamily="@font/roboto_regular"
                 android:inputType="text"
                 android:nextFocusForward="@+id/operator"
-                android:padding="15dp"
                 android:textColor="#373836"
-                android:fontFamily="@font/roboto_regular"
+                android:padding="15dp"
                 android:textSize="15sp"
                 android:visibility="gone" />
             <TextView
@@ -120,7 +120,6 @@
                     android:nextFocusForward="@+id/city"></Spinner>
 
             </LinearLayout>
-
             <EditText
                 android:id="@+id/amountElectricity"
                 android:layout_width="match_parent"
@@ -149,12 +148,27 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/white_button_grayborder"
+                android:fontFamily="@font/roboto_regular"
                 android:inputType="number"
                 android:nextFocusForward="@+id/state"
-                android:fontFamily="@font/roboto_regular"
                 android:textColor="#373836"
-                android:padding="10dp"
+                android:textSize="15sp"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView6"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="0dp"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:text="Select Operator"
+                android:textColor="#373836"
                 android:textSize="15sp" />
+
 
             <LinearLayout
                 android:id="@+id/operatorlayout"
@@ -175,23 +189,6 @@
 
             </LinearLayout>
 
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_below="@+id/operator"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:text="City"
-                android:textColor="#373836"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="15sp"
-                android:visibility="gone" />
-
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
@@ -207,6 +204,22 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/operator"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:textColor="#373836"
+                android:text="City"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -215,25 +228,11 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginRight="20dp"
+                android:fontFamily="@font/roboto_regular"
                 android:gravity="center"
+
                 android:text="Customer id"
-
                 android:textColor="#373836"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="0dp"
-                android:gravity="center"
-                android:text="Select Operator"
-                android:textColor="#373836"
-                android:fontFamily="@font/roboto_regular"
                 android:textSize="15sp" />
 
 

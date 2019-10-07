@@ -93,5 +93,6 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.1'
     implementation 'com.google.android.gms:play-services:8.4.0'
     implementation 'com.malinskiy:superrecyclerview:1.1.4'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.1'
 
 }

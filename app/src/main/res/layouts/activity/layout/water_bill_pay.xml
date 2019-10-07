@@ -7,12 +7,6 @@
     android:id="@+id/waterBillLayout"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="14dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/splas_gradient"></LinearLayout>
-
     <RelativeLayout
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
@@ -40,6 +34,12 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/splas_gradient"></LinearLayout>
+
     <ScrollView
         android:layout_below="@id/headerbar"
         android:layout_width="match_parent"
@@ -51,7 +51,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="28dp">
-
             <Button
                 android:id="@+id/waterPaybtn"
                 android:layout_width="match_parent"
@@ -59,15 +58,15 @@
                 android:layout_below="@+id/amount"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginRight="0dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_buttons"
-                android:padding="0dp"
-                android:textAllCaps="false"
-                android:text="Pay Now"
-                android:textColor="#fff"
                 android:fontFamily="@font/roboto_regular"
+                android:padding="0dp"
+                android:text="Process Payment"
+                android:textAllCaps="false"
+                android:textColor="#fff"
                 android:textSize="15sp" />
 
             <EditText
@@ -79,12 +78,11 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="0dp"
                 android:background="@drawable/white_button_grayborder"
-                android:inputType="number"
                 android:fontFamily="@font/roboto_regular"
+                android:inputType="number"
                 android:textColor="#373836"
-                android:imeOptions="actionDone"
+
                 android:padding="10dp"
-                android:singleLine="true"
                 android:textSize="15sp" />
 
             <EditText
@@ -99,39 +97,10 @@
                 android:background="@drawable/white_button_grayborder"
                 android:inputType="number"
                 android:nextFocusForward="@+id/amount"
-                android:singleLine="true"
-                android:imeOptions="actionNext"
                 android:padding="10dp"
                 android:textColor="#373836"
+
                 android:textSize="15dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/white_button_grayborder"
-                android:orientation="vertical">
-
-                <Spinner
-                    android:id="@+id/operator"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/textView5"
-                    android:layout_marginTop="4dp"
-                    android:nextFocusForward="@+id/textView" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:text="Select Operator"
-                android:textColor="#373836"
-                android:textSize="15dp"
-                android:visibility="visible"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -142,11 +111,12 @@
                 <Spinner
                     android:id="@+id/operatorWater"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/textView5"
                     android:layout_marginTop="4dp"
                     android:nextFocusForward="@+id/textView"/>
             </LinearLayout>
+
 
             <TextView
                 android:id="@+id/textView3"
@@ -160,7 +130,6 @@
                 android:text="Amount"
                 android:textColor="#373836"
                 android:textSize="15dp" />
-
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
@@ -182,16 +151,14 @@
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginRight="20dp"
-                android:fontFamily="@font/roboto_regular"
                 android:gravity="center"
                 android:text="Select Operator"
                 android:textColor="#373836"
+                android:fontFamily="@font/roboto_regular"
                 android:textSize="15sp" />
 
 
         </LinearLayout>
-
-
     </ScrollView>
 
 

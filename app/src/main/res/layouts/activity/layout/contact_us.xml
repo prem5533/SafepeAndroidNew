@@ -5,7 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="14dp"
@@ -34,9 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="5dp"
-            android:fontFamily="@font/roboto_bold"
             android:gravity="center"
             android:text="Contact Us"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -50,89 +49,128 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             app:cardCornerRadius="4dp"
             app:cardElevation="4dp">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:layout_margin="15dp"
-                android:visibility="gone">
 
-
-                <EditText
-                    android:id="@+id/contactus_email"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:orientation="vertical"
                     android:padding="10dp"
-                    android:textSize="15dp"
-                    android:background="@drawable/login_input_bg"
-                    android:hint="Email"
-                    />
-                <EditText
-                    android:id="@+id/contactus_subject"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:padding="10dp"
-                    android:textSize="15dp"
-                    android:background="@drawable/login_input_bg"
-                    android:hint="Your Subject"
-                    />
-                <EditText
-                    android:id="@+id/contactus_message"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:padding="10dp"
-                    android:inputType="textMultiLine"
-                    android:textSize="15dp"
-                    android:background="@drawable/login_input_bg"
-                    android:hint="Message"
-                    />
-                <Button
-                    android:id="@+id/contactus_submit"
-                    android:layout_width="150dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Submit"
-                    android:layout_gravity="center|right"
-                    android:textColor="#fff"
-                    android:background="@drawable/rounded_buttons"
-                    />
-            </LinearLayout>
+                    android:visibility="gone">
 
 
-            <TextView
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="About Us"
-                android:layout_gravity="center"
-                android:textSize="16dp"
-                android:visibility="gone"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:textColor="#000"
-                />
+                    <Button
+                        android:id="@+id/contactus_submit"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center|right"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/rounded_buttons"
+                        android:text="Submit"
+                        android:textColor="#fff" />
+
+                    <EditText
+                        android:id="@+id/contactus_subject"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/login_input_bg"
+                        android:hint="Your Subject"
+                        android:padding="10dp"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/contactus_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/login_input_bg"
+                        android:hint="Message"
+                        android:inputType="textMultiLine"
+                        android:padding="10dp"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/contactus_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/login_input_bg"
+                        android:hint="Email"
+                        android:padding="10dp"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:visibility="gone">
+
+
+                    <Button
+                        android:id="@+id/call_button_usa"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="-30dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"
+                        android:text="+1 6808000842"
+                        android:textColor="#3454dc"
+                        android:textIsSelectable="true"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/call_button_india"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="-10dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:text="+91 8860722217"
+                        android:textColor="#34ad38"
+                        android:textIsSelectable="true"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:text="+91 8860722217"
+                        android:textColor="#34ad38"
+                        android:textIsSelectable="true"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -140,184 +178,135 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="30dp"
                     android:orientation="vertical">
-
                     <TextView
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Copyright © 2019 Safepe Payments"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:fontFamily="@font/roboto_regular"
                         android:gravity="center"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="Copyright © 2019 Safepe Payments"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="All Rights Reserved"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        android:textIsSelectable="true"
-                        android:paddingLeft="20dp"
-                        android:gravity="center"
-                        android:background="@null"
-                        android:paddingRight="20dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp" />
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="All Rights Reserved"
+                        android:textColor="@color/black"
+                        android:textIsSelectable="true"
+                        android:textSize="12sp" />
                 </LinearLayout>
-
                 <TextView
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Address :- "
-                android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/black"
-                android:layout_marginBottom="10dp"
-                    android:textSize="14sp"
-                />
-            <TextView
-                android:id="@+id/sendmail"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Email ID: support@safepayu.com"
-                android:layout_gravity="center"
-                android:textIsSelectable="true"
-                android:fontFamily="@font/roboto_regular"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/blue_theme"
-                android:textSize="15sp"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="In case of any inconvenience regarding the transaction of money OR further query then you can contact us:"
-                android:layout_gravity="center"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/green_theme"
-                android:textSize="12sp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:text="Whatsapp and Call"
-                android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/black"
-                android:textIsSelectable="true"
-                android:layout_gravity="center"
-                android:textSize="14sp" />
-
-
-                <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="+91 8376097766, +91 9867967827"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto_regular"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                    android:textColor="@color/green_theme"
-                    android:textIsSelectable="true"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/visit_website"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Visit Our Website"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="About Us"
+                    android:textColor="#000"
+                    android:textSize="16dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
-                    android:padding="10dp"
-                    android:textColor="@color/blue_theme"
+                    android:text="Safepe Payments "
+                    android:textColor="@color/bue_A800"
+                    android:textIsSelectable="true"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
-                    android:textSize="16sp" />
-            <LinearLayout
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp">
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Address :- "
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/sendmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="Email ID: support@safepayu.com"
+                    android:textColor="@color/blue_theme"
+                    android:textIsSelectable="true"
+                    android:textSize="15sp" />
 
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="In case of any inconvenience regarding the transaction of money OR further query then you can contact us:"
+                    android:textColor="@color/green_theme"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="+91 8860722217"
-                    android:textSize="14dp"
-                    android:textColor="#34ad38"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Whatsapp and Call"
+                    android:textColor="@color/black"
                     android:textIsSelectable="true"
-                    android:background="@null"
-                    android:textStyle="bold"
-                    />
-
-                <Button
-                    android:id="@+id/call_button_usa"
+                    android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="+91 8376097766, +91 9867967827"
+                    android:textColor="@color/green_theme"
+                    android:textSize="16sp"
+                    android:textIsSelectable="true"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/visit_website"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="-30dp"
-                    android:text="+1 6808000842"
-                    android:textSize="14dp"
-                    android:textColor="#3454dc"
-                    android:textIsSelectable="true"
-                    android:paddingLeft="0dp"
-                    android:background="@null"
-                    android:textStyle="bold"
-                    android:paddingRight="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="Visit Our Website"
+                    android:textColor="@color/blue_theme"
+                    android:textSize="16sp"
                     />
-
-                <Button
-                    android:id="@+id/call_button_india"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="-10dp"
-                    android:layout_weight="1"
-                    android:text="+91 8860722217"
-                    android:textSize="14dp"
-                    android:textColor="#34ad38"
-                    android:textIsSelectable="true"
-                    android:background="@null"
-                    android:textStyle="bold"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="0dp"
-                    />
-            </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Safepe Payments "
-                android:layout_marginTop="10dp"
-                android:textIsSelectable="true"
-                android:fontFamily="@font/roboto_bold"
-                android:gravity="center"
-                android:textColor="@color/bue_A800"
-                android:textSize="18sp" />
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
