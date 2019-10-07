@@ -294,6 +294,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 Uri uri = Uri.fromParts("package", this.getPackageName(), null);
                 intent.setData(uri);
                 startActivity(intent);
+                //
                 break;
             default:
                 ActivityCompat.requestPermissions(NewAccount.this,
