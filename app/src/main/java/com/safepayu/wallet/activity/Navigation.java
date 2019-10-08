@@ -1,11 +1,19 @@
 package com.safepayu.wallet.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -29,6 +37,8 @@ import com.safepayu.wallet.activity.recharge.PostpaidLandlineBillpay;
 import com.safepayu.wallet.activity.recharge.WaterBillPay;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
+import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -44,12 +54,25 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     private LinearLayout addMoney, sendMoney, recharge, payBill, dth, payShop, sendToBank,Upi_Pay;
     LinearLayout layout_electricity, layout_gas, layout_water, layout_broadband;
     private LinearLayout payLayout,walletLayout,send;
+    String versionName="",appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
+    int versionCode=0;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, false);
 
+        loadingDialog = new LoadingDialog(this);
+
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            versionName = pInfo.versionName;
+            versionCode = pInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        getAppVersion();
         setupNavigation();
     }
 
@@ -249,6 +272,72 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         }
     }
 
+    private void getAppVersion() {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getAppVersion()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<AppVersionResponse>() {
+                    @Override
+                    public void onSuccess(AppVersionResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+                            int val= Integer.parseInt(response.getVersionData().getVal());
+
+                            if (versionCode==val){
+
+                            }else {
+                                showDialogForAppUpdate(Navigation.this);
+                            }
+
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(drawer, response.getMessage(), false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
+                        BaseApp.getInstance().toastHelper().showApiExpectation(drawer, false, e.getCause());
+                    }
+                }));
+    }
+
+    public void showDialogForAppUpdate(Activity activity) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.app_update_dialog);
+
+        Button proceedButton = (Button) dialog.findViewById(R.id.proceedBtn_appUpdate);
+        proceedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(appUrl)));
+                finish();
+            }
+        });
+
+        Button cancelBtn_appUpdate = (Button) dialog.findViewById(R.id.cancelBtn_appUpdate);
+        cancelBtn_appUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BaseApp.getInstance().toastHelper().showSnackBar(drawer, getResources().getString(R.string.waringforAppUpdate), true);
+                dialog.dismiss();
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
+    }
 
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {

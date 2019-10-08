@@ -31,7 +31,7 @@
             android:text="Address"
             android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="18sp" />
+            android:textSize="18sp"  />
     </RelativeLayout>
 
 
@@ -41,88 +41,89 @@
         android:layout_below="@id/headerbar">
 
 
+
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_below="@id/headerbar"
+            android:layout_width="match_parent"
             android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="20dp"
 
-            android:layout_marginRight="15dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/add_address"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/rounded_buttons"
-                android:fontFamily="@font/roboto_regular"
-                android:text="Add new Address"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <Button
-                android:id="@+id/edit_address"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/rounded_buttons"
-                android:fontFamily="@font/roboto_regular"
-                android:text="Update Address"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:visibility="gone" />
-
-
-            <CheckBox
-                android:id="@+id/current_location"
+            <TextView
+                android:id="@+id/heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/bue_A800"
+                android:textSize="18sp"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_marginBottom="20dp"
+                android:text="Add your address"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_marginTop="10dp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:layout_marginTop="30dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp"
-                android:buttonTint="@color/green_theme"
-                android:checked="false"
+                android:layout_marginBottom="6dp"
+                android:text="Flat/House location"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Use current location"
-                android:textColor="@color/green_theme"
-                android:textSize="15sp" />
+                android:textSize="13sp"/>
 
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <EditText
                     android:id="@+id/update_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/edittext_rounded"
-                    android:fontFamily="@font/roboto_regular"
                     android:hint="Street 23, PS Colony"
                     android:padding="10dp"
-                    android:textSize="13sp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="left"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"/>
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="end"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
                     android:alpha="0.3"
                     android:src="@drawable/ic_placeholder" />
 
 
             </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:layout_marginBottom="6dp"
+                android:text="City"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="13sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -133,26 +134,40 @@
                 <EditText
                     android:id="@+id/update_city"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Knight Place"
                     android:padding="10dp"
-                    android:textSize="13sp" />
+                    android:background="@drawable/edittext_rounded"
+                    android:hint="Knight Place"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"/>
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="end"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
                     android:alpha="0.3"
                     android:src="@drawable/ic_skyline" />
 
 
             </FrameLayout>
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="13sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="State"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -163,27 +178,38 @@
                 <EditText
                     android:id="@+id/update_state"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Kerela"
                     android:padding="10dp"
-                    android:textSize="13sp" />
+                    android:background="@drawable/edittext_rounded"
+                    android:layout_height="wrap_content"
+                    android:hint="Kerela"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"/>
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="end"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
                     android:alpha="0.3"
                     android:src="@drawable/ic_home" />
 
 
             </FrameLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:layout_marginBottom="6dp"
+                android:text="Pincode"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="13sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -194,28 +220,38 @@
                 <EditText
                     android:id="@+id/update_pin"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="6dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="121320"
-                    android:maxLength="6"
                     android:padding="10dp"
-                    android:textSize="13sp" />
+                    android:background="@drawable/edittext_rounded"
+                    android:layout_height="wrap_content"
+                    android:hint="121320"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="10dp"
+                    android:maxLength="6"
+                    android:layout_marginBottom="6dp"/>
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="end"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
                     android:alpha="0.3"
                     android:src="@drawable/ic_pincode" />
 
 
             </FrameLayout>
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:layout_marginBottom="6dp"
+                android:text="Country"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="13sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -225,100 +261,67 @@
                 <EditText
                     android:id="@+id/update_country"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="India"
-                    android:maxLength="6"
                     android:padding="10dp"
-                    android:textSize="13sp" />
+                    android:background="@drawable/edittext_rounded"
+                    android:layout_height="wrap_content"
+                    android:hint="India"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="10dp"
+                    android:maxLength="6"
+                    android:layout_marginBottom="20dp"/>
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="end"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
                     android:alpha="0.3"
                     android:src="@drawable/ic_flag" />
 
 
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/roboto_bold"
-                android:text="Add your address"
-                android:textColor="@color/bue_A800"
-                android:textSize="18sp" />
 
-            <TextView
+            <CheckBox
+                android:id="@+id/current_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="6dp"
+                android:textSize="15sp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Flat/House location"
-                android:textColor="@color/blue"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="6dp"
-                android:fontFamily="@font/roboto_regular"
-                android:text="City"
-                android:textColor="@color/blue"
-                android:textSize="13sp" />
+                android:textColor="@color/green_theme"
+                android:layout_marginBottom="10dp"
+                android:text="Use current location"
+                android:checked="false"
+                android:buttonTint="@color/green_theme"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="6dp"
-                android:fontFamily="@font/roboto_regular"
-                android:text="State"
-                android:textColor="@color/blue"
-                android:textSize="13sp" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="6dp"
-                android:fontFamily="@font/roboto_regular"
-                android:text="Pincode"
-                android:textColor="@color/blue"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="6dp"
-                android:fontFamily="@font/roboto_regular"
-                android:text="Country"
-                android:textColor="@color/blue"
-                android:textSize="13sp" />
-
-            <View
+            <Button
+                android:id="@+id/add_address"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/divider" />
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_buttons"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginBottom="20dp"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:text="Add new Address"/>
+            <Button
+                android:id="@+id/edit_address"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/rounded_buttons"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginBottom="20dp"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:text="Update Address"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

@@ -51,8 +51,8 @@ public class DthRecharge extends BaseActivity {
 
         RechargeBtn=findViewById(R.id.dthPaybtn);
         BackBtn=findViewById(R.id.dth_back_btn);
-        OperatorSpinner=findViewById(R.id.operatorDTH);
-        AmountED=findViewById(R.id.amountDTH);
+        OperatorSpinner=findViewById(R.id.operator);
+        AmountED=findViewById(R.id.amountid);
         DthIdED=findViewById(R.id.customerid);
 
         OperatorNameList=new ArrayList<>();

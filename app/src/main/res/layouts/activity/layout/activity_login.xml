@@ -12,24 +12,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <include layout="@layout/toolbar_transparent"
+            android:visibility="gone"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:layout_marginTop="50dp"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btn.login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/login"
-                android:background="@drawable/rounded_buttons"
-                android:fontFamily="@font/roboto_regular"
-                android:layout_marginTop="20dp"
-                android:textSize="18sp"
-                style="@style/buttonDefault" />
+            android:orientation="vertical"
+            android:layout_marginTop="50dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -50,28 +42,24 @@
                     style="@style/TextAppearance.AppCompat.Headline"
                     app:fontCustom="@string/Roboto"
                     android:textStyle="bold"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textColor="@color/bue_A800"
                     android:textSize="20sp"
+                    android:textColor="@color/bue_A800"
+                    android:fontFamily="@font/roboto_bold"
                     android:text="@string/login" />
 
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/et.password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    style="@style/defaultEditTextStyle"
-                    android:inputType="textPassword"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="@string/enter_password" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <com.safepayu.wallet.custom_view.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                style="@style/TextAppearance.AppCompat.Large"
+                app:fontCustom="@string/Roboto"
+                android:textStyle="normal"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/login_text_hint" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -85,23 +73,48 @@
                     android:textSize="24sp"
                     style="@style/defaultEditTextStyle"
                     android:inputType="number"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="@string/enter_mobile" />
+                    android:hint="@string/enter_mobile"
+                    android:fontFamily="@font/roboto_regular"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.safepayu.wallet.custom_view.CustomTextView
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et.password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    style="@style/defaultEditTextStyle"
+                    android:inputType="textPassword"
+                    android:hint="@string/enter_password"
+                    android:fontFamily="@font/roboto_regular"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn.login"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                style="@style/TextAppearance.AppCompat.Large"
-                app:fontCustom="@string/Roboto"
-                android:textStyle="normal"
-                android:fontFamily="@font/roboto_bold"
-                android:textColor="@color/black"
+                android:text="@string/login"
                 android:textSize="18sp"
-                android:text="@string/login_text_hint" />
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_buttons"
+                style="@style/buttonDefault" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider" />
 
         <LinearLayout
             android:id="@+id/btn.forgetPass"
@@ -111,13 +124,6 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:padding="5dp"
-                android:layout_height="24dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/ic_right_arrow" />
-
             <com.safepayu.wallet.custom_view.CustomTextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -126,15 +132,17 @@
                 style="@style/TextAppearance.AppCompat.Small"
                 app:fontCustom="@string/Roboto"
                 android:textStyle="normal"
-                android:textColor="@color/bue_A800"
                 android:textSize="15sp"
+                android:textColor="@color/bue_A800"
                 android:text="@string/forgot_password" />
-        </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            <ImageView
+                android:layout_width="24dp"
+                android:padding="5dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_right_arrow"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -149,13 +157,6 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:padding="5dp"
-                android:layout_height="24dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/ic_right_arrow" />
-
             <com.safepayu.wallet.custom_view.CustomTextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -164,15 +165,17 @@
                 app:fontCustom="@string/Roboto"
                 android:padding="20dp"
                 android:textStyle="normal"
-                android:textColor="@color/bue_A800"
                 android:textSize="15sp"
+                android:textColor="@color/bue_A800"
                 android:text="@string/create_new_account" />
-        </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider" />
+            <ImageView
+                android:layout_width="24dp"
+                android:padding="5dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_right_arrow"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -180,10 +183,6 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/splas_gradient">
         </LinearLayout>
-
-        <include
-            layout="@layout/toolbar_transparent"
-            android:visibility="gone" />
 
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

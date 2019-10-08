@@ -35,12 +35,6 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="14dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/splas_gradient"></LinearLayout>
-
     <ScrollView
         android:layout_below="@id/headerbar"
         android:layout_width="match_parent"
@@ -64,235 +58,8 @@
                 android:src="@drawable/white_botton" />
 
 
-            <Button
-                android:id="@+id/addressupdateBtn"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/blue_border"
-                android:fontFamily="@font/roboto_regular"
-                android:padding="0dp"
-                android:text="Update Address"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@drawable/white_button_grayborder"
-                android:orientation="vertical"
-                android:padding="20dp"
-                android:visibility="gone">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/packages_have"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:text="Package "
-                        android:textAllCaps="false"
-                        android:textSize="13dp" />
-                    <TextView
-                        android:id="@+id/package_name_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=" --"
-                        android:textAllCaps="false"
-                        android:textColor="@color/red"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:text="Status "
-                        android:textAllCaps="false"
-                        android:textSize="13dp" />
-                    <TextView
-                        android:id="@+id/package_status_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="--"
-                        android:textSize="13dp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:text="Package Amount "
-                        android:textAllCaps="false"
-                        android:textSize="13dp" />
-                    <TextView
-                        android:id="@+id/package_amount_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="--"
-                        android:textSize="13dp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:text="Total Amount "
-                        android:textAllCaps="false"
-                        android:textSize="13dp" />
-                    <TextView
-                        android:id="@+id/total_amount_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="--"
-                        android:textSize="13dp" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Package Details"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/change_pass_button"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@+id/main_details2"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/green_border"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="12dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="3dp"
-                    android:src="@drawable/ic_arrow_drop_down_black_24dp" />
-                <TextView
-                    android:id="@+id/changePassBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
-                    android:inputType="datetime"
-                    android:text="Change Password"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="normal" />
 
 
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/change_pass_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/edittext_rounded"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:visibility="gone">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/old_password_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-                    <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="Old Password :"
-                        android:textColor="@color/bue_A800"
-                        android:textSize="15sp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/new_password_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-                    <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="New Password : "
-                        android:textColor="@color/bue_A800"
-                        android:textSize="15sp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/confirm_password_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-                    <TextView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="Confirm Password : "
-                        android:textColor="@color/bue_A800"
-                        android:textSize="15sp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:gravity="center">
-                    <Button
-                        android:id="@+id/change_pass_submit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:background="@drawable/rounded_buttons"
-                        android:fontFamily="@font/roboto_regular"
-                        android:paddingLeft="90dp"
-                        android:paddingRight="90dp"
-                        android:text="Submit"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
-                </LinearLayout>
-
-            </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -350,11 +117,6 @@
                         android:gravity="center"
                         android:padding="10dp">
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_marginLeft="5dp"
-                            android:src="@drawable/ic_face"></ImageView>
                         <TextView
                             android:id="@+id/username1"
                             android:layout_width="wrap_content"
@@ -366,15 +128,26 @@
                             android:textColor="@color/bue_A800"
                             android:textSize="18sp"
                             android:textStyle="bold" />
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_face"
+                            android:layout_marginLeft="5dp"></ImageView>
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_marginTop="30dp"
-                        android:layout_marginLeft="10dp">
+                        android:layout_marginLeft="10dp"
+                        >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -382,7 +155,7 @@
                             android:text="Phone"
                             android:textColor="@color/blue_theme"
                             android:fontFamily="@font/roboto_regular"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:id="@+id/p_mobile"
@@ -393,14 +166,23 @@
                             android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/blue_grey_500"
                             android:textStyle="bold"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            />
                     </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -409,7 +191,7 @@
                             android:text="Email"
                             android:textColor="@color/blue_theme"
                             android:fontFamily="@font/roboto_regular"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:id="@+id/p_mail"
@@ -422,12 +204,19 @@
                             android:textStyle="bold"
                             android:textSize="16sp" />
                     </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -436,7 +225,7 @@
                             android:text="Date of birth"
                             android:textColor="@color/blue_theme"
                             android:fontFamily="@font/roboto_regular"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:id="@+id/p_dob"
@@ -451,13 +240,19 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -480,12 +275,19 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -493,7 +295,7 @@
                             android:text="Pincode"
                             android:textColor="@color/blue_theme"
                             android:fontFamily="@font/roboto_regular"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"/>
 
                         <TextView
                             android:id="@+id/p_pincode"
@@ -505,48 +307,16 @@
                             android:gravity="center"
                             android:textColor="@color/blue_grey_500"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            />
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/divider" />
-                    <View
-                        android:layout_width="match_parent"
                         android:layout_height=".5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="30dp"
-                        android:background="@color/divider" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height=".5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="30dp"
-                        android:background="@color/divider" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height=".5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="30dp"
-                        android:background="@color/divider" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height=".5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="30dp"
-                        android:background="@color/divider" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height=".5dp"
-                        android:layout_marginRight="30dp"
+                        android:background="@color/divider"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"
-                        android:background="@color/divider" />
+                        android:layout_marginRight="30dp"/>
 
 
                     <!--
@@ -693,6 +463,234 @@
                     -->
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:background="@drawable/white_button_grayborder"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18dp"
+                    android:text="Package Details"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:id="@+id/packages_have"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Package "
+                        android:textAllCaps="false"
+                        android:textSize="13dp" />
+                    <TextView
+                        android:id="@+id/package_name_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" --"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:textColor="@color/red"
+                        android:textSize="15dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Status "
+                        android:textAllCaps="false"
+                        android:textSize="13dp" />
+                    <TextView
+                        android:id="@+id/package_status_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="--"
+                        android:textSize="13dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Package Amount "
+                        android:textAllCaps="false"
+                        android:textSize="13dp" />
+                    <TextView
+                        android:id="@+id/package_amount_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="--"
+                        android:textSize="13dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Total Amount "
+                        android:textAllCaps="false"
+                        android:textSize="13dp" />
+                    <TextView
+                        android:id="@+id/total_amount_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="--"
+                        android:textSize="13dp" />
+                </LinearLayout>
+            </LinearLayout>
+            <Button
+                android:id="@+id/addressupdateBtn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Update Address"
+                android:textAllCaps="false"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:padding="0dp"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/white"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_gravity="center"
+                android:background="@drawable/blue_border"/>
+
+
+            <LinearLayout
+                android:id="@+id/change_pass_button"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/main_details2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:padding="12dp"
+                android:gravity="center"
+                android:background="@drawable/green_border"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/changePassBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="datetime"
+                    android:text="Change Password"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textStyle="normal" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/change_pass_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:padding="10dp"
+                android:background="@drawable/edittext_rounded">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="Old Password :"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/bue_A800"/>
+                    <EditText
+                        android:id="@+id/old_password_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="New Password : "
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/bue_A800"/>
+                    <EditText
+                        android:id="@+id/new_password_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="Confirm Password : "
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/bue_A800"/>
+                    <EditText
+                        android:id="@+id/confirm_password_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_margin="20dp">
+                    <Button
+                        android:id="@+id/change_pass_submit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="Submit"
+                        android:textColor="@color/white"
+                        android:paddingLeft="90dp"
+                        android:paddingRight="90dp"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:background="@drawable/rounded_buttons"/>
+                </LinearLayout>
+
+            </LinearLayout>
             <Button
                 android:visibility="gone"
                 android:id="@+id/logout"
@@ -739,5 +737,12 @@
                 android:background="@drawable/ic_done_black_24dp" />
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
 
 </RelativeLayout>

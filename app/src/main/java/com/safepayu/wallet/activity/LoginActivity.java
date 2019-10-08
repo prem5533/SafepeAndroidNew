@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import com.safepayu.wallet.halper.Config;
 import com.safepayu.wallet.listener.MobileEditTextWatcher;
 import com.safepayu.wallet.listener.SnackBarActionClickListener;
 import com.safepayu.wallet.models.request.Login;
+import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.UserResponse;
@@ -47,6 +49,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private EditText mobileNo, password;
     private ApiService apiService;
     private LoadingDialog loadingDialog;
+    String versionName="",appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
+    int versionCode=0;
 
     //Otp Dialog
     TextView TimerTV;
@@ -66,6 +70,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         loadingDialog = new LoadingDialog(this);
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            versionName = pInfo.versionName;
+            versionCode = pInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
         mobileNo = findViewById(R.id.et_mobileNo);
         password = findViewById(R.id.et_password);
@@ -78,6 +90,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         findViewById(R.id.btn_newAccount).setOnClickListener(this);
 
 //        checkPermission();
+        getAppVersion();
     }
 
     @Override
@@ -100,9 +113,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.btn_login:
                 BaseApp.getInstance().commonUtils().hideKeyboard(this);
                 if (checkPermission() && validate()) {
-
                     resendOtp();
-
                 }
                 break;
             case R.id.btn_forgetPass:
@@ -200,6 +211,40 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
+    private void getAppVersion() {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getAppVersion()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<AppVersionResponse>() {
+                    @Override
+                    public void onSuccess(AppVersionResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+                            int val= Integer.parseInt(response.getVersionData().getVal());
+
+                            if (versionCode==val){
+
+                            }else {
+                                showDialogForAppUpdate(LoginActivity.this);
+                            }
+
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.walletHistoryLayout), response.getMessage(), false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.walletHistoryLayout), false, e.getCause());
+                    }
+                }));
+    }
+
     private void loginUser() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login login = new Login(mobileNo.getText().toString().split(" ")[1], password.getText().toString());
@@ -211,12 +256,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onSuccess(LoginResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE, mobileNo.getText().toString().split(" ")[1]);
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, response.getAccessToken());
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN_EXPIRE_IN, response.getTokenExpiresIn());
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
-                            switch (response.getStatusCode()) {
+                             switch (response.getStatusCode()) {
                                 case 0:
+                                    SaveLoginDetails(response);
                                     startActivity(new Intent(LoginActivity.this,Navigation.class));
                                     finish();
                                     break;
@@ -227,10 +269,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                                     BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false, getResources().getString(R.string.verify), ButtonActions.VERIFY_MOBILE, LoginActivity.this);
                                     break;
                                 case 3:
+                                    SaveLoginDetails(response);
                                     Toast.makeText(LoginActivity.this, "Please First Set Passcode", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(LoginActivity.this, CreatePassCodeActivity.class));
                                     break;
                                 case 4:
+                                    SaveLoginDetails(response);
                                     Toast.makeText(LoginActivity.this, "Please First Set Address", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(LoginActivity.this, AddUpdateAddress.class));
                                     break;
@@ -248,6 +292,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
                     }
                 }));
+    }
+
+    private void SaveLoginDetails(LoginResponse response){
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE, mobileNo.getText().toString().split(" ")[1]);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, response.getAccessToken());
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN_EXPIRE_IN, response.getTokenExpiresIn());
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
     }
 
     public void showDialog(Activity activity) {
@@ -281,6 +332,39 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             @Override
             public void onClick(View v) {
                 resendOtp();
+                dialog.dismiss();
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
+    }
+
+    public void showDialogForAppUpdate(Activity activity) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.app_update_dialog);
+
+        Button proceedButton = (Button) dialog.findViewById(R.id.proceedBtn_appUpdate);
+        proceedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(appUrl)));
+                finish();
+            }
+        });
+
+        Button cancelBtn_appUpdate = (Button) dialog.findViewById(R.id.cancelBtn_appUpdate);
+        cancelBtn_appUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, getResources().getString(R.string.waringforAppUpdate), true);
                 dialog.dismiss();
             }
         });

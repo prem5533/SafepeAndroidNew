@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,7 +63,7 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
     @NonNull
     @Override
     public WalletHistoryAdapter.PackagesListingViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewtype) {
-        return new WalletHistoryAdapter.PackagesListingViewHolder(inflater.inflate(R.layout.packages_item_view, viewGroup, false));
+        return new WalletHistoryAdapter.PackagesListingViewHolder(inflater.inflate(R.layout.wallet_history_adapter, viewGroup, false));
     }
 
     @Override
@@ -83,22 +84,46 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
 
     class PackagesListingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final TextView packageName, packageAmount;
+        private final TextView tv_walletDescription, AmountTV,tv_opertionType,TimeTV,StatusTV;
+        private final ImageView imageViewStatus;
 
 
         public PackagesListingViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            packageName = itemView.findViewById(R.id.tv_packageName);
-            packageAmount = itemView.findViewById(R.id.tv_packageAmount);
+            tv_walletDescription = itemView.findViewById(R.id.tv_wallet_description);
+            AmountTV = itemView.findViewById(R.id.tv_wallet_amount);
+            tv_opertionType = itemView.findViewById(R.id.tv_opertion_type);
+            TimeTV = itemView.findViewById(R.id.tv_wallet_time_date);
+            StatusTV = itemView.findViewById(R.id.tv_wallet_status);
+            imageViewStatus = itemView.findViewById(R.id.image_status);
 
             itemView.setOnClickListener(this);
         }
 
         private void bindData(final int position) {
+            String status="failed";
+            try{
+                if (mItem.get(position).getStatus()==1){
+                    status="success";
+                    imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_success));
+                }else if (mItem.get(position).getStatus()==0){
+                    imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_pending));
+                    status="pending";
+                }else {
+                    status="failed";
+                }
+            }catch (Exception e){
+                imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_fail));
+                status="failed";
+                e.printStackTrace();
+            }
 
-            packageName.setText(mItem.get(position).getTransaction_no());
-            //packageAmount.setText());
+            tv_opertionType.setText(mItem.get(position).getOperation());
+            tv_walletDescription.setText(mItem.get(position).getDescription());
+            AmountTV.setText(String.valueOf(mItem.get(position).getAmount()));
+            TimeTV.setText(mItem.get(position).getCreated_at());
+            StatusTV.setText(status);
 
         }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,7 +63,7 @@ public class RechargeHistoryAdapter extends RecyclerView.Adapter<RechargeHistory
     @NonNull
     @Override
     public RechargeHistoryAdapter.PackagesListingViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewtype) {
-        return new RechargeHistoryAdapter.PackagesListingViewHolder(inflater.inflate(R.layout.packages_item_view, viewGroup, false));
+        return new RechargeHistoryAdapter.PackagesListingViewHolder(inflater.inflate(R.layout.rechrge_histrory_adapter_layout, viewGroup, false));
     }
 
     @Override
@@ -83,22 +84,46 @@ public class RechargeHistoryAdapter extends RecyclerView.Adapter<RechargeHistory
 
     class PackagesListingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final TextView packageName, packageAmount;
+        private final TextView RechargeTypeTV, AmountTV,CustomerIdTV,TimeTV,StatusTV;
+        private final ImageView imageViewStatus;
 
 
         public PackagesListingViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            packageName = itemView.findViewById(R.id.tv_packageName);
-            packageAmount = itemView.findViewById(R.id.tv_packageAmount);
+            RechargeTypeTV = itemView.findViewById(R.id.tv_recharge_type);
+            AmountTV = itemView.findViewById(R.id.tv_recharge_amount);
+            CustomerIdTV = itemView.findViewById(R.id.tv_customerId);
+            TimeTV = itemView.findViewById(R.id.tv_rechrge_time_date);
+            StatusTV = itemView.findViewById(R.id.tv_rechrge_status);
+            imageViewStatus = itemView.findViewById(R.id.image_status);
 
             itemView.setOnClickListener(this);
         }
 
         private void bindData(final int position) {
+            String status="failed";
+            try{
+                if (mItem.get(position).getStatus()==1){
+                    status="success";
+                    imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_success));
+                }else if (mItem.get(position).getStatus()==0){
+                    imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_pending));
+                    status="pending";
+                }else {
+                    status="failed";
+                }
+            }catch (Exception e){
+                imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_fail));
+                status="failed";
+                e.printStackTrace();
+            }
 
-            packageName.setText(mItem.get(position).getTransactionID());
-            //packageAmount.setText());
+            RechargeTypeTV.setText(mItem.get(position).getTransactionID());
+            TimeTV.setText(mItem.get(position).getCreated_at());
+            CustomerIdTV.setText(mItem.get(position).getNumber());
+            AmountTV.setText(String.valueOf(mItem.get(position).getAmount()));
+            StatusTV.setText(status);
 
         }
 
@@ -107,13 +132,10 @@ public class RechargeHistoryAdapter extends RecyclerView.Adapter<RechargeHistory
             if (selectedHistoryView == null) {
                 selectedHistoryPosition = getLayoutPosition();
                 selectedHistoryView = itemView;
-                itemView.setBackground(context.getResources().getDrawable(R.drawable.package_selected));
             } else {
                 selectedHistoryView.setBackground(context.getResources().getDrawable(R.drawable.package_normal));
                 selectedHistoryPosition = getLayoutPosition();
                 selectedHistoryView = itemView;
-                itemView.setBackground(context.getResources().getDrawable(R.drawable.package_selected));
-
             }
             if (callback != null) {
                 callback.onPackageSelect(getLayoutPosition(), mItem.get(getLayoutPosition()));

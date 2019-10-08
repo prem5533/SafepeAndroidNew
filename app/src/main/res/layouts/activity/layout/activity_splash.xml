@@ -9,8 +9,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:background="@drawable/button_background_gradient_diagonal"
-        android:visibility="gone"></LinearLayout>
+        android:visibility="gone"
+        android:background="@drawable/button_background_gradient_diagonal">
+    </LinearLayout>
 
     <ImageView
         android:layout_width="200dp"
@@ -19,10 +20,16 @@
         android:layout_marginTop="100dp"
         android:src="@drawable/logo_big" />
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@drawable/splas_gradient"></LinearLayout>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="100dp"
+        android:text="@string/splash_tag"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/bue_A800"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
 
     <View
         android:layout_width="match_parent"
@@ -98,15 +105,10 @@
 
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_bold"
-        android:gravity="center"
-        android:paddingLeft="100dp"
-        android:text="@string/splash_tag"
-        android:textColor="@color/bue_A800"
-        android:textStyle="bold" />
+        android:layout_height="20dp"
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
 
 </LinearLayout>

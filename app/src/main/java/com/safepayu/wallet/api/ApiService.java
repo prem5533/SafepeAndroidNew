@@ -14,6 +14,7 @@ import com.safepayu.wallet.models.request.SendToWalletRequest;
 import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
 import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
+import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.models.response.CustOperatorResponse;
@@ -132,4 +133,11 @@ public interface ApiService {
 
     @GET("api/safepe/wallletHistory")
     Single<WalletHistoryResponse> getWalletHistory();
+
+    @GET("api/safepe/getVersion")
+    Single<AppVersionResponse> getAppVersion();
+
+    @FormUrlEncoded
+    @POST("api/safepe/refer")
+    Single<BaseResponse> sendRefer(@Field("mobile") String mobile);
 }

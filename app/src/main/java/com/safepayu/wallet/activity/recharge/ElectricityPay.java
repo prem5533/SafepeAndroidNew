@@ -52,9 +52,9 @@ public class ElectricityPay extends BaseActivity {
 
         ElectrictyPaybtn=findViewById(R.id.electrictyPaybtn);
         BackBtn=findViewById(R.id.electricty_back_btn);
-        OperatorSpinner=findViewById(R.id.operatorelElectricity);
-        AmountED=findViewById(R.id.amountElectricity);
-        ElectricityIdED=findViewById(R.id.electricityBillId);
+        OperatorSpinner=findViewById(R.id.operator);
+        AmountED=findViewById(R.id.amount);
+        ElectricityIdED=findViewById(R.id.mobile);
 
         OperatorNameList=new ArrayList<>();
         IdList=new ArrayList<>();

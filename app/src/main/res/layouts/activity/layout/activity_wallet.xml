@@ -4,236 +4,8 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:id="@+id/walletLayout"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_below="@id/headerbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".Activity.WalletActivity">
-
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#fff">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/splas_gradient"></LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_walletAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="---"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="38sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/grey_100"
-                    android:padding="15dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="Recent Transactions"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="10dp"
-                    android:padding="4dp">
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@color/divider" />
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:cardElevation="2dp">
-                        <LinearLayout
-                            android:id="@+id/wallet_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:background="@drawable/card_bg"
-                            android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="60dp"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="0dp"
-                                android:foregroundGravity="left"
-                                android:padding="5dp"
-                                android:src="@drawable/ic_wallet_history" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.6"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginTop="0dp"
-                                    android:layout_weight="0.2"
-                                    android:foregroundGravity="left"
-                                    android:src="@drawable/ic_chevron_right_black_24dp" />
-
-                                <TextView
-                                    style="@style/TextAppearance.AppCompat.Medium"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginTop="0dp"
-                                    android:layout_weight="0.8"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:text="Wallet History"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:cardElevation="2dp">
-
-                        <LinearLayout
-                            android:id="@+id/recharge_history"
-                            android:layout_width="match_parent"
-                            android:layout_height="80dp"
-                            android:background="@drawable/card_bg"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="60dp"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="0dp"
-                                android:foregroundGravity="left"
-                                android:padding="5dp"
-                                android:src="@drawable/ic_mobile" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.6">
-
-                                <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginTop="0dp"
-                                    android:layout_weight="0.2"
-                                    android:foregroundGravity="left"
-                                    android:src="@drawable/ic_chevron_right_black_24dp" />
-
-                                <TextView
-                                    style="@style/TextAppearance.AppCompat.Medium"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginTop="0dp"
-                                    android:layout_weight="0.8"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:text="Recharge History"
-                                    android:textColor="@color/cardview_dark_background"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:padding="10dp"
-                    android:text="Available amount in wallet"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tv_addMoneyToSafepe"
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Add money to Safepe Wallet"
-                    android:textColor="@color/bue_A800"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/send_txt"
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="Send Money to Bank"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/divider" />
-
-            </LinearLayout>
-
-        </ScrollView>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="14dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/splas_gradient"></LinearLayout>
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_centerInParent="true"
-        android:visibility="gone"/>
-
+    android:layout_height="match_parent"
+    android:id="@+id/walletLayout">
 
     <RelativeLayout
         android:id="@+id/headerbar"
@@ -256,12 +28,239 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:fontFamily="@font/roboto_bold"
             android:gravity="center"
             android:text="SafePe Wallet"
+            android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
     </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_below="@id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".Activity.WalletActivity">
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:text="Available amount in wallet"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <TextView
+                    android:id="@+id/tv_walletAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="---"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="38sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_addMoneyToSafepe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Add money to Safepe Wallet"
+                    android:textColor="@color/bue_A800"
+                    android:textSize="15sp"
+                    style="@style/TextAppearance.AppCompat.Small" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/divider" />
+
+                <TextView
+                    android:id="@+id/send_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Send Money to Bank"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/colorPrimaryDark"
+                    style="@style/TextAppearance.AppCompat.Small" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/splas_gradient">
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="@color/grey_100">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="Recent Transactions"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/roboto_regular"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:padding="4dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:cardElevation="2dp">
+                        <LinearLayout
+                            android:id="@+id/wallet_history"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="@drawable/card_bg"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:layout_width="80dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center"
+                                android:foregroundGravity="left"
+                                android:layout_marginTop="0dp"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_wallet_history" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.6"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="0dp"
+                                    android:textColor="@color/black"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_weight="0.8"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:text="Wallet History" />
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:foregroundGravity="left"
+                                    android:layout_marginTop="0dp"
+                                    android:layout_weight="0.2"
+                                    android:src="@drawable/ic_chevron_right_black_24dp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/divider"/>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:cardElevation="2dp">
+                        <LinearLayout
+                            android:id="@+id/recharge_history"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:background="@drawable/card_bg"
+                            android:orientation="horizontal"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:layout_width="80dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center"
+                                android:foregroundGravity="left"
+                                android:layout_marginTop="0dp"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_mobile" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.6">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="0dp"
+                                    android:textColor="@color/cardview_dark_background"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:layout_weight="0.8"
+                                    android:text="Recharge History" />
+
+                                <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:foregroundGravity="left"
+                                    android:layout_marginTop="0dp"
+                                    android:layout_weight="0.2"
+                                    android:src="@drawable/ic_chevron_right_black_24dp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
 
 
 </RelativeLayout>

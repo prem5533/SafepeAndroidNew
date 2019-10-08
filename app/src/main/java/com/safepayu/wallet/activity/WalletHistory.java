@@ -1,8 +1,10 @@
 package com.safepayu.wallet.activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -31,6 +33,8 @@ public class WalletHistory extends BaseActivity implements WalletHistoryAdapter.
     private WalletHistoryAdapter mAdapter;
     private WalletHistoryResponse historyResponse;
 
+    private Dialog dialogPending;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +48,16 @@ public class WalletHistory extends BaseActivity implements WalletHistoryAdapter.
         layoutManager.setScrollEnabled(false);
         WalletHistoryListView.setLayoutManager(layoutManager);
         layoutManager = new RecyclerLayoutManager(1, RecyclerLayoutManager.VERTICAL);
-        layoutManager.setScrollEnabled(false);
+        layoutManager.setScrollEnabled(true);
         WalletHistoryListView.setLayoutManager(layoutManager);
         mAdapter = new WalletHistoryAdapter(this, this);
         WalletHistoryListView.setAdapter(mAdapter);
+
+        dialogPending = new Dialog(WalletHistory.this, android.R.style.Theme_Light);
+        dialogPending.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogPending.setContentView(R.layout.recharge_histroy_detail);
+        dialogPending.setCancelable(false);
+
 
         getWalletHistory();
 

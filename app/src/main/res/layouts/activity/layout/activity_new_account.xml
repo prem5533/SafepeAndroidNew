@@ -7,11 +7,12 @@
     android:orientation="vertical"
     android:id="@+id/newAccountLayout"
     tools:context=".activity.LoginActivity">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <include layout="@layout/toolbar_transparent" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -26,17 +27,6 @@
                 android:paddingRight="30dp">
 
 
-                <Button
-                    android:id="@+id/btn.process"
-                    style="@style/buttonDefault"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="30dp"
-                    android:background="@drawable/rounded_buttons"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="@string/process"
-                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -55,10 +45,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:fontFamily="@font/roboto_bold"
                         android:text="@string/create_new_account"
-                        android:textColor="@color/bue_A800"
                         android:textSize="20sp"
+                        android:textColor="@color/bue_A800"
+                        android:fontFamily="@font/roboto_bold"
                         app:fontCustom="@string/Roboto" />
 
                 </LinearLayout>
@@ -73,11 +63,11 @@
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
                         android:hint="@string/first_name"
                         android:inputType="textCapSentences"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -90,11 +80,11 @@
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
                         android:hint="@string/last_name"
                         android:inputType="textCapSentences"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -107,11 +97,11 @@
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
                         android:hint="@string/email"
                         android:inputType="textEmailAddress"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -124,11 +114,11 @@
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
                         android:hint="@string/enter_mobile"
                         android:inputType="number"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -142,11 +132,11 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="false"
-                        android:fontFamily="@font/roboto_regular"
                         android:hint="@string/dob_hint"
                         android:inputType="text"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -158,11 +148,11 @@
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
                         android:hint="@string/enter_password"
                         android:inputType="textPassword"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -175,11 +165,11 @@
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
                         android:hint="@string/referral_code"
                         android:inputType="number"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.safepayu.wallet.custom_view.CustomTextView
@@ -187,35 +177,46 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="@font/roboto_bold"
                     android:text="@string/create_account_text_hint"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
                     android:textStyle="normal"
-                    app:fontCustom="@string/Roboto" />
+                    app:fontCustom="@string/Roboto" android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_bold"
+                    />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     style="@style/TextAppearance.AppCompat.Caption"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
                     android:text="@string/opt_send_message"
                     android:textColor="@color/red"
-                    android:textSize="12sp"
                     android:textStyle="normal"
-                    app:fontCustom="@string/Roboto" />
+                    app:fontCustom="@string/Roboto"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"/>
+                <Button
+                    android:id="@+id/btn.process"
+                    style="@style/buttonDefault"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/rounded_buttons"
+                    android:text="@string/process"
+                    android:layout_marginBottom="30dp"/>
             </LinearLayout>
 
 
+
+
         </ScrollView>
-
-        <include layout="@layout/toolbar_transparent" />
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="14dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/splas_gradient"></LinearLayout>
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
 
 </RelativeLayout>

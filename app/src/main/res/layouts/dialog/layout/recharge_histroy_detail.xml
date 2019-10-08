@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#f7f8f8">
+
+    <RelativeLayout
+        android:id="@+id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="#1dbf78 "
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/recharge_back_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_arrow_back_white_24dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:text="Transaction Succesful"
+            android:gravity="center"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/recharge_back_btn"/>
+    </RelativeLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headerbar"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center|bottom">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Transaction ID"
+                        android:textSize="15sp"
+                        android:padding="5dp"
+                        android:textColor="@color/black"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tv_recharge_transction_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="P195792378937S333"
+                            android:textSize="15sp"
+                            android:padding="5dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/bue_A800"/>
+                        <TextView
+                            android:id="@+id/tv_copy_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Copy"
+                            android:textSize="12sp"
+                            android:padding="5dp"
+                            android:textColor="@color/blue_theme"
+                            android:layout_marginRight="10dp"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Recharge Type"
+                            android:textSize="15sp"
+                            android:padding="5dp"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/tv_recharge_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Recharge Type"
+                            android:textSize="15sp"
+                            android:padding="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        >
+                        <androidx.cardview.widget.CardView
+                            android:layout_height="46dp"
+                            android:layout_width="46dp"
+                            android:layout_margin="5dp"
+                            app:cardElevation="1dp"
+                            app:cardCornerRadius="23dp"
+                            app:cardBackgroundColor="@color/blue_theme">
+
+                            <ImageView
+                                android:id="@+id/image_restaurant"
+                                android:layout_width="47dp"
+                                android:layout_height="match_parent"
+                                android:layout_margin="1dp"
+                                android:scaleType="fitXY"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_send" />
+
+                        </androidx.cardview.widget.CardView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="10dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tv_customer_name_number"
+                                    android:layout_width="301dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:text="Customer Id/Number"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp" />
+                                <TextView
+                                    android:id="@+id/tv_wallet_amount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="65"
+                                    android:gravity="bottom"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:layout_marginRight="5dp"
+                                    android:fontFamily="@font/roboto_bold"/>
+                            </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_customer_id_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:text="CustomerID"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_regular">
+
+
+                            </TextView>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_detil_time_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="01:44 PM on 02 Oct 2019"
+                        android:textSize="10sp"
+                        android:textColor="@color/blue_grey_400"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginBottom="5dp"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Need Help?"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="start|center">
+
+                        <TextView
+                            android:id="@+id/tv_contct_support"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="Contact SafePe Support"
+                            android:textColor="@color/bue_A800"
+                            android:textSize="14sp"
+                            android:padding="5dp"/>
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="1dp"
+                            android:scaleType="fitXY"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_help" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/safepe_logo_transparent"
+                android:layout_marginTop="30dp"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/gobackBtn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/amount"
+            android:layout_gravity="center"
+            android:background="@drawable/dialog_button"
+            android:padding="10dp"
+            android:text="Go Back"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:textSize="17sp"
+            android:fontFamily="@font/roboto_regular"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="14dp"
+            android:background="@drawable/splas_gradient"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
+

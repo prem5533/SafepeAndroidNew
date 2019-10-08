@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:id="@+id/postpaidBillLayout"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/postpaidBillLayout">
 
     <RelativeLayout
         android:id="@+id/l1_send"
@@ -35,11 +35,6 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="14dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/splas_gradient"></LinearLayout>
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -54,58 +49,55 @@
             android:layout_marginRight="20dp"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/Paybtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/amount"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/rounded_buttons"
-                android:fontFamily="@font/roboto_regular"
-                android:padding="10dp"
-                android:text="Pay Bill"
-                android:textColor="#fff"
-                android:textSize="15sp"
-                android:visibility="gone" />
+            <TextView
 
-            <Button
-                android:id="@+id/btnCheckBill"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/amount"
-                android:layout_gravity="center"
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/operator"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/rounded_buttons"
-                android:fontFamily="@font/roboto_regular"
-                android:padding="10dp"
-                android:text="Check Bill"
-                android:textColor="#fff"
-                android:textSize="15sp" />
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Enter Mobile"
+                android:textColor="#373836"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"/>
 
             <EditText
-                android:id="@+id/amountPostpaid"
+                android:id="@+id/mobilePostpaid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView"
+                android:layout_below="@+id/textView2"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/white_button_grayborder"
-                android:imeOptions="actionDone"
                 android:inputType="number"
-                android:nextFocusForward="@+id/btn"
+                android:hint="Mobile"
+                android:maxLength="11"
+                android:nextFocusForward="@+id/amount"
                 android:padding="10dp"
                 android:textColor="#373836"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="15sp" />
+
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"/>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView6"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Select Operator"
+                android:textColor="#373836"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -138,26 +130,6 @@
                 android:visibility="gone"/>
 
             <EditText
-                android:id="@+id/mobilePostpaid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView2"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/white_button_grayborder"
-                android:inputType="number"
-                android:hint="Mobile"
-                android:maxLength="11"
-                android:nextFocusForward="@+id/amount"
-                android:padding="10dp"
-                android:textColor="#373836"
-
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="15sp" />
-
-            <EditText
                 android:id="@+id/amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,37 +146,7 @@
                 android:padding="10dp"
                 android:textColor="#373836"
                 android:textSize="15dp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="center"
-                android:text="Select Operator"
-                android:textColor="#373836"
-                android:textSize="15sp" />
-
-            <TextView
-
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_below="@+id/operator"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="20dp"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="center"
-                android:text="Enter Mobile"
-                android:textColor="#373836"
-                android:textSize="15sp" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/textView22"
@@ -217,9 +159,68 @@
                 android:gravity="center"
                 android:text="Bill Amount"
                 android:textColor="#373836"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular" />
+
+            <EditText
+                android:id="@+id/amountPostpaid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/white_button_grayborder"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:nextFocusForward="@+id/btn"
+                android:padding="10dp"
+                android:textColor="#373836"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular" />
+
+            <Button
+                android:id="@+id/Paybtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/amount"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rounded_buttons"
+                android:padding="10dp"
+                android:text="Pay Bill"
+                android:textColor="#fff"
+                android:layout_marginBottom="30dp"
+                android:visibility="gone"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular" />
+
+            <Button
+                android:id="@+id/btnCheckBill"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/amount"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rounded_buttons"
+                android:padding="10dp"
+                android:text="Check Bill"
+                android:textColor="#fff"
+                android:layout_marginBottom="30dp"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular" />
         </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
 
 </RelativeLayout>

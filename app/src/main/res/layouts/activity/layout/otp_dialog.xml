@@ -26,6 +26,47 @@
                 android:padding="5dp"
                 android:visibility="visible">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="OTP Verification"
+                    android:textColor="@color/red"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/enter_otpLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/white_button_grayborder"
+                    android:hint="Enter your Otp"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#085272"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+
+                <TextView
+                    android:id="@+id/timerLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="00:00"
+                    android:textColor="@color/red"
+                    android:textSize="15dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:visibility="gone" />
+
+
                 <Button
                     android:id="@+id/continue_otpLogin"
                     android:layout_width="wrap_content"
@@ -54,47 +95,6 @@
                     android:text="Resend Otp"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15dp"
-                    android:visibility="gone" />
-
-
-                <EditText
-                    android:id="@+id/enter_otpLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/white_button_grayborder"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Enter your Otp"
-                    android:inputType="number"
-                    android:maxLength="4"
-                    android:padding="10dp"
-                    android:textColor="#085272"
-                    android:textSize="15sp" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="OTP Verification"
-                    android:textColor="@color/red"
-                    android:textSize="16dp"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/timerLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="00:00"
-                    android:textColor="@color/red"
                     android:textSize="15dp"
                     android:visibility="gone" />
             </LinearLayout>

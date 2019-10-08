@@ -32,7 +32,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/ic_tick"></ImageView>
+                        android:src="@drawable/ic_tick"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
                         android:fontFamily="@font/roboto_regular"
                         android:gravity="center"
                         android:padding="10dp"
-                        android:textSize="15sp"></TextView>
+                        android:textSize="15sp"/>
 
                 </LinearLayout>
 

@@ -1,7 +1,5 @@
 package com.safepayu.wallet.activity;
 
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -10,30 +8,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.halper.Config;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.ResetPasscodeModel;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.Random;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -43,7 +32,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ForgotPasscode extends AppCompatActivity {
 
     EditText edit_number, enter_otp, enter_password;
-    Button btn_request_otp, btn_continue, btn_conform_password, resend_btn;
+    Button btn_request_otp, btn_continue, btn_conform_password, resend_btn,BackBtn;
     TextView timer, label, back_forgot_password;
     String str_edit_otp, str_edit_conf_pass, str_edit_number, password = "918429";
     private int randomPIN, Otpval;
@@ -62,6 +51,7 @@ public class ForgotPasscode extends AppCompatActivity {
         loadingDialog = new LoadingDialog(this);
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
         edit_number = (EditText) findViewById(R.id.number_forgot);
+        BackBtn=findViewById(R.id.FP_back_btn);
         label = findViewById(R.id.label);
         timer = findViewById(R.id.timer);
         enter_otp = (EditText) findViewById(R.id.enter_otp);
@@ -87,6 +77,13 @@ public class ForgotPasscode extends AppCompatActivity {
                 resend_top = true;
                 resendOtp();
 
+            }
+        });
+
+        BackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
