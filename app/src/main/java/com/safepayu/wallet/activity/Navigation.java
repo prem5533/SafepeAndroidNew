@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -57,6 +58,12 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     String versionName="",appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
     int versionCode=0;
     private LoadingDialog loadingDialog;
+
+    //for nav
+    private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet,liShopping,liChnangePasswlrd,liMyOrders,liHistory,liGenelogy,
+            liReferEarn,liUpdteKYC, liContactUs, liLogout;
+    private TextView tv_home,tvProfile,tvPackageDetails,tvBuyPackage,tvBusinessWallet,tvMyWallet,tvShopping,tvChangePassword,tvMyOrders,tvHistory,tvGenelogy,
+            tvReferEarn,tvUpdateKYC, tvContact,tvLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +123,56 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         layout_water = findViewById(R.id.layout_water);
         layout_broadband = findViewById(R.id.layout_broadband);
 
+        liHome = findViewById(R.id.li_home);
+        liProfile = findViewById(R.id.li_profile);
+        liPackageDetails = findViewById(R.id.li_package_details);
+        liBuyPackage = findViewById(R.id.li_buy_package);
+        liCommission = findViewById(R.id.li_commission);
+        liWallet = findViewById(R.id.li_my_wallet);
+        liShopping = findViewById(R.id.li_shopping);
+        liChnangePasswlrd = findViewById(R.id.li_change_password);
+        liMyOrders = findViewById(R.id.li_myorder);
+        liHistory = findViewById(R.id.li_history);
+        liGenelogy = findViewById(R.id.li_genelogy);
+        liReferEarn = findViewById(R.id.li_refer_earn);
+        liUpdteKYC = findViewById(R.id.li_update_kyc);
+        liContactUs = findViewById(R.id.li_contact_us);
+        liLogout = findViewById(R.id.li_logout);
+
+        tv_home = findViewById(R.id.tv_home);
+        tvProfile = findViewById(R.id.tv_profile);
+        tvPackageDetails = findViewById(R.id.tv_package_details);
+        tvBuyPackage = findViewById(R.id.tv_buy_packge);
+        tvBusinessWallet = findViewById(R.id.tv_commission);
+        tvMyWallet = findViewById(R.id.tv_my_wallet);
+        tvShopping = findViewById(R.id.tv_shopping);
+        tvChangePassword = findViewById(R.id.tv_change_password);
+        tvMyOrders = findViewById(R.id.tv_my_orders);
+        tvHistory = findViewById(R.id.tv_history);
+        tvGenelogy = findViewById(R.id.tv_genelogy);
+        tvReferEarn = findViewById(R.id.tv_refer_earn);
+        tvUpdateKYC = findViewById(R.id.tv_update_kyc);
+        tvContact = findViewById(R.id.tv_contact_us);
+        tvLogout = findViewById(R.id.tv_logout);
+
+
+        //********************set listener&*****************
+        liHome.setOnClickListener(this);
+        liProfile.setOnClickListener(this);
+        liPackageDetails.setOnClickListener(this);
+        liBuyPackage.setOnClickListener(this);
+        liCommission.setOnClickListener(this);
+        liWallet.setOnClickListener(this);
+        liShopping.setOnClickListener(this);
+        liChnangePasswlrd.setOnClickListener(this);
+        liMyOrders.setOnClickListener(this);
+        liHistory.setOnClickListener(this);
+        liGenelogy.setOnClickListener(this);
+        liReferEarn.setOnClickListener(this);
+        liUpdteKYC.setOnClickListener(this);
+        liContactUs.setOnClickListener(this);
+        liLogout.setOnClickListener(this);
+
         addMoney.setOnClickListener(this);
         sendMoney.setOnClickListener(this);
         recharge.setOnClickListener(this);
@@ -167,52 +224,55 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         // Handle navigation view item clicks here.
-        int id = menuItem.getItemId();
+//        int id = menuItem.getItemId();
+//
+//        if (id == R.id.nav_home) {
+//
+//
+//        } else if (id == R.id.nav_profile) {
+//            startActivity(new Intent(Navigation.this, Profile.class));
+//        } else if (id == R.id.nav_show_package) {
+//            startActivity(new Intent(Navigation.this, PackageDetails.class));
+//        } else if (id == R.id.nav_buy_packge) {
+//            startActivity(new Intent(Navigation.this, BuyMemberShip.class));
+//        } else if (id == R.id.wallet) {
+//            startActivity(new Intent(Navigation.this, WalletActivity.class));
+//        } else if (id == R.id.shoping) {
+//            Toast.makeText(this, "Coming Sooon", Toast.LENGTH_SHORT).show();
+//            drawer.closeDrawers();
+//        } else if (id == R.id.orders) {
+//            Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_LONG).show();
+//        } else if (id == R.id.passcode) {
+//          startActivity(new Intent(Navigation.this, ForgotPasscode.class));
+//        } else if (id == R.id.history) {
+//           // startActivity(new Intent(Navigation.this, HistoryActivity.class));
+//        } else if (id == R.id.geneology) {
+//
+//            startActivity(new Intent(Navigation.this, Geneology.class));
+//
+//        } else if (id == R.id.refer) {
+//            startActivity(new Intent(Navigation.this, ReferAndEarn.class));
+//
+//        } else if (id == R.id.kyc) {
+//            Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_LONG).show();
+//        } else if (id == R.id.logout) {
+//            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, null);
+//            startActivity(intent);
+//            finish();
+//
+//        } else if (id == R.id.contact) {
+//            startActivity(new Intent(Navigation.this, ContactUs.class));
+//        } else if (id == R.id.commission) {
+//            startActivity(new Intent(Navigation.this, Commission.class));
+//        }
+//
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
 
-        if (id == R.id.nav_home) {
 
 
-        } else if (id == R.id.nav_profile) {
-            startActivity(new Intent(Navigation.this, Profile.class));
-        } else if (id == R.id.nav_show_package) {
-            startActivity(new Intent(Navigation.this, PackageDetails.class));
-        } else if (id == R.id.nav_buy_packge) {
-            startActivity(new Intent(Navigation.this, BuyMemberShip.class));
-        } else if (id == R.id.wallet) {
-            startActivity(new Intent(Navigation.this, WalletActivity.class));
-        } else if (id == R.id.shoping) {
-            Toast.makeText(this, "Coming Sooon", Toast.LENGTH_SHORT).show();
-            drawer.closeDrawers();
-        } else if (id == R.id.orders) {
-            Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_LONG).show();
-        } else if (id == R.id.passcode) {
-          startActivity(new Intent(Navigation.this, ForgotPasscode.class));
-        } else if (id == R.id.history) {
-           // startActivity(new Intent(Navigation.this, HistoryActivity.class));
-        } else if (id == R.id.geneology) {
-
-            startActivity(new Intent(Navigation.this, Geneology.class));
-
-        } else if (id == R.id.refer) {
-            startActivity(new Intent(Navigation.this, ReferAndEarn.class));
-
-        } else if (id == R.id.kyc) {
-            Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_LONG).show();
-        } else if (id == R.id.logout) {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, null);
-            startActivity(intent);
-            finish();
-
-        } else if (id == R.id.contact) {
-            startActivity(new Intent(Navigation.this, ContactUs.class));
-        } else if (id == R.id.commission) {
-            startActivity(new Intent(Navigation.this, Commission.class));
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -251,6 +311,552 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
             case R.id.pay_layout:
                 startActivity(new Intent(Navigation.this, SendMoneyToWallet.class));
+                break;
+
+
+            case R.id.li_home:
+                tv_home.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                liHome.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_profile:
+                startActivity(new Intent(Navigation.this, Profile.class));
+
+                tvProfile.setTextColor(getResources().getColor(R.color.bue_A800));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                liProfile.setBackgroundColor(getResources().getColor(R.color.white));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_package_details:
+                startActivity(new Intent(Navigation.this, PackageDetails.class));
+
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+
+                drawer.closeDrawers();
+                break;
+            case R.id.li_buy_package:
+                startActivity(new Intent(Navigation.this, BuyMemberShip.class));
+
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_commission:
+                startActivity(new Intent(Navigation.this, Commission.class));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                liCommission.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_my_wallet:
+                startActivity(new Intent(Navigation.this, WalletActivity.class));
+
+                tvMyWallet.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                liWallet.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_shopping:
+
+                tvShopping.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                Toast.makeText(this, "Coming Sooon", Toast.LENGTH_SHORT).show();
+                liShopping.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_change_password:
+                startActivity(new Intent(Navigation.this, ForgotPasscode.class));
+
+                tvChangePassword.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_myorder:
+
+                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_LONG).show();
+
+                tvMyOrders.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_history:
+
+                //    startActivity(new Intent(Navigation.this, HistoryActivity.class));
+                tvHistory.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                liHistory.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_genelogy:
+                startActivity(new Intent(Navigation.this, Geneology.class));
+
+                tvGenelogy.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_refer_earn:
+                startActivity(new Intent(Navigation.this, ReferAndEarn.class));
+
+                tvReferEarn.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_update_kyc:
+                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_LONG).show();
+
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_contact_us:
+                startActivity(new Intent(Navigation.this, ContactUs.class));
+
+                tvContact.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.white));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                drawer.closeDrawers();
+                break;
+
+            case R.id.li_logout:
+                liLogout.setBackgroundColor(getResources().getColor(R.color.white));
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, null);
+                startActivity(intent);
+                finish();
+
+                drawer.closeDrawers();
                 break;
         }
 

@@ -1,6 +1,7 @@
 package com.safepayu.wallet.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -19,16 +20,19 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.SendToWalletRequest;
 import com.safepayu.wallet.models.response.BaseResponse;
+import com.safepayu.wallet.utils.PasscodeClickListener;
+import com.safepayu.wallet.utils.PasscodeDialog;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class SendMoneyToWallet extends BaseActivity implements View.OnClickListener {
+public class SendMoneyToWallet extends BaseActivity implements View.OnClickListener, PasscodeClickListener {
 
     Button BackBtn,SendMoneyBtn;
     private EditText MobileED,AmountED;
     private LoadingDialog loadingDialog;
+    SendToWalletRequest sendToWalletRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,17 +97,17 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
                     if (Integer.parseInt(Amount)<0 || Integer.parseInt(Amount)==0 ){
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Enter Correct Amount",false);
                     }else {
-                        SendToWalletRequest sendToWalletRequest=new SendToWalletRequest();
+                        sendToWalletRequest=new SendToWalletRequest();
                         sendToWalletRequest.setAmount(Amount);
                         sendToWalletRequest.setMobile(Mobile);
                         sendToWalletRequest.setUser_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
 
-                        if (isNetworkAvailable()){
-                            WithAmountMethod(sendToWalletRequest);
-                        }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Check Your Internet Connection",false);
+                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+                            startActivity(new Intent(SendMoneyToWallet.this,CreatePassCodeActivity.class));
+                        } else {
+                            PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoneyToWallet.this, SendMoneyToWallet.this, "");
+                            passcodeDialog.show();
                         }
-
                     }
 
                 }else {
@@ -142,6 +146,20 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.sendMoneyToWalletLayout), true, e);
                     }
                 }));
+
+    }
+
+    @Override
+    public void onPasscodeMatch(boolean isPasscodeMatched) {
+        if (isPasscodeMatched){
+            if (isNetworkAvailable()){
+                WithAmountMethod(sendToWalletRequest);
+            }else {
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Check Your Internet Connection",false);
+            }
+        }else {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Invalid Passcode",false);
+        }
 
     }
 }

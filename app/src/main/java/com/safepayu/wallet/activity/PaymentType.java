@@ -263,7 +263,6 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.paymentLayout), true, e);
                     }
                 }));
-
     }
 
 
@@ -348,7 +347,6 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         intentProceed.putExtra("pay_mode",payment_mode);
         intentProceed.putExtra("sub_merchant_id","");
         startActivityForResult(intentProceed, StaticDataModel.PWE_REQUEST_CODE);
-
     }
 
     public String hashCal(String type,String str){
@@ -424,6 +422,9 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                     rechargeRequest.setOperator_code(OperatorCode);
                     rechargeRequest.setRecharge_type(RechargeTypeId);
                     rechargeRequest.setOperator_id(OperatorId);
+                    rechargeRequest.setTransaction_id("easepayid");
+                    rechargeRequest.setPayment_mode("bank");
+                    rechargeRequest.setNumber_type("");
 
                     doRecharge(rechargeRequest);
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout), "Payment Success", false);
@@ -448,6 +449,9 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             rechargeRequest.setOperator_code(OperatorCode);
             rechargeRequest.setRecharge_type(RechargeTypeId);
             rechargeRequest.setOperator_id(OperatorId);
+            rechargeRequest.setTransaction_id("");
+            rechargeRequest.setPayment_mode("wallet");
+            rechargeRequest.setNumber_type("");
 
             doRecharge(rechargeRequest);
         }else {

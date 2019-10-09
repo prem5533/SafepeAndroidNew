@@ -302,11 +302,15 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
 
                         if (response.isStatus()) {
 
-                            OperatorText=response.getOperator().getOperator_name();
-                            OperatorCode=response.getOperator().getOperator_code();
-                            int indexx=OperatorCodeList.indexOf(OperatorCode);
-                            OperatorId=IdList.get(indexx);
-                            OperatorSpinner.setSelection(indexx);
+                            try{
+                                OperatorText=response.getOperator().getOperator_name();
+                                OperatorCode=response.getOperator().getOperator_code();
+                                int indexx=OperatorCodeList.indexOf(OperatorCode);
+                                OperatorId=IdList.get(indexx);
+                                OperatorSpinner.setSelection(indexx);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     }
 
@@ -321,6 +325,7 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
     @Override
     public void onOfferSelect(int position, Offer offer) {
         AmountED.setText(offer.getAmount());
+        AmountED.setSelection(offer.getAmount().length());
         dialog.dismiss();
     }
 

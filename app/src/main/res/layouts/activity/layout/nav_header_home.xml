@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nav_header"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@color/white"
+    android:background="#f7f8f8"
     android:gravity="bottom"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
@@ -13,26 +14,51 @@
         android:layout_width="160dp"
         android:layout_height="60dp"
         android:layout_gravity="left"
-        android:src="@drawable/safepe_logo"/>
+        android:src="@drawable/safepe_logo_transparent"/>
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center"
+        android:text="@string/splash_tag_2"
+        android:textColor="@color/blue_theme"
+        android:textSize="12sp"
+        android:layout_marginLeft="40dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginLeft="80dp"
+        android:textSize="12sp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/splash_tag_3"
+        android:textColor="@color/green_theme"
+        style="@style/TextAppearance.AppCompat.Medium" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="20dp"
-        android:background="@color/green_theme"></LinearLayout>
+        android:background="@color/green_theme"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/blue_theme"></LinearLayout>
+        android:background="@color/blue_theme"/>
     <TextView
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_medium"
+        android:fontFamily="@font/roboto_italic"
         android:textColor="@color/bue_A800"
-        android:textSize="15sp"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"
         android:text="The New Generation Payment App"/>
 
 </LinearLayout>

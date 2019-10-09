@@ -1,6 +1,7 @@
 package com.safepayu.wallet.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,7 +37,7 @@ public class RechargeHistory extends BaseActivity implements RechargeHistoryAdap
 
     private Dialog dialogStatus;
     private RelativeLayout StatusColorBackground;
-    private TextView StatusTV,TransactionIdTV,CustomerNumberIdTV,AmountTV,RechargeTypeTV;
+    private TextView StatusTV,TransactionIdTV,CustomerNumberIdTV,AmountTV,RechargeTypeTV,ContactSupportTV;
     private Button GoToWalletBtn;
 
 
@@ -59,7 +60,7 @@ public class RechargeHistory extends BaseActivity implements RechargeHistoryAdap
         dialogStatus = new Dialog(RechargeHistory.this, android.R.style.Theme_Light);
         dialogStatus.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogStatus.setContentView(R.layout.recharge_histroy_detail);
-        dialogStatus.setCancelable(false);
+        dialogStatus.setCancelable(true);
 
         StatusColorBackground=dialogStatus.findViewById(R.id.headerbar);
         StatusTV=dialogStatus.findViewById(R.id.tv_status);
@@ -67,7 +68,8 @@ public class RechargeHistory extends BaseActivity implements RechargeHistoryAdap
         CustomerNumberIdTV=dialogStatus.findViewById(R.id.tv_customer_id_number);
         AmountTV=dialogStatus.findViewById(R.id.tv_wallet_amount);
         RechargeTypeTV=dialogStatus.findViewById(R.id.tv_recharge_type);
-        GoToWalletBtn=dialogStatus.findViewById(R.id.gobackBtn);
+        GoToWalletBtn=dialogStatus.findViewById(R.id.recharge_back_btn);
+        ContactSupportTV=dialogStatus.findViewById(R.id.tv_contct_support);
 
         getRechargeHistory();
 
@@ -81,6 +83,14 @@ public class RechargeHistory extends BaseActivity implements RechargeHistoryAdap
         GoToWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialogStatus.dismiss();
+            }
+        });
+
+        ContactSupportTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RechargeHistory.this,ContactUs.class));
                 dialogStatus.dismiss();
             }
         });
@@ -99,7 +109,7 @@ public class RechargeHistory extends BaseActivity implements RechargeHistoryAdap
     private void SelectedHistory(RechargeHistoryResponse.DataBean selectedPackage) {
 
         TransactionIdTV.setText(selectedPackage.getTransactionID());
-        AmountTV.setText(String.valueOf(selectedPackage.getAmount()));
+        AmountTV.setText(getResources().getString(R.string.rupees)+" "+selectedPackage.getAmount());
         CustomerNumberIdTV.setText(selectedPackage.getNumber());
 
         int rechargeTypeNo=0,statusNo=0;

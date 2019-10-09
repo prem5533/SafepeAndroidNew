@@ -10,7 +10,7 @@
         android:id="@+id/l1_send"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -29,7 +29,8 @@
             android:gravity="center"
             android:text="Forgot Passcode"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="18dp" />
     </RelativeLayout>
 
     <ScrollView
@@ -37,7 +38,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/l1_send"
         android:background="@color/white">
-
 
         <LinearLayout
             android:layout_width="match_parent"

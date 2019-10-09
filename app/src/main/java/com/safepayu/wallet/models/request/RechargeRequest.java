@@ -12,14 +12,26 @@ public class RechargeRequest {
      * operator_code : 13
      * circle_code : 51
      * operator_id : 1
+     * payment_mode : bank
      */
 
+    private String transaction_id;
     private String recharge_type;
+    private String number_type;
     private String number;
     private String amount;
     private String operator_code;
     private String circle_code;
     private String operator_id;
+    private String payment_mode;
+
+    public String getTransaction_id() {
+        return transaction_id;
+    }
+
+    public void setTransaction_id(String transaction_id) {
+        this.transaction_id = transaction_id;
+    }
 
     public String getRecharge_type() {
         return recharge_type;
@@ -27,6 +39,14 @@ public class RechargeRequest {
 
     public void setRecharge_type(String recharge_type) {
         this.recharge_type = recharge_type;
+    }
+
+    public String getNumber_type() {
+        return number_type;
+    }
+
+    public void setNumber_type(String number_type) {
+        this.number_type = number_type;
     }
 
     public String getNumber() {
@@ -67,5 +87,13 @@ public class RechargeRequest {
 
     public void setOperator_id(String operator_id) {
         this.operator_id = operator_id;
+    }
+
+    public String getPayment_mode() {
+        return payment_mode;
+    }
+
+    public void setPayment_mode(String payment_mode) {
+        this.payment_mode = payment_mode;
     }
 }

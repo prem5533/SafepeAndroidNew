@@ -1,12 +1,15 @@
 package com.safepayu.wallet.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,7 +36,11 @@ public class WalletHistory extends BaseActivity implements WalletHistoryAdapter.
     private WalletHistoryAdapter mAdapter;
     private WalletHistoryResponse historyResponse;
 
-    private Dialog dialogPending;
+    private Dialog dialogStatus;
+    private RelativeLayout StatusColorBackground;
+    private LinearLayout DescriptionLayout;
+    private TextView StatusTV,TransactionIdTV,CustomerNumberIdTV,AmountTV,RechargeTypeTV,DescriptionTextTV,OperationTextTV,ContactSupportTV;
+    private Button GoToWalletBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +60,46 @@ public class WalletHistory extends BaseActivity implements WalletHistoryAdapter.
         mAdapter = new WalletHistoryAdapter(this, this);
         WalletHistoryListView.setAdapter(mAdapter);
 
-        dialogPending = new Dialog(WalletHistory.this, android.R.style.Theme_Light);
-        dialogPending.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialogPending.setContentView(R.layout.recharge_histroy_detail);
-        dialogPending.setCancelable(false);
+        dialogStatus = new Dialog(WalletHistory.this, android.R.style.Theme_Light);
+        dialogStatus.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogStatus.setContentView(R.layout.recharge_histroy_detail);
+        dialogStatus.setCancelable(true);
 
-
+        StatusColorBackground=dialogStatus.findViewById(R.id.headerbar);
+        StatusTV=dialogStatus.findViewById(R.id.tv_status);
+        TransactionIdTV=dialogStatus.findViewById(R.id.tv_recharge_transction_id);
+        CustomerNumberIdTV=dialogStatus.findViewById(R.id.tv_customer_id_number);
+        AmountTV=dialogStatus.findViewById(R.id.tv_wallet_amount);
+        RechargeTypeTV=dialogStatus.findViewById(R.id.tv_recharge_type);
+        GoToWalletBtn=dialogStatus.findViewById(R.id.recharge_back_btn);
+        DescriptionTextTV=dialogStatus.findViewById(R.id.description);
+        OperationTextTV=dialogStatus.findViewById(R.id.operationText);
+        ContactSupportTV=dialogStatus.findViewById(R.id.tv_contct_support);
+        DescriptionLayout=dialogStatus.findViewById(R.id.description_layout);
+        DescriptionLayout.setVisibility(View.VISIBLE);
+        OperationTextTV.setText("Operation ");
+        
         getWalletHistory();
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        GoToWalletBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogStatus.dismiss();
+            }
+        });
+
+        ContactSupportTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(WalletHistory.this,ContactUs.class));
+                dialogStatus.dismiss();
             }
         });
     }
@@ -85,8 +120,36 @@ public class WalletHistory extends BaseActivity implements WalletHistoryAdapter.
     }
 
     private void SelectedHistory(WalletHistoryResponse.DataBean selectedPackage) {
+        int statusNo=0;
+        String CustNo="";
 
-        Toast.makeText(this, selectedPackage.getTransaction_no(), Toast.LENGTH_SHORT).show();
+        try{
+            statusNo=selectedPackage.getStatus();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if (statusNo==0){
+            StatusTV.setText("Pending");
+            StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.clay_yellow));
+        }else  if (statusNo==1){
+            StatusTV.setText("Successful");
+            StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.green_500));
+        }else {
+            StatusTV.setText("Failed");
+            StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.red_500));
+        }
+
+        CustNo=selectedPackage.getWallet_no();
+        CustNo=CustNo.substring(3,CustNo.length());
+
+        DescriptionTextTV.setText(selectedPackage.getDescription());
+        RechargeTypeTV.setText(selectedPackage.getOperation());
+        TransactionIdTV.setText(selectedPackage.getTransaction_no());
+        AmountTV.setText(getResources().getString(R.string.rupees)+" "+selectedPackage.getAmount());
+        CustomerNumberIdTV.setText(CustNo);
+
+        dialogStatus.show();
 
     }
 

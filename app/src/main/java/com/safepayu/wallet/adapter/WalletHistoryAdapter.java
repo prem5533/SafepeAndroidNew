@@ -111,6 +111,7 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
                     imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_pending));
                     status="pending";
                 }else {
+                    imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_fail));
                     status="failed";
                 }
             }catch (Exception e){
@@ -121,7 +122,7 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
 
             tv_opertionType.setText(mItem.get(position).getOperation());
             tv_walletDescription.setText(mItem.get(position).getDescription());
-            AmountTV.setText(String.valueOf(mItem.get(position).getAmount()));
+            AmountTV.setText(context.getResources().getString(R.string.rupees)+" "+mItem.get(position).getAmount());
             TimeTV.setText(mItem.get(position).getCreated_at());
             StatusTV.setText(status);
 
@@ -132,12 +133,10 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
             if (selectedHistoryView == null) {
                 selectedHistoryPosition = getLayoutPosition();
                 selectedHistoryView = itemView;
-                itemView.setBackground(context.getResources().getDrawable(R.drawable.package_selected));
             } else {
                 selectedHistoryView.setBackground(context.getResources().getDrawable(R.drawable.package_normal));
                 selectedHistoryPosition = getLayoutPosition();
                 selectedHistoryView = itemView;
-                itemView.setBackground(context.getResources().getDrawable(R.drawable.package_selected));
 
             }
             if (callback != null) {

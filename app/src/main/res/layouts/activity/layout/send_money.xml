@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/withMoneyLayout"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:id="@+id/withMoneyLayout">
 
     <RelativeLayout
         android:id="@+id/headerbar"
@@ -807,29 +807,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="0dp"
-                        android:background="@drawable/deactive_rounded_buttons"
                         android:orientation="horizontal"
                         android:padding="0dp"
                         android:layout_weight="1"
                         android:weightSum="10">
 
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_weight="1"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/banktansfer" />
-
-                        <Button
-                            android:id="@+id/BankBenAddBtn"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textSize="10dp"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="end"
-                            android:background="#00ffffff"
-                            android:textColor="@color/white" />
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:id="@+id/BankBenAddBtn">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_bank" />
+
+                            <TextView
+                                android:id="@+id/tv_bank_click_here"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="Click here"
+                                android:textSize="14sp"
+                                android:gravity="center"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/green_theme"
+                                android:padding="10dp"
+                                >
+                            </TextView>
+                        </LinearLayout>
                     </RelativeLayout>
 
                 </LinearLayout>

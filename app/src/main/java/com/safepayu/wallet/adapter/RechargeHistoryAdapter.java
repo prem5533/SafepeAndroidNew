@@ -111,6 +111,7 @@ public class RechargeHistoryAdapter extends RecyclerView.Adapter<RechargeHistory
                     imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_pending));
                     status="pending";
                 }else {
+                    imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_fail));
                     status="failed";
                 }
             }catch (Exception e){
@@ -122,7 +123,7 @@ public class RechargeHistoryAdapter extends RecyclerView.Adapter<RechargeHistory
             RechargeTypeTV.setText(mItem.get(position).getTransactionID());
             TimeTV.setText(mItem.get(position).getCreated_at());
             CustomerIdTV.setText(mItem.get(position).getNumber());
-            AmountTV.setText(String.valueOf(mItem.get(position).getAmount()));
+            AmountTV.setText(context.getResources().getString(R.string.rupees)+" "+mItem.get(position).getAmount());
             StatusTV.setText(status);
 
         }

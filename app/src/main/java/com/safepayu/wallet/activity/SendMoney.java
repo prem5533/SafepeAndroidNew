@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -20,10 +19,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
-import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
-import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
 import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
 
@@ -37,8 +33,8 @@ import static android.view.View.VISIBLE;
 
 public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChangeListener {
 
-    Button AddBankBenBtn,BackBtn,WithDrawBtn;
-    private LinearLayout WithdrawAmountlayout;
+    Button BackBtn,WithDrawBtn;
+    private LinearLayout WithdrawAmountlayout,AddBankBenBtn;
     private Spinner BankBenSpinner;
     private EditText AmountED;
     private RadioGroup radioGroup;
