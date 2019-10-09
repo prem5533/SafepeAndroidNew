@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         app:fontCustom="@string/Roboto"
         android:textStyle="bold"
+        android:textSize="18sp"
         android:layout_height="wrap_content"
         style="@style/TextAppearance.AppCompat.Headline"
         android:text="@string/verification" />
@@ -32,6 +33,7 @@
         app:fontCustom="@string/Roboto"
         android:textStyle="normal"
         android:padding="10dp"
+        android:textSize="15sp"
         android:layout_height="wrap_content"
         style="@style/TextAppearance.AppCompat.Medium"
         android:text="@string/otp_message" />
@@ -40,6 +42,7 @@
         app:fontCustom="@string/Roboto"
         android:id="@+id/tv.mobileNo"
         android:textStyle="normal"
+        android:textSize="15sp"
         android:layout_height="wrap_content"
         style="@style/TextAppearance.AppCompat.Medium"
         android:text="+91 " />
@@ -66,8 +69,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:background="@drawable/edit_text_border_default"
+            android:background="@drawable/white_button_grayborder"
             android:padding="10dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto_regular"
             style="@style/defaultEditTextStyle"
             android:inputType="textPassword"
             android:hint="OTP" />
@@ -79,6 +84,9 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:text="@string/verify"
+        android:textSize="15sp"
+        android:background="@drawable/rounded_buttons"
+        android:fontFamily="@font/roboto_regular"
         style="@style/buttonDefault"
         android:id="@+id/btn.verify" />
 
@@ -94,6 +102,8 @@
             app:fontCustom="@string/Roboto"
             android:textStyle="normal"
             android:padding="10dp"
+            android:textSize="12sp"
+            android:fontFamily="@font/roboto_regular"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.AppCompat.Small"
             android:text="@string/don_t_receive_otp" />
@@ -103,6 +113,8 @@
             app:fontCustom="@string/Roboto"
             android:textStyle="bold"
             android:id="@+id/btn.resendOtp"
+            android:textSize="12sp"
+            android:fontFamily="@font/roboto_regular"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:textColor="@color/blue_700"

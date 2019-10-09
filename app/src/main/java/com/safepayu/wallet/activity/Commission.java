@@ -20,14 +20,14 @@ public class Commission extends BaseActivity {
         setToolbar(false, null, false);
 
         SendWallet=findViewById(R.id.send_to_wallet);
-        //BackBtn=findViewById(R.id.water_back_btn);
+        BackBtn=findViewById(R.id.send_back_btn);
 
-//        BackBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                finish();
-//            }
-//        });
+        BackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         SendWallet.setOnClickListener(new View.OnClickListener() {
             @Override

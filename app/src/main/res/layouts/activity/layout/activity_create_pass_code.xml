@@ -12,7 +12,7 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:src="@drawable/logo_big" />
 
     <TextView
@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enter your passcode"
+        android:fontFamily="@font/roboto_regular"
         android:textSize="18.0sp"
         android:gravity="center"
         android:padding="20.0dp" />
@@ -28,7 +29,7 @@
         android:id="@+id/otp_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@color/blue_theme"
         app:bar_active_color="@color/colorPrimary"
         app:bar_enabled="true"
         app:bar_error_color="@color/red_600"

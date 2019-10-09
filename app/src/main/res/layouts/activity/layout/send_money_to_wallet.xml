@@ -9,7 +9,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -29,7 +29,8 @@
             android:gravity="center"
             android:text="Send money"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="18sp" />
     </RelativeLayout>
 
 
@@ -47,12 +48,13 @@
             android:paddingBottom="10dp">
 
             <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
+                android:foregroundGravity="left"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/money_icon" />
-
+                android:padding="5dp"
+                android:src="@drawable/ic_wallet_history" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,8 +66,9 @@
                 android:gravity="center"
                 android:text="Transfer Money"
                 android:id="@+id/text_wallet_money_sendmoney"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp" />
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/bue_A800"
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,6 +97,8 @@
                         android:layout_weight="1"
                         android:textSize="18sp"
                         android:paddingLeft="40dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"
                         android:layout_marginLeft="35dp"
                         android:layout_alignParentEnd="true"
                         android:hint="Enter Mobile Number "/>
@@ -105,6 +110,7 @@
                         android:text="+91"
                         android:textSize="18dp"
                         android:textColor="@color/blue"
+                        android:fontFamily="@font/roboto_regular"
                         android:layout_marginTop="15dp"
                         android:layout_marginLeft="0dp" />
                 </RelativeLayout>
@@ -147,6 +153,7 @@
                             android:gravity="center"
                             android:text="₹"
                             android:textSize="24dp"
+                            android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/blue"/>
 
 
@@ -163,8 +170,10 @@
                             android:singleLine="true"
                             android:imeOptions="actionDone"
                             android:layout_marginLeft="5dp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/black"
                             android:textSize="18sp"
-                            android:textColor="#000" />
+                          />
 
                     </LinearLayout>
 
@@ -231,17 +240,11 @@
         </LinearLayout>
     </LinearLayout>
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="20dp"
-        android:layout_above="@id/darkline"
-        android:id="@+id/lightline"
-        android:background="@color/lightLine"/>
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
+        android:layout_height="14dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="7dp"
-        android:background="@color/darkLine"/>
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
+
 </RelativeLayout>

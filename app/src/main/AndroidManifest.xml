@@ -21,7 +21,8 @@
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home" />
         <activity android:name=".activity.BuyMemberShip" />
-        <activity android:name=".activity.AddUpdateAddress" />
+        <activity android:name=".activity.AddUpdateAddress"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".activity.OtpVerification" />
         <activity android:name=".activity.NewAccount" />
         <activity android:name=".activity.LoginActivity" />
@@ -45,7 +46,9 @@
         <activity android:name=".activity.ContactUs"/>
         <activity android:name=".activity.ReferAndEarn"/>
         <activity android:name=".ChangePasscode"/>
-        <activity android:name=".activity.ForgotPasscode"/>
+        <activity android:name=".activity.ForgotPasscode"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            />
         <activity android:name=".activity.MemberBankAddPackages"/>
         <activity android:name=".activity.SendMoneyToWallet"/>
         <activity android:name=".activity.ForgetPassword"/>
