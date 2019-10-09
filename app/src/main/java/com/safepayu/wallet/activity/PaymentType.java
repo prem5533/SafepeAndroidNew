@@ -29,6 +29,8 @@ import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
 
+import org.json.JSONObject;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -299,7 +301,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         //key|txnid|amount|productinfo|firstname|email_id|udf1|udf2|udf3|udf4|udf5||||||salt|key
 
         customer_phone = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
-        payment_mode="test";
+        payment_mode="production";//test
         customer_address1="noida";
         customer_address2="noida";
         customer_city="noida";
@@ -311,6 +313,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         merchant_udf3="udf3";
         merchant_udf4="udf4";
         merchant_udf5="udf5";
+        Amount="1";
         merchant_payment_amount = Float.parseFloat(Amount);
 
         hash = hashKeyResponse.getMerchant_key() + "|" + hashKeyResponse.getTransactionId() + "|" + merchant_payment_amount + "|" + hashKeyRequest.getMerchant_productInfo()
@@ -383,37 +386,48 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
     // "cardnum":"NA","key":"FGMXRKGLPF","bankcode":"NA","merchant_logo":"NA","udf10":"","payment_source":"Easebuzz",
     // "udf1":"udf1","udf3":"udf3","udf2":"udf2","udf5":"udf5","mode":"DC","udf7":"","udf6":"","udf9":"","udf8":"","flag":0}
         String response="",result="";
+        JSONObject jsonObject=null;
+        String bank_ref_num="",txnid="",productinfo="",net_amount_debit="",mode="",status="",easepayid="";
 
         if (requestCode==100){
             try{
                 result = data.getStringExtra("result");
                 response = data.getStringExtra("payment_response");
                 Log.d("response",response+result);
+
+                jsonObject=new JSONObject(response);
+
+                bank_ref_num =jsonObject.getString("bank_ref_num");
+                txnid =jsonObject.getString("txnid");
+                productinfo =jsonObject.getString("productinfo");
+                net_amount_debit =jsonObject.getString("net_amount_debit");
+                mode =jsonObject.getString("mode");
+                status =jsonObject.getString("status");
+                easepayid =jsonObject.getString("easepayid");
             }catch (Exception e){
                 e.printStackTrace();
             }
-            if (requestCode==-1){
 
-                SendPaymentGatewayDetailsRequest sendPaymentGatewayDetailsRequest = new SendPaymentGatewayDetailsRequest();
-                sendPaymentGatewayDetailsRequest.setUser_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
-                sendPaymentGatewayDetailsRequest.setBank_ref_no("Bank Ref No");
-                sendPaymentGatewayDetailsRequest.setTransaction_id("trans Id");
-                sendPaymentGatewayDetailsRequest.setDescription("productinfo");
-                sendPaymentGatewayDetailsRequest.setOpration("Debit");
-                sendPaymentGatewayDetailsRequest.setAmount("net_amount_debit");
-                sendPaymentGatewayDetailsRequest.setMode_of_payment("mode");
-                sendPaymentGatewayDetailsRequest.setStatus("success");
-                sendPaymentGatewayDetailsRequest.setEasy_pay_id("easepayid");
-                sendPaymentGatewayDetailsRequest.setPackage_amount("package_amount");
-                sendPaymentGatewayDetailsRequest.setPackage_id("package_id");
+            SendPaymentGatewayDetailsRequest sendPaymentGatewayDetailsRequest = new SendPaymentGatewayDetailsRequest();
+            sendPaymentGatewayDetailsRequest.setUser_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
+            sendPaymentGatewayDetailsRequest.setBank_ref_no(bank_ref_num);
+            sendPaymentGatewayDetailsRequest.setTransaction_id(txnid);
+            sendPaymentGatewayDetailsRequest.setDescription(productinfo);
+            sendPaymentGatewayDetailsRequest.setOpration("Debit");
+            sendPaymentGatewayDetailsRequest.setAmount(net_amount_debit);
+            sendPaymentGatewayDetailsRequest.setMode_of_payment(mode);
+            sendPaymentGatewayDetailsRequest.setStatus(status);
+            sendPaymentGatewayDetailsRequest.setEasy_pay_id(easepayid);
+            sendPaymentGatewayDetailsRequest.setPackage_amount(Amount);
+            sendPaymentGatewayDetailsRequest.setPackage_id(OperatorCode);
+            sendPaymentGatewayDetailsRequest.setType("bank");
+
+            if (resultCode==-1){
 
                 if (PaymentFor.equalsIgnoreCase("Wallet")) {
 
-                    sendPaymentGatewayDetailsRequest.setType("Wallet");
 
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout), "Payment Success", false);
                 } else {
-                    sendPaymentGatewayDetailsRequest.setType("Recharge");
 
                     RechargeRequest rechargeRequest = new RechargeRequest();
                     rechargeRequest.setAmount(Amount);
@@ -422,20 +436,21 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                     rechargeRequest.setOperator_code(OperatorCode);
                     rechargeRequest.setRecharge_type(RechargeTypeId);
                     rechargeRequest.setOperator_id(OperatorId);
-                    rechargeRequest.setTransaction_id("easepayid");
+                    rechargeRequest.setTransaction_id(easepayid);
                     rechargeRequest.setPayment_mode("bank");
                     rechargeRequest.setNumber_type("");
 
                     doRecharge(rechargeRequest);
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout), "Payment Success", false);
                 }
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout), "Payment Success", false);
             }else {
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Payment Failed\n"+result+"\n"+response,true);
             }
+
+            saveTransactionDetails(sendPaymentGatewayDetailsRequest);
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Payment Failed",false);
         }
-
     }
 
     @Override
