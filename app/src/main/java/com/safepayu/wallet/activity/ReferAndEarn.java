@@ -2,10 +2,14 @@ package com.safepayu.wallet.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,11 +34,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class ReferAndEarn extends BaseActivity {
+public class ReferAndEarn extends BaseActivity implements View.OnClickListener {
 
     Button BackBtn,inviteFriends_btn;
     TextView referralCode;
     String strReferalcode;
+    private ImageView imageCopy;
     LinearLayout WhatsappLayout;
     private LoadingDialog loadingDialog;
 
@@ -44,6 +50,7 @@ public class ReferAndEarn extends BaseActivity {
 
         loadingDialog=new LoadingDialog(this);
         BackBtn=findViewById(R.id.ref_back_btn);
+        imageCopy = (ImageView) findViewById(R.id.image_copy);
 
         inviteFriends_btn=findViewById(R.id.referralbtn);
         referralCode= findViewById(R.id.tv_referralcode);
@@ -52,26 +59,12 @@ public class ReferAndEarn extends BaseActivity {
         strReferalcode= BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
         referralCode.setText(strReferalcode);
 
-        WhatsappLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendToWhatsapp();
-            }
-        });
+        //set listener ******************
+        imageCopy.setOnClickListener(this);
+        WhatsappLayout.setOnClickListener(this);
+        inviteFriends_btn.setOnClickListener(this);
+        BackBtn.setOnClickListener(this);
 
-        inviteFriends_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               showDialogMobile(ReferAndEarn.this);
-            }
-        });
-
-        BackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
     }
 
     @Override
@@ -173,5 +166,26 @@ public class ReferAndEarn extends BaseActivity {
         dialog.getWindow().setAttributes(lp);
         dialog.show();
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.li_whtasapp:
+                sendToWhatsapp();
+                break;
+            case R.id.referralbtn:
+                showDialogMobile(ReferAndEarn.this);
+                break;
+            case R.id.ref_back_btn:
+                finish();
+                break;
+            case R.id.image_copy:
+                ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("text label", strReferalcode);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(),"Copied",Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

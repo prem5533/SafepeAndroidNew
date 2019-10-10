@@ -142,10 +142,13 @@ public class WalletAddMoney extends BaseActivity implements PackageListAdapter.O
                                     Double packageAmt = response.getPackages().get(i).getPackageAmount();
                                     String packName = response.getPackages().get(i).getPackageName();
 
-                                    packages1.setId(id);
-                                    packages1.setPackageAmount(packageAmt);
-                                    packages1.setPackageName(packName);
+
+                                    packages1.setId(response.getPackages().get(i).getId());
+                                    packages1.setPackageAmount(response.getPackages().get(i).getPackageAmount());
+                                    packages1.setPackageName(response.getPackages().get(i).getPackageName());
                                     packages.add(packages1);
+
+                               //     mAdapter.notifyDataSetChanged();
                                 }
                             }
                             packageListData1.setPackages(packages);

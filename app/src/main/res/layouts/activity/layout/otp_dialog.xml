@@ -18,12 +18,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/im_cross"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_clear"
+                android:layout_marginRight="10dp"></ImageView>
+
             <LinearLayout
                 android:id="@+id/layout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="5dp"
                 android:visibility="visible">
 
                 <TextView
