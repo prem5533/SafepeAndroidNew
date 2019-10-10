@@ -282,6 +282,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                                     sendVerifyLink();
                                     break;
                             }
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout),response.getMessage(),false);
                         }
                     }
 

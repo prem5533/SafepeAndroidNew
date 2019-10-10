@@ -33,6 +33,8 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
+import java.util.Date;
 
 import datamodels.StaticDataModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -52,7 +54,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
     private TextView AmountTV;
 
     //recharge/bill payment parameter
-    private String RechargePaymentId="",Amount="",PaymentType="",PaymentFor="",RechargeTypeId="",OperatorCode="",CircleCode="",OperatorId="";
+    private String RechargePaymentId="",Amount="",PaymentTypeText="",PaymentFor="",RechargeTypeId="",OperatorCode="",CircleCode="",OperatorId="";
 
     private String merchant_trxnId="",merchant_productInfo="",customer_firstName="",customer_email_id="",customer_phone="";
     private String merchant_udf1="",merchant_udf2="",merchant_udf3="",merchant_udf4="",merchant_udf5="";
@@ -140,7 +142,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                 HashKeyRequest hashKeyRequest=new HashKeyRequest();
                 hashKeyRequest.setCustomer_firstName(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME));
                 hashKeyRequest.setMerchant_payment_amount(Amount);
-                hashKeyRequest.setMerchant_productInfo(PaymentFor+" "+PaymentType);
+                hashKeyRequest.setMerchant_productInfo(PaymentFor+" "+PaymentTypeText);
                 hashKeyRequest.setCustomer_email_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
 
                 if (isNetworkAvailable()){
@@ -165,7 +167,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
 
         try{
             Intent intent=getIntent();
-            PaymentType=intent.getStringExtra("PaymentType");
+            PaymentTypeText=intent.getStringExtra("PaymentType");
             RechargePaymentId=intent.getStringExtra("RechargePaymentId");
             Amount=intent.getStringExtra("Amount");
             PaymentFor=intent.getStringExtra("PaymentFor");
@@ -206,8 +208,8 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
 
     }
 
-    private void doRecharge(RechargeRequest rechargeRequest){
-
+    private void doRecharge(final RechargeRequest rechargeRequest){
+        final Intent intentRecharge=new Intent(PaymentType.this,PaidOrderActivity.class);
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
@@ -219,12 +221,31 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                     @Override
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
+                        Date currentTime = Calendar.getInstance().getTime();
+                        String date=currentTime.toString();
                         if (response.getStatus()) {
-                            Toast.makeText(PaymentType.this, response.getMessage(), Toast.LENGTH_SHORT).show();
-                            finish();
+
+                            if (response.getStatusCode()==0){
+                                intentRecharge.putExtra("status","pending");
+                            }else {
+                                intentRecharge.putExtra("status","success");
+                            }
+                           // Toast.makeText(PaymentType.this, response.getMessage(), Toast.LENGTH_SHORT).show();
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),response.getMessage(),false);
+                            intentRecharge.putExtra("status","failed");
+                            //BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),response.getMessage(),false);
                         }
+                        try{
+
+                            intentRecharge.putExtra("Amount",Amount);
+                            intentRecharge.putExtra("date",date);
+                            intentRecharge.putExtra("productinfo",PaymentFor+" "+PaymentTypeText);
+                            intentRecharge.putExtra("txnid",rechargeRequest.getTransaction_id());
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        //startActivity(intentRecharge);
+                        //finish();
                     }
 
                     @Override
@@ -239,8 +260,6 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
 
     private void saveTransactionDetails(SendPaymentGatewayDetailsRequest sendPaymentGatewayDetailsRequest) {
 
-        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
         BaseApp.getInstance().getDisposable().add(apiService.addBankToWallet(sendPaymentGatewayDetailsRequest)
@@ -249,10 +268,9 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                 .subscribeWith(new DisposableSingleObserver<SendPaymentGatewayDetailsResponse>() {
                     @Override
                     public void onSuccess(SendPaymentGatewayDetailsResponse response) {
-                        loadingDialog.hideDialog();
+
                         if (response.isStatus()) {
                             Toast.makeText(PaymentType.this, response.getMessage(), Toast.LENGTH_SHORT).show();
-                            finish();
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout), response.getMessage(), false);
                         }
@@ -261,7 +279,6 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                     @Override
                     public void onError(Throwable e) {
                         Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
-                        loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.paymentLayout), true, e);
                     }
                 }));
@@ -313,6 +330,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         merchant_udf3="udf3";
         merchant_udf4="udf4";
         merchant_udf5="udf5";
+
         Amount="1";
         merchant_payment_amount = Float.parseFloat(Amount);
 
@@ -387,7 +405,10 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
     // "udf1":"udf1","udf3":"udf3","udf2":"udf2","udf5":"udf5","mode":"DC","udf7":"","udf6":"","udf9":"","udf8":"","flag":0}
         String response="",result="";
         JSONObject jsonObject=null;
-        String bank_ref_num="",txnid="",productinfo="",net_amount_debit="",mode="",status="",easepayid="";
+        String bank_ref_num="",txnid="",productinfo="",net_amount_debit="",mode="",status="",easepayid="",date="";
+        SendPaymentGatewayDetailsRequest sendPaymentGatewayDetailsRequest = new SendPaymentGatewayDetailsRequest();
+        
+        Intent intentStatus=new Intent(PaymentType.this,PaidOrderActivity.class);
 
         if (requestCode==100){
             try{
@@ -404,11 +425,12 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                 mode =jsonObject.getString("mode");
                 status =jsonObject.getString("status");
                 easepayid =jsonObject.getString("easepayid");
+                date =jsonObject.getString("addedon");
             }catch (Exception e){
                 e.printStackTrace();
             }
 
-            SendPaymentGatewayDetailsRequest sendPaymentGatewayDetailsRequest = new SendPaymentGatewayDetailsRequest();
+            
             sendPaymentGatewayDetailsRequest.setUser_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
             sendPaymentGatewayDetailsRequest.setBank_ref_no(bank_ref_num);
             sendPaymentGatewayDetailsRequest.setTransaction_id(txnid);
@@ -423,7 +445,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             sendPaymentGatewayDetailsRequest.setType("bank");
 
             if (resultCode==-1){
-
+                intentStatus.putExtra("status","success");
                 if (PaymentFor.equalsIgnoreCase("Wallet")) {
 
 
@@ -444,13 +466,31 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                 }
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout), "Payment Success", false);
             }else {
+                intentStatus.putExtra("status","failed");
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Payment Failed\n"+result+"\n"+response,true);
             }
 
             saveTransactionDetails(sendPaymentGatewayDetailsRequest);
         }else {
+            intentStatus.putExtra("status","failed");
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Payment Failed",false);
         }
+
+        if (PaymentFor.equalsIgnoreCase("Wallet")) {
+
+        }else {
+            try{
+                intentStatus.putExtra("txnid",txnid);
+                intentStatus.putExtra("Amount",Amount);
+                intentStatus.putExtra("date",date);
+                intentStatus.putExtra("productinfo",productinfo);
+                //startActivity(intentStatus);
+               // finish();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Override
