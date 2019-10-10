@@ -30,6 +30,10 @@
             android:textColor="#fff"
             android:textSize="18sp" />
     </RelativeLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/headerbar">
 
     <LinearLayout
         android:layout_below="@id/headerbar"
@@ -343,11 +347,13 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list.packageListView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"/>
 
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

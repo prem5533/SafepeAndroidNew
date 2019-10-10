@@ -8,7 +8,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -27,8 +27,9 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="SafePe Wallet"
+            android:fontFamily="@font/roboto_regular"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
     </RelativeLayout>
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_below="@id/headerbar"
@@ -57,15 +58,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Select Payment Option"
+                    android:fontFamily="@font/roboto_bold"
                     android:layout_gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/bue_A800"
                     android:layout_marginBottom="20dp"
                     android:textSize="22dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                 />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:id="@+id/textmaoutotpay"
@@ -77,6 +85,7 @@
                         android:paddingLeft="10dp"
                         android:layout_centerVertical="true"
                         android:textColor="@color/colorPrimaryLight"
+                        android:fontFamily="@font/roboto_regular"
                         android:text="Amount to be paid"
                         android:textSize="14sp" />
 
@@ -91,6 +100,7 @@
                         android:text="₹ 507"
                         android:paddingRight="10dp"
                         android:textStyle="bold"
+                        android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/black"
                         android:textSize="23sp" />
 
@@ -132,6 +142,7 @@
                             android:text="Debit/Credit Card"
                             android:layout_centerVertical="true"
                             android:textSize="18dp"
+                            android:fontFamily="@font/roboto_regular"
                             android:layout_marginLeft="0dp"
                             android:textColor="@color/colorPrimaryDark" />
                     </RelativeLayout>
@@ -327,6 +338,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:text="Net Banking"
+                            android:fontFamily="@font/roboto_regular"
                             android:layout_centerVertical="true"
                             android:textSize="18dp"
                             android:layout_marginLeft="0dp"
@@ -371,6 +383,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="left"
                             android:text="UPI"
+                            android:fontFamily="@font/roboto_regular"
                             android:layout_centerVertical="true"
                             android:textSize="18dp"
                             android:layout_marginLeft="0dp"
@@ -449,6 +462,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="left"
                             android:text="Wallet"
+                            android:fontFamily="@font/roboto_regular"
                             android:layout_centerVertical="true"
                             android:textSize="18dp"
                             android:layout_marginLeft="0dp"
@@ -575,19 +589,13 @@
         </LinearLayout>
     </ScrollView>
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="20dp"
-        android:layout_above="@id/darkline"
-        android:id="@+id/lightline"
-        android:background="@color/lightLine"/>
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
+        android:layout_height="14dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="7dp"
-        android:background="@color/darkLine"/>
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
+
 
 
 

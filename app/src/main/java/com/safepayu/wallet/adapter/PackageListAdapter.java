@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -86,6 +87,7 @@ public class PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter.
     class PackagesListingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView packageName, packageAmount;
+        private LinearLayout linear_buy_package;
 
 
         public PackagesListingViewHolder(@NonNull View itemView) {
@@ -93,6 +95,7 @@ public class PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter.
 
             packageName = itemView.findViewById(R.id.tv_packageName);
             packageAmount = itemView.findViewById(R.id.tv_packageAmount);
+            linear_buy_package = itemView.findViewById(R.id.linear_buy_package);
 
             itemView.setOnClickListener(this);
         }
@@ -108,13 +111,13 @@ public class PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter.
         public void onClick(View v) {
             if (selectedPackageView == null) {
                 selectedPackagePosition = getLayoutPosition();
-                selectedPackageView = itemView;
-                itemView.setBackground(context.getResources().getDrawable(R.drawable.package_selected));
+                selectedPackageView = linear_buy_package;
+                linear_buy_package.setBackground(context.getResources().getDrawable(R.drawable.package_selected));
             } else {
                 selectedPackageView.setBackground(context.getResources().getDrawable(R.drawable.package_normal));
                 selectedPackagePosition = getLayoutPosition();
-                selectedPackageView = itemView;
-                itemView.setBackground(context.getResources().getDrawable(R.drawable.package_selected));
+                selectedPackageView = linear_buy_package;
+                linear_buy_package.setBackground(context.getResources().getDrawable(R.drawable.package_selected));
 
             }
             if (callback != null) {

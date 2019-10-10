@@ -41,8 +41,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
 
             <TextView
                 android:layout_width="match_parent"
@@ -63,6 +68,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
                 android:text="We just need your registered Number to sent\n OTP for Passcode reset"
                 android:textColor="#000"
                 android:textSize="15dp" />
@@ -89,6 +95,7 @@
                         android:layout_marginRight="0dp"
                         android:background="@drawable/white_button_grayborder"
                         android:hint="Enter your Number"
+                        android:fontFamily="@font/roboto_regular"
                         android:inputType="number"
                         android:maxLength="10"
                         android:padding="10dp"
@@ -107,6 +114,7 @@
                         android:paddingLeft="50dp"
                         android:paddingRight="50dp"
                         android:text="Request Otp"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="#FFF"
                         android:textSize="15dp" />
                 </LinearLayout>
@@ -231,23 +239,62 @@
                 android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:text=" Back"
+                android:fontFamily="@font/roboto_regular"
                 android:textColor="#999"
                 android:textSize="12dp" />
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="150dp"
+                android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+
+                android:gravity="center">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/blue_theme"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/safepe_logo">
+
+                </ImageView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/green_theme"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
+
     </ScrollView>
 
-    <View
-        android:id="@+id/lightline"
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_above="@id/darkline"
-        android:layout_marginTop="20dp"
-        android:background="@color/lightLine"/>
 
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/darkLine"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="14dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/splas_gradient">
+        </LinearLayout>
+
+
+
 </RelativeLayout>

@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private LoadingDialog loadingDialog;
     String versionName="",appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
     int versionCode=0;
+    private ImageView im_cross;
 
     //Otp Dialog
     TextView TimerTV;
@@ -82,8 +84,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         mobileNo = findViewById(R.id.et_mobileNo);
         password = findViewById(R.id.et_password);
         mobileNo.addTextChangedListener(new MobileEditTextWatcher(mobileNo));
-        mobileNo.setText("+91 9811871855");
-        password.setText("adarsh515");
+        mobileNo.setText("+91 ");
+        password.setText("");
         mobileNo.setSelection(mobileNo.getText().length());
         findViewById(R.id.btn_login).setOnClickListener(this);
         findViewById(R.id.btn_forgetPass).setOnClickListener(this);
@@ -311,6 +313,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         TimerTV = dialog.findViewById(R.id.timerLogin);
         OtpED = dialog.findViewById(R.id.enter_otpLogin);
+        im_cross = dialog.findViewById(R.id.im_cross);
+
+        im_cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
         continueButton = (Button) dialog.findViewById(R.id.continue_otpLogin);
         continueButton.setOnClickListener(new View.OnClickListener() {

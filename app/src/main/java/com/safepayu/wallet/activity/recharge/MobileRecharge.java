@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -72,6 +75,12 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.blue_theme));
+        }
+
 
         loadingDialog = new LoadingDialog(this);
         dialog = new Dialog(this);

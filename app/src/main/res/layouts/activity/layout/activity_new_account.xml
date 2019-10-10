@@ -6,28 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/newAccountLayout"
-    tools:context=".activity.LoginActivity">
+    >
+    <include layout="@layout/toolbar_transparent" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <include layout="@layout/toolbar_transparent" />
-
-        <ScrollView
+        android:orientation="vertical"
+        android:layout_below="@+id/toolbar">
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp">
-
-
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -153,24 +149,33 @@
                         android:textSize="16sp"
                         android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout><com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp">
 
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
+                    android:id="@+id/et.referralCode"
+                    style="@style/defaultEditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:hint="@string/referral_code"
+                    android:inputType="number"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/refer_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text=""
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black">
 
-                    <EditText
-                        android:id="@+id/et.referralCode"
-                        style="@style/defaultEditTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/referral_code"
-                        android:inputType="number"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                </TextView>
+            </com.google.android.material.textfield.TextInputLayout>
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     style="@style/TextAppearance.AppCompat.Large"
@@ -205,12 +210,12 @@
                     android:background="@drawable/rounded_buttons"
                     android:text="@string/process"
                     android:layout_marginBottom="30dp"/>
+
+
             </LinearLayout>
 
 
-
-
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

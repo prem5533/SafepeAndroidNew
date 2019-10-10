@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -40,6 +41,7 @@ import io.reactivex.schedulers.Schedulers;
 public class NewAccount extends BaseActivity implements View.OnClickListener, SnackBarActionClickListener {
 
     private EditText firstName, lastName, email, mobileNo, password, dob, referralCode;
+    private TextView tvReferUserName;
     private LoadingDialog loadingDialog;
 
     @Override
@@ -59,6 +61,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         mobileNo = findViewById(R.id.et_mobileNo);
         dob = findViewById(R.id.et_dob);
         referralCode = findViewById(R.id.et_referralCode);
+        tvReferUserName = findViewById(R.id.refer_user_name);
         password = findViewById(R.id.et_password);
 
         mobileNo.addTextChangedListener(new MobileEditTextWatcher(mobileNo));
@@ -78,6 +81,9 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 if (s.length() == 10) {
 
                     getReferralDetails();
+                }
+                else {
+                    tvReferUserName.setText("");
                 }
             }
 
@@ -160,9 +166,9 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         } else if (dob.getText().toString().trim().length() == 0) {
             BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter DOB", true);
             return false;
-        } else if (password.getText().toString().trim().length() == 0) {
+        } else if (password.getText().toString().trim().length() == 0|| password.getText().toString().trim().length()<8) {
             mobileNo.requestFocus();
-            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter password", true);
+            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter password, password must be 8 digit", true);
             return false;
         } else if (referralCode.getText().toString().trim().length() == 0) {
             referralCode.requestFocus();
@@ -262,17 +268,22 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     @Override
                     public void onSuccess(ReferralCodeResponse response) {
                         loadingDialog.hideDialog();
-                        if (response.isStatus()) {
+                        try {
+                            if (response.isStatus()) {
 
-                            referralCode.setText(response.getPackages());
-                            referralCode.setSelection(referralCode.getText().toString().length());
-                            //
-                        } else {
+                                tvReferUserName.setText(response.getPackages());
+                                referralCode.setSelection(referralCode.getText().toString().length());
+                                //
+                            } else {
 
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout), "Wrong Referral Code", false);
-                            referralCode.setText("");
-                            referralCode.requestFocus();
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout), "Wrong Referral Code", false);
+                                referralCode.setText("");
+                                referralCode.requestFocus();
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
+
                     }
 
                     @Override

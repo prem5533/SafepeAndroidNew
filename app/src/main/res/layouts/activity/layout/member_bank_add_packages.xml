@@ -10,7 +10,7 @@
         android:id="@+id/l1_send"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/blue_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -30,7 +30,8 @@
             android:gravity="center"
             android:text="Add packages"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18sp"
+            android:fontFamily="@font/roboto_regular"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -56,6 +57,7 @@
                 android:gravity="center_vertical"
                 android:hint="Date of payment"
                 android:padding="10dp"
+                android:fontFamily="@font/roboto_regular"
                 android:layout_marginTop="10dp"
                 android:textSize="15dp" />
 
@@ -69,6 +71,7 @@
                 android:gravity="center_vertical"
                 android:hint="Reference Number"
                 android:padding="10dp"
+                android:fontFamily="@font/roboto_regular"
                 android:textSize="15dp" />
 
             <EditText
@@ -80,6 +83,7 @@
                 android:gravity="center_vertical"
                 android:hint="Amount Paid"
                 android:padding="10dp"
+                android:fontFamily="@font/roboto_regular"
                 android:textSize="15dp" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,6 +115,7 @@
                 android:gravity="center_vertical"
                 android:hint="UPI/Account from which amount is paid"
                 android:padding="10dp"
+                android:fontFamily="@font/roboto_regular"
                 android:textSize="15dp" />
 
             <!--<TextView-->
@@ -144,7 +149,8 @@
                 android:text="Submit"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="15sp" />
 
 
         </LinearLayout>
