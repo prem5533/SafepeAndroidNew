@@ -9,6 +9,7 @@ import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.RechargeRequest;
 import com.safepayu.wallet.models.request.Register;
 import com.safepayu.wallet.models.request.ResetPasscodeModel;
+import com.safepayu.wallet.models.request.SaveAddressRequest;
 import com.safepayu.wallet.models.request.SendPaymentGatewayDetailsRequest;
 import com.safepayu.wallet.models.request.SendToWalletRequest;
 import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
@@ -26,6 +27,7 @@ import com.safepayu.wallet.models.response.PackageDetailsResponse;
 import com.safepayu.wallet.models.response.PackageListData;
 import com.safepayu.wallet.models.response.RechargeHistoryResponse;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
+import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
 import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
@@ -140,4 +142,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/safepe/refer")
     Single<BaseResponse> sendRefer(@Field("mobile") String mobile);
+
+    @POST("api/safepe/SaveUserAddress")
+    Single<SaveAddressResponse> addAddress(@Body SaveAddressRequest saveAddressRequest);
 }

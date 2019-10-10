@@ -60,6 +60,7 @@ public class WalletAddMoney extends BaseActivity implements PackageListAdapter.O
         mAdapter = new PackageAdapterForWallet(this, this);
         packageListView.setAdapter(mAdapter);
 
+        ((TextView) findViewById(R.id.tv_mobileNumber)).setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
         ((TextView) findViewById(R.id.tv_packageName)).setText("Package");
         ((TextView) findViewById(R.id.tv_packageAmount)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(0d));
         ((TextView) findViewById(R.id.tv_totalAmountPay)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(0d));

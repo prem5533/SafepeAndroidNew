@@ -19,7 +19,9 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.SaveAddressRequest;
 import com.safepayu.wallet.models.request.UpdateAddress;
+import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,7 +35,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
     private Button add_address, update_address;
     private LoadingDialog loadingDialog;
     private CheckBox current_location;
-    boolean b = false;
+    boolean check = false;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private String Location, City, State, Country, Pincode, mapSelectLocality, mapSelectCity, mapSelectState, mapSelectPincode, mapSelectCountry;
 
@@ -75,8 +77,11 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
 
 
         if (Location != null && City != null && State != null && Country != null && Pincode != null) {
+
             update_address.setVisibility(View.VISIBLE);
             add_address.setVisibility(View.GONE);
+        }else {
+            check=false;
         }
 
         current_location.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -87,7 +92,6 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
                     Intent intent = new Intent(AddUpdateAddress.this, MapActivity.class);
                     startActivityForResult(intent, STATIC_INTEGER_VALUE);
                 }
-
             }
         });
     }
@@ -131,7 +135,9 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.add_address:
 
-                Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                if (validate()) {
+                    addNewAddress();
+                }
 
                 break;
             case R.id.back_btn_address:
@@ -191,6 +197,45 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
                         if (response.isStatus()){
                             Toast.makeText(AddUpdateAddress.this, "Address Updated Successfully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(AddUpdateAddress.this, Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            finish();
+
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addUpdateAddressLayout),response.getMessage(),false);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(AddUpdateAddress.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                    }
+                }));
+    }
+
+    private void addNewAddress() {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        SaveAddressRequest saveAddressRequest = new SaveAddressRequest( );
+        saveAddressRequest.setUser_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
+        saveAddressRequest.setLocation(etLocation.getText().toString().trim());
+        saveAddressRequest.setState(etState.getText().toString().trim());
+        saveAddressRequest.setCity(etCity.getText().toString().trim());
+        saveAddressRequest.setCountry(etCountry.getText().toString().trim());
+        saveAddressRequest.setPin(etPincode.getText().toString().trim());
+
+
+        BaseApp.getInstance().getDisposable().add(apiService.addAddress(saveAddressRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<SaveAddressResponse>() {
+                    @Override
+                    public void onSuccess(SaveAddressResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()){
+                            Toast.makeText(AddUpdateAddress.this, "Address Updated Successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddUpdateAddress.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             finish();
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addUpdateAddressLayout),response.getMessage(),false);

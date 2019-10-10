@@ -98,7 +98,7 @@
                                 android:fontFamily="@font/roboto_regular"
                                 android:textColor="@color/grey_500"
                                 android:id="@+id/tv.mobileNumber"
-                                android:text="8750110867"
+                                android:text=""
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="10dp"/>
                         </LinearLayout>
@@ -184,7 +184,7 @@
                                     android:textColor="@color/grey_500"
                                     android:textStyle="normal"
                                     android:gravity="center"
-                                    android:text="18%"
+                                    android:text="0%"
                                     android:fontFamily="@font/roboto_regular"
                                     android:layout_alignParentRight="true"
                                     android:layout_marginRight="10dp"/>

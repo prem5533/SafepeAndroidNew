@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textAlignment="viewEnd"
-                    android:text="Package Name"
+                    android:text=""
                     android:textSize="15sp"
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/blue"
@@ -214,7 +214,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_regular"
                     android:singleLine="true"
-                    android:text="Bonus Credited"
+                    android:text=""
                     android:textAlignment="viewEnd"
                     android:textColor="@color/blue"
                     android:textSize="15sp" />

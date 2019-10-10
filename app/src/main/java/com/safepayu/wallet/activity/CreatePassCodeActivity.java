@@ -1,12 +1,9 @@
 package com.safepayu.wallet.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -19,7 +16,6 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.enums.ButtonActions;
 import com.safepayu.wallet.fragment.NumberBoard;
 import com.safepayu.wallet.models.request.Login;
-import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -114,7 +110,7 @@ public class CreatePassCodeActivity extends BaseActivity implements NumberBoard.
                     public void onSuccess(UserResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                            startActivity(new Intent(CreatePassCodeActivity.this, Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            startActivity(new Intent(CreatePassCodeActivity.this, AddUpdateAddress.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             finish();
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.createPasscode),response.getMessage(),false);
