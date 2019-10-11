@@ -515,7 +515,7 @@
                     android:layout_weight="1">
 
                     <LinearLayout
-                        android:id="@+id/pay_shop"
+                        android:id="@+id/layout_metro"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/home_screen_icons_back"
@@ -553,7 +553,7 @@
 
 
                     <LinearLayout
-                        android:id="@+id/layout_send_bank"
+                        android:id="@+id/layout_flight"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/home_screen_icons_back"
@@ -591,7 +591,7 @@
 
 
                     <LinearLayout
-                        android:id="@+id/layout_add_money"
+                        android:id="@+id/layout_bus_tickets"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/home_screen_icons_back"
@@ -628,7 +628,7 @@
 
 
                     <LinearLayout
-                        android:id="@+id/layout_send_money"
+                        android:id="@+id/layout_train_ticket"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/home_screen_icons_back"
@@ -670,7 +670,7 @@
                     android:layout_weight="1">
 
                     <LinearLayout
-                        android:id="@+id/layout_creditcardpay"
+                        android:id="@+id/layout_hotel"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/home_screen_icons_back"
@@ -727,7 +727,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/roboto_regular"
-                            android:text="Dontion"
+                            android:text="Donation"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
