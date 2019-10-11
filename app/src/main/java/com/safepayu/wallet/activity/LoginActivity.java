@@ -115,7 +115,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.btn_login:
                 BaseApp.getInstance().commonUtils().hideKeyboard(this);
                 if (checkPermission() && validate()) {
-                    resendOtp();
+                    //resendOtp();
+                    loginUser();
                 }
                 break;
             case R.id.btn_forgetPass:
@@ -258,32 +259,35 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onSuccess(LoginResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                             switch (response.getStatusCode()) {
-                                case 0:
-                                    SaveLoginDetails(response);
-                                    startActivity(new Intent(LoginActivity.this,Navigation.class));
-                                    finish();
-                                    break;
-                                case 1:
-                                    BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false);
-                                    break;
-                                case 2:
-                                    BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false, getResources().getString(R.string.verify), ButtonActions.VERIFY_MOBILE, LoginActivity.this);
-                                    break;
-                                case 3:
-                                    SaveLoginDetails(response);
-                                    Toast.makeText(LoginActivity.this, "Please First Set Passcode", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, CreatePassCodeActivity.class));
-                                    break;
-                                case 4:
-                                    SaveLoginDetails(response);
-                                    Toast.makeText(LoginActivity.this, "Please First Set Address", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, AddUpdateAddress.class));
-                                    break;
-                                case 5:
-                                    sendVerifyLink();
-                                    break;
-                            }
+
+                            CheckStatusCode(response);
+//                             switch (response.getStatusCode()) {
+//                                case 0:
+//                                    SaveLoginDetails(response);
+//                                    startActivity(new Intent(LoginActivity.this,Navigation.class));
+//                                    finish();
+//                                    break;
+//                                case 1:
+//                                    BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false);
+//                                    break;
+//                                case 2:
+//                                    BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false, getResources().getString(R.string.verify), ButtonActions.VERIFY_MOBILE, LoginActivity.this);
+//                                    break;
+//                                case 3:
+//                                    SaveLoginDetails(response);
+//                                    Toast.makeText(LoginActivity.this, "Please First Set Passcode", Toast.LENGTH_SHORT).show();
+//                                    startActivity(new Intent(LoginActivity.this, CreatePassCodeActivity.class));
+//                                    break;
+//                                case 4:
+//                                    SaveLoginDetails(response);
+//                                    Toast.makeText(LoginActivity.this, "Please First Set Address", Toast.LENGTH_SHORT).show();
+//                                    startActivity(new Intent(LoginActivity.this, AddUpdateAddress.class));
+//                                    break;
+//                                case 5:
+//
+//                                    showDialogForEmail(LoginActivity.this);
+//                                    break;
+//                             }
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout),response.getMessage(),false);
                         }
@@ -296,6 +300,36 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
                     }
                 }));
+    }
+
+    private void CheckStatusCode(LoginResponse response){
+
+        switch (response.getStatusCode()) {
+            case 0:
+                SaveLoginDetails(response);
+                resendOtp();
+                break;
+            case 1:
+                BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false);
+                break;
+            case 2:
+                BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false, getResources().getString(R.string.verify), ButtonActions.VERIFY_MOBILE, LoginActivity.this);
+                break;
+            case 3:
+                SaveLoginDetails(response);
+                Toast.makeText(LoginActivity.this, "Please First Set Passcode", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, CreatePassCodeActivity.class));
+                break;
+            case 4:
+                SaveLoginDetails(response);
+                Toast.makeText(LoginActivity.this, "Please First Set Address", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, AddUpdateAddress.class));
+                break;
+            case 5:
+                showDialogForEmail(LoginActivity.this);
+                break;
+        }
+
     }
 
     private void SaveLoginDetails(LoginResponse response){
@@ -390,6 +424,49 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
+    public void showDialogForEmail(Activity activity) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.verify_email_dialog);
+
+        final EditText emailEd=dialog.findViewById(R.id.enter_EmailLogin);
+
+        Button proceedButton = (Button) dialog.findViewById(R.id.continue_EmailLogin);
+        proceedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(emailEd.getText().toString().trim())){
+                    emailEd.setError("Please Enter Email Id");
+                    emailEd.requestFocus();
+                }else {
+                    if (isValidEmail(emailEd.getText().toString().trim())){
+                        emailEd.setError("Please Enter Correct Email Id");
+                        emailEd.requestFocus();
+                    }else {
+                        sendVerifyLink(emailEd.getText().toString().trim());
+                    }
+                }
+
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
+    }
+    public final static boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
+    }
+
     private void resendOtp() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(mobileNo.getText().toString().split(" ")[1], null);
@@ -446,7 +523,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onSuccess(UserResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                            loginUser();
+                            //loginUser();
+                            startActivity(new Intent(LoginActivity.this,Navigation.class));
+                            finish();
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(), false);
                         }
@@ -461,12 +540,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }));
     }
 
-    private void sendVerifyLink() {
+    private void sendVerifyLink(String Email) {
 
         String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
-        BaseApp.getInstance().getDisposable().add(apiService.verifyEmail(UserId)
+        BaseApp.getInstance().getDisposable().add(apiService.verifyEmail(UserId,Email)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<BaseResponse>() {

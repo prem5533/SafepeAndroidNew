@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -992,6 +991,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_EMAIL,response.getUser().getEmail());
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME,response.getUser().getFirstName());
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME,response.getUser().getLastName());
+                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED,String.valueOf(response.getUser().getBlocked()));
                     }
 
                     @Override

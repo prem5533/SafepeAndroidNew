@@ -107,7 +107,7 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
                 if (mItem.get(position).getStatus()==1){
                     status="success";
                     imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_success));
-                }else if (mItem.get(position).getStatus()==0){
+                }else if (mItem.get(position).getStatus()==2){
                     imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_pending));
                     status="pending";
                 }else {

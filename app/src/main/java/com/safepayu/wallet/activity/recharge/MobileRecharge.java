@@ -31,7 +31,6 @@ import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.LoginActivity;
-import com.safepayu.wallet.activity.PaidOrderActivity;
 import com.safepayu.wallet.activity.PaymentType;
 import com.safepayu.wallet.adapter.OfferAdapter;
 import com.safepayu.wallet.api.ApiClient;
@@ -144,8 +143,12 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                /* startActivity(new Intent(getApplicationContext(), PaymentType.class));
                 overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                 finish();*/
-                startActivity(new Intent(getApplicationContext(), PaidOrderActivity.class));
-                CheckValidate();
+
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")){
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",false);
+                }else {
+                    CheckValidate();
+                }
             }
         });
 

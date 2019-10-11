@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+
 import com.easebuzz.payment.kit.PWECouponsActivity;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -52,6 +54,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
     private Button ProceedWalletBtn;
     private LoadingDialog loadingDialog;
     private TextView AmountTV;
+    private CardView Card_fillLayout;
 
     //recharge/bill payment parameter
     private String RechargePaymentId="",Amount="",PaymentTypeText="",PaymentFor="",RechargeTypeId="",OperatorCode="",CircleCode="",OperatorId="";
@@ -74,6 +77,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         upiBtnLayout = (RelativeLayout) findViewById(R.id.radioLayout3);
         NetBankingBtnLayout = (RelativeLayout) findViewById(R.id.radioLayout2);
         WalletBtnLayout = (RelativeLayout) findViewById(R.id.radioLayout4);
+        Card_fillLayout=findViewById(R.id.card_fillLayout);
 
         cardLayout = (LinearLayout) findViewById(R.id.card_layout);
         UpiLayout = (LinearLayout) findViewById(R.id.upi_layout);
@@ -102,6 +106,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                 UpiLayout.setVisibility(GONE);
                 proceed_wallet.setVisibility(GONE);
                 btn_proceed_netBanking.setVisibility(GONE);
+                Card_fillLayout.setVisibility(GONE);
             }
         });
 
@@ -180,6 +185,9 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             if (PaymentFor.equalsIgnoreCase("Wallet")) {
                 WalletBtnLayout.setVisibility(GONE);
             }
+            NetBankingBtnLayout.setVisibility(GONE);
+            upiBtnLayout.setVisibility(GONE);
+            Card_fillLayout.setVisibility(GONE);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -244,8 +252,8 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                         }catch (Exception e){
                             e.printStackTrace();
                         }
-                        //startActivity(intentRecharge);
-                        //finish();
+                        startActivity(intentRecharge);
+                        finish();
                     }
 
                     @Override
@@ -447,7 +455,16 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             if (resultCode==-1){
                 intentStatus.putExtra("status","success");
                 if (PaymentFor.equalsIgnoreCase("Wallet")) {
-
+                    try{
+                        intentStatus.putExtra("txnid",txnid);
+                        intentStatus.putExtra("Amount",Amount);
+                        intentStatus.putExtra("date",date);
+                        intentStatus.putExtra("productinfo",productinfo);
+                       // startActivity(intentStatus);
+                        //finish();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
 
                 } else {
 
@@ -467,28 +484,33 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout), "Payment Success", false);
             }else {
                 intentStatus.putExtra("status","failed");
+                try{
+                    intentStatus.putExtra("txnid",txnid);
+                    intentStatus.putExtra("Amount",Amount);
+                    intentStatus.putExtra("date",date);
+                    intentStatus.putExtra("productinfo",productinfo);
+                    //startActivity(intentStatus);
+                    //finish();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Payment Failed\n"+result+"\n"+response,true);
             }
 
             saveTransactionDetails(sendPaymentGatewayDetailsRequest);
         }else {
             intentStatus.putExtra("status","failed");
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Payment Failed",false);
-        }
-
-        if (PaymentFor.equalsIgnoreCase("Wallet")) {
-
-        }else {
             try{
                 intentStatus.putExtra("txnid",txnid);
                 intentStatus.putExtra("Amount",Amount);
                 intentStatus.putExtra("date",date);
                 intentStatus.putExtra("productinfo",productinfo);
                 //startActivity(intentStatus);
-               // finish();
+                //finish();
             }catch (Exception e){
                 e.printStackTrace();
             }
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Payment Failed",false);
         }
 
     }

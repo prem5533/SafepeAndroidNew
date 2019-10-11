@@ -17,8 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.adapter.PackageAdapterForWallet;
-import com.safepayu.wallet.adapter.PackageListAdapter;
+import com.safepayu.wallet.adapter.PackageAdapterForWalletNew;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -26,21 +25,22 @@ import com.safepayu.wallet.halper.RecyclerLayoutManager;
 import com.safepayu.wallet.models.response.PackageListData;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class WalletAddMoney extends BaseActivity implements PackageListAdapter.OnPackageSelectListener {
+public class WalletAddMoney extends BaseActivity implements PackageAdapterForWalletNew.OnPackageSelectListener {
 
     Button AddMoneyBtn,BackBtn;
     String PackageID = "", PackageName = "";
     private LoadingDialog loadingDialog;
     private RecyclerView packageListView;
     private RecyclerLayoutManager layoutManager;
-    private PackageAdapterForWallet mAdapter;
+    //private PackageAdapterForWallet mAdapter;
     private PackageListData packageListData;
+    private ArrayList<String> PackageNameList,PackageIdList;
+    private ArrayList<Double> PackageAmountList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +57,10 @@ public class WalletAddMoney extends BaseActivity implements PackageListAdapter.O
         layoutManager = new RecyclerLayoutManager(2, RecyclerLayoutManager.VERTICAL);
         layoutManager.setScrollEnabled(false);
         packageListView.setLayoutManager(layoutManager);
-        mAdapter = new PackageAdapterForWallet(this, this);
-        packageListView.setAdapter(mAdapter);
+//        mAdapter = new PackageAdapterForWallet(this, this);
+//        packageListView.setAdapter(mAdapter);
 
-        ((TextView) findViewById(R.id.tv_mobileNumber)).setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
+        ((TextView) findViewById(R.id.mobileNumberWallet)).setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
         ((TextView) findViewById(R.id.tv_packageName)).setText("Package");
         ((TextView) findViewById(R.id.tv_packageAmount)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(0d));
         ((TextView) findViewById(R.id.tv_totalAmountPay)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(0d));
@@ -95,37 +95,36 @@ public class WalletAddMoney extends BaseActivity implements PackageListAdapter.O
 
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
-
+        if (isConnected){
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId),getResources().getString(R.string.internet_check),false);
+        }
     }
 
     @Override
-    public void onPackageSelect(int position, PackageListData.Packages selectedPackage) {
-        showPackageDetails(selectedPackage);
-    }
-
-    public void showPackageDetails(PackageListData.Packages selectedPackage) {
-        PackageID = selectedPackage.getId();
-        PackageName = selectedPackage.getPackageName();
-        ((TextView) findViewById(R.id.tv_packageName)).setText(selectedPackage.getPackageName());
-        ((TextView) findViewById(R.id.tv_packageAmount)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(selectedPackage.getPackageAmount()));
-        ((TextView) findViewById(R.id.tv_tax)).setText(packageListData.getTax().getTaxValue() + "%");
-        Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(selectedPackage.getPackageAmount(), Double.parseDouble(packageListData.getTax().getTaxValue()));
+    public void onPackageSelectNew(int position, ArrayList<String> PackageNameList1, ArrayList<String> PackageIdList1, ArrayList<Double> PackageAmountList1,String TaxPer1) {
+        PackageID = PackageIdList1.get(position);
+        PackageName = PackageNameList1.get(position);
+        ((TextView) findViewById(R.id.tv_packageName)).setText(PackageName);
+        ((TextView) findViewById(R.id.tv_packageAmount)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(PackageAmountList1.get(position)));
+        ((TextView) findViewById(R.id.tv_tax)).setText(TaxPer1 + "%");
+        Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(PackageAmountList1.get(position), Double.parseDouble(TaxPer1));
         ((TextView) findViewById(R.id.tv_totalAmountPay)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount));
 
-        showDialog(WalletAddMoney.this, PackageID, PackageName, String.valueOf(selectedPackage.getPackageAmount()), String.valueOf(BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount)));
+        showDialog(WalletAddMoney.this, PackageID, PackageName, String.valueOf(PackageAmountList1.get(position)), String.valueOf(BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount)));
     }
 
     private void getPackages() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
-        final PackageListData packageListData1 = new PackageListData();
-        final List<PackageListData.Packages> packages = new ArrayList<>();
-        packages.clear();
+        PackageNameList=new ArrayList<>();
+        PackageIdList=new ArrayList<>();
+        PackageAmountList=new ArrayList<>();
 
-        final PackageListData.Packages packages1 = new PackageListData.Packages();
+        PackageNameList.clear();
+        PackageIdList.clear();
+        PackageAmountList.clear();
 
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-
 
         BaseApp.getInstance().getDisposable().add(apiService.getAllPackages()
                 .subscribeOn(Schedulers.io())
@@ -143,29 +142,15 @@ public class WalletAddMoney extends BaseActivity implements PackageListAdapter.O
                                     Double packageAmt = response.getPackages().get(i).getPackageAmount();
                                     String packName = response.getPackages().get(i).getPackageName();
 
-
-                                    packages1.setId(response.getPackages().get(i).getId());
-                                    packages1.setPackageAmount(response.getPackages().get(i).getPackageAmount());
-                                    packages1.setPackageName(response.getPackages().get(i).getPackageName());
-                                    packages.add(packages1);
-
-                               //     mAdapter.notifyDataSetChanged();
+                                    PackageNameList.add(packName);
+                                    PackageIdList.add(id);
+                                    PackageAmountList.add(packageAmt);
                                 }
                             }
-                            packageListData1.setPackages(packages);
-                            packageListData1.setTax(response.getTax());
-                            try {
-                                packageListData = packageListData1;
-                                mAdapter.addItem(packageListData1.getPackages());
-                                try {
-                                    ((TextView) findViewById(R.id.tv_taxDetails)).setText("Additional " + response.getTax().getTaxValue() + "% GST will be charged from the total amount");
-                                } catch (Exception r) {
-                                    r.printStackTrace();
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Something Went Wrong", false);
-                            }
+                            PackageAdapterForWalletNew adapter=new PackageAdapterForWalletNew(WalletAddMoney.this,PackageNameList,PackageIdList,
+                                    PackageAmountList,response.getTax().getTaxValue(),WalletAddMoney.this);
+                            packageListView.setAdapter(adapter);
+                            ((TextView) findViewById(R.id.tv_taxDetails)).setText("Additional " + response.getTax().getTaxValue() + "% GST will be charged from the total amount");
                         }
                     }
 
@@ -181,7 +166,6 @@ public class WalletAddMoney extends BaseActivity implements PackageListAdapter.O
     public void showDialog(Activity activity, final String PackageID, String PackName, String AMount, final String Amount2Pay) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //dialog.setCancelable(false);
         dialog.setContentView(R.layout.wallet_dialog);
 
         TextView PackNameTV = dialog.findViewById(R.id.packageName_WalletDialog);

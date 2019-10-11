@@ -18,6 +18,7 @@ import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BuyPackageResponse;
+import com.safepayu.wallet.models.response.CommissionDetailsResponse;
 import com.safepayu.wallet.models.response.CustOperatorResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
 import com.safepayu.wallet.models.response.HashKeyResponse;
@@ -128,7 +129,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/safepe/sendVerifyEmailLink")
-    Single<BaseResponse> verifyEmail(@Field("userid") String userid);
+    Single<BaseResponse> verifyEmail(@Field("userid") String userid,@Field("email") String email);
 
     @GET("api/safepe/rechargeHistory")
     Single<RechargeHistoryResponse> getRechargeHistory();
@@ -145,4 +146,7 @@ public interface ApiService {
 
     @POST("api/safepe/SaveUserAddress")
     Single<SaveAddressResponse> addAddress(@Body SaveAddressRequest saveAddressRequest);
+
+    @POST("api/safepe/getCommitionWithBusinessAmount")
+    Single<CommissionDetailsResponse> getCommissionDetails();
 }

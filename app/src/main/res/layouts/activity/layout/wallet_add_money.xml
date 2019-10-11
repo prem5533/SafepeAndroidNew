@@ -150,7 +150,7 @@
                             <com.safepayu.wallet.custom_view.CustomTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/tv_mobileNumber"
+                                android:id="@+id/mobileNumberWallet"
                                 style="@style/TextAppearance.AppCompat.Large"
                                 app:fontCustom="@string/Roboto"
                                 android:textSize="14sp"

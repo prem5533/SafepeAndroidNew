@@ -1,6 +1,5 @@
 package com.safepayu.wallet.activity;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +20,7 @@ public class Geneology extends BaseActivity {
     String url;
     WebView myWebView;
     Button BackBtn;
+    private boolean doubleBackToExitPressedOnce = false;
 
 
     @Override
@@ -55,7 +55,7 @@ public class Geneology extends BaseActivity {
         myWebView.setWebChromeClient(new WebChromeClient());
 
         String userid = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
-        url = "https://abhi.safepayu.com/genealogy?userid=" + userid + "&token=kjhgdwergnmkiuhbv3456uhvcxANEisorbenoinc0fc";
+        url = "http://13.232.191.38/safepe-new/public/Genealogy/" + userid;
         myWebView.loadUrl(url);
 
         send_back_btn = findViewById(R.id.send_back_btn);
@@ -63,7 +63,18 @@ public class Geneology extends BaseActivity {
         send_back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+//                if (doubleBackToExitPressedOnce) {
+//                    finish();
+//                }
+//                doubleBackToExitPressedOnce = true;
+//                myWebView.loadUrl(url);
+
+                boolean goBackCheck=myWebView.canGoBack();
+                if (goBackCheck) {
+                    myWebView.loadUrl(url);
+                } else {
+                    finish();
+                }
             }
         });
         refresh_btn.setOnClickListener(new View.OnClickListener() {
@@ -83,5 +94,15 @@ public class Geneology extends BaseActivity {
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        myWebView.loadUrl(url);
     }
 }

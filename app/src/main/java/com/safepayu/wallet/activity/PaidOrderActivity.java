@@ -92,10 +92,4 @@ public class PaidOrderActivity extends AppCompatActivity {
         DateTV.setText(date);
         ProductInfoTV.setText(productinfo);
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
 }

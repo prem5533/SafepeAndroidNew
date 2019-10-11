@@ -129,7 +129,7 @@ public class WalletHistory extends BaseActivity implements WalletHistoryAdapter.
             e.printStackTrace();
         }
 
-        if (statusNo==0){
+        if (statusNo==2){
             StatusTV.setText("Pending");
             StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.clay_yellow));
         }else  if (statusNo==1){

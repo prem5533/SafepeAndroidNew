@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/commissionLayout">
 
     <RelativeLayout
         android:id="@+id/headerbar"
@@ -125,7 +126,7 @@
 
 
                             <TextView
-                                android:id="@+id/mem_txt"
+                                android:id="@+id/getMemberShipBtn"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
