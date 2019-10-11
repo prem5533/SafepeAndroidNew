@@ -31,6 +31,10 @@ import com.google.gson.Gson;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.booking.BusActivity;
+import com.safepayu.wallet.activity.booking.FlightsActivity;
+import com.safepayu.wallet.activity.booking.MetroActivity;
+import com.safepayu.wallet.activity.booking.TrainActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
 import com.safepayu.wallet.activity.recharge.GasPay;
@@ -59,6 +63,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     String versionName="",appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
     int versionCode=0;
     private LoadingDialog loadingDialog;
+    private LinearLayout liMetro,liFlight, liBusTicket,liTrainTicket, liHotles,liDonation,liToll, liFlood;
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet,liShopping,liChnangePasswlrd,liMyOrders,liHistory,liGenelogy,
@@ -114,15 +119,15 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        addMoney = findViewById(R.id.layout_add_money);
-        sendMoney = findViewById(R.id.layout_send_money);
+    /*    addMoney = findViewById(R.id.layout_add_money);
+        sendMoney = findViewById(R.id.layout_send_money);*/
         recharge = findViewById(R.id.layout_recharge);
         Upi_Pay = findViewById(R.id.upi_layout1);
         payBill = findViewById(R.id.layout_pay_bill);
         dth = findViewById(R.id.layout_dth);
         send = findViewById(R.id.send);
-        payShop = findViewById(R.id.pay_shop);
-        sendToBank = findViewById(R.id.layout_send_bank);
+     /*   payShop = findViewById(R.id.pay_shop);
+        sendToBank = findViewById(R.id.layout_send_bank);*/
         payLayout = findViewById(R.id.pay_layout);
         walletLayout = findViewById(R.id.wallet_layout);
         layout_electricity = findViewById(R.id.layout_electricity);
@@ -162,6 +167,15 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         tvContact = findViewById(R.id.tv_contact_us);
         tvLogout = findViewById(R.id.tv_logout);
 
+        //**********booking & offers ******
+        liMetro = findViewById(R.id.layout_metro);
+        liFlight = findViewById(R.id.layout_flight);
+        liBusTicket = findViewById(R.id.layout_bus_tickets);
+        liTrainTicket = findViewById(R.id.layout_train_ticket);
+        liHotles = findViewById(R.id.layout_hotel);
+        liDonation = findViewById(R.id.layout_donation);
+        liToll = findViewById(R.id.layout_toll);
+        liFlood = findViewById(R.id.layout_flood);
 
         //********************set listener&*****************
         liHome.setOnClickListener(this);
@@ -180,18 +194,27 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liContactUs.setOnClickListener(this);
         liLogout.setOnClickListener(this);
 
-        addMoney.setOnClickListener(this);
-        sendMoney.setOnClickListener(this);
+      //  addMoney.setOnClickListener(this);
+      //  sendMoney.setOnClickListener(this);
         recharge.setOnClickListener(this);
         payBill.setOnClickListener(this);
         dth.setOnClickListener(this);
-        payShop.setOnClickListener(this);
-        sendToBank.setOnClickListener(this);
+      //  payShop.setOnClickListener(this);
+       // sendToBank.setOnClickListener(this);
         layout_broadband.setOnClickListener(this);
         layout_water.setOnClickListener(this);
         layout_electricity.setOnClickListener(this);
         layout_gas.setOnClickListener(this);
         payLayout.setOnClickListener(this);
+
+        liMetro.setOnClickListener(this);
+        liFlight.setOnClickListener(this);
+        liBusTicket.setOnClickListener(this);
+        liTrainTicket.setOnClickListener(this);
+        liHotles.setOnClickListener(this);
+        liDonation.setOnClickListener(this);
+        liToll.setOnClickListener(this);
+        liFlood.setOnClickListener(this);
 
         walletLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -320,7 +343,23 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 startActivity(new Intent(Navigation.this, SendMoneyToWallet.class));
                 break;
 
+            case R.id.layout_metro:
+                startActivity(new Intent(Navigation.this, MetroActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                break;
 
+            case R.id.layout_flight:
+                startActivity(new Intent(Navigation.this, FlightsActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                break;
+            case R.id.layout_bus_tickets:
+                startActivity(new Intent(Navigation.this, BusActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                break;
+            case R.id.layout_train_ticket:
+                startActivity(new Intent(Navigation.this, TrainActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                break;
             case R.id.li_home:
                 tv_home.setTextColor(getResources().getColor(R.color.bue_A800));
                 tvProfile.setTextColor(getResources().getColor(R.color.black));

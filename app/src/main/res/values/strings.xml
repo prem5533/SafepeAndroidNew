@@ -48,4 +48,21 @@
     <string name="payment">Once done. Click on proceed to fill the payment details.</string>
     <string name="movie">Movie\nTickets</string>
 
+
+    <string name="metro_status">After successful recharge, please tap your metro card on AVM/TVM/AG at metro station.</string>
+    <string name="oneway">ONEWAY</string>
+    <string name="twoway">TWOWAY</string>
+    <string name="departure_date">Departure Date</string>
+    <string name="return_date">Return Date</string>
+    <string name="travellers">Travellers</string>
+    <string name="class_">Class</string>
+    <string name="checkbox_flight">Show non stop flight only</string>
+    <string name="search_flight">Search Flights</string>
+    <string name="book_tickets">BOOK TICKETS</string>
+    <string name="check_pnr">CHECK PNR</string>
+    <string name="train_status">TRAIN STATUS</string>
+    <string name="source_">Source Station</string>
+    <string name="destination">Destination Station</string>
+    <string name="checkbox_train">Show both non-AC and AC coaches</string>
+
 </resources>

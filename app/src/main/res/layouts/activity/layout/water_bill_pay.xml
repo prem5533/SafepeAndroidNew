@@ -40,7 +40,7 @@
         android:layout_height="match_parent"
         tools:context="com.xwallet.wallet.Fragments.PostpaidRechrge">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -63,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="4dp"
                 android:background="@drawable/white_button_grayborder">
 
                 <Spinner
@@ -70,8 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_below="@+id/textView5"
-                    android:layout_marginTop="4dp"
-                    android:nextFocusForward="@+id/textView"/>
+                    android:nextFocusForward="@+id/textView" />
             </LinearLayout>
 
             <TextView
@@ -101,7 +101,6 @@
                 android:nextFocusForward="@+id/amount"
                 android:padding="10dp"
                 android:textColor="#373836"
-
                 android:textSize="15dp" />
 
 

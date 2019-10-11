@@ -8,50 +8,54 @@
         android:allowBackup="true"
         android:icon="@drawable/safepe_launcher"
         android:label="@string/app_name"
-
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.PaidOrderActivity"></activity>
+        <activity android:name=".activity.booking.TrainActivity"></activity>
+        <activity android:name=".activity.booking.BusActivity" />
+        <activity android:name=".activity.booking.FlightsActivity" />
+        <activity android:name=".activity.booking.MetroActivity" />
+        <activity android:name=".activity.PaidOrderActivity" />
         <activity android:name=".activity.MapActivity" />
         <activity android:name=".activity.CreatePassCodeActivity" />
         <activity
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home" />
         <activity android:name=".activity.BuyMemberShip" />
-        <activity android:name=".activity.AddUpdateAddress"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name=".activity.AddUpdateAddress"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".activity.OtpVerification" />
         <activity android:name=".activity.NewAccount" />
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.Navigation"/>
-        <activity android:name=".activity.WalletActivity"/>
-        <activity android:name=".activity.SendMoney"/>
-        <activity android:name=".activity.AddBeneficiary"/>
-        <activity android:name=".activity.WalletAddMoney"/>
-        <activity android:name=".activity.PaymentType"/>
-        <activity android:name=".activity.recharge.MobileRecharge"/>
-        <activity android:name=".activity.recharge.DthRecharge"/>
-        <activity android:name=".activity.recharge.PostpaidLandlineBillpay"/>
-        <activity android:name=".activity.recharge.WaterBillPay"/>
-        <activity android:name=".activity.recharge.ElectricityPay"/>
-        <activity android:name=".activity.recharge.GasPay"/>
-        <activity android:name=".activity.Profile"/>
-        <activity android:name=".activity.Commission"/>
-        <activity android:name=".activity.TransferCommissionToWallet"/>
-        <activity android:name=".activity.Geneology"/>
-        <activity android:name=".activity.PackageDetails"/>
-        <activity android:name=".activity.ContactUs"/>
-        <activity android:name=".activity.ReferAndEarn"/>
-        <activity android:name=".ChangePasscode"/>
-        <activity android:name=".activity.ForgotPasscode"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            />
-        <activity android:name=".activity.MemberBankAddPackages"/>
-        <activity android:name=".activity.SendMoneyToWallet"/>
-        <activity android:name=".activity.ForgetPassword"/>
+        <activity android:name=".activity.Navigation" />
+        <activity android:name=".activity.WalletActivity" />
+        <activity android:name=".activity.SendMoney" />
+        <activity android:name=".activity.AddBeneficiary" />
+        <activity android:name=".activity.WalletAddMoney" />
+        <activity android:name=".activity.PaymentType" />
+        <activity android:name=".activity.recharge.MobileRecharge" />
+        <activity android:name=".activity.recharge.DthRecharge" />
+        <activity android:name=".activity.recharge.PostpaidLandlineBillpay" />
+        <activity android:name=".activity.recharge.WaterBillPay" />
+        <activity android:name=".activity.recharge.ElectricityPay" />
+        <activity android:name=".activity.recharge.GasPay" />
+        <activity android:name=".activity.Profile" />
+        <activity android:name=".activity.Commission" />
+        <activity android:name=".activity.TransferCommissionToWallet" />
+        <activity android:name=".activity.Geneology" />
+        <activity android:name=".activity.PackageDetails" />
+        <activity android:name=".activity.ContactUs" />
+        <activity android:name=".activity.ReferAndEarn" />
+        <activity android:name=".ChangePasscode" />
+        <activity
+            android:name=".activity.ForgotPasscode"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".activity.MemberBankAddPackages" />
+        <activity android:name=".activity.SendMoneyToWallet" />
+        <activity android:name=".activity.ForgetPassword" />
         <activity android:name=".activity.WalletHistory" />
         <activity android:name=".activity.RechargeHistory" />
         <activity android:name=".activity.Splash">
@@ -73,6 +77,7 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
         <service
             android:name=".service.OtpVerifyService"
             android:exported="false" />
@@ -80,14 +85,14 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-    </application>
+    </application> <!-- The API key for Google Maps-based APIs. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- The API key for Google Maps-based APIs. -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

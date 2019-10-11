@@ -179,7 +179,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         mCurrLocationMarker = mMap.addMarker(markerOptions.draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,
                     this);

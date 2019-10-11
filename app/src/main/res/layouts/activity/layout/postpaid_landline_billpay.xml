@@ -72,7 +72,7 @@
                 android:layout_below="@+id/textView2"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/white_button_grayborder"
                 android:inputType="number"
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="4dp"
                 android:background="@drawable/white_button_grayborder">
 
                 <Spinner
@@ -169,7 +169,7 @@
                 android:layout_below="@+id/textView"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/white_button_grayborder"
                 android:imeOptions="actionDone"
