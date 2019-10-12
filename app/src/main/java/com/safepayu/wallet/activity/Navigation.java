@@ -6,7 +6,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +30,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -51,6 +57,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.safepayu.wallet.activity.Profile.QRcodeWidth;
+
 public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
 
     private ImageView nav_icon, notification_icon;
@@ -70,6 +78,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             liReferEarn,liUpdteKYC, liContactUs, liLogout;
     private TextView tv_home,tvProfile,tvPackageDetails,tvBuyPackage,tvBusinessWallet,tvMyWallet,tvShopping,tvChangePassword,tvMyOrders,tvHistory,tvGenelogy,
             tvReferEarn,tvUpdateKYC, tvContact,tvLogout;
+    public static Bitmap qrCodeImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +102,17 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         }
         getAppVersion();
         setupNavigation();
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    qrCodeImage=TextToImageEncode(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -235,7 +255,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         Upi_Pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.drawer_layout),"Coming Soon!",false);
+                //startActivity(new Intent(Navigation.this,QrCodeScanner.class));
+                Toast.makeText(Navigation.this, "Coming Soon!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -1040,6 +1061,40 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, true, e);
                     }
                 }));
+    }
+
+    Bitmap TextToImageEncode(String Value) throws WriterException {
+        BitMatrix bitMatrix;
+        try {
+            bitMatrix = new MultiFormatWriter().encode(
+                    Value,
+                    BarcodeFormat.DATA_MATRIX.QR_CODE,
+                    QRcodeWidth, QRcodeWidth, null
+            );
+
+        } catch (IllegalArgumentException Illegalargumentexception) {
+
+            return null;
+        }
+        int bitMatrixWidth = bitMatrix.getWidth();
+
+        int bitMatrixHeight = bitMatrix.getHeight();
+
+        int[] pixels = new int[bitMatrixWidth * bitMatrixHeight];
+
+        for (int y = 0; y < bitMatrixHeight; y++) {
+            int offset = y * bitMatrixWidth;
+
+            for (int x = 0; x < bitMatrixWidth; x++) {
+
+                pixels[offset + x] = bitMatrix.get(x, y) ?
+                        getResources().getColor(R.color.bue_A800):getResources().getColor(R.color.white);
+            }
+        }
+        Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444);
+
+        bitmap.setPixels(pixels, 0, 500, 0, 0, bitMatrixWidth, bitMatrixHeight);
+        return bitmap;
     }
 
 

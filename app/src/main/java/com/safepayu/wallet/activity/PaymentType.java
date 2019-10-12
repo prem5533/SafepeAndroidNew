@@ -339,7 +339,6 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         merchant_udf4="udf4";
         merchant_udf5="udf5";
 
-        Amount="1";
         merchant_payment_amount = Float.parseFloat(Amount);
 
         hash = hashKeyResponse.getMerchant_key() + "|" + hashKeyResponse.getTransactionId() + "|" + merchant_payment_amount + "|" + hashKeyRequest.getMerchant_productInfo()
@@ -460,8 +459,8 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                         intentStatus.putExtra("Amount",Amount);
                         intentStatus.putExtra("date",date);
                         intentStatus.putExtra("productinfo",productinfo);
-                       // startActivity(intentStatus);
-                        //finish();
+                        startActivity(intentStatus);
+                        finish();
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -489,8 +488,8 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                     intentStatus.putExtra("Amount",Amount);
                     intentStatus.putExtra("date",date);
                     intentStatus.putExtra("productinfo",productinfo);
-                    //startActivity(intentStatus);
-                    //finish();
+                    startActivity(intentStatus);
+                    finish();
                 }catch (Exception e){
                     e.printStackTrace();
                 }

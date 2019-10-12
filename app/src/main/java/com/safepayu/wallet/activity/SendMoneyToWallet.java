@@ -19,7 +19,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.SendToWalletRequest;
-import com.safepayu.wallet.models.response.BaseResponse;
+import com.safepayu.wallet.models.response.SendToWalletResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
 
@@ -33,6 +33,7 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
     private EditText MobileED,AmountED;
     private LoadingDialog loadingDialog;
     SendToWalletRequest sendToWalletRequest;
+    String Mobile="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,13 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
 
         BackBtn.setOnClickListener(this);
         SendMoneyBtn.setOnClickListener(this);
+
+        try{
+            Mobile=getIntent().getStringExtra("Mobile");
+            MobileED.setText(Mobile);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -130,17 +138,27 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
         BaseApp.getInstance().getDisposable().add(apiService.transferWalletToWallet(sendToWalletRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                .subscribeWith(new DisposableSingleObserver<SendToWalletResponse>() {
                     @Override
-                    public void onSuccess(BaseResponse response) {
+                    public void onSuccess(SendToWalletResponse response) {
                         loadingDialog.hideDialog();
-                        if (response.getStatus()) {
+                        Intent intentStatus=new Intent(SendMoneyToWallet.this,PaidOrderActivity.class);
+                        if (response.isStatus()) {
 
-                            Toast.makeText(SendMoneyToWallet.this, response.getMessage(), Toast.LENGTH_SHORT).show();
-                            finish();
+
+                            intentStatus.putExtra("status","success");
+
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),response.getMessage(),false);
+                            intentStatus.putExtra("status","failed");
+                            Toast.makeText(SendMoneyToWallet.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                           // BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),response.getMessage(),false);
                         }
+                        intentStatus.putExtra("txnid",response.getUtrId());
+                        intentStatus.putExtra("Amount",AmountED.getText().toString().trim());
+                        intentStatus.putExtra("date",response.getData());
+                        intentStatus.putExtra("productinfo","Wallet To Wallet Transaction");
+                        startActivity(intentStatus);
+                        finish();
                     }
 
                     @Override

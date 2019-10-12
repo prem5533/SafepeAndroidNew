@@ -39,7 +39,7 @@ public class WalletHistory extends BaseActivity implements WalletHistoryAdapter.
     private Dialog dialogStatus;
     private RelativeLayout StatusColorBackground;
     private LinearLayout DescriptionLayout;
-    private TextView StatusTV,TransactionIdTV,CustomerNumberIdTV,AmountTV,RechargeTypeTV,DescriptionTextTV,OperationTextTV,ContactSupportTV;
+    private TextView StatusTV,DateTV,TransactionIdTV,CustomerNumberIdTV,AmountTV,RechargeTypeTV,DescriptionTextTV,OperationTextTV,ContactSupportTV;
     private Button GoToWalletBtn;
 
     @Override
@@ -76,6 +76,8 @@ public class WalletHistory extends BaseActivity implements WalletHistoryAdapter.
         OperationTextTV=dialogStatus.findViewById(R.id.operationText);
         ContactSupportTV=dialogStatus.findViewById(R.id.tv_contct_support);
         DescriptionLayout=dialogStatus.findViewById(R.id.description_layout);
+        DateTV=dialogStatus.findViewById(R.id.tv_detil_time_date);
+
         DescriptionLayout.setVisibility(View.VISIBLE);
         OperationTextTV.setText("Operation ");
         
@@ -148,6 +150,7 @@ public class WalletHistory extends BaseActivity implements WalletHistoryAdapter.
         TransactionIdTV.setText(selectedPackage.getTransaction_no());
         AmountTV.setText(getResources().getString(R.string.rupees)+" "+selectedPackage.getAmount());
         CustomerNumberIdTV.setText(CustNo);
+        DateTV.setText(selectedPackage.getUpdated_at());
 
         dialogStatus.show();
 

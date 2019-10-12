@@ -3,6 +3,7 @@ package com.safepayu.wallet.api;
 import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.BuyPackage;
 import com.safepayu.wallet.models.request.ChangePassword;
+import com.safepayu.wallet.models.request.CheckEmailMobileRequest;
 import com.safepayu.wallet.models.request.ForgetPasswordRequest;
 import com.safepayu.wallet.models.request.HashKeyRequest;
 import com.safepayu.wallet.models.request.Login;
@@ -30,8 +31,10 @@ import com.safepayu.wallet.models.response.RechargeHistoryResponse;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
+import com.safepayu.wallet.models.response.SendToWalletResponse;
 import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
+import com.safepayu.wallet.models.response.UpiUserDetailsResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
 import com.safepayu.wallet.models.response.WalletHistoryResponse;
@@ -92,7 +95,7 @@ public interface ApiService {
     Single<UserResponse>changePwd(@Body ChangePassword changePassword);
 
     @POST("api/safepe/walletToWallet")
-    Single<BaseResponse> transferWalletToWallet(@Body SendToWalletRequest sendToWalletRequest);
+    Single<SendToWalletResponse> transferWalletToWallet(@Body SendToWalletRequest sendToWalletRequest);
 
     @POST("api/safepe/getWalletDetails")
     Single<WalletResponse> getWalletDetails();;
@@ -150,4 +153,11 @@ public interface ApiService {
 
     @POST("api/safepe/getCommitionWithBusinessAmount")
     Single<CommissionDetailsResponse> getCommissionDetails();
+
+    @FormUrlEncoded
+    @POST("api/safepe/getUserDetails")
+    Single<UpiUserDetailsResponse> getUserDetailUPI(@Field("userid") String userid);
+
+    @POST("api/safepe/checkUserMobile")
+    Single<BaseResponse> checkEmailMobile(@Body CheckEmailMobileRequest checkEmailMobileRequest );
 }

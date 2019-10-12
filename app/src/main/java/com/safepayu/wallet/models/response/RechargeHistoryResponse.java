@@ -66,7 +66,7 @@ public class RechargeHistoryResponse {
         private int rech_type;
         private int number_type;
         private String number;
-        private int amount;
+        private double amount;
         private int operator_id;
         private int status;
         private String created_at;
@@ -144,7 +144,7 @@ public class RechargeHistoryResponse {
             this.number = number;
         }
 
-        public int getAmount() {
+        public double getAmount() {
             return amount;
         }
 

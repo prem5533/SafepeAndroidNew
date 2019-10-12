@@ -63,7 +63,7 @@ public class WalletHistoryResponse {
         private String transaction_no;
         private String description;
         private String operation;
-        private int amount;
+        private double amount;
         private String wallet_no;
         private String mode_payment;
         private String easy_pay_id;
@@ -115,7 +115,7 @@ public class WalletHistoryResponse {
             this.operation = operation;
         }
 
-        public int getAmount() {
+        public double getAmount() {
             return amount;
         }
 

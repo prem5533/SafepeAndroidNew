@@ -77,21 +77,36 @@
                     android:fontFamily="@font/roboto_regular"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/et.password"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
                     android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    style="@style/defaultEditTextStyle"
-                    android:inputType="textPassword"
-                    android:hint="@string/enter_password"
-                    android:fontFamily="@font/roboto_regular"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_toLeftOf="@+id/show_hide_password">
+
+                    <EditText
+                        android:id="@+id/et.password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        style="@style/defaultEditTextStyle"
+                        android:inputType="textPassword"
+                        android:hint="@string/enter_password"
+                        android:fontFamily="@font/roboto_regular"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/show_password48"
+                    android:id="@+id/show_hide_password"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="30dp"/>
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/btn.login"

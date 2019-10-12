@@ -31,7 +31,9 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.enums.ButtonActions;
 import com.safepayu.wallet.listener.MobileEditTextWatcher;
 import com.safepayu.wallet.listener.SnackBarActionClickListener;
+import com.safepayu.wallet.models.request.CheckEmailMobileRequest;
 import com.safepayu.wallet.models.request.Register;
+import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BaseResponse1;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
@@ -45,6 +47,8 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     private EditText firstName, lastName, email, mobileNo, password, dob, referralCode;
     private TextView tvReferUserName;
     private LoadingDialog loadingDialog;
+    CheckEmailMobileRequest checkEmailMobileRequest;
+    boolean mobileCheck=false,emailCheck=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +74,71 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         mobileNo.setText("+91 ");
         mobileNo.setSelection(mobileNo.getText().length());
 
+        checkEmailMobileRequest=new CheckEmailMobileRequest();
+
 
         findViewById(R.id.btn_process).setOnClickListener(this);
         dob.setOnClickListener(this);
+
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+
+                if (BaseApp.getInstance().commonUtils().isValidEmail(email.getText().toString())) {
+                    if (email.getText().toString().contains(".com")){
+                        checkEmailMobileRequest.setEmail(email.getText().toString());
+                        checkEmailMobileRequest.setType("2");
+                        checkEmailMobileRequest.setMobile("");
+                        checkEmail(checkEmailMobileRequest);
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                // TODO Auto-generated method stub
+            }
+        });
+
+        mobileNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+
+                if (s.length() == 14) {
+                    checkEmailMobileRequest.setEmail("");
+                    checkEmailMobileRequest.setType("1");
+                    checkEmailMobileRequest.setMobile(mobileNo.getText().toString().split(" ")[1]);
+                    checkMobile(checkEmailMobileRequest);
+                } else {
+
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                // TODO Auto-generated method stub
+            }
+        });
 
         referralCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -125,7 +191,16 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
             case R.id.btn_process:
                 BaseApp.getInstance().commonUtils().hideKeyboard(this);
                 if (validate()) {
-                    register();
+                    if (mobileCheck){
+                        if (emailCheck){
+                            register();
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout),"This Email Is Already Registered"  , false);
+                        }
+                    }else {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout),"This Mobile Is Already Registered"  , false);
+                    }
+
                 }
                 break;
             case R.id.et_dob:
@@ -310,6 +385,68 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                             }
                         }catch (Exception e){
                             e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.newAccountLayout), true, e);
+                    }
+                }));
+
+    }
+
+    private void checkEmail(CheckEmailMobileRequest checkEmailMobileRequest1) {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.checkEmailMobile(checkEmailMobileRequest1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.getStatus()) {
+                            emailCheck=false;
+                            email.setError("This Email Is Already Registered");
+
+                        } else {
+                            emailCheck=true;
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.newAccountLayout), true, e);
+                    }
+                }));
+
+    }
+
+    private void checkMobile(CheckEmailMobileRequest checkEmailMobileRequest1) {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.checkEmailMobile(checkEmailMobileRequest1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.getStatus()) {
+                            mobileCheck=false;
+                            mobileNo.setError("This Mobile Is Already Registered");
+
+                        } else {
+                            mobileCheck=true;
                         }
 
                     }

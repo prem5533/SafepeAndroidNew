@@ -1,11 +1,17 @@
 package com.safepayu.wallet.activity;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,15 +29,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.safepayu.wallet.activity.Navigation.qrCodeImage;
+
 public class Profile extends BaseActivity implements View.OnClickListener {
 
     Button BackBtn,UpdateAddressBtn,btnChangePassSubmit;
     TextView ChangePassBtn,tvPhoneNumber, tvEmil,tvDOB, tvAddress,tvPincode,tvUsername1;
-    LinearLayout ChangePassLayout;
+    LinearLayout ChangePassLayout, ShowMyQRcodeLayout;
     int ChangePassVisibility=0;
     UserResponse uResponse;
     private EditText etOldPassword, etNewPassword, etConfirmPassword;
     private LoadingDialog loadingDialog;
+    public final static int QRcodeWidth = 500 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +51,7 @@ public class Profile extends BaseActivity implements View.OnClickListener {
         //getProfileData
         getProfileData();
 
+        ShowMyQRcodeLayout=findViewById(R.id.showMyQRcode);
         ChangePassBtn=findViewById(R.id.changePassBtn);
         BackBtn=findViewById(R.id.backbtn_from_profile);
         ChangePassLayout=findViewById(R.id.change_pass_layout);
@@ -74,7 +84,16 @@ public class Profile extends BaseActivity implements View.OnClickListener {
             e.printStackTrace();
         }*/
 
+        ShowMyQRcodeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogForQRcode(Profile.this,qrCodeImage);
+
+            }
+        });
+
     }
+
 
     private void getProfileData() {
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
@@ -92,9 +111,6 @@ public class Profile extends BaseActivity implements View.OnClickListener {
                         tvDOB.setText(userResponse.getUser().getDob());
                         tvAddress.setText(userResponse.getUser().getLocation()+" "+ userResponse.getUser().getCity()+" "+userResponse.getUser().getState()+" "+userResponse.getUser().getCountry());
                         tvPincode.setText(userResponse.getUser().getPin());
-
-
-
                     }
 
                     @Override
@@ -207,6 +223,25 @@ public class Profile extends BaseActivity implements View.OnClickListener {
                         loadingDialog.hideDialog();
                     }
                 }));
+    }
+
+    public void showDialogForQRcode(Activity activity,Bitmap bitmap) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.qr_code_dialog);
+        dialog.getWindow().setLayout(370, 800);
+
+        ImageView QRcodeImageView=dialog.findViewById(R.id.imageViewQRcode);
+        QRcodeImageView.setImageBitmap(bitmap);
+
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
     }
 
 }

@@ -218,7 +218,7 @@
                         android:id="@+id/tv_detil_time_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="01:44 PM on 02 Oct 2019"
+                        android:text=""
                         android:textSize="10sp"
                         android:textColor="@color/blue_grey_400"
                         android:fontFamily="@font/roboto_regular"

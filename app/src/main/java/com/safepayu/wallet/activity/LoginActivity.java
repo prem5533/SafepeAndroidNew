@@ -12,6 +12,7 @@ import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -52,7 +53,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private LoadingDialog loadingDialog;
     String versionName="",appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
     int versionCode=0;
-    private ImageView im_cross;
+    private ImageView im_cross,ShowHidePasswordBtn;
+    boolean showPass=false;
 
     //Otp Dialog
     TextView TimerTV;
@@ -83,6 +85,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         mobileNo = findViewById(R.id.et_mobileNo);
         password = findViewById(R.id.et_password);
+        ShowHidePasswordBtn= findViewById(R.id.show_hide_password);
         mobileNo.addTextChangedListener(new MobileEditTextWatcher(mobileNo));
         mobileNo.setText("+91 ");
         password.setText("");
@@ -90,6 +93,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         findViewById(R.id.btn_login).setOnClickListener(this);
         findViewById(R.id.btn_forgetPass).setOnClickListener(this);
         findViewById(R.id.btn_newAccount).setOnClickListener(this);
+        findViewById(R.id.show_hide_password).setOnClickListener(this);
 
 //        checkPermission();
         getAppVersion();
@@ -124,6 +128,31 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.btn_newAccount:
                 startActivity(new Intent(this, NewAccount.class));
+                break;
+            case R.id.show_hide_password:
+
+
+                if (showPass){
+                    showPass=false;
+                    ShowHidePasswordBtn.setImageDrawable(getResources().getDrawable(R.drawable.show_password48));
+                    password.setTransformationMethod(new PasswordTransformationMethod());
+                    try {
+                        password.setSelection(password.getText().toString().length());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }else {
+                    showPass=true;
+                    ShowHidePasswordBtn.setImageDrawable(getResources().getDrawable(R.drawable.hide_password48));
+                    password.setTransformationMethod(null);
+                    try {
+                        password.setSelection(password.getText().toString().length());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
                 break;
         }
     }
@@ -430,7 +459,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.verify_email_dialog);
 
+        im_cross = dialog.findViewById(R.id.im_cross);
+
         final EditText emailEd=dialog.findViewById(R.id.enter_EmailLogin);
+
+        im_cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
 
         Button proceedButton = (Button) dialog.findViewById(R.id.continue_EmailLogin);
         proceedButton.setOnClickListener(new View.OnClickListener() {
@@ -441,10 +479,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     emailEd.requestFocus();
                 }else {
                     if (isValidEmail(emailEd.getText().toString().trim())){
+
+                        sendVerifyLink(emailEd.getText().toString().trim(),dialog);
+                    }else {
                         emailEd.setError("Please Enter Correct Email Id");
                         emailEd.requestFocus();
-                    }else {
-                        sendVerifyLink(emailEd.getText().toString().trim());
                     }
                 }
 
@@ -459,6 +498,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         dialog.show();
 
     }
+
     public final static boolean isValidEmail(CharSequence target) {
         if (target == null) {
             return false;
@@ -540,7 +580,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }));
     }
 
-    private void sendVerifyLink(String Email) {
+    private void sendVerifyLink(String Email, final Dialog dialog) {
 
         String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
@@ -552,6 +592,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     @Override
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
+                        dialog.dismiss();
                         if (response.getStatus()) {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage() + "\n" + "Please Verify From Your Email Account", false);
                         } else {

@@ -2,11 +2,10 @@ package com.safepayu.wallet.models.response;
 
 public class WalletResponse {
 
-
     /**
      * status : true
      * message : User Wallet Details.
-     * wallet : {"id":1,"userid":"u8605278049","number":"sp_8605278049","amount":154600,"status":1,"created_at":"2019-09-10 04:09:09","updated_at":"2019-09-10 18:03:18"}
+     * wallet : {"id":1115,"userid":"u8376097766","number":"sp_8376097766","amount":626007.99,"status":1,"created_at":"2019-10-12 21:17:41","updated_at":"2019-10-12 21:17:41"}
      */
 
     private boolean status;
@@ -39,19 +38,19 @@ public class WalletResponse {
 
     public static class WalletBean {
         /**
-         * id : 1
-         * userid : u8605278049
-         * number : sp_8605278049
-         * amount : 154600
+         * id : 1115
+         * userid : u8376097766
+         * number : sp_8376097766
+         * amount : 626007.99
          * status : 1
-         * created_at : 2019-09-10 04:09:09
-         * updated_at : 2019-09-10 18:03:18
+         * created_at : 2019-10-12 21:17:41
+         * updated_at : 2019-10-12 21:17:41
          */
 
         private int id;
         private String userid;
         private String number;
-        private int amount;
+        private double amount;
         private int status;
         private String created_at;
         private String updated_at;
@@ -80,11 +79,11 @@ public class WalletResponse {
             this.number = number;
         }
 
-        public int getAmount() {
+        public double getAmount() {
             return amount;
         }
 
-        public void setAmount(int amount) {
+        public void setAmount(double amount) {
             this.amount = amount;
         }
 

@@ -149,10 +149,9 @@
                         android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout><com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="50dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
                 <EditText
                     android:id="@+id/et.referralCode"
@@ -164,17 +163,33 @@
                     android:textSize="16sp"
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/black"/>
-                <TextView
-                    android:id="@+id/refer_user_name"
+            </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:text=""
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/black">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="50dp">
 
-                </TextView>
-            </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="Referral Name - "
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/refer_user_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text=""
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     style="@style/TextAppearance.AppCompat.Large"

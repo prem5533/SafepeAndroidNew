@@ -120,7 +120,7 @@ public class RechargeHistoryAdapter extends RecyclerView.Adapter<RechargeHistory
                 e.printStackTrace();
             }
 
-            RechargeTypeTV.setText(mItem.get(position).getTransactionID());
+            RechargeTypeTV.setText(mItem.get(position).getUtransactionID());
             TimeTV.setText(mItem.get(position).getCreated_at());
             CustomerIdTV.setText(mItem.get(position).getNumber());
             AmountTV.setText(context.getResources().getString(R.string.rupees)+" "+mItem.get(position).getAmount());

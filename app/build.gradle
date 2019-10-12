@@ -7,8 +7,8 @@ android {
         applicationId "com.safepayu.wallet"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 30
+        versionName "1.7.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -94,5 +94,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services:8.4.0'
     implementation 'com.malinskiy:superrecyclerview:1.1.4'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.1'
+    implementation 'com.google.zxing:core:3.2.1'
+    implementation 'me.dm7.barcodescanner:zxing:1.9'
 
 }

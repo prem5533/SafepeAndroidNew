@@ -145,7 +145,7 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                 finish();*/
 
                 if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")){
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",false);
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"Please Buy Membership To Enjoy App's Features",false);
                 }else {
                     CheckValidate();
                 }

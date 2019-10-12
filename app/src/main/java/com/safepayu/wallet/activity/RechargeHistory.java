@@ -37,7 +37,7 @@ public class RechargeHistory extends BaseActivity implements RechargeHistoryAdap
 
     private Dialog dialogStatus;
     private RelativeLayout StatusColorBackground;
-    private TextView StatusTV,TransactionIdTV,CustomerNumberIdTV,AmountTV,RechargeTypeTV,ContactSupportTV;
+    private TextView StatusTV,TransactionIdTV,CustomerNumberIdTV,AmountTV,RechargeTypeTV,ContactSupportTV,DateTV;
     private Button GoToWalletBtn;
 
 
@@ -70,6 +70,7 @@ public class RechargeHistory extends BaseActivity implements RechargeHistoryAdap
         RechargeTypeTV=dialogStatus.findViewById(R.id.tv_recharge_type);
         GoToWalletBtn=dialogStatus.findViewById(R.id.recharge_back_btn);
         ContactSupportTV=dialogStatus.findViewById(R.id.tv_contct_support);
+        DateTV=dialogStatus.findViewById(R.id.tv_detil_time_date);
 
         getRechargeHistory();
 
@@ -108,9 +109,10 @@ public class RechargeHistory extends BaseActivity implements RechargeHistoryAdap
 
     private void SelectedHistory(RechargeHistoryResponse.DataBean selectedPackage) {
 
-        TransactionIdTV.setText(selectedPackage.getTransactionID());
+        TransactionIdTV.setText(selectedPackage.getUtransactionID());
         AmountTV.setText(getResources().getString(R.string.rupees)+" "+selectedPackage.getAmount());
         CustomerNumberIdTV.setText(selectedPackage.getNumber());
+        DateTV.setText(selectedPackage.getUpdated_at());
 
         int rechargeTypeNo=0,statusNo=0;
         String RechargeType="";
