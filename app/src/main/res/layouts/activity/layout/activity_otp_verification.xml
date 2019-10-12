@@ -40,7 +40,7 @@
     <com.safepayu.wallet.custom_view.CustomTextView
         android:layout_width="wrap_content"
         app:fontCustom="@string/Roboto"
-        android:id="@+id/tv.mobileNo"
+        android:id="@+id/tv_mobileNo1"
         android:textStyle="normal"
         android:textSize="15sp"
         android:layout_height="wrap_content"

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -31,8 +32,9 @@ import com.safepayu.wallet.enums.ButtonActions;
 import com.safepayu.wallet.listener.MobileEditTextWatcher;
 import com.safepayu.wallet.listener.SnackBarActionClickListener;
 import com.safepayu.wallet.models.request.Register;
+import com.safepayu.wallet.models.response.BaseResponse1;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
-import com.safepayu.wallet.models.response.UserResponse;
+import com.safepayu.wallet.models.response.UserResponse1;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -81,8 +83,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 if (s.length() == 10) {
 
                     getReferralDetails();
-                }
-                else {
+                } else {
                     tvReferUserName.setText("");
                 }
             }
@@ -235,15 +236,42 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         BaseApp.getInstance().getDisposable().add(apiService.register(register)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<UserResponse>() {
+                .subscribeWith(new DisposableSingleObserver<UserResponse1>() {
                     @Override
-                    public void onSuccess(UserResponse response) {
+                    public void onSuccess(UserResponse1 response) {
                         loadingDialog.hideDialog();
-                        if (response.getStatus()) {
+                        if (response.isStatus()) {
                             BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
                             BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().REFERRAL_USER, new Gson().toJson(response.getReferralUser()));
                             startActivity(new Intent(NewAccount.this, OtpVerification.class));
                             finish();
+                        }else {
+                            String message="";
+
+                           try{
+                               BaseResponse1.DataBean dataBean=response.getData();
+                               if (dataBean!=null){
+
+                                   if (dataBean.getEmail().size()==1){
+                                       message=dataBean.getEmail().get(0)+"\n";
+                                   }else if (dataBean.getEmail().size()>1){
+                                       message=dataBean.getEmail().get(0)+"\n"+dataBean.getEmail().get(1)+"\n";
+                                   }
+
+                                   if (dataBean.getMobile().size()==1){
+                                       message=message+dataBean.getMobile().get(0);
+                                   }else if (dataBean.getEmail().size()>1){
+                                       message=message+dataBean.getMobile().get(0)+"\n"+dataBean.getMobile().get(1)+"\n";
+                                   }
+                               }
+                           }catch (Exception e){
+                               e.printStackTrace();
+                           }
+                            if (TextUtils.isEmpty(message)) {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout), response.getMessage(), false);
+                            }else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout),  message, false);
+                            }
                         }
                     }
 

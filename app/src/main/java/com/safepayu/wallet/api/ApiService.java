@@ -33,6 +33,7 @@ import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
 import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
 import com.safepayu.wallet.models.response.UserResponse;
+import com.safepayu.wallet.models.response.UserResponse1;
 import com.safepayu.wallet.models.response.WalletHistoryResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
 
@@ -48,7 +49,7 @@ public interface ApiService {
 
     // Register new user
     @POST("api/safepe/createUser")
-    Single<UserResponse> register(@Body Register registerRequest);
+    Single<UserResponse1> register(@Body Register registerRequest);
 
     // Login user
     @POST("api/safepe/login")

@@ -1,7 +1,5 @@
 package com.safepayu.wallet.activity;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseActivity;
@@ -53,12 +52,16 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
         });
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
         otp = findViewById(R.id.et_otp);
-        mobileNo = findViewById(R.id.tv_mobileNo);
+        mobileNo = findViewById(R.id.tv_mobileNo1);
 
         otpReadRemainingTime = findViewById(R.id.tv_otpReadRemainingTime);
         resendAgainLayout = findViewById(R.id.layout_resendAgainLayout);
 
-        mobileNo.setText("+91 " + BaseApp.getInstance().commonUtils().hideCharacter(getIntent().getStringExtra(Config.MOBILE_NO), "X", 7));
+        try{
+            mobileNo.setText("+91 " + BaseApp.getInstance().commonUtils().hideCharacter(getIntent().getStringExtra(Config.MOBILE_NO), "X", 7));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
 
         findViewById(R.id.btn_verify).setOnClickListener(this);
