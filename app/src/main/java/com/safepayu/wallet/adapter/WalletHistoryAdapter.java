@@ -120,11 +120,19 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
                 e.printStackTrace();
             }
 
-            tv_opertionType.setText(mItem.get(position).getOperation());
+
             tv_walletDescription.setText(mItem.get(position).getDescription());
-            AmountTV.setText(context.getResources().getString(R.string.rupees)+" "+mItem.get(position).getAmount());
             TimeTV.setText(mItem.get(position).getCreated_at());
             StatusTV.setText(status);
+
+            if (mItem.get(position).getOperation().equalsIgnoreCase("debit")){
+                AmountTV.setTextColor(context.getResources().getColor(R.color.red_500));
+                AmountTV.setText("- "+context.getResources().getString(R.string.rupees)+" "+mItem.get(position).getAmount());
+            }else {
+                AmountTV.setTextColor(context.getResources().getColor(R.color.green_500));
+                AmountTV.setText("+ "+context.getResources().getString(R.string.rupees)+" "+mItem.get(position).getAmount());
+            }
+            tv_opertionType.setText(mItem.get(position).getOperation());
 
         }
 

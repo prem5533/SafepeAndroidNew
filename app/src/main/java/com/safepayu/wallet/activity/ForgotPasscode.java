@@ -233,6 +233,7 @@ public class ForgotPasscode extends AppCompatActivity {
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE,Passcode);
                             Toast.makeText(ForgotPasscode.this, response.getMessage(), Toast.LENGTH_SHORT).show();
                             finish();
                         }else {

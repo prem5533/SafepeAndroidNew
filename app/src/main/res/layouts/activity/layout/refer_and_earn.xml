@@ -143,7 +143,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="#4deb9e"
+                android:background="@drawable/green_round_bg"
                 android:gravity="center"
                 android:padding="10dp">
                 <ImageView
@@ -153,9 +153,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="Share on Whatsapp"
-                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:text="       Share             "
+                    android:textSize="16sp"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_marginLeft="20dp"/>
             </LinearLayout>

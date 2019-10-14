@@ -4,7 +4,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -42,6 +44,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
 
     Button BackBtn,WithDrawBtn;
     private LinearLayout WithdrawAmountlayout,AddBankBenBtn;
+    private  TextView AmountTotalTV;
     private Spinner BankBenSpinner;
     private EditText AmountED;
     private RadioGroup radioGroup;
@@ -69,6 +72,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         BankBenSpinner=findViewById(R.id.bankBenSpinner);
         radioGroup=findViewById(R.id.radioGroupWithdraw);
         WithDrawBtn=findViewById(R.id.btnWithdraw);
+        AmountTotalTV=findViewById(R.id.calculatedamount);
         AmountED=findViewById(R.id.withdrawAmount);
         BankBenSpinner.setVisibility(View.GONE);
 
@@ -99,11 +103,16 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         WithDrawBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")){
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",false);
                 }else {
-                    CheckValidate();
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")){
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.dthRechargeLayout),"Withdraw Is Closed Today",true);
+                    }else {
+                        CheckValidate();
+                    }
                 }
+
             }
         });
 
@@ -116,6 +125,33 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        AmountED.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+                if (s.length()>2){
+                    double amt=CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()));
+                    String text = AmountED.getText().toString().trim()+" - Tax = ";
+                    AmountTotalTV.setText(text+String.format("%.2f", amt));
+                }else {
+                    AmountTotalTV.setText("0.0");
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                // TODO Auto-generated method stub
             }
         });
 
@@ -137,7 +173,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
             if (TextUtils.isEmpty(AmountED.getText().toString().trim())){
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Enter Amount",false);
             }else {
-                if (Amount<8001 && Amount>0){//99
+                if (Amount<8001 && Amount>99){//99
 
                     if (TextUtils.isEmpty(BenID)){
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Select Any Beneficiary",false);
@@ -369,5 +405,22 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId),"Invalid Passcode",false);
         }
 
+    }
+
+    private double CalculateAmount(int amount){
+
+        double totalAmount=0.0f,minusAmount=0.0f;
+        int checkAmount=0;
+
+        minusAmount=((((double) amount) / 100) * 3.56);
+        totalAmount=(double)amount- minusAmount;
+        checkAmount=(int)minusAmount;
+        if (checkAmount>9){
+
+        }else {
+            totalAmount=(double)amount-(double)10;
+        }
+
+        return totalAmount;
     }
 }

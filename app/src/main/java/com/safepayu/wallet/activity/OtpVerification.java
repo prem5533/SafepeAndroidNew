@@ -195,9 +195,11 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                         if (response.getStatus()) {
                             BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
                             if (response.getUser().getPassCode() == null) {
-                                startActivity(new Intent(OtpVerification.this, Navigation.class));
+                                startActivity(new Intent(OtpVerification.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             }
                             finish();
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(),true);
                         }
                     }
 

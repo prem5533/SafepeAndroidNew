@@ -134,36 +134,71 @@
                         android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/et.password"
-                        style="@style/defaultEditTextStyle"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/et_password_password"
+                            style="@style/defaultEditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/enter_password"
+                            android:inputType="textPassword"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/show_password48"
+                        android:id="@+id/show_hide_password_newAccount"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/enter_password"
-                        android:inputType="textPassword"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black" />
-                </com.google.android.material.textfield.TextInputLayout><com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                        android:layout_marginTop="10dp">
 
-                <EditText
-                    android:id="@+id/et.referralCode"
-                    style="@style/defaultEditTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/referral_code"
-                    android:inputType="number"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/black"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                        <EditText
+                            android:id="@+id/et.referralCode"
+                            style="@style/defaultEditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/referral_code"
+                            android:inputType="text"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/black"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/verify_referral"
+                        android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:text="Verify Referral"
+                        android:textSize="14sp"
+                        android:textColor="@color/bue_A800"
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginTop="10dp"/>
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -174,21 +209,21 @@
                     android:layout_marginBottom="50dp">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
                         android:text="Referral Name - "
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/bue_A800"/>
 
                     <TextView
                         android:id="@+id/refer_user_name"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
                         android:text=""
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/bue_A700"/>
                 </LinearLayout>
 
                 <com.safepayu.wallet.custom_view.CustomTextView

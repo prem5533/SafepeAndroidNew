@@ -21,6 +21,7 @@ import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.models.response.CommissionDetailsResponse;
 import com.safepayu.wallet.models.response.CustOperatorResponse;
+import com.safepayu.wallet.models.response.ForgetPasswordResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
 import com.safepayu.wallet.models.response.HashKeyResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
@@ -35,6 +36,7 @@ import com.safepayu.wallet.models.response.SendToWalletResponse;
 import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
 import com.safepayu.wallet.models.response.UpiUserDetailsResponse;
+import com.safepayu.wallet.models.response.UserDetailResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
 import com.safepayu.wallet.models.response.WalletHistoryResponse;
@@ -71,7 +73,7 @@ public interface ApiService {
     Single<PackageListData> getAllPackages();
     // All Packages listing
     @GET("api/safepe/getUser")
-    Single<UserResponse> getUserDetails();
+    Single<UserDetailResponse> getUserDetails();
 
     @POST("api/safepe/buyPackage")
     Single<BuyPackageResponse> buyPackage(@Body BuyPackage buyPackage);
@@ -118,7 +120,7 @@ public interface ApiService {
     Single<CustOperatorResponse> getMobileOperator(@Field("number") String number);
 
     @POST("api/safepe/forgotPassword")
-    Single<BaseResponse> getForgetPassword(@Body ForgetPasswordRequest forgetPasswordResponse);
+    Single<ForgetPasswordResponse> getForgetPassword(@Body ForgetPasswordRequest forgetPasswordResponse);
 
     @POST("api/safepe/addBankToWallet")
     Single<SendPaymentGatewayDetailsResponse> addBankToWallet(@Body SendPaymentGatewayDetailsRequest sendPaymentGatewayDetailsRequest);
@@ -129,7 +131,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/safepe/findVenificairyName")
-    Single<ReferralCodeResponse> getReferralDetails(@Field("referral_code") String referral_code);
+    Single<ReferralCodeResponse> getReferralDetails(@Field("referral_code") String referral_code, @Field("type") String type, @Field("mobile") String mobile);
 
     @FormUrlEncoded
     @POST("api/safepe/sendVerifyEmailLink")

@@ -288,8 +288,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onSuccess(LoginResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-
                             CheckStatusCode(response);
+
+
 //                             switch (response.getStatusCode()) {
 //                                case 0:
 //                                    SaveLoginDetails(response);
@@ -342,19 +343,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false);
                 break;
             case 2:
-                BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false, getResources().getString(R.string.verify), ButtonActions.VERIFY_MOBILE, LoginActivity.this);
+                BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), true, getResources().getString(R.string.verify), ButtonActions.VERIFY_MOBILE, LoginActivity.this);
                 break;
             case 3:
-                SaveLoginDetails(response);
+
                 Toast.makeText(LoginActivity.this, "Please First Set Passcode", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LoginActivity.this, CreatePassCodeActivity.class));
                 break;
             case 4:
-                SaveLoginDetails(response);
                 Toast.makeText(LoginActivity.this, "Please First Set Address", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LoginActivity.this, AddUpdateAddress.class));
                 break;
             case 5:
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
                 showDialogForEmail(LoginActivity.this);
                 break;
         }
@@ -366,6 +367,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, response.getAccessToken());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN_EXPIRE_IN, response.getTokenExpiresIn());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
+
+
     }
 
     public void showDialog(Activity activity) {
@@ -397,8 +400,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     verifyOtp(OtpED.getText().toString().trim());
                     dialog.dismiss();
                 }
-
-
             }
         });
 
@@ -563,8 +564,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onSuccess(UserResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                            //loginUser();
-                            startActivity(new Intent(LoginActivity.this,Navigation.class));
+                            startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             finish();
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(), false);
@@ -594,9 +594,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         loadingDialog.hideDialog();
                         dialog.dismiss();
                         if (response.getStatus()) {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage() + "\n" + "Please Verify From Your Email Account", false);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage() + "\n" + "Please Verify From Your Email Account", true);
                         } else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(), false);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(), true);
                         }
                     }
 

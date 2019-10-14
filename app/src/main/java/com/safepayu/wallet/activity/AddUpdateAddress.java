@@ -196,7 +196,6 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
                         loadingDialog.hideDialog();
                         if (response.isStatus()){
                             Toast.makeText(AddUpdateAddress.this, "Address Updated Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(AddUpdateAddress.this, Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             finish();
 
                         }else {

@@ -258,7 +258,31 @@
                         android:id="@+id/tv_history"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="History"
+                        android:text="Recharge History"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/roboto_regular"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/li_historyWallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/wallet1"/>
+
+                    <TextView
+                        android:id="@+id/tv_historyWallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Wallet History"
                         android:textSize="15sp"
                         android:textColor="@color/black"
                         android:layout_marginLeft="20dp"

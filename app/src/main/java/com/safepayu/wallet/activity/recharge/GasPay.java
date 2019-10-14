@@ -76,7 +76,7 @@ public class GasPay extends BaseActivity {
         GasPayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")){
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.gasPayLayout),"Please Buy Membership To Enjoy App's Features",false);
                 }else {
                     CheckValidate();

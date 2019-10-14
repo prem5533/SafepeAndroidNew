@@ -6,10 +6,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +37,7 @@ public class ReferAndEarn extends BaseActivity implements View.OnClickListener {
     TextView referralCode;
     String strReferalcode;
     private ImageView imageCopy;
+    private String shareMessage;
     LinearLayout WhatsappLayout;
     private LoadingDialog loadingDialog;
 
@@ -65,6 +63,8 @@ public class ReferAndEarn extends BaseActivity implements View.OnClickListener {
         inviteFriends_btn.setOnClickListener(this);
         BackBtn.setOnClickListener(this);
 
+        shareMessage="Checkout this amazing app for Recharges, Bill payments and UPI transfer. Use this code "+strReferalcode+" to signup and get rewards. Share this app to make money. Just download SafePe from https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en ";
+
     }
 
     @Override
@@ -78,23 +78,11 @@ public class ReferAndEarn extends BaseActivity implements View.OnClickListener {
     }
 
     private void sendToWhatsapp(){
-        PackageManager pm=getPackageManager();
-        try {
-            String shareMessage="Checkout this amazing app for Recharges, Bill payments and UPI transfer. Use this code "+strReferalcode+" to signup and get rewards. Share this app to make money. Just download SafePe from https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en ";
-            PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-            //Check if package exists or not. If not then code
-            //in catch block will be called
-
-            Intent waIntent = new Intent(Intent.ACTION_SEND);
-            waIntent.setType("text/plain");
-            waIntent.putExtra(Intent.EXTRA_SUBJECT,"SafePay UPI Payments, Recharges & Money Transfer");
-            waIntent.setPackage("com.whatsapp");
-            waIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-            startActivity(Intent.createChooser(waIntent, "Share via"));
-
-        } catch (PackageManager.NameNotFoundException e) {
-            Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT).show();
-        }
+        Intent waIntent = new Intent(Intent.ACTION_SEND);
+        waIntent.setType("text/plain");
+        waIntent.putExtra(Intent.EXTRA_SUBJECT,"SafePay Android App");
+        waIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+        startActivity(Intent.createChooser(waIntent, "Share via"));
     }
 
     private void sendReferral(String MOBILE) {
@@ -182,7 +170,7 @@ public class ReferAndEarn extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.image_copy:
                 ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("text label", strReferalcode);
+                ClipData clip = ClipData.newPlainText("text label", shareMessage);
                 clipboard.setPrimaryClip(clip);
                 Toast.makeText(getApplicationContext(),"Copied",Toast.LENGTH_SHORT).show();
                 break;

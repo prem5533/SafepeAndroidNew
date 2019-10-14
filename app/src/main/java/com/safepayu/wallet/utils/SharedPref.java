@@ -22,6 +22,7 @@ public class SharedPref {
     public final String PASSCODE = "passcode";
     public final String MOBILE = "mobile";
     public final String IS_BLOCKED = "is_blocked";
+    public final String PACKAGE_PURCHASED = "package_purchased";
 
     public SharedPref(Context context) {
         this.context = context;

@@ -1,7 +1,6 @@
 package com.safepayu.wallet.activity;
 
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -65,21 +64,29 @@ public class AddBeneficiary extends BaseActivity {
         showAccNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AccountConfirmED.setInputType(InputType.TYPE_CLASS_NUMBER);
-                AccountConfirmED.setSelection(AccountConfirmED.getText().length());
                 showAccNo.setVisibility(View.GONE);
                 HideAccNo.setVisibility(View.VISIBLE);
+                AccountConfirmED.setTransformationMethod(null);
+                try {
+                    AccountConfirmED.setSelection(AccountConfirmED.getText().toString().length());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
             }
         });
 
         HideAccNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AccountConfirmED.setInputType(InputType.TYPE_CLASS_NUMBER);
-                AccountConfirmED.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                AccountConfirmED.setSelection(AccountConfirmED.getText().length());
                 showAccNo.setVisibility(View.VISIBLE);
                 HideAccNo.setVisibility(View.GONE);
+                AccountConfirmED.setTransformationMethod(new PasswordTransformationMethod());
+                try {
+                    AccountConfirmED.setSelection(AccountConfirmED.getText().toString().length());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
     }

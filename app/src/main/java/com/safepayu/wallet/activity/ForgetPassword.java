@@ -3,10 +3,12 @@ package com.safepayu.wallet.activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.ForgetPasswordRequest;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.response.BaseResponse;
+import com.safepayu.wallet.models.response.ForgetPasswordResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
 import java.util.Random;
@@ -42,6 +45,8 @@ public class ForgetPassword extends AppCompatActivity {
     LinearLayout layout1, layout2, layout3;
     private LoadingDialog loadingDialog;
     ApiService apiService;
+    private ImageView ShowHidePasswordBtn;
+    boolean showPass=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,7 @@ public class ForgetPassword extends AppCompatActivity {
         enter_otp = (EditText) findViewById(R.id.enter_otp);
         enter_password = (EditText) findViewById(R.id.enter_password);
         confrimPasswordED = findViewById(R.id.confirm_password);
+        ShowHidePasswordBtn= findViewById(R.id.show_hide_password_forgetPass);
 
         otpToSend = 0;
         Random r = new Random();
@@ -113,6 +119,32 @@ public class ForgetPassword extends AppCompatActivity {
             }
         });
 
+        ShowHidePasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (showPass){
+                    showPass=false;
+                    ShowHidePasswordBtn.setImageDrawable(getResources().getDrawable(R.drawable.show_password48));
+                    enter_password.setTransformationMethod(new PasswordTransformationMethod());
+                    try {
+                        enter_password.setSelection(enter_password.getText().toString().length());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }else {
+                    showPass=true;
+                    ShowHidePasswordBtn.setImageDrawable(getResources().getDrawable(R.drawable.hide_password48));
+                    enter_password.setTransformationMethod(null);
+                    try {
+                        enter_password.setSelection(enter_password.getText().toString().length());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
     }
 
     void continueOtp() {
@@ -143,15 +175,6 @@ public class ForgetPassword extends AppCompatActivity {
                 confrimPasswordED.requestFocus();
                 confrimPasswordED.setSelection(confrimPasswordED.getText().toString().length());
             } else {
-                if (str_edit_conf_pass.equals(confrimPass)) {
-
-                    //enter_password.setError("Both Password Did Not Match");
-
-                    //confrimPasswordED.setError("Both Password Did Not Match");
-
-                } else {
-
-                }
 
                 ForgetPasswordRequest forgetPasswordRequest = new ForgetPasswordRequest();
                 forgetPasswordRequest.setMobile(str_edit_number);
@@ -162,7 +185,6 @@ public class ForgetPassword extends AppCompatActivity {
                 resetPassword(forgetPasswordRequest);
             }
         }
-
     }
 
     private void resendOtp() {
@@ -225,7 +247,6 @@ public class ForgetPassword extends AppCompatActivity {
                             layout1.setVisibility(View.GONE);
                             layout2.setVisibility(View.GONE);
                             layout3.setVisibility(View.VISIBLE);
-
                         }
                     }
 
@@ -245,15 +266,39 @@ public class ForgetPassword extends AppCompatActivity {
         BaseApp.getInstance().getDisposable().add(apiService.getForgetPassword(forgetPasswordRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                .subscribeWith(new DisposableSingleObserver<ForgetPasswordResponse>() {
                     @Override
-                    public void onSuccess(BaseResponse response) {
+                    public void onSuccess(ForgetPasswordResponse response) {
                         loadingDialog.hideDialog();
-                        if (response.getStatus()) {
+                        if (response.isStatus()) {
                             Toast.makeText(ForgetPassword.this, response.getMessage(), Toast.LENGTH_SHORT).show();
                             finish();
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.forgetPasscodeId),response.getMessage(),false);
+                            String message="";
+                            try{
+                                ForgetPasswordResponse.DataBean dataBean=response.getData();
+                                if (dataBean!=null){
+
+                                    if (dataBean.getPassword().size()==1){
+                                        message=dataBean.getPassword().get(0)+"\n";
+                                    }else if (dataBean.getPassword().size()>1){
+                                        message=dataBean.getPassword().get(0)+"\n"+dataBean.getPassword().get(1)+"\n";
+                                    }
+
+                                    if (dataBean.getPassword_confirmation().size()==1){
+                                        message=message+dataBean.getPassword_confirmation().get(0);
+                                    }else if (dataBean.getPassword_confirmation().size()>1){
+                                        message=message+dataBean.getPassword_confirmation().get(0)+"\n"+dataBean.getPassword_confirmation().get(1)+"\n";
+                                    }
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            if (TextUtils.isEmpty(message)) {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.forgetPasscodeId), response.getMessage(), true);
+                            }else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.forgetPasscodeId),  message, true);
+                            }
                         }
                     }
 

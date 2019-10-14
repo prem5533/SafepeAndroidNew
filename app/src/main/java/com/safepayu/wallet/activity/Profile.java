@@ -23,6 +23,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.ChangePassword;
+import com.safepayu.wallet.models.response.UserDetailResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -37,7 +38,7 @@ public class Profile extends BaseActivity implements View.OnClickListener {
     TextView ChangePassBtn,tvPhoneNumber, tvEmil,tvDOB, tvAddress,tvPincode,tvUsername1;
     LinearLayout ChangePassLayout, ShowMyQRcodeLayout;
     int ChangePassVisibility=0;
-    UserResponse uResponse;
+    UserDetailResponse uResponse;
     private EditText etOldPassword, etNewPassword, etConfirmPassword;
     private LoadingDialog loadingDialog;
     public final static int QRcodeWidth = 500 ;
@@ -100,17 +101,17 @@ public class Profile extends BaseActivity implements View.OnClickListener {
         BaseApp.getInstance().getDisposable().add(apiService.getUserDetails()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<UserResponse>() {
+                .subscribeWith(new DisposableSingleObserver<UserDetailResponse>() {
                     @Override
-                    public void onSuccess(UserResponse userResponse) {
+                    public void onSuccess(UserDetailResponse userResponse) {
 //                        BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(userResponse.getUser()));
                         uResponse = userResponse;
-                        tvUsername1.setText(userResponse.getUser().getFirstName()+" "+ userResponse.getUser().getLastName());
+                        tvUsername1.setText(userResponse.getUser().getFirst_name()+" "+ userResponse.getUser().getLast_name());
                         tvPhoneNumber.setText(userResponse.getUser().getMobile());
                         tvEmil.setText(userResponse.getUser().getEmail());
                         tvDOB.setText(userResponse.getUser().getDob());
                         tvAddress.setText(userResponse.getUser().getLocation()+" "+ userResponse.getUser().getCity()+" "+userResponse.getUser().getState()+" "+userResponse.getUser().getCountry());
-                        tvPincode.setText(userResponse.getUser().getPin());
+                        tvPincode.setText(String.valueOf(userResponse.getUser().getPin()));
                     }
 
                     @Override

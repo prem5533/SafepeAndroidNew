@@ -240,7 +240,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="0dp"
                     android:layout_marginBottom="0dp"
-                    android:background="@drawable/edittext_rounded"></Spinner>
+                    android:background="@drawable/edittext_rounded"/>
 
                 <TextView
                     android:visibility="gone"
@@ -259,7 +259,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="0dp"
-                    android:background="@drawable/edittext_rounded"></Spinner>
+                    android:background="@drawable/edittext_rounded"/>
                 <ListView
                     android:visibility="gone"
                     android:id="@+id/listViewupi_ben"
@@ -419,7 +419,6 @@
                                 android:text="SELECT"
                                 android:textColor="@color/white" />
                         </RelativeLayout>
-
 
                         <RelativeLayout
                             android:visibility="visible"
@@ -676,7 +675,7 @@
                             android:background="@drawable/white_button_grayborder"
                             android:hint="Enter Amount"
                             android:textColor="#000000"
-                            android:maxLength="5"
+                            android:maxLength="4"
                             android:inputType="number"
                             android:paddingLeft="15sp"
                             android:fontFamily="@font/roboto_regular"

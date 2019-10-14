@@ -146,11 +146,20 @@ public class WalletHistory extends BaseActivity implements WalletHistoryAdapter.
         CustNo=CustNo.substring(3,CustNo.length());
 
         DescriptionTextTV.setText(selectedPackage.getDescription());
-        RechargeTypeTV.setText(selectedPackage.getOperation());
+
         TransactionIdTV.setText(selectedPackage.getTransaction_no());
-        AmountTV.setText(getResources().getString(R.string.rupees)+" "+selectedPackage.getAmount());
         CustomerNumberIdTV.setText(CustNo);
         DateTV.setText(selectedPackage.getUpdated_at());
+
+        if (selectedPackage.getOperation().equalsIgnoreCase("debit")){
+            AmountTV.setTextColor(getResources().getColor(R.color.red_500));
+            AmountTV.setText("- "+getResources().getString(R.string.rupees)+" "+selectedPackage.getAmount());
+            RechargeTypeTV.setText(selectedPackage.getOperation());
+        }else {
+            AmountTV.setTextColor(getResources().getColor(R.color.green_500));
+            AmountTV.setText("+ "+getResources().getString(R.string.rupees)+" "+selectedPackage.getAmount());
+            RechargeTypeTV.setText(selectedPackage.getOperation());
+        }
 
         dialogStatus.show();
 
