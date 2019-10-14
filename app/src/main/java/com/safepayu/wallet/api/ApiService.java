@@ -67,7 +67,7 @@ public interface ApiService {
     Single<UserResponse> verifyOTP(@Body Login loginRequest);
     // Create PassCode
     @POST("api/safepe/savePasscode")
-    Single<UserResponse> savePassCode(@Body Login loginRequest);
+    Single<UserDetailResponse> savePassCode(@Body Login loginRequest);
     // All Packages listing
     @GET("api/safepe/getAllPackages")
     Single<PackageListData> getAllPackages();

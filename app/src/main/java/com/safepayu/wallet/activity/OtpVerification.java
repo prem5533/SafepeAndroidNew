@@ -175,7 +175,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                     public void onError(Throwable e) {
                         Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.otpLayout), true, e);
                     }
                 }));
     }
@@ -195,11 +195,11 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                         if (response.getStatus()) {
                             BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
                             if (response.getUser().getPassCode() == null) {
-                                startActivity(new Intent(OtpVerification.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                startActivity(new Intent(OtpVerification.this, CreatePassCodeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             }
                             finish();
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(),true);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.otpLayout), response.getMessage(),true);
                         }
                     }
 
@@ -207,7 +207,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                     public void onError(Throwable e) {
                         Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.otpLayout), true, e);
                     }
                 }));
     }

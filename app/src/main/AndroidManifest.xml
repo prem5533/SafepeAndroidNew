@@ -90,6 +90,16 @@
             android:name=".service.OtpVerifyService"
             android:exported="false" />
 
+        <!--for firebase message-->
+        <service
+            android:name=".service.MyFirebaseMsgService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

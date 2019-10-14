@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "204708705206",
+    "firebase_url": "https://safepe.firebaseio.com",
+    "project_id": "safepe",
+    "storage_bucket": "safepe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204708705206:android:b27c1f3f5f84c1a0",
+        "android_client_info": {
+          "package_name": "com.safepayu.wallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204708705206-1v5cjrc3554pbnq16brakg3g6487pl6r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.safepayu.wallet",
+            "certificate_hash": "612a267ae0b3e3da504a3478101c1e168e9cb765"
+          }
+        },
+        {
+          "client_id": "204708705206-l624jagtalaofu0mdpsdsj4vnql7robn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.safepayu.wallet",
+            "certificate_hash": "9d7ef780a271667183b8f411c44e14d39fceb967"
+          }
+        },
+        {
+          "client_id": "204708705206-k7br4hjf3b55uj5ko0kl30r88gusto9b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-IqiN_KW9HRXiIkEDxnTNmP_IQQ8qZSU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204708705206-k7br4hjf3b55uj5ko0kl30r88gusto9b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

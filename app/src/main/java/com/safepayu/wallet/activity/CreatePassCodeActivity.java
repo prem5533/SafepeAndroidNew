@@ -16,7 +16,7 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.enums.ButtonActions;
 import com.safepayu.wallet.fragment.NumberBoard;
 import com.safepayu.wallet.models.request.Login;
-import com.safepayu.wallet.models.response.UserResponse;
+import com.safepayu.wallet.models.response.UserDetailResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -105,11 +105,12 @@ public class CreatePassCodeActivity extends BaseActivity implements NumberBoard.
         BaseApp.getInstance().getDisposable().add(apiService.savePassCode(login)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<UserResponse>() {
+                .subscribeWith(new DisposableSingleObserver<UserDetailResponse>() {
                     @Override
-                    public void onSuccess(UserResponse response) {
+                    public void onSuccess(UserDetailResponse response) {
                         loadingDialog.hideDialog();
-                        if (response.getStatus()) {
+                        if (response.isStatus()) {
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE,passCodeTextView.getPassCode());
                             startActivity(new Intent(CreatePassCodeActivity.this, AddUpdateAddress.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             finish();
                         }else {

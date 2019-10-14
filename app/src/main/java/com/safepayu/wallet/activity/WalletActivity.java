@@ -132,7 +132,7 @@ public class WalletActivity extends BaseActivity {
                     public void onSuccess(WalletResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            AmountTV.setText(String.valueOf(response.getWallet().getAmount()));
+                            AmountTV.setText(getResources().getString(R.string.rupees)+" "+response.getWallet().getAmount());
 
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);

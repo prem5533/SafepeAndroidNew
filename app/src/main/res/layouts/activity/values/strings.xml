@@ -39,4 +39,6 @@
     <string name="create">Create</string>
 
     <string name="clear">Clear</string>
+    <string name="channel_name">default</string>
+    <string name="channel_description">channel_description</string>
 </resources>
