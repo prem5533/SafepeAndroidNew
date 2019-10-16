@@ -1,5 +1,9 @@
 package com.safepayu.wallet.activity;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -18,10 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -35,12 +35,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.safepayu.wallet.MapActivity;
 import com.safepayu.wallet.R;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, View.OnClickListener {
+import static com.safepayu.wallet.MapActivity.MY_PERMISSIONS_REQUEST_LOCATION;
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, View.OnClickListener {
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     GoogleApiClient mGoogleApiClient;
@@ -66,12 +70,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             checkLocationPermission();
         }
         SupportMapFragment mapFragment = (SupportMapFragment)
-                getSupportFragmentManager()
-                        .findFragmentById(R.id.map);
+                getSupportFragmentManager().findFragmentById(R.id.map);
 
-        mapFragment.getMapAsync(this);
-
-
+        try {
+            if (mapFragment != null) {
+                mapFragment.getMapAsync(this);
+            } else {
+                Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -82,6 +91,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
+
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -96,12 +106,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
     }
     protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
+        try {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+            mGoogleApiClient.connect();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -141,41 +155,41 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
         Location locations = locationManager.getLastKnownLocation(provider);
         List<String> providerList = locationManager.getAllProviders();
-        //    if (null != locations && null != providerList && providerList.size() > 0) {
+           if (null != locations && null != providerList && providerList.size() > 0) {
         double longitude = location.getLongitude();
         double latitude = location.getLatitude();
 
 
         geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-            try {
-                listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
-                if (null != listAddresses && listAddresses.size() > 0) {
-                    address = listAddresses.get(0).getAddressLine(0);
-                    subLocality = listAddresses.get(0).getSubLocality();
-                    city = listAddresses.get(0).getLocality();
-                    state = listAddresses.get(0).getAdminArea();
-                    country = listAddresses.get(0).getCountryName();
-                    postalCode = listAddresses.get(0).getPostalCode();
-                    knownName = listAddresses.get(0).getFeatureName();
-                    subAdmin = listAddresses.get(0).getSubAdminArea();
-                    subAdmin1 = listAddresses.get(0).getSubThoroughfare();
-                    subAdmin2 = listAddresses.get(0).getPremises();
+        try {
+            listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if (null != listAddresses && listAddresses.size() > 0) {
+                address = listAddresses.get(0).getAddressLine(0);
+                subLocality = listAddresses.get(0).getSubLocality();
+                city = listAddresses.get(0).getLocality();
+                state = listAddresses.get(0).getAdminArea();
+                country = listAddresses.get(0).getCountryName();
+                postalCode = listAddresses.get(0).getPostalCode();
+                knownName = listAddresses.get(0).getFeatureName();
+                subAdmin = listAddresses.get(0).getSubAdminArea();
+                subAdmin1 = listAddresses.get(0).getSubThoroughfare();
+                subAdmin2 = listAddresses.get(0).getPremises();
 
 
-                    String[] separated = address.split(",");
-                    first = separated[0];// this will contain "Fruit"
-                    second = separated[1];
-                    Log.d("DDRE", first + second);
-                    markerOptions.title("" + latLng + "," + subLocality + "," + state
-                            + "," + country);
-                    tvLatLong.setText(address);
-                    Toast.makeText(getApplicationContext(), address, Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                Log.e("Location Address Loader", "Unable connect to Geocoder", e);
-                e.printStackTrace();
+                String[] separated = address.split(",");
+                first = separated[0];// this will contain "Fruit"
+                second = separated[1];
+                Log.d("DDRE", first + second);
+                markerOptions.title("" + latLng + "," + subLocality + "," + state
+                        + "," + country);
+                tvLatLong.setText(address);
+                Toast.makeText(getApplicationContext(), address, Toast.LENGTH_SHORT).show();
             }
-        //    }
+        } catch (Exception e) {
+            Log.e("Location Address Loader", "Unable connect to Geocoder", e);
+            e.printStackTrace();
+        }
+           }
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         mCurrLocationMarker = mMap.addMarker(markerOptions.draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -290,7 +304,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 Toast.makeText(this, "Location select", Toast.LENGTH_LONG).show();
 
 
-                Intent intent = new Intent(MapActivity.this, AddUpdateAddress.class);
+                Intent intent = new Intent(MapsActivity.this, AddUpdateAddress.class);
                 if (subLocality == null) {
                     intent.putExtra("select_locality", knownName + " " + second);
                 } else {

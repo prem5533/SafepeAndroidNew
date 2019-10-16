@@ -47,10 +47,11 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri notificationSoundURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder( this)
-                .setSmallIcon(R.drawable.safepe1)
+        NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder(this, "SafePe")
+                .setSmallIcon(R.drawable.ola_complete_icon)
                 .setContentTitle("SafePe")
                 .setContentText(messageBody)
+                .setStyle( new NotificationCompat.BigTextStyle().bigText("SafePe"))
                 .setAutoCancel( true )
                 .setSound(notificationSoundURI)
                 .setContentIntent(resultIntent);

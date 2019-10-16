@@ -143,15 +143,22 @@ public class Profile extends BaseActivity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.addressupdateBtn:
-
                 Intent i = new Intent(Profile.this, AddUpdateAddress.class);
-                i.putExtra("location",  uResponse.getUser().getLocation());
-                i.putExtra("city",  uResponse.getUser().getCity());
-                i.putExtra("state",  uResponse.getUser().getState());
-                i.putExtra("country",  uResponse.getUser().getCountry());
-                i.putExtra("pincode",  uResponse.getUser().getPin());
+                try {
+
+                    i.putExtra("location",  uResponse.getUser().getLocation());
+                    i.putExtra("city",  uResponse.getUser().getCity());
+                    i.putExtra("state",  uResponse.getUser().getState());
+                    i.putExtra("country",  uResponse.getUser().getCountry());
+                    i.putExtra("pincode",  uResponse.getUser().getPin());
+
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
                 startActivity(i);
                 finish();
+
                 break;
             case R.id.changePassBtn:
                 if (ChangePassVisibility==0){

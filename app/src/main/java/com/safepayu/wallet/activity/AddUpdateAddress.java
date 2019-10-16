@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
+import com.safepayu.wallet.MapActivity;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -89,8 +90,10 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
                 if (isChecked) {
-                    Intent intent = new Intent(AddUpdateAddress.this, MapActivity.class);
+                    Intent intent = new Intent(AddUpdateAddress.this, MapsActivity.class);
                     startActivityForResult(intent, STATIC_INTEGER_VALUE);
+
+                //  Toast.makeText(getApplicationContext(),"Map Coming Soon",Toast.LENGTH_SHORT).show();
                 }
             }
         });
