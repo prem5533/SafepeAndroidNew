@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
-import com.safepayu.wallet.MapActivity;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -74,7 +73,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         etCity.setText(City);
         etState.setText(State);
         etCountry.setText(Country);
-        etPincode.setText(Pincode);
+        etPincode.setText(""+Pincode);
 
 
         if (Location != null && City != null && State != null && Country != null && Pincode != null) {
@@ -94,6 +93,19 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
                     startActivityForResult(intent, STATIC_INTEGER_VALUE);
 
                 //  Toast.makeText(getApplicationContext(),"Map Coming Soon",Toast.LENGTH_SHORT).show();
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                            // TODO: Consider calling
+//                            //    Activity#requestPermissions
+//                            // here to request the missing permissions, and then overriding
+//                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                            //                                          int[] grantResults)
+//                            // to handle the case where the user grants the permission. See the documentation
+//                            // for Activity#requestPermissions for more details.
+//                            return;
+//                        }
+//                    }
+//                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, AddUpdateAddress.this);
                 }
             }
         });

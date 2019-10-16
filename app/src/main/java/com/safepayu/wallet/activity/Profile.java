@@ -97,8 +97,9 @@ public class Profile extends BaseActivity implements View.OnClickListener {
             }
         });
 
-        showDialogForEmail(this);
-
+        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equals("0")){
+            showDialogForEmail(this);
+        }
     }
 
 

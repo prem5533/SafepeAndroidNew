@@ -323,6 +323,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     public void onResume(){
         super.onResume();
         if (isNetworkAvailable()){
+
             getUserDetails();
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.walletLayout),"No Internet Connection",false);
