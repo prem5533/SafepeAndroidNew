@@ -139,7 +139,13 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
         SubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CheckValidate();
+
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages),"Please Goto Your Profile and Verify Your Email First",true);
+                }else {
+                    CheckValidate();
+                }
+
             }
         });
 

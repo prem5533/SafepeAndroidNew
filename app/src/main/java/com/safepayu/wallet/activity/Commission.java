@@ -56,16 +56,23 @@ public class Commission extends BaseActivity {
             }
         });
 
-        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
-            GetMemberShipBtn.setVisibility(View.VISIBLE);
-            SendWallet.setVisibility(View.GONE);
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",true);
+
+        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Goto Your Profile and Verify Your Email First",true);
         }else {
-            GetMemberShipBtn.setVisibility(View.GONE);
-            SendWallet.setVisibility(View.VISIBLE);
+            getCommissionDetails();
+            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
+                GetMemberShipBtn.setVisibility(View.VISIBLE);
+                SendWallet.setVisibility(View.GONE);
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",true);
+            }else {
+                GetMemberShipBtn.setVisibility(View.GONE);
+                SendWallet.setVisibility(View.VISIBLE);
+            }
         }
 
-        getCommissionDetails();
+
+
     }
 
     @Override

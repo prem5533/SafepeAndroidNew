@@ -64,4 +64,11 @@
         tools:layout="@layout/number_bard_fragment"
         class="com.safepayu.wallet.fragment.NumberBoard"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
+
 </LinearLayout>

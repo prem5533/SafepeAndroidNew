@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -23,6 +24,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.ChangePassword;
+import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
@@ -30,6 +32,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.safepayu.wallet.activity.LoginActivity.isValidEmail;
 import static com.safepayu.wallet.activity.Navigation.qrCodeImage;
 
 public class Profile extends BaseActivity implements View.OnClickListener {
@@ -42,6 +45,7 @@ public class Profile extends BaseActivity implements View.OnClickListener {
     private EditText etOldPassword, etNewPassword, etConfirmPassword;
     private LoadingDialog loadingDialog;
     public final static int QRcodeWidth = 500 ;
+    private ImageView im_cross;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +97,8 @@ public class Profile extends BaseActivity implements View.OnClickListener {
             }
         });
 
+        showDialogForEmail(this);
+
     }
 
 
@@ -143,22 +149,15 @@ public class Profile extends BaseActivity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.addressupdateBtn:
+
                 Intent i = new Intent(Profile.this, AddUpdateAddress.class);
-                try {
-
-                    i.putExtra("location",  uResponse.getUser().getLocation());
-                    i.putExtra("city",  uResponse.getUser().getCity());
-                    i.putExtra("state",  uResponse.getUser().getState());
-                    i.putExtra("country",  uResponse.getUser().getCountry());
-                    i.putExtra("pincode",  uResponse.getUser().getPin());
-
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
+                i.putExtra("location",  uResponse.getUser().getLocation());
+                i.putExtra("city",  uResponse.getUser().getCity());
+                i.putExtra("state",  uResponse.getUser().getState());
+                i.putExtra("country",  uResponse.getUser().getCountry());
+                i.putExtra("pincode",  ""+uResponse.getUser().getPin());
                 startActivity(i);
                 finish();
-
                 break;
             case R.id.changePassBtn:
                 if (ChangePassVisibility==0){
@@ -250,6 +249,82 @@ public class Profile extends BaseActivity implements View.OnClickListener {
         dialog.getWindow().setAttributes(lp);
         dialog.show();
 
+    }
+
+    public void showDialogForEmail(Activity activity) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.verify_email_dialog1);
+
+        im_cross = dialog.findViewById(R.id.im_cross);
+
+        final EditText emailEd=dialog.findViewById(R.id.enter_EmailLogin);
+
+        im_cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        Button proceedButton = (Button) dialog.findViewById(R.id.continue_EmailLogin);
+        proceedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(emailEd.getText().toString().trim())){
+                    emailEd.setError("Please Enter Email Id");
+                    emailEd.requestFocus();
+                }else {
+                    if (isValidEmail(emailEd.getText().toString().trim())){
+
+                        sendVerifyLink(emailEd.getText().toString().trim(),dialog);
+                    }else {
+                        emailEd.setError("Please Enter Correct Email Id");
+                        emailEd.requestFocus();
+                    }
+                }
+
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+    }
+
+    private void sendVerifyLink(String Email, final Dialog dialog) {
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+        String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        BaseApp.getInstance().getDisposable().add(apiService.verifyEmail(UserId,Email)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        loadingDialog.hideDialog();
+                        dialog.dismiss();
+                        if (response.getStatus()) {
+                            Toast.makeText(Profile.this, response.getMessage() + "\n" + "Please Verify From Your Email Account", Toast.LENGTH_LONG).show();
+                            finish();
+                        } else {
+
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addUpdateAddressLayout), response.getMessage(), true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.addUpdateAddressLayout), true, e);
+                    }
+                }));
     }
 
 }

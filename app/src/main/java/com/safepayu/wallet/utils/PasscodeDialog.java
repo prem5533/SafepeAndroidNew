@@ -41,6 +41,7 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setCancelable(false);
         setContentView(R.layout.passcode_layout);
+
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         visible = findViewById(R.id.visible);

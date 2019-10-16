@@ -162,4 +162,8 @@ public interface ApiService {
 
     @POST("api/safepe/checkUserMobile")
     Single<BaseResponse> checkEmailMobile(@Body CheckEmailMobileRequest checkEmailMobileRequest );
+
+    @FormUrlEncoded
+    @POST("api/safepe/getFirebaseTocken")
+    Single<BaseResponse> getFirebaseToken(@Field("userid") String userid, @Field("token") String token);
 }

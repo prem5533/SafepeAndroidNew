@@ -283,7 +283,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         } else if (dob.getText().toString().trim().length() == 0) {
             BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter DOB", true);
             return false;
-        } else if (password.getText().toString().trim().length() == 0|| password.getText().toString().trim().length()<8) {
+        } else if (password.getText().toString().trim().length() == 0|| password.getText().toString().trim().length()<5) {
             mobileNo.requestFocus();
             BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter password, password must be 8 digit", true);
             return false;
@@ -357,8 +357,11 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     public void onSuccess(UserResponse1 response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED, response.getUser().getEmailVerified());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUser().getUserId());
                             BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
                             BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().REFERRAL_USER, new Gson().toJson(response.getReferralUser()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE,mobileNo.getText().toString().split(" ")[1]);
                             startActivity(new Intent(NewAccount.this, OtpVerification.class));
                             finish();
                         }else {

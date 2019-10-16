@@ -183,7 +183,8 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     private void verifyOtp(String otp) {
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-        Login request = new Login(getIntent().getStringExtra(Config.MOBILE_NO), null);
+        String Mobile=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
+        Login request = new Login(Mobile, null);
         request.setOtp(otp);
         BaseApp.getInstance().getDisposable().add(apiService.verifyOTP(request)
                 .subscribeOn(Schedulers.io())

@@ -347,19 +347,10 @@
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/lightline"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_above="@id/darkline"
-        android:background="#42aad8">
-
-    </View>
-
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="14dp"
         android:layout_alignParentBottom="true"
-        android:background="#0f5865"/>
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
 </LinearLayout>

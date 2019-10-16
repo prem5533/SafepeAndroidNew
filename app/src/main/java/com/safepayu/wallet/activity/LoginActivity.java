@@ -26,6 +26,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -94,6 +98,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         findViewById(R.id.btn_forgetPass).setOnClickListener(this);
         findViewById(R.id.btn_newAccount).setOnClickListener(this);
         findViewById(R.id.show_hide_password).setOnClickListener(this);
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.v("getInstanceId failed", "getInstanceId failed", task.getException());
+                            return;
+                        }
+                        // Get new Instance ID token
+                        String FirebaseToken = task.getResult().getToken();
+                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN,FirebaseToken);
+                    }
+                });
 
 //        checkPermission();
         getAppVersion();
@@ -288,6 +306,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onSuccess(LoginResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE, mobileNo.getText().toString().split(" ")[1]);
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
                             CheckStatusCode(response);
 
 
@@ -319,7 +339,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 //                                    break;
 //                             }
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout),response.getMessage(),false);
+                            String message="";
+
+                            try{
+                                BaseResponse.DataBean dataBean=response.getData();
+                                if (dataBean!=null){
+
+                                    if (dataBean.getMobile().size()==1){
+                                        message=message+dataBean.getMobile().get(0);
+                                    }else if (dataBean.getMobile().size()>1){
+                                        message=message+dataBean.getMobile().get(0)+"\n"+dataBean.getMobile().get(1)+"\n";
+                                    }
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            if (TextUtils.isEmpty(message)) {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(), false);
+                            }else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout),  message, false);
+                            }
                         }
                     }
 
@@ -355,20 +394,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 startActivity(new Intent(LoginActivity.this, AddUpdateAddress.class));
                 break;
             case 5:
-                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
-                showDialogForEmail(LoginActivity.this);
+                //showDialogForEmail(LoginActivity.this);  for mail verification
+                SaveLoginDetails(response);
+                resendOtp();
                 break;
         }
 
     }
 
     private void SaveLoginDetails(LoginResponse response){
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE, mobileNo.getText().toString().split(" ")[1]);
+
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, response.getAccessToken());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN_EXPIRE_IN, response.getTokenExpiresIn());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
-
-
     }
 
     public void showDialog(Activity activity) {

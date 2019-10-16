@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    tools:context=".activity.MapActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,17 +40,17 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <fragment android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:map="http://schemas.android.com/apk/res-auto"
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="com.abhiandroid.GoogleMaps.googlemaps.MapsActivity"/>
+                tools:context="example.com.mapexample.MapsActivity" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="bottom">
 
@@ -71,7 +68,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ic_tick"
-                        android:layout_marginLeft="10dp"></ImageView>
+                        android:layout_marginLeft="10dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -82,8 +79,7 @@
                         android:fontFamily="@font/roboto_regular"
                         android:padding="10dp"
                         android:gravity="center"
-                        android:layout_marginRight="10dp"
-                        ></TextView>
+                        android:layout_marginRight="10dp"/>
 
                 </LinearLayout>
 
@@ -91,4 +87,5 @@
         </FrameLayout>
     </LinearLayout>
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
