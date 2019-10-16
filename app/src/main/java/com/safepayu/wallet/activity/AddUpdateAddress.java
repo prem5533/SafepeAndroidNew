@@ -1,7 +1,15 @@
 package com.safepayu.wallet.activity;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,11 +32,14 @@ import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
 
+import java.util.List;
+import java.util.Locale;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class AddUpdateAddress extends BaseActivity implements View.OnClickListener {
+public class AddUpdateAddress extends BaseActivity implements View.OnClickListener, LocationListener {
 
     private EditText etLocation, etCity, etState, etPincode, etCountry;
     public int STATIC_INTEGER_VALUE = 1;
@@ -38,6 +49,8 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
     boolean check = false;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private String Location, City, State, Country, Pincode, mapSelectLocality, mapSelectCity, mapSelectState, mapSelectPincode, mapSelectCountry;
+    private Geocoder geocoder;
+    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +58,9 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
 
         setToolbar(false, null, false);
         loadingDialog = new LoadingDialog(this);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
 
         //  findViewById(R.id.add_address).setOnClickListener(this);
         findViewById(R.id.back_btn_address).setOnClickListener(this);
@@ -76,12 +92,12 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         etPincode.setText(Pincode);
 
 
-        if (Location != null && City != null && State != null && Country != null && Pincode != null) {
+        if (Location != null || City != null || State != null || Country != null || Pincode != null) {
 
             update_address.setVisibility(View.VISIBLE);
             add_address.setVisibility(View.GONE);
-        }else {
-            check=false;
+        } else {
+            check = false;
         }
 
         current_location.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -89,11 +105,25 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
                 if (isChecked) {
-                    Intent intent = new Intent(AddUpdateAddress.this, MapActivity.class);
-                    startActivityForResult(intent, STATIC_INTEGER_VALUE);
+//                    Intent intent = new Intent(AddUpdateAddress.this, MapActivity.class);
+//                    startActivityForResult(intent, STATIC_INTEGER_VALUE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    Activity#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for Activity#requestPermissions for more details.
+                            return;
+                        }
+                    }
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, AddUpdateAddress.this);
                 }
             }
         });
+
     }
 
     @Override
@@ -252,4 +282,52 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
     }
 
 
+    @Override
+    public void onLocationChanged(android.location.Location location) {
+        try {
+            List<Address> listAddresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            if (null != listAddresses && listAddresses.size() > 0) {
+                String address = listAddresses.get(0).getAddressLine(0);
+                String subLocality = listAddresses.get(0).getSubLocality();
+                String city = listAddresses.get(0).getLocality();
+                String state = listAddresses.get(0).getAdminArea();
+                String country = listAddresses.get(0).getCountryName();
+                String postalCode = listAddresses.get(0).getPostalCode();
+                String knownName = listAddresses.get(0).getFeatureName();
+                String subAdmin = listAddresses.get(0).getSubAdminArea();
+                String subAdmin1 = listAddresses.get(0).getSubThoroughfare();
+                String subAdmin2 = listAddresses.get(0).getPremises();
+
+
+                etLocation.setText(subLocality);
+                etCity.setText(city);
+                etState.setText(state);
+                etPincode.setText(country);
+                etCountry.setText(postalCode);
+
+                String[] separated = address.split(",");
+                String first = separated[0];// this will contain "Fruit"
+                String second = separated[1];
+                Log.d("DDRE", first + second);
+            }
+        } catch (Exception e) {
+            Log.e("Location Address Loader", "Unable connect to Geocoder", e);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
+    }
 }

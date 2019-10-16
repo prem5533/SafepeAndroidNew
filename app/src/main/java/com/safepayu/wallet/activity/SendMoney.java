@@ -103,13 +103,18 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         WithDrawBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",false);
+
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Goto Your Profile and Verify Your Email First",true);
                 }else {
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.dthRechargeLayout),"Withdraw Is Closed Today",true);
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Buy Membership To Enjoy App's Features",false);
                     }else {
-                        CheckValidate();
+                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")){
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Withdraw Is Closed Today",true);
+                        }else {
+                            CheckValidate();
+                        }
                     }
                 }
 

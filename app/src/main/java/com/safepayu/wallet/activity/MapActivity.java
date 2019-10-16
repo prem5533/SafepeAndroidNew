@@ -66,12 +66,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             checkLocationPermission();
         }
         SupportMapFragment mapFragment = (SupportMapFragment)
-                getSupportFragmentManager()
-                        .findFragmentById(R.id.map);
+                getSupportFragmentManager().findFragmentById(R.id.map);
 
-        mapFragment.getMapAsync(this);
-
-
+        try {
+            if (mapFragment != null) {
+                mapFragment.getMapAsync(this);
+            } else {
+                Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -82,6 +87,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
+
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -96,12 +102,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
     }
     protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
+        try {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+            mGoogleApiClient.connect();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

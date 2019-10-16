@@ -2,12 +2,20 @@ package com.safepayu.wallet.models.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class BaseResponse {
     Boolean status;
     @SerializedName("status_code")
     int statusCode;
     String message;
     String success;
+    /**
+     * data : {"mobile":["The mobile must be at least 10 characters."]}
+     */
+
+    private DataBean data;
+
 
     public Boolean getStatus() {
         return status;
@@ -39,5 +47,25 @@ public class BaseResponse {
 
     public void setSuccess(String success) {
         this.success = success;
+    }
+
+    public DataBean getData() {
+        return data;
+    }
+
+    public void setData(DataBean data) {
+        this.data = data;
+    }
+
+    public static class DataBean {
+        private List<String> mobile;
+
+        public List<String> getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(List<String> mobile) {
+            this.mobile = mobile;
+        }
     }
 }

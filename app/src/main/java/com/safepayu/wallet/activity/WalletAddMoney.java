@@ -96,7 +96,7 @@ public class WalletAddMoney extends BaseActivity implements PackageAdapterForWal
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
         if (isConnected){
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId),getResources().getString(R.string.internet_check),false);
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addMoneyToWalletLayout),getResources().getString(R.string.internet_check),false);
         }
     }
 
@@ -151,6 +151,8 @@ public class WalletAddMoney extends BaseActivity implements PackageAdapterForWal
                                     PackageAmountList,response.getTax().getTaxValue(),WalletAddMoney.this);
                             packageListView.setAdapter(adapter);
                             ((TextView) findViewById(R.id.tv_taxDetails)).setText("Additional " + response.getTax().getTaxValue() + "% GST will be charged from the total amount");
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addMoneyToWalletLayout),"No Package Found",false);
                         }
                     }
 
@@ -158,7 +160,7 @@ public class WalletAddMoney extends BaseActivity implements PackageAdapterForWal
                     public void onError(Throwable e) {
                         Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.buy_packageId), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.addMoneyToWalletLayout), true, e);
                     }
                 }));
     }
@@ -181,19 +183,26 @@ public class WalletAddMoney extends BaseActivity implements PackageAdapterForWal
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(WalletAddMoney.this, PaymentType.class);
-                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
-                intent.putExtra("RechargePaymentId", "");
-                intent.putExtra("Amount", Amount2Pay);
-                intent.putExtra("PaymentType", "Add Money");
-                intent.putExtra("PaymentFor", "Wallet");
-                intent.putExtra("RechargeTypeId", "0");
-                intent.putExtra("OperatorCode", PackageID);
-                intent.putExtra("CircleCode", "");
-                intent.putExtra("OperatorId", "");
-                startActivity(intent);
-                finish();
-                dialog.dismiss();
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
+                    dialog.dismiss();
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addMoneyToWalletLayout),"Please Goto Your Profile and Verify Your Email First",true);
+                }else {
+                    Intent intent = new Intent(WalletAddMoney.this, PaymentType.class);
+                    overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                    intent.putExtra("RechargePaymentId", "");
+                    intent.putExtra("Amount", Amount2Pay);
+                    intent.putExtra("PaymentType", "Add Money");
+                    intent.putExtra("PaymentFor", "Wallet");
+                    intent.putExtra("RechargeTypeId", "0");
+                    intent.putExtra("OperatorCode", PackageID);
+                    intent.putExtra("CircleCode", "");
+                    intent.putExtra("OperatorId", "");
+                    startActivity(intent);
+                    finish();
+                    dialog.dismiss();
+                }
+
+
             }
         });
 

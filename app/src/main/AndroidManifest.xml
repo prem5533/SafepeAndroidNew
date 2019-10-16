@@ -77,8 +77,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" /> <!-- Intent service -->
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
+            android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
+
 
 <!--        <receiver android:name=".receiver.SmsReceiver">-->
 <!--            <intent-filter android:priority="99999">-->
@@ -98,6 +99,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/icon_new_transparent" />
 
 
         <uses-library

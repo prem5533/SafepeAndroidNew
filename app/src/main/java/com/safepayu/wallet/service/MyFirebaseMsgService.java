@@ -51,6 +51,7 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
                 .setSmallIcon(R.drawable.safepe1)
                 .setContentTitle("SafePe")
                 .setContentText(messageBody)
+                .setStyle( new NotificationCompat.BigTextStyle().bigText("SafePe"))
                 .setAutoCancel( true )
                 .setSound(notificationSoundURI)
                 .setContentIntent(resultIntent);
@@ -59,6 +60,21 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0, mNotificationBuilder.build());
+
+        /*
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notification.setSmallIcon(R.drawable.safepe1);
+            notification.setColor(getResources().getColor(R.color.green_theme));
+        } else {
+            notification.setSmallIcon(R.drawable.safepe1);
+        }
+        notification.setContentText(messageBody)
+                .setAutoCancel( true )
+                .setSound(notificationSoundURI)
+                .setContentIntent(resultIntent);
+        notificationManager.notify(0, notification.build());
+        */
     }
 
     private int getNotificationIcon() {

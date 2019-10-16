@@ -74,7 +74,8 @@
             android:textSize="16sp"
             android:fontFamily="@font/roboto_regular"
             style="@style/defaultEditTextStyle"
-            android:inputType="textPassword"
+            android:inputType="number"
+            android:maxLength="4"
             android:hint="OTP" />
     </LinearLayout>
 

@@ -357,8 +357,11 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     public void onSuccess(UserResponse1 response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED, response.getUser().getEmailVerified());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUser().getUserId());
                             BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
                             BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().REFERRAL_USER, new Gson().toJson(response.getReferralUser()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE,mobileNo.getText().toString().split(" ")[1]);
                             startActivity(new Intent(NewAccount.this, OtpVerification.class));
                             finish();
                         }else {
