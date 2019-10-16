@@ -283,7 +283,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         } else if (dob.getText().toString().trim().length() == 0) {
             BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter DOB", true);
             return false;
-        } else if (password.getText().toString().trim().length() == 0|| password.getText().toString().trim().length()<8) {
+        } else if (password.getText().toString().trim().length() == 0|| password.getText().toString().trim().length()<5) {
             mobileNo.requestFocus();
             BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter password, password must be 8 digit", true);
             return false;

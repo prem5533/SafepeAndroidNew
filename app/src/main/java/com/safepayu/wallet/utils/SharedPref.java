@@ -24,6 +24,7 @@ public class SharedPref {
     public final String IS_BLOCKED = "is_blocked";
     public final String PACKAGE_PURCHASED = "package_purchased";
     public final String EMAIL_VERIFIED = "email_verified";
+    public final String FIREBASE_TOKEN = "FirebaseToken";
 
     public SharedPref(Context context) {
         this.context = context;

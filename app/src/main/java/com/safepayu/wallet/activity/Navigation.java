@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,6 +62,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.AppVersionResponse;
+import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -78,7 +80,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     private LinearLayout addMoney, sendMoney, recharge, payBill, dth, payShop, sendToBank,Upi_Pay;
     LinearLayout layout_electricity, layout_gas, layout_water, layout_broadband;
     private LinearLayout payLayout,walletLayout,send;
-    String versionName="",appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
+    String versionName="",FirebaseToken,appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
     int versionCode=0;
     private LoadingDialog loadingDialog;
     private LinearLayout liMetro,liFlight, liBusTicket,liTrainTicket, liHotles,liDonation,liToll, liFlood;
@@ -115,6 +117,19 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         getAppVersion();
         setupNavigation();
 
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.v("getInstanceId failed", "getInstanceId failed", task.getException());
+                            return;
+                        }
+                        // Get new Instance ID token
+                        FirebaseToken = task.getResult().getToken();
+                    }
+                });
+
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -125,23 +140,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 }
             }
         });
-
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w("getInstanceId failed", "getInstanceId failed", task.getException());
-                            return;
-                        }
-
-                        // Get new Instance ID token
-                        String token = task.getResult().getToken();
-
-                        // Log and toast
-                        //Toast.makeText(Navigation.this, token, Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     @Override
@@ -1048,6 +1046,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.white));
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN, null);
                 BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, null);
                 startActivity(intent);
                 finish();
@@ -1169,6 +1168,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME,response.getUser().getLast_name());
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED,String.valueOf(response.getUser().getBlocked()));
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED,String.valueOf(response.getUser().getPackage_status()));
+
+                        getFirebaseToken(response.getUser().getUserid());
                     }
 
                     @Override
@@ -1176,6 +1177,39 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
 
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, true, e);
+                    }
+                }));
+    }
+
+    private void getFirebaseToken(String userId) {
+
+        if (TextUtils.isEmpty(FirebaseToken)){
+            FirebaseToken=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN);
+        }
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getFirebaseToken(userId,FirebaseToken)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        loadingDialog.hideDialog();
+
+                        if (response.getStatus()){
+
+                        }else {
+                            Toast.makeText(Navigation.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        Toast.makeText(Navigation.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 }));
     }

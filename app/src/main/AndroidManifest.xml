@@ -3,13 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.safepayu.wallet">
 
-    <uses-feature
-        android:name="android.hardware.telephony"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
     <application
         android:name=".BaseApp"
         android:allowBackup="true"
@@ -20,7 +18,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.booking.TrainActivity"></activity>
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+
+        <activity android:name=".activity.booking.TrainActivity" />
         <activity android:name=".activity.booking.BusActivity" />
         <activity android:name=".activity.booking.FlightsActivity" />
         <activity android:name=".activity.booking.MetroActivity" />
@@ -65,33 +73,29 @@
         <activity android:name=".activity.ForgetPassword" />
         <activity android:name=".activity.WalletHistory" />
         <activity android:name=".activity.RechargeHistory" />
-        <activity android:name=".activity.QrCodeScanner"/>
+        <activity android:name=".activity.QrCodeScanner" />
         <activity android:name=".activity.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- SMS Receiver -->
+        </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" /> <!-- SMS Receiver -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" /> <!-- Intent service -->
+
+
         <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="@string/google_maps_key" />
-
-
-<!--        <receiver android:name=".receiver.SmsReceiver">-->
-<!--            <intent-filter android:priority="99999">-->
-<!--                <action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
-
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/icon_new_transparent" /> <!-- for firebase message -->
         <service
             android:name=".service.OtpVerifyService"
             android:exported="false" />
 
-        <!--for firebase message-->
         <service
             android:name=".service.MyFirebaseMsgService"
             android:exported="false">
@@ -99,23 +103,29 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/icon_new_transparent" />
-
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-    </application> <!-- The API key for Google Maps-based APIs. -->
+    </application>
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA"
+    <uses-permission
+        android:name="android.permission.CAMERA"
         tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
     <uses-permission android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.hardware.camera.autofocus" />
 
 </manifest>

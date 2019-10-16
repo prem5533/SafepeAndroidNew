@@ -1,5 +1,5 @@
 <resources>
-    <string name="google_maps_key">AIzaSyCfYpEWWQsXU9_JUGDxI8MdX_pBOye2IkM</string>
+    <string name="google_maps_key">AIzaSyB5a-YmB6RglHnsrIgImWL0o_OhSt6Vmtg</string>
     <string name="setting">Setting</string>
     <string name="ok">Ok</string>
     <string name="permission_granted">Permission has now been granted</string>
@@ -41,4 +41,5 @@
     <string name="clear">Clear</string>
     <string name="channel_name">default</string>
     <string name="channel_description">channel_description</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

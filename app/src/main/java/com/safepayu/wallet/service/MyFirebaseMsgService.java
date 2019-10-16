@@ -25,7 +25,7 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
         //create notification
-        createNotification(remoteMessage.getNotification().getBody());
+        createNotification(remoteMessage);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
         Log.e(TAG, "sendRegistrationToServer: " + token);
     }
 
-    private void createNotification(String messageBody) {
+    private void createNotification(RemoteMessage remoteMessage) {
         Intent intent = new Intent( this , Navigation.class );
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent resultIntent = PendingIntent.getActivity( this , 0, intent,
@@ -49,36 +49,21 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
         Uri notificationSoundURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder( this)
                 .setSmallIcon(R.drawable.safepe1)
-                .setContentTitle("SafePe")
-                .setContentText(messageBody)
+                .setContentTitle(remoteMessage.getData().get("title"))
+                .setContentText(remoteMessage.getData().get("body"))
                 .setStyle( new NotificationCompat.BigTextStyle().bigText("SafePe"))
+
                 .setAutoCancel( true )
                 .setSound(notificationSoundURI)
                 .setContentIntent(resultIntent);
+
+        //                .setStyle(new NotificationCompat.BigPictureStyle()
+        //                        .bigPicture(myBitmap))
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0, mNotificationBuilder.build());
-
-        /*
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            notification.setSmallIcon(R.drawable.safepe1);
-            notification.setColor(getResources().getColor(R.color.green_theme));
-        } else {
-            notification.setSmallIcon(R.drawable.safepe1);
-        }
-        notification.setContentText(messageBody)
-                .setAutoCancel( true )
-                .setSound(notificationSoundURI)
-                .setContentIntent(resultIntent);
-        notificationManager.notify(0, notification.build());
-        */
     }
 
-    private int getNotificationIcon() {
-        boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
-        return useWhiteIcon ? R.drawable.safepe1 : R.drawable.safepe1;
-    }
 }
