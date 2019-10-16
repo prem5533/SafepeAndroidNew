@@ -323,7 +323,19 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     public void onResume(){
         super.onResume();
         if (isNetworkAvailable()){
-            getUserDetails();
+
+            String userId="";
+            try{
+                userId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+            }catch (Exception e){
+                userId="";
+                e.printStackTrace();
+            }
+            if (TextUtils.isEmpty(userId) || userId!=null){
+                getUserDetails();
+            }else {
+                getFirebaseToken(userId);
+            }
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.walletLayout),"No Internet Connection",false);
         }
