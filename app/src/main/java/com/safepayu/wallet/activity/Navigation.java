@@ -324,18 +324,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         super.onResume();
         if (isNetworkAvailable()){
 
-            String userId="";
-            try{
-                userId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
-            }catch (Exception e){
-                userId="";
-                e.printStackTrace();
-            }
-            if (TextUtils.isEmpty(userId) || userId!=null){
-                getUserDetails();
-            }else {
-                getFirebaseToken(userId);
-            }
+            getUserDetails();
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.walletLayout),"No Internet Connection",false);
         }
@@ -1221,7 +1210,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         Toast.makeText(Navigation.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        finish();
+
                     }
                 }));
     }

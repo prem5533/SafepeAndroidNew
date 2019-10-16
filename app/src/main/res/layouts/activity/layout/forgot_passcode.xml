@@ -201,10 +201,13 @@
                         android:layout_marginTop="20dp"
                         android:background="@drawable/white_button_grayborder"
                         android:hint="Enter New Passcode"
-                        android:inputType="textPassword"
+                        android:inputType="numberPassword"
                         android:padding="10dp"
                         android:textColor="#085272"
-                        android:textSize="15dp" />
+                        android:textSize="15dp"
+                        android:maxLength="4"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"/>
 
 
                     <Button

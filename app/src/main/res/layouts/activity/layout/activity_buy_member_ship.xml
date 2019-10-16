@@ -330,8 +330,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:visibility="gone"
-                    >
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -344,7 +343,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="10dp">
+                            android:padding="10dp"
+                            >
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -607,7 +607,14 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="10dp">
+                            android:padding="10dp"
+                            android:gravity="center">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                             >
 
                             <TextView
                                 android:layout_width="140dp"
@@ -625,6 +632,13 @@
                                 android:textIsSelectable="true"
                                 android:fontFamily="@font/roboto_regular"
                                 android:textSize="14sp"/>
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/upi" />
+
                         </LinearLayout>
                     </LinearLayout>
 

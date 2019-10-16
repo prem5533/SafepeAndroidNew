@@ -1,9 +1,16 @@
 package com.safepayu.wallet.activity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -58,13 +65,32 @@ public class Commission extends BaseActivity {
 
 
         if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
+            GetMemberShipBtn.setVisibility(View.VISIBLE);
+            SendWallet.setVisibility(View.GONE);
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Goto Your Profile and Verify Your Email First",true);
         }else {
             getCommissionDetails();
             if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
                 GetMemberShipBtn.setVisibility(View.VISIBLE);
                 SendWallet.setVisibility(View.GONE);
-                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",true);
+             //   BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",true);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            //    alertDialogBuilder.setTitle("Commission");
+                alertDialogBuilder.setTitle( Html.fromHtml("<font color='#3db7c2'>Commission</font>"));
+                alertDialogBuilder
+                        .setMessage("Please Buy Membership To Enjoy App's Features")
+                        .setCancelable(false)
+                        .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                dialog.cancel();
+                            }
+                        });
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
             }else {
                 GetMemberShipBtn.setVisibility(View.GONE);
                 SendWallet.setVisibility(View.VISIBLE);
@@ -123,4 +149,8 @@ public class Commission extends BaseActivity {
                     }
                 }));
     }
+
+
+
+
 }

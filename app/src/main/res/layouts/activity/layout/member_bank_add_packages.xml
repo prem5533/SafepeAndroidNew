@@ -59,7 +59,9 @@
                 android:padding="10dp"
                 android:fontFamily="@font/roboto_regular"
                 android:layout_marginTop="10dp"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:imeOptions="actionNext"
+                android:singleLine="true"/>
 
 
             <EditText
@@ -72,7 +74,10 @@
                 android:hint="Reference Number"
                 android:padding="10dp"
                 android:fontFamily="@font/roboto_regular"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                />
 
             <EditText
                 android:id="@+id/tv_amountpaid"
@@ -84,7 +89,10 @@
                 android:hint="Amount Paid"
                 android:padding="10dp"
                 android:fontFamily="@font/roboto_regular"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:inputType="numberDecimal"
+                android:imeOptions="actionNext"
+                android:singleLine="true"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -116,7 +124,9 @@
                 android:hint="UPI/Account from which amount is paid"
                 android:padding="10dp"
                 android:fontFamily="@font/roboto_regular"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:imeOptions="actionDone"
+                android:singleLine="true"/>
 
             <!--<TextView-->
             <!--android:layout_width="match_parent"-->
@@ -165,18 +175,10 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginTop="20dp"
-        android:layout_above="@id/darkline"
-        android:id="@+id/lightline"
-        android:background="@color/lightLine"/>
-    <View
-        android:id="@+id/darkline"
-        android:layout_width="match_parent"
+        android:layout_height="14dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="7dp"
-        android:background="@color/darkLine"/>
+        android:background="@drawable/splas_gradient">
+    </LinearLayout>
 </RelativeLayout>

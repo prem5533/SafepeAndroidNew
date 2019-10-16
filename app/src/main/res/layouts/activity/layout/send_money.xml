@@ -367,7 +367,7 @@
                                 android:layout_width="70dp"
                                 android:layout_height="50dp"
                                 android:layout_weight="1"
-                                android:src="@drawable/upi_logo" />
+                                android:src="@drawable/upilogo" />
 
                             <Button
                                 android:layout_width="80dp"
@@ -396,7 +396,7 @@
                                 android:layout_width="70dp"
                                 android:layout_height="50dp"
                                 android:layout_weight="1"
-                                android:src="@drawable/upi_logo" />
+                                android:src="@drawable/upilogo" />
                             <TextView
                                 android:id="@+id/UpiBenNumber"
                                 android:layout_width="wrap_content"
@@ -782,7 +782,7 @@
                         android:weightSum="10">
 
                         <ImageView
-                            android:src="@drawable/upi_logo"
+                            android:src="@drawable/upilogo"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_centerInParent="true"/>

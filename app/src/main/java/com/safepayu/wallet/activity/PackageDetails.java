@@ -91,10 +91,10 @@ public class PackageDetails extends BaseActivity {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
                             PackageNameTV.setText(response.getPackageX().getPackage_name());
-                            PackageAmountTV.setText(String.valueOf(response.getPackageX().getPackage_amount()));
-                            BonusAmountTV.setText(String.valueOf(response.getPackageX().getBonus_amount()));
-                            BalanceAmountTV.setText(String.valueOf(response.getPackageX().getBalance_amount()));
-                            BonusCreditTv.setText(String.valueOf(response.getPackageX().getBonus_credited()));
+                            PackageAmountTV.setText(getResources().getString(R.string.rupees)+String.valueOf(response.getPackageX().getPackage_amount()));
+                            BonusAmountTV.setText(getResources().getString(R.string.rupees)+String.valueOf(response.getPackageX().getBonus_amount()));
+                            BalanceAmountTV.setText(getResources().getString(R.string.rupees)+String.valueOf(response.getPackageX().getBalance_amount()));
+                            BonusCreditTv.setText(getResources().getString(R.string.rupees)+String.valueOf(response.getPackageX().getBonus_credited()));
 
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);

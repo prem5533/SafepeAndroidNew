@@ -79,7 +79,8 @@
                             android:textSize="30sp"
                             android:text="@string/Rs"
                             android:fontFamily="@font/roboto_bold"
-                            android:textColor="@color/black">
+                            android:textColor="@color/black"
+                            android:visibility="gone">
                         </TextView>
 
                         <TextView

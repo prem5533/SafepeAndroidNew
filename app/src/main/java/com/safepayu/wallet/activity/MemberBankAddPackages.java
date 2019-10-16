@@ -40,7 +40,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
     private EditText tv_referencenumber,tv_amountpaid,UPIorbankaccount;
     private Spinner BankTypeSpinner,TransferTypeSpinner;
     private String[] TransferTypeCategories,bankcategories;
-    String TransferTypeText="",BankNameText="",PackageID="",TransactionType="";
+    String TransferTypeText="",BankNameText="",PackageID="",TransactionType="", Amount="";
     private LoadingDialog loadingDialog;
     private boolean CheckNetConnection=false;
     BuyPackage buyPackage;
@@ -66,6 +66,9 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
         try{
             TransactionType=getIntent().getStringExtra("TransactionType");
             PackageID=getIntent().getStringExtra("PackageID");
+            Amount=getIntent().getStringExtra("Amount");
+            tv_amountpaid.setText(Amount);
+            tv_amountpaid.setEnabled(false);
         }catch (Exception e){
             e.printStackTrace();
         }
