@@ -292,6 +292,17 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
 
         createNotificationChannel();
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    getFirebaseToken(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
     }
 
@@ -1170,7 +1181,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED,String.valueOf(response.getUser().getBlocked()));
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED,String.valueOf(response.getUser().getPackage_status()));
 
-                        getFirebaseToken(response.getUser().getUserid());
+
                     }
 
                     @Override
@@ -1210,7 +1221,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         Toast.makeText(Navigation.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        finish();
                     }
                 }));
     }

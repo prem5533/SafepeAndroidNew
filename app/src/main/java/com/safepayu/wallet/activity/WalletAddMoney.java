@@ -147,6 +147,10 @@ public class WalletAddMoney extends BaseActivity implements PackageAdapterForWal
                                     PackageAmountList.add(packageAmt);
                                 }
                             }
+
+                            PackageNameList.add("More");
+                            PackageIdList.add("");
+                            PackageAmountList.add(Double.valueOf(0));
                             PackageAdapterForWalletNew adapter=new PackageAdapterForWalletNew(WalletAddMoney.this,PackageNameList,PackageIdList,
                                     PackageAmountList,response.getTax().getTaxValue(),WalletAddMoney.this);
                             packageListView.setAdapter(adapter);

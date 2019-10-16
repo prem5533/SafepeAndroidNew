@@ -204,20 +204,7 @@ public class ForgetPassword extends AppCompatActivity {
                             btn_request_otp.setVisibility(View.GONE);
                             resend_btn.setVisibility(View.GONE);
 
-                            new CountDownTimer(59000, 1000) {
-
-                                public void onTick(long millisUntilFinished) {
-
-                                    timer.setText("00:" + millisUntilFinished / 1000);
-                                    //here you can have your logic to set text to edittext
-                                }
-
-                                public void onFinish() {
-                                    timer.setVisibility(View.GONE);
-                                    resend_btn.setVisibility(View.VISIBLE);
-                                }
-
-                            }.start();
+                            countDownTimer.start();
                         }
                     }
 
@@ -229,6 +216,22 @@ public class ForgetPassword extends AppCompatActivity {
                     }
                 }));
     }
+
+    CountDownTimer countDownTimer = new CountDownTimer(4*60000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            int seconds = (int) (millisUntilFinished / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+            timer.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        }
+
+        @Override
+        public void onFinish() {
+            resend_btn.setVisibility(View.VISIBLE);
+            timer.setVisibility(View.INVISIBLE);
+        }
+    };
 
     private void verifyOtp(String otp) {
 

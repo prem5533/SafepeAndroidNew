@@ -56,7 +56,6 @@ public class Commission extends BaseActivity {
             }
         });
 
-
         if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
             GetMemberShipBtn.setVisibility(View.VISIBLE);
             SendWallet.setVisibility(View.GONE);
