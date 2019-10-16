@@ -40,7 +40,8 @@ import com.safepayu.wallet.R;
 import java.util.List;
 import java.util.Locale;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, View.OnClickListener {
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, View.OnClickListener {
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     GoogleApiClient mGoogleApiClient;
@@ -151,41 +152,41 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
         Location locations = locationManager.getLastKnownLocation(provider);
         List<String> providerList = locationManager.getAllProviders();
-        //    if (null != locations && null != providerList && providerList.size() > 0) {
+           if (null != locations && null != providerList && providerList.size() > 0) {
         double longitude = location.getLongitude();
         double latitude = location.getLatitude();
 
 
         geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-            try {
-                listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
-                if (null != listAddresses && listAddresses.size() > 0) {
-                    address = listAddresses.get(0).getAddressLine(0);
-                    subLocality = listAddresses.get(0).getSubLocality();
-                    city = listAddresses.get(0).getLocality();
-                    state = listAddresses.get(0).getAdminArea();
-                    country = listAddresses.get(0).getCountryName();
-                    postalCode = listAddresses.get(0).getPostalCode();
-                    knownName = listAddresses.get(0).getFeatureName();
-                    subAdmin = listAddresses.get(0).getSubAdminArea();
-                    subAdmin1 = listAddresses.get(0).getSubThoroughfare();
-                    subAdmin2 = listAddresses.get(0).getPremises();
+        try {
+            listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if (null != listAddresses && listAddresses.size() > 0) {
+                address = listAddresses.get(0).getAddressLine(0);
+                subLocality = listAddresses.get(0).getSubLocality();
+                city = listAddresses.get(0).getLocality();
+                state = listAddresses.get(0).getAdminArea();
+                country = listAddresses.get(0).getCountryName();
+                postalCode = listAddresses.get(0).getPostalCode();
+                knownName = listAddresses.get(0).getFeatureName();
+                subAdmin = listAddresses.get(0).getSubAdminArea();
+                subAdmin1 = listAddresses.get(0).getSubThoroughfare();
+                subAdmin2 = listAddresses.get(0).getPremises();
 
 
-                    String[] separated = address.split(",");
-                    first = separated[0];// this will contain "Fruit"
-                    second = separated[1];
-                    Log.d("DDRE", first + second);
-                    markerOptions.title("" + latLng + "," + subLocality + "," + state
-                            + "," + country);
-                    tvLatLong.setText(address);
-                    Toast.makeText(getApplicationContext(), address, Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                Log.e("Location Address Loader", "Unable connect to Geocoder", e);
-                e.printStackTrace();
+                String[] separated = address.split(",");
+                first = separated[0];// this will contain "Fruit"
+                second = separated[1];
+                Log.d("DDRE", first + second);
+                markerOptions.title("" + latLng + "," + subLocality + "," + state
+                        + "," + country);
+                tvLatLong.setText(address);
+                Toast.makeText(getApplicationContext(), address, Toast.LENGTH_SHORT).show();
             }
-        //    }
+        } catch (Exception e) {
+            Log.e("Location Address Loader", "Unable connect to Geocoder", e);
+            e.printStackTrace();
+        }
+           }
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         mCurrLocationMarker = mMap.addMarker(markerOptions.draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -300,7 +301,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 Toast.makeText(this, "Location select", Toast.LENGTH_LONG).show();
 
 
-                Intent intent = new Intent(MapActivity.this, AddUpdateAddress.class);
+                Intent intent = new Intent(MapsActivity.this, AddUpdateAddress.class);
                 if (subLocality == null) {
                     intent.putExtra("select_locality", knownName + " " + second);
                 } else {

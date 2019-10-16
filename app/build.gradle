@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.safepayu.wallet"
         minSdkVersion 19
@@ -91,8 +92,13 @@ dependencies {
     implementation(name: 'peb-lib', ext: 'aar')
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.android.support:multidex:1.0.1'
+
     implementation 'com.google.android.gms:play-services:8.4.0'
     //implementation "com.google.android.gms:play-services-maps:8.4.0"
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+ //   implementation 'com.google.android.gms:play-services-gcm:15.0.1'
+    implementation  'com.google.android.gms:play-services-location:15.0.1'
+
     implementation 'com.malinskiy:superrecyclerview:1.1.4'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.1'
     implementation 'com.google.zxing:core:3.2.1'

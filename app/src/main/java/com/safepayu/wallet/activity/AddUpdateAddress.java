@@ -1,15 +1,12 @@
 package com.safepayu.wallet.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -89,7 +86,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         etCity.setText(City);
         etState.setText(State);
         etCountry.setText(Country);
-        etPincode.setText(Pincode);
+        etPincode.setText(""+Pincode);
 
 
         if (Location != null || City != null || State != null || Country != null || Pincode != null) {
@@ -106,19 +103,22 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
 
                 if (isChecked) {
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            // TODO: Consider calling
-                            //    Activity#requestPermissions
-                            // here to request the missing permissions, and then overriding
-                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                            //                                          int[] grantResults)
-                            // to handle the case where the user grants the permission. See the documentation
-                            // for Activity#requestPermissions for more details.
-                            return;
-                        }
-                    }
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, AddUpdateAddress.this);
+                    Intent intent=new Intent(AddUpdateAddress.this,MapsActivity.class);
+                    startActivityForResult(intent,STATIC_INTEGER_VALUE);
+
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                            // TODO: Consider calling
+//                            //    Activity#requestPermissions
+//                            // here to request the missing permissions, and then overriding
+//                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                            //                                          int[] grantResults)
+//                            // to handle the case where the user grants the permission. See the documentation
+//                            // for Activity#requestPermissions for more details.
+//                            return;
+//                        }
+//                    }
+//                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, AddUpdateAddress.this);
                 }
             }
         });

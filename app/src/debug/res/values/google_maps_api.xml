@@ -5,6 +5,7 @@
     To get one, follow this link, follow the directions and press "Create" at the end:
 
     https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=9D:7E:F7:80:A2:71:66:71:83:B8:F4:11:C4:4E:14:D3:9F:CE:B9:67%3Bcom.safepayu.wallet.activity
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=61:2A:26:7A:E0:B3:E3:DA:50:4A:34:78:10:1C:1E:16:8E:9C:B7:65%3Bcom.safepayu.wallet.activity
 
     You can also add your credentials to an existing key, using these values:
 
@@ -13,6 +14,10 @@
 
     SHA-1 certificate fingerprint:
     9D:7E:F7:80:A2:71:66:71:83:B8:F4:11:C4:4E:14:D3:9F:CE:B9:67
+    61:2A:26:7A:E0:B3:E3:DA:50:4A:34:78:10:1C:1E:16:8E:9C:B7:65
+
+    SHA-1 certificate fingerprint:
+    61:2A:26:7A:E0:B3:E3:DA:50:4A:34:78:10:1C:1E:16:8E:9C:B7:65
 
     Alternatively, follow the directions here:
     https://developers.google.com/maps/documentation/android/start#get-key
