@@ -35,7 +35,7 @@
             android:id="@+id/tv.packageAmount"
             android:padding="5dp"
             android:layout_marginBottom="5dp"
-            android:text="package Name"
+            android:text=""
             style="@style/TextAppearance.AppCompat.Small"
             app:fontCustom="@string/Roboto"
             android:textStyle="normal"

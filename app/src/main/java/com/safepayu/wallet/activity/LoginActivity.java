@@ -560,20 +560,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             showDialog(LoginActivity.this);
                             TimerTV.setVisibility(View.VISIBLE);
 
-                            new CountDownTimer(59000, 1000) {
-
-                                public void onTick(long millisUntilFinished) {
-
-                                    TimerTV.setText("00:" + millisUntilFinished / 1000);
-                                    //here you can have your logic to set text to edittext
-                                }
-
-                                public void onFinish() {
-                                    TimerTV.setVisibility(View.GONE);
-                                    resendButton.setVisibility(View.VISIBLE);
-                                }
-
-                            }.start();
+                            countDownTimer.start();
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(), false);
                         }
@@ -587,6 +574,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     }
                 }));
     }
+
+    CountDownTimer countDownTimer = new CountDownTimer(4*60000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            int seconds = (int) (millisUntilFinished / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+            TimerTV.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        }
+
+        @Override
+        public void onFinish() {
+            resendButton.setVisibility(View.VISIBLE);
+            TimerTV.setVisibility(View.INVISIBLE);
+        }
+    };
 
     private void verifyOtp(String otp) {
 

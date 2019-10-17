@@ -1,9 +1,14 @@
 package com.safepayu.wallet.activity;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -39,7 +44,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     private PackageListData packageListData;
     private RadioGroup paymentMode;
     private CardView cardView;
-    String TransactionType="0",PackageID="",PackageName="";
+    String TransactionType="0",PackageID="",PackageName="",PackageAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,16 +74,21 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
 
         paymentMode.setOnCheckedChangeListener(this);
         findViewById(R.id.backbtn_from_membership).setOnClickListener(this);
+
+
     }
 
     public void showPackageDetails(PackageListData.Packages selectedPackage) {
         PackageID=selectedPackage.getId();
         PackageName=selectedPackage.getPackageName();
+        PackageAmount= String.valueOf(selectedPackage.getPackageAmount());
         ((TextView) findViewById(R.id.tv_packageName)).setText(selectedPackage.getPackageName());
         ((TextView) findViewById(R.id.tv_packageAmount)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(selectedPackage.getPackageAmount()));
         ((TextView) findViewById(R.id.tv_tax)).setText(packageListData.getTax().getTaxValue() + "%");
         Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(selectedPackage.getPackageAmount(), Double.parseDouble(packageListData.getTax().getTaxValue()));
         ((TextView) findViewById(R.id.tv_totalAmountPay)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount));
+
+        showDialog(BuyMemberShip.this, PackageID, PackageName, String.valueOf(selectedPackage.getPackageAmount()), String.valueOf(BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount)));
     }
 
     @Override
@@ -183,11 +193,13 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                         Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
                         intent.putExtra("TransactionType",TransactionType);
                         intent.putExtra("PackageID",PackageID);
+                        intent.putExtra("Amount",PackageAmount);
                         startActivity(intent);
                     }else if (TransactionType.equalsIgnoreCase("2")) {
                         Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
                         intent.putExtra("TransactionType",TransactionType);
                         intent.putExtra("PackageID",PackageID);
+                        intent.putExtra("Amount",PackageAmount);
                         startActivity(intent);
                     }else {
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Transfer Type", false);
@@ -237,5 +249,54 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Invalid Passcode", false);
         }
+    }
+
+    public void showDialog(Activity activity, final String PackageID, String PackName, String AMount, final String Amount2Pay) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.wallet_dialog_buy);
+
+        TextView PackNameTV = dialog.findViewById(R.id.packageName_WalletDialog);
+        TextView AmountTV = dialog.findViewById(R.id.packageAmount_WalletDialog);
+        TextView AmountToPayTV = dialog.findViewById(R.id.totalAmountPay_WalletDialog);
+        TextView bonusAmount = dialog.findViewById(R.id.bonusAmount_WalletDialog);
+        TextView bonuscREDIT = dialog.findViewById(R.id.bonusCredit_WalletDialog);
+
+        try{
+            double bonusAmout=CalculateAmount((int)Float.parseFloat(PackageAmount));
+            bonuscREDIT.setText(getResources().getString(R.string.rupees)+" "+(int)bonusAmout);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            bonusAmount.setText(getResources().getString(R.string.rupees)+" "+2*(int)Float.parseFloat(PackageAmount));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        PackNameTV.setText(PackName);
+        AmountTV.setText(getResources().getString(R.string.rupees)+" "+AMount);
+        AmountToPayTV.setText(getResources().getString(R.string.rupees)+" "+Amount2Pay);
+
+
+        Button dialogButton = (Button) dialog.findViewById(R.id.payBtn_WalletDialog);
+        dialogButton.setVisibility(View.GONE);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
+    }
+
+    private double CalculateAmount(int amount){
+
+        double minusAmount=0.0f;
+        minusAmount=((((double) amount) / 100) * 1.04);
+
+        return minusAmount;
     }
 }

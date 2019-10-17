@@ -210,7 +210,7 @@
                         android:id="@+id/tv_change_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Change Password"
+                        android:text="Change Passcode"
                         android:textSize="15sp"
                         android:textColor="@color/black"
                         android:layout_marginLeft="20dp"

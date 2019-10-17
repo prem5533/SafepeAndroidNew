@@ -95,8 +95,17 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         AddBankBenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AddBeneficiary.class));
-                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Goto Your Profile and Verify Your Email First",true);
+                }else {
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Buy Membership To Enjoy App's Features",true);
+                    }else {
+                        startActivity(new Intent(getApplicationContext(), AddBeneficiary.class));
+                        overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                    }
+                }
+
             }
         });
 
@@ -108,7 +117,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Goto Your Profile and Verify Your Email First",true);
                 }else {
                     if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Buy Membership To Enjoy App's Features",false);
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Buy Membership To Enjoy App's Features",true);
                     }else {
                         if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")){
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Withdraw Is Closed Today",true);

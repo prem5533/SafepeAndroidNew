@@ -1,6 +1,10 @@
 package com.safepayu.wallet.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.BuyMemberShip;
 
 import java.util.ArrayList;
 
@@ -50,13 +55,24 @@ public class PackageAdapterForWalletNew extends RecyclerView.Adapter<PackageAdap
     @Override
     public void onBindViewHolder(PackageAdapterForWalletNew.MyViewHolder holder, final int position) {
 
-        holder.packageName.setText(PackageNameList.get(position));
-        holder.packageAmount.setText(mContext.getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(PackageAmountList.get(position)));
+
+
+        if (PackageNameList.get(position).equalsIgnoreCase("more")){
+            holder.packageName.setText("More...");
+            holder.packageName.setTextColor(mContext.getResources().getColor(R.color.bue_A800));
+            holder.packageName.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+            holder.packageName.setGravity(Gravity.CENTER);
+
+
+        }else {
+            holder.packageName.setText(PackageNameList.get(position));
+            holder.packageAmount.setText(mContext.getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(PackageAmountList.get(position)));
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return PackageNameList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -92,7 +108,14 @@ public class PackageAdapterForWalletNew extends RecyclerView.Adapter<PackageAdap
                 e.printStackTrace();
             }
             if (callback != null) {
-                callback.onPackageSelectNew(getLayoutPosition(), PackageNameList,PackageIdList, PackageAmountList, TaxPer);
+
+                if (PackageNameList.get(getLayoutPosition()).equalsIgnoreCase("more")){
+                    mContext.startActivity(new Intent(mContext, BuyMemberShip.class));
+                    ((Activity)mContext).finish();
+                }else {
+                    callback.onPackageSelectNew(getLayoutPosition(), PackageNameList,PackageIdList, PackageAmountList, TaxPer);
+                }
+
             }
         }
     }

@@ -25,6 +25,7 @@ import com.safepayu.wallet.models.response.ForgetPasswordResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
 import com.safepayu.wallet.models.response.HashKeyResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
+import com.safepayu.wallet.models.response.NotificationResponse;
 import com.safepayu.wallet.models.response.OperatorResponse;
 import com.safepayu.wallet.models.response.PackageDetailsResponse;
 import com.safepayu.wallet.models.response.PackageListData;
@@ -166,4 +167,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/safepe/getFirebaseTocken")
     Single<BaseResponse> getFirebaseToken(@Field("userid") String userid, @Field("token") String token);
+
+    @GET("api/safepe/getNotificationData")
+    Single<NotificationResponse> getNotificationData();
 }

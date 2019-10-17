@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:gravity="center"
-            android:text="Forgot Passcode"
+            android:text="Change Passcode"
             android:textColor="#fff"
             android:fontFamily="@font/roboto_regular"
             android:textSize="18dp" />
@@ -138,6 +138,8 @@
                         android:hint="Enter your Otp"
                         android:inputType="number"
                         android:maxLength="4"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"
                         android:padding="10dp"
                         android:textColor="#085272"
                         android:textSize="15dp" />
@@ -194,20 +196,37 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <EditText
-                        android:id="@+id/enter_password"
+
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/white_button_grayborder"
-                        android:hint="Enter New Passcode"
-                        android:inputType="numberPassword"
-                        android:padding="10dp"
-                        android:textColor="#085272"
-                        android:textSize="15dp"
-                        android:maxLength="4"
-                        android:imeOptions="actionNext"
-                        android:singleLine="true"/>
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/enter_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/white_button_grayborder"
+                            android:hint="Enter New Passcode"
+                            android:inputType="numberPassword"
+                            android:padding="10dp"
+                            android:textColor="#085272"
+                            android:textSize="15dp"
+                            android:maxLength="4"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"/>
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/show_password48"
+                            android:id="@+id/show_hide_password_forgetPass"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="25dp"
+                            android:layout_marginRight="5dp"/>
+                    </RelativeLayout>
 
 
                     <Button
@@ -287,10 +306,6 @@
         </LinearLayout>
 
     </ScrollView>
-
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="14dp"

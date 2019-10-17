@@ -126,7 +126,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
         countDownTimer.start();
     }
 
-    CountDownTimer countDownTimer = new CountDownTimer(60000, 1000) {
+    CountDownTimer countDownTimer = new CountDownTimer(4*60000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
             int seconds = (int) (millisUntilFinished / 1000);

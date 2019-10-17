@@ -90,12 +90,13 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
         }
 
 
-        bankcategories = new String[]{"Select Bank", "Hixson Technologies AXIS BANK", "Hixson Technologies UNION BANK", "UPI (safepe@upi)"};
+    //    bankcategories = new String[]{"Select Bank", "Hixson Technologies AXIS BANK", "Hixson Technologies UNION BANK", "UPI (safepe@upi)"};
+        bankcategories = new String[]{"Select Bank", "918020100795727 AXIS BANK", "5824101010050412 UNION BANK", "UPI (safepe@upi)"};
         ArrayAdapter<String> TransferType= new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,bankcategories);
         TransferType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         BankTypeSpinner.setAdapter(TransferType);
 
-        TransferTypeCategories = new String[]{"Payment Mode", "Net Banking", "Bank Challan", "Bank Transfer NEFT/RTGS", "UPI Transfer"};
+        TransferTypeCategories = new String[]{"Payment Mode", "Net Banking", "Bank Challan", "Bank Transfer NEFT/RTGS/IMPS", "UPI Transfer"};
         ArrayAdapter<String> TransferTypeSpinnerAdapter= new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,TransferTypeCategories);
         TransferTypeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         TransferTypeSpinner.setAdapter(TransferTypeSpinnerAdapter);

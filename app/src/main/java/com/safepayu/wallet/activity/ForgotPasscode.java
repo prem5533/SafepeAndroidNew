@@ -3,10 +3,12 @@ package com.safepayu.wallet.activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +43,8 @@ public class ForgotPasscode extends AppCompatActivity {
     String session_id, userid;
     LinearLayout layout1, layout2, layout3;
     private LoadingDialog loadingDialog;
+    private ImageView ShowHidePasswordBtn;
+    boolean showPass=false;
     ApiService apiService;
 
     @Override
@@ -56,6 +60,7 @@ public class ForgotPasscode extends AppCompatActivity {
         timer = findViewById(R.id.timer);
         enter_otp = (EditText) findViewById(R.id.enter_otp);
         enter_password = (EditText) findViewById(R.id.enter_password);
+        ShowHidePasswordBtn= findViewById(R.id.show_hide_password_forgetPass);
 
         otpToSend = 0;
         Random r = new Random();
@@ -118,6 +123,32 @@ public class ForgotPasscode extends AppCompatActivity {
             }
         });
 
+        ShowHidePasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (showPass){
+                    showPass=false;
+                    ShowHidePasswordBtn.setImageDrawable(getResources().getDrawable(R.drawable.show_password48));
+                    enter_password.setTransformationMethod(new PasswordTransformationMethod());
+                    try {
+                        enter_password.setSelection(enter_password.getText().toString().length());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }else {
+                    showPass=true;
+                    ShowHidePasswordBtn.setImageDrawable(getResources().getDrawable(R.drawable.hide_password48));
+                    enter_password.setTransformationMethod(null);
+                    try {
+                        enter_password.setSelection(enter_password.getText().toString().length());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
     }
 
     void continueOtp() {
@@ -163,20 +194,7 @@ public class ForgotPasscode extends AppCompatActivity {
                             btn_request_otp.setVisibility(View.GONE);
                             resend_btn.setVisibility(View.GONE);
 
-                            new CountDownTimer(59000, 1000) {
-
-                                public void onTick(long millisUntilFinished) {
-
-                                    timer.setText("00:" + millisUntilFinished / 1000);
-                                    //here you can have your logic to set text to edittext
-                                }
-
-                                public void onFinish() {
-                                    timer.setVisibility(View.GONE);
-                                    resend_btn.setVisibility(View.VISIBLE);
-                                }
-
-                            }.start();
+                            countDownTimer.start();
                         }
                     }
 
@@ -188,6 +206,22 @@ public class ForgotPasscode extends AppCompatActivity {
                     }
                 }));
     }
+
+    CountDownTimer countDownTimer = new CountDownTimer(4*60000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            int seconds = (int) (millisUntilFinished / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+            timer.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        }
+
+        @Override
+        public void onFinish() {
+            resend_btn.setVisibility(View.VISIBLE);
+            timer.setVisibility(View.INVISIBLE);
+        }
+    };
 
     private void verifyOtp(String otp) {
 
