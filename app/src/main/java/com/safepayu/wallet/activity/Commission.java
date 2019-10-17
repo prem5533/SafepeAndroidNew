@@ -71,9 +71,6 @@ public class Commission extends BaseActivity {
                 SendWallet.setVisibility(View.VISIBLE);
             }
         }
-
-
-
     }
 
     @Override

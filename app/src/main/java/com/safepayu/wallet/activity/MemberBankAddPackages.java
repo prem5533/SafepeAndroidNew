@@ -2,8 +2,13 @@ package com.safepayu.wallet.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,7 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,22 +34,29 @@ import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Calendar;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.safepayu.wallet.activity.QrCodeScanner.PICK_IMAGE;
+
 public class MemberBankAddPackages  extends BaseActivity implements PasscodeClickListener {
 
     private Button BackBtn,SubmitBtn;
-    private TextView DateTv;
+    private TextView DateTv,ChooseImageBtn;
     private EditText tv_referencenumber,tv_amountpaid,UPIorbankaccount;
     private Spinner BankTypeSpinner,TransferTypeSpinner;
     private String[] TransferTypeCategories,bankcategories;
-    String TransferTypeText="",BankNameText="",PackageID="",TransactionType="";
+    private  String TransferTypeText="",BankNameText="",PackageID="",TransactionType="",textBase64="";
     private LoadingDialog loadingDialog;
     private boolean CheckNetConnection=false;
+    private ImageView imageView;
+    private RelativeLayout ImageLayout;
     BuyPackage buyPackage;
     LinearLayout LinearSPinnerAmount;
 
@@ -62,6 +76,9 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
         BankTypeSpinner=findViewById(R.id.spinner_banktype);
         TransferTypeSpinner=findViewById(R.id.spinner_amountpaidto);
         LinearSPinnerAmount=findViewById(R.id.linearSPinnerAmount);
+        imageView=findViewById(R.id.image_challan);
+        ChooseImageBtn=findViewById(R.id.chooseImageBtn);
+        ImageLayout=findViewById(R.id.imageLayout);
 
         try{
             TransactionType=getIntent().getStringExtra("TransactionType");
@@ -77,6 +94,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
             tv_amountpaid.setVisibility(View.GONE);
             TransferTypeSpinner.setVisibility(View.GONE);
             LinearSPinnerAmount.setVisibility(View.GONE);
+            ImageLayout.setVisibility(View.GONE);
         }else {
             DateTv.setVisibility(View.VISIBLE);
             tv_referencenumber.setVisibility(View.VISIBLE);
@@ -84,6 +102,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
             tv_amountpaid.setVisibility(View.VISIBLE);
             TransferTypeSpinner.setVisibility(View.VISIBLE);
             LinearSPinnerAmount.setVisibility(View.VISIBLE);
+            ImageLayout.setVisibility(View.VISIBLE);
         }
 
 
@@ -146,6 +165,16 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                     CheckValidate();
                 }
 
+            }
+        });
+
+        ChooseImageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
             }
         });
 
@@ -216,22 +245,25 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                             }else {
                                 if (TransferTypeText.equalsIgnoreCase("Payment Mode")){
                                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages), "Please Select Payment Mode", false);
-
                                 }else {
 
-                                    buyPackage.setTransaction_type(TransactionType);
-                                    buyPackage.setPackage_id(PackageID);
-                                    buyPackage.setBuy_date(DateText);
-                                    buyPackage.setPayment_mode(TransferTypeText);
-                                    buyPackage.setRefrence_no(ReferenceNumber);
-                                    buyPackage.setDocument_attached("");
-                                    buyPackage.setPaid_to_account(BankNameText);
-                                    buyPackage.setPaid_from_account(UPI);
-                                    if (CheckNetConnection){
-                                        BuyPackageMethod(buyPackage);
+                                    if (TextUtils.isEmpty(textBase64)){
+                                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages), "Please Choose Image/Screenshot", false);
                                     }else {
-                                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages), "Check Internet Connection", false);
+                                        buyPackage.setTransaction_type(TransactionType);
+                                        buyPackage.setPackage_id(PackageID);
+                                        buyPackage.setBuy_date(DateText);
+                                        buyPackage.setPayment_mode(TransferTypeText);
+                                        buyPackage.setRefrence_no(ReferenceNumber);
+                                        buyPackage.setDocument_attached("data:image/png;base64,"+textBase64);
+                                        buyPackage.setPaid_to_account(BankNameText);
+                                        buyPackage.setPaid_from_account(UPI);
+                                        if (CheckNetConnection){
+                                            BuyPackageMethod(buyPackage);
+                                        }else {
+                                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages), "Check Internet Connection", false);
 
+                                        }
                                     }
                                 }
                             }
@@ -302,5 +334,37 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages), "Invalid Passcode", false);
         }
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE) {
+
+            Uri uri = data.getData();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+
+               // Bitmap original = BitmapFactory.decodeStream(getAssets().open("1024x768.jpg"));
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+
+                imageView.setImageBitmap(decoded);
+                textBase64=ConvertToBase64(decoded);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private String ConvertToBase64(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        return encoded;
     }
 }

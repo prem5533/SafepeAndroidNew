@@ -3,10 +3,15 @@ package com.safepayu.wallet.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -14,7 +19,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Reader;
 import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
@@ -22,6 +36,8 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.BaseResponse1;
 import com.safepayu.wallet.models.response.UpiUserDetailsResponse;
+
+import java.io.IOException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -35,16 +51,21 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
     private LoadingDialog loadingDialog;
+    Button SubmitBtn,GalleryBtn;
+    public static final int PICK_IMAGE = 1;
 
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.scan_view);
         Log.e("onCreate", "onCreate");
 
         loadingDialog=new LoadingDialog(this);
-        mScannerView = new ZXingScannerView(this);
-        setContentView(mScannerView);
+        mScannerView = findViewById(R.id.scanView);
+        SubmitBtn=findViewById(R.id.numberBtn_scanView);
+        GalleryBtn=findViewById(R.id.getGalleryBtn_scanView);
+
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
         if (currentapiVersion >= android.os.Build.VERSION_CODES.M) {
             if (checkPermission()) {
@@ -53,6 +74,25 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
                 requestPermission();
             }
         }
+
+        SubmitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(QrCodeScanner.this, SendMoneyToWallet.class);
+                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                startActivity(intent);
+            }
+        });
+
+        GalleryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            }
+        });
     }
 
     @Override
@@ -130,8 +170,7 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
 
     @Override
     public void handleResult(Result result) {
-        final String result1 = result.getText();
-        getUserDetails(result1);
+        getUserDetails(result.getText());
     }
 
     private void getUserDetails(String userId) {
@@ -187,8 +226,53 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         Toast.makeText(QrCodeScanner.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        finish();
                     }
                 }));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE) {
+
+            Uri uri = data.getData();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+
+                String UserId=GetResultFromBitmap(bitmap);
+                Log.v("UserId ",UserId);
+                getUserDetails(UserId);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private String GetResultFromBitmap(Bitmap bMap){
+
+        String contents = null;
+
+        int[] intArray = new int[bMap.getWidth()*bMap.getHeight()];
+        //copy pixel data from the Bitmap into the 'intArray' array
+        bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight());
+
+        LuminanceSource source = new RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray);
+        BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+        Reader reader = new MultiFormatReader();
+        Result result = null;
+        try {
+            result = reader.decode(bitmap);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        } catch (ChecksumException e) {
+            e.printStackTrace();
+        } catch (FormatException e) {
+            e.printStackTrace();
+        }
+        contents = result.getText();
+
+        return contents;
     }
 }

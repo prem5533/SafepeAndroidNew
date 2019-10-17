@@ -348,9 +348,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lightline"
         android:layout_width="match_parent"
         android:layout_height="14dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/splas_gradient">
+        android:background="@drawable/splas_gradient"
+        android:orientation="vertical">
     </LinearLayout>
 </LinearLayout>

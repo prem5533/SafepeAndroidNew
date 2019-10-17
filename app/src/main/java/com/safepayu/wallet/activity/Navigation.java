@@ -292,16 +292,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
 
         createNotificationChannel();
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    getFirebaseToken(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        getFirebaseToken(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
 
 
     }
@@ -437,7 +428,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
 
             case R.id.pay_layout:
-                startActivity(new Intent(Navigation.this, SendMoneyToWallet.class));
+                startActivity(new Intent(Navigation.this, QrCodeScanner.class));
                 break;
 
             case R.id.layout_metro:
@@ -1180,8 +1171,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME,response.getUser().getLast_name());
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED,String.valueOf(response.getUser().getBlocked()));
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED,String.valueOf(response.getUser().getPackage_status()));
-
-
                     }
 
                     @Override
@@ -1198,7 +1187,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         if (TextUtils.isEmpty(FirebaseToken)){
             FirebaseToken=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN);
         }
-        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
 
         BaseApp.getInstance().getDisposable().add(apiService.getFirebaseToken(userId,FirebaseToken)
@@ -1207,19 +1196,16 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
                     @Override
                     public void onSuccess(BaseResponse response) {
-                        loadingDialog.hideDialog();
 
                         if (response.getStatus()){
 
                         }else {
                             Toast.makeText(Navigation.this, response.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.hideDialog();
                         Toast.makeText(Navigation.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }));
