@@ -14,7 +14,7 @@ import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
-import com.safepayu.wallet.models.response.BaseResponse;
+import com.safepayu.wallet.models.response.CommissionWalletTransferResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
 
@@ -89,16 +89,26 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
         BaseApp.getInstance().getDisposable().add(apiService.transferCommWalletToMainWallet(AmountED.getText().toString().trim())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                .subscribeWith(new DisposableSingleObserver<CommissionWalletTransferResponse>() {
                     @Override
-                    public void onSuccess(BaseResponse response) {
-
-                        if (response.getStatus()) {
-                            Toast.makeText(TransferCommissionToWallet.this, response.getMessage(), Toast.LENGTH_SHORT).show();
-                            finish();
+                    public void onSuccess(CommissionWalletTransferResponse response) {
+                        Intent intentStatus=new Intent(TransferCommissionToWallet.this,PaidOrderActivity.class);
+                        if (response.isStatus()) {
+                            //Toast.makeText(TransferCommissionToWallet.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                           // finish();
+                            intentStatus.putExtra("status","success");
                         } else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commisionToWallet), response.getMessage(), false);
+                            intentStatus.putExtra("status","failed");
+                            Toast.makeText(TransferCommissionToWallet.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                            //BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commisionToWallet), response.getMessage(), false);
                         }
+
+                        intentStatus.putExtra("txnid",response.getUtrId());
+                        intentStatus.putExtra("Amount",AmountED.getText().toString().trim());
+                        intentStatus.putExtra("date",response.getDate());
+                        intentStatus.putExtra("productinfo","Commission Wallet To Main Wallet Transaction");
+                        startActivity(intentStatus);
+                        finish();
                     }
 
                     @Override

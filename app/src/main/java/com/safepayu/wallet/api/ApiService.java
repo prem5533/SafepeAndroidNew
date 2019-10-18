@@ -20,6 +20,7 @@ import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.models.response.CommissionDetailsResponse;
+import com.safepayu.wallet.models.response.CommissionWalletTransferResponse;
 import com.safepayu.wallet.models.response.CustOperatorResponse;
 import com.safepayu.wallet.models.response.ForgetPasswordResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
@@ -128,7 +129,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/safepe/commitionToWallet")
-    Single<BaseResponse> transferCommWalletToMainWallet(@Field("amount") String amount);
+    Single<CommissionWalletTransferResponse> transferCommWalletToMainWallet(@Field("amount") String amount);
 
     @FormUrlEncoded
     @POST("api/safepe/findVenificairyName")
