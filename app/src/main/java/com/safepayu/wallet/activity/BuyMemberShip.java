@@ -286,7 +286,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                 "Validity 200 Days.\n" +
                 "Additional 18% GST Will be charged from the account.";
 
-        String SilverPlusText="Wallet cash back Rs 1,76,000.\n" +
+        String SilverPlusText="Wallet cash back Rs 1,56,000.\n" +
                 "Cash back can be redeemed\n" +
                 "Rs.780 on working days.\n" +
                 "Validity 200 Days.\n" +
