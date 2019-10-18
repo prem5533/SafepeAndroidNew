@@ -3,18 +3,27 @@ package com.safepayu.wallet.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Reader;
 import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
@@ -23,6 +32,12 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.BaseResponse1;
 import com.safepayu.wallet.models.response.UpiUserDetailsResponse;
 
+import java.io.IOException;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -35,16 +50,22 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
     private LoadingDialog loadingDialog;
+    Button SubmitBtn,GalleryBtn;
+    public static final int PICK_IMAGE = 1;
+    private boolean fromGallery=false;
 
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.scan_view);
         Log.e("onCreate", "onCreate");
 
         loadingDialog=new LoadingDialog(this);
-        mScannerView = new ZXingScannerView(this);
-        setContentView(mScannerView);
+        mScannerView = findViewById(R.id.scanView);
+        SubmitBtn=findViewById(R.id.numberBtn_scanView);
+        GalleryBtn=findViewById(R.id.getGalleryBtn_scanView);
+
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
         if (currentapiVersion >= android.os.Build.VERSION_CODES.M) {
             if (checkPermission()) {
@@ -53,6 +74,25 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
                 requestPermission();
             }
         }
+
+        SubmitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(QrCodeScanner.this, SendMoneyToWallet.class);
+                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                startActivity(intent);
+            }
+        });
+
+        GalleryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            }
+        });
     }
 
     @Override
@@ -130,8 +170,7 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
 
     @Override
     public void handleResult(Result result) {
-        final String result1 = result.getText();
-        getUserDetails(result1);
+        getUserDetails(result.getText());
     }
 
     private void getUserDetails(String userId) {
@@ -146,40 +185,50 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
                     public void onSuccess(UpiUserDetailsResponse response) {
                         loadingDialog.hideDialog();
 
-                        if (response.isStatus()){
-                            Intent intent=new Intent(QrCodeScanner.this,SendMoneyToWallet.class);
-                            intent.putExtra("Mobile",response.getUser().getMobile());
-                            startActivity(intent);
-                            finish();
-                        }else {
-                            String message="";
-
-                            try{
-                                BaseResponse1.DataBean dataBean=response.getData();
-                                if (dataBean!=null){
-
-                                    if (dataBean.getEmail().size()==1){
-                                        message=dataBean.getEmail().get(0)+"\n";
-                                    }else if (dataBean.getEmail().size()>1){
-                                        message=dataBean.getEmail().get(0)+"\n"+dataBean.getEmail().get(1)+"\n";
-                                    }
-
-                                    if (dataBean.getMobile().size()==1){
-                                        message=message+dataBean.getMobile().get(0);
-                                    }else if (dataBean.getEmail().size()>1){
-                                        message=message+dataBean.getMobile().get(0)+"\n"+dataBean.getMobile().get(1)+"\n";
-                                    }
-                                }
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-                            if (TextUtils.isEmpty(message)) {
-                                Toast.makeText(QrCodeScanner.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                        try{
+                            if (response.isStatus()){
+                                Intent intent=new Intent(QrCodeScanner.this,SendMoneyToWallet.class);
+                                intent.putExtra("Mobile",response.getUser().getMobile());
+                                startActivity(intent);
+                                finish();
                             }else {
-                                Toast.makeText(QrCodeScanner.this, message, Toast.LENGTH_SHORT).show();
+                                String message="";
+
+                                try{
+                                    BaseResponse1.DataBean dataBean=response.getData();
+                                    if (dataBean!=null){
+
+                                        if (dataBean.getEmail().size()==1){
+                                            message=dataBean.getEmail().get(0)+"\n";
+                                        }else if (dataBean.getEmail().size()>1){
+                                            message=dataBean.getEmail().get(0)+"\n"+dataBean.getEmail().get(1)+"\n";
+                                        }
+
+                                        if (dataBean.getMobile().size()==1){
+                                            message=message+dataBean.getMobile().get(0);
+                                        }else if (dataBean.getEmail().size()>1){
+                                            message=message+dataBean.getMobile().get(0)+"\n"+dataBean.getMobile().get(1)+"\n";
+                                        }
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                                if (TextUtils.isEmpty(message)) {
+
+                                    if (fromGallery){
+                                        Toast.makeText(QrCodeScanner.this, "Please Select QR Code Image Only", Toast.LENGTH_LONG).show();
+                                    }else {
+                                        Toast.makeText(QrCodeScanner.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }else {
+                                    Toast.makeText(QrCodeScanner.this, message, Toast.LENGTH_SHORT).show();
+                                }
                             }
+                            finish();
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
-                        finish();
 
                     }
 
@@ -187,8 +236,56 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         Toast.makeText(QrCodeScanner.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        finish();
                     }
                 }));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE) {
+            fromGallery=true;
+
+            try {
+                Uri uri = data.getData();
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+
+                String UserId=GetResultFromBitmap(bitmap);
+                getUserDetails(UserId);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private String GetResultFromBitmap(Bitmap bMap){
+
+        String contents = null;
+
+        try {
+            int[] intArray = new int[bMap.getWidth()*bMap.getHeight()];
+            //copy pixel data from the Bitmap into the 'intArray' array
+            bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight());
+
+            LuminanceSource source = new RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+            Reader reader = new MultiFormatReader();
+            Result result = null;
+            try {
+                result = reader.decode(bitmap);
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            } catch (ChecksumException e) {
+                e.printStackTrace();
+            } catch (FormatException e) {
+                e.printStackTrace();
+            }
+            contents = result.getText();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return contents;
     }
 }

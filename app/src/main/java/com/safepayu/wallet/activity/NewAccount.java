@@ -19,10 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -41,6 +37,9 @@ import com.safepayu.wallet.models.response.BaseResponse1;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -218,6 +217,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
             case R.id.et_dob:
                 DatePicker datePicker = DatePicker.newInstance(dob, null);
                 datePicker.show(getSupportFragmentManager(), "datePicker");
+
                 break;
 
             case R.id.show_hide_password_newAccount:

@@ -28,12 +28,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -65,6 +59,11 @@ import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -302,9 +301,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
 
         createNotificationChannel();
-
         getFirebaseToken(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
-
 
     }
 
@@ -439,7 +436,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
 
             case R.id.pay_layout:
-                startActivity(new Intent(Navigation.this, SendMoneyToWallet.class));
+                startActivity(new Intent(Navigation.this, QrCodeScanner.class));
                 break;
 
             case R.id.layout_metro:
@@ -1185,8 +1182,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME,response.getUser().getLast_name());
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED,String.valueOf(response.getUser().getBlocked()));
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED,String.valueOf(response.getUser().getPackage_status()));
-
-
                     }
 
                     @Override
@@ -1204,6 +1199,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             FirebaseToken=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN);
         }
       //  loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
 
         BaseApp.getInstance().getDisposable().add(apiService.getFirebaseToken(userId,FirebaseToken)
@@ -1219,7 +1215,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         }else {
                             Toast.makeText(Navigation.this, response.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
                     @Override

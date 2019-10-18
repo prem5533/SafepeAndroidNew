@@ -6,182 +6,192 @@
     android:background="@color/white"
     android:id="@+id/memberBankAddPackages">
 
-    <RelativeLayout
-        android:id="@+id/l1_send"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/blue_theme"
-        android:paddingBottom="5dp">
 
-        <Button
-            android:id="@+id/mem_back_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:text="Add packages"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:fontFamily="@font/roboto_regular"/>
-    </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/l1_send"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/blue_theme"
+                android:paddingBottom="5dp">
 
-    <LinearLayout
+                <Button
+                    android:id="@+id/mem_back_btn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/ic_arrow_back_white_24dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="Add packages"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/roboto_regular"/>
+            </RelativeLayout>
+    <ScrollView
         android:layout_below="@id/l1_send"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".Activity.Membership">
+        android:layout_height="wrap_content">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
-            android:orientation="vertical"
-            android:padding="20dp">
-
-            <TextView
-                android:id="@+id/tv_dateofbirth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/white_button_grayborder"
-                android:gravity="center_vertical"
-                android:hint="Date of payment"
-                android:padding="10dp"
-                android:fontFamily="@font/roboto_regular"
-                android:layout_marginTop="10dp"
-                android:textSize="15dp"
-                android:imeOptions="actionNext"
-                android:singleLine="true"/>
-
-
-            <EditText
-                android:id="@+id/tv_referencenumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/white_button_grayborder"
-                android:gravity="center_vertical"
-                android:hint="Reference Number"
-                android:padding="10dp"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="15dp"
-                android:imeOptions="actionNext"
-                android:singleLine="true"
-                />
-
-            <EditText
-                android:id="@+id/tv_amountpaid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/white_button_grayborder"
-                android:gravity="center_vertical"
-                android:hint="Amount Paid"
-                android:padding="10dp"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="15dp"
-                android:inputType="numberDecimal"
-                android:imeOptions="actionNext"
-                android:singleLine="true"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <LinearLayout
+
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/white_button_grayborder">
-                <Spinner
-                    android:id="@+id/spinner_banktype"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context=".Activity.Membership">
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
+                    android:layout_height="match_parent"
+                    android:layout_margin="20dp"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_dateofbirth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/white_button_grayborder"
+                        android:gravity="center_vertical"
+                        android:hint="Date of payment"
+                        android:padding="10dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginTop="10dp"
+                        android:textSize="15dp" />
+
+
+                    <EditText
+                        android:id="@+id/tv_referencenumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/white_button_grayborder"
+                        android:gravity="center_vertical"
+                        android:hint="Reference Number"
+                        android:padding="10dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="15dp"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"/>
+
+                    <EditText
+                        android:id="@+id/tv_amountpaid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/white_button_grayborder"
+                        android:gravity="center_vertical"
+                        android:hint="Amount Paid"
+                        android:padding="10dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="15dp"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/white_button_grayborder">
+                        <Spinner
+                            android:id="@+id/spinner_banktype"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/linearSPinnerAmount"
+                        android:background="@drawable/white_button_grayborder">
+                        <Spinner
+                            android:id="@+id/spinner_amountpaidto"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"/>
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/tv_amountpaidfrom"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/white_button_grayborder"
+                        android:gravity="center_vertical"
+                        android:hint="UPI/Account from which amount is paid"
+                        android:padding="10dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="15dp"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:padding="10dp"
+                        android:id="@+id/imageLayout">
+
+                        <TextView
+                            android:id="@+id/chooseImageBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Choose Image"
+                            android:textSize="16sp"
+                            android:textColor="@color/bue_A700"/>
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="120dp"
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/image_challan"
+                            android:background="@drawable/image_demo100"
+                            android:scaleType="fitXY"/>
+
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/btn_packages"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="60dp"
+                        android:background="@drawable/rounded_buttons"
+                        android:text="Submit"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:id="@+id/linearSPinnerAmount"
-                android:background="@drawable/white_button_grayborder">
-                <Spinner
-                    android:id="@+id/spinner_amountpaidto"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
-            </LinearLayout>
-
-            <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="20dp"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:hint="Upload Payment Proof(Only jpg and pdf format are accepted"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:textSize="12sp" />-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/tv_choosefile"-->
-
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/white_button_grayborder"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:hint="Choose File"-->
-            <!--android:padding="10dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:textSize="15dp" />-->
-
-            <EditText
-                android:id="@+id/tv_amountpaidfrom"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/white_button_grayborder"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="center_vertical"
-                android:hint="UPI/Account from which amount is paid"
-                android:imeOptions="actionDone"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="15dp" />
-
-            <Button
-                android:id="@+id/btn_packages"
-
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="60dp"
-                android:background="@drawable/rounded_buttons"
-                android:text="Submit"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="15sp" />
-
 
         </LinearLayout>
-
-        </ScrollView>
-    </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
-
+    </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="14dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/splas_gradient">
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/green_theme"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/blue_theme"/>
     </LinearLayout>
 </RelativeLayout>

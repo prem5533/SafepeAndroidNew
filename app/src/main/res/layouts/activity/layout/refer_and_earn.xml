@@ -1,4 +1,4 @@
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -38,7 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_below="@+id/l1_send">
         <TextView
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
@@ -176,4 +177,22 @@
             android:textColor="@color/white"
             android:text="Share via Link"/>
     </LinearLayout>
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/lightline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/green_theme"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/blue_theme"/>
+    </LinearLayout>
+
+</RelativeLayout>
