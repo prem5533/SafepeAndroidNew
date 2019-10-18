@@ -14,7 +14,9 @@
         android:layout_width="160dp"
         android:layout_height="60dp"
         android:layout_gravity="left"
+        android:layout_marginLeft="0dp"
         android:src="@drawable/safepe_logo_transparent"/>
+
 
     <TextView
         style="@style/TextAppearance.AppCompat.Headline"
@@ -26,14 +28,14 @@
         android:text="@string/splash_tag_2"
         android:textColor="@color/blue_theme"
         android:textSize="12sp"
-        android:layout_marginLeft="40dp"/>
+        android:layout_marginLeft="0dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginLeft="80dp"
+        android:layout_marginLeft="60dp"
         android:textSize="12sp"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/splash_tag_3"
@@ -50,15 +52,50 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/blue_theme"/>
-    <TextView
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_italic"
-        android:textColor="@color/bue_A800"
-        android:textSize="12sp"
-        android:layout_marginTop="5dp"
-        android:text="The New Generation Payment App"/>
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center"
+            android:src="@drawable/safepe_logo_transparent"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="@string/india"
+            android:textColor="@color/blue_theme"
+            android:textSize="16sp"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/pvt_ltd"
+            android:textColor="@color/green_theme"
+            style="@style/TextAppearance.AppCompat.Medium" />
+    </LinearLayout>
+
+
+
+
 
 </LinearLayout>

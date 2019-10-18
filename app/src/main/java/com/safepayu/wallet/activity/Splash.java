@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Splash extends AppCompatActivity implements PasscodeClickListener {
 
@@ -18,7 +18,7 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        BaseApp.getInstance().handler().postDelayed(runnable,1000);
+        BaseApp.getInstance().handler().postDelayed(runnable,2000);
     }
 
     Runnable runnable = new Runnable() {

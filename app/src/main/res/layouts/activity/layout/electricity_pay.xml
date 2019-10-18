@@ -236,10 +236,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="14dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/splas_gradient">
-    </LinearLayout>
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/green_theme"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/blue_theme"/>
+    </LinearLayout>
 </RelativeLayout>
 

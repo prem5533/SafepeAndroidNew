@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
     android:id="@+id/packageDetailsLayout">
+
 
     <RelativeLayout
         android:id="@+id/header"
@@ -34,6 +35,8 @@
             android:textSize="18sp"  />
     </RelativeLayout>
 
+
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,7 +44,8 @@
         app:cardCornerRadius="4dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/header">
 
         <LinearLayout
             android:layout_below="@id/header"
@@ -71,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
@@ -83,6 +87,7 @@
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/black"/>
 
+
                 <TextView
                     android:id="@+id/txtPckgName"
                     android:layout_width="wrap_content"
@@ -91,16 +96,22 @@
                     android:textAlignment="viewEnd"
                     android:text=""
                     android:textSize="15sp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/blue"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/blue_theme"
                     android:singleLine="true"
                     android:layout_marginRight="10dp"
                     />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"/>
             <LinearLayout
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -123,15 +134,21 @@
                     android:text=""
                     android:textColor="@color/blue"
                     android:textSize="15sp"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/roboto_bold"
                     android:singleLine="true"
                     android:layout_marginRight="10dp"
                     />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"/>
             <LinearLayout
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -153,15 +170,20 @@
                     android:textAlignment="viewEnd"
                     android:text=""
                     android:textSize="15sp"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/roboto_bold"
                     android:textColor="@color/blue"
                     android:singleLine="true"
                     android:layout_marginRight="10dp"/>
             </LinearLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"/>
             <LinearLayout
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -183,16 +205,21 @@
                     android:textAlignment="viewEnd"
                     android:text=""
                     android:textSize="15sp"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/roboto_bold"
                     android:textColor="@color/blue"
                     android:singleLine="true"
                     android:layout_marginRight="10dp"
                     />
             </LinearLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"/>
             <LinearLayout
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -212,7 +239,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/roboto_bold"
                     android:singleLine="true"
                     android:text=""
                     android:textAlignment="viewEnd"
@@ -223,4 +250,8 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-</LinearLayout>
+    <include layout="@layout/footer"
+      ></include>
+
+
+</RelativeLayout>

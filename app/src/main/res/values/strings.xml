@@ -65,4 +65,7 @@
     <string name="destination">Destination Station</string>
     <string name="checkbox_train">Show both non-AC and AC coaches</string>
 
+    <string name="pvt_ltd"> Pvt. Ltd.</string>
+    <string name="india">India </string>
+
 </resources>
