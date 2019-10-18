@@ -195,6 +195,8 @@ public class ForgotPasscode extends AppCompatActivity {
                             resend_btn.setVisibility(View.GONE);
 
                             countDownTimer.start();
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.forgetPasscodeId),response.getMessage(),true);
                         }
                     }
 
