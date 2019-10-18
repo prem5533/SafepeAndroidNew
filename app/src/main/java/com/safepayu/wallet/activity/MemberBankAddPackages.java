@@ -1,11 +1,16 @@
 package com.safepayu.wallet.activity;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -18,7 +23,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,16 +38,19 @@ import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.safepayu.wallet.activity.QrCodeScanner.PICK_IMAGE;
 
 public class MemberBankAddPackages  extends BaseActivity implements PasscodeClickListener {
 
@@ -56,9 +63,14 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
     private LoadingDialog loadingDialog;
     private boolean CheckNetConnection=false;
     private ImageView imageView;
-    private RelativeLayout ImageLayout;
+    private LinearLayout ImageLayout;
     BuyPackage buyPackage;
     LinearLayout LinearSPinnerAmount;
+    private static final int PICK_IMAGE_CAMERA = 223;
+    private static final int PICK_IMAGE_GALLERY = 623;
+    private Bitmap bitmap;
+    private File destination = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +91,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
         imageView=findViewById(R.id.image_challan);
         ChooseImageBtn=findViewById(R.id.chooseImageBtn);
         ImageLayout=findViewById(R.id.imageLayout);
+
 
         try{
             TransactionType=getIntent().getStringExtra("TransactionType");
@@ -172,17 +185,26 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
             }
         });
 
-        ChooseImageBtn.setOnClickListener(new View.OnClickListener() {
+
+
+        // *********select image from camera and gallery*********
+        ImageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            public void onClick(View v) {
+
+                if (ContextCompat.checkSelfPermission(MemberBankAddPackages.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                        && ContextCompat.checkSelfPermission(MemberBankAddPackages.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    selectImage();
+                } else {
+                    ActivityCompat.requestPermissions(MemberBankAddPackages.this, new String[]{Manifest.permission.CAMERA,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    }, 100);
+                }
             }
         });
-
     }
+
+
 
     public void datePicker(){
         final Calendar c = Calendar.getInstance();
@@ -340,6 +362,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
 
     }
 
+/*
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -362,6 +385,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
             }
         }
     }
+*/
 
     private String ConvertToBase64(Bitmap bitmap){
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -371,4 +395,111 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
 
         return encoded;
     }
+
+    private void selectImage() {
+        try {
+            PackageManager pm = MemberBankAddPackages.this.getPackageManager();
+            int hasPerm = pm.checkPermission(Manifest.permission.CAMERA, MemberBankAddPackages.this.getPackageName());
+            if (hasPerm == PackageManager.PERMISSION_GRANTED) {
+                final CharSequence[] options = {"Take Photo", "Choose From Gallery", "Cancel"};
+              AlertDialog.Builder builder = new AlertDialog.Builder(MemberBankAddPackages.this);
+                builder.setTitle("Select Option");
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int item) {
+
+                        if (options[item].equals("Take Photo")) {
+                            dialog.dismiss();
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(intent, PICK_IMAGE_CAMERA);
+                        } else if (options[item].equals("Choose From Gallery")) {
+                            dialog.dismiss();
+                            Intent intent = new Intent();
+                            intent.setType("image/*");
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_GALLERY);
+                        } else if (options[item].equals("Cancel")) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                builder.show();
+            } else
+                Toast.makeText(MemberBankAddPackages.this, "Camera Permission error", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(MemberBankAddPackages.this, "Camera Permission error", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_CAMERA) {
+            try {
+                bitmap = (Bitmap) data.getExtras().get("data");
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
+
+
+                destination = new File(Environment.getExternalStorageDirectory() + "/" +
+                        getString(R.string.app_name), "IMG_" + System.currentTimeMillis() + ".jpg");
+                FileOutputStream fo;
+                try {
+                    destination.createNewFile();
+                    fo = new FileOutputStream(destination);
+                    fo.write(bytes.toByteArray());
+                    fo.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Drawable d = new BitmapDrawable(getResources(), bitmap);
+                imageView.setImageDrawable(d);
+                textBase64 = ConvertToBase64(bitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (requestCode == PICK_IMAGE_GALLERY) {
+            /*if (data != null) {
+                Uri uri = data.getData();
+
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+
+                    // Bitmap original = BitmapFactory.decodeStream(getAssets().open("1024x768.jpg"));
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, out);
+                    Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+
+                    imageView.setImageBitmap(decoded);
+                    textBase64=ConvertToBase64(decoded);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }*/
+
+            if (data != null) {
+                Uri selectedImage = data.getData();
+                if (selectedImage != null) {
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(MemberBankAddPackages.this.getContentResolver(), selectedImage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    textBase64 = ConvertToBase64(bitmap);
+                    Drawable d = new BitmapDrawable(getResources(), bitmap);
+                    imageView.setImageDrawable(d);
+                }
+            }
+
+        }
+    }
+
+
+
 }

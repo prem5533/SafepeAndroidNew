@@ -135,31 +135,34 @@
                         android:imeOptions="actionDone"
                         android:singleLine="true"/>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginTop="20dp"
-                        android:padding="10dp"
+                        android:gravity="start|center"
                         android:id="@+id/imageLayout">
 
                         <TextView
                             android:id="@+id/chooseImageBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Choose Image"
-                            android:textSize="16sp"
-                            android:textColor="@color/bue_A700"/>
+                            android:text="Choose Image\nClick Here"
+                            android:textSize="15sp"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/black"
+                            android:layout_weight="1"/>
 
                         <ImageView
                             android:layout_width="100dp"
-                            android:layout_height="120dp"
+                            android:layout_height="130dp"
                             android:layout_alignParentRight="true"
                             android:id="@+id/image_challan"
-                            android:background="@drawable/image_demo100"
+                            android:background="@drawable/ic_picture"
                             android:scaleType="fitXY"/>
 
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/btn_packages"

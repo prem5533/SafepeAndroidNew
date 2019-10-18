@@ -351,6 +351,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"/>
 
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Note: Click More to get other package"
+                        android:textSize="12sp"
+                        android:padding="10dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/red"
+                        android:gravity="center"/>
+
+
+
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
