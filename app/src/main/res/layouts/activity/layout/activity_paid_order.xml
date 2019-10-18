@@ -160,10 +160,11 @@
                         android:gravity="center">
                         <TextView
                             android:id="@+id/productInfo"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="17sp"
                             android:text="Payment For"
+                            android:gravity="center"
                             android:fontFamily="@font/roboto_medium"
                             android:textColor="@color/bue_A800">
                         </TextView>

@@ -378,7 +378,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         dialogStatus.show();
     }
 
-    CountDownTimer countDownTimer = new CountDownTimer(60000, 1000) {
+    CountDownTimer countDownTimer = new CountDownTimer(10000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
             int seconds = (int) (millisUntilFinished / 1000);
@@ -395,7 +395,8 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
                 intentStatus.putExtra("status","success");
             }else if (responseData.getStatusCode()==2){
                 Toast.makeText(SendMoney.this, responseData.getMessage(), Toast.LENGTH_SHORT).show();
-                intentStatus.putExtra("status","pending");
+                intentStatus.putExtra("status","success");
+                //change status to pending on bank issue resolved
             }else {
                 Toast.makeText(SendMoney.this, responseData.getMessage(), Toast.LENGTH_SHORT).show();
                 intentStatus.putExtra("status","failed");
