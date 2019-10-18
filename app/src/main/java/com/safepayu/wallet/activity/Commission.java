@@ -25,7 +25,7 @@ import io.reactivex.schedulers.Schedulers;
 public class Commission extends BaseActivity {
 
     private Button BackBtn;
-    private TextView SendWallet,CommBalanceTV,LeftBussTV,RightBussTV,TotalBussTV,SponserBussTV,MatchingBussTV,GetMemberShipBtn;
+    private TextView SendWallet,CommBalanceTV,LeftBussTV,RightBussTV,TotalBussTV,SponserBussTV,MatchingBussTV,GetMemberShipBtn,WarningTextTv;
     private LoadingDialog loadingDialog;
 
     @Override
@@ -43,6 +43,7 @@ public class Commission extends BaseActivity {
         SponserBussTV=findViewById(R.id.sponser_business);
         MatchingBussTV=findViewById(R.id.matching_business);
         GetMemberShipBtn=findViewById(R.id.getMemberShipBtn);
+        WarningTextTv=findViewById(R.id.textWarningCommission);
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,12 +63,14 @@ public class Commission extends BaseActivity {
         if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
             GetMemberShipBtn.setVisibility(View.VISIBLE);
             SendWallet.setVisibility(View.GONE);
+            WarningTextTv.setVisibility(View.VISIBLE);
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Goto Your Profile and Verify Your Email First",true);
         }else {
             getCommissionDetails();
             if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
                 GetMemberShipBtn.setVisibility(View.VISIBLE);
                 SendWallet.setVisibility(View.GONE);
+                WarningTextTv.setVisibility(View.VISIBLE);
              //   BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",true);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             //    alertDialogBuilder.setTitle("Commission");

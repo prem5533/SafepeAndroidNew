@@ -1,10 +1,7 @@
 package com.safepayu.wallet.api;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.safepayu.wallet.BaseApp;
 
@@ -20,8 +17,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-
-    private static final String BASE_URL = "http://13.232.191.38/safepe-new/public/";
+//http://13.232.191.38/safepe-new/public/
+    private static final String BASE_URL = "http://india.safepayu.com/safepe-new/public/";
     private static Retrofit retrofit = null;
     private static int REQUEST_TIMEOUT = 60;
     private static OkHttpClient okHttpClient;

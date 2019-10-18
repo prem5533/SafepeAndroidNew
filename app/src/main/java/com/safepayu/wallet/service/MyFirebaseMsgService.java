@@ -15,7 +15,7 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.Navigation;
+import com.safepayu.wallet.activity.BellNotifictionActivity;
 
 import static com.safepayu.wallet.activity.Navigation.BadgeCount;
 import static com.safepayu.wallet.activity.Navigation.BadgeCountTV;
@@ -60,7 +60,7 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
 
     private void createNotification(RemoteMessage remoteMessage) {
         BadgeCount=BadgeCount+1;
-        Intent intent = new Intent( this , Navigation.class );
+        Intent intent = new Intent( this , BellNotifictionActivity.class );
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent resultIntent = PendingIntent.getActivity( this , 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);

@@ -19,6 +19,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -37,9 +41,6 @@ import com.safepayu.wallet.models.response.BaseResponse1;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -52,18 +53,20 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     private Button VerifyReffralBtn;
     CheckEmailMobileRequest checkEmailMobileRequest;
     boolean mobileCheck=false,emailCheck=false,showPass=false,referralCheck=false;
-    private ImageView im_cross,ShowHidePasswordBtn;
+    private ImageView ShowHidePasswordBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, true);
+
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+
         loadingDialog = new LoadingDialog(this);
         firstName = findViewById(R.id.et_firstName);
         lastName = findViewById(R.id.et_lastName);
@@ -252,6 +255,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     }
 
     private Boolean validate() {
+
         if (firstName.getText().toString().trim().length() == 0) {
             firstName.requestFocus();
             BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter first name", true);
@@ -289,7 +293,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
             return false;
         } else if (referralCode.getText().toString().trim().length() == 0) {
             referralCode.requestFocus();
-            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter referral code", true);
+
             return false;
         }
         return true;

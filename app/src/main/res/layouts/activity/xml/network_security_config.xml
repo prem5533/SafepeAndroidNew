@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">13.232.191.38</domain>
+<!--        <domain includeSubdomains="true">13.232.191.38</domain>-->
+        <domain includeSubdomains="true">india.safepayu.com</domain>
         <domain includeSubdomains="true">api.sakshamapp.com</domain>
     </domain-config>
 </network-security-config>
