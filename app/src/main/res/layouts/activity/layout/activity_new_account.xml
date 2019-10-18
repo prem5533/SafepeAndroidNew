@@ -126,13 +126,16 @@
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="false"
                         android:hint="@string/dob_hint"
                         android:inputType="text"
                         android:textSize="16sp"
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
+
+                        android:clickable="true"
+                        android:focusable="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <RelativeLayout
