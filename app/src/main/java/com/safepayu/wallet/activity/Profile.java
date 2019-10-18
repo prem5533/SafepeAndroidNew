@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -238,6 +239,7 @@ public class Profile extends BaseActivity implements View.OnClickListener {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.qr_code_dialog);
         dialog.getWindow().setLayout(370, 800);
+        dialog.getWindow().setGravity(Gravity.CENTER| Gravity.CENTER);
 
         ImageView QRcodeImageView=dialog.findViewById(R.id.imageViewQRcode);
         QRcodeImageView.setImageBitmap(bitmap);
@@ -246,6 +248,8 @@ public class Profile extends BaseActivity implements View.OnClickListener {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+
 
         dialog.getWindow().setAttributes(lp);
         dialog.show();
