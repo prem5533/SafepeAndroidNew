@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -16,6 +17,9 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.Navigation;
 
+import static com.safepayu.wallet.activity.Navigation.BadgeCount;
+import static com.safepayu.wallet.activity.Navigation.BadgeCountTV;
+
 public class MyFirebaseMsgService extends FirebaseMessagingService {
 
     private static final String TAG = "MyAndroidFCMService";
@@ -24,6 +28,20 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
         //Log data to Log Cat
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
+
+        BadgeCount=BadgeCount+1;
+
+        try{
+            BadgeCountTV.post(new Runnable() {
+                public void run() {
+                    BadgeCountTV.setVisibility(View.VISIBLE);
+                    BadgeCountTV.setText(""+BadgeCount);
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         //create notification
         createNotification(remoteMessage);
     }
@@ -41,6 +59,7 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
     }
 
     private void createNotification(RemoteMessage remoteMessage) {
+        BadgeCount=BadgeCount+1;
         Intent intent = new Intent( this , Navigation.class );
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent resultIntent = PendingIntent.getActivity( this , 0, intent,

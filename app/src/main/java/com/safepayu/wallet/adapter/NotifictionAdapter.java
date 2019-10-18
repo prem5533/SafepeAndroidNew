@@ -2,30 +2,21 @@ package com.safepayu.wallet.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.zxing.oned.ITFReader;
-import com.safepayu.wallet.R;
-import com.safepayu.wallet.models.response.NotificationResponse;
-import com.safepayu.wallet.models.response.WalletHistoryResponse;
-import com.squareup.picasso.Picasso;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.PluralsRes;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.safepayu.wallet.R;
+import com.safepayu.wallet.models.response.NotificationResponse;
+import com.squareup.picasso.Picasso;
+
+import java.util.Collections;
+import java.util.List;
 
 public class NotifictionAdapter  extends RecyclerView.Adapter<NotifictionAdapter.NotificationViewHolder> {
 
@@ -37,10 +28,8 @@ public class NotifictionAdapter  extends RecyclerView.Adapter<NotifictionAdapter
     public NotifictionAdapter(Context context, List<NotificationResponse.DataBean> mData) {
         this.context = context;
         this.mData = mData;
-    }
 
-    public void addItem(List<NotificationResponse.DataBean> mData) {
-        this.mData.addAll(mData);
+        Collections.reverse( this.mData);
         notifyItemChanged(this.mData.size());
     }
 

@@ -118,6 +118,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                             try{
                                 packageListData = response;
                                 mAdapter.addItem(response.getPackages());
+
                                 try{
                                     ((TextView) findViewById(R.id.tv_taxDetails)).setText("Additional " + response.getTax().getTaxValue() + "% GST will be charged from the total amount");
                                 }catch (Exception r){

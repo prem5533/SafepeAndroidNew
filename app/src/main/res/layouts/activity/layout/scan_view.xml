@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <me.dm7.barcodescanner.zxing.ZXingScannerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/scanView"
+                android:background="@color/bue_A700" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/scan_msg"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_margin="20dp"
+                android:id="@+id/textttttt"/>
+
+            <Button
+                android:id="@+id/getGalleryBtn_scanView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@null"
+                android:text="Get Image From Gallery"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:layout_above="@+id/numberBtn_scanView"/>
+
+            <Button
+                android:id="@+id/numberBtn_scanView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@null"
+                android:text="Or Enter Number"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+</RelativeLayout>

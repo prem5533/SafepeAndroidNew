@@ -81,9 +81,11 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     LinearLayout layout_electricity, layout_gas, layout_water, layout_broadband;
     private LinearLayout payLayout,walletLayout,send;
     String versionName="",FirebaseToken,appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
-    int versionCode=0;
+    private int versionCode=0;
     private LoadingDialog loadingDialog;
     private LinearLayout liMetro,liFlight, liBusTicket,liTrainTicket, liHotles,liDonation,liToll, liFlood;
+    public static int BadgeCount=0;
+    public static TextView BadgeCountTV;
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet,liShopping,liChnangePasswlrd,liMyOrders,liHistory,liGenelogy,
@@ -154,6 +156,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         notification_icon = findViewById(R.id.notification);
         nav_icon = findViewById(R.id.nav_icon);
         nav_icon.setOnClickListener(nav_iconListner);
+
+        BadgeCountTV=findViewById(R.id.cart_badge);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -302,9 +306,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
 
         createNotificationChannel();
-
         getFirebaseToken(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
-
 
     }
 
@@ -336,10 +338,16 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     public void onResume(){
         super.onResume();
         if (isNetworkAvailable()){
-
             getUserDetails();
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.walletLayout),"No Internet Connection",false);
+        }
+
+        if (BadgeCount==0){
+            BadgeCountTV.setVisibility(View.GONE);
+        }else {
+            BadgeCountTV.setText(""+BadgeCount);
+            BadgeCountTV.setVisibility(View.VISIBLE);
         }
 
     }
@@ -439,7 +447,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
 
             case R.id.pay_layout:
-                startActivity(new Intent(Navigation.this, SendMoneyToWallet.class));
+                startActivity(new Intent(Navigation.this, QrCodeScanner.class));
                 break;
 
             case R.id.layout_metro:
@@ -1185,8 +1193,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME,response.getUser().getLast_name());
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED,String.valueOf(response.getUser().getBlocked()));
                         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED,String.valueOf(response.getUser().getPackage_status()));
-
-
                     }
 
                     @Override
@@ -1204,6 +1210,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             FirebaseToken=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN);
         }
       //  loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
 
         BaseApp.getInstance().getDisposable().add(apiService.getFirebaseToken(userId,FirebaseToken)
@@ -1219,7 +1226,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         }else {
                             Toast.makeText(Navigation.this, response.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
                     @Override

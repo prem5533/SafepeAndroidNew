@@ -40,9 +40,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/headerbar">
 
-
-
-
         <LinearLayout
             android:layout_below="@id/headerbar"
             android:layout_width="match_parent"

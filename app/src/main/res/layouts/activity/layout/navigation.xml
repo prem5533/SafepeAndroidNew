@@ -77,16 +77,40 @@
 
                         </RelativeLayout>
 
-                        <ImageView
-                            android:layout_height="25dp"
-                            android:layout_width="20dp"
-                            android:id="@+id/notification"
-                            android:src="@drawable/bell5"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="0"
-                            android:layout_marginTop="0dp"/>
+                        <FrameLayout
+                            style="?attr/actionButtonStyle"
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:focusable="true">
+
+                            <ImageView
+                                android:layout_height="25dp"
+                                android:layout_width="20dp"
+                                android:id="@+id/notification"
+                                android:src="@drawable/bell5"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="10dp"
+                                android:layout_weight="0"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/cart_badge"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="right|end|top"
+                                android:layout_marginEnd="-5dp"
+                                android:layout_marginRight="-5dp"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center"
+                                android:padding="3dp"
+                                android:textColor="@android:color/white"
+                                android:text="0"
+                                android:textSize="10sp"
+                                android:background="@drawable/badge_count_background"/>
+
+                        </FrameLayout>
 
                     </LinearLayout>
 

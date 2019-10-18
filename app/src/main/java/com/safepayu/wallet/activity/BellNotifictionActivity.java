@@ -1,33 +1,27 @@
 package com.safepayu.wallet.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.recharge.MobileRecharge;
 import com.safepayu.wallet.adapter.NotifictionAdapter;
-import com.safepayu.wallet.adapter.OfferAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.NotificationResponse;
-import com.safepayu.wallet.models.response.RechargeHistoryResponse;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+
+import static com.safepayu.wallet.activity.Navigation.BadgeCount;
 
 public class BellNotifictionActivity extends AppCompatActivity {
 
@@ -36,17 +30,14 @@ public class BellNotifictionActivity extends AppCompatActivity {
     private LoadingDialog loadingDialog;
     private Button backBtn;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bell_notifiction);
+        BadgeCount=0;
+
         findId();
         getNotificationData();
-
-
-
     }
 
 
@@ -77,9 +68,8 @@ public class BellNotifictionActivity extends AppCompatActivity {
                         loadingDialog.hideDialog();
                         if (notificationResponse.isStatus()) {
 
-                            recylerNotifications.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, true));
+                            recylerNotifications.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
                             notifictionAdapter = new NotifictionAdapter(getApplicationContext(), notificationResponse.getData());
-                            recylerNotifications.setHasFixedSize(true);
                             recylerNotifications.setAdapter(notifictionAdapter);
                         }
                     }

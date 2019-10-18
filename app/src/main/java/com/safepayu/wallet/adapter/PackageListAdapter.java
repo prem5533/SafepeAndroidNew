@@ -15,9 +15,10 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.models.response.PackageListData;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter.PackagesListingViewHolder> {
+public class  PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter.PackagesListingViewHolder> {
     private final Context context;
     private final LayoutInflater inflater;
     private List<PackageListData.Packages> mItem;
@@ -45,13 +46,8 @@ public class PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter.
 
     public void addItem(List<PackageListData.Packages> mItem) {
         this.mItem.addAll(mItem);
+        Collections.reverse( this.mItem);
         notifyItemChanged(this.mItem.size());
-    }
-
-    public void addItem(PackageListData.Packages mItem) {
-        this.mItem.add(mItem);
-        notifyItemChanged(this.mItem.size());
-
     }
 
     public PackageListData.Packages getData(int position) {
