@@ -22,25 +22,42 @@
                 android:background="@null"
                 android:text="@string/scan_msg"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/green_theme"
                 android:textSize="18sp"
                 android:gravity="center"
                 android:layout_margin="20dp"
+                android:fontFamily="@font/roboto_regular"
                 android:id="@+id/textttttt"/>
 
-            <Button
-                android:id="@+id/getGalleryBtn_scanView"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@null"
-                android:text="Get Image From Gallery"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="18sp"
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_margin="10dp"
-                android:layout_above="@+id/numberBtn_scanView"/>
+                android:layout_above="@+id/numberBtn_scanView"
+                android:layout_marginTop="10dp"
+                >
+                <Button
+                    android:id="@+id/getGalleryBtn_scanView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@null"
+                    android:text="Get Image From Gallery"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:gravity="center"
+
+                />
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_image_add_pkg"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/numberBtn_scanView"

@@ -130,7 +130,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Safepe Payments "
+                    android:text="SafePe India Pvt. Ltd."
                     android:gravity="center"
                     android:textIsSelectable="true"
                     android:textSize="18sp"
@@ -276,7 +276,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Address: B-096, B Block, Sector 65, Noida, Uttar Pradesh 201301"
+                        android:text="B-096, B Block, Sector 65, Noida, Uttar Pradesh 201301"
                         android:textSize="14sp"
                         android:fontFamily="@font/roboto_regular"
                         android:layout_marginTop="10dp"
