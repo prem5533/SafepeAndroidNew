@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:text="Your personal SafePe ID QR"
+        android:text="Your personal SafePe ID QR "
         android:textColor="@color/black"
         android:gravity="center"
         android:padding="10dp"/>
