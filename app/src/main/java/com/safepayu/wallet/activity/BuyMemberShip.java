@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -44,6 +44,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     private PackageListData packageListData;
     private RadioGroup paymentMode;
     private CardView cardView;
+    private double FinalAmount;
     String TransactionType="0",PackageID="",PackageName="",PackageAmount;
 
     @Override
@@ -87,6 +88,8 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         ((TextView) findViewById(R.id.tv_tax)).setText(packageListData.getTax().getTaxValue() + "%");
         Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(selectedPackage.getPackageAmount(), Double.parseDouble(packageListData.getTax().getTaxValue()));
         ((TextView) findViewById(R.id.tv_totalAmountPay)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount));
+
+        FinalAmount=CalculateAmount(selectedPackage.getPackageAmount());
 
         showDialog(BuyMemberShip.this, PackageID, PackageName, String.valueOf(selectedPackage.getPackageAmount()), String.valueOf(BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount)));
     }
@@ -194,13 +197,15 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                         Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
                         intent.putExtra("TransactionType",TransactionType);
                         intent.putExtra("PackageID",PackageID);
-                        intent.putExtra("Amount",PackageAmount);
+                        intent.putExtra("PackageName",PackageName);
+                        intent.putExtra("Amount",String.valueOf(FinalAmount));
                         startActivity(intent);
                     }else if (TransactionType.equalsIgnoreCase("2")) {
                         Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
                         intent.putExtra("TransactionType",TransactionType);
                         intent.putExtra("PackageID",PackageID);
-                        intent.putExtra("Amount",PackageAmount);
+                        intent.putExtra("PackageName",PackageName);
+                        intent.putExtra("Amount",String.valueOf(FinalAmount));
                         startActivity(intent);
                     }else {
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Transfer Type", false);
@@ -255,34 +260,108 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     public void showDialog(Activity activity, final String PackageID, String PackName, String AMount, final String Amount2Pay) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.wallet_dialog_buy);
+        dialog.setContentView(R.layout.single_package_detail);
 
-        TextView PackNameTV = dialog.findViewById(R.id.packageName_WalletDialog);
-        TextView AmountTV = dialog.findViewById(R.id.packageAmount_WalletDialog);
-        TextView AmountToPayTV = dialog.findViewById(R.id.totalAmountPay_WalletDialog);
-        TextView bonusAmount = dialog.findViewById(R.id.bonusAmount_WalletDialog);
-        TextView bonuscREDIT = dialog.findViewById(R.id.bonusCredit_WalletDialog);
+//        TextView PackNameTV = dialog.findViewById(R.id.packageName_WalletDialog);
+//        TextView AmountTV = dialog.findViewById(R.id.packageAmount_WalletDialog);
+//        TextView AmountToPayTV = dialog.findViewById(R.id.totalAmountPay_WalletDialog);
+//        TextView bonusAmount = dialog.findViewById(R.id.bonusAmount_WalletDialog);
+//        TextView bonuscREDIT = dialog.findViewById(R.id.bonusCredit_WalletDialog);
+        ImageView imageView = dialog.findViewById(R.id.image_package1);
+        TextView PackNameTV = dialog.findViewById(R.id.package_detail_dialog);
 
-        try{
-            double bonusAmout=CalculateAmount((int)Float.parseFloat(PackageAmount));
-            bonuscREDIT.setText(getResources().getString(R.string.rupees)+" "+(int)bonusAmout);
-        }catch (Exception e){
-            e.printStackTrace();
+        String PromotionalText="Wallet cash back Rs 10,400.\n" +
+                "Cash back can be redeemed Rs 52 on working days.\n" +
+                "Validity 200 Days.\n" +
+                "Additional 18% GST Will be charged from the account.";
+
+        String NanoText="Wallet cash back Rs.20,800.\n" +
+                "Cash back can be redeemed\n" +
+                "Rs. 104 on working days.\n" +
+                "Validity 200 Days.\n" +
+                "Additional 18% GST Will be charged from the account.";
+
+        String ProText="Wallet cash back Rs.52,000.\n" +
+                "Cash back can be redeemed Rs.260 on working days.\n" +
+                "Validity 200 Days.\n" +
+                "Additional 18% GST Will be charged from the account.";
+
+        String SilverText="Wallet cash back Rs 1,04,000.\n" +
+                "Cash back can be redeemed Rs.520 on working days.\n" +
+                "Validity 200 Days.\n" +
+                "Additional 18% GST Will be charged from the account.";
+
+        String SilverPlusText="Wallet cash back Rs 1,56,000.\n" +
+                "Cash back can be redeemed\n" +
+                "Rs.780 on working days.\n" +
+                "Validity 200 Days.\n" +
+                "Additional 18% GST Will be charged from the account.";
+
+        String GoldText="Wallet cash back Rs 2,08,000.\n" +
+                "Cash back can be redeemed\n" +
+                "Rs.1040 on working days.\n" +
+                "Validity 200 Days.\n" +
+                "Additional 18% GST Will be charged from the account.";
+
+        String TitaniumText="Wallet cash back Rs 3,12,000 .\n" +
+                "Cash back can be redeemed\n" +
+                "Rs. 1560 on working days.\n" +
+                "Validity 200 Days.\n" +
+                "Additional 18% GST Will be charged from the account.";
+
+        String DiamondText="Wallet cash back Rs 4,16,000 .\n" +
+                "Cash back can be redeemed\n" +
+                "Rs.2080 on working days.\n" +
+                "Validity 200 Days.\n" +
+                "Additional 18% GST Will be charged from the account.";
+
+        if (PackName.equalsIgnoreCase("Promotional")){
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.promotional_package));
+            PackNameTV.setText(PromotionalText);
+        }else if (PackName.equalsIgnoreCase("Nano")){
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.nano_package));
+            PackNameTV.setText(NanoText);
+        }else if (PackName.equalsIgnoreCase("Pro")){
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.pro_package));
+            PackNameTV.setText(ProText);
+        }else if (PackName.equalsIgnoreCase("Silver")){
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.silver_package));
+            PackNameTV.setText(SilverText);
+        }else if (PackName.equalsIgnoreCase("Silver Plus")){
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.silver_plus_package));
+            PackNameTV.setText(SilverPlusText);
+        }else if (PackName.equalsIgnoreCase("Gold")){
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.gold_package));
+            PackNameTV.setText(GoldText);
+        }else if (PackName.equalsIgnoreCase("Titanium")){
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.titanium_package));
+            PackNameTV.setText(TitaniumText);
+        }else if (PackName.equalsIgnoreCase("Diamond")){
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.diamond_package));
+            PackNameTV.setText(DiamondText);
         }
 
-        try{
-            bonusAmount.setText(getResources().getString(R.string.rupees)+" "+2*(int)Float.parseFloat(PackageAmount));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
-        PackNameTV.setText(PackName);
-        AmountTV.setText(getResources().getString(R.string.rupees)+" "+AMount);
-        AmountToPayTV.setText(getResources().getString(R.string.rupees)+" "+Amount2Pay);
-
-
-        Button dialogButton = (Button) dialog.findViewById(R.id.payBtn_WalletDialog);
-        dialogButton.setVisibility(View.GONE);
+//        try{
+//            double bonusAmout=CalculateAmount((int)Float.parseFloat(PackageAmount));
+//            bonuscREDIT.setText(getResources().getString(R.string.rupees)+" "+(int)bonusAmout);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//        try{
+//            bonusAmount.setText(getResources().getString(R.string.rupees)+" "+2*(int)Float.parseFloat(PackageAmount));
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//        PackNameTV.setText(PackName);
+//        AmountTV.setText(getResources().getString(R.string.rupees)+" "+AMount);
+//        AmountToPayTV.setText(getResources().getString(R.string.rupees)+" "+Amount2Pay);
+//
+//
+//        Button dialogButton = (Button) dialog.findViewById(R.id.payBtn_WalletDialog);
+//        dialogButton.setVisibility(View.GONE);
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
@@ -293,11 +372,11 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
 
     }
 
-    private double CalculateAmount(int amount){
+    private double CalculateAmount(Double amount){
 
         double minusAmount=0.0f;
-        minusAmount=((((double) amount) / 100) * 1.04);
+        minusAmount=((( amount) / 100) * 18.00);
 
-        return minusAmount;
+        return minusAmount+amount;
     }
 }

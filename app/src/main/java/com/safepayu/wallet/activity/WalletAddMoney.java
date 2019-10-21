@@ -95,7 +95,7 @@ public class WalletAddMoney extends BaseActivity implements PackageAdapterForWal
 
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
-        if (isConnected){
+        if (!isConnected){
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addMoneyToWalletLayout),getResources().getString(R.string.internet_check),false);
         }
     }

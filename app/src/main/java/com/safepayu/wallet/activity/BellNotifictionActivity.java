@@ -1,5 +1,6 @@
 package com.safepayu.wallet.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -48,11 +49,18 @@ public class BellNotifictionActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(BellNotifictionActivity.this, Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 finish();
             }
         });
+    }
 
-
+    @Override
+    public void onBackPressed()
+    {
+        startActivity(new Intent(BellNotifictionActivity.this, Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        finish();
+        super.onBackPressed();  // optional depending on your needs
     }
 
     private void getNotificationData() {

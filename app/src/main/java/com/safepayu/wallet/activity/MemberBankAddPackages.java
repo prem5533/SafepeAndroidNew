@@ -27,6 +27,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -43,11 +47,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -57,15 +61,15 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
     private Button BackBtn,SubmitBtn;
     private TextView DateTv,ChooseImageBtn;
     private EditText tv_referencenumber,tv_amountpaid,UPIorbankaccount;
-    private Spinner BankTypeSpinner,TransferTypeSpinner;
-    private String[] TransferTypeCategories,bankcategories;
-    private  String TransferTypeText="",BankNameText="",PackageID="",TransactionType="",textBase64="", Amount="";
+    private Spinner BankTypeSpinner,TransferTypeSpinner,SpinnerWalletOption;
+    private String[] TransferTypeCategories,bankcategories,WalletOptionCategories;
+    private  String TransferTypeText="",BankNameText="",PackageID="",TransactionType="",textBase64="", Amount="",WalletOptionText="",PackageName="";
     private LoadingDialog loadingDialog;
     private boolean CheckNetConnection=false;
     private ImageView imageView;
-    private LinearLayout ImageLayout;
-    BuyPackage buyPackage;
-    LinearLayout LinearSPinnerAmount;
+    private BuyPackage buyPackage;
+    public static BuyPackage buyPackageFromDB;
+    LinearLayout LinearSPinnerAmount,walletOptionLayout,banktypeLayout,ImageLayout;
     private static final int PICK_IMAGE_CAMERA = 223;
     private static final int PICK_IMAGE_GALLERY = 623;
     private Bitmap bitmap;
@@ -91,12 +95,16 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
         imageView=findViewById(R.id.image_challan);
         ChooseImageBtn=findViewById(R.id.chooseImageBtn);
         ImageLayout=findViewById(R.id.imageLayout);
+        SpinnerWalletOption=findViewById(R.id.spinner_walletOption);
+        walletOptionLayout=findViewById(R.id.walletOptionLayout);
+        banktypeLayout=findViewById(R.id.banktypeLayout);
 
 
         try{
             TransactionType=getIntent().getStringExtra("TransactionType");
             PackageID=getIntent().getStringExtra("PackageID");
             Amount=getIntent().getStringExtra("Amount");
+            PackageName=getIntent().getStringExtra("PackageName");
             tv_amountpaid.setText(Amount);
             tv_amountpaid.setEnabled(false);
         }catch (Exception e){
@@ -111,6 +119,8 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
             TransferTypeSpinner.setVisibility(View.GONE);
             LinearSPinnerAmount.setVisibility(View.GONE);
             ImageLayout.setVisibility(View.GONE);
+            banktypeLayout.setVisibility(View.GONE);
+            walletOptionLayout.setVisibility(View.VISIBLE);
         }else {
             DateTv.setVisibility(View.VISIBLE);
             tv_referencenumber.setVisibility(View.VISIBLE);
@@ -119,6 +129,8 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
             TransferTypeSpinner.setVisibility(View.VISIBLE);
             LinearSPinnerAmount.setVisibility(View.VISIBLE);
             ImageLayout.setVisibility(View.VISIBLE);
+            banktypeLayout.setVisibility(View.VISIBLE);
+            walletOptionLayout.setVisibility(View.GONE);
         }
 
 
@@ -132,6 +144,11 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
         ArrayAdapter<String> TransferTypeSpinnerAdapter= new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,TransferTypeCategories);
         TransferTypeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         TransferTypeSpinner.setAdapter(TransferTypeSpinnerAdapter);
+
+        WalletOptionCategories = new String[]{"Select Payment From", "Wallet", "Credit/Debit Card"};
+        ArrayAdapter<String> TransferTypeWalletOptionCategories= new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,WalletOptionCategories);
+        TransferTypeWalletOptionCategories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        SpinnerWalletOption.setAdapter(TransferTypeWalletOptionCategories);
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +181,19 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 TransferTypeText=TransferTypeSpinner.getItemAtPosition(i).toString().trim();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        SpinnerWalletOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                WalletOptionText=SpinnerWalletOption.getItemAtPosition(i).toString().trim();
             }
 
             @Override
@@ -234,24 +264,51 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
 
         if (TransactionType.equalsIgnoreCase("1")){
 
-            if (BankNameText.equalsIgnoreCase("Select Bank")) {
-                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages), "Please Select Bank", false);
+            if (WalletOptionText.equalsIgnoreCase("Select Payment From")) {
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages), "Please Select Payment From", false);
             }else {
-                buyPackage.setTransaction_type(TransactionType);
-                buyPackage.setPackage_id(PackageID);
-                buyPackage.setBuy_date("");
-                buyPackage.setPayment_mode("Wallet");
-                buyPackage.setRefrence_no("");
-                buyPackage.setDocument_attached("");
-                buyPackage.setPaid_to_account(BankNameText);
-                buyPackage.setPaid_from_account("");
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                    startActivity(new Intent(MemberBankAddPackages.this, CreatePassCodeActivity.class));
-                } else {
-                    PasscodeDialog passcodeDialog = new PasscodeDialog(MemberBankAddPackages.this, MemberBankAddPackages.this, "");
-                    passcodeDialog.show();
+                if (WalletOptionText.equalsIgnoreCase("Wallet")) {
+                    buyPackage.setTransaction_type(TransactionType);
+                    buyPackage.setPackage_id(PackageID);
+                    buyPackage.setBuy_date("");
+                    buyPackage.setPayment_mode("Wallet");
+                    buyPackage.setRefrence_no("");
+                    buyPackage.setDocument_attached("");
+                    buyPackage.setPaid_to_account(BankNameText);
+                    buyPackage.setPaid_from_account("");
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+                        startActivity(new Intent(MemberBankAddPackages.this, CreatePassCodeActivity.class));
+                    } else {
+                        PasscodeDialog passcodeDialog = new PasscodeDialog(MemberBankAddPackages.this, MemberBankAddPackages.this, "");
+                        passcodeDialog.show();
+                    }
+                }else {
+                    buyPackage.setTransaction_type(TransactionType);
+                    buyPackage.setPackage_id(PackageID);
+                    buyPackage.setBuy_date("");
+                    buyPackage.setPayment_mode("Payment Gateway");
+                    buyPackage.setRefrence_no("");
+                    buyPackage.setDocument_attached("");
+                    buyPackage.setPaid_to_account(BankNameText);
+                    buyPackage.setPaid_from_account("");
+                    buyPackageFromDB=buyPackage;
+
+                    Intent intent=new Intent(MemberBankAddPackages.this,PaymentType.class);
+                    overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                    intent.putExtra("RechargePaymentId",BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
+                    intent.putExtra("Amount",tv_amountpaid.getText().toString().trim());
+                    intent.putExtra("PaymentType",PackageName);
+                    intent.putExtra("PaymentFor","Buy Package");
+                    intent.putExtra("RechargeTypeId","0");
+                    intent.putExtra("OperatorCode","");
+                    intent.putExtra("CircleCode","0");
+                    intent.putExtra("OperatorId","");
+                    startActivity(intent);
+                    finish();
                 }
+
             }
+
         }else {
             if (TextUtils.isEmpty(DateText)){
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages), "Please Select Date", false);
@@ -314,13 +371,22 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                     @Override
                     public void onSuccess(BuyPackageResponse response) {
                         loadingDialog.hideDialog();
+
+                        String currentDate = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(new Date());
+                        Intent intentStatus=new Intent(MemberBankAddPackages.this,PaidOrderActivity.class);
                         if (response.isStatus()) {
-                            Toast.makeText(MemberBankAddPackages.this, response.getMessage(), Toast.LENGTH_SHORT).show();
-                            finish();
+                            intentStatus.putExtra("status","success");
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages),response.getMessage(),false);
+                            intentStatus.putExtra("status","failed");
+                            Toast.makeText(MemberBankAddPackages.this, response.getMessage(), Toast.LENGTH_LONG).show();
 
                         }
+                        intentStatus.putExtra("txnid","");
+                        intentStatus.putExtra("Amount",Amount);
+                        intentStatus.putExtra("date",currentDate);
+                        intentStatus.putExtra("productinfo","Buy Package "+PackageName);
+                        startActivity(intentStatus);
+                        finish();
                     }
 
                     @Override

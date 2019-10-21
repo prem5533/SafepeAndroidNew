@@ -283,9 +283,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/card_total_bg"
                         android:paddingHorizontal="8dp"
-                        android:paddingVertical="20dp"
-
-                        >
+                        android:paddingVertical="20dp">
 
                         <TextView
                             android:layout_width="wrap_content"

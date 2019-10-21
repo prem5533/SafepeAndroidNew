@@ -63,8 +63,9 @@ public class ReferAndEarn extends BaseActivity implements View.OnClickListener {
         inviteFriends_btn.setOnClickListener(this);
         BackBtn.setOnClickListener(this);
 
-        shareMessage="Checkout this amazing app for Recharges, Bill payments and UPI transfer. Use this code "+strReferalcode+" to signup and get rewards. Share this app to make money. Just download SafePe from https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en ";
-
+        shareMessage="Checkout this Amazing App for Recharges, Bill payments And UPI Transfer. Use this Code "+strReferalcode+" to Sign Up And Get Rewards. Share this App to Make Money.And Long Life Opportunity. \n" +
+                "Just Download SafePe Payment App from https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en\n" +
+                "Referral Code- "+strReferalcode;
     }
 
     @Override

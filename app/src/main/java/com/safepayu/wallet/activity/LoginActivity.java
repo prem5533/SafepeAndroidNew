@@ -310,34 +310,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
                             CheckStatusCode(response);
 
-
-//                             switch (response.getStatusCode()) {
-//                                case 0:
-//                                    SaveLoginDetails(response);
-//                                    startActivity(new Intent(LoginActivity.this,Navigation.class));
-//                                    finish();
-//                                    break;
-//                                case 1:
-//                                    BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false);
-//                                    break;
-//                                case 2:
-//                                    BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false, getResources().getString(R.string.verify), ButtonActions.VERIFY_MOBILE, LoginActivity.this);
-//                                    break;
-//                                case 3:
-//                                    SaveLoginDetails(response);
-//                                    Toast.makeText(LoginActivity.this, "Please First Set Passcode", Toast.LENGTH_SHORT).show();
-//                                    startActivity(new Intent(LoginActivity.this, CreatePassCodeActivity.class));
-//                                    break;
-//                                case 4:
-//                                    SaveLoginDetails(response);
-//                                    Toast.makeText(LoginActivity.this, "Please First Set Address", Toast.LENGTH_SHORT).show();
-//                                    startActivity(new Intent(LoginActivity.this, AddUpdateAddress.class));
-//                                    break;
-//                                case 5:
-//
-//                                    showDialogForEmail(LoginActivity.this);
-//                                    break;
-//                             }
                         }else {
                             String message="";
 

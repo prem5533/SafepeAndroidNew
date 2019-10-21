@@ -13,10 +13,12 @@
     android:gravity="center">
 
     <ImageView
+        android:id="@+id/image_package"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/silver_plus"
-        android:layout_margin="20dp"/>
+        android:src="@drawable/demooo1"
+        android:layout_margin="20dp"
+        android:scaleType="fitXY"/>
 
     <LinearLayout
         android:layout_width="match_parent"

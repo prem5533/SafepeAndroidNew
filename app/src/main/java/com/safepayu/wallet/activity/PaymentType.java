@@ -26,6 +26,7 @@ import com.safepayu.wallet.models.request.HashKeyRequest;
 import com.safepayu.wallet.models.request.RechargeRequest;
 import com.safepayu.wallet.models.request.SendPaymentGatewayDetailsRequest;
 import com.safepayu.wallet.models.response.BaseResponse;
+import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.models.response.HashKeyResponse;
 import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
@@ -35,8 +36,10 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import datamodels.StaticDataModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -45,6 +48,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.safepayu.wallet.activity.MemberBankAddPackages.buyPackageFromDB;
 
 public class PaymentType extends BaseActivity implements PasscodeClickListener {
 
@@ -464,6 +468,8 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                         e.printStackTrace();
                     }
 
+                } else if (PaymentFor.equalsIgnoreCase("Buy Package")){
+                    BuyPackageMethod(txnid);
                 } else {
 
                     RechargeRequest rechargeRequest = new RechargeRequest();
@@ -497,14 +503,15 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
 
             saveTransactionDetails(sendPaymentGatewayDetailsRequest);
         }else {
-            intentStatus.putExtra("status","failed");
+
             try{
+                intentStatus.putExtra("status","failed");
                 intentStatus.putExtra("txnid",txnid);
                 intentStatus.putExtra("Amount",Amount);
                 intentStatus.putExtra("date",date);
                 intentStatus.putExtra("productinfo",productinfo);
-                //startActivity(intentStatus);
-                //finish();
+                startActivity(intentStatus);
+                finish();
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -517,21 +524,66 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
     public void onPasscodeMatch(boolean isPasscodeMatched) {
 
         if (isPasscodeMatched){
-            RechargeRequest rechargeRequest=new RechargeRequest();
-            rechargeRequest.setAmount(Amount);
-            rechargeRequest.setCircle_code(CircleCode);
-            rechargeRequest.setNumber(RechargePaymentId);
-            rechargeRequest.setOperator_code(OperatorCode);
-            rechargeRequest.setRecharge_type(RechargeTypeId);
-            rechargeRequest.setOperator_id(OperatorId);
-            rechargeRequest.setTransaction_id("");
-            rechargeRequest.setPayment_mode("wallet");
-            rechargeRequest.setNumber_type("");
+            if (PaymentFor.equalsIgnoreCase("Buy Package")){
+                BuyPackageMethod("");
+            }else {
+                RechargeRequest rechargeRequest=new RechargeRequest();
+                rechargeRequest.setAmount(Amount);
+                rechargeRequest.setCircle_code(CircleCode);
+                rechargeRequest.setNumber(RechargePaymentId);
+                rechargeRequest.setOperator_code(OperatorCode);
+                rechargeRequest.setRecharge_type(RechargeTypeId);
+                rechargeRequest.setOperator_id(OperatorId);
+                rechargeRequest.setTransaction_id("");
+                rechargeRequest.setPayment_mode("wallet");
+                rechargeRequest.setNumber_type("");
 
-            doRecharge(rechargeRequest);
+                doRecharge(rechargeRequest);
+            }
+
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Invalid Passcode",false);
         }
+
+    }
+
+    private void BuyPackageMethod(final String txnid){
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.buyPackage(buyPackageFromDB)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BuyPackageResponse>() {
+                    @Override
+                    public void onSuccess(BuyPackageResponse response) {
+                        loadingDialog.hideDialog();
+                        String currentDate = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(new Date());
+                        Intent intentStatus=new Intent(PaymentType.this,PaidOrderActivity.class);
+                        if (response.isStatus()) {
+                            intentStatus.putExtra("status","success");
+                        }else {
+                            intentStatus.putExtra("status","failed");
+                            Toast.makeText(PaymentType.this, response.getMessage(), Toast.LENGTH_LONG).show();
+
+                        }
+                        intentStatus.putExtra("txnid",txnid);
+                        intentStatus.putExtra("Amount",Amount);
+                        intentStatus.putExtra("date",currentDate);
+                        intentStatus.putExtra("productinfo",PaymentFor+" "+PaymentTypeText);
+                        startActivity(intentStatus);
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.paymentLayout), true, e);
+                    }
+                }));
 
     }
 }

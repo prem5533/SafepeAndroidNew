@@ -2,6 +2,7 @@ package com.safepayu.wallet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -87,9 +88,14 @@ public class PaidOrderActivity extends AppCompatActivity {
         }
 
         StatusTV.setText(status);
-        TxnIdTV.setText("Txn ID: "+txnid);
         AmountTV.setText(Amount);
         DateTV.setText(date);
         ProductInfoTV.setText(productinfo);
+
+        if (TextUtils.isEmpty(txnid)){
+            TxnIdTV.setVisibility(View.GONE);
+        }else {
+            TxnIdTV.setText("Txn ID: "+txnid);
+        }
     }
 }

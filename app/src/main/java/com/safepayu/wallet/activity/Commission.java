@@ -60,6 +60,15 @@ public class Commission extends BaseActivity {
             }
         });
 
+        GetMemberShipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), BuyMemberShip.class));
+                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                finish();
+            }
+        });
+
         if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
             GetMemberShipBtn.setVisibility(View.VISIBLE);
             SendWallet.setVisibility(View.GONE);
@@ -127,9 +136,10 @@ public class Commission extends BaseActivity {
                             CommBalanceTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotcurrentcommwallet());
                             LeftBussTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotleftbusiness());
                             RightBussTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotrightbusiness());
+
                             TotalBussTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotincome());
-                            SponserBussTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotdirectbusiness());
-                            MatchingBussTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotmatchtbusiness());
+                            SponserBussTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotdirectincome());
+                            MatchingBussTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotbinaryincome());
 
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout), response.getMessage(), false);
