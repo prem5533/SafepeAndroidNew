@@ -1,8 +1,11 @@
 package com.safepayu.wallet.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -105,6 +108,35 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
                 // TODO Auto-generated method stub
             }
         });
+
+        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
+
+            SendToWalletBtn.setVisibility(View.GONE);
+
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Goto Your Profile and Verify Your Email First",true);
+        }else {
+
+            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+                SendToWalletBtn.setVisibility(View.GONE);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle(Html.fromHtml("<font color='#3db7c2'>Commission</font>"));
+                alertDialogBuilder
+                        .setMessage("Please Buy Membership To Enjoy App's Features")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                alertDialog.show();
+            } else {
+
+                SendToWalletBtn.setVisibility(View.VISIBLE);
+            }
+        }
 
     }
 

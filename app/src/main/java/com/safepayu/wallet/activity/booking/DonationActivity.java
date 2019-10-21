@@ -9,34 +9,37 @@ import com.safepayu.wallet.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class HotelActivity extends AppCompatActivity implements View.OnClickListener {
+public class DonationActivity extends AppCompatActivity  implements View.OnClickListener {
 
-    private Button searhHotelBtn,backBtn;
-
+    private Button ProceedBtn,BackBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hotel);
+        setContentView(R.layout.activity_donation);
         findId();
     }
 
     private void findId() {
-        backBtn = findViewById(R.id.recharge_back_btn);
-        searhHotelBtn = findViewById( R.id.search_hotel_btn);
+        BackBtn = findViewById(R.id.donation_back_btn);
+        ProceedBtn = findViewById( R.id.proceed_btn);
 
-        //set listener
-        backBtn.setOnClickListener(this);
-        searhHotelBtn.setOnClickListener(this);
+        //Set Listenere
+        BackBtn.setOnClickListener(this);
+        ProceedBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.recharge_back_btn:
+            case R.id.donation_back_btn:
                 overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
                 finish();
                 break;
-            case R.id.search_hotel_btn:
+
+            case R.id.tv_metro_type:
+                break;
+            case R. id.proceed_btn:
+
                 CheckValidate();
                 break;
         }
@@ -45,7 +48,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
 
     private void CheckValidate() {
 
-        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_hotel),"Coming Soon",false);
+        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_donation),"Coming Soon",false);
     }
-
 }
+
