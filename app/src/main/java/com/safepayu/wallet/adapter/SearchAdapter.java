@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
@@ -38,7 +37,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     @Override
     public SearchAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.packages_item_view, parent, false);
+                .inflate(R.layout.search_item_view, parent, false);
 
         return new SearchAdapter.MyViewHolder(itemView);
     }
@@ -56,15 +55,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final TextView SearchName, packageAmount;
-        CardView cardView;
+        private final TextView SearchName;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            SearchName = itemView.findViewById(R.id.tv_packageName);
-            packageAmount = itemView.findViewById(R.id.tv_packageAmount);
-            cardView = itemView.findViewById(R.id.packageItem);
+            SearchName = itemView.findViewById(R.id.tv_searchName);;
 
             itemView.setOnClickListener(this);
         }

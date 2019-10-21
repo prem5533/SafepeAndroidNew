@@ -54,7 +54,7 @@
                         <RelativeLayout
                             android:layout_height="40dp"
                             android:layout_width="match_parent"
-                            android:id="@+id/icon"
+                            android:id="@+id/searchLayout_nav"
                             android:background="@drawable/main_topbar_background"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"

@@ -306,7 +306,7 @@
                         android:id="@+id/tv_genelogy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Genelogy"
+                        android:text="Genealogy"
                         android:textSize="15sp"
                         android:textColor="@color/black"
                         android:layout_marginLeft="20dp"

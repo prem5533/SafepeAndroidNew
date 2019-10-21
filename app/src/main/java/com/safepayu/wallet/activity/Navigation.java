@@ -25,6 +25,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.BusActivity;
 import com.safepayu.wallet.activity.booking.FlightsActivity;
+import com.safepayu.wallet.activity.booking.HotelActivity;
 import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.TrainActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
@@ -90,6 +92,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     Dialog dialog;
     TextView TitleNotiDialog,ContentNotiDialog;
     ImageView ImageViewNotiDialog;
+    private RelativeLayout searchLayout_nav;
     public static String TitleNotiDialogText="",ContentNotiDialogText="";
     public static Bitmap ImageNotiDialog;
 
@@ -162,6 +165,14 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
         dialog.getWindow().setAttributes(lp);
         dialog.show();
+
+        searchLayout_nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+            }
+        });
     }
 
     @Override
@@ -170,7 +181,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     }
 
     private void setupNavigation() {
-
+        searchLayout_nav=findViewById(R.id.searchLayout_nav);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         notification_icon = findViewById(R.id.notification);
@@ -527,7 +538,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_hotel:
-                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Navigation.this, HotelActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_donation:
                 Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();

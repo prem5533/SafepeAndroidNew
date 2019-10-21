@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.safepayu.wallet">
-
+    <!-- The API key for Google Maps-based APIs. -->
     <application
         android:name=".BaseApp"
         android:allowBackup="true"
@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.BellNotifictionActivity"></activity>
+        <activity android:name=".activity.booking.HotelActivity"></activity>
+        <activity android:name=".activity.BellNotifictionActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -24,8 +25,7 @@
         -->
         <activity
             android:name=".activity.MapsActivity"
-            android:label="@string/title_activity_maps" />
-<!--        <activity android:name=".MapActivity" />-->
+            android:label="@string/title_activity_maps" /> <!-- <activity android:name=".MapActivity" /> -->
         <activity android:name=".activity.booking.TrainActivity" />
         <activity android:name=".activity.booking.BusActivity" />
         <activity android:name=".activity.booking.FlightsActivity" />
@@ -109,7 +109,7 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-    </application> <!-- The API key for Google Maps-based APIs. -->
+    </application>
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
@@ -126,13 +126,9 @@
         android:name="android.permission.CAMERA"
         tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
     <uses-permission android:name="android.hardware.camera" />
-
     <uses-permission android:name="android.hardware.camera.autofocus" />
-    <uses-permission
-    android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>
