@@ -1,5 +1,6 @@
 package com.safepayu.wallet.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +11,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -26,9 +29,12 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
+import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
 import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
+import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
 
@@ -48,7 +54,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
     private Spinner BankBenSpinner;
     private EditText AmountED;
     private RadioGroup radioGroup;
-    private String Mode="",BenID="";
+    private String Mode="",BenID="",Mobile="";;
     private LoadingDialog loadingDialog;
     private boolean CheckNet=false;
     Dialog dialogStatus;
@@ -59,13 +65,23 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
     ArrayList<String> NameList,IdList,BenIdList;
     private static int SPLASH_TIME_OUT = 59000;
 
+    //Otp Dialog
+    TextView TimerTV;
+    EditText OtpED;
+    Button continueButton, resendButton;
+    private ImageView im_cross;
+
+    private ApiService apiService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, false);
 
         loadingDialog = new LoadingDialog(this);
-
+        Mobile=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
+        apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+        
         AddBankBenBtn=findViewById(R.id.BankBenAddBtn);
         BackBtn=findViewById(R.id.send_back_btn);
         WithdrawAmountlayout=findViewById(R.id.withdrawAmountlayout);
@@ -197,12 +213,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
                         transferWalletToBankRequest.setBeneId(BenID);
                         transferWalletToBankRequestDate=transferWalletToBankRequest;
 
-                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                            startActivity(new Intent(SendMoney.this,CreatePassCodeActivity.class));
-                        } else {
-                            PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoney.this, SendMoney.this, "");
-                            passcodeDialog.show();
-                        }
+                        resendOtp();
                     }
 
                 }else {
@@ -298,7 +309,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
                     public void onError(Throwable e) {
                         Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.buy_packageId), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
                     }
                 }));
 
@@ -322,37 +333,6 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         }
     }
 
-    private void ShowStatus(final TransferWalletToBankResponse response){
-        final Intent intentStatus=new Intent(SendMoney.this,PaidOrderActivity.class);
-
-        /*
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // This method will be executed once the timer is over
-                // Start your app main activity
-
-                // close this activity
-                if (response.getStatusCode()==1){
-                    intentStatus.putExtra("status","success");
-                }else if (response.getStatusCode()==2){
-                    Toast.makeText(SendMoney.this, response.getMessage(), Toast.LENGTH_SHORT).show();
-                    intentStatus.putExtra("status","pending");
-                }else {
-                    Toast.makeText(SendMoney.this, response.getMessage(), Toast.LENGTH_SHORT).show();
-                    intentStatus.putExtra("status","failed");
-                }
-                intentStatus.putExtra("txnid",response.getTransaction());
-                intentStatus.putExtra("Amount",AmountED.getText().toString().trim());
-                intentStatus.putExtra("date","");
-                intentStatus.putExtra("productinfo","Wallet To Bank Transaction");
-                startActivity(intentStatus);
-                finish();
-
-            }
-        }, SPLASH_TIME_OUT);  */
-    }
-
     private void ShowPending(TransferWalletToBankResponse response){
         TextView tvNeedHelp,StatusTV,DateTV,TxnIdTV,AmountTV,ProductInfoTV;
 
@@ -370,7 +350,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
 
         DateTV.setText(response.getDate());
         TxnIdTV.setText(response.getTransactionId());
-        AmountTV.setText(getResources().getString(R.string.rupees)+" "+AmountED.getText().toString());
+        AmountTV.setText(AmountED.getText().toString());
         ProductInfoTV.setText("Transfer Wallet To Bank");
 
         countDownTimer.start();
@@ -394,7 +374,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
             if (responseData.getStatusCode()==1){
                 intentStatus.putExtra("status","success");
             }else if (responseData.getStatusCode()==2){
-                Toast.makeText(SendMoney.this, responseData.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(SendMoney.this, responseData.getMessage(), Toast.LENGTH_SHORT).show();
                 intentStatus.putExtra("status","success");
                 //change status to pending on bank issue resolved
             }else {
@@ -417,7 +397,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         if (isPasscodeMatched){
             WithAmountMethod(transferWalletToBankRequestDate);
         }else {
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId),"Invalid Passcode",false);
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Invalid Passcode",false);
         }
 
     }
@@ -437,5 +417,134 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         }
 
         return totalAmount;
+    }
+
+    private void resendOtp() {
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        Login request = new Login(Mobile, null);
+
+        BaseApp.getInstance().getDisposable().add(apiService.resendOtp(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.getStatus()) {
+                            countDownTimerOtp.start();
+                            showDialog(SendMoney.this);
+
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), response.getMessage(), false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
+                    }
+                }));
+    }
+
+    private void verifyOtp(String otp) {
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        Login request = new Login(Mobile, null);
+        request.setOtp(otp);
+        BaseApp.getInstance().getDisposable().add(apiService.verifyOTP(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<UserResponse>() {
+                    @Override
+                    public void onSuccess(UserResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.getStatus()) {
+                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+                                startActivity(new Intent(SendMoney.this,CreatePassCodeActivity.class));
+                            } else {
+                                PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoney.this, SendMoney.this, "");
+                                passcodeDialog.show();
+                            }
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), response.getMessage(), false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
+                    }
+                }));
+    }
+
+    CountDownTimer countDownTimerOtp = new CountDownTimer(4*60000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            int seconds = (int) (millisUntilFinished / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+            TimerTV.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        }
+
+        @Override
+        public void onFinish() {
+            resendButton.setVisibility(View.VISIBLE);
+            TimerTV.setVisibility(View.INVISIBLE);
+        }
+    };
+
+    public void showDialog(Activity activity) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.otp_dialog);
+
+        TimerTV = dialog.findViewById(R.id.timerLogin);
+        OtpED = dialog.findViewById(R.id.enter_otpLogin);
+        im_cross = dialog.findViewById(R.id.im_cross);
+
+        im_cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        continueButton = (Button) dialog.findViewById(R.id.continue_otpLogin);
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (TextUtils.isEmpty(OtpED.getText().toString().trim())) {
+                    OtpED.setError("Please Enter Otp");
+                    //BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout),"Please Enter Otp",false);
+                } else {
+                    verifyOtp(OtpED.getText().toString().trim());
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        resendButton = (Button) dialog.findViewById(R.id.resend_otpLogin);
+        resendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resendOtp();
+                dialog.dismiss();
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
     }
 }

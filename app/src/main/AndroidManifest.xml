@@ -61,6 +61,7 @@
         <activity android:name=".activity.PackageDetails" />
         <activity android:name=".activity.ContactUs" />
         <activity android:name=".activity.ReferAndEarn" />
+        <activity android:name=".activity.SearchActivity" />
         <activity android:name=".ChangePasscode" />
         <activity
             android:name=".activity.ForgotPasscode"
