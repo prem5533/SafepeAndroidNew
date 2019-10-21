@@ -12,8 +12,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -26,6 +24,7 @@ import com.safepayu.wallet.models.response.PackageListData;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -95,7 +94,7 @@ public class WalletAddMoney extends BaseActivity implements PackageAdapterForWal
 
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
-        if (isConnected){
+        if (!isConnected){
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addMoneyToWalletLayout),getResources().getString(R.string.internet_check),false);
         }
     }

@@ -82,9 +82,15 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     String versionName="",FirebaseToken,appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
     private int versionCode=0;
     private LoadingDialog loadingDialog;
-    private LinearLayout liMetro,liFlight, liBusTicket,liTrainTicket, liHotles,liDonation,liToll, liFlood;
+    private LinearLayout liMetro,liFlight, liBusTicket,liTrainTicket, liHotles,liDonation,liToll, liFlood,liCredit,liInsurance,limovie,liGoogleplay,lihotel,
+    liBigBazaar,liBrandFactory, liKFC, liDominos;
     public static int BadgeCount=0;
     public static TextView BadgeCountTV;
+    Dialog dialog;
+    TextView TitleNotiDialog,ContentNotiDialog;
+    ImageView ImageViewNotiDialog;
+    public static String TitleNotiDialogText="",ContentNotiDialogText="";
+    public static Bitmap ImageNotiDialog;
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet,liShopping,liChnangePasswlrd,liMyOrders,liHistory,liGenelogy,
@@ -141,6 +147,20 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 }
             }
         });
+
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.notification_dialog);
+        TitleNotiDialog=dialog.findViewById(R.id.title_notificationDialog);
+        ContentNotiDialog=dialog.findViewById(R.id.content_notificationDialog);
+        ImageViewNotiDialog=dialog.findViewById(R.id.image_notificationDialog);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
     }
 
     @Override
@@ -201,6 +221,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liContactUs = findViewById(R.id.li_contact_us);
         liLogout = findViewById(R.id.li_logout);
         liWalletHistory = findViewById(R.id.li_historyWallet);
+        liGoogleplay = findViewById(R.id.layout_googleplay);
+
+
 
         tv_home = findViewById(R.id.tv_home);
         tvProfile = findViewById(R.id.tv_profile);
@@ -228,6 +251,15 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liDonation = findViewById(R.id.layout_donation);
         liToll = findViewById(R.id.layout_toll);
         liFlood = findViewById(R.id.layout_flood);
+        liCredit = findViewById(R.id.credit_layout);
+        liInsurance = findViewById(R.id.layout_insurance);
+        limovie = findViewById(R.id.layout_movie);
+        lihotel = findViewById(R.id.layout_hotel);
+        liBigBazaar = findViewById(R.id.layout_big_bazar);
+        liBrandFactory = findViewById(R.id.layout_brand_factory);
+        liKFC = findViewById(R.id.layout_kfc);
+        liDominos = findViewById(R.id.layout_dominos);
+
 
         //********************set listener&*****************
         liHome.setOnClickListener(this);
@@ -246,12 +278,23 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liContactUs.setOnClickListener(this);
         liLogout.setOnClickListener(this);
         liWalletHistory.setOnClickListener(this);
+        liInsurance.setOnClickListener(this);
+        limovie.setOnClickListener(this);
+        liGoogleplay.setOnClickListener(this);
+        lihotel.setOnClickListener(this);
+        liDominos.setOnClickListener(this);
+        liKFC.setOnClickListener(this);
+        liBrandFactory.setOnClickListener(this);
+        liBigBazaar.setOnClickListener(this);
+
 
       //  addMoney.setOnClickListener(this);
       //  sendMoney.setOnClickListener(this);
         recharge.setOnClickListener(this);
         payBill.setOnClickListener(this);
         dth.setOnClickListener(this);
+        liCredit.setOnClickListener(this);
+
       //  payShop.setOnClickListener(this);
        // sendToBank.setOnClickListener(this);
         layout_broadband.setOnClickListener(this);
@@ -268,6 +311,10 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liDonation.setOnClickListener(this);
         liToll.setOnClickListener(this);
         liFlood.setOnClickListener(this);
+        liBigBazaar.setOnClickListener(this);
+        liKFC.setOnClickListener(this);
+        liBrandFactory.setOnClickListener(this);
+        liBigBazaar.setOnClickListener(this);
 
         notification_icon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -407,8 +454,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        drawer.closeDrawer(GravityCompat.START);
 
-
-
         return false;
     }
 
@@ -466,6 +511,47 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 startActivity(new Intent(Navigation.this, TrainActivity.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
+            case R.id.credit_layout:
+               Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.layout_insurance:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_movie:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.layout_googleplay:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_hotel:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_donation:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_toll:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_flood:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+                case R.id.layout_big_bazar:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_brand_factory:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_kfc:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_dominos:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+
+
+
 
             case R.id.li_home:
                 tv_home.setTextColor(getResources().getColor(R.color.bue_A800));
@@ -1166,9 +1252,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
-        if (isConnected){
-
-        }else {
+        if (!isConnected){
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.drawer_layout),"No Internet Connection!",false);
         }
     }
@@ -1182,16 +1266,21 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 .subscribeWith(new DisposableSingleObserver<UserDetailResponse>() {
                     @Override
                     public void onSuccess(UserDetailResponse response) {
-                        BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
 
-                        //BaseApp.getInstance().toastHelper().log(HomeActivity.class, BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER));
-                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED, String.valueOf(response.getUser().getEmail_verified()));
-                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE, String.valueOf(response.getUser().getPasscode()));
-                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_EMAIL,response.getUser().getEmail());
-                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME,response.getUser().getFirst_name());
-                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME,response.getUser().getLast_name());
-                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED,String.valueOf(response.getUser().getBlocked()));
-                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED,String.valueOf(response.getUser().getPackage_status()));
+                        if (response.getUser().getStatus()==0){
+                            showDialogBlocked(Navigation.this);
+                        }else {
+                            BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
+
+                            //BaseApp.getInstance().toastHelper().log(HomeActivity.class, BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED, String.valueOf(response.getUser().getEmail_verified()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE, String.valueOf(response.getUser().getPasscode()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_EMAIL,response.getUser().getEmail());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME,response.getUser().getFirst_name());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME,response.getUser().getLast_name());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED,String.valueOf(response.getUser().getBlocked()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED,String.valueOf(response.getUser().getPackage_status()));
+                        }
                     }
 
                     @Override
@@ -1201,6 +1290,23 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, true, e);
                     }
                 }));
+    }
+
+    public void showDialogBlocked(Activity activity) {
+        new AlertDialog.Builder(activity)
+                .setTitle("SafePe Alert")
+                .setMessage("You are blocked. Please Contact Customer Support Immediately.")
+                .setCancelable(false)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                //.setPositiveButton(android.R.string.yes, null)
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setIcon(getResources().getDrawable(R.drawable.icon_old100))
+                .show();
+
     }
 
     private void getFirebaseToken(String userId) {

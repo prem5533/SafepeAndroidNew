@@ -23,9 +23,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -46,6 +43,8 @@ import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -310,34 +309,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
                             CheckStatusCode(response);
 
-
-//                             switch (response.getStatusCode()) {
-//                                case 0:
-//                                    SaveLoginDetails(response);
-//                                    startActivity(new Intent(LoginActivity.this,Navigation.class));
-//                                    finish();
-//                                    break;
-//                                case 1:
-//                                    BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false);
-//                                    break;
-//                                case 2:
-//                                    BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false, getResources().getString(R.string.verify), ButtonActions.VERIFY_MOBILE, LoginActivity.this);
-//                                    break;
-//                                case 3:
-//                                    SaveLoginDetails(response);
-//                                    Toast.makeText(LoginActivity.this, "Please First Set Passcode", Toast.LENGTH_SHORT).show();
-//                                    startActivity(new Intent(LoginActivity.this, CreatePassCodeActivity.class));
-//                                    break;
-//                                case 4:
-//                                    SaveLoginDetails(response);
-//                                    Toast.makeText(LoginActivity.this, "Please First Set Address", Toast.LENGTH_SHORT).show();
-//                                    startActivity(new Intent(LoginActivity.this, AddUpdateAddress.class));
-//                                    break;
-//                                case 5:
-//
-//                                    showDialogForEmail(LoginActivity.this);
-//                                    break;
-//                             }
                         }else {
                             String message="";
 

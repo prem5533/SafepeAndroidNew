@@ -2,11 +2,14 @@ package com.safepayu.wallet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.safepayu.wallet.BaseActivity;
@@ -18,6 +21,10 @@ import com.safepayu.wallet.models.response.CommissionWalletTransferResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -27,6 +34,7 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
     Button SendToWalletBtn,BackBtn;
     private EditText AmountED;
     private int Amount = 0;
+    private TextView AmountTotalTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,7 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
         SendToWalletBtn=findViewById(R.id.sendToWalletBtn);
         BackBtn=findViewById(R.id.backBtn_transferCommission);
         AmountED = findViewById(R.id.withdrawAmount_commWallet);
+        AmountTotalTV= findViewById(R.id.calculatedamount);
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +76,33 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commisionToWallet), "Please Enter Amount", false);
                     }
                 }
+            }
+        });
+
+        AmountED.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+                if (s.length()>1 || s.length()==1){
+                    double amt=CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()));
+                    String text = getResources().getString(R.string.rupees)+" "+AmountED.getText().toString().trim()+" - Admin Charge = ";
+                    AmountTotalTV.setText(text+getResources().getString(R.string.rupees)+" "+String.format("%.2f", amt));
+                }else {
+                    AmountTotalTV.setText(getResources().getString(R.string.rupees)+" "+"0.0");
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                // TODO Auto-generated method stub
             }
         });
 
@@ -103,10 +139,18 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
                             //BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commisionToWallet), response.getMessage(), false);
                         }
 
-                        intentStatus.putExtra("txnid",response.getUtrId());
+                        if (response.getMessage().contains("Insufficient Balance.") || response.getMessage().equalsIgnoreCase("Insufficient Balance.")){
+
+                            String currentDate = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(new Date());
+                            intentStatus.putExtra("date",currentDate);
+                            intentStatus.putExtra("txnid","");
+                            intentStatus.putExtra("productinfo","Insufficient Balance In Commission Wallet");
+                        }else {
+                            intentStatus.putExtra("date",response.getDate());
+                            intentStatus.putExtra("txnid",response.getUtrId());
+                            intentStatus.putExtra("productinfo","Commission Wallet To Main Wallet Transaction");
+                        }
                         intentStatus.putExtra("Amount",AmountED.getText().toString().trim());
-                        intentStatus.putExtra("date",response.getDate());
-                        intentStatus.putExtra("productinfo","Commission Wallet To Main Wallet Transaction");
                         startActivity(intentStatus);
                         finish();
                     }
@@ -128,5 +172,22 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commisionToWallet), "Invalid Passcode", false);
         }
 
+    }
+
+    private double CalculateAmount(int amount){
+
+        double totalAmount=0.0f,minusAmount=0.0f;
+        int checkAmount=0;
+
+        minusAmount=((((double) amount) / 100) * 10.00);
+        totalAmount=(double)amount- minusAmount;
+        checkAmount=(int)minusAmount;
+        if (checkAmount>9){
+
+        }else {
+            totalAmount=(double)amount-(double)10;
+        }
+
+        return totalAmount;
     }
 }

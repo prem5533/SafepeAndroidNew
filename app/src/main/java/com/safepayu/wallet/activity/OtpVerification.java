@@ -13,8 +13,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -27,6 +25,7 @@ import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -58,11 +57,10 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
         resendAgainLayout = findViewById(R.id.layout_resendAgainLayout);
 
         try{
-            mobileNo.setText("+91 " + BaseApp.getInstance().commonUtils().hideCharacter(getIntent().getStringExtra(Config.MOBILE_NO), "X", 7));
+            mobileNo.setText("+91 " + BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
         }catch (Exception e){
             e.printStackTrace();
         }
-
 
         findViewById(R.id.btn_verify).setOnClickListener(this);
         findViewById(R.id.btn_resendOtp).setOnClickListener(this);
@@ -157,7 +155,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
 
     private void resendOtp() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-        Login request = new Login(getIntent().getStringExtra(Config.MOBILE_NO), null);
+        Login request = new Login(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE), null);
 
         BaseApp.getInstance().getDisposable().add(apiService.resendOtp(request)
                 .subscribeOn(Schedulers.io())

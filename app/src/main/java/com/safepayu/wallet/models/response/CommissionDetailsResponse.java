@@ -2,18 +2,20 @@ package com.safepayu.wallet.models.response;
 
 public class CommissionDetailsResponse {
 
+
     /**
      * status : true
      * message : Commission Business Details
-     * totleftbusiness : 0
-     * totrightbusiness : 0
-     * totmatchtbusiness : 0
-     * totdirectbusiness : 0
+     * totleftbusiness : 365000
+     * totrightbusiness : 3695000
+     * totmatchtbusiness : 365000
+     * totdirectbusiness : 60000
      * totmatchincome : 0
-     * totdirectincome : 0
-     * totincome : 0
-     * totwithdrawwallet : 100
-     * totcurrentcommwallet : 0
+     * totbinaryincome : 900.00
+     * totdirectincome : 6000.00
+     * totincome : 6900
+     * totwithdrawwallet : 4370
+     * totcurrentcommwallet : 342830
      */
 
     private boolean status;
@@ -23,7 +25,8 @@ public class CommissionDetailsResponse {
     private int totmatchtbusiness;
     private int totdirectbusiness;
     private int totmatchincome;
-    private int totdirectincome;
+    private String totbinaryincome;
+    private String totdirectincome;
     private int totincome;
     private int totwithdrawwallet;
     private int totcurrentcommwallet;
@@ -84,11 +87,19 @@ public class CommissionDetailsResponse {
         this.totmatchincome = totmatchincome;
     }
 
-    public int getTotdirectincome() {
+    public String getTotbinaryincome() {
+        return totbinaryincome;
+    }
+
+    public void setTotbinaryincome(String totbinaryincome) {
+        this.totbinaryincome = totbinaryincome;
+    }
+
+    public String getTotdirectincome() {
         return totdirectincome;
     }
 
-    public void setTotdirectincome(int totdirectincome) {
+    public void setTotdirectincome(String totdirectincome) {
         this.totdirectincome = totdirectincome;
     }
 

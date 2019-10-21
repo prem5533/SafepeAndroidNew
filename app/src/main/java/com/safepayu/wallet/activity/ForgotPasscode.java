@@ -13,8 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
@@ -27,6 +25,7 @@ import com.safepayu.wallet.models.response.UserResponse;
 
 import java.util.Random;
 
+import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -195,6 +194,8 @@ public class ForgotPasscode extends AppCompatActivity {
                             resend_btn.setVisibility(View.GONE);
 
                             countDownTimer.start();
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.forgetPasscodeId),response.getMessage(),true);
                         }
                     }
 
