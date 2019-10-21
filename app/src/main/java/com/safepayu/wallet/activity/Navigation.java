@@ -83,7 +83,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     String versionName="",FirebaseToken,appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
     private int versionCode=0;
     private LoadingDialog loadingDialog;
-    private LinearLayout liMetro,liFlight, liBusTicket,liTrainTicket, liHotles,liDonation,liToll, liFlood;
+    private LinearLayout liMetro,liFlight, liBusTicket,liTrainTicket, liHotles,liDonation,liToll, liFlood,liCredit,liInsurance,limovie,liGoogleplay,lihotel,
+    liBigBazaar,liBrandFactory, liKFC, liDominos;
     public static int BadgeCount=0;
     public static TextView BadgeCountTV;
     Dialog dialog;
@@ -155,8 +156,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         ContentNotiDialog=dialog.findViewById(R.id.content_notificationDialog);
         ImageViewNotiDialog=dialog.findViewById(R.id.image_notificationDialog);
 
-        ImageViewNotiDialog.setImageDrawable(getResources().getDrawable(R.drawable.happy_diwali));
-
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -223,6 +222,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liContactUs = findViewById(R.id.li_contact_us);
         liLogout = findViewById(R.id.li_logout);
         liWalletHistory = findViewById(R.id.li_historyWallet);
+        liGoogleplay = findViewById(R.id.layout_googleplay);
+
+
 
         tv_home = findViewById(R.id.tv_home);
         tvProfile = findViewById(R.id.tv_profile);
@@ -250,6 +252,15 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liDonation = findViewById(R.id.layout_donation);
         liToll = findViewById(R.id.layout_toll);
         liFlood = findViewById(R.id.layout_flood);
+        liCredit = findViewById(R.id.credit_layout);
+        liInsurance = findViewById(R.id.layout_insurance);
+        limovie = findViewById(R.id.layout_movie);
+        lihotel = findViewById(R.id.layout_hotel);
+        liBigBazaar = findViewById(R.id.layout_big_bazar);
+        liBrandFactory = findViewById(R.id.layout_brand_factory);
+        liKFC = findViewById(R.id.layout_kfc);
+        liDominos = findViewById(R.id.layout_dominos);
+
 
         //********************set listener&*****************
         liHome.setOnClickListener(this);
@@ -268,12 +279,23 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liContactUs.setOnClickListener(this);
         liLogout.setOnClickListener(this);
         liWalletHistory.setOnClickListener(this);
+        liInsurance.setOnClickListener(this);
+        limovie.setOnClickListener(this);
+        liGoogleplay.setOnClickListener(this);
+        lihotel.setOnClickListener(this);
+        liDominos.setOnClickListener(this);
+        liKFC.setOnClickListener(this);
+        liBrandFactory.setOnClickListener(this);
+        liBigBazaar.setOnClickListener(this);
+
 
       //  addMoney.setOnClickListener(this);
       //  sendMoney.setOnClickListener(this);
         recharge.setOnClickListener(this);
         payBill.setOnClickListener(this);
         dth.setOnClickListener(this);
+        liCredit.setOnClickListener(this);
+
       //  payShop.setOnClickListener(this);
        // sendToBank.setOnClickListener(this);
         layout_broadband.setOnClickListener(this);
@@ -290,6 +312,10 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liDonation.setOnClickListener(this);
         liToll.setOnClickListener(this);
         liFlood.setOnClickListener(this);
+        liBigBazaar.setOnClickListener(this);
+        liKFC.setOnClickListener(this);
+        liBrandFactory.setOnClickListener(this);
+        liBigBazaar.setOnClickListener(this);
 
         notification_icon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -486,6 +512,47 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 startActivity(new Intent(Navigation.this, TrainActivity.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
+            case R.id.credit_layout:
+               Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.layout_insurance:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_movie:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.layout_googleplay:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_hotel:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_donation:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_toll:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_flood:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+                case R.id.layout_big_bazar:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_brand_factory:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_kfc:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_dominos:
+                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                break;
+
+
+
 
             case R.id.li_home:
                 tv_home.setTextColor(getResources().getColor(R.color.bue_A800));

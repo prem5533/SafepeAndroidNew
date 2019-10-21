@@ -11,17 +11,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:background="@drawable/violet_bg">
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/statusImage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:src="@drawable/source"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center">
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/happy_diwali"
-                    android:padding="20dp"
+                    android:layout_height="180dp"
+                    android:src="@drawable/diwali"
                     android:id="@+id/image_notificationDialog"/>
             </LinearLayout>
 
@@ -32,22 +39,23 @@
                 android:text="@string/splash_tag_5"
                 android:fontFamily="@font/roboto_italic"
                 android:textSize="17sp"
-                android:textColor="@color/blue_theme"
+                android:textColor="#e6b819"
                 android:layout_marginTop="20dp"
                 android:padding="5dp"
                 android:visibility="visible"
                 android:gravity="center"/>
+
             <TextView
                 android:id="@+id/content_notificationDialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/splash_tag_4"
-                android:fontFamily="@font/roboto_italic"
-                android:textSize="15sp"
-                android:gravity="center"
                 android:layout_margin="8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
                 android:padding="5dp"
-                android:textColor="@color/green_theme"/>
+                android:text="@string/splash_tag_4"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
