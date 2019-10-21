@@ -44,6 +44,7 @@ import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.BusActivity;
 import com.safepayu.wallet.activity.booking.FlightsActivity;
+import com.safepayu.wallet.activity.booking.HotelActivity;
 import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.TrainActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
@@ -526,7 +527,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_hotel:
-                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Navigation.this, HotelActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_donation:
                 Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();

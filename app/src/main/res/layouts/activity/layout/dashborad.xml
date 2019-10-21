@@ -399,7 +399,7 @@
                     android:layout_weight="1">
 
                     <LinearLayout
-                        android:id="@+id/layout_movie"
+                        android:id="@+id/layout_metro"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/home_screen_icons_back"
@@ -409,23 +409,24 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/movie_tieckets"
+                            android:src="@drawable/metro"
                             android:visibility="gone" />
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/ic_movieticket" />
+                            android:src="@drawable/ic_metro" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/roboto_regular"
-                            android:text="Movie Ticket"
+                            android:text="Metro"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
+
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -508,6 +509,7 @@
                 android:layout_height="100dp"
                 android:weightSum="4">
 
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -515,7 +517,7 @@
                     android:layout_weight="1">
 
                     <LinearLayout
-                        android:id="@+id/layout_metro"
+                        android:id="@+id/layout_movie"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/home_screen_icons_back"
@@ -525,24 +527,23 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/metro"
+                            android:src="@drawable/movie_tieckets"
                             android:visibility="gone" />
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/ic_metro" />
+                            android:src="@drawable/ic_movieticket" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/roboto_regular"
-                            android:text="Metro"
+                            android:text="Movie Ticket"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
-
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView

@@ -3,7 +3,7 @@
     <string name="splash_tag">We Build This Bank For You</string>
     <string name="splash_tag_2">SafePe करिये</string>
     <string name="splash_tag_3">Secure रहिये</string>
-    <string name="splash_tag_4">SafePe App मे आपका न्यू फ्यूचर &amp; सर्विस के साथ आप सबका तहे दिल से स्वागत हे।\n
+    <string name="splash_tag_4">SafePe App मे न्यू फ्यूचर &amp; सर्विस के साथ आप सबका तहे दिल से स्वागत है।\n
                 Long Life Opportunity के साथ SafePe करिये, Secure रहिये।\n</string>
     <string name="splash_tag_5">With Diwali SafePe India Pvt Ltd \nbrings new SafePe App to you. </string>
     <string name="coming_soon">This feature is coming soon</string>
@@ -67,6 +67,9 @@
     <string name="source_">Source Station</string>
     <string name="destination">Destination Station</string>
     <string name="checkbox_train">Show both non-AC and AC coaches</string>
+    <string name="goingto">Going to</string>
+    <string name="hotel_near_me">Near hotel</string>
+    <string name="search_hotel">Search Hotels</string>
 
     <string name="pvt_ltd"> Pvt. Ltd.</string>
     <string name="india">India </string>

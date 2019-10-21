@@ -1,13 +1,19 @@
 package com.safepayu.wallet.activity;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.safepayu.wallet.BaseActivity;
@@ -17,7 +23,10 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
+import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
+import com.safepayu.wallet.models.response.BaseResponse;
+import com.safepayu.wallet.models.response.UserResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -30,6 +39,14 @@ public class AddBeneficiary extends BaseActivity {
     private LoadingDialog loadingDialog;
     private boolean CheckNet=false;
     private ImageView showAccNo,HideAccNo;
+    private ApiService apiService;
+    private String Mobile="";
+    private AddBeneficiaryRequest addBeneficiaryRequest;
+    //Otp Dialog
+    TextView TimerTV;
+    EditText OtpED;
+    Button continueButton, resendButton;
+    private ImageView im_cross;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +54,10 @@ public class AddBeneficiary extends BaseActivity {
         setToolbar(false, null, false);
 
         loadingDialog = new LoadingDialog(this);
+        apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+        addBeneficiaryRequest=new AddBeneficiaryRequest();
+
+        Mobile=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
 
         BackBtn=findViewById(R.id.send_back_btn);
         AccountNameED=findViewById(R.id.accountName);
@@ -127,7 +148,6 @@ public class AddBeneficiary extends BaseActivity {
                         if (AccountN.equals(AccountNF)){
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout),"Please Same Account Number In Both Account's Field",false);
                         }else {
-                            AddBeneficiaryRequest addBeneficiaryRequest=new AddBeneficiaryRequest();
                             addBeneficiaryRequest.setName(AccountNameED.getText().toString().trim());
                             addBeneficiaryRequest.setBank_account(AccountNumberED.getText().toString().trim());
                             addBeneficiaryRequest.setIfsc_code(IFSCED.getText().toString().trim());
@@ -135,7 +155,7 @@ public class AddBeneficiary extends BaseActivity {
                             addBeneficiaryRequest.setPaytm("");
 
                             if (CheckNet){
-                                addBenMethod(addBeneficiaryRequest);
+                                resendOtp();
                             }else {
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout),"Check Your Internet Connection!",false);
                             }
@@ -149,8 +169,6 @@ public class AddBeneficiary extends BaseActivity {
     private void addBenMethod(AddBeneficiaryRequest addBeneficiaryRequest){
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-
-        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
         BaseApp.getInstance().getDisposable().add(apiService.addBeneficiary(addBeneficiaryRequest)
                 .subscribeOn(Schedulers.io())
@@ -174,6 +192,130 @@ public class AddBeneficiary extends BaseActivity {
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.addBeneficiaryLayout), true, e);
                     }
                 }));
+
+    }
+
+    private void resendOtp() {
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        Login request = new Login(Mobile, null);
+
+        BaseApp.getInstance().getDisposable().add(apiService.resendOtp(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.getStatus()) {
+                            countDownTimer.start();
+                            showDialog(AddBeneficiary.this);
+
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), response.getMessage(), false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.addBeneficiaryLayout), true, e);
+                    }
+                }));
+    }
+
+    private void verifyOtp(String otp) {
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        Login request = new Login(Mobile, null);
+        request.setOtp(otp);
+        BaseApp.getInstance().getDisposable().add(apiService.verifyOTP(request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<UserResponse>() {
+                    @Override
+                    public void onSuccess(UserResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.getStatus()) {
+                            addBenMethod(addBeneficiaryRequest);
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), response.getMessage(), false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.addBeneficiaryLayout), true, e);
+                    }
+                }));
+    }
+
+    CountDownTimer countDownTimer = new CountDownTimer(4*60000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            int seconds = (int) (millisUntilFinished / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+            TimerTV.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        }
+
+        @Override
+        public void onFinish() {
+            resendButton.setVisibility(View.VISIBLE);
+            TimerTV.setVisibility(View.INVISIBLE);
+        }
+    };
+
+    public void showDialog(Activity activity) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.otp_dialog);
+
+        TimerTV = dialog.findViewById(R.id.timerLogin);
+        OtpED = dialog.findViewById(R.id.enter_otpLogin);
+        im_cross = dialog.findViewById(R.id.im_cross);
+
+        im_cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        continueButton = (Button) dialog.findViewById(R.id.continue_otpLogin);
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (TextUtils.isEmpty(OtpED.getText().toString().trim())) {
+                    OtpED.setError("Please Enter Otp");
+                    //BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout),"Please Enter Otp",false);
+                } else {
+                    verifyOtp(OtpED.getText().toString().trim());
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        resendButton = (Button) dialog.findViewById(R.id.resend_otpLogin);
+        resendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resendOtp();
+                dialog.dismiss();
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
 
     }
 }

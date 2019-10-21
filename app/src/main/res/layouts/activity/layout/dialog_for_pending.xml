@@ -90,7 +90,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="30sp"
-                            android:text="350"
+                            android:text=""
                             android:fontFamily="@font/roboto_bold"
                             android:layout_marginLeft="10dp"
                             android:textColor="@color/black"
@@ -103,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
-                        android:text="Pending"
+                        android:text="In Progress..."
                         android:textColor="@color/clay_yellow"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/roboto_bold">
