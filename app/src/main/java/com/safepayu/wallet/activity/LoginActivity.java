@@ -308,6 +308,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onSuccess(LoginResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
+                            loginResponse=response;
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE, mobileNo.getText().toString().split(" ")[1]);
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
                             CheckStatusCode(response);
