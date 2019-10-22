@@ -19,6 +19,7 @@ import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.BusActivity;
 import com.safepayu.wallet.activity.booking.FlightsActivity;
+import com.safepayu.wallet.activity.booking.HotelActivity;
 import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.TrainActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
@@ -370,7 +371,7 @@ public class SearchActivity extends BaseActivity implements SearchAdapter.OnList
 
         }else if (SearchItem.equalsIgnoreCase("Hotel Booking")){
 
-            startActivity(new Intent(getApplicationContext(), WaterBillPay.class));
+            startActivity(new Intent(getApplicationContext(), HotelActivity.class));
             overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
 
         }

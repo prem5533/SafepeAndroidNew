@@ -50,13 +50,16 @@ import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.BusActivity;
+import com.safepayu.wallet.activity.booking.DonationActivity;
 import com.safepayu.wallet.activity.booking.FlightsActivity;
 import com.safepayu.wallet.activity.booking.HotelActivity;
 import com.safepayu.wallet.activity.booking.MetroActivity;
+import com.safepayu.wallet.activity.booking.TollActivity;
 import com.safepayu.wallet.activity.booking.TrainActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
 import com.safepayu.wallet.activity.recharge.GasPay;
+import com.safepayu.wallet.activity.recharge.InsuranceActivity;
 import com.safepayu.wallet.activity.recharge.MobileRecharge;
 import com.safepayu.wallet.activity.recharge.PostpaidLandlineBillpay;
 import com.safepayu.wallet.activity.recharge.WaterBillPay;
@@ -528,7 +531,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
 
             case R.id.layout_insurance:
-                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Navigation.this, InsuranceActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_movie:
                 Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
@@ -542,10 +546,12 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_donation:
-                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Navigation.this, DonationActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_toll:
-                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Navigation.this, TollActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_flood:
                 Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();

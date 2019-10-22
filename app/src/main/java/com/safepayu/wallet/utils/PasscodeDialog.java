@@ -35,7 +35,6 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
         this.clickListener = clickListener;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

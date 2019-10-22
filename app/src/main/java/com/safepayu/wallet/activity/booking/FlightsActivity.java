@@ -1,5 +1,6 @@
 package com.safepayu.wallet.activity.booking;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -15,6 +17,12 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
     private TextView tvOneWay, tvTwoWay;
     private ImageView imageOneWay, imageTwoWay;
     private Button searchFlightBtn,backBtn;
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

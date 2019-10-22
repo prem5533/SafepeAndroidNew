@@ -59,6 +59,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     int versionCode=0;
     private ImageView im_cross,ShowHidePasswordBtn;
     boolean showPass=false;
+    private LoginResponse loginResponse;
 
     //Otp Dialog
     TextView TimerTV;
@@ -347,10 +348,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         switch (response.getStatusCode()) {
             case 0:
-                SaveLoginDetails(response);
-                startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                finish();
-                //resendOtp();
+                resendOtp();
                 break;
             case 1:
                 BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false);
@@ -369,11 +367,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case 5:
                 //showDialogForEmail(LoginActivity.this);  for mail verification
-                SaveLoginDetails(response);
-                //resendOtp();
-
-                startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                finish();
+                resendOtp();
                 break;
         }
 
@@ -581,6 +575,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onSuccess(UserResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
+                            SaveLoginDetails(loginResponse);
                             startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             finish();
                         } else {

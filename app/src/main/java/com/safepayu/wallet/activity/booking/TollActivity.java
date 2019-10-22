@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.MultiDex;
@@ -12,10 +11,9 @@ import androidx.multidex.MultiDex;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 
-public class MetroActivity extends AppCompatActivity implements View.OnClickListener {
+public class TollActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button ProceedBtn,BackBtn;
-    private TextView tvMetroType;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -26,26 +24,23 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_metro);
-
+        setContentView(R.layout.activity_toll);
         findId();
     }
 
     private void findId() {
-        BackBtn = findViewById(R.id.recharge_back_btn);
-        tvMetroType = findViewById(R.id.tv_metro_type);
+        BackBtn = findViewById(R.id.donation_back_btn);
         ProceedBtn = findViewById( R.id.proceed_btn);
 
         //Set Listenere
         BackBtn.setOnClickListener(this);
-        tvMetroType.setOnClickListener(this);
         ProceedBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.recharge_back_btn:
+            case R.id.donation_back_btn:
                 overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
                 finish();
                 break;
@@ -62,6 +57,7 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
 
     private void CheckValidate() {
 
-        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_metro),"Coming Soon",false);
+        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_toll),"Coming Soon",false);
     }
 }
+

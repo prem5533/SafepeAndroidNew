@@ -1,7 +1,9 @@
 package com.safepayu.wallet.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -14,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -178,8 +179,7 @@ public class AddBeneficiary extends BaseActivity {
                     public void onSuccess(AddBeneficiaryResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            Toast.makeText(AddBeneficiary.this, response.getMessage(), Toast.LENGTH_SHORT).show();
-                            finish();
+                            showDialogAfterAddBen(AddBeneficiary.this,response.getMessage());
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout),response.getMessage()+"\n"+response.getReason(),true);
                         }
@@ -317,5 +317,27 @@ public class AddBeneficiary extends BaseActivity {
         dialog.getWindow().setAttributes(lp);
         dialog.show();
 
+    }
+
+    public void showDialogAfterAddBen(Activity activity,String Response) {
+        AlertDialog.Builder dialog=new AlertDialog.Builder(activity);
+        dialog.setTitle("SafePe Alert")
+                .setMessage("\n"+Response+"\nPlease Wait For Minimum Of 30 Mins After Adding Of Beneficiary")
+                .setCancelable(false)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                        finish();
+                        dialog.dismiss();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setIcon(getResources().getDrawable(R.drawable.icon_old100))
+                .show();
     }
 }
