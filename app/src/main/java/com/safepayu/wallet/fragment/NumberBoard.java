@@ -6,11 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.enums.ButtonActions;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 public class NumberBoard extends Fragment {
     View rootView;
@@ -36,7 +36,7 @@ public class NumberBoard extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.number_bard_fragment, container, false);
+        rootView = inflater.inflate(R.layout.number_board_layout, container, false);
 
         rootView.findViewById(R.id.one_btn).setOnClickListener(new View.OnClickListener() {
             @Override

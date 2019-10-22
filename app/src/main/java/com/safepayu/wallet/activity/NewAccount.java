@@ -19,10 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -41,6 +37,9 @@ import com.safepayu.wallet.models.response.BaseResponse1;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -287,7 +286,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         } else if (dob.getText().toString().trim().length() == 0) {
             BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter DOB", true);
             return false;
-        } else if (password.getText().toString().trim().length() == 0|| password.getText().toString().trim().length()<5) {
+        } else if (password.getText().toString().trim().length() == 0|| password.getText().toString().trim().length()<4) {
             mobileNo.requestFocus();
             BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter password, password must be 4 digit", true);
             return false;

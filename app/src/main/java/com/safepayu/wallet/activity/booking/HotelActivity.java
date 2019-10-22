@@ -9,9 +9,10 @@ import com.safepayu.wallet.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 public class HotelActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button searhHotelBtn,backBtn;
+    private Button searhHotelBtn, backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
 
     private void findId() {
         backBtn = findViewById(R.id.recharge_back_btn);
-        searhHotelBtn = findViewById( R.id.search_hotel_btn);
+        searhHotelBtn = findViewById(R.id.search_hotel_btn);
 
         //set listener
         backBtn.setOnClickListener(this);
@@ -31,9 +32,9 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.recharge_back_btn:
-                overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
+                overridePendingTransition(R.anim.right_to_left, R.anim.slide_in);
                 finish();
                 break;
             case R.id.search_hotel_btn:
@@ -45,7 +46,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
 
     private void CheckValidate() {
 
-        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_hotel),"Coming Soon",false);
+        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_hotel), "Coming Soon", false);
     }
 
 }

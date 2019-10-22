@@ -378,7 +378,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
                 intentStatus.putExtra("status","success");
                 //change status to pending on bank issue resolved
             }else {
-                Toast.makeText(SendMoney.this, responseData.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SendMoney.this, responseData.getMessage(), Toast.LENGTH_LONG).show();
                 intentStatus.putExtra("status","failed");
             }
             intentStatus.putExtra("txnid",responseData.getTransactionId());

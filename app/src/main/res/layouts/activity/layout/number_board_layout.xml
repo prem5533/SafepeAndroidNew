@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_bg"
+    tools:context=".fragment.NumberBoard">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="@dimen/passcode_btn"
+                android:layout_height="@dimen/passcode_btn"
+                android:layout_margin="@dimen/passcode_btn_margin"
+                android:orientation="vertical"
+                android:background="@drawable/numeric_button"
+                android:gravity="center"
+                android:clickable="true"
+                android:id="@+id/one_btn"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/digit_one"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/passcode_btn"
+                android:layout_height="@dimen/passcode_btn"
+                android:layout_margin="@dimen/passcode_btn_margin"
+                android:orientation="vertical"
+                android:background="@drawable/numeric_button"
+                android:gravity="center"
+                android:clickable="true"
+                android:id="@+id/two_btn"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/digit_two"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/passcode_btn"
+                android:layout_height="@dimen/passcode_btn"
+                android:layout_margin="@dimen/passcode_btn_margin"
+                android:orientation="vertical"
+                android:background="@drawable/numeric_button"
+                android:gravity="center"
+                android:clickable="true"
+                android:id="@+id/three_btn"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/digit_three"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="@dimen/passcode_btn"
+                android:layout_height="@dimen/passcode_btn"
+                android:layout_margin="@dimen/passcode_btn_margin"
+                android:orientation="vertical"
+                android:background="@drawable/numeric_button"
+                android:gravity="center"
+                android:clickable="true"
+                android:id="@+id/four_btn"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/digit_four"   android:fontFamily="@font/roboto_bold"
+                    android:textSize="16sp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/passcode_btn"
+                android:layout_height="@dimen/passcode_btn"
+                android:layout_margin="@dimen/passcode_btn_margin"
+                android:orientation="vertical"
+                android:background="@drawable/numeric_button"
+                android:gravity="center"
+                android:clickable="true"
+                android:id="@+id/five_btn"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/digit_five"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/passcode_btn"
+                android:layout_height="@dimen/passcode_btn"
+                android:layout_margin="@dimen/passcode_btn_margin"
+                android:orientation="vertical"
+                android:background="@drawable/numeric_button"
+                android:gravity="center"
+                android:clickable="true"
+                android:id="@+id/six_btn"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/digit_six"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="@dimen/passcode_btn"
+                android:layout_height="@dimen/passcode_btn"
+                android:layout_margin="@dimen/passcode_btn_margin"
+                android:orientation="vertical"
+                android:background="@drawable/numeric_button"
+                android:gravity="center"
+                android:clickable="true"
+                android:id="@+id/seven_btn"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/digit_seven"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/passcode_btn"
+                android:layout_height="@dimen/passcode_btn"
+                android:layout_margin="@dimen/passcode_btn_margin"
+                android:orientation="vertical"
+                android:background="@drawable/numeric_button"
+                android:gravity="center"
+                android:clickable="true"
+                android:id="@+id/eight_btn"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/digit_eight"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/passcode_btn"
+                android:layout_height="@dimen/passcode_btn"
+                android:layout_margin="@dimen/passcode_btn_margin"
+                android:orientation="vertical"
+                android:background="@drawable/numeric_button"
+                android:gravity="center"
+                android:clickable="true"
+                android:id="@+id/nine_btn"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/digit_nine"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <FrameLayout
+                android:layout_width="@dimen/passcode_btn"
+                android:layout_height="@dimen/passcode_btn"
+                android:layout_margin="@dimen/passcode_btn_margin">
+
+                <ImageButton
+                    android:layout_width="@dimen/passcode_btn"
+                    android:layout_height="@dimen/passcode_btn"
+                    android:layout_margin="@dimen/passcode_btn_margin"
+                    android:src="@drawable/ic_ok"
+                    android:hapticFeedbackEnabled="true"
+                    android:id="@+id/ok_btn"
+                    android:visibility="gone"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/ok" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/btn.create"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:background="@drawable/text_numeric_button"
+                    android:visibility="visible"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/create" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/passcode_btn"
+                android:layout_height="@dimen/passcode_btn"
+                android:layout_margin="@dimen/passcode_btn_margin"
+                android:orientation="vertical"
+                android:background="@drawable/numeric_button"
+                android:gravity="center"
+                android:clickable="true"
+                android:id="@+id/zero_btn"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/digit_zero"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <ImageButton
+                android:layout_width="@dimen/passcode_btn"
+                android:layout_height="@dimen/passcode_btn"
+                android:layout_margin="@dimen/passcode_btn_margin"
+                android:src="@drawable/ic_action_backspace"
+                android:hapticFeedbackEnabled="true"
+                android:id="@+id/delete_btn"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/clear" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -68,6 +68,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, true);
+
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -347,6 +348,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         switch (response.getStatusCode()) {
             case 0:
                 SaveLoginDetails(response);
+
                 resendOtp();
                 break;
             case 1:
@@ -368,6 +370,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 //showDialogForEmail(LoginActivity.this);  for mail verification
                 SaveLoginDetails(response);
                 resendOtp();
+
+
                 break;
         }
 

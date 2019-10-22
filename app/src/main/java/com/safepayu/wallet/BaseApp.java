@@ -1,6 +1,5 @@
 package com.safepayu.wallet;
 
-import android.app.Application;
 import android.os.Handler;
 
 import com.safepayu.wallet.halper.ToastHelper;
@@ -8,10 +7,10 @@ import com.safepayu.wallet.utils.CommonUtils;
 import com.safepayu.wallet.utils.DateUtil;
 import com.safepayu.wallet.utils.SharedPref;
 
-
+import androidx.multidex.MultiDexApplication;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class BaseApp extends Application {
+public class BaseApp extends MultiDexApplication {
     private static BaseApp mInstance;
 
     public static synchronized BaseApp getInstance() {

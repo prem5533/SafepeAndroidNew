@@ -25,6 +25,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,6 +94,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     Dialog dialog;
     TextView TitleNotiDialog,ContentNotiDialog;
     ImageView ImageViewNotiDialog;
+    private RelativeLayout searchLayout_nav;
     public static String TitleNotiDialogText="",ContentNotiDialogText="";
     public static Bitmap ImageNotiDialog;
 
@@ -165,6 +167,14 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
         dialog.getWindow().setAttributes(lp);
         dialog.show();
+
+        searchLayout_nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+            }
+        });
     }
 
     @Override
@@ -173,7 +183,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     }
 
     private void setupNavigation() {
-
+        searchLayout_nav=findViewById(R.id.searchLayout_nav);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         notification_icon = findViewById(R.id.notification);
