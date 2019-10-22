@@ -1,5 +1,6 @@
 package com.safepayu.wallet.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.NotificationResponse;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -29,6 +31,12 @@ public class BellNotifictionActivity extends AppCompatActivity {
     private NotifictionAdapter notifictionAdapter;
     private LoadingDialog loadingDialog;
     private Button backBtn;
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

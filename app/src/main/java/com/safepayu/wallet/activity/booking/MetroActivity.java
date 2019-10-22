@@ -1,19 +1,28 @@
 package com.safepayu.wallet.activity.booking;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
 
 public class MetroActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button ProceedBtn,BackBtn;
     private TextView tvMetroType;
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

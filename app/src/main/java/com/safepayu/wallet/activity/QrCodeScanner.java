@@ -79,8 +79,9 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(QrCodeScanner.this, SendMoneyToWallet.class);
-                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                 startActivity(intent);
+                finish();
+
             }
         });
 

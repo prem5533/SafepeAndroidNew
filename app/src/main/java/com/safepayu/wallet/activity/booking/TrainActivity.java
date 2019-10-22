@@ -1,20 +1,29 @@
 package com.safepayu.wallet.activity.booking;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
 
 public class TrainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvBookTickets, tvCheckPnr,tvTrainStatus;
     private LinearLayout linearLayoutBookTickets, linearLayoutCheckPNR,linearLayoutTrainTickets;
     private Button searchTrainBtn,backBtn;
+
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,5 +1,8 @@
 package com.safepayu.wallet.activity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -96,5 +99,31 @@ public class PaidOrderActivity extends AppCompatActivity {
         }else {
             TxnIdTV.setText("Txn ID: "+txnid);
         }
+
+        if (productinfo.equalsIgnoreCase("Wallet To Bank Transaction")){
+            showDialogAfterBankTrans(this);
+        }
+    }
+
+    public void showDialogAfterBankTrans(Activity activity) {
+        AlertDialog.Builder dialog=new AlertDialog.Builder(activity);
+        dialog.setTitle("SafePe Alert")
+                .setMessage("\nYour Credit Status Confirmation Will Be Available In 2 Working Days.\nPlease Ignore If Credit Is Already Received" +
+                        "\nThank You For Using SafePe App.")
+                .setCancelable(false)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                        dialog.dismiss();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setIcon(getResources().getDrawable(R.drawable.icon_old100))
+                .show();
     }
 }

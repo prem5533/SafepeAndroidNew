@@ -20,6 +20,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Toolbar mToolbar;
     private CheckInternet checkInternet;
     private ConnectivityReceiver connectivityReceiver;
+
+
     @Override
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(context);
@@ -30,7 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceId());
-      
+
         checkInternet = new CheckInternet(this);
         connectivityReceiver = new ConnectivityReceiver();
 

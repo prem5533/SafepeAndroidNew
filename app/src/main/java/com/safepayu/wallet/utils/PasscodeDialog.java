@@ -15,11 +15,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.ForgotPasscode;
+
+import androidx.annotation.NonNull;
 
 public class PasscodeDialog extends Dialog implements View.OnClickListener {
     private TextView one, two, three, four, five, six, seven, eight, nine, zero, txvEnter, error, forgot_passcode;
@@ -34,7 +34,6 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
         this.activity = activity;
         this.clickListener = clickListener;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

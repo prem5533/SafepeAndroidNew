@@ -1,5 +1,6 @@
 package com.safepayu.wallet;
 
+import android.content.Context;
 import android.os.Handler;
 
 import com.safepayu.wallet.halper.ToastHelper;
@@ -7,6 +8,7 @@ import com.safepayu.wallet.utils.CommonUtils;
 import com.safepayu.wallet.utils.DateUtil;
 import com.safepayu.wallet.utils.SharedPref;
 
+import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -23,6 +25,12 @@ public class BaseApp extends MultiDexApplication {
     private DateUtil dateUtil;
     private SharedPref sharedPref;
     private Handler handler;
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
+    }
 
     @Override
     public void onCreate() {
