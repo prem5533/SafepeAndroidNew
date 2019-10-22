@@ -385,6 +385,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
             intentStatus.putExtra("Amount",AmountED.getText().toString().trim());
             intentStatus.putExtra("date",responseData.getDate());
             intentStatus.putExtra("productinfo","Wallet To Bank Transaction");
+            intentStatus.putExtra("msg",responseData.getMessage());
             startActivity(intentStatus);
             finish();
             dialogStatus.dismiss();

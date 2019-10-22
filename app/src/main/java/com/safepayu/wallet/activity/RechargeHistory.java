@@ -40,8 +40,6 @@ public class RechargeHistory extends BaseActivity implements RechargeHistoryAdap
     private TextView StatusTV,TransactionIdTV,CustomerNumberIdTV,AmountTV,RechargeTypeTV,ContactSupportTV,DateTV;
     private Button GoToWalletBtn;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

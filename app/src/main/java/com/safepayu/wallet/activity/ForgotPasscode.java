@@ -1,5 +1,6 @@
 package com.safepayu.wallet.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -46,6 +48,12 @@ public class ForgotPasscode extends AppCompatActivity {
     private ImageView ShowHidePasswordBtn;
     boolean showPass=false;
     ApiService apiService;
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
