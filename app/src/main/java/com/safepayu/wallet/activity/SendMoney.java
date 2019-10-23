@@ -262,23 +262,27 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
                     @Override
                     public void onSuccess(GetBeneficiaryResponse response) {
                         loadingDialog.hideDialog();
-                        if (response.isStatus()) {
+                        try{
+                            if (response.isStatus()) {
 
-                            if (response.getBeneficiary().size()>0){
-                                for (int i=0;i<response.getBeneficiary().size();i++){
-                                    NameList.add(response.getBeneficiary().get(i).getName());
-                                    IdList.add(String.valueOf(response.getBeneficiary().get(i).getId()));
-                                    BenIdList.add(response.getBeneficiary().get(i).getBenId());
+                                if (response.getBeneficiary().size()>0){
+                                    for (int i=0;i<response.getBeneficiary().size();i++){
+                                        NameList.add(response.getBeneficiary().get(i).getName());
+                                        IdList.add(String.valueOf(response.getBeneficiary().get(i).getId()));
+                                        BenIdList.add(response.getBeneficiary().get(i).getBenId());
+                                    }
+
+                                    ArrayAdapter<String> TransferType= new ArrayAdapter<>(SendMoney.this,android.R.layout.simple_spinner_item,NameList);
+                                    TransferType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    BankBenSpinner.setAdapter(TransferType);
+                                }else {
+                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"No Beneficiary Found!. Please Add One",true);
                                 }
-
-                                ArrayAdapter<String> TransferType= new ArrayAdapter<>(SendMoney.this,android.R.layout.simple_spinner_item,NameList);
-                                TransferType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                BankBenSpinner.setAdapter(TransferType);
                             }else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"No Beneficiary Found!. Please Add One",true);
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);
                             }
-                        }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
                     }
 

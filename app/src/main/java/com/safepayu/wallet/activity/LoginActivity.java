@@ -350,7 +350,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         switch (response.getStatusCode()) {
             case 0:
-                resendOtp();
+                //resendOtp();
+                SaveLoginDetails(loginResponse);
+                startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                finish();
                 break;
             case 1:
                 BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false);
@@ -369,7 +372,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case 5:
                 //showDialogForEmail(LoginActivity.this);  for mail verification
-                resendOtp();
+                //resendOtp();
+                SaveLoginDetails(loginResponse);
+                startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                finish();
                 break;
         }
 
