@@ -25,6 +25,7 @@ public class SharedPref {
     public final String PACKAGE_PURCHASED = "package_purchased";
     public final String EMAIL_VERIFIED = "email_verified";
     public final String FIREBASE_TOKEN = "FirebaseToken";
+    public final String REMEMBER_ME = "remember_me";
 
     public SharedPref(Context context) {
         this.context = context;

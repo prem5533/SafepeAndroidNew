@@ -119,10 +119,10 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Goto Your Profile and Verify Your Email First",true);
                 }else {
                     if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Buy Membership To Enjoy App's Features",false);
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Buy Membership To Enjoy App's Features",true);
                     }else {
                         if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")){
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Transaction Is Closed Today",false);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Transaction Is Closed Today",true);
                         }else {
                             CheckValidate();
                         }
@@ -212,7 +212,7 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
 
                         }else {
                             intentStatus.putExtra("status","failed");
-                            Toast.makeText(SendMoneyToWallet.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SendMoneyToWallet.this, response.getMessage(), Toast.LENGTH_LONG).show();
                            // BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),response.getMessage(),false);
                         }
                         intentStatus.putExtra("txnid",response.getUtrId());

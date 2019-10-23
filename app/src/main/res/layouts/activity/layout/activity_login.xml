@@ -61,21 +61,41 @@
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/login_text_hint" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="40dp"
-                android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/et.mobileNo"
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="24sp"
-                    style="@style/defaultEditTextStyle"
                     android:inputType="number"
-                    android:hint="@string/enter_mobile"
-                    android:fontFamily="@font/roboto_regular"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:text="+91 "
+                    style="@style/defaultEditTextStyle"
+                    android:layout_marginTop="51dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:enabled="false"
+                    android:focusable="false"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="-14dp"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/et.mobileNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        style="@style/defaultEditTextStyle"
+                        android:inputType="number"
+                        android:maxLength="14"
+                        android:hint="@string/enter_mobile"
+                        android:fontFamily="@font/roboto_regular"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -85,8 +105,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/show_hide_password">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/et.password"
@@ -107,6 +126,18 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="30dp"/>
             </RelativeLayout>
+
+            <CheckBox
+                android:id="@+id/cb_rememberMe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/light_blue_500"
+                android:buttonTint="@color/light_blue_500"
+                android:checked="false"
+                android:text="Remember Me"
+                android:textSize="15sp"
+                android:textColor="@color/light_blue_500"
+                android:layout_marginTop="5dp"/>
 
             <Button
                 android:id="@+id/btn.login"

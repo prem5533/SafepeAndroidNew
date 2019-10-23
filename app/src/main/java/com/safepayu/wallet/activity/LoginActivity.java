@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
@@ -18,6 +19,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,7 +38,6 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.enums.ButtonActions;
 import com.safepayu.wallet.halper.Config;
-import com.safepayu.wallet.listener.MobileEditTextWatcher;
 import com.safepayu.wallet.listener.SnackBarActionClickListener;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.response.AppVersionResponse;
@@ -52,12 +54,13 @@ import io.reactivex.schedulers.Schedulers;
 public class LoginActivity extends BaseActivity implements View.OnClickListener, SnackBarActionClickListener {
     private static String TAG = LoginActivity.class.getName();
     private EditText mobileNo, password;
+    private CheckBox RememberMeCB;
     private ApiService apiService;
     private LoadingDialog loadingDialog;
-    String versionName="",appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
-    int versionCode=0;
-    private ImageView im_cross,ShowHidePasswordBtn;
-    boolean showPass=false;
+    String versionName = "", appUrl = "https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
+    int versionCode = 0;
+    private ImageView im_cross, ShowHidePasswordBtn;
+    private boolean showPass = false,checkedRemember=false;
     private LoginResponse loginResponse;
 
     //Otp Dialog
@@ -90,11 +93,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         mobileNo = findViewById(R.id.et_mobileNo);
         password = findViewById(R.id.et_password);
-        ShowHidePasswordBtn= findViewById(R.id.show_hide_password);
-        mobileNo.addTextChangedListener(new MobileEditTextWatcher(mobileNo));
-        mobileNo.setText("+91 ");
+        RememberMeCB = findViewById(R.id.cb_rememberMe);
+        ShowHidePasswordBtn = findViewById(R.id.show_hide_password);
+        //mobileNo.addTextChangedListener(new MobileEditTextWatcher(mobileNo));
+        //mobileNo.setText("+91 ");
         password.setText("");
-        mobileNo.setSelection(mobileNo.getText().length());
+        //mobileNo.setSelection(mobileNo.getText().length());
         findViewById(R.id.btn_login).setOnClickListener(this);
         findViewById(R.id.btn_forgetPass).setOnClickListener(this);
         findViewById(R.id.btn_newAccount).setOnClickListener(this);
@@ -110,9 +114,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         }
                         // Get new Instance ID token
                         String FirebaseToken = task.getResult().getToken();
-                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN,FirebaseToken);
+                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN, FirebaseToken);
                     }
                 });
+
+        RememberMeCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isCheck) {
+                if (isCheck){
+                    RememberMeCB.setChecked(true);
+                    checkedRemember=true;
+                }else {
+                    RememberMeCB.setChecked(false);
+                    checkedRemember=false;
+                }
+            }
+        });
 
 //        checkPermission();
         getAppVersion();
@@ -151,23 +168,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.show_hide_password:
 
 
-                if (showPass){
-                    showPass=false;
+                if (showPass) {
+                    showPass = false;
                     ShowHidePasswordBtn.setImageDrawable(getResources().getDrawable(R.drawable.show_password48));
                     password.setTransformationMethod(new PasswordTransformationMethod());
                     try {
                         password.setSelection(password.getText().toString().length());
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                }else {
-                    showPass=true;
+                } else {
+                    showPass = true;
                     ShowHidePasswordBtn.setImageDrawable(getResources().getDrawable(R.drawable.hide_password48));
                     password.setTransformationMethod(null);
                     try {
                         password.setSelection(password.getText().toString().length());
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -225,11 +242,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             mobileNo.requestFocus();
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), "Please enter valid phone number", true);
             return false;
-        } else if (PhoneNumberUtils.isGlobalPhoneNumber(mobileNo.getText().toString().trim())) {
+        } else if (PhoneNumberUtils.isGlobalPhoneNumber("+91 " + mobileNo.getText().toString().trim())) {
             mobileNo.requestFocus();
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), "Please enter valid phone number", true);
             return false;
-        } else if (mobileNo.getText().toString().trim().length() < 10 || mobileNo.getText().toString().trim().length() > 14 || mobileNo.getText().toString().trim().matches(BaseApp.getInstance().commonUtils().phoneNumberRegex) == false) {
+        } else if (mobileNo.getText().toString().trim().length() != 10) {
             mobileNo.requestFocus();
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), "Please enter valid phone number", true);
             return false;
@@ -274,11 +291,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onSuccess(AppVersionResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            int val= Integer.parseInt(response.getVersionData().getVal());
+                            int val = Integer.parseInt(response.getVersionData().getVal());
 
-                            if (versionCode==val){
+                            if (versionCode == val) {
 
-                            }else {
+                            } else {
                                 showDialogForAppUpdate(LoginActivity.this);
                             }
 
@@ -298,7 +315,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private void loginUser() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-        Login login = new Login(mobileNo.getText().toString().split(" ")[1], password.getText().toString());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    Activity#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for Activity#requestPermissions for more details.
+                return;
+            }
+        }
+        Login login = new Login(mobileNo.getText().toString().trim(), password.getText().toString(), BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId(), checkedRemember);
         BaseApp.getInstance().getDisposable().add(apiService.login(login)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -308,7 +337,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
                             loginResponse=response;
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE, mobileNo.getText().toString().split(" ")[1]);
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE, mobileNo.getText().toString().trim());
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
                             CheckStatusCode(response);
 
@@ -349,7 +378,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         switch (response.getStatusCode()) {
             case 0:
-                resendOtp();
+                if (response.getRemember_me().equalsIgnoreCase("1")){
+                    SaveLoginDetails(response);
+                    startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    finish();
+                }else {
+                    resendOtp();
+                }
 
                 break;
             case 1:
@@ -369,15 +404,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case 5:
                 //showDialogForEmail(LoginActivity.this);  for mail verification
-                resendOtp();
+                if (response.getRemember_me().equalsIgnoreCase("1")){
+                    SaveLoginDetails(response);
+                    startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    finish();
+                }else {
+                    resendOtp();
+                }
 
                 break;
         }
-
     }
 
     private void SaveLoginDetails(LoginResponse response){
-
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().REMEMBER_ME, response.getRemember_me());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, response.getAccessToken());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN_EXPIRE_IN, response.getTokenExpiresIn());
     }
@@ -399,7 +439,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             }
         });
 
-        continueButton = (Button) dialog.findViewById(R.id.continue_otpLogin);
+        continueButton =  dialog.findViewById(R.id.continue_otpLogin);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -414,7 +454,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             }
         });
 
-        resendButton = (Button) dialog.findViewById(R.id.resend_otpLogin);
+        resendButton = dialog.findViewById(R.id.resend_otpLogin);
         resendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -438,7 +478,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.app_update_dialog);
 
-        Button proceedButton = (Button) dialog.findViewById(R.id.proceedBtn_appUpdate);
+        Button proceedButton = dialog.findViewById(R.id.proceedBtn_appUpdate);
         proceedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -447,7 +487,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             }
         });
 
-        Button cancelBtn_appUpdate = (Button) dialog.findViewById(R.id.cancelBtn_appUpdate);
+        Button cancelBtn_appUpdate =  dialog.findViewById(R.id.cancelBtn_appUpdate);
         cancelBtn_appUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -482,7 +522,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             }
         });
 
-        Button proceedButton = (Button) dialog.findViewById(R.id.continue_EmailLogin);
+        Button proceedButton = dialog.findViewById(R.id.continue_EmailLogin);
         proceedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -521,7 +561,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private void resendOtp() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-        Login request = new Login(mobileNo.getText().toString().split(" ")[1], null);
+        Login request = new Login(mobileNo.getText().toString().trim(), null);
 
         BaseApp.getInstance().getDisposable().add(apiService.resendOtp(request)
                 .subscribeOn(Schedulers.io())
@@ -568,7 +608,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private void verifyOtp(String otp) {
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-        Login request = new Login(mobileNo.getText().toString().split(" ")[1], null);
+        Login request = new Login(mobileNo.getText().toString().trim(), null);
         request.setOtp(otp);
         BaseApp.getInstance().getDisposable().add(apiService.verifyOTP(request)
                 .subscribeOn(Schedulers.io())
