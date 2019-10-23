@@ -73,5 +73,6 @@
 
     <string name="pvt_ltd"> Pvt. Ltd.</string>
     <string name="india">India </string>
+    <string name="prefs_theme_key">theme</string>
 
 </resources>

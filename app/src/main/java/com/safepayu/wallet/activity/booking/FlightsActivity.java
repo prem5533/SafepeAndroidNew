@@ -5,18 +5,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.MultiDex;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.fragment.BottomSheetFragment;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
 
 public class FlightsActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvOneWay, tvTwoWay;
     private ImageView imageOneWay, imageTwoWay;
     private Button searchFlightBtn,backBtn;
+    private LinearLayout liayoutClassAdult;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -39,12 +42,14 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         tvTwoWay = findViewById(R.id.tv_twoway);
         imageOneWay = findViewById(R.id.image_one_way);
         imageTwoWay = findViewById(R.id.image_two_way);
+        liayoutClassAdult = findViewById(R.id.layout_class_traveller_tab);
 
         //set listener
         tvOneWay.setOnClickListener(this);
         tvTwoWay.setOnClickListener(this);
         backBtn.setOnClickListener(this);
         searchFlightBtn.setOnClickListener(this);
+        liayoutClassAdult.setOnClickListener(this);
 
         tvOneWay.setBackgroundDrawable(getDrawable(R.drawable.green_rounded));
         tvOneWay.setTextColor(getResources().getColor(R.color.white));
@@ -80,6 +85,11 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
             case R. id.search_flight_btn:
 
                 CheckValidate();
+                break;
+            case R.id.layout_class_traveller_tab:
+
+                    BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+                    bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
                 break;
         }
     }

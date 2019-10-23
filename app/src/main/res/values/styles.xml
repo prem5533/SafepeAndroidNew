@@ -13,6 +13,8 @@
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
         <item name="android:itemTextAppearance">@style/PopupMenu.TextAppearance</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+
     </style>
     <style name="Theme.AppCompat.WhiteCheck">
         <item name="colorAccent">#fff</item>
@@ -68,5 +70,16 @@
         <item name="android:shadowColor">#7F000000</item>
         <item name="android:shadowDy">-3.5</item>
         <item name="android:shadowRadius">2</item>
+    </style>
+
+
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_dialog</item>
     </style>
 </resources>

@@ -23,9 +23,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -46,6 +43,8 @@ import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -350,10 +349,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         switch (response.getStatusCode()) {
             case 0:
-                //resendOtp();
-                SaveLoginDetails(loginResponse);
-                startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                finish();
+                resendOtp();
+
                 break;
             case 1:
                 BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, response.getMessage(), false);
@@ -372,10 +369,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case 5:
                 //showDialogForEmail(LoginActivity.this);  for mail verification
-                //resendOtp();
-                SaveLoginDetails(loginResponse);
-                startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                finish();
+                resendOtp();
+
                 break;
         }
 
