@@ -21,6 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private CheckInternet checkInternet;
     private ConnectivityReceiver connectivityReceiver;
 
+
     @Override
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(context);

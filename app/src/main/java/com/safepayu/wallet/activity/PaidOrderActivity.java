@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.MultiDex;
@@ -57,7 +56,9 @@ public class PaidOrderActivity extends AppCompatActivity {
         tvNeedHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(PaidOrderActivity.this, ContactUs.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
             }
         });
 

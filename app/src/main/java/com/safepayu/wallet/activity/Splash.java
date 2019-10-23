@@ -29,7 +29,10 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        int phVersion=Build.VERSION.SDK_INT;
+        int kitVersion=Build.VERSION_CODES.KITKAT;
+
+        if (phVersion >= kitVersion) {
             BaseApp.getInstance().handler().postDelayed(runnable,2000);
         }else {
             showDialogVersion(this);

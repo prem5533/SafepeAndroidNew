@@ -12,6 +12,7 @@ import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 
 
+
 public class HotelActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button searhHotelBtn, backBtn;

@@ -1,6 +1,7 @@
 package com.safepayu.wallet.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -376,17 +377,18 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                         Intent intentStatus=new Intent(MemberBankAddPackages.this,PaidOrderActivity.class);
                         if (response.isStatus()) {
                             intentStatus.putExtra("status","success");
+                            intentStatus.putExtra("txnid","");
+                            intentStatus.putExtra("Amount",Amount);
+                            intentStatus.putExtra("date",currentDate);
+                            intentStatus.putExtra("productinfo","Buy Package "+PackageName);
+                            startActivity(intentStatus);
+                            finish();
                         }else {
                             intentStatus.putExtra("status","failed");
-                            Toast.makeText(MemberBankAddPackages.this, response.getMessage(), Toast.LENGTH_LONG).show();
+                            showDialogpACKAGE(MemberBankAddPackages.this,response.getMessage(),intentStatus);
 
                         }
-                        intentStatus.putExtra("txnid","");
-                        intentStatus.putExtra("Amount",Amount);
-                        intentStatus.putExtra("date",currentDate);
-                        intentStatus.putExtra("productinfo","Buy Package "+PackageName);
-                        startActivity(intentStatus);
-                        finish();
+
                     }
 
                     @Override
@@ -427,6 +429,36 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
         }
 
     }
+
+    public void showDialogpACKAGE(Activity activity, String Message,final Intent intentStatus1) {
+        android.app.AlertDialog.Builder dialog=new android.app.AlertDialog.Builder(activity);
+
+        dialog.setTitle("SafePe Alert")
+                .setCancelable(false)
+                .setMessage("\n"+Message+"\n")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                        String currentDate = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(new Date());
+                        intentStatus1.putExtra("txnid","");
+                        intentStatus1.putExtra("Amount",Amount);
+                        intentStatus1.putExtra("date",currentDate);
+                        intentStatus1.putExtra("productinfo","Buy Package "+PackageName);
+                        startActivity(intentStatus1);
+                        finish();
+                        dialog.dismiss();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setIcon(getResources().getDrawable(R.drawable.icon_old100))
+                .show();
+    }
+
 
 /*
     @Override
