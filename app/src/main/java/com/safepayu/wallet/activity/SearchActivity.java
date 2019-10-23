@@ -143,13 +143,16 @@ public class SearchActivity extends BaseActivity implements SearchAdapter.OnList
             returnList.add("Package Details");
             
         }else if (search.equalsIgnoreCase("Wallet") || search.equalsIgnoreCase("Commission") ||
-                search.equalsIgnoreCase("Money") || search.equalsIgnoreCase("Withdraw")){
+                search.equalsIgnoreCase("Money") || search.equalsIgnoreCase("Withdraw") ||
+                search.equalsIgnoreCase("Pay") || search.equalsIgnoreCase("Transfer") ||
+                search.equalsIgnoreCase("Transaction")){
             returnList.add("Commission Wallet");
             returnList.add("Transfer Commission Wallet To Main Wallet");
             returnList.add("Add Money");
             returnList.add("Wallet History");
             returnList.add("Withdraw From Wallet");
             returnList.add("Wallet ");
+            returnList.add("Pay ");
             
         }else if (search.equalsIgnoreCase("Recharge")){
             returnList.add("Mobile Recharge");
@@ -206,6 +209,23 @@ public class SearchActivity extends BaseActivity implements SearchAdapter.OnList
             returnList.add("Hotel Booking");
 
 
+        }else if (search.equalsIgnoreCase("offers") || search.equalsIgnoreCase("vouchers")){
+            returnList.add("KFC");
+            returnList.add("Brand Factory");
+            returnList.add("Dominos");
+            returnList.add("Big Bazar");
+
+        }else if (search.equalsIgnoreCase("KFC") || search.equalsIgnoreCase("Dominos")){
+            returnList.add("KFC");
+            returnList.add("Dominos");
+
+        }else if (search.equalsIgnoreCase("Brand Factory") || search.equalsIgnoreCase("Big Bazar")){
+            returnList.add("Brand Factory");
+            returnList.add("Big Bazar");
+
+        }else if (search.equalsIgnoreCase("UPI")){
+            returnList.add("UPI");
+
         }
 
         return returnList;
@@ -243,6 +263,11 @@ public class SearchActivity extends BaseActivity implements SearchAdapter.OnList
         }else if (SearchItem.equalsIgnoreCase("Transfer Commission Wallet To Main Wallet")){
 
             startActivity(new Intent(getApplicationContext(), TransferCommissionToWallet.class));
+            overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+
+        }else if (SearchItem.equalsIgnoreCase("Commission Wallet")){
+
+            startActivity(new Intent(getApplicationContext(), Commission.class));
             overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
 
         }else if (SearchItem.equalsIgnoreCase("Add Money")){
@@ -372,6 +397,31 @@ public class SearchActivity extends BaseActivity implements SearchAdapter.OnList
         }else if (SearchItem.equalsIgnoreCase("Hotel Booking")){
 
             startActivity(new Intent(getApplicationContext(), HotelActivity.class));
+            overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+
+        }else if (SearchItem.equalsIgnoreCase("KFC")){
+
+            Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+
+        }else if (SearchItem.equalsIgnoreCase("Dominos")){
+
+            Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+
+        }else if (SearchItem.equalsIgnoreCase("Brand Factory")){
+
+            Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+
+        }else if (SearchItem.equalsIgnoreCase("Big Bazar")){
+
+            Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+
+        }else if (SearchItem.equalsIgnoreCase("UPI")){
+
+            Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+
+        }else if (SearchItem.equalsIgnoreCase("Pay")){
+
+            startActivity(new Intent(getApplicationContext(), SendMoneyToWallet.class));
             overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
 
         }

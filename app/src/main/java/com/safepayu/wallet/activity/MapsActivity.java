@@ -18,10 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -40,6 +36,11 @@ import com.safepayu.wallet.R;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.multidex.MultiDex;
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, View.OnClickListener {
 
@@ -54,6 +55,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LinearLayout liSelectLocation;
     private String address, city, state, country, postalCode, knownName, subLocality, subAdmin1, subAdmin, subAdmin2, first, second;
     private TextView tvLatLong;
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

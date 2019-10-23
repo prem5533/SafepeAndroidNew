@@ -64,8 +64,8 @@
 
                     <pl.droidsonroids.gif.GifImageView
                         android:id="@+id/statusImage"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
                         android:src="@drawable/pending"
                         android:layout_gravity="center"
                         android:scaleType="centerCrop"

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.MultiDex;
 
 
+
 public class HotelActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button searhHotelBtn, backBtn;

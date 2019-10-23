@@ -8,14 +8,14 @@ android {
         applicationId "com.safepayu.wallet"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 34
-        versionName "1.7.6"
+        versionCode 35
+        versionName "1.7.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
     buildTypes {
         release {
-            multiDexKeepFile file('multidex-config.txt')
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

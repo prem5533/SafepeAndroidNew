@@ -213,7 +213,12 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
                         transferWalletToBankRequest.setBeneId(BenID);
                         transferWalletToBankRequestDate=transferWalletToBankRequest;
 
-                        resendOtp();
+                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+                            startActivity(new Intent(SendMoney.this,CreatePassCodeActivity.class));
+                        } else {
+                            PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoney.this, SendMoney.this, "");
+                            passcodeDialog.show();
+                        }
                     }
 
                 }else {
@@ -385,6 +390,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
             intentStatus.putExtra("Amount",AmountED.getText().toString().trim());
             intentStatus.putExtra("date",responseData.getDate());
             intentStatus.putExtra("productinfo","Wallet To Bank Transaction");
+            intentStatus.putExtra("msg",responseData.getMessage());
             startActivity(intentStatus);
             finish();
             dialogStatus.dismiss();
@@ -462,12 +468,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
                     public void onSuccess(UserResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                                startActivity(new Intent(SendMoney.this,CreatePassCodeActivity.class));
-                            } else {
-                                PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoney.this, SendMoney.this, "");
-                                passcodeDialog.show();
-                            }
+
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), response.getMessage(), false);
                         }
