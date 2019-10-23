@@ -276,7 +276,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/wallet1"/>
+                        android:src="@drawable/ic_wallet"/>
 
                     <TextView
                         android:id="@+id/tv_historyWallet"
@@ -384,6 +384,32 @@
                         android:textColor="@color/black"
                         android:textSize="15sp" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_logoutAlldevice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_logout_all"/>
+
+                    <TextView
+                        android:id="@+id/tv_logoutAlldevice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Logout From All Devices"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/roboto_regular"/>
+                </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/li_logout"
                     android:layout_width="match_parent"

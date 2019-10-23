@@ -10,6 +10,8 @@ public class LoginResponse extends BaseResponse{
     @SerializedName("userid")
     String userId;
 
+    private String remember_me;
+
     public LoginResponse() {
     }
 
@@ -41,5 +43,13 @@ public class LoginResponse extends BaseResponse{
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getRemember_me() {
+        return remember_me;
+    }
+
+    public void setRemember_me(String remember_me) {
+        this.remember_me = remember_me;
     }
 }

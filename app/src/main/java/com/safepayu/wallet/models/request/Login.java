@@ -19,6 +19,13 @@ public class Login {
     @SerializedName("userid")
     @Expose
     String userId;
+    /**
+     * deviceid : CS123
+     * rememberme : true
+     */
+
+    private String deviceid;
+    private boolean rememberme;
 
     public Login() {
     }
@@ -26,6 +33,13 @@ public class Login {
     public Login(String mobile, String password) {
         this.mobile = mobile;
         this.password = password;
+    }
+
+    public Login(String mobile, String password,String deviceid, boolean rememberme) {
+        this.mobile = mobile;
+        this.password = password;
+        this.deviceid = deviceid;
+        this.rememberme = rememberme;
     }
 
     public String getMobile() {
@@ -66,5 +80,21 @@ public class Login {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getDeviceid() {
+        return deviceid;
+    }
+
+    public void setDeviceid(String deviceid) {
+        this.deviceid = deviceid;
+    }
+
+    public boolean isRememberme() {
+        return rememberme;
+    }
+
+    public void setRememberme(boolean rememberme) {
+        this.rememberme = rememberme;
     }
 }
