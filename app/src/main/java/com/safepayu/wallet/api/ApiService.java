@@ -178,4 +178,7 @@ public interface ApiService {
 
     @GET("api/safepe/bankPaymentList")
     Single<MyOrderResponse>getBankPayment();
+
+    @GET("api/safepe/checkBuyPackage")
+    Single<BaseResponse> getcheckBuyPackage();
 }

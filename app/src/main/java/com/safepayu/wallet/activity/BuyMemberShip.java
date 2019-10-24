@@ -1,7 +1,9 @@
 package com.safepayu.wallet.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,9 +14,6 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -24,10 +23,13 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.halper.RecyclerLayoutManager;
 import com.safepayu.wallet.models.request.BuyPackage;
+import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.models.response.PackageListData;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -45,6 +47,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     private RadioGroup paymentMode;
     private CardView cardView;
     private double FinalAmount;
+    boolean checkPac=false;
     String TransactionType="0",PackageID="",PackageName="",PackageAmount;
 
     @Override
@@ -143,6 +146,31 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                 }));
     }
 
+    private boolean checkBuyPackage() {
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getcheckBuyPackage()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        loadingDialog.hideDialog();
+                        checkPac=response.getStatus();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.buy_packageId), false, e.getCause());
+                    }
+                }));
+
+        return checkPac;
+    }
+
     private void BuyPackageMethod(BuyPackage buyPackage){
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
@@ -185,30 +213,27 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
             case R.id.btn_proceed:
                 if (mAdapter.getSelectedData() != null) {
 
-                    if (TransactionType.equalsIgnoreCase("1")){
-
-//                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-//                            startActivity(new Intent(BuyMemberShip.this,CreatePassCodeActivity.class));
-//                        } else {
-//                            PasscodeDialog passcodeDialog = new PasscodeDialog(BuyMemberShip.this, BuyMemberShip.this, "");
-//                            passcodeDialog.show();
-//                        }
-
-                        Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
-                        intent.putExtra("TransactionType",TransactionType);
-                        intent.putExtra("PackageID",PackageID);
-                        intent.putExtra("PackageName",PackageName);
-                        intent.putExtra("Amount",String.valueOf(FinalAmount));
-                        startActivity(intent);
-                    }else if (TransactionType.equalsIgnoreCase("2")) {
-                        Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
-                        intent.putExtra("TransactionType",TransactionType);
-                        intent.putExtra("PackageID",PackageID);
-                        intent.putExtra("PackageName",PackageName);
-                        intent.putExtra("Amount",String.valueOf(FinalAmount));
-                        startActivity(intent);
+                    if (checkBuyPackage()){
+                        showDialogPackage(this);
                     }else {
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Transfer Type", false);
+                        if (TransactionType.equalsIgnoreCase("1")){
+
+                            Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
+                            intent.putExtra("TransactionType",TransactionType);
+                            intent.putExtra("PackageID",PackageID);
+                            intent.putExtra("PackageName",PackageName);
+                            intent.putExtra("Amount",String.valueOf(FinalAmount));
+                            startActivity(intent);
+                        }else if (TransactionType.equalsIgnoreCase("2")) {
+                            Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
+                            intent.putExtra("TransactionType",TransactionType);
+                            intent.putExtra("PackageID",PackageID);
+                            intent.putExtra("PackageName",PackageName);
+                            intent.putExtra("Amount",String.valueOf(FinalAmount));
+                            startActivity(intent);
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Transfer Type", false);
+                        }
                     }
 
                 } else {
@@ -220,6 +245,28 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                 finish();
                 break;
         }
+    }
+
+    public void showDialogPackage(Activity activity) {
+        AlertDialog.Builder dialog=new AlertDialog.Builder(activity);
+
+        dialog.setTitle("SafePe Alert")
+                .setCancelable(false)
+                .setMessage("\nPackage Already Purchased\nTo Upgrade Your Package Please Contact SafePe Customer Support\n")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                        dialog.dismiss();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setIcon(getResources().getDrawable(R.drawable.icon_old100))
+                .show();
     }
 
     @Override

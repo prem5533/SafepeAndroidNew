@@ -1,12 +1,14 @@
 package com.safepayu.wallet.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.safepayu.wallet.BaseActivity;
@@ -32,9 +34,11 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
     private LoadingDialog loadingDialog;
     private MyOrdersAdapter mAdapter;
     private Button backBtn;
+    private RelativeLayout StatusColorBackground;
 
     private Dialog dialogStatus;
-    private TextView tvTransactionIdTV,tvCustomerNumberId,tvAmount,tvRechargeType,tvDescriptionText,tvOperationText,tvContactSupport,tvDate,tvStatus;
+    private TextView tvTransactionIdTV,tvCustomerNumberId,tvAmount,tvRechargeType,tvDescriptionText,tvOperationText,tvContactSupport,tvDate,tvStatus,tvCustomerNameNumber
+    ,GoToWalletBtn;
     LinearLayout layoutDescription;
 
 
@@ -52,17 +56,19 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
         dialogStatus.setContentView(R.layout.recharge_histroy_detail);
         dialogStatus.setCancelable(true);
 
+        StatusColorBackground=dialogStatus.findViewById(R.id.headerbar);
         tvTransactionIdTV=dialogStatus.findViewById(R.id.tv_recharge_transction_id);
         tvCustomerNumberId=dialogStatus.findViewById(R.id.tv_customer_id_number);
         tvAmount=dialogStatus.findViewById(R.id.tv_wallet_amount);
         tvRechargeType=dialogStatus.findViewById(R.id.tv_recharge_type);
-//        GoToWalletBtn=dialogStatus.findViewById(R.id.recharge_back_btn);
+        GoToWalletBtn=dialogStatus.findViewById(R.id.recharge_back_btn);
         tvDescriptionText=dialogStatus.findViewById(R.id.description);
         tvOperationText=dialogStatus.findViewById(R.id.operationText);
         tvContactSupport=dialogStatus.findViewById(R.id.tv_contct_support);
         layoutDescription=dialogStatus.findViewById(R.id.description_layout);
+        tvCustomerNameNumber=dialogStatus.findViewById(R.id.tv_customer_name_number);
         tvDate=dialogStatus.findViewById(R.id.tv_detil_time_date);
-
+        tvStatus=dialogStatus.findViewById(R.id.tv_status);
 
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +78,20 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
             finish();
         }
     });
+        tvContactSupport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MyOrdersActivity.this,ContactUs.class));
+                dialogStatus.dismiss();
+            }
+        });
 
+        GoToWalletBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogStatus.dismiss();
+            }
+        });
         getBankPayments();
 
 
@@ -134,11 +153,38 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
 
     private void showDetail(MyOrderResponse.BankToWalletBean selectOrderItem) {
 
+        int statusNo=0;
+        String CustNo="";
+
+        try{
+            statusNo=selectOrderItem.getStatus();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if (statusNo==2){
+            tvStatus.setText("Pending");
+            StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.clay_yellow));
+        }else  if (statusNo==1){
+            tvStatus.setText("Successful");
+            StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.green_500));
+        }else {
+            tvStatus.setText("Failed");
+            StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.red_500));
+        }
+
         tvDescriptionText.setText(selectOrderItem.getDescription());
 
         tvTransactionIdTV.setText(selectOrderItem.getTransaction_id());
-        tvCustomerNumberId.setText(selectOrderItem.getUserid());
+      //  tvCustomerNumberId.setText(selectOrderItem.getUserid());
         tvDate.setText(selectOrderItem.getCreated_at());
+        tvRechargeType.setText(selectOrderItem.getDescription());
+        tvAmount.setText(getResources().getString(R.string.rupees)+ " " +selectOrderItem.getAmount());
+        String  usernumber = selectOrderItem.getUserid();
+        String[] parts = usernumber.split("u");
+        String part1 = parts[0]; // 004
+        String part2 = parts[1]; // 034556
+        tvCustomerNumberId.setText(part2);
         dialogStatus.show();
     }
 }

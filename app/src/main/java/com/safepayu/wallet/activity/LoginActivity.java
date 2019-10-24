@@ -60,7 +60,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     String versionName = "", appUrl = "https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
     int versionCode = 0;
     private ImageView im_cross, ShowHidePasswordBtn;
-    private boolean showPass = false,checkedRemember=false;
+    private boolean showPass = false, checkedRemember=false;
     private LoginResponse loginResponse;
 
     //Otp Dialog
@@ -327,7 +327,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 return;
             }
         }
-        Login login = new Login(mobileNo.getText().toString().trim(), password.getText().toString(), BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId(), checkedRemember);
+        //Login login = new Login(mobileNo.getText().toString().trim(), password.getText().toString(), BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
+
+        Login login=new Login();
+        login.setDeviceid(BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
+        login.setMobile(mobileNo.getText().toString().trim());
+        login.setPassword(password.getText().toString().trim());
+
         BaseApp.getInstance().getDisposable().add(apiService.login(login)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
