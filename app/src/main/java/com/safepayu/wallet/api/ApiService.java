@@ -174,4 +174,7 @@ public interface ApiService {
 
     @POST("api/safepe/logoutAlldevices")
     Single<BaseResponse> getlogoutAlldevices();
+
+    @GET("api/safepe/checkBuyPackage")
+    Single<BaseResponse> getcheckBuyPackage();
 }

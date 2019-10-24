@@ -25,7 +25,6 @@ public class Login {
      */
 
     private String deviceid;
-    private boolean rememberme;
 
     public Login() {
     }
@@ -35,11 +34,10 @@ public class Login {
         this.password = password;
     }
 
-    public Login(String mobile, String password,String deviceid, boolean rememberme) {
+    public Login(String mobile, String password,String deviceid) {
         this.mobile = mobile;
         this.password = password;
         this.deviceid = deviceid;
-        this.rememberme = rememberme;
     }
 
     public String getMobile() {
@@ -88,13 +86,5 @@ public class Login {
 
     public void setDeviceid(String deviceid) {
         this.deviceid = deviceid;
-    }
-
-    public boolean isRememberme() {
-        return rememberme;
-    }
-
-    public void setRememberme(boolean rememberme) {
-        this.rememberme = rememberme;
     }
 }

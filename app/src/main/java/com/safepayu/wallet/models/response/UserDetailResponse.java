@@ -106,6 +106,7 @@ public class UserDetailResponse {
         private String state;
         private String country;
         private int pin;
+        private int remember_me;
 
         public int getId() {
             return id;
@@ -369,6 +370,14 @@ public class UserDetailResponse {
 
         public void setPin(int pin) {
             this.pin = pin;
+        }
+
+        public int getRemember_me() {
+            return remember_me;
+        }
+
+        public void setRemember_me(int remember_me) {
+            this.remember_me = remember_me;
         }
     }
 }

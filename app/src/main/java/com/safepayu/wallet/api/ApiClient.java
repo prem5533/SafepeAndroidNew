@@ -84,7 +84,7 @@ public class ApiClient {
                 }
 
 
-                return chain.proceed(request);
+                return response;
             }
         });
 
