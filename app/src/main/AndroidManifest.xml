@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.booking.MovieActivity"></activity>
+        <activity android:name=".activity.MyOrdersActivity"></activity>
+        <activity android:name=".activity.booking.MovieActivity" />
         <activity android:name=".activity.recharge.InsuranceActivity" />
         <activity android:name=".activity.booking.TollActivity" />
         <activity android:name=".activity.booking.DonationActivity" />
