@@ -166,6 +166,18 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Vi
 
             case R.id.tv_done:
 
+                /*Intent intent = getActivity().getIntent();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("string2", str2);
+
+                bundle.putInt("int_id_2", 200);
+
+                i.putExtras(bundle);
+
+                startActivity(i);*/
+
+
                 break;
         }
     }

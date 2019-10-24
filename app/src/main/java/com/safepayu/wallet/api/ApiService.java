@@ -26,6 +26,7 @@ import com.safepayu.wallet.models.response.ForgetPasswordResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
 import com.safepayu.wallet.models.response.HashKeyResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
+import com.safepayu.wallet.models.response.MyOrderResponse;
 import com.safepayu.wallet.models.response.NotificationResponse;
 import com.safepayu.wallet.models.response.OperatorResponse;
 import com.safepayu.wallet.models.response.PackageDetailsResponse;
@@ -174,4 +175,7 @@ public interface ApiService {
 
     @POST("api/safepe/logoutAlldevices")
     Single<BaseResponse> getlogoutAlldevices();
+
+    @GET("api/safepe/bankPaymentList")
+    Single<MyOrderResponse>getBankPayment();
 }
