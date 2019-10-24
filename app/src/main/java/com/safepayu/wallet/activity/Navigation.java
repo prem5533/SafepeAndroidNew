@@ -1366,27 +1366,16 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         if (response.getUser().getStatus()==0){
                             showDialogBlocked(Navigation.this);
                         }else {
-                            if (response.getUser().getRemember_me()==0){
-                                try{
-                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN, null);
-                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, null);
-                                    startActivity(new Intent(Navigation.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                    finish();
-                                }catch (Exception e){
-                                    e.printStackTrace();
-                                }
-                            }else {
-                                BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
+                            BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
 
-                                //BaseApp.getInstance().toastHelper().log(HomeActivity.class, BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER));
-                                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED, String.valueOf(response.getUser().getEmail_verified()));
-                                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE, String.valueOf(response.getUser().getPasscode()));
-                                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_EMAIL,response.getUser().getEmail());
-                                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME,response.getUser().getFirst_name());
-                                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME,response.getUser().getLast_name());
-                                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED,String.valueOf(response.getUser().getBlocked()));
-                                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED,String.valueOf(response.getUser().getPackage_status()));
-                            }
+                            //BaseApp.getInstance().toastHelper().log(HomeActivity.class, BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED, String.valueOf(response.getUser().getEmail_verified()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE, String.valueOf(response.getUser().getPasscode()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_EMAIL,response.getUser().getEmail());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME,response.getUser().getFirst_name());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME,response.getUser().getLast_name());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED,String.valueOf(response.getUser().getBlocked()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED,String.valueOf(response.getUser().getPackage_status()));
                         }
                     }
 
@@ -1394,16 +1383,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     public void onError(Throwable e) {
                         Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, true, e);
-                        /*
-                        if (e.getMessage().contains("401")){
-                            try{
-                                dialog.dismiss();
-                                startActivity(new Intent(Navigation.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                                finish();
-                            }catch (Exception e1){
-                                e1.printStackTrace();
-                            }
-                        }*/
                     }
                 }));
     }
