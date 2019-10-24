@@ -47,7 +47,6 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     private RadioGroup paymentMode;
     private CardView cardView;
     private double FinalAmount;
-    boolean checkPac=false;
     String TransactionType="0",PackageID="",PackageName="",PackageAmount;
 
     @Override
@@ -146,7 +145,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                 }));
     }
 
-    private boolean checkBuyPackage() {
+    private void checkBuyPackage() {
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
@@ -158,7 +157,29 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                     @Override
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
-                        checkPac=response.getStatus();
+                        if (response.getStatus()){
+                            showDialogPackage(BuyMemberShip.this);
+                        }else {
+                            if (TransactionType.equalsIgnoreCase("1")){
+
+                                Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
+                                intent.putExtra("TransactionType",TransactionType);
+                                intent.putExtra("PackageID",PackageID);
+                                intent.putExtra("PackageName",PackageName);
+                                intent.putExtra("Amount",String.valueOf(FinalAmount));
+                                startActivity(intent);
+                            }else if (TransactionType.equalsIgnoreCase("2")) {
+                                Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
+                                intent.putExtra("TransactionType",TransactionType);
+                                intent.putExtra("PackageID",PackageID);
+                                intent.putExtra("PackageName",PackageName);
+                                intent.putExtra("Amount",String.valueOf(FinalAmount));
+                                startActivity(intent);
+                            }else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Transfer Type", false);
+                            }
+                        }
+
                     }
 
                     @Override
@@ -167,8 +188,6 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.buy_packageId), false, e.getCause());
                     }
                 }));
-
-        return checkPac;
     }
 
     private void BuyPackageMethod(BuyPackage buyPackage){
@@ -213,28 +232,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
             case R.id.btn_proceed:
                 if (mAdapter.getSelectedData() != null) {
 
-                    if (checkBuyPackage()){
-                        showDialogPackage(this);
-                    }else {
-                        if (TransactionType.equalsIgnoreCase("1")){
-
-                            Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
-                            intent.putExtra("TransactionType",TransactionType);
-                            intent.putExtra("PackageID",PackageID);
-                            intent.putExtra("PackageName",PackageName);
-                            intent.putExtra("Amount",String.valueOf(FinalAmount));
-                            startActivity(intent);
-                        }else if (TransactionType.equalsIgnoreCase("2")) {
-                            Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
-                            intent.putExtra("TransactionType",TransactionType);
-                            intent.putExtra("PackageID",PackageID);
-                            intent.putExtra("PackageName",PackageName);
-                            intent.putExtra("Amount",String.valueOf(FinalAmount));
-                            startActivity(intent);
-                        }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Transfer Type", false);
-                        }
-                    }
+                    checkBuyPackage();
 
                 } else {
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Pacakage", false);
