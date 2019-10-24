@@ -30,6 +30,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -66,11 +72,6 @@ import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -1258,8 +1259,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 showDialogLogoutAll(Navigation.this);
 
                 break;
-
-
         }
 
     }
@@ -1383,8 +1382,17 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     @Override
                     public void onError(Throwable e) {
                         Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
-
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, true, e);
+                        /*
+                        if (e.getMessage().contains("401")){
+                            try{
+                                dialog.dismiss();
+                                startActivity(new Intent(Navigation.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                                finish();
+                            }catch (Exception e1){
+                                e1.printStackTrace();
+                            }
+                        }*/
                     }
                 }));
     }
@@ -1403,7 +1411,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 //.setNegativeButton(android.R.string.no, null)
                 .setIcon(getResources().getDrawable(R.drawable.icon_old100))
                 .show();
-
     }
 
     public void showDialogLogoutAll(Activity activity) {
@@ -1418,12 +1425,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Continue with delete operation
-                        Intent intentAlldevice = new Intent(getApplicationContext(), LoginActivity.class);
-                        intentAlldevice.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN, null);
-                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, null);
-                        startActivity(intentAlldevice);
-                        finish();
+
+                        getlogoutAlldevices();
+
                         dialog.dismiss();
                     }
                 })
@@ -1501,5 +1505,35 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         return bitmap;
     }
 
+    private void getlogoutAlldevices() {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
 
+        BaseApp.getInstance().getDisposable().add(apiService.getlogoutAlldevices()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.getStatus()) {
+                            Intent intentAlldevice = new Intent(getApplicationContext(), LoginActivity.class);
+                            intentAlldevice.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN, null);
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, null);
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGOUT_ALL, "1");
+                            startActivity(intentAlldevice);
+                            finish();
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(drawer, response.getMessage(), false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(drawer, false, e.getCause());
+                    }
+                }));
+    }
 }

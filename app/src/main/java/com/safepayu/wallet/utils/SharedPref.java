@@ -26,6 +26,7 @@ public class SharedPref {
     public final String EMAIL_VERIFIED = "email_verified";
     public final String FIREBASE_TOKEN = "FirebaseToken";
     public final String REMEMBER_ME = "remember_me";
+    public final String LOGOUT_ALL = "logout_all";
 
     public SharedPref(Context context) {
         this.context = context;

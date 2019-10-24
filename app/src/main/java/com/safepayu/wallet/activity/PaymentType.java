@@ -37,7 +37,6 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -185,7 +184,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             CircleCode=intent.getStringExtra("CircleCode");
             OperatorId=intent.getStringExtra("OperatorId");
 
-            AmountTV.setText(Amount);
+            AmountTV.setText(getResources().getString(R.string.rupees)+" "+Amount);
             if (PaymentFor.equalsIgnoreCase("Wallet")) {
                 WalletBtnLayout.setVisibility(GONE);
             }
@@ -233,8 +232,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                     @Override
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
-                        Date currentTime = Calendar.getInstance().getTime();
-                        String date=currentTime.toString();
+                        String date=new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
                         if (response.getStatus()) {
 
                             if (response.getStatusCode()==0){
@@ -330,7 +328,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         //key|txnid|amount|productinfo|firstname|email_id|udf1|udf2|udf3|udf4|udf5||||||salt|key
 
         customer_phone = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
-        payment_mode="production";//test
+        payment_mode="production";//test production
         customer_address1="noida";
         customer_address2="noida";
         customer_city="noida";
@@ -344,6 +342,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         merchant_udf5="udf5";
 
         merchant_payment_amount = Float.parseFloat(Amount);
+
 
         hash = hashKeyResponse.getMerchant_key() + "|" + hashKeyResponse.getTransactionId() + "|" + merchant_payment_amount + "|" + hashKeyRequest.getMerchant_productInfo()
                 + "|" + hashKeyRequest.getCustomer_firstName()
@@ -450,9 +449,19 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             sendPaymentGatewayDetailsRequest.setMode_of_payment(mode);
             sendPaymentGatewayDetailsRequest.setStatus(status);
             sendPaymentGatewayDetailsRequest.setEasy_pay_id(easepayid);
-            sendPaymentGatewayDetailsRequest.setPackage_amount(Amount);
-            sendPaymentGatewayDetailsRequest.setPackage_id(OperatorCode);
             sendPaymentGatewayDetailsRequest.setType("bank");
+
+            if (PaymentFor.equalsIgnoreCase("Wallet")) {
+                sendPaymentGatewayDetailsRequest.setPackage_amount("");
+                sendPaymentGatewayDetailsRequest.setPackage_id("");
+
+            } else if (PaymentFor.equalsIgnoreCase("Buy Package")){
+                sendPaymentGatewayDetailsRequest.setPackage_amount(Amount);
+                sendPaymentGatewayDetailsRequest.setPackage_id(OperatorCode);
+            } else {
+                sendPaymentGatewayDetailsRequest.setPackage_amount("");
+                sendPaymentGatewayDetailsRequest.setPackage_id("");
+            }
 
             if (resultCode==-1){
                 intentStatus.putExtra("status","success");

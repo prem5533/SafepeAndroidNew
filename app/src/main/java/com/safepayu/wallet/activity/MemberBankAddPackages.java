@@ -301,7 +301,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                     intent.putExtra("PaymentType",PackageName);
                     intent.putExtra("PaymentFor","Buy Package");
                     intent.putExtra("RechargeTypeId","0");
-                    intent.putExtra("OperatorCode","");
+                    intent.putExtra("OperatorCode",PackageID);
                     intent.putExtra("CircleCode","0");
                     intent.putExtra("OperatorId","");
                     startActivity(intent);
