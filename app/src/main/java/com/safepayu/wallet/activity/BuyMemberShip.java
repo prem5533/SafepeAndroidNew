@@ -251,7 +251,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
 
         dialog.setTitle("SafePe Alert")
                 .setCancelable(false)
-                .setMessage("\nPackage Already Purchased\nTo Upgrade Your Package Please Contact SafePe Customer Support\n")
+                .setMessage("\nPackage Already Purchased.\nTo Upgrade Your Package Please Contact SafePe Customer Support\n")
 
                 // Specifying a listener allows you to take an action before dismissing the dialog.
                 // The dialog is automatically dismissed when a dialog button is clicked.
