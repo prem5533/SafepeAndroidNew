@@ -26,9 +26,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -48,6 +45,8 @@ import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
