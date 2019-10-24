@@ -910,8 +910,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
             case R.id.li_myorder:
                 drawer.closeDrawers();
-
-                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(Navigation.this, MyOrdersActivity.class));
+              //  overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
                 tvMyOrders.setTextColor(getResources().getColor(R.color.bue_A800));
                 tvProfile.setTextColor(getResources().getColor(R.color.black));

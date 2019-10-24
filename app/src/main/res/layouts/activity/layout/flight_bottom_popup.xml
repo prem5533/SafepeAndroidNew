@@ -49,7 +49,9 @@
             android:text="Economy"
             android:textSize="15sp"
             android:fontFamily="@font/roboto_regular"
-            android:buttonTint="@color/bue_A800"/>
+            android:buttonTint="@color/bue_A800"
+            android:checked="true"
+            />
 
         <RadioButton
             android:layout_width="fill_parent"
@@ -127,13 +129,14 @@
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:padding="8dp"
+                        android:visibility="gone"
                         android:src="@drawable/ic_minus"/>
                     <ImageView
                         android:id="@+id/imageAdultsMinusgray"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:padding="8dp"
-                        android:visibility="gone"
+
                         android:src="@drawable/ic_minus_gray"/>
                 </FrameLayout>
 
@@ -147,6 +150,9 @@
                 android:fontFamily="@font/roboto_regular"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"/>
+                <FrameLayout
+                    android:layout_width="45dp"
+                    android:layout_height="45dp">
 
                 <ImageView
                     android:id="@+id/imageAdultsPlus"
@@ -154,6 +160,14 @@
                     android:layout_height="45dp"
                     android:padding="8dp"
                     android:src="@drawable/ic_plus"/>
+                    <ImageView
+                        android:id="@+id/imageAdultsPlusgray"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:padding="8dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_plus_gray"/>
+                </FrameLayout>
 
             </LinearLayout>
 
@@ -195,28 +209,53 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center">
-                <ImageView
-                    android:id="@+id/imageChildrenMinus"
+
+                <FrameLayout
                     android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_minus"/>
+                    android:layout_height="45dp">
+
+                    <ImageView
+                        android:id="@+id/imageChildrenMinus"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_minus" />
+
+                    <ImageView
+                        android:id="@+id/imageChildrenMinusgray"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:padding="8dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_minus_gray"/>
+                </FrameLayout>
                 <TextView
+                    android:id="@+id/tvChildrenCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1"
+                    android:text=""
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"/>
-
+                    <FrameLayout
+                         android:layout_width="45dp"
+                        android:layout_height="45dp">
                 <ImageView
                     android:id="@+id/imageChildrenPlus"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:padding="8dp"
                     android:src="@drawable/ic_plus"/>
+                <ImageView
+                    android:id="@+id/imageChildrenPlusgray"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:padding="8dp"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_plus_gray"/>
+            </FrameLayout>
 
             </LinearLayout>
 
@@ -259,26 +298,56 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center">
-                <ImageView
+
+                <FrameLayout
                     android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_minus"/>
+                    android:layout_height="45dp">
+
+                    <ImageView
+                        android:id="@+id/imageInfantMinus"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_minus" />
+
+                    <ImageView
+                        android:id="@+id/imageInfantMinusgray"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:padding="8dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_minus_gray"/>
+                </FrameLayout>
+
                 <TextView
+                    android:id="@+id/tvInfantCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1"
+                    android:text=""
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"/>
 
-                <ImageView
+                <FrameLayout
                     android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_plus"/>
+                    android:layout_height="45dp">
+
+                    <ImageView
+                        android:id="@+id/imageInfantPlus"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_plus" />
+                    <ImageView
+                        android:id="@+id/imageInfantPlusgray"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:padding="8dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_plus_gray"/>
+                </FrameLayout>
 
             </LinearLayout>
 
