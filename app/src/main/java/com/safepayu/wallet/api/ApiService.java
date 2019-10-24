@@ -171,4 +171,7 @@ public interface ApiService {
 
     @GET("api/safepe/getNotificationData")
     Single<NotificationResponse> getNotificationData();
+
+    @POST("api/safepe/logoutAlldevices")
+    Single<BaseResponse> getlogoutAlldevices();
 }

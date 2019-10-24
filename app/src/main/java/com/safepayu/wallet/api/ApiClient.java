@@ -1,9 +1,12 @@
 package com.safepayu.wallet.api;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.safepayu.wallet.BaseApp;
+import com.safepayu.wallet.activity.LoginActivity;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -65,8 +68,22 @@ public class ApiClient {
                 if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN)!=null) {
                         requestBuilder.addHeader("Authorization", "Bearer "+BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN));
                 }
-
                 Request request = requestBuilder.build();
+                Response response = chain.proceed(request);
+
+                if (response.code() == 401) {
+                    try{
+                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN, null);
+                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, null);
+                        context.startActivity(new Intent(context, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        ((Activity)context).finish();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    return response;
+                }
+
+
                 return chain.proceed(request);
             }
         });

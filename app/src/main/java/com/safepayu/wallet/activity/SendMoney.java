@@ -79,7 +79,6 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         setToolbar(false, null, false);
 
         loadingDialog = new LoadingDialog(this);
-        Mobile=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
         
         AddBankBenBtn=findViewById(R.id.BankBenAddBtn);
@@ -185,7 +184,12 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
             }
         });
 
-        getBenList();
+        try {
+            Mobile=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
+            getBenList();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -265,18 +269,30 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
                         try{
                             if (response.isStatus()) {
 
-                                if (response.getBeneficiary().size()>0){
-                                    for (int i=0;i<response.getBeneficiary().size();i++){
-                                        NameList.add(response.getBeneficiary().get(i).getName());
-                                        IdList.add(String.valueOf(response.getBeneficiary().get(i).getId()));
-                                        BenIdList.add(response.getBeneficiary().get(i).getBenId());
-                                    }
+                                try{
+                                    if (response.getBeneficiary().size()>0){
+                                        try{
+                                            for (int i=0;i<response.getBeneficiary().size();i++){
+                                                NameList.add(response.getBeneficiary().get(i).getName());
+                                                IdList.add(String.valueOf(response.getBeneficiary().get(i).getId()));
+                                                BenIdList.add(response.getBeneficiary().get(i).getBenId());
+                                            }
 
-                                    ArrayAdapter<String> TransferType= new ArrayAdapter<>(SendMoney.this,android.R.layout.simple_spinner_item,NameList);
-                                    TransferType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                    BankBenSpinner.setAdapter(TransferType);
-                                }else {
-                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"No Beneficiary Found!. Please Add One",true);
+                                            try{
+                                                ArrayAdapter<String> TransferType= new ArrayAdapter<>(SendMoney.this,android.R.layout.simple_spinner_item,NameList);
+                                                TransferType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                                BankBenSpinner.setAdapter(TransferType);
+                                            }catch (Exception e){
+                                                e.printStackTrace();
+                                            }
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
+                                    }else {
+                                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"No Beneficiary Found!. Please Add One",true);
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
                                 }
                             }else {
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);
@@ -312,6 +328,10 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
                         loadingDialog.hideDialog();
                         responseData=response;
                         ShowPending(response);
+
+                        if (response.getStatusCode()==401){
+
+                        }
                     }
 
                     @Override
