@@ -58,8 +58,15 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
 
         try{
             Mobile=getIntent().getStringExtra("Mobile");
-            MobileED.setText(Mobile);
+
+            if (Mobile==null || TextUtils.isEmpty(Mobile)){
+
+            }else {
+                MobileED.setText(Mobile);
+            }
+
         }catch (Exception e){
+            Mobile="";
             e.printStackTrace();
         }
 
