@@ -185,7 +185,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             OperatorId=intent.getStringExtra("OperatorId");
 
             AmountTV.setText(getResources().getString(R.string.rupees)+" "+Amount);
-            if (PaymentFor.equalsIgnoreCase("Wallet")) {
+            if (PaymentFor.equalsIgnoreCase("Wallet") || PaymentFor.equalsIgnoreCase("Buy Package")) {
                 WalletBtnLayout.setVisibility(GONE);
             }
             NetBankingBtnLayout.setVisibility(GONE);
@@ -438,7 +438,6 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             }catch (Exception e){
                 e.printStackTrace();
             }
-
             
             sendPaymentGatewayDetailsRequest.setUser_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
             sendPaymentGatewayDetailsRequest.setBank_ref_no(bank_ref_num);
@@ -478,7 +477,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                     }
 
                 } else if (PaymentFor.equalsIgnoreCase("Buy Package")){
-                    BuyPackageMethod(txnid);
+                    BuyPackageMethod(txnid,easepayid);
                 } else {
 
                     RechargeRequest rechargeRequest = new RechargeRequest();
@@ -534,7 +533,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
 
         if (isPasscodeMatched){
             if (PaymentFor.equalsIgnoreCase("Buy Package")){
-                BuyPackageMethod("");
+                BuyPackageMethod("","");
             }else {
                 RechargeRequest rechargeRequest=new RechargeRequest();
                 rechargeRequest.setAmount(Amount);
@@ -556,7 +555,8 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
 
     }
 
-    private void BuyPackageMethod(final String txnid){
+    private void BuyPackageMethod(final String txnid,final String easepayid){
+        buyPackageFromDB.setRefrence_no(easepayid);
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 

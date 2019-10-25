@@ -284,13 +284,14 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                         passcodeDialog.show();
                     }
                 }else {
+                    TransactionType="3";
                     buyPackage.setTransaction_type(TransactionType);
                     buyPackage.setPackage_id(PackageID);
                     buyPackage.setBuy_date("");
                     buyPackage.setPayment_mode("Payment Gateway");
                     buyPackage.setRefrence_no("");
                     buyPackage.setDocument_attached("");
-                    buyPackage.setPaid_to_account(BankNameText);
+                    buyPackage.setPaid_to_account("By Admin");
                     buyPackage.setPaid_from_account("");
                     buyPackageFromDB=buyPackage;
 

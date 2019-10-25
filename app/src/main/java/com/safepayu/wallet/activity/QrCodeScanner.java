@@ -252,18 +252,26 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE) {
-            fromGallery=true;
+        try{
+            if (resultCode==0){
 
-            try {
-                Uri uri = data.getData();
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            }else {
+                if (requestCode == PICK_IMAGE) {
+                    fromGallery=true;
 
-                String UserId=GetResultFromBitmap(bitmap);
-                getUserDetails(UserId);
-            } catch (IOException e) {
-                e.printStackTrace();
+                    try {
+                        Uri uri = data.getData();
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+
+                        String UserId=GetResultFromBitmap(bitmap);
+                        getUserDetails(UserId);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
