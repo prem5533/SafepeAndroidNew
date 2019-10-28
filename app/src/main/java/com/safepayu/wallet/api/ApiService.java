@@ -44,6 +44,7 @@ import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
 import com.safepayu.wallet.models.response.WalletHistoryResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
+import com.safepayu.wallet.models.response.booking.FlightSourceResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.Body;
@@ -181,4 +182,8 @@ public interface ApiService {
 
     @GET("api/safepe/checkBuyPackage")
     Single<BaseResponse> getcheckBuyPackage();
+
+    @GET("Flights/Airports?flightType=1")
+    Single<FlightSourceResponse> getFlightSources();
+
 }

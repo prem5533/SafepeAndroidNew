@@ -1,33 +1,68 @@
 package com.safepayu.wallet.activity.booking;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.safepayu.wallet.BaseApp;
-import com.safepayu.wallet.R;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.MultiDex;
 
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.safepayu.wallet.BaseApp;
+import com.safepayu.wallet.R;
+import com.safepayu.wallet.api.ApiClientBooking;
+import com.safepayu.wallet.api.ApiService;
+import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.response.booking.FlightSourceResponse;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class FlightsActivity extends AppCompatActivity implements View.OnClickListener {
-     private TextView tvOneWay, tvTwoWay;
+     private TextView tvOneWay, tvTwoWay,SourceDescTV,DestinationDescTV;
      public static TextView tvFlightTraveller;
     private ImageView imageOneWay, imageTwoWay;
     private Button searchFlightBtn,backBtn;
     private LinearLayout liayoutClassAdult;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
+    private LoadingDialog loadingDialog;
+    private ArrayList<String> AirportCodeList,CityList,AirportDescList;
+    AutoCompleteTextView SourceACTV,DestinationACTV;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -40,7 +75,33 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flights);
 
+        loadingDialog = new LoadingDialog(this);
+
         findId();
+
+        SourceACTV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                String city=SourceACTV.getText().toString();
+                int index=CityList.indexOf(city);
+                SourceACTV.setText(city+" -("+AirportCodeList.get(index)+")");
+                SourceACTV.setSelection(SourceACTV.getText().toString().length());
+                SourceDescTV.setText(AirportDescList.get(index));
+            }
+        });
+
+        DestinationACTV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String city=DestinationACTV.getText().toString();
+                int index=CityList.indexOf(city);
+                DestinationACTV.setText(city+" -("+AirportCodeList.get(index)+")");
+                DestinationACTV.setSelection(DestinationACTV.getText().toString().length());
+                DestinationDescTV.setText(AirportDescList.get(index));
+
+            }
+        });
     }
 
     private void findId() {
@@ -52,6 +113,10 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         imageOneWay = findViewById(R.id.image_one_way);
         imageTwoWay = findViewById(R.id.image_two_way);
         liayoutClassAdult = findViewById(R.id.layout_class_traveller_tab);
+        SourceACTV= findViewById(R.id.sourceFlight);
+        DestinationACTV= findViewById(R.id.destinationFlight);
+        SourceDescTV= findViewById(R.id.sourceFlightDesc);
+        DestinationDescTV= findViewById(R.id.destinationFlightDesc);
 
         //set listener
         tvOneWay.setOnClickListener(this);
@@ -64,13 +129,20 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         tvOneWay.setTextColor(getResources().getColor(R.color.white));
         imageOneWay.setVisibility(View.VISIBLE);
 
-
-
-
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String name = prefs.getString("adult", "No name defined");//"No name defined" is the default value.
       //  int idName = prefs.getInt("idName", 0); //0 is the default value.
 
+        AirportCodeList=new ArrayList<>();
+        CityList=new ArrayList<>();
+        AirportDescList=new ArrayList<>();
+
+        AirportCodeList.clear();
+        CityList.clear();
+        AirportDescList.clear();
+
+        //getFlightSources("1");
+        new GetSoureces().execute();
     }
 
     @Override
@@ -179,8 +251,6 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
 
             tvInfantCount.setText("" +mintegerInfant);
             tvChildrenCount.setText("" + mintegerChild);
-
-
 
         }
 
@@ -382,4 +452,148 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+
+    private void getFlightSources(String flightType) {
+          loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiService apiService = ApiClientBooking.getClient(this).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getFlightSources()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<FlightSourceResponse>() {
+                    @Override
+                    public void onSuccess(FlightSourceResponse response) {
+                          loadingDialog.hideDialog();
+
+
+//                          if (response.getBankDetails().size()>0){
+//                              for (int i=0;i<response.getBankDetails().size();i++){
+//                                  AirportCodeList.add(response.getBankDetails().get(i).getAirportCode());
+//                                  CityList.add(response.getBankDetails().get(i).getCity());
+//                                  AirportDescList.add(response.getBankDetails().get(i).getAirportDesc());
+//                              }
+//                              ArrayAdapter<String> adapter = new ArrayAdapter<String>(FlightsActivity.this, android.R.layout.simple_dropdown_item_1line, CityList);
+//                              SourceACTV.setAdapter(adapter);
+//                              SourceACTV.setThreshold(3);
+//                          }else {
+//                              BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_flight),"No Data Found",true);
+//                          }
+
+                        AirportCodeList.add(response.getAirportCode());
+                        CityList.add(response.getCity());
+                        AirportDescList.add(response.getAirportDesc());
+                    }
+
+
+                    @Override
+                    public void onError(Throwable e) {
+                          loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_flight),e.getMessage(),true);
+                    }
+                }));
+    }
+
+    public class GetSoureces extends AsyncTask<Object, Void, Object> {
+        public ProgressDialog dialog;
+        int status_code = 0;
+        private String response = "", actualString = "";
+        private  String ConsumerKey="CF1AA97C156A138796A39CA8E7CFDEB3D17C8D60";
+        private String ConsumerSecret="7FAEC265BC38BA83F21D23C88A1C416F2820D0B1";
+
+        @Override
+        protected Object doInBackground(Object... arg0) {
+            try {
+                HttpClient httpClient = new DefaultHttpClient();
+                String URL = "http://webapi.i2space.co.in/Flights/Airports?flightType=1";
+                //HttpPost httpost = new HttpPost(URL);
+                HttpGet httpGet = new HttpGet(URL);
+
+                httpGet.addHeader("ConsumerKey",ConsumerKey);
+                httpGet.addHeader("ConsumerSecret",ConsumerSecret);
+
+                HttpParams httpParameters = new BasicHttpParams();
+                int timeoutConnection = 3000;
+                HttpConnectionParams.setConnectionTimeout(httpParameters,
+                        timeoutConnection);
+                int timeoutSocket = 3000;
+                HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+                HttpContext localContext = new BasicHttpContext();
+                HttpResponse httpresponse = httpClient.execute(httpGet, localContext);
+                status_code = httpresponse.getStatusLine().getStatusCode();
+                HttpEntity entity = httpresponse.getEntity();
+                InputStream stream = entity.getContent();
+                BufferedReader buffer = new BufferedReader(new InputStreamReader(
+                        stream));
+
+                String s = "";
+
+                while ((s = buffer.readLine()) != null) {
+                    response += s;
+                }
+
+
+                actualString = response;
+
+                if (response.startsWith("null")) {
+                    actualString = response;
+                }
+
+
+            } catch (Exception ex) {
+                String msg = ex.getMessage();
+            }
+            return actualString;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog = ProgressDialog.show(FlightsActivity.this, "Getting Sources...",
+                    "Please wait...", true);
+        }
+
+        @Override
+        protected void onPostExecute(Object result) {
+
+            JSONObject jsonObject = null;
+            JSONArray jsonArray = null;
+            dialog.dismiss();
+            if (status_code == 200) {
+                try {
+                    jsonArray = new JSONArray(response);
+                    Log.v("response",response.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (jsonArray.length()>0){
+                              for (int i=0;i<jsonArray.length();i++){
+                                  try {
+                                      jsonObject=jsonArray.getJSONObject(i);
+                                  } catch (JSONException e) {
+                                      e.printStackTrace();
+                                  }
+                                  try {
+                                      AirportCodeList.add(jsonObject.getString("AirportCode"));
+                                      CityList.add(jsonObject.getString("City"));
+                                      AirportDescList.add(jsonObject.getString("AirportDesc"));
+                                  } catch (JSONException e) {
+                                      e.printStackTrace();
+                                  }
+
+                              }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(FlightsActivity.this, android.R.layout.simple_dropdown_item_1line, CityList);
+                    SourceACTV.setAdapter(adapter);
+                    SourceACTV.setThreshold(3);
+                    DestinationACTV.setAdapter(adapter);
+                    DestinationACTV.setThreshold(3);
+
+                }else {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_flight),"No Data Found",true);
+                }
+
+            }
+
+        }
+    }
 }

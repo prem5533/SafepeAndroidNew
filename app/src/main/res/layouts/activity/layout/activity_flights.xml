@@ -6,33 +6,33 @@
     android:background="@color/white"
     android:id="@+id/relative_flight"
     tools:context=".activity.booking.FlightsActivity">
-    <RelativeLayout
-    android:id="@+id/headerbar"
-    android:layout_width="match_parent"
-    android:layout_height="?actionBarSize"
-    android:background="@color/blue_theme"
-    android:paddingBottom="5dp">
+        <RelativeLayout
+            android:id="@+id/headerbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/blue_theme"
+            android:paddingBottom="5dp">
 
-    <Button
-        android:id="@+id/recharge_back_btn"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/ic_arrow_back_white_24dp" />
+            <Button
+                android:id="@+id/recharge_back_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ic_arrow_back_white_24dp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="5dp"
-        android:gravity="center"
-        android:text="Flights"
-        android:fontFamily="@font/roboto_bold"
-        android:textColor="#fff"
-        android:textSize="18sp" />
-</RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="Flights"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+        </RelativeLayout>
 
 
 
@@ -94,17 +94,26 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:layout_marginRight="10dp">
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <AutoCompleteTextView
+                            android:id="@+id/sourceFlight"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="From"
+                            android:hint="From"
                             android:textSize="18sp"
                             android:textColor="@color/bue_A800"
-                            android:fontFamily="@font/roboto_regular"/>
+                            android:fontFamily="@font/roboto_regular"
+                            android:layout_marginLeft="5dp"
+                            android:background="@null"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:imeOptions="actionDone"/>
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/sourceFlightDesc"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="where"
+                            android:hint="where"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center"
                             android:textSize="14sp"
                             android:textColor="@color/bue_A800"
                             android:fontFamily="@font/roboto_regular"/>
@@ -118,18 +127,27 @@
                         android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:orientation="vertical">
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <AutoCompleteTextView
+                            android:id="@+id/destinationFlight"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="To"
+                            android:hint="To"
                             android:textSize="18sp"
                             android:textColor="@color/bue_A800"
-                            android:fontFamily="@font/roboto_regular"/>
+                            android:fontFamily="@font/roboto_regular"
+                            android:layout_marginLeft="5dp"
+                            android:background="@null"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:imeOptions="actionDone"/>
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/destinationFlightDesc"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="where"
+                            android:hint="where"
+                            android:gravity="center"
                             android:textSize="14sp"
+                            android:layout_marginLeft="5dp"
                             android:textColor="@color/bue_A800"
                             android:fontFamily="@font/roboto_regular"/>
 

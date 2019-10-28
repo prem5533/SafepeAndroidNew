@@ -4,5 +4,6 @@
 <!--        <domain includeSubdomains="true">13.232.191.38</domain>-->
         <domain includeSubdomains="true">india.safepayu.com</domain>
         <domain includeSubdomains="true">api.sakshamapp.com</domain>
+        <domain includeSubdomains="true">webapi.i2space.co.in</domain>
     </domain-config>
 </network-security-config>
