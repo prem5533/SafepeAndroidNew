@@ -1,10 +1,6 @@
 package com.safepayu.wallet.models.response;
 
-import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 
 public class UserResponse extends BaseResponse   {
     @SerializedName("user")

@@ -13,22 +13,15 @@
             android:orientation="vertical"
             android:gravity="center"
             android:background="@drawable/violet_bg">
-            <pl.droidsonroids.gif.GifImageView
-                android:id="@+id/statusImage"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:src="@drawable/source"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="180dp"
                     android:layout_height="180dp"
-                    android:src="@drawable/diwali"
+                    android:src="@drawable/logo_big"
                     android:id="@+id/image_notificationDialog"/>
             </LinearLayout>
 
@@ -39,8 +32,8 @@
                 android:text="@string/splash_tag_5"
                 android:fontFamily="@font/roboto_italic"
                 android:textSize="17sp"
-                android:textColor="#e6b819"
-                android:layout_marginTop="20dp"
+                android:textColor="@color/blue_theme"
+                android:layout_marginTop="0dp"
                 android:padding="5dp"
                 android:visibility="visible"
                 android:gravity="center"/>

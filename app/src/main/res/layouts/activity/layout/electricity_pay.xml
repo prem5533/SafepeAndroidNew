@@ -212,6 +212,28 @@
                 android:textColor="#373836"
                 android:textSize="15dp" />
 
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/calculatedamount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text=" "
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/green_theme"
+                android:paddingLeft="0dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:text="Amount is equal or less than 1000 get 3% cashback,\nIf Amount is greater than 1000 get 2% cashback"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="12sp"
+                android:layout_margin="20dp" />
+
             <Button
                 android:id="@+id/electrictyPaybtn"
                 android:layout_width="match_parent"

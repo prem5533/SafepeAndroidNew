@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_flight_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IndiGo 6E - 399"
+        android:textColor="@color/black"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:fontFamily="@font/roboto_regular"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_airplane"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_weight=".5">
+            <TextView
+                android:id="@+id/tv_departure_flight_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15:40"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/bue_A800" />
+            <TextView
+                android:id="@+id/tv_departure_flight_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DEL"
+                android:textSize="12sp"
+                android:textAllCaps="true"
+                android:textColor="@color/darker_gray"
+                android:fontFamily="@font/roboto_regular"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight=".5">
+            <TextView
+                android:id="@+id/tv_take_flight_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2h 40m"
+                android:textSize="10sp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/bue_A800" />
+
+            <View
+                android:layout_width="35dp"
+                android:layout_height="4dp"
+                android:background="@color/darker_gray" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight=".5">
+            <TextView
+                android:id="@+id/tv_arrival_flight_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18:20"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/bue_A800" />
+            <TextView
+                android:id="@+id/arrival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GOI"
+                android:textSize="12sp"
+                android:textAllCaps="true"
+                android:textColor="@color/darker_gray"
+                android:fontFamily="@font/roboto_regular"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_fight_rupee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="7,618"
+            android:textSize="18sp"
+            android:gravity="right"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/black" />
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/divider"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

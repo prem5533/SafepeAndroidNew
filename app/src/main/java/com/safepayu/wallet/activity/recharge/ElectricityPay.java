@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -27,6 +28,7 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.CustOperatorResponse;
 import com.safepayu.wallet.models.response.OperatorResponse;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,6 +43,8 @@ public class ElectricityPay extends BaseActivity {
     String OperatorText="",OperatorCode="",OperatorId="";
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
+    private TextView AmountTotalTV;
+    double totalAmount = 0.0f, minusAmount = 0.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,7 @@ public class ElectricityPay extends BaseActivity {
         OperatorSpinner=findViewById(R.id.operator);
         AmountED=findViewById(R.id.amount);
         ElectricityIdED=findViewById(R.id.mobile);
+        AmountTotalTV = findViewById(R.id.calculatedamount);
 
         OperatorNameList=new ArrayList<>();
         IdList=new ArrayList<>();
@@ -121,6 +126,44 @@ public class ElectricityPay extends BaseActivity {
             public void afterTextChanged(Editable s) {
 
                 // TODO Auto-generated method stub
+            }
+        });
+
+        AmountED.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                String Amount = AmountED.getText().toString().trim();
+                if (!Amount.equals("")) {
+                    int num = Integer.parseInt(Amount);
+                    if (num <=1000) {
+                        CalculateAmount(num);
+                        String text = AmountED.getText().toString().trim() + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
+                        AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
+
+                    else if (num>1000){
+                        CalculateAmount2Per(num);
+                        String text = AmountED.getText().toString().trim()  + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
+                        AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
+
+                    else {
+                        AmountTotalTV.setText("0.0");
+                    }
+                }
+                else {
+                    AmountTotalTV.setText(" ");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
@@ -261,6 +304,28 @@ public class ElectricityPay extends BaseActivity {
                     }
                 }));
 
+    }
+
+    private double CalculateAmount(int num) {
+
+        int checkAmount = 0;
+
+        minusAmount = ((((double) num) / 100) * 3);
+        totalAmount = (double) num - minusAmount;
+        checkAmount = (int) minusAmount;
+
+        return totalAmount;
+    }
+
+    private double CalculateAmount2Per(int num) {
+        //   double totalAmount = 0.0f, minusAmount = 0.0f;
+        int checkAmount = 0;
+
+        minusAmount = ((((double) num) / 100) * 2);
+        totalAmount = (double) num - minusAmount;
+        checkAmount = (int) minusAmount;
+
+        return totalAmount;
     }
 }
 

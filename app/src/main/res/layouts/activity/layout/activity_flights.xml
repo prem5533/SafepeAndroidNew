@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:id="@+id/relative_flight"
-    tools:context=".activity.booking.FlightsActivity">
+    tools:context=".activity.booking.flight.FlightsActivity">
         <RelativeLayout
             android:id="@+id/headerbar"
             android:layout_width="match_parent"
@@ -102,7 +102,8 @@
                             android:textSize="18sp"
                             android:textColor="@color/bue_A800"
                             android:fontFamily="@font/roboto_regular"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:background="@null"
                             android:gravity="center"
                             android:singleLine="true"
@@ -112,7 +113,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="where"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:gravity="center"
                             android:textSize="14sp"
                             android:textColor="@color/bue_A800"
@@ -135,7 +137,8 @@
                             android:textSize="18sp"
                             android:textColor="@color/bue_A800"
                             android:fontFamily="@font/roboto_regular"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:background="@null"
                             android:gravity="center"
                             android:singleLine="true"
@@ -147,7 +150,8 @@
                             android:hint="where"
                             android:gravity="center"
                             android:textSize="14sp"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:textColor="@color/bue_A800"
                             android:fontFamily="@font/roboto_regular"/>
 

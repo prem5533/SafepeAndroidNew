@@ -13,15 +13,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.view.menu.MenuView;
-
 import com.safepayu.wallet.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 //https://github.com/aabhasr1/OtpView
 public class PasscodeTextView extends FrameLayout {
 

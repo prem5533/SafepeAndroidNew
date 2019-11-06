@@ -1,11 +1,8 @@
 package com.safepayu.wallet.utils;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -15,11 +12,9 @@ import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.safepayu.wallet.BaseApp;
-
 import java.text.DecimalFormat;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class CommonUtils {
     private Context context;

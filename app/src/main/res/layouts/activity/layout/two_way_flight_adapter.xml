@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        >
+        <ImageView
+            android:id="@+id/image_flight_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_airplane"
+            android:padding="5dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/flight_name1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Air India"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/darker_gray"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/flight_name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Air India"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/darker_gray"
+                android:textSize="8sp" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/flight_rs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7,815"
+            android:gravity="center"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <TextView
+            android:id="@+id/tv_flight_departure_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20:40"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="15sp"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/tv_take_flight_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="21h 30m"
+                android:textSize="10sp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/bue_A800" />
+
+            <View
+                android:layout_width="35dp"
+                android:layout_height="1dp"
+                android:background="@color/darker_gray" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_flight_arrival_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20:40"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="15sp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/divider"
+        android:layout_marginLeft="5dp"/>
+</LinearLayout>

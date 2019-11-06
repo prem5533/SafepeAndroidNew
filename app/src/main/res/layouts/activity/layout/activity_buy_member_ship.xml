@@ -628,7 +628,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="safepe@upi "
+                                android:text="safepe@icici"
                                 android:textColor="@color/colorSecondaryDark"
                                 android:textIsSelectable="true"
                                 android:fontFamily="@font/roboto_regular"

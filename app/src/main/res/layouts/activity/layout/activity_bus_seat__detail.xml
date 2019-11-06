@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.booking.bus.BusSeat_DetailActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/blue_theme"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/recharge_back_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_arrow_back_white_24dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Royal Travel Hills"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="AC,SEATER, 2+3,SINGLE|10:00PM"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="#fff"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:layout_below="@id/headerbar">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="scrollable"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/green_theme"
+        app:tabTextColor="#757391"
+        app:tabSelectedTextColor="@color/white"
+        style="@style/TabLayoutTextStyle"
+        android:background="#f6f7fb"
+        app:tabBackground="@drawable/tab_color_selector"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    </androidx.viewpager.widget.ViewPager>
+        </LinearLayout>
+
+
+</LinearLayout>

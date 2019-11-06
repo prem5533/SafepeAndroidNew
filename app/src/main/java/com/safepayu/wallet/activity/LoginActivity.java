@@ -227,7 +227,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 startActivity(intent);
                 break;
             case VERIFY_MOBILE:
-                startActivity(new Intent(LoginActivity.this, OtpVerification.class).putExtra(Config.MOBILE_NO, mobileNo.getText().toString().split(" ")[1]));
+                startActivity(new Intent(LoginActivity.this, OtpVerification.class).putExtra(Config.MOBILE_NO, mobileNo.getText().toString()));
                 break;
             default:
                 ActivityCompat.requestPermissions(LoginActivity.this,

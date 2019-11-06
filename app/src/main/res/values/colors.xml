@@ -143,4 +143,6 @@
 
     <color name="blue_theme">#03017e</color>
     <color name="green_theme">#3db7c2</color>
+    <color name="background">#e7ebf5</color>
+    <color name="tab_bg">#f5f7fc</color>
 </resources>

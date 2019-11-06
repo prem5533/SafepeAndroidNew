@@ -2,8 +2,6 @@ package com.safepayu.wallet.models.response;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
 public class User  {
     @SerializedName("userid")
     String userId;

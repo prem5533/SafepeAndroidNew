@@ -1,7 +1,8 @@
-package com.safepayu.wallet.activity.booking;
+package com.safepayu.wallet.activity.booking.flight;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,13 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.MultiDex;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.safepayu.wallet.BaseApp;
@@ -48,6 +48,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -63,6 +65,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
     private LoadingDialog loadingDialog;
     private ArrayList<String> AirportCodeList,CityList,AirportDescList;
     AutoCompleteTextView SourceACTV,DestinationACTV;
+    private CheckBox checkboxFlight;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -117,6 +120,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         DestinationACTV= findViewById(R.id.destinationFlight);
         SourceDescTV= findViewById(R.id.sourceFlightDesc);
         DestinationDescTV= findViewById(R.id.destinationFlightDesc);
+        checkboxFlight= findViewById(R.id.checkbox_flight);
 
         //set listener
         tvOneWay.setOnClickListener(this);
@@ -143,6 +147,15 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
 
         //getFlightSources("1");
         new GetSoureces().execute();
+
+        checkboxFlight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            /*  Intent intent = new Intent(FlightsActivity.this,FlightListActivity.class);
+              intent.putExtra("oneway","1");
+              startActivity(intent);*/
+            }
+        });
     }
 
     @Override
@@ -172,7 +185,9 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
 
             case R. id.search_flight_btn:
 
-                CheckValidate();
+                Intent intent = new Intent(FlightsActivity.this,FlightListActivity.class);
+                startActivity(intent);
+             //   CheckValidate();
                 break;
             case R.id.layout_class_traveller_tab:
 

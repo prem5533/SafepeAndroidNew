@@ -30,12 +30,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -50,14 +44,14 @@ import com.google.zxing.common.BitMatrix;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.booking.BusActivity;
 import com.safepayu.wallet.activity.booking.DonationActivity;
-import com.safepayu.wallet.activity.booking.FlightsActivity;
 import com.safepayu.wallet.activity.booking.HotelActivity;
 import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.MovieActivity;
 import com.safepayu.wallet.activity.booking.TollActivity;
 import com.safepayu.wallet.activity.booking.TrainActivity;
+import com.safepayu.wallet.activity.booking.bus.BusActivity;
+import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
 import com.safepayu.wallet.activity.recharge.GasPay;
@@ -72,6 +66,11 @@ import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -169,7 +168,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
 
         dialog.getWindow().setAttributes(lp);
-       // dialog.show();
+        dialog.show();
 
         searchLayout_nav.setOnClickListener(new View.OnClickListener() {
             @Override

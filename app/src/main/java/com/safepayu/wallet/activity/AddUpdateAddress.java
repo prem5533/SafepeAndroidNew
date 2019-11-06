@@ -2,10 +2,6 @@ package com.safepayu.wallet.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,8 +10,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -28,6 +22,7 @@ import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
 
+import androidx.annotation.Nullable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;

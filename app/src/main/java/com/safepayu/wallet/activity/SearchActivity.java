@@ -11,17 +11,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.booking.BusActivity;
-import com.safepayu.wallet.activity.booking.FlightsActivity;
 import com.safepayu.wallet.activity.booking.HotelActivity;
 import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.TrainActivity;
+import com.safepayu.wallet.activity.booking.bus.BusActivity;
+import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
 import com.safepayu.wallet.activity.recharge.GasPay;
@@ -31,6 +28,9 @@ import com.safepayu.wallet.activity.recharge.WaterBillPay;
 import com.safepayu.wallet.adapter.SearchAdapter;
 
 import java.util.ArrayList;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SearchActivity extends BaseActivity implements SearchAdapter.OnListSelectListener {
     

@@ -1,21 +1,19 @@
 package com.safepayu.wallet.activity.ui.home;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.safepayu.wallet.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
-import com.safepayu.wallet.R;
 
 public class HomeFragment extends Fragment {
     private Context context;

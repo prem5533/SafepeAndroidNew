@@ -1,13 +1,11 @@
 package com.safepayu.wallet.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,7 +15,6 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
 import com.safepayu.wallet.models.response.PackageDetailsResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

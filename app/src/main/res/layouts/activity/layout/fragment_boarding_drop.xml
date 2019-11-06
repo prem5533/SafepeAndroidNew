@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.bus.BoardingDropFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+       <LinearLayout
+           android:id="@+id/li_bus_boarding"
+           android:layout_width="match_parent"
+           android:layout_height="80dp"
+           android:orientation="vertical"
+           android:padding="10dp"
+           android:layout_weight="1">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="BORDING"
+               android:textColor="@color/black"
+               android:textSize="14sp"
+               android:fontFamily="@font/roboto_regular"
+               android:layout_marginLeft="5dp"/>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="9:30 PM, 01 Nov"
+               android:textColor="@color/black"
+               android:textSize="14sp"
+               android:fontFamily="@font/roboto_regular"
+               android:layout_marginLeft="5dp"/>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Fazalganj"
+               android:textColor="@color/darker_gray"
+               android:textSize="12sp"
+               android:fontFamily="@font/roboto_regular"
+               android:layout_marginLeft="5dp"/>
+       </LinearLayout>
+        <LinearLayout
+            android:id="@+id/li_bus_drop"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:background="#f5f7fc">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DROP"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginLeft="5dp"
+                android:visibility="gone"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9:30 PM, 01 Nov"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginLeft="5dp"
+                android:visibility="gone"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fazalganj"
+                android:textColor="@color/darker_gray"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginLeft="5dp"
+                android:visibility="gone"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="DROP"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_boarding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardElevation="2dp">
+
+    <LinearLayout
+        android:id="@+id/li_boarding_point"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:background="@drawable/card_matching_bg"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_boarding"
+            android:padding="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Find your nearest Bording point"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="12sp"
+                android:textColor="@color/darker_gray" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your area,street,landmark."
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="10sp"
+                android:textColor="@color/darker_gray" />
+        </LinearLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fri, 01 November"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="12sp"
+            android:textColor="@color/darker_gray"
+            android:layout_margin="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:checked="true"
+                android:text="10:30 PM"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="14sp"
+                android:buttonTint="@color/bue_A800" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0-94, Sector 12, Saral Yatra Office Noida Stadium Noida Opposite Dolly Petrol Pump, Noida"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"/>
+        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_marginTop="10dp"></View>
+        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linear_drop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sat, 02 November"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="12sp"
+            android:textColor="@color/darker_gray"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="start|center"
+            android:orientation="horizontal">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="6:00 AM"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="14sp"
+                android:buttonTint="@color/bue_A800" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Akshrdham Metro Station"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="14sp"
+                android:gravity="start|center"
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+              />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginTop="10dp"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="start|center"
+            android:orientation="horizontal">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="6:15 AM"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="14sp"
+                android:buttonTint="@color/bue_A800" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anand Vihar"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginTop="10dp"></View>
+    </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

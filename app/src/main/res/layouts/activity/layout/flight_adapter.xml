@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+      >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="5dp">
+
+
+        <TextView
+            android:id="@+id/flight_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="06 Nov,Thu"
+            android:gravity="center"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/bue_A800"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/flight_rs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6758"
+            android:gravity="center"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/bue_A800"
+            android:textSize="14sp" />
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/divider"
+            android:layout_margin="5dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>

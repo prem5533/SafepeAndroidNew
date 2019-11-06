@@ -22,9 +22,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.tabs.TabLayout;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.safepayu.wallet.BaseActivity;
@@ -49,26 +46,31 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOfferSelectListener{
+public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOfferSelectListener {
 
-    private Button RechargeBtn,BackBtn;
+    private Button RechargeBtn, BackBtn;
     private TextView OffersBtn;
     private Spinner OperatorSpinner;
     public static EditText AmountED;
     private EditText MobileED;
-    String OperatorText="",OperatorCode="",OperatorId="";
+    String OperatorText = "", OperatorCode = "", OperatorId = "";
     private LoadingDialog loadingDialog;
-    private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
+    private ArrayList<String> OperatorNameList, IdList, OperatorCodeList;
     OfferAdapter adapter;
-    SuperRecyclerView recyclerView ;
+    SuperRecyclerView recyclerView;
     Dialog dialog;
     ArrayList<Offer> offers;
+    private TextView AmountTotalTV;
+    double totalAmount = 0.0f, minusAmount = 0.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,16 +87,17 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         dialog = new Dialog(this);
         offers = new ArrayList<>();
 
-        RechargeBtn=findViewById(R.id.recharge_btn);
-        BackBtn=findViewById(R.id.recharge_back_btn);
-        OffersBtn=findViewById(R.id.Offersbtn);
-        OperatorSpinner=findViewById(R.id.operator);
-        AmountED=findViewById(R.id.amountRecharge);
-        MobileED=findViewById(R.id.mobile_recharge);
+        RechargeBtn = findViewById(R.id.recharge_btn);
+        BackBtn = findViewById(R.id.recharge_back_btn);
+        OffersBtn = findViewById(R.id.Offersbtn);
+        OperatorSpinner = findViewById(R.id.operator);
+        AmountED = findViewById(R.id.amountRecharge);
+        MobileED = findViewById(R.id.mobile_recharge);
+        AmountTotalTV = findViewById(R.id.calculatedamount);
 
-        OperatorNameList=new ArrayList<>();
-        IdList=new ArrayList<>();
-        OperatorCodeList=new ArrayList<>();
+        OperatorNameList = new ArrayList<>();
+        IdList = new ArrayList<>();
+        OperatorCodeList = new ArrayList<>();
 
         OperatorNameList.clear();
         IdList.clear();
@@ -115,22 +118,22 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
             @Override
             public void onClick(View view) {
 
-                if (TextUtils.isEmpty(MobileED.getText().toString().trim())){
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"Please Enter Your Mobile Number",false);
-                }else {
-                    if (MobileED.getText().toString().trim().length()==10){
-                        if (isNetworkAvailable()){
-                            if (offers.isEmpty()){
+                if (TextUtils.isEmpty(MobileED.getText().toString().trim())) {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Enter Your Mobile Number", false);
+                } else {
+                    if (MobileED.getText().toString().trim().length() == 10) {
+                        if (isNetworkAvailable()) {
+                            if (offers.isEmpty()) {
                                 new GetOfferData().execute();
-                            }else {
+                            } else {
                                 dialog.show();
                             }
-                        }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"Please Check Your Internet Connection",false);
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Check Your Internet Connection", false);
                         }
 
-                    }else {
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"Please Enter Your Correct Mobile Number",false);
+                    } else {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Enter Your Correct Mobile Number", false);
                     }
                 }
 
@@ -144,9 +147,9 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                 overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                 finish();*/
 
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"Please Buy Membership To Enjoy App's Features",false);
-                }else {
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Buy Membership To Enjoy App's Features", false);
+                } else {
                     CheckValidate();
                 }
             }
@@ -155,9 +158,9 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         OperatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                OperatorText=OperatorSpinner.getItemAtPosition(i).toString();
-                OperatorCode=OperatorCodeList.get(i);
-                OperatorId=IdList.get(i);
+                OperatorText = OperatorSpinner.getItemAtPosition(i).toString();
+                OperatorCode = OperatorCodeList.get(i);
+                OperatorId = IdList.get(i);
             }
 
             @Override
@@ -172,7 +175,7 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
 
                 // TODO Auto-generated method stub
 
-                if (s.length()==10){
+                if (s.length() == 10) {
                     getCustomerOperator();
 
                 }
@@ -191,10 +194,49 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
             }
         });
 
-        if (isNetworkAvailable()){
+
+        AmountED.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                String Amount = AmountED.getText().toString().trim();
+                if (!Amount.equals("")) {
+                    int num = Integer.parseInt(Amount);
+                    if (num <=1000) {
+                    CalculateAmount(num);
+                        String text = AmountED.getText().toString().trim() + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
+                        AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
+
+                    else if (num>1000){
+                        CalculateAmount2Per(num);
+                        String text = AmountED.getText().toString().trim()  + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
+                        AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
+
+                    else {
+                        AmountTotalTV.setText("0.0");
+                    }
+                }
+                else {
+                    AmountTotalTV.setText(" ");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        if (isNetworkAvailable()) {
             getAllOperators();
-        }else {
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"Check Your Internet Connection",false);
+        } else {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Check Your Internet Connection", false);
         }
 
     }
@@ -213,58 +255,60 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
 
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
-        if (!isConnected){
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"Please Check Your Internet Connection",false);
+        if (!isConnected) {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Check Your Internet Connection", false);
         }
     }
 
-    private void CheckValidate(){
-        int Amount=0;
-        String Mobile="";
-        try{
-            Mobile= MobileED.getText().toString().trim();
-            Amount= Integer.parseInt(AmountED.getText().toString().trim());
-        }catch (Exception e){
+
+    private void CheckValidate() {
+        int Amount = 0;
+        String Mobile = "";
+        try {
+            Mobile = MobileED.getText().toString().trim();
+             Amount= Integer.parseInt(AmountED.getText().toString().trim());
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (TextUtils.isEmpty(MobileED.getText().toString().trim())){
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"Please Enter Mobile Number",false);
-        }else {
-            if (TextUtils.isEmpty(AmountED.getText().toString().trim())){
-                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"Please Enter Amount",false);
-            }else {
-                if (Mobile.length()==10){
-                    if (Amount==0 || Amount<0){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"Please Enter Amount",false);
-                    }else {
+        if (TextUtils.isEmpty(MobileED.getText().toString().trim())) {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Enter Mobile Number", false);
+        } else {
+            if (TextUtils.isEmpty(AmountED.getText().toString().trim())) {
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Enter Amount", false);
+            } else {
+                if (Mobile.length() == 10) {
+                    if (Amount == 0 || Amount < 0) {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Enter Amount", false);
+                    } else {
 
-                        if (TextUtils.isEmpty(OperatorCode) || OperatorCode.equals("0")){
+                        if (TextUtils.isEmpty(OperatorCode) || OperatorCode.equals("0")) {
 
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"Please Select Operator",false);
-                        }else {
-                            Intent intent=new Intent(MobileRecharge.this,PaymentType.class);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Select Operator", false);
+                        } else {
+                            Intent intent = new Intent(MobileRecharge.this, PaymentType.class);
                             overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
-                            intent.putExtra("RechargePaymentId",Mobile);
-                            intent.putExtra("Amount",String.valueOf(Amount));
-                            intent.putExtra("PaymentType","Recharge");
-                            intent.putExtra("PaymentFor","Mobile");
-                            intent.putExtra("RechargeTypeId","1");
-                            intent.putExtra("OperatorCode",OperatorCode);
-                            intent.putExtra("CircleCode","51");
-                            intent.putExtra("OperatorId",OperatorId);
+                            intent.putExtra("RechargePaymentId", Mobile);
+                            intent.putExtra("Amount", String.valueOf(Amount));
+                            intent.putExtra("PaymentType", "Recharge");
+                            intent.putExtra("PaymentFor", "Mobile");
+                            intent.putExtra("RechargeTypeId", "1");
+                            intent.putExtra("OperatorCode", OperatorCode);
+                            intent.putExtra("CircleCode", "51");
+                            intent.putExtra("OperatorId", OperatorId);
                             startActivity(intent);
                             finish();
                         }
                     }
-                }else {
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"Please Enter Correct Mobile Number",false);
+                } else {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Enter Correct Mobile Number", false);
                 }
             }
         }
     }
 
-    private void getAllOperators(){
+    private void getAllOperators() {
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
@@ -278,17 +322,17 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                     public void onSuccess(OperatorResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            for (int i=0;i<response.getOperators().size();i++){
+                            for (int i = 0; i < response.getOperators().size(); i++) {
                                 OperatorNameList.add(response.getOperators().get(i).getOperator_name());
                                 IdList.add(String.valueOf(response.getOperators().get(i).getId()));
                                 OperatorCodeList.add(response.getOperators().get(i).getOperator_code());
                             }
 
-                            ArrayAdapter<String> TransferType= new ArrayAdapter<>(MobileRecharge.this,android.R.layout.simple_spinner_item,OperatorNameList);
+                            ArrayAdapter<String> TransferType = new ArrayAdapter<>(MobileRecharge.this, android.R.layout.simple_spinner_item, OperatorNameList);
                             TransferType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             OperatorSpinner.setAdapter(TransferType);
-                        }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),response.getMessage(),false);
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), response.getMessage(), false);
                         }
                     }
 
@@ -302,7 +346,7 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
 
     }
 
-    private void getCustomerOperator(){
+    private void getCustomerOperator() {
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
         BaseApp.getInstance().getDisposable().add(apiService.getMobileOperator(MobileED.getText().toString().trim())
@@ -314,13 +358,13 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
 
                         if (response.isStatus()) {
 
-                            try{
-                                OperatorText=response.getOperator().getOperator_name();
-                                OperatorCode=response.getOperator().getOperator_code();
-                                int indexx=OperatorCodeList.indexOf(OperatorCode);
-                                OperatorId=IdList.get(indexx);
+                            try {
+                                OperatorText = response.getOperator().getOperator_name();
+                                OperatorCode = response.getOperator().getOperator_code();
+                                int indexx = OperatorCodeList.indexOf(OperatorCode);
+                                OperatorId = IdList.get(indexx);
                                 OperatorSpinner.setSelection(indexx);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -342,7 +386,7 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
     }
 
     public class GetOfferData extends AsyncTask<String, String, String> {
-        String apiUrl = "http://api.sakshamapp.com/MobileOffer?mobile="+MobileED.getText().toString().trim();
+        String apiUrl = "http://api.sakshamapp.com/MobileOffer?mobile=" + MobileED.getText().toString().trim();
 
 
         protected void onPreExecute() {
@@ -394,7 +438,7 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
             loadingDialog.hideDialog();
 
             offers.clear();
-            if (response.length()>0){
+            if (response.length() > 0) {
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -422,12 +466,12 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         }
     }
 
-    private void SetOffersDialog(ArrayList<Offer> offers){
+    private void SetOffersDialog(ArrayList<Offer> offers) {
         dialog.setContentView(R.layout.dialog_offer);
         dialog.setTitle("Select Offer");
         dialog.setCancelable(false);
 
-         recyclerView = (SuperRecyclerView) dialog.findViewById(R.id.list);
+        recyclerView = (SuperRecyclerView) dialog.findViewById(R.id.list);
         Button cancelBtn = (Button) dialog.findViewById(R.id.cancel);
 
         TabLayout tabs = (TabLayout) dialog.findViewById(R.id.tabLayout);
@@ -472,7 +516,7 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new OfferAdapter(MobileRecharge.this, offers,this);
+        adapter = new OfferAdapter(MobileRecharge.this, offers, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
 
@@ -485,5 +529,57 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
 
         dialog.show();
     }
-}
 
+
+
+   /* private double CalculateAmount(int amount){
+
+        double totalAmount=0.0f,minusAmount=0.0f;
+        int checkAmount=0;
+
+        minusAmount=((((double) amount) / 100) * 3);
+        totalAmount=(double)amount- minusAmount;
+        checkAmount=(int)minusAmount;
+        if (checkAmount>9){
+
+        }else {
+            totalAmount=(double)amount-(double)10;
+        }
+
+        return totalAmount;
+    }
+}*/
+
+    private double CalculateAmount(int num) {
+
+        int checkAmount = 0;
+
+        minusAmount = ((((double) num) / 100) * 3);
+        totalAmount = (double) num - minusAmount;
+        checkAmount = (int) minusAmount;
+       /* if (checkAmount > 9) {
+
+        } else {
+            totalAmount = (double) num - (double) 10;
+        }*/
+
+        return totalAmount;
+    }
+
+    private double CalculateAmount2Per(int num) {
+     //   double totalAmount = 0.0f, minusAmount = 0.0f;
+        int checkAmount = 0;
+
+        minusAmount = ((((double) num) / 100) * 2);
+        totalAmount = (double) num - minusAmount;
+        checkAmount = (int) minusAmount;
+     /*   if (checkAmount > 9) {
+
+        } else {
+            totalAmount = (double) num - (double) 10;
+        }*/
+
+        return totalAmount;
+    }
+
+}

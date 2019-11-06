@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp">
+
+    <LinearLayout
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="5dp"
+        android:background="@drawable/deactive_rounded_buttons">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:id="@+id/image_flight_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_airplane"
+                android:padding="5dp"/>
+
+            <TextView
+                android:id="@+id/flight_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Air India"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/bue_A800"
+                android:textSize="10sp" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/flight_rs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12,178"
+            android:gravity="center"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+</LinearLayout>

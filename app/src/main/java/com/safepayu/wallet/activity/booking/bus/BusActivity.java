@@ -1,19 +1,22 @@
-package com.safepayu.wallet.activity.booking;
+package com.safepayu.wallet.activity.booking.bus;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.MultiDex;
+import android.widget.TextView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
+
 public class BusActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button searchBusBtn,backBtn;
+    private TextView tvFromBus,tvToBus;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -32,10 +35,14 @@ public class BusActivity extends AppCompatActivity implements View.OnClickListen
     private void findId() {
         backBtn = findViewById(R.id.recharge_back_btn);
         searchBusBtn = findViewById( R.id.search_bus_btn);
+        tvFromBus = findViewById( R.id.tv_from_bus);
+        tvToBus = findViewById( R.id.tv_to_bus);
 
         //set listener
         backBtn.setOnClickListener(this);
         searchBusBtn.setOnClickListener(this);
+        tvFromBus.setOnClickListener(this);
+        tvToBus.setOnClickListener(this);
     }
 
     @Override
@@ -46,7 +53,16 @@ public class BusActivity extends AppCompatActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.search_bus_btn:
-                CheckValidate();
+               // CheckValidate();
+                startActivity(new Intent(BusActivity.this, BusListActivity.class));
+                break;
+            case R.id.tv_from_bus:
+                startActivity(new Intent(BusActivity.this, BusLocationActivity.class));
+
+                break;
+            case R.id.tv_to_bus:
+                startActivity(new Intent(BusActivity.this, BusLocationActivity.class));
+
                 break;
         }
 
