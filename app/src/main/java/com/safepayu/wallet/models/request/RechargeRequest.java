@@ -13,6 +13,7 @@ public class RechargeRequest {
      * circle_code : 51
      * operator_id : 1
      * payment_mode : bank
+     * description : recharge
      */
 
     private String transaction_id;
@@ -24,6 +25,7 @@ public class RechargeRequest {
     private String circle_code;
     private String operator_id;
     private String payment_mode;
+    private String description;
 
     public String getTransaction_id() {
         return transaction_id;
@@ -95,5 +97,13 @@ public class RechargeRequest {
 
     public void setPayment_mode(String payment_mode) {
         this.payment_mode = payment_mode;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

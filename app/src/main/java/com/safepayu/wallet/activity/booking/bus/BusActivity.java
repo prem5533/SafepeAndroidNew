@@ -1,7 +1,6 @@
 package com.safepayu.wallet.activity.booking.bus;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -53,15 +52,17 @@ public class BusActivity extends AppCompatActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.search_bus_btn:
-               // CheckValidate();
-                startActivity(new Intent(BusActivity.this, BusListActivity.class));
+                CheckValidate();
+                //startActivity(new Intent(BusActivity.this, BusListActivity.class));
                 break;
             case R.id.tv_from_bus:
-                startActivity(new Intent(BusActivity.this, BusLocationActivity.class));
+                CheckValidate();
+               // startActivity(new Intent(BusActivity.this, BusLocationActivity.class));
 
                 break;
             case R.id.tv_to_bus:
-                startActivity(new Intent(BusActivity.this, BusLocationActivity.class));
+                CheckValidate();
+           //     startActivity(new Intent(BusActivity.this, BusLocationActivity.class));
 
                 break;
         }

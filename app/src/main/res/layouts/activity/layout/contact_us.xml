@@ -136,8 +136,7 @@
                     android:textSize="18sp"
                     android:fontFamily="@font/roboto_bold"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/bue_A800"
-                    />
+                    android:textColor="@color/bue_A800" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -156,8 +155,7 @@
                     android:textSize="12sp"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_marginTop="20dp"
-                    android:textColor="@color/green_theme"
-                    />
+                    android:textColor="@color/green_theme" />
 
 
                 <TextView
@@ -181,7 +179,33 @@
                     android:textStyle="bold"
                     android:fontFamily="@font/roboto_regular"
                     android:textIsSelectable="true"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:id="@+id/tollfreeNoText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:text="Tollfree Number"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:textIsSelectable="true" />
+
+                <TextView
+                    android:id="@+id/tollfreeNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:textSize="16sp"
+                    android:textColor="@color/green_theme"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textIsSelectable="true"
+                    android:layout_marginTop="5dp"/>
+
                 <LinearLayout
                     android:visibility="gone"
                     android:layout_width="match_parent"
@@ -189,8 +213,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp">
-
-
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -200,8 +222,7 @@
                         android:textColor="#34ad38"
                         android:textIsSelectable="true"
                         android:background="@null"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/call_button_usa"
@@ -219,8 +240,7 @@
                         android:paddingRight="0dp"
                         android:layout_marginRight="0dp"
                         android:layout_marginTop="0dp"
-                        android:layout_marginBottom="0dp"
-                        />
+                        android:layout_marginBottom="0dp" />
 
                     <Button
                         android:id="@+id/call_button_india"
@@ -239,6 +259,7 @@
                         android:layout_marginBottom="0dp"
                         />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/visit_website"
                     android:paddingLeft="20dp"
@@ -252,14 +273,26 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:textColor="@color/blue_theme"
-                    />
+                    android:textColor="@color/blue_theme" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="www.safepeindia.com"
+                    android:textSize="16sp"
+                    android:textColor="@color/green_theme"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textIsSelectable="true"
+                    android:layout_marginTop="-10dp"/>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:paddingLeft="20dp"
@@ -291,14 +324,13 @@
                     android:paddingRight="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Email ID: support@safepayu.com"
+                    android:text="Email ID: support@safepeindia.com"
                     android:layout_gravity="center"
                     android:textIsSelectable="true"
                     android:textSize="15sp"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/blue_theme"
-                    />
+                    android:textColor="@color/blue_theme" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -344,7 +376,8 @@
 
     </ScrollView>
 
-    <include layout="@layout/footer" />
+    <include layout="@layout/footer"
+     />
 
     <LinearLayout
         android:layout_width="match_parent"

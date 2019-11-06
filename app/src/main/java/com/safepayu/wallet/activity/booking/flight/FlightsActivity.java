@@ -2,7 +2,6 @@ package com.safepayu.wallet.activity.booking.flight;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -148,13 +146,13 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         //getFlightSources("1");
         new GetSoureces().execute();
 
-        checkboxFlight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      /*  checkboxFlight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Intent intent = new Intent(FlightsActivity.this,FlightListActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override
@@ -184,9 +182,9 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
 
             case R. id.search_flight_btn:
 
-                Intent intent = new Intent(FlightsActivity.this,TwoWayListActivity.class);
-                startActivity(intent);
-             //   CheckValidate();
+              /*  Intent intent = new Intent(FlightsActivity.this,TwoWayListActivity.class);
+                startActivity(intent);*/
+               CheckValidate();
                 break;
             case R.id.layout_class_traveller_tab:
 

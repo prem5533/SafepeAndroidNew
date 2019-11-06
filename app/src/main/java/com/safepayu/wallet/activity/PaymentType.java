@@ -13,8 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.cardview.widget.CardView;
-
 import com.easebuzz.payment.kit.PWECouponsActivity;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -40,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.cardview.widget.CardView;
 import datamodels.StaticDataModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -67,7 +66,6 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
     private String customer_address1="",customer_address2="",customer_city="",customer_state="",customer_country="",customer_zipcode="";
     private String hash="",payment_mode="",customers_unique_id="";
     private float merchant_payment_amount= (float) 1.0;
-    private String merchant_key="FGMXRKGLPF",merchant_salt="79W2K9FO44";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,7 +214,6 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         }else{
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Please Check Your Internet Connection",false);
         }
-
     }
 
     private void doRecharge(final RechargeRequest rechargeRequest){
@@ -246,7 +243,6 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                             //BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),response.getMessage(),false);
                         }
                         try{
-
                             intentRecharge.putExtra("Amount",Amount);
                             intentRecharge.putExtra("date",date);
                             intentRecharge.putExtra("productinfo",PaymentFor+" "+PaymentTypeText);
@@ -490,6 +486,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                     rechargeRequest.setTransaction_id(easepayid);
                     rechargeRequest.setPayment_mode("bank");
                     rechargeRequest.setNumber_type("");
+                    rechargeRequest.setDescription(PaymentFor+" "+PaymentTypeText);
 
                     doRecharge(rechargeRequest);
                 }
@@ -545,6 +542,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                 rechargeRequest.setTransaction_id("");
                 rechargeRequest.setPayment_mode("wallet");
                 rechargeRequest.setNumber_type("");
+                rechargeRequest.setDescription(PaymentFor+" "+PaymentTypeText);
 
                 doRecharge(rechargeRequest);
             }

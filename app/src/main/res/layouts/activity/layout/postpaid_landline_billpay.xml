@@ -215,7 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/red"
-                android:text="Amount is equal or less than 1000 get 3% cashback,\nIf Amount is greater than 1000 get 2% cashback"
+                android:text="Amount is equal or less than 1000 get 3% cashback,\nIf Amount is greater than 1000 get 1% cashback"
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="12sp"
                 android:layout_margin="20dp" />

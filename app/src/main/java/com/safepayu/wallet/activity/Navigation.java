@@ -97,7 +97,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     TextView TitleNotiDialog,ContentNotiDialog;
     ImageView ImageViewNotiDialog;
     private RelativeLayout searchLayout_nav;
-    public static String TitleNotiDialogText="",ContentNotiDialogText="";
+    public static String TitleNotiDialogText="",ContentNotiDialogText="", tollNumber="";
     public static Bitmap ImageNotiDialog;
 
     //for nav
@@ -1292,6 +1292,13 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
                             int val= Integer.parseInt(response.getVersionData().getVal());
+
+                            try {
+                                tollNumber=response.getVersionData().getTollfree();
+                            }catch (Exception e){
+                                tollNumber="";
+                                e.printStackTrace();
+                            }
 
                             if (versionCode==val){
 

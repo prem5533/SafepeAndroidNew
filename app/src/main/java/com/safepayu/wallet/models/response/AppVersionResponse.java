@@ -44,6 +44,12 @@ public class AppVersionResponse {
 
         private String version_name;
         private String val;
+        /**
+         * tollfree : 0090909
+         */
+
+        private String tollfree;
+
 
         public String getVersion_name() {
             return version_name;
@@ -59,6 +65,14 @@ public class AppVersionResponse {
 
         public void setVal(String val) {
             this.val = val;
+        }
+
+        public String getTollfree() {
+            return tollfree;
+        }
+
+        public void setTollfree(String tollfree) {
+            this.tollfree = tollfree;
         }
     }
 }
