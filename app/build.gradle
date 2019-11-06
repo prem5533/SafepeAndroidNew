@@ -112,8 +112,6 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.1'
 
 
-    implementation 'com.android.support:multidex:1.0.1'
-
     implementation 'com.github.Inconnu08:android-ratingreviews:1.0.0'
 
 }

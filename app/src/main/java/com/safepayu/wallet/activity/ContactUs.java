@@ -1,6 +1,7 @@
 package com.safepayu.wallet.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
@@ -29,20 +29,21 @@ public class ContactUs extends BaseActivity {
     private Button submit, callButtonIndia, callButtonUsa;
     String str_mail,str_subject,str_message,id,trueStr="true";
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, false);
 
-        Button clear_btn = (Button) findViewById(R.id.recharge_back_btn);
-        editEmail=(EditText)findViewById(R.id.contactus_email);
-        visit_website=(TextView) findViewById(R.id.visit_website);
-        editSubject=(EditText)findViewById(R.id.contactus_subject);
-        editMessage=(EditText)findViewById(R.id.contactus_message);
-        submit=(Button)findViewById(R.id.contactus_submit);
-        callButtonIndia = (Button) findViewById(R.id.call_button_india);
-        callButtonUsa = (Button) findViewById(R.id.call_button_usa);
-        sendmail = (TextView) findViewById(R.id.sendmail);
+        Button clear_btn = findViewById(R.id.recharge_back_btn);
+        editEmail=findViewById(R.id.contactus_email);
+        visit_website= findViewById(R.id.visit_website);
+        editSubject=findViewById(R.id.contactus_subject);
+        editMessage=findViewById(R.id.contactus_message);
+        submit=findViewById(R.id.contactus_submit);
+        callButtonIndia = findViewById(R.id.call_button_india);
+        callButtonUsa = findViewById(R.id.call_button_usa);
+        sendmail =  findViewById(R.id.sendmail);
 
         id= BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
         clear_btn.setOnClickListener(new View.OnClickListener() {
@@ -76,17 +77,13 @@ public class ContactUs extends BaseActivity {
                 emailIntent.setData(Uri.parse("mailto:"));
                 emailIntent.setType("text/plain");
 
-                emailIntent.putExtra(Intent.EXTRA_EMAIL  , new String[]{"support@safepayu.com"});
-
+                emailIntent.putExtra(Intent.EXTRA_EMAIL  , new String[]{"support@safepeindia.com"});
 
                 try{
                     startActivity(Intent.createChooser(emailIntent, "Send mail..."));
                 }catch (Exception e){
                     Log.e("SendEmailERRO", e.toString());
                 }
-//                Uri uri = Uri.parse("mailto:support@safepayu.com");
-//                Intent i = new Intent(Intent.ACTION_SENDTO, uri);
-//                startActivity(Intent.createChooser(i, "Send mail"));
 
             }
         });
@@ -102,7 +99,7 @@ public class ContactUs extends BaseActivity {
         visit_website.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.safepayu.com/")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.safepeindia.com")));
             }
         });
 
@@ -143,7 +140,7 @@ public class ContactUs extends BaseActivity {
 
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    Toast.makeText(ContactUs.this, "Permission denied to Call Phone", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(ContactUs.this, "Permission denied to Call Phone", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
