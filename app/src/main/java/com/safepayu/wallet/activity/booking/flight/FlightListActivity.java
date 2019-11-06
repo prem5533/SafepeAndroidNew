@@ -10,8 +10,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.adapter.fight.FlightListAdapter;
 import com.safepayu.wallet.adapter.fight.OneWayFlightListAdapter;
-import com.safepayu.wallet.adapter.fight.TwoWayFlightListAdapter;
-import com.safepayu.wallet.adapter.fight.TwoWayFlightTopAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,12 +20,10 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
 
     private FlightListAdapter flightListAdapter;
     private OneWayFlightListAdapter oneWayFlightListAdapter;
-    private TwoWayFlightTopAdapter twoWayFlightTopAdapter;
-    private TwoWayFlightListAdapter twoWayFlightListAdapter;
-    private RecyclerView recyclerViewFlight,recyclerViewFlightList,recyclerViewFlightListMore,recyclerViewPriceList,recyclerViewFlightListgGo,recyclerViewFlightListReturn;
+    private RecyclerView recyclerViewFlight,recyclerViewFlightList,recyclerViewFlightListMore;
     private Button backBtn;
     public static BottomNavigationView bottomNavigation;
-    private LinearLayout linearOneWay ,linearTwoWay;
+    private LinearLayout linearOneWay ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +39,9 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
         recyclerViewFlight = findViewById(R.id.flight_date_list);
         recyclerViewFlightList = findViewById(R.id.one_way_flight_list);
         recyclerViewFlightListMore = findViewById(R.id.one_way_flight_list_more);
-        recyclerViewPriceList = findViewById(R.id.flight_price_list);
-        recyclerViewFlightListgGo = findViewById(R.id.flight_list1);
-        recyclerViewFlightListReturn = findViewById(R.id.flight_list2);
+
         linearOneWay = findViewById(R.id.linear_one_way);
-        linearTwoWay = findViewById(R.id.linear_two_way);
+
         backBtn = findViewById(R.id.backbtn_flight_list);
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
@@ -80,20 +74,11 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
             recyclerViewFlightListMore.setAdapter(oneWayFlightListAdapter);
 
 
+     /*
            /* linearOneWay.setVisibility(View.GONE);
             linearTwoWay.setVisibility(View.VISIBLE);*/
 
-            recyclerViewPriceList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
-            twoWayFlightTopAdapter = new TwoWayFlightTopAdapter(getApplicationContext());
-            recyclerViewPriceList.setAdapter(twoWayFlightTopAdapter);
 
-            recyclerViewFlightListgGo.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-            twoWayFlightListAdapter = new TwoWayFlightListAdapter(getApplicationContext());
-            recyclerViewFlightListgGo.setAdapter(twoWayFlightListAdapter);
-
-            recyclerViewFlightListReturn.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-            twoWayFlightListAdapter = new TwoWayFlightListAdapter(getApplicationContext());
-            recyclerViewFlightListReturn.setAdapter(twoWayFlightListAdapter);
 
     }
 

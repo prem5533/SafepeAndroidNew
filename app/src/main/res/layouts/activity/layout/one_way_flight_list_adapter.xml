@@ -65,7 +65,7 @@
 
             <View
                 android:layout_width="35dp"
-                android:layout_height="4dp"
+                android:layout_height="1dp"
                 android:background="@color/darker_gray" />
         </LinearLayout>
         <LinearLayout

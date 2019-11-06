@@ -4,7 +4,7 @@
     package="com.safepayu.wallet">
 
     <application
-        android:name="com.safepayu.wallet.BaseApp"
+        android:name=".BaseApp"
         android:allowBackup="true"
         android:icon="@drawable/icon_old100"
         android:label="@string/app_name"
@@ -13,17 +13,18 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.safepayu.wallet.activity.booking.flight.FlightListActivity"></activity>
-        <activity android:name="com.safepayu.wallet.activity.booking.bus.BusSeat_DetailActivity" />
-        <activity android:name="com.safepayu.wallet.activity.booking.bus.BusListActivity" />
-        <activity android:name="com.safepayu.wallet.activity.booking.bus.BusLocationActivity" />
-        <activity android:name="com.safepayu.wallet.activity.MyOrdersActivity" />
-        <activity android:name="com.safepayu.wallet.activity.booking.MovieActivity" />
-        <activity android:name="com.safepayu.wallet.activity.recharge.InsuranceActivity" />
-        <activity android:name="com.safepayu.wallet.activity.booking.TollActivity" />
-        <activity android:name="com.safepayu.wallet.activity.booking.DonationActivity" />
-        <activity android:name="com.safepayu.wallet.activity.booking.HotelActivity" />
-        <activity android:name="com.safepayu.wallet.activity.BellNotifictionActivity" />
+        <activity android:name=".activity.booking.flight.TwoWayListActivity"></activity>
+        <activity android:name=".activity.booking.flight.FlightListActivity" />
+        <activity android:name=".activity.booking.bus.BusSeat_DetailActivity" />
+        <activity android:name=".activity.booking.bus.BusListActivity" />
+        <activity android:name=".activity.booking.bus.BusLocationActivity" />
+        <activity android:name=".activity.MyOrdersActivity" />
+        <activity android:name=".activity.booking.MovieActivity" />
+        <activity android:name=".activity.recharge.InsuranceActivity" />
+        <activity android:name=".activity.booking.TollActivity" />
+        <activity android:name=".activity.booking.DonationActivity" />
+        <activity android:name=".activity.booking.HotelActivity" />
+        <activity android:name=".activity.BellNotifictionActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -33,55 +34,55 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <activity
-            android:name="com.safepayu.wallet.activity.MapsActivity"
+            android:name=".activity.MapsActivity"
             android:label="@string/title_activity_maps" /> <!-- <activity android:name=".MapActivity" /> -->
-        <activity android:name="com.safepayu.wallet.activity.booking.TrainActivity" />
-        <activity android:name="com.safepayu.wallet.activity.booking.bus.BusActivity" />
-        <activity android:name="com.safepayu.wallet.activity.booking.flight.FlightsActivity" />
-        <activity android:name="com.safepayu.wallet.activity.booking.MetroActivity" />
-        <activity android:name="com.safepayu.wallet.activity.PaidOrderActivity" />
-        <activity android:name="com.safepayu.wallet.activity.CreatePassCodeActivity" />
+        <activity android:name=".activity.booking.TrainActivity" />
+        <activity android:name=".activity.booking.bus.BusActivity" />
+        <activity android:name=".activity.booking.flight.FlightsActivity" />
+        <activity android:name=".activity.booking.MetroActivity" />
+        <activity android:name=".activity.PaidOrderActivity" />
+        <activity android:name=".activity.CreatePassCodeActivity" />
         <activity
-            android:name="com.safepayu.wallet.activity.HomeActivity"
+            android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home" />
-        <activity android:name="com.safepayu.wallet.activity.BuyMemberShip" />
+        <activity android:name=".activity.BuyMemberShip" />
         <activity
-            android:name="com.safepayu.wallet.activity.AddUpdateAddress"
+            android:name=".activity.AddUpdateAddress"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="com.safepayu.wallet.activity.OtpVerification" />
-        <activity android:name="com.safepayu.wallet.activity.NewAccount" />
-        <activity android:name="com.safepayu.wallet.activity.LoginActivity" />
-        <activity android:name="com.safepayu.wallet.activity.Navigation" />
-        <activity android:name="com.safepayu.wallet.activity.WalletActivity" />
-        <activity android:name="com.safepayu.wallet.activity.SendMoney" />
-        <activity android:name="com.safepayu.wallet.activity.AddBeneficiary" />
-        <activity android:name="com.safepayu.wallet.activity.WalletAddMoney" />
-        <activity android:name="com.safepayu.wallet.activity.PaymentType" />
-        <activity android:name="com.safepayu.wallet.activity.recharge.MobileRecharge" />
-        <activity android:name="com.safepayu.wallet.activity.recharge.DthRecharge" />
-        <activity android:name="com.safepayu.wallet.activity.recharge.PostpaidLandlineBillpay" />
-        <activity android:name="com.safepayu.wallet.activity.recharge.WaterBillPay" />
-        <activity android:name="com.safepayu.wallet.activity.recharge.ElectricityPay" />
-        <activity android:name="com.safepayu.wallet.activity.recharge.GasPay" />
-        <activity android:name="com.safepayu.wallet.activity.Profile" />
-        <activity android:name="com.safepayu.wallet.activity.Commission" />
-        <activity android:name="com.safepayu.wallet.activity.TransferCommissionToWallet" />
-        <activity android:name="com.safepayu.wallet.activity.Geneology" />
-        <activity android:name="com.safepayu.wallet.activity.PackageDetails" />
-        <activity android:name="com.safepayu.wallet.activity.ContactUs" />
-        <activity android:name="com.safepayu.wallet.activity.ReferAndEarn" />
-        <activity android:name="com.safepayu.wallet.activity.SearchActivity" />
-        <activity android:name="com.safepayu.wallet.ChangePasscode" />
+        <activity android:name=".activity.OtpVerification" />
+        <activity android:name=".activity.NewAccount" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.Navigation" />
+        <activity android:name=".activity.WalletActivity" />
+        <activity android:name=".activity.SendMoney" />
+        <activity android:name=".activity.AddBeneficiary" />
+        <activity android:name=".activity.WalletAddMoney" />
+        <activity android:name=".activity.PaymentType" />
+        <activity android:name=".activity.recharge.MobileRecharge" />
+        <activity android:name=".activity.recharge.DthRecharge" />
+        <activity android:name=".activity.recharge.PostpaidLandlineBillpay" />
+        <activity android:name=".activity.recharge.WaterBillPay" />
+        <activity android:name=".activity.recharge.ElectricityPay" />
+        <activity android:name=".activity.recharge.GasPay" />
+        <activity android:name=".activity.Profile" />
+        <activity android:name=".activity.Commission" />
+        <activity android:name=".activity.TransferCommissionToWallet" />
+        <activity android:name=".activity.Geneology" />
+        <activity android:name=".activity.PackageDetails" />
+        <activity android:name=".activity.ContactUs" />
+        <activity android:name=".activity.ReferAndEarn" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".ChangePasscode" />
         <activity
-            android:name="com.safepayu.wallet.activity.ForgotPasscode"
+            android:name=".activity.ForgotPasscode"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="com.safepayu.wallet.activity.MemberBankAddPackages" />
-        <activity android:name="com.safepayu.wallet.activity.SendMoneyToWallet" />
-        <activity android:name="com.safepayu.wallet.activity.ForgetPassword" />
-        <activity android:name="com.safepayu.wallet.activity.WalletHistory" />
-        <activity android:name="com.safepayu.wallet.activity.RechargeHistory" />
-        <activity android:name="com.safepayu.wallet.activity.QrCodeScanner" />
-        <activity android:name="com.safepayu.wallet.activity.Splash">
+        <activity android:name=".activity.MemberBankAddPackages" />
+        <activity android:name=".activity.SendMoneyToWallet" />
+        <activity android:name=".activity.ForgetPassword" />
+        <activity android:name=".activity.WalletHistory" />
+        <activity android:name=".activity.RechargeHistory" />
+        <activity android:name=".activity.QrCodeScanner" />
+        <activity android:name=".activity.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -105,10 +106,10 @@
             android:value="@integer/google_play_services_version" />
 
         <service
-            android:name="com.safepayu.wallet.service.OtpVerifyService"
+            android:name=".service.OtpVerifyService"
             android:exported="false" />
         <service
-            android:name="com.safepayu.wallet.service.MyFirebaseMsgService"
+            android:name=".service.MyFirebaseMsgService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

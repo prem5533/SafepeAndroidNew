@@ -147,7 +147,7 @@ public class WaterBillPay extends BaseActivity {
                         AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
 
                     else if (num>1000){
-                        CalculateAmount2Per(num);
+                        CalculateAmount1Per(num);
                         String text = AmountED.getText().toString().trim()  + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
                         AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
 
@@ -317,11 +317,11 @@ public class WaterBillPay extends BaseActivity {
         return totalAmount;
     }
 
-    private double CalculateAmount2Per(int num) {
+    private double CalculateAmount1Per(int num) {
         //   double totalAmount = 0.0f, minusAmount = 0.0f;
         int checkAmount = 0;
 
-        minusAmount = ((((double) num) / 100) * 2);
+        minusAmount = ((((double) num) / 100) * 1);
         totalAmount = (double) num - minusAmount;
         checkAmount = (int) minusAmount;
 

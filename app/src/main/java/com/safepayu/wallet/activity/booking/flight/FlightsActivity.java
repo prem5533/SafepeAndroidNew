@@ -151,9 +151,8 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         checkboxFlight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            /*  Intent intent = new Intent(FlightsActivity.this,FlightListActivity.class);
-              intent.putExtra("oneway","1");
-              startActivity(intent);*/
+                Intent intent = new Intent(FlightsActivity.this,FlightListActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -185,7 +184,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
 
             case R. id.search_flight_btn:
 
-                Intent intent = new Intent(FlightsActivity.this,FlightListActivity.class);
+                Intent intent = new Intent(FlightsActivity.this,TwoWayListActivity.class);
                 startActivity(intent);
              //   CheckValidate();
                 break;

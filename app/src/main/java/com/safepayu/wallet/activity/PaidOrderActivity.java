@@ -11,12 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.MultiDex;
-
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
 import pl.droidsonroids.gif.GifImageView;
 
 public class PaidOrderActivity extends AppCompatActivity {
@@ -93,14 +94,21 @@ public class PaidOrderActivity extends AppCompatActivity {
         }
 
         if (status.equalsIgnoreCase("success")){
-            gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.success));
+           // gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.success));
+            Glide.with(getApplicationContext()).load(R.drawable.success).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
             StatusTV.setTextColor(getResources().getColor(R.color.green_500));
-        }else if (status.equalsIgnoreCase("pending")){
-            gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.pending));
+        }
+        else if (status.equalsIgnoreCase("pending")){
+            //gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.pending));
+
+            Glide.with(getApplicationContext()).load(R.drawable.pending2).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
+
             StatusTV.setTextColor(getResources().getColor(R.color.clay_yellow));
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.statusorderLayout),PendingText,true);
-        }else {
-            gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.failed_gif));
+        }
+        else {
+       //     gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.failed_gif));
+            Glide.with(getApplicationContext()).load(R.drawable.failed_gif).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
             StatusTV.setTextColor(getResources().getColor(R.color.red_400));
         }
 

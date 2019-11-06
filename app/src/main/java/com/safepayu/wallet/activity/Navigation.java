@@ -483,6 +483,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         switch (l.getId()) {
             case R.id.layout_recharge:
                 startActivity(new Intent(Navigation.this, MobileRecharge.class));
+
                 break;
 
             case R.id.layout_pay_bill:
