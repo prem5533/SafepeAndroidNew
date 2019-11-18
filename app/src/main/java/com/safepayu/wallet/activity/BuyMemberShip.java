@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -28,8 +31,6 @@ import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.models.response.PackageListData;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -263,7 +264,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 //.setNegativeButton(android.R.string.no, null)
-                .setIcon(getResources().getDrawable(R.drawable.icon_old100))
+                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
                 .show();
     }
 

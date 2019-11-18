@@ -10,7 +10,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/blue_theme"
+        android:background="@color/red_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -162,7 +162,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="0dp"
                         android:layout_marginRight="20dp"
-                        android:background="@color/colorPrimary"
+                        android:background="#ff9f48"
                         android:gravity="center"
                         android:onClick="OffersClick"
                         android:padding="7dp"
@@ -179,9 +179,9 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:text=" "
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/green_theme"
+                    android:textColor="@color/yellow_theme"
                     android:paddingLeft="0dp"
                   />
                 <TextView
@@ -190,7 +190,7 @@
                     android:textColor="@color/red"
                     android:text="Amount is equal or less than 1000 get 3% cashback,\nIf Amount is greater than 1000 get 1% cashback"
                     android:fontFamily="@font/roboto_regular"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:layout_margin="20dp" />
                 <Button
                     android:id="@+id/recharge_btn"
@@ -222,21 +222,6 @@
         </RelativeLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/green_theme"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/blue_theme"/>
-    </LinearLayout>
 
 </RelativeLayout>

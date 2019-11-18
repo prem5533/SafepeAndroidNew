@@ -11,7 +11,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/blue_theme"
+        android:background="@color/red_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -134,7 +134,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginHorizontal="30sp"
                                 android:layout_marginVertical="10dp"
-                                android:background="@color/blue_theme"
+                                android:background="@color/yellow"
                                 android:gravity="center"
                                 android:text="Get Membership "
                                 android:textColor="@color/white"
@@ -198,7 +198,7 @@
                                 android:layout_weight="1"
                                 android:text="Left Business"
                                 android:fontFamily="@font/roboto_bold"
-                                android:textColor="@color/blue_theme"
+                                android:textColor="@color/red_theme"
                                 android:textSize="14sp" />
 
 
@@ -212,7 +212,7 @@
                                 android:text="Rs. 0.00"
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/roboto_regular"
-                                android:textColor="@color/green_theme"
+                                android:textColor="@color/yellow_theme"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
 
@@ -248,7 +248,7 @@
                                 android:text="Right Business"
                                 android:fontFamily="@font/roboto_bold"
                                 android:textSize="14sp"
-                                android:textColor="@color/blue_theme" />
+                                android:textColor="@color/red_theme" />
 
 
                             <TextView
@@ -261,7 +261,7 @@
                                 android:gravity="end"
                                 android:text="Rs. 0.00"
                                 android:fontFamily="@font/roboto_regular"
-                                android:textColor="@color/green_theme"
+                                android:textColor="@color/yellow_theme"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
 
@@ -291,7 +291,7 @@
                             android:layout_gravity="center"
                             android:fontFamily="@font/roboto_bold"
                             android:text="Total Business"
-                            android:textColor="@color/blue_theme"
+                            android:textColor="@color/red_theme"
                             android:textSize="14sp" />
 
 
@@ -305,7 +305,7 @@
                             android:gravity="end"
                             android:text="Rs. 0.00"
                             android:textAlignment="viewEnd"
-                            android:textColor="@color/green_theme"
+                            android:textColor="@color/yellow_theme"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -332,7 +332,7 @@
                             android:text="Sponser Business"
                             android:fontFamily="@font/roboto_bold"
                             android:textSize="14sp"
-                            android:textColor="@color/blue_theme" />
+                            android:textColor="@color/red_theme" />
 
 
                         <TextView
@@ -345,7 +345,7 @@
                             android:text="Rs. 0.00"
                             android:textAlignment="viewEnd"
                             android:fontFamily="@font/roboto_bold"
-                            android:textColor="@color/green_theme"
+                            android:textColor="@color/yellow_theme"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -373,7 +373,7 @@
                             android:text="Matching Business"
                             android:fontFamily="@font/roboto_bold"
                             android:textSize="14sp"
-                            android:textColor="@color/blue_theme" />
+                            android:textColor="@color/red_theme" />
 
                         <TextView
                             android:id="@+id/matching_business"
@@ -385,7 +385,7 @@
                             android:text="Rs. 0.00"
                             android:textAlignment="viewEnd"
                             android:fontFamily="@font/roboto_bold"
-                            android:textColor="@color/green_theme"
+                            android:textColor="@color/yellow_theme"
                             android:textSize="14sp" />
 
                     </LinearLayout>

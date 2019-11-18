@@ -22,6 +22,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.tabs.TabLayout;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.safepayu.wallet.BaseActivity;
@@ -49,8 +52,6 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -79,7 +80,7 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.blue_theme));
+            window.setStatusBarColor(getResources().getColor(R.color.red_theme));
         }
 
 

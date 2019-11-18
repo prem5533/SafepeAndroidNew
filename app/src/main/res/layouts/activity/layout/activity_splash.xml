@@ -15,22 +15,23 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="80dp"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:src="@drawable/logo_big" />
+        android:src="@drawable/safelogo_transparent" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingLeft="100dp"
         android:text="@string/splash_tag"
         android:fontFamily="@font/roboto_bold"
-        android:textColor="@color/bue_A800"
+        android:textColor="@color/red_theme"
         style="@style/TextAppearance.AppCompat.Medium"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginTop="-30dp"
+        android:layout_gravity="center"/>
 
     <View
         android:layout_width="match_parent"
@@ -43,7 +44,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/splash_tag_2"
-        android:textColor="@color/blue_theme"
+        android:textColor="@color/red_theme"
         style="@style/TextAppearance.AppCompat.Headline" />
 
     <TextView
@@ -53,7 +54,7 @@
         android:gravity="center"
         android:layout_marginLeft="40dp"
         android:text="@string/splash_tag_3"
-        android:textColor="@color/green_theme"
+        android:textColor="@color/yellow_theme"
         style="@style/TextAppearance.AppCompat.Medium" />
 
     <View
@@ -78,6 +79,13 @@
 
             <ImageView
                 android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/norton" />
+            <ImageView
+                android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
@@ -85,13 +93,6 @@
                 android:contentDescription="Verified By Visa"
                 android:src="@drawable/verified_by_visa" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:src="@drawable/norton" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -146,13 +147,5 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/green_theme"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/blue_theme"/>
 </LinearLayout>

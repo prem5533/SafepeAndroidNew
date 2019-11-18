@@ -6,7 +6,7 @@
     android:id="@+id/headerbar"
     android:layout_width="match_parent"
     android:layout_height="?actionBarSize"
-    android:background="@color/blue_theme"
+    android:background="@color/red_theme"
     android:paddingBottom="5dp">
 
     <Button
@@ -61,14 +61,14 @@
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="20dp"
                         android:src="@drawable/pinlock1"
-                        android:tint="@color/colorPrimaryDark" />
+                        android:tint="@color/yellow" />
 
                     <EditText
                         android:id="@+id/edtxPassCode"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="20dp"
-                        android:backgroundTint="@color/green_theme"
+                        android:backgroundTint="@color/yellow_theme"
                         android:gravity="center"
                         android:hint="Old Passcode"
                         android:inputType="numberPassword"
@@ -85,7 +85,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginBottom="20dp"
-                        android:backgroundTint="@color/green_theme"
+                        android:backgroundTint="@color/yellow_theme"
                         android:gravity="center"
                         android:hint="Create Passcode"
                         android:inputType="numberPassword"
@@ -101,7 +101,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginBottom="20dp"
-                        android:backgroundTint="@color/green_theme"
+                        android:backgroundTint="@color/yellow_theme"
                         android:gravity="center"
                         android:hint="Confirm Passcode"
                         android:inputType="numberPassword"

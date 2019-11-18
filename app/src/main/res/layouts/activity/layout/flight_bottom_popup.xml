@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/class_"
                 android:textSize="18sp"
-                android:textColor="@color/bue_A800"
+                android:textColor="@color/red_theme"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto_bold"/>
@@ -31,7 +31,7 @@
                 android:text="Done"
                 android:textSize="18sp"
                 android:padding="10dp"
-                android:textColor="@color/blue_theme"
+                android:textColor="@color/yellow_theme"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/roboto_bold"/>
         </LinearLayout>
@@ -61,7 +61,8 @@
             android:textSize="15sp"
             android:buttonTint="@color/bue_A800"
             android:fontFamily="@font/roboto_regular"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:checked="false"/>
 
         <RadioButton
             android:layout_width="fill_parent"
@@ -71,7 +72,20 @@
             android:textSize="15sp"
             android:buttonTint="@color/bue_A800"
             android:fontFamily="@font/roboto_regular"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:checked="false"
+            />
+        <RadioButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_first_class"
+            android:text="First Class"
+            android:textSize="15sp"
+            android:buttonTint="@color/bue_A800"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_marginTop="5dp"
+            android:checked="false"
+            />
     </RadioGroup>
 
         <View
@@ -84,7 +98,7 @@
             android:layout_height="wrap_content"
             android:text="No. of Travellers"
             android:textSize="18sp"
-            android:textColor="@color/bue_A800"
+            android:textColor="@color/red_theme"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:fontFamily="@font/roboto_bold"/>

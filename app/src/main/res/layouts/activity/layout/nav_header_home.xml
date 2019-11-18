@@ -15,7 +15,7 @@
         android:layout_height="60dp"
         android:layout_gravity="left"
         android:layout_marginLeft="0dp"
-        android:src="@drawable/safepe_logo_transparent"/>
+        android:src="@drawable/safelogo_transparent"/>
 
 
     <TextView
@@ -26,7 +26,7 @@
         android:fontFamily="@font/roboto_regular"
         android:gravity="center"
         android:text="@string/splash_tag_2"
-        android:textColor="@color/blue_theme"
+        android:textColor="@color/red_theme"
         android:textSize="12sp"
         android:layout_marginLeft="0dp"/>
 
@@ -39,19 +39,19 @@
         android:textSize="12sp"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/splash_tag_3"
-        android:textColor="@color/green_theme"
+        android:textColor="@color/red_theme"
         style="@style/TextAppearance.AppCompat.Medium" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="20dp"
-        android:background="@color/green_theme"/>
+        android:background="@color/yellow_theme"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/blue_theme"/>
+        android:background="@color/red_theme"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
             android:fontFamily="@font/roboto_regular"
             android:gravity="center"
             android:text="@string/india"
-            android:textColor="@color/blue_theme"
+            android:textColor="@color/red_theme"
             android:textSize="16sp"
             android:layout_marginRight="5dp"/>
 
@@ -90,7 +90,7 @@
             android:textSize="16sp"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/pvt_ltd"
-            android:textColor="@color/green_theme"
+            android:textColor="@color/yellow_theme"
             style="@style/TextAppearance.AppCompat.Medium" />
     </LinearLayout>
 

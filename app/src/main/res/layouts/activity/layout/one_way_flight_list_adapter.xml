@@ -3,23 +3,47 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/tv_flight_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="IndiGo 6E - 399"
-        android:textColor="@color/black"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:textSize="15sp"
-        android:fontFamily="@font/roboto_regular"
-        />
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_flight_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IndiGo 6E - 399"
+            android:textColor="@color/black"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/roboto_regular"
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/divider"
+            android:layout_marginLeft="5dp"/>
+        <TextView
+            android:id="@+id/tv_operatingAirlineCode_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/blue_grey_500"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_regular"
+            />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="5dp">
         <ImageView
+            android:id="@+id/image_flight_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="5dp"
@@ -38,16 +62,16 @@
                 android:textSize="15sp"
                 android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/bue_A800" />
+
             <TextView
-                android:id="@+id/tv_departure_flight_location"
+                android:id="@+id/tv_departure_flight_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DEL"
-                android:textSize="12sp"
-                android:textAllCaps="true"
-                android:textColor="@color/darker_gray"
                 android:fontFamily="@font/roboto_regular"
-                />
+                android:text="DEL"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -64,9 +88,19 @@
                 android:textColor="@color/bue_A800" />
 
             <View
-                android:layout_width="35dp"
+                android:layout_width="45dp"
                 android:layout_height="1dp"
-                android:background="@color/darker_gray" />
+                android:background="@color/divider"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:id="@+id/tv_flight_num_stops"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:textSize="10sp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/black"
+                android:layout_marginTop="5dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -82,13 +116,13 @@
                 android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/bue_A800" />
             <TextView
-                android:id="@+id/arrival"
+                android:id="@+id/tv_arrival_flight_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="GOI"
                 android:textSize="12sp"
                 android:textAllCaps="true"
-                android:textColor="@color/darker_gray"
+                android:textColor="@color/black"
                 android:fontFamily="@font/roboto_regular"
                 />
         </LinearLayout>

@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="17 Ratings"
-                    android:textColor="@color/blue_theme"
+                    android:textColor="@color/red_theme"
                     android:textSize="10sp"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_weight="1"
@@ -118,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bording &amp; Drop Point"
-                    android:textColor="@color/blue_theme"
+                    android:textColor="@color/red_theme"
                     android:textSize="10sp"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_weight="1"/>
@@ -126,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cancellation Point"
-                    android:textColor="@color/blue_theme"
+                    android:textColor="@color/red_theme"
                     android:textSize="10sp"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_weight="1"/>

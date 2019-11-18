@@ -11,25 +11,26 @@
     <include layout="@layout/toolbar_transparent"/>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:src="@drawable/logo_big" />
+        android:layout_width="200dp"
+        android:layout_height="90dp"
+        android:src="@drawable/safelogo_transparent" />
 
     <TextView
         android:id="@+id/promptview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter your passcode"
+        android:layout_marginTop="-20dp"
         android:fontFamily="@font/roboto_regular"
-        android:textSize="18.0sp"
         android:gravity="center"
-        android:padding="20.0dp" />
+        android:padding="20.0dp"
+        android:text="Enter your passcode"
+        android:textSize="18.0sp" />
 
     <com.safepayu.wallet.custom_view.passcodeview.PasscodeTextView
         android:id="@+id/otp_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/blue_theme"
+        android:textColor="@color/red_theme"
         app:bar_active_color="@color/colorPrimary"
         app:bar_enabled="true"
         app:bar_error_color="@color/red_600"
@@ -60,7 +61,7 @@
         android:id="@+id/example_keyboard"
         android:layout_marginTop="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="0dp"
         tools:layout="@layout/number_bard_fragment"
         class="com.safepayu.wallet.fragment.NumberBoard"/>
 
@@ -69,16 +70,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
+        android:visibility="gone"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/green_theme"/>
+            android:background="@color/yellow_theme"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/blue_theme"/>
+            android:background="@color/red_theme"/>
     </LinearLayout>
 
 </LinearLayout>

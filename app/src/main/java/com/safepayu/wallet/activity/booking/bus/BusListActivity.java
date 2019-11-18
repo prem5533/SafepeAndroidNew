@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.safepayu.wallet.R;
-import com.safepayu.wallet.adapter.BusListAdapter;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.safepayu.wallet.R;
+import com.safepayu.wallet.adapter.bus.BusListAdapter;
 
 public class BusListActivity extends AppCompatActivity implements View.OnClickListener, BusListAdapter.OnBusItemClickListener {
 

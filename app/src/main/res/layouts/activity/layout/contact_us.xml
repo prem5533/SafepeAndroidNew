@@ -9,7 +9,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/blue_theme"
+        android:background="@color/red_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -136,11 +136,11 @@
                     android:textSize="18sp"
                     android:fontFamily="@font/roboto_bold"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/bue_A800" />
+                    android:textColor="@color/red_theme" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/divider"
+                    android:background="@color/yellow"
                     android:layout_marginTop="10dp"/>
 
 
@@ -155,7 +155,7 @@
                     android:textSize="12sp"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_marginTop="20dp"
-                    android:textColor="@color/green_theme" />
+                    android:textColor="@color/red_theme" />
 
 
                 <TextView
@@ -174,7 +174,7 @@
                     android:layout_height="match_parent"
                     android:text="+91 8376097766, +91 9867967827"
                     android:textSize="16sp"
-                    android:textColor="@color/green_theme"
+                    android:textColor="@color/yellow_theme"
                     android:layout_gravity="center"
                     android:textStyle="bold"
                     android:fontFamily="@font/roboto_regular"
@@ -199,7 +199,7 @@
                     android:layout_height="match_parent"
                     android:text=""
                     android:textSize="16sp"
-                    android:textColor="@color/green_theme"
+                    android:textColor="@color/yellow_theme"
                     android:layout_gravity="center"
                     android:textStyle="bold"
                     android:fontFamily="@font/roboto_regular"
@@ -273,14 +273,14 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:layout_marginTop="20dp"
-                    android:textColor="@color/blue_theme" />
+                    android:textColor="@color/red_theme" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="www.safepeindia.com"
                     android:textSize="16sp"
-                    android:textColor="@color/green_theme"
+                    android:textColor="@color/yellow_theme"
                     android:layout_gravity="center"
                     android:textStyle="bold"
                     android:fontFamily="@font/roboto_regular"
@@ -330,7 +330,7 @@
                     android:textSize="15sp"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/blue_theme" />
+                    android:textColor="@color/red_theme" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -379,21 +379,5 @@
     <include layout="@layout/footer"
      />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/green_theme"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/blue_theme"/>
-    </LinearLayout>
 
 </RelativeLayout>

@@ -7,10 +7,10 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/green_theme" />
+        android:background="@color/yellow_theme" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/blue_theme" />
+        android:background="@color/red_theme" />
 </LinearLayout>

@@ -5,24 +5,25 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
         android:adjustViewBounds="true"
         android:layout_marginTop="50dp"
         android:layout_gravity="center"
-        android:src="@drawable/safepe_logo_transparent" />
+        android:src="@drawable/safelogo_transparent"
+        android:scaleType="fitXY"/>
 
     <TextView
         android:id="@+id/secureline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingLeft="30dp"
         android:text="The New Generations Payment App"
-        android:textColor="#10525C"
+        android:textColor="@color/red_theme"
         android:textSize="12dp"
         android:fontFamily="@font/roboto_italic"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        android:layout_marginTop="-20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -112,7 +113,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_gravity="left"
                 android:text="Forgot Passcode?"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/red_theme"
                 android:textSize="14sp" />
         </LinearLayout>
         <LinearLayout
@@ -312,12 +313,19 @@
         android:id="@+id/securebtn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_above="@id/lightline"
         android:layout_gravity="bottom"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/norton" />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -327,13 +335,7 @@
             android:contentDescription="Verified By Visa"
             android:src="@drawable/verified_by_visa" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:src="@drawable/norton" />
+
 
         <ImageView
             android:layout_width="match_parent"
@@ -347,21 +349,5 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/lightline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/green_theme"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/blue_theme"/>
-    </LinearLayout>
     </LinearLayout>

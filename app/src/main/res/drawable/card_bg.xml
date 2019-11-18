@@ -2,10 +2,10 @@
     android:shape="rectangle">
 
 
-    <solid android:color="#f5f7fc" />
+    <solid android:color="#fff5ee" />
     <stroke
         android:width=".5dp"
-        android:color="#e7ebf5" />
+        android:color="#e061a8" />
 
 
 </shape>

@@ -12,7 +12,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/blue_theme"
+        android:background="@color/red_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -215,7 +215,7 @@
                         android:textSize="14sp"
                         android:textColor="@color/black"
                         android:fontFamily="@font/roboto_regular"
-                        android:buttonTint="@color/green_theme"
+                        android:buttonTint="@color/yellow_theme"
                         android:text="BANK ACCOUNT"/>
                 </RadioGroup>
 
@@ -562,7 +562,8 @@
                                 android:layout_gravity="end"
                                 android:layout_marginTop="60dp"
                                 android:checked="false"
-                                android:gravity="end" />
+                                android:gravity="end"
+                                tools:ignore="ObsoleteLayoutParam" />
                         </RadioGroup>
 
                         <RelativeLayout
@@ -585,7 +586,8 @@
                                 android:layout_gravity="end"
                                 android:gravity="end"
                                 android:text=""
-                                android:visibility="gone" />
+                                android:visibility="gone"
+                                android:layout_alignParentRight="true" />
                         </RelativeLayout>
 
                         <View
@@ -714,7 +716,7 @@
                             android:text="Enter amount"
                             android:textSize="12sp"
                             android:fontFamily="@font/roboto_regular"
-                            android:textColor="@color/green_theme"
+                            android:textColor="@color/yellow"
                             android:paddingLeft="0dp"
                             android:gravity="right"/>
 
@@ -826,7 +828,7 @@
                                 app:cardElevation="1dp"
                                 app:cardCornerRadius="23dp"
                                 android:layout_gravity="center"
-                                app:cardBackgroundColor="@color/blue_theme">
+                                app:cardBackgroundColor="@color/red_theme">
 
                                 <ImageView
                                     android:id="@+id/image_restaurant"
@@ -854,12 +856,12 @@
                                     android:textSize="14sp"
 
                                     android:fontFamily="@font/roboto_regular"
-                                    android:textColor="@color/green_theme"
+                                    android:textColor="@color/yellow_theme"
                                    />
                                 <View
                                     android:layout_width="62dp"
                                     android:layout_height="2dp"
-                                    android:background="@color/blue_theme"/>
+                                    android:background="@color/red_theme"/>
                             </LinearLayout>
 
 
@@ -871,24 +873,5 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-
-    <LinearLayout
-        android:id="@+id/lightline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/green_theme"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/blue_theme"/>
-    </LinearLayout>
 
 </RelativeLayout>

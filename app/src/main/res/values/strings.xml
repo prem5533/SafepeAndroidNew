@@ -58,7 +58,8 @@
     <string name="departure_date">Departure Date</string>
     <string name="return_date">Return Date</string>
     <string name="travellers">Travellers</string>
-    <string name="class_">Class</string>
+    <string name="class_">Choose Cabin Class</string>
+    <string name="cabin_class">Cabin Class</string>
     <string name="checkbox_flight">Show non stop flight only</string>
     <string name="search_flight">Search Flights</string>
     <string name="book_tickets">BOOK TICKETS</string>
@@ -74,6 +75,7 @@
     <string name="pvt_ltd"> Pvt. Ltd.</string>
     <string name="india">India </string>
     <string name="prefs_theme_key">theme</string>
+    <string name="OK">OK</string>
 
     <!--Bus-->
     <string name="cancel_policy1">* Cancellation fare calculated on seat fare of{seat Fare}</string>

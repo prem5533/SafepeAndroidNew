@@ -1,14 +1,14 @@
-package com.safepayu.wallet.adapter;
+package com.safepayu.wallet.adapter.bus;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.safepayu.wallet.R;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.safepayu.wallet.R;
 
 public class BusListAdapter extends RecyclerView.Adapter<BusListAdapter.BusViewHolder> {
     private Context context;
