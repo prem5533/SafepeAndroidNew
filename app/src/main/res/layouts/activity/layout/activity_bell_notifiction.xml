@@ -10,7 +10,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/blue_theme"
+        android:background="@color/red_theme"
         android:paddingBottom="5dp">
 
         <Button

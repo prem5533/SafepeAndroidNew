@@ -14,7 +14,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/scanView"
-                android:background="@color/bue_A700" />
+                android:background="@color/bue_A800" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:background="@null"
                 android:text="@string/scan_msg"
                 android:textAllCaps="false"
-                android:textColor="@color/green_theme"
+                android:textColor="@color/yellow_theme"
                 android:textSize="18sp"
                 android:gravity="center"
                 android:layout_margin="20dp"

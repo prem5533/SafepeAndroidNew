@@ -45,7 +45,7 @@
                     android:layout_marginTop="20dp"
                     android:text="@string/waringforAppUpdate"
                     android:gravity="center"
-                    android:textColor="#03017e"
+                    android:textColor="@color/red_theme"
                     android:textSize="16sp"
                     android:fontFamily="@font/roboto_regular"
                     android:visibility="visible" />

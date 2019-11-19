@@ -10,7 +10,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/blue_theme"
+        android:background="@color/red_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         app:tabMode="scrollable"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/green_theme"
+        app:tabIndicatorColor="@color/yellow_theme"
         app:tabTextColor="#757391"
         app:tabSelectedTextColor="@color/white"
         style="@style/TabLayoutTextStyle"

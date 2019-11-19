@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/blue_theme"
+        android:background="@color/red_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -62,7 +62,7 @@
                     android:text="Account Holder Name"
                     android:fontFamily="@font/roboto_regular"
                     android:textSize="13sp"
-                    android:textColor="@color/colorPrimary"/>
+                    android:textColor="@color/red_theme"/>
 
                 <EditText
                     android:id="@+id/accountName"
@@ -82,7 +82,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/red_theme"
                     android:fontFamily="@font/roboto_regular"
                     android:textSize="13sp"
                     android:text="Account Number"/>
@@ -107,7 +107,7 @@
                     android:text="Confirm Account Number"
                     android:fontFamily="@font/roboto_regular"
                     android:textSize="13sp"
-                    android:textColor="@color/colorPrimary"/>
+                    android:textColor="@color/red_theme"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -153,7 +153,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/red_theme"
                     android:fontFamily="@font/roboto_regular"
                     android:textSize="13sp"
                     android:text="Bank IFSC Code"/>
@@ -185,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:layout_marginRight="20dp"
-                    android:textColor="@color/bluedark"
+                    android:textColor="@color/red_theme"
                     android:textSize="13sp"
                     android:text=""/>
 

@@ -10,7 +10,7 @@
             android:id="@+id/headerbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/blue_theme"
+            android:background="@color/red_theme"
             android:paddingBottom="5dp">
 
             <Button
@@ -84,101 +84,170 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:id="@+id/linear_flight_source"
+                        android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:background="@drawable/edittext_rounded"
                         android:gravity="center"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:layout_marginRight="10dp">
-                        <AutoCompleteTextView
+                      >
+                        <TextView
                             android:id="@+id/sourceFlight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="From"
-                            android:textSize="18sp"
+                            android:text="From"
+                            android:textSize="15sp"
                             android:textColor="@color/bue_A800"
                             android:fontFamily="@font/roboto_regular"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:background="@null"
-                            android:gravity="center"
+                            android:gravity="start"
                             android:singleLine="true"
-                            android:imeOptions="actionDone"/>
-                        <TextView
-                            android:id="@+id/sourceFlightDesc"
+                            android:imeOptions="actionDone"
+                            android:clickable="false"/>
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="where"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:gravity="center"
-                            android:textSize="14sp"
-                            android:textColor="@color/bue_A800"
-                            android:fontFamily="@font/roboto_regular"/>
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/sourceFlightDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="New Delhi"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:gravity="start"
+                                android:textSize="20sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_regular"/>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="-"
+                                        android:gravity="start"
+                                        android:textSize="20sp"
+                                        android:textColor="@color/blue_grey_700"
+                                        android:fontFamily="@font/roboto_regular"/>
+
+                            <TextView
+                                android:id="@+id/source_flight_airport_code"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="DEL"
+                                android:gravity="start"
+                                android:textSize="20sp"
+                                android:textColor="@color/blue_grey_700"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_marginLeft="5dp"/>
+
+
+                                </LinearLayout>
+                        </LinearLayout>
+
+
 
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:id="@+id/linear_flight_destination"
+                        android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:background="@drawable/edittext_rounded"
                         android:gravity="center"
                         android:layout_weight="1"
-                        android:layout_marginLeft="10dp"
-                        android:orientation="vertical">
-                        <AutoCompleteTextView
+                        android:layout_marginLeft="0dp"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp">
+                        <TextView
                             android:id="@+id/destinationFlight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="To"
-                            android:textSize="18sp"
+                            android:text="To"
+                            android:textSize="15sp"
                             android:textColor="@color/bue_A800"
                             android:fontFamily="@font/roboto_regular"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:background="@null"
-                            android:gravity="center"
+                            android:gravity="start"
                             android:singleLine="true"
-                            android:imeOptions="actionDone"/>
-                        <TextView
-                            android:id="@+id/destinationFlightDesc"
+                            android:imeOptions="actionDone"
+                            android:clickable="false"/>
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="where"
-                            android:gravity="center"
-                            android:textSize="14sp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:textColor="@color/bue_A800"
-                            android:fontFamily="@font/roboto_regular"/>
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/destinationFlightDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Bengaluru"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:gravity="start"
+                                android:textSize="20sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_regular"/>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="-"
+                                    android:gravity="start"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/blue_grey_700"
+                                    android:fontFamily="@font/roboto_regular"/>
+                            <TextView
+                                android:id="@+id/destination_flight_airport_code"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="BLR"
+                                android:gravity="start"
+                                android:textSize="20sp"
+                                android:textColor="@color/blue_grey_700"
+                                android:layout_marginLeft="5dp"
+                                android:fontFamily="@font/roboto_regular"/>
+                            </LinearLayout>
+                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:layout_gravity="right|center"
+                        android:layout_marginRight="20dp"
                         android:background="@drawable/circle"
-                        android:layout_gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/image_one_way"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_one_way"
                             android:padding="11dp"
-                            android:visibility="gone"
-                            />
+                            android:src="@drawable/ic_down_arrow"
+                            android:visibility="gone" />
+
                         <ImageView
                             android:id="@+id/image_two_way"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_two_way"
-                            android:padding="11dp"/>
+                            android:padding="11dp"
+                            android:src="@drawable/ic_updownarrow" />
 
                     </LinearLayout>
                 </FrameLayout>
@@ -196,15 +265,51 @@
                         android:padding="10dp"
                         android:layout_marginRight="10dp">
 
-                        <TextView
-                            android:id="@+id/tv_departure_date"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/departure_date"
+                                android:textSize="12sp"
+                                android:textColor="@color/darker_gray"
+                                android:fontFamily="@font/roboto_regular"/>
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/departure_date"
-                            android:textSize="14sp"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_regular"
-                           ></TextView>
+                            android:layout_height="40dp"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv_departure_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_regular"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="28sp" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginLeft="5dp">
+                                <TextView
+                                    android:id="@+id/tv_departure_month_year"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:text=""
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp" />
+                                <TextView
+                                    android:id="@+id/tv_departure_day"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:text=""
+                                    android:textColor="@color/darker_gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -219,16 +324,64 @@
                     android:layout_weight="1"
                         android:padding="10dp"
                         android:layout_marginLeft="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/return_date"
+                            android:textSize="12sp"
+                            android:textColor="@color/darker_gray"
+                            android:fontFamily="@font/roboto_regular"/>
+                        <TextView
+                            android:id="@+id/tv_round"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="@string/book_round_trip"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
 
-                    <TextView
-                        android:id="@+id/tv_return_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/return_date"
-                        android:textSize="14sp"
-                        android:textColor="@color/darker_gray"
-                        android:fontFamily="@font/roboto_regular"
-                      ></TextView>
+                        <LinearLayout
+                            android:id="@+id/lidate"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:visibility="gone"
+                         >
+
+                            <TextView
+                                android:id="@+id/tv_return_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_regular"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="28sp" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginLeft="5dp">
+                                <TextView
+                                    android:id="@+id/tv_return_month_year"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:text=""
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp" />
+                                <TextView
+                                    android:id="@+id/tv_return_day"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:text=""
+                                    android:textColor="@color/darker_gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -241,7 +394,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="20dp">
                 <LinearLayout
                     android:id="@+id/layout_class_traveller_tab"
                     android:layout_width="match_parent"
@@ -255,7 +408,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/class_"
+                            android:text="@string/cabin_class"
                             android:textSize="12sp"
                             android:textColor="@color/darker_gray"
                             android:fontFamily="@font/roboto_regular"/>

@@ -28,10 +28,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -53,6 +49,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -456,7 +455,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 //.setNegativeButton(android.R.string.no, null)
-                .setIcon(getResources().getDrawable(R.drawable.icon_old100))
+                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
                 .show();
     }
 

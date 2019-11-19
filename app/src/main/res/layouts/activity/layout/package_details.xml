@@ -12,7 +12,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/blue_theme"
+        android:background="@color/red_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -69,7 +69,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/divider"
+                android:background="@color/yellow_theme"
                 android:layout_marginTop="10dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                     android:text=""
                     android:textSize="15sp"
                     android:fontFamily="@font/roboto_bold"
-                    android:textColor="@color/blue_theme"
+                    android:textColor="@color/red_theme"
                     android:singleLine="true"
                     android:layout_marginRight="10dp"
                     />
@@ -132,7 +132,7 @@
                     android:layout_weight="1"
                     android:textAlignment="viewEnd"
                     android:text=""
-                    android:textColor="@color/blue"
+                    android:textColor="@color/bue_A800"
                     android:textSize="15sp"
                     android:fontFamily="@font/roboto_bold"
                     android:singleLine="true"
@@ -171,7 +171,7 @@
                     android:text=""
                     android:textSize="15sp"
                     android:fontFamily="@font/roboto_bold"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/bue_A800"
                     android:singleLine="true"
                     android:layout_marginRight="10dp"/>
             </LinearLayout>
@@ -206,7 +206,7 @@
                     android:text=""
                     android:textSize="15sp"
                     android:fontFamily="@font/roboto_bold"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/bue_A800"
                     android:singleLine="true"
                     android:layout_marginRight="10dp"
                     />
@@ -243,7 +243,7 @@
                     android:singleLine="true"
                     android:text=""
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/bue_A800"
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -252,21 +252,5 @@
 
     <include layout="@layout/footer"
       ></include>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/green_theme"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/blue_theme"/>
-    </LinearLayout>
 
 </RelativeLayout>

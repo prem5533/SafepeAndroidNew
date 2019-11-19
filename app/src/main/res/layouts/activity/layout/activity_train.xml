@@ -10,7 +10,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/blue_theme"
+        android:background="@color/red_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -186,7 +186,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TODAY"
-            android:textColor="@color/green_theme"
+            android:textColor="@color/yellow_theme"
             android:textSize="13sp"
             android:fontFamily="@font/roboto_regular"
             android:padding="10dp"/>
@@ -219,7 +219,7 @@
             android:text="@string/checkbox_train"
             android:textSize="12sp"
             android:textColor="@color/bue_A800"
-            android:buttonTint="@color/bue_A800"
+            android:buttonTint="@color/yellow"
             android:layout_marginTop="5dp"/>
         <Button
             android:id="@+id/search_train_btn"

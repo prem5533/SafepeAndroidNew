@@ -39,7 +39,7 @@
             style="@style/TextAppearance.AppCompat.Small"
             app:fontCustom="@string/Roboto"
             android:textStyle="normal"
-            android:textColor="@color/green_theme"
+            android:textColor="@color/yellow_theme"
             android:textSize="14sp" />
 
     </LinearLayout>

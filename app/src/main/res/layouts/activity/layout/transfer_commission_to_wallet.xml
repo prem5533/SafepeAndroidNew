@@ -9,7 +9,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/blue_theme"
+        android:background="@color/red_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="center"
-        android:background="@color/green_theme"
+        android:background="@color/yellow_theme"
         android:gravity="center"
         android:text="Withdraw in main wallet"
         android:textColor="@color/white"
@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Amount Reflect In Your Main Wallet"
-                android:textColor="@color/green_theme"
+                android:textColor="@color/yellow_theme"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/roboto_regular" />
@@ -114,7 +114,7 @@
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/green_theme"
+                android:textColor="@color/yellow_theme"
                 android:paddingLeft="0dp"
                 android:gravity="right"/>
         </LinearLayout>
@@ -245,36 +245,20 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/blue_theme"
-            android:layout_weight="1"/>
+            android:background="@color/red_theme"
+            android:layout_weight="1"
+            android:layout_marginRight="-20dp"/>
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:src="@drawable/safepe_logo">
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:src="@drawable/safelogo_transparent">
 
         </ImageView>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/green_theme"
-            android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lightline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/green_theme"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/blue_theme"/>
+            android:background="@color/yellow_theme"
+            android:layout_weight="1"
+            android:layout_marginLeft="-20dp"/>
     </LinearLayout>
 </LinearLayout>

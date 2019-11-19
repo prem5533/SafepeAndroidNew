@@ -8,13 +8,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.MultiDex;
-
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
 
 public class Splash extends AppCompatActivity implements PasscodeClickListener {
 
@@ -81,7 +81,7 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 //.setNegativeButton(android.R.string.no, null)
-                .setIcon(getResources().getDrawable(R.drawable.icon_old100))
+                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
                 .show();
 
     }

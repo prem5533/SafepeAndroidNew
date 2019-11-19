@@ -44,4 +44,6 @@
     <string name="channel_description">channel_description</string>
     <string name="title_activity_maps">Map</string>
     <string name="copyright">\u00a9</string>
+    <string name="book_round_trip">Book two\nway trips</string>
+
 </resources>

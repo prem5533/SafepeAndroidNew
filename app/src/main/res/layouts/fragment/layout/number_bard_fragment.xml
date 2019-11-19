@@ -19,23 +19,23 @@
 
 
             <LinearLayout
+                android:id="@+id/one_btn"
                 android:layout_width="@dimen/passcode_btn"
                 android:layout_height="@dimen/passcode_btn"
                 android:layout_margin="@dimen/passcode_btn_margin"
-                android:orientation="vertical"
                 android:background="@drawable/numeric_button"
-                android:gravity="center"
                 android:clickable="true"
-                android:id="@+id/one_btn"
-                android:focusable="true">
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/digit_one"
                     android:fontFamily="@font/roboto_bold"
-                    android:textSize="16sp"/>
+                    android:text="@string/digit_one"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -253,7 +253,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:id="@+id/btn.create"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/red_theme"
                     android:textStyle="bold"
                     android:background="@drawable/text_numeric_button"
                     android:visibility="visible"

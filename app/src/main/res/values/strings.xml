@@ -58,7 +58,8 @@
     <string name="departure_date">Departure Date</string>
     <string name="return_date">Return Date</string>
     <string name="travellers">Travellers</string>
-    <string name="class_">Class</string>
+    <string name="class_">Choose Cabin Class</string>
+    <string name="cabin_class">Cabin Class</string>
     <string name="checkbox_flight">Show non stop flight only</string>
     <string name="search_flight">Search Flights</string>
     <string name="book_tickets">BOOK TICKETS</string>
@@ -74,10 +75,16 @@
     <string name="pvt_ltd"> Pvt. Ltd.</string>
     <string name="india">India </string>
     <string name="prefs_theme_key">theme</string>
+    <string name="OK">OK</string>
 
     <!--Bus-->
     <string name="cancel_policy1">* Cancellation fare calculated on seat fare of{seat Fare}</string>
     <string name="cancel_policy2">* Ticket can not be cancelled after scheduled bus departure time from the first boarding point</string>
     <string name="cancel_policy3">* Refundable amount is calculated based on scheduled bus departure time from the first boarding time</string>
+    
+    <string name="refund_flight">A penalty of upto 2925 will be charged by the airline &amp; MMT based on how close to the departure date you cancel </string>
+    <string name="zero_cancel">Buy Zero cancellation for 749 and get maximum refund in case of cancellation upto 24 hours before departure</string>
+
+
 
 </resources>

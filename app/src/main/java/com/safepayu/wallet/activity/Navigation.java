@@ -117,7 +117,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.blue_theme));
+            window.setStatusBarColor(getResources().getColor(R.color.red_theme));
         }
 
         loadingDialog = new LoadingDialog(this);
@@ -1406,7 +1406,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 //.setNegativeButton(android.R.string.no, null)
-                .setIcon(getResources().getDrawable(R.drawable.icon_old100))
+                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
                 .show();
     }
 
@@ -1431,7 +1431,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton(android.R.string.no, null)
-                .setIcon(getResources().getDrawable(R.drawable.icon_old100))
+                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
                 .show();
     }
 

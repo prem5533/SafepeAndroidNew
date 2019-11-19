@@ -37,10 +37,10 @@ import io.reactivex.schedulers.Schedulers;
 
 public class PostpaidLandlineBillpay extends BaseActivity {
 
-    Button PayBtn,BackBtn,BillCheckBtn;
+    Button PayBtn,BackBtn,BillCheckBtn ;
     TextView textView;
     private Spinner OperatorSpinner;
-    private EditText AmountEd,MobileED;
+    private EditText MobileED ,AmountEd;
     String OperatorText="",OperatorCode="",OperatorId="";
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
@@ -54,13 +54,13 @@ public class PostpaidLandlineBillpay extends BaseActivity {
 
         loadingDialog = new LoadingDialog(this);
 
-        PayBtn=findViewById(R.id.Paybtn);
-        BackBtn=findViewById(R.id.postpaid_back_btn);
-        BillCheckBtn=findViewById(R.id.btnCheckBill);
-        textView=findViewById(R.id.textView);
-        AmountEd=findViewById(R.id.amountPostpaid);
-        OperatorSpinner=findViewById(R.id.operatorPostpaid);
-        MobileED=findViewById(R.id.mobilePostpaid);
+        PayBtn = findViewById(R.id.Paybtn);
+        BackBtn = findViewById(R.id.postpaid_back_btn);
+        BillCheckBtn = findViewById(R.id.btnCheckBill);
+        textView = findViewById(R.id.textView);
+        AmountEd = findViewById(R.id.amountPostpaid);
+        OperatorSpinner = findViewById(R.id.operatorPostpaid);
+        MobileED = findViewById(R.id.mobilePostpaid);
         AmountTotalTV = findViewById(R.id.calculatedamount_bill);
 
         OperatorNameList=new ArrayList<>();
@@ -134,7 +134,7 @@ public class PostpaidLandlineBillpay extends BaseActivity {
         BillCheckBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                textView.setVisibility(View.VISIBLE);
+                textView.setVisibility(View.GONE);
                 AmountEd.setVisibility(View.VISIBLE);
                 BillCheckBtn.setVisibility(View.GONE);
                 PayBtn.setVisibility(View.VISIBLE);
@@ -218,7 +218,7 @@ public class PostpaidLandlineBillpay extends BaseActivity {
             if (TextUtils.isEmpty(AmountEd.getText().toString().trim())){
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Enter Amount",false);
             }else {
-                if (Mobile.length()>11 || Mobile.length()<0){
+                if (Mobile.length()>9 || Mobile.length()<0){
                     if (Amount==0 || Amount<0){
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Enter Amount",false);
                     }else {

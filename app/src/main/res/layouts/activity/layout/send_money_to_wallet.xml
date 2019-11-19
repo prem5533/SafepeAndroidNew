@@ -8,7 +8,7 @@
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/blue_theme"
+        android:background="@color/red_theme"
         android:paddingBottom="5dp">
 
         <Button
@@ -108,7 +108,7 @@
                         android:gravity="center"
                         android:text="+91"
                         android:textSize="18dp"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/red_theme"
                         android:fontFamily="@font/roboto_regular"
                         android:layout_marginTop="15dp"
                         android:layout_marginLeft="0dp" />
@@ -155,7 +155,7 @@
                             android:text="₹"
                             android:textSize="24dp"
                             android:fontFamily="@font/roboto_regular"
-                            android:textColor="@color/blue"/>
+                            android:textColor="@color/red_theme"/>
 
 
                         <EditText
@@ -251,22 +251,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/lightline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/green_theme"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/blue_theme"/>
-    </LinearLayout>
 
 </RelativeLayout>

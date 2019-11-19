@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Background Color -->
-    <solid android:color="@color/green_theme" />
+    <solid android:color="@color/yellow_theme" />
 
     <!-- Border Color -->
     <corners

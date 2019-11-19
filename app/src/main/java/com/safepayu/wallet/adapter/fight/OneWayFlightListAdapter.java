@@ -4,8 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
+import com.squareup.picasso.Picasso;
+
+import java.text.NumberFormat;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,31 +20,136 @@ import androidx.recyclerview.widget.RecyclerView;
 public class OneWayFlightListAdapter extends RecyclerView.Adapter<OneWayFlightListAdapter.OneWayListViewHolder> {
 
     private Context context;
+    private List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> mItem;
+    private OnFlightItemListener onFlightItemListener;
 
-    public OneWayFlightListAdapter(Context context) {
+    public interface OnFlightItemListener{
+        void onFlightItemListerne(int position, AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mFlightItemListenre);
+    }
+
+    public OneWayFlightListAdapter(Context context, List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> mItem,OnFlightItemListener onFlightItemListener) {
         this.context = context;
+        this.mItem = mItem;
+        this.onFlightItemListener = onFlightItemListener;
     }
 
     @NonNull
     @Override
     public OneWayListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.one_way_flight_list_adapter,parent,false);
+
         return new OneWayFlightListAdapter.OneWayListViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull OneWayListViewHolder holder, int position) {
+        holder.bindData(position);
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return mItem.size();
     }
 
-    public class  OneWayListViewHolder extends RecyclerView.ViewHolder {
+    public class  OneWayListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView tvflightName, tvDepartureCode, tvArrivalCode, tvTakeFlightTime, tvFlightTotalFare, tvDepartureFlightTime, tvArrivalFlightTime,
+                tvFlightNumStops,tvOperatingAirlineCodeNumber;
+        private ImageView imageFlight;
+
         public OneWayListViewHolder(@NonNull View itemView) {
             super(itemView);
+            tvflightName = itemView.findViewById(R.id.tv_flight_name);
+            tvDepartureCode = itemView.findViewById(R.id.tv_departure_flight_code);
+            tvArrivalCode = itemView.findViewById(R.id.tv_arrival_flight_code);
+            tvTakeFlightTime = itemView.findViewById(R.id.tv_take_flight_time);
+            tvFlightTotalFare = itemView.findViewById(R.id.tv_fight_rupee);
+            tvDepartureFlightTime = itemView.findViewById(R.id.tv_departure_flight_time);
+            tvArrivalFlightTime = itemView.findViewById(R.id.tv_arrival_flight_time);
+            tvFlightNumStops = itemView.findViewById(R.id.tv_flight_num_stops);
+            imageFlight = itemView.findViewById(R.id.image_flight_icon);
+            tvOperatingAirlineCodeNumber = itemView.findViewById(R.id.tv_operatingAirlineCode_number);
+
+            itemView.setOnClickListener(this);
+        }
+
+        public void bindData(int position) {
+
+
+
+
+            int flightStop =   mItem.get(position).getFlightSegments().size();
+
+        //    tvArrivalCode.setText();
+
+            tvflightName.setText(mItem.get(position).getFlightSegments().get(0).getAirLineName()+ mItem.get(position).getFlightSegments().size());
+            tvDepartureCode.setText(mItem.get(position).getFlightSegments().get(0).getDepartureAirportCode());
+            if (flightStop>1){
+                tvArrivalCode.setText(mItem.get(position).getFlightSegments().get(flightStop-1).getArrivalAirportCode());
+            }
+            else {
+                tvArrivalCode.setText(mItem.get(position).getFlightSegments().get(0).getArrivalAirportCode());
+            }
+
+
+            tvTakeFlightTime.setText(mItem.get(position).getFlightSegments().get(0).getDuration());
+        /*    String totalFare = String.valueOf(mItem.get(position).getFareDetails().getChargeableFares().getActualBaseFare() +
+                    mItem.get(position).getFareDetails().getChargeableFares().getTax() + mItem.get(position).getFareDetails().getChargeableFares().getSTax() +
+                    mItem.get(position).getFareDetails().getChargeableFares().getSCharge() + mItem.get(position).getFareDetails().getChargeableFares().getTDiscount() +
+                    mItem.get(position).getFareDetails().getChargeableFares().getTPartnerCommission());*/
+            int passengercount = mItem.get(position).getFareDetails().getFareBreakUp().getFareAry().get(0).getIntPassengerCount();
+            int intAmount = mItem.get(position).getFareDetails().getFareBreakUp().getFareAry().get(0).getIntTaxDataArray().get(0).getIntAmount();
+            int totalAmt =  intAmount/passengercount;
+
+            tvFlightTotalFare.setText(context.getResources().getString(R.string.rupees) + " " +NumberFormat.getIntegerInstance().format(totalAmt));
+
+            tvOperatingAirlineCodeNumber.setText(mItem.get(position).getFlightSegments().get(0).getOperatingAirlineCode()+ " "+ mItem.get(position).getFlightSegments().get(0).getOperatingAirlineFlightNumber());
+
+            //************set flight time***********
+            String Date, Time, h, m;
+            String depTime = mItem.get(position).getFlightSegments().get(0).getDepartureDateTimeZone();
+            String[] separated = depTime.split(" ");
+            Date = separated[0];
+            Time = separated[1];
+            String[] separatedTime = Time.split(":");
+            h = separatedTime[0];
+            m = separatedTime[1];
+            tvDepartureFlightTime.setText(h + ":" + m);
+
+            String arrTime = mItem.get(position).getFlightSegments().get(0).getArrivalDateTimeZone();
+            String[] arrTimeseparated = arrTime.split(" ");
+            Date = arrTimeseparated[0];
+            Time = arrTimeseparated[1];
+            String[] separatedArrTime = Time.split(":");
+            h = separatedArrTime[0];
+            m = separatedArrTime[1];
+            tvArrivalFlightTime.setText(h + ":" + m);
+
+            //*************set image****************
+            Picasso.get().load("http://webapi.i2space.co.in/" + mItem.get(position).getFlightSegments().get(0).getImagePath()).into(imageFlight);
+
+
+            //*********set flight count*****************
+            if ( mItem.get(position).getFlightSegments().size()>1){
+                tvFlightNumStops.setText(mItem.get(position).getFlightSegments().size()-1 +" Stop");
+            }
+          else  if (String.valueOf(mItem.get(position).getFlightSegments().get(0).getIntNumStops()).equals("null")){
+                tvFlightNumStops.setText("Non Stop");
+            }
+            else {
+                tvFlightNumStops.setText(String.valueOf(mItem.get(position).getFlightSegments().get(0).getIntNumStops())+"Stop");
+            }
+
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (onFlightItemListener != null) {
+                onFlightItemListener.onFlightItemListerne(getLayoutPosition(),mItem.get(getLayoutPosition()) );
+
+            }
         }
     }
 }

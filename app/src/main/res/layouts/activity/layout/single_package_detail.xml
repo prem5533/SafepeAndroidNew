@@ -30,7 +30,7 @@
                 android:text="Wallet cashback Rs. 1,76,000."
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="14sp"
-                android:textColor="@color/blue_theme"
+                android:textColor="@color/red_theme"
                 android:layout_marginTop="20dp"
                 android:visibility="gone"/>
             <TextView

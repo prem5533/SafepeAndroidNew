@@ -28,6 +28,35 @@ public class SharedPref {
     public final String REMEMBER_ME = "remember_me";
     public final String LOGOUT_ALL = "logout_all";
 
+    //***********FLIGHT*******************
+    public final String FLIGHT_DATE = "flight_date";
+    public final String FLIGHT_SOURCE = "flight_source";
+    public final String FLIGHT_DESTINATION = "flight_destination";
+    public final String FLIGHT_JOURNEY_DATE = "flight_journey_date";
+    public final String FLIGHT_TRIP_TYPE = "flight_trip_type";
+    public final String FLIGHT_USER = "flight_user";
+    public final String FLIGHT_USER_TYPE = "flight_user_type";
+    public final String FLIGHT_ADULTS = "flight_adult";
+    public final String FLIGHT_INFANTS = "flight_infant";
+    public final String FLIGHT_CHILDREN = "flight_children";
+    public final String FLIGHT_TYPE = "flight_type";
+    public final String FLIGHT_RETURN_DATE = "flight_return_date";
+    public final String FLIGHT_TRAVELLERS_CLASS = "flight_trvellers_class";
+    public final String FLIGHT_TRAVELLERS_COUNT = "flight_trvellers_count";
+    public final String FLIGHT_TRAVELLERS_CLASS_TYPE = "flight_trvellers_class_type";
+    public final String FLIGHT_SOURCE_FULL_NAME = "flight_source_full_name";
+    public final String FLIGHT_DESTINATION_FULL_NAME = "flight_destination_full_name";
+    public final String FLIGHT_IMAGE = "flight_image";
+    public final String FLIGHT_NAME = "flight_name";
+    public final String FLIGHT_OPERATING_AIRLINE_CODE = "flight_airline_code";
+    public final String FLIGHT_OPERATING_AIRLINE_FLIGHT_NUMBER = "flight_airline_flight_number";
+    public final String FLIGHT_DURATION = "flight_duration";
+    public final String FLIGHT_HAND_BAGGAGE = "flight_hand_baggage";
+    public final String FLIGHT_CHECKIN_BAGGAGE = "flight_checkin_baggage";
+    public final String FLIGHT_TOTAL_FARE = "flight_total_fare";
+    public final String FLIGHT_DEP_TIME = "flight_dep_time";
+    public final String FLIGHT_ARRIVAL_TIME = "flight_arrival_time";
+
     public SharedPref(Context context) {
         this.context = context;
     }

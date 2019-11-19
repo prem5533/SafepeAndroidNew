@@ -27,7 +27,7 @@
                     android:layout_margin="5dp"
                     app:cardElevation="1dp"
                     app:cardCornerRadius="23dp"
-                    app:cardBackgroundColor="@color/blue_theme">
+                    app:cardBackgroundColor="@color/red_theme">
 
                     <ImageView
                         android:id="@+id/image_restaurant"

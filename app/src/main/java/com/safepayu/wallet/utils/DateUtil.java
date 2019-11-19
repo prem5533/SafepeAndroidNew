@@ -32,11 +32,13 @@ public class DateUtil {
         try {
             Date date = mFormatFrom.parse(input);
             strDate = mFormatTo.format(date);
+
         } catch (ParseException e) {
             BaseApp.getInstance().toastHelper().log(DateUtil.class, e.getMessage());
         }
         return strDate;
     }
+
 
 
 }
