@@ -100,6 +100,7 @@ public class BusActivity extends AppCompatActivity implements View.OnClickListen
                 SourceName=DestinationName;
                 DestinationName=Namev;
 
+
                 Idv=SourceNameId;
                 SourceNameId=DestinationNameId;
                 DestinationNameId=Idv;
@@ -128,7 +129,13 @@ public class BusActivity extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.search_bus_btn:
 
-                startActivity(new Intent(BusActivity.this, BusListActivity.class));
+                Intent intent=new Intent(BusActivity.this, BusListActivity.class);
+                intent.putExtra("SourceName",SourceName);
+                intent.putExtra("SourceNameId",SourceNameId);
+                intent.putExtra("DestinationName",DestinationName);
+                intent.putExtra("DestinationNameId",DestinationNameId);
+                intent.putExtra("BusDate",BusDate.getText().toString());
+                startActivity(intent);
                 break;
 
             case R.id.tv_bus_date:

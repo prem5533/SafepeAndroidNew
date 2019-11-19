@@ -39,8 +39,8 @@ import com.safepayu.wallet.api.ApiClientBooking;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.FlightDatePicker;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.models.response.booking.FlightSourceResponse;
 import com.safepayu.wallet.models.response.booking.flight.AirportLocationResponse;
+import com.safepayu.wallet.models.response.booking.flight.FlightSourceResponse;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

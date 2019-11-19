@@ -16,6 +16,7 @@ import com.safepayu.wallet.models.request.SendToWalletRequest;
 import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
 import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.request.booking.flight.AvailableFlightRequest;
+import com.safepayu.wallet.models.request.booking_bus.BusListRequest;
 import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -45,10 +46,11 @@ import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
 import com.safepayu.wallet.models.response.WalletHistoryResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
-import com.safepayu.wallet.models.response.booking.FlightSourceResponse;
+import com.safepayu.wallet.models.response.booking.bus.BusListResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusSourcesResponse;
 import com.safepayu.wallet.models.response.booking.flight.AirportLocationResponse;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
+import com.safepayu.wallet.models.response.booking.flight.FlightSourceResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.Body;
@@ -200,7 +202,9 @@ public interface ApiService {
 
 
     //*************Bus Booking *******************//
-
     @POST("api/safepe/postBusLocationList")
     Single<BusSourcesResponse> getBusSourcres();
+
+    @POST("api/safepe/postBusAvailable")
+    Single<BusListResponse> getBusAvailable(@Body BusListRequest busListRequest);
 }
