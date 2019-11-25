@@ -29,13 +29,12 @@
                 android:fontFamily="@font/roboto_regular"
                 android:id="@+id/textttttt"/>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_above="@+id/numberBtn_scanView"
+                android:layout_above="@+id/li_number"
                 android:layout_marginTop="10dp"
                 >
                 <Button
@@ -50,7 +49,7 @@
                     android:textSize="18sp"
                     android:gravity="center"
 
-                />
+                    />
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -58,20 +57,35 @@
                     android:layout_marginLeft="10dp"/>
             </LinearLayout>
 
-
-            <Button
-                android:id="@+id/numberBtn_scanView"
+            <LinearLayout
+                android:id="@+id/li_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@null"
-                android:text="Or Enter Number"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="18sp"
+                android:orientation="horizontal"
                 android:gravity="center"
                 android:layout_margin="10dp"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentBottom="true">
+                <Button
+                    android:id="@+id/numberBtn_scanView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@null"
+                    android:text="Or Enter Number"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                  />
+                <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_smartphone_white"
+                android:layout_marginLeft="10dp"/>
+
+            </LinearLayout>
+
+
         </RelativeLayout>
 
 

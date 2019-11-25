@@ -31,6 +31,7 @@ import com.safepayu.wallet.models.response.OperatorResponse;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import androidx.cardview.widget.CardView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -44,7 +45,8 @@ public class DthRecharge extends BaseActivity {
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
     double totalAmount = 0.0f, minusAmount = 0.0f;
-    private TextView AmountTotalTV;
+    private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;;
+    private CardView cardAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,11 @@ public class DthRecharge extends BaseActivity {
         AmountED=findViewById(R.id.amountid);
         DthIdED=findViewById(R.id.customerid);
         AmountTotalTV = findViewById(R.id.calculatedamount);
+        cardAmount = findViewById(R.id.card_amount);
+        tvRechargeamount = findViewById(R.id.tv_rechargeamount);
+        tvWalletCashback = findViewById(R.id.tv_walletcashback);
+        tvTotalAmountpay = findViewById(R.id.tv_total_amountpay);
+
 
         OperatorNameList=new ArrayList<>();
         IdList=new ArrayList<>();
@@ -147,19 +154,27 @@ public class DthRecharge extends BaseActivity {
                     if (num <=1000) {
                         CalculateAmount(num);
                         String text = AmountED.getText().toString().trim() + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
-                        AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
+                      //  AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
+                        cardAmount.setVisibility(View.VISIBLE);
+                        tvRechargeamount.setText(AmountED.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
+                        tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
+                        tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees)); }
 
                     else if (num>1000){
                         CalculateAmount1Per(num);
                         String text = AmountED.getText().toString().trim()  + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
-                        AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
+                     //   AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
+                        tvRechargeamount.setText(AmountED.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
+                        tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
+                        tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees)); }
 
                     else {
                         AmountTotalTV.setText("0.0");
                     }
                 }
                 else {
-                    AmountTotalTV.setText(" ");
+                  //  AmountTotalTV.setText(" ");
+                    cardAmount.setVisibility(View.GONE);
                 }
             }
 

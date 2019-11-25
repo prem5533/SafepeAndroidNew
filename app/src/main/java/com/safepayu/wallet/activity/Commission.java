@@ -8,6 +8,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.safepayu.wallet.BaseActivity;
@@ -18,6 +19,8 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.CommissionDetailsResponse;
 
+import java.text.NumberFormat;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -27,23 +30,25 @@ public class Commission extends BaseActivity {
     private Button BackBtn;
     private TextView SendWallet,CommBalanceTV,LeftBussTV,RightBussTV,TotalBussTV,SponserBussTV,MatchingBussTV,GetMemberShipBtn,WarningTextTv;
     private LoadingDialog loadingDialog;
+    private LinearLayout liSendTowallet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, false);
 
-        loadingDialog=new LoadingDialog(this);
-        SendWallet=findViewById(R.id.send_to_wallet);
-        BackBtn=findViewById(R.id.send_back_btn);
-        CommBalanceTV=findViewById(R.id.current_referral_business);
-        LeftBussTV=findViewById(R.id.left_business);
-        RightBussTV=findViewById(R.id.right_business);
-        TotalBussTV=findViewById(R.id.total_business);
-        SponserBussTV=findViewById(R.id.sponser_business);
-        MatchingBussTV=findViewById(R.id.matching_business);
-        GetMemberShipBtn=findViewById(R.id.getMemberShipBtn);
-        WarningTextTv=findViewById(R.id.textWarningCommission);
+        loadingDialog = new LoadingDialog(this);
+        SendWallet = findViewById(R.id.send_to_wallet);
+        BackBtn = findViewById(R.id.send_back_btn);
+        CommBalanceTV = findViewById(R.id.current_referral_business);
+        LeftBussTV = findViewById(R.id.left_business);
+        RightBussTV = findViewById(R.id.right_business);
+        TotalBussTV = findViewById(R.id.total_business);
+        SponserBussTV = findViewById(R.id.sponser_business);
+        MatchingBussTV = findViewById(R.id.matching_business);
+        GetMemberShipBtn = findViewById(R.id.getMemberShipBtn);
+        WarningTextTv = findViewById(R.id.textWarningCommission);
+        liSendTowallet = findViewById(R.id.li_send_towallet);
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +57,7 @@ public class Commission extends BaseActivity {
             }
         });
 
-        SendWallet.setOnClickListener(new View.OnClickListener() {
+        liSendTowallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), TransferCommissionToWallet.class));
@@ -71,14 +76,14 @@ public class Commission extends BaseActivity {
 
         if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
             GetMemberShipBtn.setVisibility(View.VISIBLE);
-            SendWallet.setVisibility(View.GONE);
+            liSendTowallet.setVisibility(View.GONE);
             WarningTextTv.setVisibility(View.VISIBLE);
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Goto Your Profile and Verify Your Email First",true);
         }else {
             getCommissionDetails();
             if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
                 GetMemberShipBtn.setVisibility(View.VISIBLE);
-                SendWallet.setVisibility(View.GONE);
+                liSendTowallet.setVisibility(View.GONE);
                 WarningTextTv.setVisibility(View.VISIBLE);
              //   BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",true);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -100,7 +105,7 @@ public class Commission extends BaseActivity {
                 alertDialog.show();
             }else {
                 GetMemberShipBtn.setVisibility(View.GONE);
-                SendWallet.setVisibility(View.VISIBLE);
+                liSendTowallet.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -134,8 +139,8 @@ public class Commission extends BaseActivity {
                         if (response.isStatus()) {
 
                             CommBalanceTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotcurrentcommwallet());
-                            LeftBussTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotleftbusiness());
-                            RightBussTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotrightbusiness());
+                            LeftBussTV.setText(getResources().getString(R.string.rupees)+" "+ NumberFormat.getIntegerInstance().format(response.getTotleftbusiness()));
+                            RightBussTV.setText(getResources().getString(R.string.rupees)+" "+NumberFormat.getIntegerInstance().format(response.getTotrightbusiness()));
 
                             TotalBussTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotincome());
                             SponserBussTV.setText(getResources().getString(R.string.rupees)+" "+response.getTotdirectincome());

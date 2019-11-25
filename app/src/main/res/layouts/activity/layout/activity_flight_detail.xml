@@ -77,192 +77,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-          <androidx.cardview.widget.CardView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_margin="5dp">
-              <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:padding="5dp"
-                 >
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycle_flight_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </androidx.cardview.widget.CardView>
 
-                  <LinearLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:gravity="start|center">
-                      <ImageView
-                          android:id="@+id/image_flight_detail"
-                          android:layout_width="40dp"
-                          android:layout_height="40dp"
-                          android:src="@drawable/ic_airplane"
-                          android:padding="5dp"/>
-                      <TextView
-                          android:id="@+id/tv_flightdetail_name"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:hint="Indigo"
-                          android:textSize="16sp"
-                          android:textColor="@color/black"
-                          android:fontFamily="@font/roboto_regular"
-                          android:layout_marginLeft="10dp"/>
-
-                  </LinearLayout>
-                  <LinearLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="vertical">
-
-                      <LinearLayout
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:gravity="center"
-                          android:layout_marginRight="10dp"
-                          android:layout_marginLeft="10dp">
-
-                          <TextView
-                              android:id="@+id/tv_flight_detail_dep_time"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:text=""
-                              android:textSize="18sp"
-                              android:textColor="@color/black"
-                              android:fontFamily="@font/roboto_bold"
-                              android:layout_weight="1"/>
-
-
-                          <LinearLayout
-                              android:layout_width="50dp"
-                              android:layout_height="wrap_content"
-                              android:orientation="vertical"
-                              android:layout_weight="1"
-                              android:layout_gravity="center"
-                              android:gravity="center"
-                              android:layout_marginLeft="70dp"
-                              android:layout_marginRight="70dp">
-                              <TextView
-                                  android:id="@+id/tv_flight_detail_duration"
-                                  android:layout_width="match_parent"
-                                  android:layout_height="wrap_content"
-                                  android:gravity="center"
-                                  android:textSize="12sp"
-                                  android:layout_gravity="center"
-                                  android:fontFamily="@font/roboto_regular"/>
-                              <View
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="1dp"
-                                  android:background="@color/darker_gray"
-                                />
-                              <ImageView
-                                  android:layout_width="40dp"
-                                  android:layout_height="15dp"
-                                  android:layout_marginLeft="-25dp"
-                                  android:src="@drawable/ic_next"
-                                  android:visibility="gone"/>
-                          </LinearLayout>
-
-                          <TextView
-                              android:id="@+id/tv_flight_detail_arrival_time"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:text=""
-                              android:textSize="18sp"
-                              android:textColor="@color/black"
-                              android:fontFamily="@font/roboto_bold"
-                              android:layout_marginLeft="10dp"
-                              android:gravity="right"
-                              android:layout_weight="1" />
-                      </LinearLayout>
-                      <LinearLayout
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:layout_marginBottom="5dp">
-                          <LinearLayout
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:orientation="vertical"
-                              android:layout_weight="1">
-                              <TextView
-                                  android:id="@+id/tv_flight_detail_source_name"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:hint="Delhi"
-                                  android:textSize="16sp"
-                                  android:textColor="@color/black"
-                                  android:fontFamily="@font/roboto_regular"
-                                  android:layout_marginLeft="10dp"/>
-                              <TextView
-                                  android:id="@+id/tv_flight_detail_dep_date"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:hint="Fri, 15 Nov 19"
-                                  android:textSize="12sp"
-                                  android:textColor="@color/black"
-                                  android:fontFamily="@font/roboto_regular"
-                                  android:layout_marginLeft="10dp"/>
-
-                              <TextView
-                                  android:id="@+id/tv_flight_detail_source_airpot"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:layout_marginLeft="10dp"
-                                  android:fontFamily="@font/roboto_regular"
-                                  android:hint="Airport"
-                                  android:textColor="@color/darker_gray"
-                                  android:textSize="12sp"
-                                  android:layout_marginTop="5dp"/>
-
-                          </LinearLayout>
-                          <LinearLayout
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:orientation="vertical"
-                              android:layout_weight="1"
-                              android:gravity="right"
-                              android:layout_marginRight="10dp">
-                              <TextView
-                                  android:id="@+id/tv_flight_detail_desti_name"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:hint="Goa"
-                                  android:textSize="16sp"
-                                  android:textColor="@color/black"
-                                  android:fontFamily="@font/roboto_regular"
-                              />
-                              <TextView
-                                  android:id="@+id/tv_flight_detail_desti_date"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:hint="Fri, 15 Nov 19"
-                                  android:textSize="12sp"
-                                  android:textColor="@color/black"
-                                  android:fontFamily="@font/roboto_regular" />
-                              <TextView
-                                  android:id="@+id/tv_flight_detail_destin_airport"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:hint="Airport"
-                                  android:textSize="12sp"
-                                  android:textColor="@color/darker_gray"
-                                  android:fontFamily="@font/roboto_regular"
-                                  android:layout_marginTop="5dp"/>
-
-                          </LinearLayout>
-                      </LinearLayout>
-                  </LinearLayout>
-              </LinearLayout>
-          </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/white"
-              >
+                android:background="@color/white">
 
 
                     <TextView
@@ -625,57 +455,6 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:background="@color/yellow">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="start|center"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            >
-
-            <TextView
-                android:id="@+id/total_flight_fare"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:fontFamily="@font/roboto_bold" />
-
-            <TextView
-                android:id="@+id/tv_total_travellers_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:fontFamily="@font/roboto_bold" />
-        </LinearLayout>
-
-
-        <Button
-            android:id="@+id/continue_btn"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/amount"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_buttons"
-            android:padding="10dp"
-            android:text="CONTINUE"
-            android:textColor="#fff"
-            android:textSize="15sp"
-            android:fontFamily="@font/roboto_regular"
-            android:layout_weight="1"/>
-    </LinearLayout>
+<include layout="@layout/flight_amount_footer"/>
 
 </RelativeLayout>

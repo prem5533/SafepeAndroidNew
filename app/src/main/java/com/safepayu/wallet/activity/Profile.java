@@ -39,7 +39,7 @@ import static com.safepayu.wallet.activity.Navigation.qrCodeImage;
 public class Profile extends BaseActivity implements View.OnClickListener {
 
     Button BackBtn,UpdateAddressBtn,btnChangePassSubmit;
-    TextView ChangePassBtn,tvPhoneNumber, tvEmil,tvDOB, tvAddress,tvPincode,tvUsername1;
+    TextView ChangePassBtn,tvPhoneNumber, tvEmil,tvDOB, tvAddress,tvPincode,tvUsername1,tvSponserId,tvSponserName,tvSponserContactNumber;
     LinearLayout ChangePassLayout, ShowMyQRcodeLayout;
     int ChangePassVisibility=0;
     UserDetailResponse uResponse;
@@ -72,6 +72,9 @@ public class Profile extends BaseActivity implements View.OnClickListener {
         etNewPassword = findViewById(R.id.new_password_id);
         etConfirmPassword = findViewById(R.id.confirm_password_id);
         btnChangePassSubmit = findViewById(R.id.change_pass_submit);
+        tvSponserId = findViewById(R.id.p_sponser_id);
+        tvSponserName = findViewById(R.id.p_sponser_name);
+        tvSponserContactNumber = findViewById(R.id.p_sponser_contact_number);
 
         //set Listener
         BackBtn.setOnClickListener(this);
@@ -120,6 +123,9 @@ public class Profile extends BaseActivity implements View.OnClickListener {
                         tvDOB.setText(userResponse.getUser().getDob());
                         tvAddress.setText(userResponse.getUser().getLocation()+" "+ userResponse.getUser().getCity()+" "+userResponse.getUser().getState()+" "+userResponse.getUser().getCountry());
                         tvPincode.setText(String.valueOf(userResponse.getUser().getPin()));
+                        tvSponserId.setText(userResponse.getUser().getReferral_recieved());
+                        tvSponserContactNumber.setText(userResponse.getUser().getReferral_recieved());
+                        tvSponserName.setText(userResponse.getUser().getSponsorname());
                     }
 
                     @Override

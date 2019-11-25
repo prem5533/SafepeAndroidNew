@@ -24,10 +24,10 @@ import androidx.core.app.ActivityCompat;
 import static com.safepayu.wallet.activity.Navigation.tollNumber;
 
 
-public class ContactUs extends BaseActivity {
+public class ContactUs extends BaseActivity implements View.OnClickListener {
 
     EditText editEmail,editSubject,editMessage;
-    TextView visit_website, sendmail, TollfreeNoTV,TollfreeNoText;
+    TextView visit_website, sendmail, TollfreeNoTV,TollfreeNoText,tvWebsite;
     private Button submit, callButtonIndia, callButtonUsa;
     String str_mail,str_subject,str_message,id,trueStr="true";
 
@@ -48,8 +48,11 @@ public class ContactUs extends BaseActivity {
         sendmail =  findViewById(R.id.sendmail);
         TollfreeNoTV=  findViewById(R.id.tollfreeNo);
         TollfreeNoText=  findViewById(R.id.tollfreeNoText);
+        tvWebsite=  findViewById(R.id.website);
 
         id= BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+        tvWebsite.setOnClickListener(this);
+        sendmail.setOnClickListener(this);
         clear_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,25 +88,7 @@ public class ContactUs extends BaseActivity {
 
         //-------------END askr permission-------------------------
 
-        sendmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.setData(Uri.parse("mailto:"));
-                emailIntent.setType("text/plain");
-
-                emailIntent.putExtra(Intent.EXTRA_EMAIL  , new String[]{"support@safepeindia.com"});
-
-                try{
-                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-                }catch (Exception e){
-                    Log.e("SendEmailERRO", e.toString());
-                }
-
-            }
-        });
 
         callButtonIndia.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -185,5 +170,32 @@ public class ContactUs extends BaseActivity {
             return;
         }
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.website:
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("http://www.safepeindia.com/"));
+                startActivity(intent);
+                break;
+
+            case R.id.sendmail:
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.setType("text/plain");
+
+                emailIntent.putExtra(Intent.EXTRA_EMAIL  , new String[]{"support@safepeindia.com"});
+
+                try{
+                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                }catch (Exception e){
+                    Log.e("SendEmailERRO", e.toString());
+                }
+                break;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.safepayu.wallet.models.response.booking.flight;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class AvailableFlightResponse {
@@ -83,7 +84,7 @@ public class AvailableFlightResponse {
             this.DomesticReturnFlights = DomesticReturnFlights;
         }
 
-        public static class DomesticOnwardFlightsBean {
+        public static class DomesticOnwardFlightsBean   {
 
 
             private FareDetailsBean FareDetails;

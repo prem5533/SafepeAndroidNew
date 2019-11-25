@@ -189,19 +189,37 @@
                             android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/black"/>
                     </com.google.android.material.textfield.TextInputLayout>
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true">
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/verify_already"
+                            android:layout_alignParentRight="true"
+                            android:background="@null"
+                            android:text="Verified"
+                            android:textSize="12sp"
+                            android:textColor="#00C853"
+                            android:textAllCaps="false"
+                            android:visibility="gone"
+                            android:fontFamily="@font/roboto_regular"
+                            android:layout_marginTop="10dp"/>
+
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/verify_referral"
-                        android:layout_alignParentRight="true"
                         android:background="@null"
                         android:text="Verify Referral"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textColor="@color/bue_A800"
                         android:textAllCaps="false"
                         android:fontFamily="@font/roboto_regular"
                         android:layout_marginTop="10dp"/>
+                    </FrameLayout>
                 </RelativeLayout>
 
                 <LinearLayout

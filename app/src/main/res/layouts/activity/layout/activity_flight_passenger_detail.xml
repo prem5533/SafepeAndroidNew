@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f7f8f8"
+    tools:context=".activity.booking.flight.FlightPassengerDetailActivity">
+    <RelativeLayout
+        android:id="@+id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/red_theme"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/backbtn_flight_passenger"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_arrow_back_white_24dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="45dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="start|center">
+                <TextView
+                    android:id="@+id/tvflightpassenger_from_where"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/roboto_bold"
+                    android:hint=""
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+                <ImageView
+                    android:id="@+id/image_one_way"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_one_way_white"
+                    android:padding="11dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvflightpassenger_to_where"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/roboto_bold"
+                    android:hint=""
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+            <TextView
+
+                android:id="@+id/tv_flightpassenger_date_travellers_class"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6 Nov, 1 Adult, Economy"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="#fff"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headerbar"
+        android:layout_marginBottom="60dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+       >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Traveller Details"
+                android:textSize="18sp"
+                android:textColor="@color/grey_600"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter the details of passenger"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginLeft="10dp"
+                android:padding="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+
+            <LinearLayout
+                android:id="@+id/relflight_adult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adult"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:padding="5dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/relflight_child"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_child"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Child"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:padding="5dp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/relflight_infant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_infant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Infant"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:padding="5dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact information"
+                android:textSize="18sp"
+                android:textColor="@color/grey_600"
+                android:fontFamily="@font/roboto_regular"
+              />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your ticket and flights information will be sent below details"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:padding="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mobile"
+                android:textSize="11sp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/red_theme"/>
+
+               <EditText
+                   android:id="@+id/et_flightp_mobile_number"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="Mobile"
+                   android:fontFamily="@font/roboto_bold"
+                   android:clickable="false"
+                   android:enabled="false"
+                   android:textSize="14sp"
+                   android:textColorHint="@color/red_theme"
+                   android:background="@null"
+                   android:textColor="@color/black"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/red_theme"
+                android:layout_marginTop="5dp"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/red_theme"
+                    android:layout_marginTop="20dp"/>
+
+                <EditText
+                    android:id="@+id/et_flightp_email_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:fontFamily="@font/roboto_bold"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:textSize="14sp"
+                    android:textColorHint="@color/red_theme"
+                    android:background="@null"
+                    android:textColor="@color/black"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/red_theme"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_marginTop="5dp">
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gst_number_tax"
+                android:checked="false"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="14sp"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:buttonTint="@color/yellow"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp">
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/flight_term_condition"
+                android:checked="false"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="14sp"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:buttonTint="@color/yellow"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <include layout="@layout/flight_amount_footer"/>
+</RelativeLayout>

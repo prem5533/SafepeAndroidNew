@@ -1,7 +1,9 @@
 package com.safepayu.wallet.activity.booking.flight;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.adapter.fight.FlightListAdapter;
@@ -18,6 +21,9 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.booking.flight.AvailableFlightRequest;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,7 +46,7 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
     private TextView tvFlightDateTravellersClass,tvFlightFromWhere,tvFlightToWhere;
     private String Source,Destination,JourneyDate,TripType,User,UserType,Adults,Infants,Children,FlightType,ReturnDate,TravelClass,TrvaellersCount,ClassType;
 
-
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,20 +164,36 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
     public void onFlightItemListerne(int position, AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mFlightItemListenre) {
 
 
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
         Intent intent = new Intent(FlightListActivity.this,FlightDetailActivity.class);
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE_FULL_NAME,mFlightItemListenre.getFlightSegments().get(0).getIntDepartureAirportName());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DESTINATION_FULL_NAME,mFlightItemListenre.getFlightSegments().get(0).getIntArrivalAirportName());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_IMAGE,"http://webapi.i2space.co.in/"+mFlightItemListenre.getFlightSegments().get(0).getImagePath());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_NAME,mFlightItemListenre.getFlightSegments().get(0).getAirLineName());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_CODE,mFlightItemListenre.getFlightSegments().get(0).getOperatingAirlineCode());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_FLIGHT_NUMBER,mFlightItemListenre.getFlightSegments().get(0).getOperatingAirlineFlightNumber());
+       // intent.putExtra("serializable_extra", String.valueOf(mFlightItemListenre) );
+
+       // BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE_FULL_NAME,mFlightItemListenre.getFlightSegments().get(0).getIntDepartureAirportName());
+      //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DESTINATION_FULL_NAME,mFlightItemListenre.getFlightSegments().get(0).getIntArrivalAirportName());
+//        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_IMAGE,"http://webapi.i2space.co.in/"+mFlightItemListenre.getFlightSegments().get(0).getImagePath());
+//        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_NAME,mFlightItemListenre.getFlightSegments().get(0).getAirLineName());
+//        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_CODE,mFlightItemListenre.getFlightSegments().get(0).getOperatingAirlineCode());
+//        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_FLIGHT_NUMBER,mFlightItemListenre.getFlightSegments().get(0).getOperatingAirlineFlightNumber());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION,mFlightItemListenre.getFlightSegments().get(0).getDuration());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_HAND_BAGGAGE,mFlightItemListenre.getFlightSegments().get(0).getBaggageAllowed().getHandBaggage());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_CHECKIN_BAGGAGE,mFlightItemListenre.getFlightSegments().get(0).getBaggageAllowed().getCheckInBaggage());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_CHECKIN_BAGGAGE,mFlightItemListenre.getFlightSegments().get(0).getBaggageAllowed().getCheckInBaggage());
-        BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME,mFlightItemListenre.getFlightSegments().get(0).getDepartureDateTimeZone());
-        BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,mFlightItemListenre.getFlightSegments().get(0).getArrivalDateTimeZone());
+     //   BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME,mFlightItemListenre.getFlightSegments().get(0).getDepartureDateTimeZone());
+      //  BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,mFlightItemListenre.getFlightSegments().get(0).getArrivalDateTimeZone());
         BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE,String.valueOf(mFlightItemListenre.getFareDetails().getTotalFare()));
-        startActivity(intent);
+      //  BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE,mFlightItemListenre.getFlightSegments());
+
+
+        Gson gson = new Gson();
+        String json = gson.toJson(mFlightItemListenre);
+        editor.putString("MyObject", json);
+        editor.commit();
+
+        try {
+            startActivity(intent);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

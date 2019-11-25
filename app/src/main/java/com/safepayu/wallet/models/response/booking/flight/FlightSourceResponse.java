@@ -1,4 +1,4 @@
-package com.safepayu.wallet.models.response.booking;
+package com.safepayu.wallet.models.response.booking.flight;
 
 public class FlightSourceResponse {
 

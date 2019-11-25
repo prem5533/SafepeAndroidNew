@@ -13,7 +13,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.booking.flight.FlightDetailActivity"></activity>
+        <activity android:name=".activity.booking.flight.FlightPassengerDetailActivity"
+         android:windowSoftInputMode="stateVisible|adjustNothing"></activity>
+        <activity android:name=".activity.booking.flight.FlightDetailActivity" />
         <activity android:name=".activity.booking.flight.TwoWayListActivity" />
         <activity android:name=".activity.booking.flight.FlightListActivity" />
         <activity android:name=".activity.booking.bus.BusSeat_DetailActivity" />

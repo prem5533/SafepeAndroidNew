@@ -72,7 +72,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         etCity.setText(City);
         etState.setText(State);
         etCountry.setText(Country);
-        etPincode.setText(""+Pincode);
+        etPincode.setText(Pincode);
 
 
         if (Location != null && City != null && State != null && Country != null && Pincode != null) {

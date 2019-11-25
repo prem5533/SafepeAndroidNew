@@ -19,6 +19,8 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.WalletResponse;
 
+import java.text.NumberFormat;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -132,7 +134,7 @@ public class WalletActivity extends BaseActivity {
                     public void onSuccess(WalletResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            AmountTV.setText(getResources().getString(R.string.rupees)+" "+response.getWallet().getAmount());
+                            AmountTV.setText(getResources().getString(R.string.rupees)+" "+ NumberFormat.getInstance().format(response.getWallet().getAmount()));
 
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);

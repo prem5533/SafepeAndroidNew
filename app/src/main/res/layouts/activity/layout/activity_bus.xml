@@ -70,7 +70,7 @@
             android:background="@color/divider"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"></View>
+            android:layout_marginLeft="10dp"/>
         <TextView
             android:id="@+id/tv_to_bus"
             android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                 android:layout_marginRight="10dp">
 
             <ImageView
-                android:id="@+id/image_up_down"
+                android:id="@+id/image_up_downBus"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_up_down"
@@ -101,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="40dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -129,10 +129,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_weight="1"
-                    android:gravity="right|center"
-                   >
+                    android:gravity="right|center">
+
                     <TextView
-                        android:id="@+id/tv_bus_tody"
+                        android:id="@+id/tv_bus_today"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TODAY"
@@ -143,8 +143,7 @@
                     <View
                         android:layout_width="1dp"
                         android:layout_height="20dp"
-                        android:background="@color/divider"
-                       ></View>
+                        android:background="@color/divider"/>
                     <TextView
                         android:id="@+id/tv_bus_tomorrow"
                         android:layout_width="wrap_content"
@@ -163,8 +162,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider"
-           ></View>
+            android:background="@color/divider"/>
         <Button
             android:id="@+id/search_bus_btn"
             android:layout_width="match_parent"

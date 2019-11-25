@@ -1,9 +1,11 @@
 package com.safepayu.wallet.adapter.fight;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,6 +59,8 @@ public class OneWayFlightListAdapter extends RecyclerView.Adapter<OneWayFlightLi
         private TextView tvflightName, tvDepartureCode, tvArrivalCode, tvTakeFlightTime, tvFlightTotalFare, tvDepartureFlightTime, tvArrivalFlightTime,
                 tvFlightNumStops,tvOperatingAirlineCodeNumber;
         private ImageView imageFlight;
+        private FrameLayout frameTwoStopLine,frameOneStop;
+        private View non_stop;
 
         public OneWayListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,6 +74,9 @@ public class OneWayFlightListAdapter extends RecyclerView.Adapter<OneWayFlightLi
             tvFlightNumStops = itemView.findViewById(R.id.tv_flight_num_stops);
             imageFlight = itemView.findViewById(R.id.image_flight_icon);
             tvOperatingAirlineCodeNumber = itemView.findViewById(R.id.tv_operatingAirlineCode_number);
+            frameTwoStopLine = itemView.findViewById(R.id.frame_two_stop);
+            frameOneStop = itemView.findViewById(R.id.frame_one_stop);
+            non_stop = itemView.findViewById(R.id.non_stop);
 
             itemView.setOnClickListener(this);
         }
@@ -80,10 +87,7 @@ public class OneWayFlightListAdapter extends RecyclerView.Adapter<OneWayFlightLi
 
 
             int flightStop =   mItem.get(position).getFlightSegments().size();
-
-        //    tvArrivalCode.setText();
-
-            tvflightName.setText(mItem.get(position).getFlightSegments().get(0).getAirLineName()+ mItem.get(position).getFlightSegments().size());
+            tvflightName.setText(mItem.get(position).getFlightSegments().get(0).getAirLineName());
             tvDepartureCode.setText(mItem.get(position).getFlightSegments().get(0).getDepartureAirportCode());
             if (flightStop>1){
                 tvArrivalCode.setText(mItem.get(position).getFlightSegments().get(flightStop-1).getArrivalAirportCode());
@@ -92,8 +96,34 @@ public class OneWayFlightListAdapter extends RecyclerView.Adapter<OneWayFlightLi
                 tvArrivalCode.setText(mItem.get(position).getFlightSegments().get(0).getArrivalAirportCode());
             }
 
+            //*****************calculate total hour & minute**************
+            int     sum = 0;
+            int mintemp = 0;
+            int hourtemp = 0;
+            if (flightStop>0){
+                for (int i = 0; i<mItem.get(position).getFlightSegments().size();i++){
+                    String duration [] = mItem.get(position).getFlightSegments().get(i).getDuration().split(":");
+                    String hour = duration[0];
+                    String min = duration[1];
+                    String durat [] = min.split(" ");
+                    String a = durat[0];
+                    String b = durat[1];
 
-            tvTakeFlightTime.setText(mItem.get(position).getFlightSegments().get(0).getDuration());
+
+                    hourtemp = Integer.parseInt(hour)*60;
+                    mintemp = Integer.parseInt(a)+hourtemp;
+                    sum = sum+mintemp;
+                }
+
+                int hours = sum / 60; //since both are ints, you get an int
+                int minutes = sum % 60;
+
+
+                 tvTakeFlightTime.setText(hours+"h "+minutes+"m");
+            }
+
+
+
         /*    String totalFare = String.valueOf(mItem.get(position).getFareDetails().getChargeableFares().getActualBaseFare() +
                     mItem.get(position).getFareDetails().getChargeableFares().getTax() + mItem.get(position).getFareDetails().getChargeableFares().getSTax() +
                     mItem.get(position).getFareDetails().getChargeableFares().getSCharge() + mItem.get(position).getFareDetails().getChargeableFares().getTDiscount() +
@@ -133,6 +163,7 @@ public class OneWayFlightListAdapter extends RecyclerView.Adapter<OneWayFlightLi
             //*********set flight count*****************
             if ( mItem.get(position).getFlightSegments().size()>1){
                 tvFlightNumStops.setText(mItem.get(position).getFlightSegments().size()-1 +" Stop");
+
             }
           else  if (String.valueOf(mItem.get(position).getFlightSegments().get(0).getIntNumStops()).equals("null")){
                 tvFlightNumStops.setText("Non Stop");
@@ -141,6 +172,21 @@ public class OneWayFlightListAdapter extends RecyclerView.Adapter<OneWayFlightLi
                 tvFlightNumStops.setText(String.valueOf(mItem.get(position).getFlightSegments().get(0).getIntNumStops())+"Stop");
             }
 
+            if (flightStop-1==2){
+                frameTwoStopLine.setVisibility(View.VISIBLE);
+                frameOneStop.setVisibility(View.GONE);
+                non_stop.setVisibility(View.GONE);
+            }
+            else    if (flightStop-1==1){
+                frameTwoStopLine.setVisibility(View.GONE);
+                frameOneStop.setVisibility(View.VISIBLE);
+                non_stop.setVisibility(View.GONE);
+            }
+            else {
+                frameTwoStopLine.setVisibility(View.GONE);
+                frameOneStop.setVisibility(View.GONE);
+                non_stop.setVisibility(View.VISIBLE);
+            }
 
         }
 

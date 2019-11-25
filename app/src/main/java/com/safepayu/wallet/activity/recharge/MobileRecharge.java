@@ -21,6 +21,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -30,6 +35,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.LoginActivity;
 import com.safepayu.wallet.activity.PaymentType;
 import com.safepayu.wallet.adapter.OfferAdapter;
+import com.safepayu.wallet.adapter.SpinnerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -48,9 +54,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -58,19 +63,23 @@ import io.reactivex.schedulers.Schedulers;
 public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOfferSelectListener {
 
     private Button RechargeBtn, BackBtn;
-    private TextView OffersBtn;
+    private TextView OffersBtn,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;
     private Spinner OperatorSpinner;
     public static EditText AmountED;
     private EditText MobileED;
-    String OperatorText = "", OperatorCode = "", OperatorId = "";
+    String OperatorText = "";
+    String OperatorCode = "";
+    String OperatorId = "";
     private LoadingDialog loadingDialog;
-    private ArrayList<String> OperatorNameList, IdList, OperatorCodeList;
+    private ArrayList<String> OperatorNameList, IdList, OperatorCodeList,OperatorImage;
     OfferAdapter adapter;
     SuperRecyclerView recyclerView;
     Dialog dialog;
     ArrayList<Offer> offers;
     private TextView AmountTotalTV;
     double totalAmount = 0.0f, minusAmount = 0.0f;
+    private CardView cardAmount;
+    List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,18 +103,25 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         AmountED = findViewById(R.id.amountRecharge);
         MobileED = findViewById(R.id.mobile_recharge);
         AmountTotalTV = findViewById(R.id.calculatedamount);
+        tvRechargeamount = findViewById(R.id.tv_rechargeamount);
+        tvWalletCashback = findViewById(R.id.tv_walletcashback);
+        tvTotalAmountpay = findViewById(R.id.tv_total_amountpay);
+        cardAmount = findViewById(R.id.card_amount);
 
         OperatorNameList = new ArrayList<>();
         IdList = new ArrayList<>();
         OperatorCodeList = new ArrayList<>();
+        OperatorImage = new ArrayList<>();
 
         OperatorNameList.clear();
         IdList.clear();
         OperatorCodeList.clear();
+        OperatorImage.clear();
 
         OperatorNameList.add("Select Operator");
         IdList.add("0");
         OperatorCodeList.add("0");
+        OperatorImage.add("0");
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,9 +174,15 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         OperatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                OperatorText = OperatorSpinner.getItemAtPosition(i).toString();
-                OperatorCode = OperatorCodeList.get(i);
-                OperatorId = IdList.get(i);
+          /*      OperatorText =mOperList.get(i).getOperator_name();
+                OperatorCode = mOperList.get(i).getOperator_code();
+                OperatorId = String.valueOf(mOperList.get(i).getId());*/
+             //   String selectedItemText = (String) adapterView.getItemAtPosition(i);
+             /*  OperatorSpinner.getItemAtPosition(i).toString();
+              //  getSpinnerField().setSelection(position);
+                OperatorSpinner.setSelection(i);*/
+            //    Toast.makeText(getApplicationContext(), OperatorSpinner.getItemAtPosition(i).toString() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(MobileRecharge.this, "You Select Position: "+OperatorText+i+" ",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -211,19 +233,28 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                     if (num <=1000) {
                     CalculateAmount(num);
                         String text = AmountED.getText().toString().trim() + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
-                        AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
+                      //  AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
+                        cardAmount.setVisibility(View.VISIBLE);
+                    tvRechargeamount.setText(AmountED.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
+                    tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
+                    tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));}
 
                     else if (num>1000){
                         CalculateAmount1Per(num);
                         String text = AmountED.getText().toString().trim()  + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
-                        AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
+                       // AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
+                        tvRechargeamount.setText(AmountED.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
+                        tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
+                        tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));}
+
 
                     else {
-                        AmountTotalTV.setText("0.0");
+                      //  AmountTotalTV.setText("0.0");
                     }
                 }
                 else {
-                    AmountTotalTV.setText(" ");
+                  //  AmountTotalTV.setText(" ");
+                    cardAmount.setVisibility(View.GONE);
                 }
             }
 
@@ -322,15 +353,19 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                     public void onSuccess(OperatorResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            for (int i = 0; i < response.getOperators().size(); i++) {
+                           /* for (int i = 0; i < response.getOperators().size(); i++) {
                                 OperatorNameList.add(response.getOperators().get(i).getOperator_name());
+                                OperatorImage.add(response.getOperators().get(i).getImage());
                                 IdList.add(String.valueOf(response.getOperators().get(i).getId()));
                                 OperatorCodeList.add(response.getOperators().get(i).getOperator_code());
-                            }
+                            }*/
 
-                            ArrayAdapter<String> TransferType = new ArrayAdapter<>(MobileRecharge.this, android.R.layout.simple_spinner_item, OperatorNameList);
+                          /*  ArrayAdapter<String> TransferType = new ArrayAdapter<>(MobileRecharge.this, android.R.layout.simple_spinner_item, OperatorNameList);
                             TransferType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            OperatorSpinner.setAdapter(TransferType);
+                            OperatorSpinner.setAdapter(TransferType);*/
+
+                            SpinnerAdapter customAdapter=new SpinnerAdapter(getApplicationContext(),response.getOperators());
+                            OperatorSpinner.setAdapter(customAdapter);
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), response.getMessage(), false);
                         }

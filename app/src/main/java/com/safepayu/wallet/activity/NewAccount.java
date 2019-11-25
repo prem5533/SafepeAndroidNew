@@ -50,10 +50,11 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     private EditText firstName, lastName, email, mobileNo, password, dob, referralCode;
     private TextView tvReferUserName;
     private LoadingDialog loadingDialog;
-    private Button VerifyReffralBtn;
+    private Button VerifyReffralBtn,verifyAlready;
     CheckEmailMobileRequest checkEmailMobileRequest;
     boolean mobileCheck=false,emailCheck=false,showPass=false,referralCheck=false;
     private ImageView ShowHidePasswordBtn;
+    private String strReferalcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +79,14 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         password = findViewById(R.id.et_password_password);
         ShowHidePasswordBtn= findViewById(R.id.show_hide_password_newAccount);
         VerifyReffralBtn=findViewById(R.id.verify_referral);
+        verifyAlready=findViewById(R.id.verify_already);
         ShowHidePasswordBtn.setOnClickListener(this);
         VerifyReffralBtn.setOnClickListener(this);
 
+        strReferalcode= BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
         mobileNo.addTextChangedListener(new MobileEditTextWatcher(mobileNo));
         mobileNo.setText("+91 ");
         mobileNo.setSelection(mobileNo.getText().length());
-
         checkEmailMobileRequest=new CheckEmailMobileRequest();
 
 
@@ -150,7 +152,6 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 // TODO Auto-generated method stub
             }
         });
-
         referralCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -160,6 +161,8 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 if (referralCheck) {
                     referralCheck=false;
                     tvReferUserName.setText("");
+                    VerifyReffralBtn.setVisibility(View.VISIBLE);
+                    verifyAlready.setVisibility(View.GONE);
                 }
             }
 
@@ -175,6 +178,14 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 // TODO Auto-generated method stub
             }
         });
+        if (strReferalcode.equals("")){
+            referralCode.setText("8376097766");
+        }
+        else {
+            referralCode.setText(strReferalcode);
+        }
+
+        getReferralDetails();
 
         checkPermission();
     }
@@ -250,6 +261,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
 
             case R.id.verify_referral:
                 getReferralDetails();
+
                 break;
         }
     }
@@ -411,7 +423,6 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     private void getReferralDetails() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-
         BaseApp.getInstance().getDisposable().add(apiService.getReferralDetails(referralCode.getText().toString().trim(),"1","")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -424,6 +435,8 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                                 referralCheck=true;
                                 tvReferUserName.setText(response.getPackages());
                                 referralCode.setSelection(referralCode.getText().toString().length());
+                                verifyAlready.setVisibility(View.VISIBLE);
+                                VerifyReffralBtn.setVisibility(View.GONE);
                                 //
                             } else {
                                 referralCheck=false;

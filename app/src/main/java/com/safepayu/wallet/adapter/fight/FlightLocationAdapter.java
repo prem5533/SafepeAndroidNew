@@ -25,8 +25,8 @@ public class FlightLocationAdapter extends RecyclerView.Adapter<FlightLocationAd
 
 
     public  interface  LocationListListener {
-        void onLocationClickFrom (int position,AirportLocationResponse.DataBean mLocationResponse);
-        void onLocationClickTo (int position,AirportLocationResponse.DataBean mLocationResponse);
+        void onLocationClickFrom(int position, AirportLocationResponse.DataBean mLocationResponse);
+        void onLocationClickTo(int position, AirportLocationResponse.DataBean mLocationResponse);
     }
 
     public FlightLocationAdapter(Context context, List<AirportLocationResponse.DataBean> airportLocationResponse, LocationListListener locationListListener) {
@@ -39,7 +39,7 @@ public class FlightLocationAdapter extends RecyclerView.Adapter<FlightLocationAd
     @Override
     public FlightLocationListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.flight_location_adapter,parent,false);
-        return new FlightLocationAdapter.FlightLocationListViewHolder(view);
+        return new FlightLocationListViewHolder(view);
     }
 
     @Override

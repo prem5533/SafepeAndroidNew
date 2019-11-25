@@ -51,7 +51,6 @@
                                 <com.safepayu.wallet.custom_view.CustomTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
                                     style="@style/TextAppearance.AppCompat.Headline"
                                     app:fontCustom="@string/Roboto"
                                     android:textStyle="bold"

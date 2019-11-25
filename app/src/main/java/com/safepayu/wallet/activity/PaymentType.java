@@ -55,7 +55,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
     private Button btn_proceed_netBanking, proceed_upi, proceed_wallet, proceed_card,BackBtn,btn_addMoney_card;
     private Button ProceedWalletBtn;
     private LoadingDialog loadingDialog;
-    private TextView AmountTV;
+    private TextView AmountTV,tvPaymentRechargeamount;
     private CardView Card_fillLayout;
 
     //recharge/bill payment parameter
@@ -90,9 +90,10 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         btn_addMoney_card=findViewById(R.id.btn_addMoney_card);
         BackBtn=findViewById(R.id.sendmoney_back_btn);
         ProceedWalletBtn=findViewById(R.id.btn_proceed_wallet);
+        tvPaymentRechargeamount = findViewById(R.id.tv_payment_rechargeamount);
 
         AmountTV = findViewById(R.id.tv_walletAddedAmount);
-
+        tvPaymentRechargeamount.setText(Amount);
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

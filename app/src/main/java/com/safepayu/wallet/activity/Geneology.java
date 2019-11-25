@@ -55,7 +55,7 @@ public class Geneology extends BaseActivity {
         myWebView.setWebChromeClient(new WebChromeClient());
 
         String userid = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
-        url = "http://india.safepayu.com/safepe-new/public/Genealogy/" + userid;
+        url = "http://india.safepayu.com/safepe-testing/public/Genealogy/" + userid;
         myWebView.loadUrl(url);
 
         send_back_btn = findViewById(R.id.send_back_btn);

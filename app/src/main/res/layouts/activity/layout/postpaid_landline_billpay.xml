@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#f7f8f8"
     android:orientation="vertical"
     android:id="@+id/postpaidBillLayout">
 
@@ -45,8 +45,6 @@
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -62,28 +60,41 @@
                 android:gravity="center"
                 android:text="Enter Mobile"
                 android:textColor="#373836"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:fontFamily="@font/roboto_regular"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_button_grayborder"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="4dp"
+            android:gravity="start|center"
+            android:layout_marginRight="20dp">
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_smartphone" />
             <EditText
                 android:id="@+id/mobilePostpaid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView2"
                 android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/white_button_grayborder"
                 android:inputType="number"
                 android:hint="Mobile"
                 android:maxLength="11"
                 android:nextFocusForward="@+id/amount"
                 android:padding="10dp"
                 android:textColor="#373836"
-
                 android:textSize="15sp"
+                android:background="@null"
                 android:fontFamily="@font/roboto_regular"/>
+        </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/textView5"
@@ -96,15 +107,16 @@
                 android:gravity="center"
                 android:text="Select Operator"
                 android:textColor="#373836"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:fontFamily="@font/roboto_regular"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical"
                 android:background="@drawable/white_button_grayborder">
 
                 <Spinner
@@ -159,26 +171,41 @@
                 android:gravity="center"
                 android:text="Bill Amount"
                 android:textColor="#373836"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:fontFamily="@font/roboto_regular" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_button_grayborder"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="4dp"
+            android:gravity="start|center"
+            android:layout_marginRight="20dp">
 
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_rupee_indian" />
             <EditText
                 android:id="@+id/amountPostpaid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView"
                 android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/white_button_grayborder"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:nextFocusForward="@+id/btn"
                 android:padding="10dp"
+                android:hint="Enter Amount"
                 android:textColor="#373836"
                 android:textSize="15sp"
+                android:background="@null"
                 android:fontFamily="@font/roboto_regular" />
+        </LinearLayout>
+
+
 
             <Button
                 android:id="@+id/Paybtn"
@@ -211,14 +238,124 @@
                 android:textColor="@color/yellow_theme"
                 android:paddingLeft="0dp"
                 />
-            <TextView
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/red"
-                android:text="Amount is equal or less than 1000 get 3% cashback,\nIf Amount is greater than 1000 get 1% cashback"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="14sp"
-                android:layout_margin="20dp" />
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Recharge Amount"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:id="@+id/tv_rechargeamount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_regular"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wallet Cashback"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:id="@+id/tv_walletcashback"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_regular"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Amount"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:id="@+id/tv_total_amountpay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_regular"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="start|center"
+                android:background="@color/white"
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_bookmark"
+                    android:padding="10dp"
+                    android:layout_marginLeft="5dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@string/landline_payment_time"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="12sp"
+                    android:layout_marginRight="5dp"/>
+            </LinearLayout>
             <Button
                 android:id="@+id/btnCheckBill"
                 android:layout_width="match_parent"

@@ -61,7 +61,7 @@
                     android:layout_marginTop="20dp"
                     android:padding="10dp"
                     android:textColor="@color/black"
-                    android:text="Available amount in wallet"
+                    android:text="Available amount in wallet -"
                     android:textSize="15sp"
                     android:fontFamily="@font/roboto_regular"/>
 
@@ -75,34 +75,59 @@
                     android:textSize="38sp"
                     android:textStyle="bold" />
 
-                <TextView
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="start|center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_add_rupee"/>
+                    <TextView
                     android:id="@+id/tv_addMoneyToSafepe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Add money to Safepe Wallet"
+                    android:text="Add Money to Safepe Wallet"
                     android:textColor="@color/bue_A800"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
+                        android:padding="10dp"
                     style="@style/TextAppearance.AppCompat.Small" />
+
+                </LinearLayout>
+
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/yellow_theme" />
+                    android:layout_margin="10dp"
+                    android:background="@color/yellow" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start|center"
+                android:layout_marginLeft="10dp">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_send_rupee"/>
                 <TextView
                     android:id="@+id/send_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
                     android:text="Send Money to Bank"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/red_theme"
+                    android:textColor="@color/yellow_theme"
                     style="@style/TextAppearance.AppCompat.Small" />
+            </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

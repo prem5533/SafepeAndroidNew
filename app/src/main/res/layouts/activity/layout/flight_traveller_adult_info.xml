@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_adult_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+ ADD ADULT 1"
+        android:layout_marginLeft="20dp"
+        android:textSize="15sp"
+        android:textColor="@color/yellow_theme"
+        android:padding="5dp"
+        android:layout_marginBottom="10dp"
+        />
+    <LinearLayout
+        android:id="@+id/linear_adult_traveller_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        >
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mr."
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="15sp"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:checked="true"
+                    android:layout_weight="1" />
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ms."
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="15sp"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:layout_weight="1" />
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mrs."
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="15sp"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </RadioGroup>
+
+
+        <EditText
+            android:id="@+id/et_flightp_adult_fname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:hint="First Name"
+            android:textSize="14sp"
+            android:padding="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/black"
+            android:background="@null"
+            android:singleLine="true"
+            android:imeOptions="actionNext"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider" />
+        <EditText
+            android:id="@+id/et_flightp_adult_lname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:hint="Last Name"
+            android:textSize="14sp"
+            android:padding="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/black"
+            android:background="@null"
+            android:imeOptions="actionNext"
+            android:singleLine="true"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <EditText
+                android:id="@+id/et_flightp_adult_dob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:hint="Date of birth"
+                android:textSize="14sp"
+                android:padding="10dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColorHint="@color/grey"
+                android:textColor="@color/black"
+                android:background="@null"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:imeOptions="actionDone"/>
+            <ImageView
+                android:id="@+id/image_flight_dob"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_calendar"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider" />
+
+    </LinearLayout>
+</LinearLayout>

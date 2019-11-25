@@ -84,7 +84,7 @@ public class UserDetailResponse {
         private String mobile_verified;
         private String dob;
         private String referral_code;
-        private String referral_recieved;
+        private String referral_recieved;// sponser_id
         private String user_sponsor;
         private String reg_time;
         private int blocked;
@@ -107,6 +107,15 @@ public class UserDetailResponse {
         private String country;
         private int pin;
         private int remember_me;
+        private String sponsorname;
+
+        public String getSponsorname() {
+            return sponsorname;
+        }
+
+        public void setSponsorname(String sponsorname) {
+            this.sponsorname = sponsorname;
+        }
 
         public int getId() {
             return id;
@@ -380,4 +389,5 @@ public class UserDetailResponse {
             this.remember_me = remember_me;
         }
     }
+
 }

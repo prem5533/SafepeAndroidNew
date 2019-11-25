@@ -114,25 +114,43 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center"
+                        android:gravity="start"
                         android:padding="10dp">
 
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/ic_profile_placeholder"/>
                         <TextView
                             android:id="@+id/username1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
-                            android:gravity="center"
+                            android:gravity="start"
                             android:singleLine="true"
-                            android:text=""
+                            android:text="dsds"
                             android:textColor="@color/bue_A800"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/ic_face"
-                            android:layout_marginLeft="5dp"/>
+                            android:textSize="16sp"
+                            android:padding="10dp"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:layout_gravity="right"
+                            android:id="@+id/showMyQRcode">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/ic_qr" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -142,32 +160,7 @@
                         android:background="@color/divider"
                         android:layout_marginTop="10dp"/>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:layout_gravity="right"
-                        android:id="@+id/showMyQRcode">
 
-                        <TextView
-                            android:id="@+id/ffdghdhg"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="Show My QR Code"
-                            android:textColor="@color/bue_A800"
-                            android:textSize="16sp" />
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/qr_code_100"
-                            android:layout_marginLeft="5dp"/>
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -183,19 +176,30 @@
                             android:text="Phone"
                             android:textColor="@color/red_theme"
                             android:fontFamily="@font/roboto_regular"
-                            android:textSize="13sp"/>
+                            android:textSize="12sp"/>
 
-                        <TextView
-                            android:id="@+id/p_mobile"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text=""
-                            android:fontFamily="@font/roboto_regular"
-                            android:textColor="@color/darker_gray"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/p_mobile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="start|center"
+                                android:text=""
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:layout_weight="1"
+                                />
+                            <ImageView
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginRight="30dp"
+                                android:src="@drawable/ic_correct"/>
+                        </LinearLayout>
+
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -219,7 +223,7 @@
                             android:text="Email"
                             android:textColor="@color/red_theme"
                             android:fontFamily="@font/roboto_regular"
-                            android:textSize="13sp"/>
+                            android:textSize="12sp"/>
 
                         <TextView
                             android:id="@+id/p_mail"
@@ -228,9 +232,8 @@
                             android:gravity="center"
                             android:text=""
                             android:fontFamily="@font/roboto_regular"
-                            android:textColor="@color/darker_gray"
-                            android:textStyle="bold"
-                            android:textSize="16sp" />
+                            android:textColor="@color/black"
+                            android:textSize="14sp"/>
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -253,7 +256,7 @@
                             android:text="Date of birth"
                             android:textColor="@color/red_theme"
                             android:fontFamily="@font/roboto_regular"
-                            android:textSize="13sp"/>
+                            android:textSize="12sp"/>
 
                         <TextView
                             android:id="@+id/p_dob"
@@ -264,9 +267,8 @@
                             android:fontFamily="@font/roboto_regular"
                             android:gravity="center"
                             android:text=""
-                            android:textColor="@color/darker_gray"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textColor="@color/black"
+                            android:textSize="14sp"/>
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -288,7 +290,7 @@
                             android:text="Address"
                             android:textColor="@color/red_theme"
                             android:fontFamily="@font/roboto_regular"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/p_address"
@@ -298,9 +300,8 @@
                             android:hint=""
                             android:focusable="false"
                             android:fontFamily="@font/roboto_regular"
-                            android:textColor="@color/darker_gray"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textColor="@color/black"
+                            android:textSize="14sp"/>
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -322,7 +323,7 @@
                             android:text="Pincode"
                             android:textColor="@color/red_theme"
                             android:fontFamily="@font/roboto_regular"
-                            android:textSize="13sp"/>
+                            android:textSize="12sp"/>
 
                         <TextView
                             android:id="@+id/p_pincode"
@@ -332,9 +333,8 @@
                             android:hint=""
                             android:focusable="false"
                             android:gravity="center"
-                            android:textColor="@color/darker_gray"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
                             />
                     </LinearLayout>
                     <View
@@ -343,9 +343,116 @@
                         android:background="@color/divider"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="30dp"/>
+                        android:layout_marginRight="30dp"
+                     />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sponser ID"
+                            android:textColor="@color/red_theme"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="12sp"/>
+
+                        <TextView
+                            android:id="@+id/p_sponser_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#00FFFFFF"
+                            android:hint=""
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sponser Name"
+                            android:textColor="@color/red_theme"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="12sp"/>
+
+                        <TextView
+                            android:id="@+id/p_sponser_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#00FFFFFF"
+                            android:hint=""
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sponser Contact Number"
+                            android:textColor="@color/red_theme"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="12sp"/>
+
+                        <TextView
+                            android:id="@+id/p_sponser_contact_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#00FFFFFF"
+                            android:hint=""
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginBottom="20dp"
+                        />
                     <!--
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -353,13 +460,11 @@
                                     android:layout_marginTop="10dp"
                                     android:orientation="vertical"
                                     android:paddingLeft="20dp">
-
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:text="@string/gender" />
-
                                     <EditText
                                         android:id="@+id/p_gender"
                                         android:layout_width="match_parent"
@@ -367,7 +472,6 @@
                                         android:layout_marginRight="20dp"
                                         android:background="@drawable/edittext_rounded"
                                         android:hint="Gender"
-
                                         android:paddingLeft="5dp"
                                         android:textColor="@color/black"
                                         android:textSize="15dp"
@@ -383,13 +487,11 @@
                          android:orientation="vertical"
                          android:paddingLeft="20dp"
                          android:visibility="gone">
-
                          <TextView
                              android:layout_width="match_parent"
                              android:layout_height="wrap_content"
                              android:layout_marginLeft="10dp"
                              android:text="@string/address" />
-
                          <EditText
                              android:id="@+id/p_address"
                              android:layout_width="match_parent"
@@ -410,13 +512,11 @@
                                     android:layout_marginTop="0dp"
                                     android:orientation="vertical"
                                     android:paddingLeft="20dp">
-
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:text="@string/pincode" />
-
                                     <EditText
                                         android:id="@+id/p_pincode"
                                         android:layout_width="match_parent"
@@ -440,13 +540,11 @@
                                     android:layout_marginTop="0dp"
                                     android:orientation="vertical"
                                     android:paddingLeft="20dp">
-
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:text="@string/city" />
-
                                     <EditText
                                         android:id="@+id/p_city"
                                         android:layout_width="match_parent"
@@ -468,13 +566,11 @@
                                     android:layout_marginTop="0dp"
                                     android:orientation="vertical"
                                     android:paddingLeft="20dp">
-
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:text="@string/state" />
-
                                     <EditText
                                         android:id="@+id/p_state"
                                         android:layout_width="match_parent"

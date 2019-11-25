@@ -48,6 +48,7 @@ public class OperatorResponse {
         private int id;
         private String operator_name;
         private String operator_code;
+        private String image;
 
         public int getId() {
             return id;
@@ -71,6 +72,14 @@ public class OperatorResponse {
 
         public void setOperator_code(String operator_code) {
             this.operator_code = operator_code;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
         }
     }
 }
