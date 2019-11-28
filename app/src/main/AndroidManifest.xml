@@ -26,7 +26,7 @@
         <activity android:name=".activity.recharge.InsuranceActivity" />
         <activity android:name=".activity.booking.TollActivity" />
         <activity android:name=".activity.booking.DonationActivity" />
-        <activity android:name=".activity.booking.HotelActivity" />
+        <activity android:name=".activity.booking.hotel.HotelActivity" />
         <activity android:name=".activity.BellNotifictionActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

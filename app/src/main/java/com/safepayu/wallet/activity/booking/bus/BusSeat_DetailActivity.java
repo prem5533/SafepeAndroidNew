@@ -2,6 +2,12 @@ package com.safepayu.wallet.activity.booking.bus;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.fragment.bus.BoardingDropFragment;
@@ -11,12 +17,6 @@ import com.safepayu.wallet.fragment.bus.SelectSeatFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 public class BusSeat_DetailActivity extends AppCompatActivity {
 
@@ -28,6 +28,7 @@ public class BusSeat_DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_seat__detail);
+
         findId();
     }
 
