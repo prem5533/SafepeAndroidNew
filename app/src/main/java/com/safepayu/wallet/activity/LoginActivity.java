@@ -304,7 +304,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
                              url = response.getVersionData().getLogo();
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ImagePath+url);
-                             Picasso.get().load(ImagePath+url).into(loginImageLogo);
+                           //  Picasso.get().load(ImagePath+url).into(loginImageLogo);
 
                             if (versionCode == val) {
 

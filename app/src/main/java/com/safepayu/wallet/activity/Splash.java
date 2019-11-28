@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.safepayu.wallet.BaseApp;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.MultiDex;
 
 public class Splash extends AppCompatActivity implements PasscodeClickListener {
+
 
     @Override
     protected void attachBaseContext(Context context) {
