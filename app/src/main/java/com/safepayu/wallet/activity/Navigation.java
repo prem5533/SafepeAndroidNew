@@ -1428,8 +1428,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                             int val = Integer.parseInt(response.getVersionData().getVal());
                             url = response.getVersionData().getLogo();
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ImagePath+url);
-                            Picasso.get().load(ImagePath+url).into(headerLogo);
-                            Picasso.get().load(ImagePath+url).into(navLogo);
+                       /*     Picasso.get().load(ImagePath+url).into(headerLogo);
+                            Picasso.get().load(ImagePath+url).into(navLogo);*/
 
                             try {
                                 tollNumber = response.getVersionData().getTollfree();

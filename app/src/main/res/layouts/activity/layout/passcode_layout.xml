@@ -50,7 +50,7 @@
                     android:layout_height="40dp"
                     android:layout_below="@+id/imgIco"
                     android:layout_marginTop="0dp"
-                    android:text="Welcome to"
+                    android:text="Welcome"
                     android:gravity="center"
                     android:fontFamily="@font/roboto_bold"
                     android:textColor="@color/red_theme"

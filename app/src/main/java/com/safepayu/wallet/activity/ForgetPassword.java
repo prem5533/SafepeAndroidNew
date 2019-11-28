@@ -74,7 +74,7 @@ public class ForgetPassword extends AppCompatActivity {
         ShowHidePasswordBtn= findViewById(R.id.show_hide_password_forgetPass);
         forgotImage = findViewById(R.id.forgot_image);
 
-        Picasso.get().load(imagePath).into(forgotImage);
+      //  Picasso.get().load(imagePath).into(forgotImage);
         otpToSend = 0;
         Random r = new Random();
         Otpval = r.nextInt(9999 - 1000) + 1000;

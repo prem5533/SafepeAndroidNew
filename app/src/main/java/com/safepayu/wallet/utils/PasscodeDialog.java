@@ -20,13 +20,15 @@ import androidx.annotation.NonNull;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.ForgotPasscode;
+import com.squareup.picasso.Picasso;
 
 public class PasscodeDialog extends Dialog implements View.OnClickListener {
     private TextView one, two, three, four, five, six, seven, eight, nine, zero, txvEnter, error, forgot_passcode;
     private ImageView delete;
     private EditText edtxPassCode;
     private Activity activity;
-    ImageView visible;
+    ImageView visible,passcode_logo;
+
     private PasscodeClickListener clickListener;
 
     public PasscodeDialog(@NonNull Activity activity, PasscodeClickListener clickListener, String action) {
@@ -40,10 +42,11 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setCancelable(false);
         setContentView(R.layout.passcode_layout);
-
+        String imagePath = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LOGO_IMAGE);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
         visible = findViewById(R.id.visible);
+        passcode_logo = findViewById(R.id.passcode_logo);
         txvEnter = findViewById(R.id.txvEnter);
         error = findViewById(R.id.error);
         forgot_passcode = findViewById(R.id.forgot_passcode);
@@ -70,7 +73,7 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
         zero.setOnClickListener(this);
         delete = findViewById(R.id.delete);
         delete.setOnClickListener(this);
-
+       // Picasso.get().load(imagePath).into(passcode_logo);
 
         //txvEnter.setText("Enter the Passcode to Access\nYour SafePe Wallet");
         txvEnter.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME)+" "+BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_LAST_NAME));
