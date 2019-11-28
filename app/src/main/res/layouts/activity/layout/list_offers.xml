@@ -10,106 +10,136 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:elevation="3dp"
+        android:layout_marginLeft="3dp"
         card_view:cardCornerRadius="1dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="#f5f5f5">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:background="#f5f5f5"
+            >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="Amount : "
-                        android:gravity="right"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_bold"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"/>
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/roboto_bold"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="15sp"/>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="Validity : "
-                        android:gravity="right"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_bold"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/validity"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+                    >
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="Description : "
-                        android:gravity="right"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
                         android:id="@+id/description"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp">
 
                     <TextView
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="Talktime : "
-                        android:gravity="right"
                         android:textStyle="bold"
-                        android:layout_width="wrap_content" />
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_bold"/>
 
                     <TextView
                         android:id="@+id/type"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/black"
+
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
 
             </LinearLayout>
 
-        </LinearLayout>
+
 
     </androidx.cardview.widget.CardView>
 

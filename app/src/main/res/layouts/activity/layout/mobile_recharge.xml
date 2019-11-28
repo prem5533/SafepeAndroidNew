@@ -115,20 +115,56 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/white_button_grayborder"
+                    android:orientation="horizontal"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="4dp"
-                    android:layout_marginRight="20dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/white_button_grayborder">
-                    <Spinner
-                        android:id="@+id/operator"
+                    android:gravity="start|center"
+                    android:layout_marginRight="20dp">
+
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_below="@+id/textView5"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginRight="0dp"
-                        android:backgroundTint="@color/red_theme"
-                        android:nextFocusForward="@+id/username"></Spinner>
+                        android:layout_height="40dp">
+                        <LinearLayout
+                            android:id="@+id/layout_select_mobile_operator"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:src="@drawable/ic_wifi" />
+                        <TextView
+                            android:id="@+id/tv_select_mobile_operator"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Select Operator"
+                            android:padding="10dp"
+                            android:textColor="#373836"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"/>
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_down_security"
+                                android:layout_marginRight="10dp"/>
+                        </LinearLayout>
+                        <Spinner
+                            android:id="@+id/operator"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_below="@+id/textView5"
+                            android:backgroundTint="@color/red_theme"
+                            android:nextFocusForward="@+id/username"
+                            android:visibility="gone"
+                            ></Spinner>
+                    </FrameLayout>
+
                 </LinearLayout>
 
 

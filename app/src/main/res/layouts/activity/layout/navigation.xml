@@ -61,6 +61,7 @@
                             android:layout_marginTop="0dp">
 
                             <ImageView
+                                android:id="@+id/nav_logo"
                                 android:layout_height="match_parent"
                                 android:layout_width="70dp"
                                 android:src="@drawable/safelogo_transparent"

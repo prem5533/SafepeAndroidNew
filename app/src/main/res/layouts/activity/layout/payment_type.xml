@@ -31,7 +31,7 @@
             android:textColor="#fff"
             android:textSize="18sp" />
     </RelativeLayout>
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_below="@id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -93,15 +93,16 @@
                                 android:padding="10dp"
                                 android:fontFamily="@font/roboto_bold"
                                 android:layout_weight="1"/>
+
                             <TextView
                                 android:id="@+id/tv_payment_rechargeamount"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="10"
-                                android:textSize="13sp"
-                                android:textColor="@color/black"
+                                android:layout_height="47dp"
+                                android:fontFamily="@font/roboto_regular"
                                 android:padding="10dp"
-                                android:fontFamily="@font/roboto_regular"/>
+                                android:text="10"
+                                android:textColor="@color/black"
+                                android:textSize="13sp" />
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -166,6 +167,10 @@
                     android:padding="10dp"
                     android:background="@color/white">
 
+                    <ImageView
+                     android:id="@+id/image_service" android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="5dp"/>
 
                     <TextView
                         android:id="@+id/textmaoutotpay"

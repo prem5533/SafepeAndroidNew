@@ -70,7 +70,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginLeft="5dp"
-                    android:src="@drawable/ic_tv"/>
+                    android:src="@drawable/ic_user"/>
 
                 <EditText
                     android:id="@+id/customerid"
@@ -107,12 +107,45 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginRight="20dp"
+                android:background="@drawable/white_button_grayborder"
+                android:orientation="horizontal"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="4dp"
-                android:background="@drawable/white_button_grayborder">
+                android:gravity="start|center"
+                android:layout_marginRight="20dp">
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                <LinearLayout
+                    android:id="@+id/layout_select_mobile_operator"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/ic_tv"/>
+                    <TextView
+                        android:id="@+id/tv_select_mobile_operator"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Select Operator"
+                        android:padding="10dp"
+                        android:textColor="#373836"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_down_security"
+                        android:layout_marginRight="10dp"/>
+                </LinearLayout>
                 <Spinner
                     android:id="@+id/operator"
                     android:layout_width="match_parent"
@@ -120,7 +153,10 @@
                     android:layout_below="@+id/textView5"
                     android:nextFocusForward="@+id/textView"
                     android:backgroundTint="@color/red_theme"
+                    android:layout_marginLeft="5dp"
+                    android:visibility="gone"
                  />
+                </FrameLayout>
             </LinearLayout>
 
             <TextView
@@ -144,6 +180,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="4dp"
             android:gravity="start|center"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="20dp">
 
             <ImageView
@@ -178,6 +215,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/yellow_theme"
                 android:paddingLeft="0dp"
+                android:visibility="gone"
                 />
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_amount"

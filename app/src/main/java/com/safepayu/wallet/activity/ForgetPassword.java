@@ -27,6 +27,7 @@ import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.ForgetPasswordResponse;
 import com.safepayu.wallet.models.response.UserResponse;
+import com.squareup.picasso.Picasso;
 
 import java.util.Random;
 
@@ -47,7 +48,7 @@ public class ForgetPassword extends AppCompatActivity {
     LinearLayout layout1, layout2, layout3;
     private LoadingDialog loadingDialog;
     ApiService apiService;
-    private ImageView ShowHidePasswordBtn;
+    private ImageView ShowHidePasswordBtn,forgotImage;
     boolean showPass=false;
 
     @Override
@@ -61,6 +62,7 @@ public class ForgetPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgot_password);
 
+        String imagePath = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LOGO_IMAGE);
         loadingDialog = new LoadingDialog(this);
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
         edit_number = (EditText) findViewById(R.id.number_forgot);
@@ -70,7 +72,9 @@ public class ForgetPassword extends AppCompatActivity {
         enter_password = (EditText) findViewById(R.id.enter_password);
         confrimPasswordED = findViewById(R.id.confirm_password);
         ShowHidePasswordBtn= findViewById(R.id.show_hide_password_forgetPass);
+        forgotImage = findViewById(R.id.forgot_image);
 
+        Picasso.get().load(imagePath).into(forgotImage);
         otpToSend = 0;
         Random r = new Random();
         Otpval = r.nextInt(9999 - 1000) + 1000;

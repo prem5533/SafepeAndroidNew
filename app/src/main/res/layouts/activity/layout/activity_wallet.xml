@@ -83,8 +83,8 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="10dp">
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_add_rupee"/>
                     <TextView
@@ -113,8 +113,8 @@
                 android:gravity="start|center"
                 android:layout_marginLeft="10dp">
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:padding="8dp"
                     android:src="@drawable/ic_send_rupee"/>
                 <TextView
@@ -251,7 +251,7 @@
                                     android:textSize="14sp"
                                     android:fontFamily="@font/roboto_regular"
                                     android:layout_weight="0.8"
-                                    android:text="Recharge History" />
+                                    android:text="Service History" />
 
                                 <ImageView
                                     android:layout_width="40dp"

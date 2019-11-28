@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -35,6 +36,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -65,12 +67,19 @@ import com.safepayu.wallet.activity.recharge.InsuranceActivity;
 import com.safepayu.wallet.activity.recharge.MobileRecharge;
 import com.safepayu.wallet.activity.recharge.PostpaidLandlineBillpay;
 import com.safepayu.wallet.activity.recharge.WaterBillPay;
+import com.safepayu.wallet.adapter.OfferPagerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
+import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
+import com.squareup.picasso.Picasso;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -78,36 +87,42 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.safepayu.wallet.activity.Profile.QRcodeWidth;
 
-public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
+public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private ImageView nav_icon, notification_icon;
     private DrawerLayout drawer;
     private AlertDialog.Builder alertNetwork;
     private boolean doubleBackToExitPressedOnce = false;
-    private LinearLayout addMoney, sendMoney, recharge, payBill, dth, payShop, sendToBank,Upi_Pay;
+    private LinearLayout addMoney, sendMoney, recharge, payBill, dth, payShop, sendToBank, Upi_Pay;
     LinearLayout layout_electricity, layout_gas, layout_water, layout_broadband;
-    private LinearLayout payLayout,walletLayout,send;
-    String versionName="",FirebaseToken,appUrl="https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
-    private int versionCode=0;
+    private LinearLayout payLayout, walletLayout, send;
+    String versionName = "", FirebaseToken, appUrl = "https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
+    private int versionCode = 0;
     private LoadingDialog loadingDialog;
-    private LinearLayout liMetro,liFlight, liBusTicket,liTrainTicket, liHotles,liDonation,liToll, liFlood,liCredit,liInsurance,limovie,liGoogleplay,lihotel,
-    liBigBazaar,liBrandFactory, liKFC, liDominos,liLogoutAllDevices,linearSecurityTab;
-    public static int BadgeCount=0;
+    private LinearLayout liMetro, liFlight, liBusTicket, liTrainTicket, liHotles, liDonation, liToll, liFlood, liCredit, liInsurance, limovie, liGoogleplay, lihotel,
+            liBigBazaar, liBrandFactory, liKFC, liDominos, liLogoutAllDevices, linearSecurityTab;
+    public static int BadgeCount = 0;
     public static TextView BadgeCountTV;
     Dialog dialog;
-    TextView TitleNotiDialog,ContentNotiDialog;
-    ImageView ImageViewNotiDialog,imageDownSecurity,imageUpSecurity;
+    TextView TitleNotiDialog, ContentNotiDialog;
+    ImageView ImageViewNotiDialog, imageDownSecurity, imageUpSecurity,headerLogo,navLogo;
     private RelativeLayout searchLayout_nav;
-    public static String TitleNotiDialogText="",ContentNotiDialogText="", tollNumber="";
+    public static String TitleNotiDialogText = "", ContentNotiDialogText = "", tollNumber = "";
     public static Bitmap ImageNotiDialog;
+    private ViewPager viewpager;
+    private String url;
 
     //for nav
-    private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet,liShopping,liChnangePasswlrd,liMyOrders,liHistory,liGenelogy,
-            liReferEarn,liUpdteKYC, liContactUs, liLogout,liWalletHistory,liSecurity;
-    private TextView tv_home,tvProfile,tvPackageDetails,tvBuyPackage,tvBusinessWallet,tvMyWallet,tvShopping,tvChangePassword,tvMyOrders,tvHistory,tvGenelogy,
-            tvReferEarn,tvUpdateKYC, tvContact,tvLogout,tvLogoutAlldevice,tvWalletHistory,tv_security;
+    private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
+            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity;
+    private TextView tv_home, tvProfile, tvPackageDetails, tvBuyPackage, tvBusinessWallet, tvMyWallet, tvShopping, tvChangePassword, tvMyOrders, tvHistory, tvGenelogy,
+            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security;
     public static Bitmap qrCodeImage;
-
+    int NUM_PAGES,currentPage = 0;
+    Timer timer;
+    final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
+    final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
+    String ImagePath="http://india.safepayu.com/safepe-new/public/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,7 +165,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             @Override
             public void run() {
                 try {
-                    qrCodeImage=TextToImageEncode(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
+                    qrCodeImage = TextToImageEncode(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
                 } catch (WriterException e) {
                     e.printStackTrace();
                 }
@@ -160,16 +175,16 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.notification_dialog);
-        TitleNotiDialog=dialog.findViewById(R.id.title_notificationDialog);
-        ContentNotiDialog=dialog.findViewById(R.id.content_notificationDialog);
-        ImageViewNotiDialog=dialog.findViewById(R.id.image_notificationDialog);
+        TitleNotiDialog = dialog.findViewById(R.id.title_notificationDialog);
+        ContentNotiDialog = dialog.findViewById(R.id.content_notificationDialog);
+        ImageViewNotiDialog = dialog.findViewById(R.id.image_notificationDialog);
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
 
         dialog.getWindow().setAttributes(lp);
-        dialog.show();
+      //  dialog.show();
 
         searchLayout_nav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,14 +201,14 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     }
 
     private void setupNavigation() {
-        searchLayout_nav=findViewById(R.id.searchLayout_nav);
+        searchLayout_nav = findViewById(R.id.searchLayout_nav);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         notification_icon = findViewById(R.id.notification);
         nav_icon = findViewById(R.id.nav_icon);
         nav_icon.setOnClickListener(nav_iconListner);
 
-        BadgeCountTV=findViewById(R.id.cart_badge);
+        BadgeCountTV = findViewById(R.id.cart_badge);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -218,7 +233,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         payLayout = findViewById(R.id.pay_layout);
         walletLayout = findViewById(R.id.wallet_layout);
         layout_electricity = findViewById(R.id.layout_electricity);
-        layout_gas =  findViewById(R.id.layout_gas_recharge);
+        layout_gas = findViewById(R.id.layout_gas_recharge);
         layout_water = findViewById(R.id.layout_water);
         layout_broadband = findViewById(R.id.layout_broadband);
 
@@ -242,8 +257,11 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liGoogleplay = findViewById(R.id.layout_googleplay);
         imageDownSecurity = findViewById(R.id.image_down_arrow);
         imageUpSecurity = findViewById(R.id.image_up_arrow);
-
-
+        headerLogo = findViewById(R.id.header_logo);
+        navLogo = findViewById(R.id.nav_logo);
+     /*   String imagePath = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LOGO_IMAGE);
+        Picasso.get().load(imagePath).into(headerLogo);
+        Picasso.get().load(imagePath).into(navLogo);*/
 
         tv_home = findViewById(R.id.tv_home);
         tvProfile = findViewById(R.id.tv_profile);
@@ -263,6 +281,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         tvLogoutAlldevice = findViewById(R.id.tv_logoutAlldevice);
         tvWalletHistory = findViewById(R.id.tv_historyWallet);
         tv_security = findViewById(R.id.tv_security);
+        viewpager = findViewById(R.id.viewpager);
+
 
         //**********booking & offers ******
         liMetro = findViewById(R.id.layout_metro);
@@ -312,15 +332,15 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liBrandFactory.setOnClickListener(this);
         liBigBazaar.setOnClickListener(this);
         linearSecurityTab.setVisibility(View.GONE);
-      //  addMoney.setOnClickListener(this);
-      //  sendMoney.setOnClickListener(this);
+        //  addMoney.setOnClickListener(this);
+        //  sendMoney.setOnClickListener(this);
         recharge.setOnClickListener(this);
         payBill.setOnClickListener(this);
         dth.setOnClickListener(this);
         liCredit.setOnClickListener(this);
 
-      //  payShop.setOnClickListener(this);
-       // sendToBank.setOnClickListener(this);
+        //  payShop.setOnClickListener(this);
+        // sendToBank.setOnClickListener(this);
         layout_broadband.setOnClickListener(this);
         layout_water.setOnClickListener(this);
         layout_electricity.setOnClickListener(this);
@@ -339,6 +359,10 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liKFC.setOnClickListener(this);
         liBrandFactory.setOnClickListener(this);
         liBigBazaar.setOnClickListener(this);
+
+
+        getPrmotionalOffer();
+
 
         imageDownSecurity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -364,7 +388,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.white));
-
 
 
                 tv_home.setTextColor(getResources().getColor(R.color.black));
@@ -396,11 +419,11 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         });
 
 
-
         notification_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+               // startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
                 startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
@@ -435,7 +458,27 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         createNotificationChannel();
         getFirebaseToken(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
 
+        /*After setting the adapter use the timer */
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                viewpager.setCurrentItem(currentPage++, true);
+            }
+        };
+
+        timer = new Timer(); // This will create a new Thread
+        timer.schedule(new TimerTask() { // task to be scheduled
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, DELAY_MS, PERIOD_MS);
+
     }
+
 
     private void securityTab() {
         linearSecurityTab.setVisibility(View.GONE);
@@ -475,22 +518,23 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if (isNetworkAvailable()){
+        if (isNetworkAvailable()) {
             getUserDetails();
-        }else {
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.walletLayout),"No Internet Connection",false);
+        } else {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.walletLayout), "No Internet Connection", false);
         }
 
-        if (BadgeCount==0){
+        if (BadgeCount == 0) {
             BadgeCountTV.setVisibility(View.GONE);
-        }else {
-            BadgeCountTV.setText(""+BadgeCount);
+        } else {
+            BadgeCountTV.setText("" + BadgeCount);
             BadgeCountTV.setVisibility(View.VISIBLE);
         }
 
     }
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -607,7 +651,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.credit_layout:
-               Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.layout_insurance:
@@ -620,7 +664,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
 
             case R.id.layout_googleplay:
-                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_hotel:
                 startActivity(new Intent(Navigation.this, HotelActivity.class));
@@ -635,22 +679,20 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_flood:
-                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
-                case R.id.layout_big_bazar:
-                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+            case R.id.layout_big_bazar:
+                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_brand_factory:
-                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_kfc:
-                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_dominos:
-                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
-
-
 
 
             case R.id.li_home:
@@ -996,7 +1038,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             case R.id.li_myorder:
                 drawer.closeDrawers();
                 startActivity(new Intent(Navigation.this, MyOrdersActivity.class));
-              //  overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                //  overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
                 tvMyOrders.setTextColor(getResources().getColor(R.color.bue_A800));
                 tvProfile.setTextColor(getResources().getColor(R.color.black));
@@ -1383,18 +1425,22 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     public void onSuccess(AppVersionResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            int val= Integer.parseInt(response.getVersionData().getVal());
+                            int val = Integer.parseInt(response.getVersionData().getVal());
+                            url = response.getVersionData().getLogo();
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ImagePath+url);
+                            Picasso.get().load(ImagePath+url).into(headerLogo);
+                            Picasso.get().load(ImagePath+url).into(navLogo);
 
                             try {
-                                tollNumber=response.getVersionData().getTollfree();
-                            }catch (Exception e){
-                                tollNumber="";
+                                tollNumber = response.getVersionData().getTollfree();
+                            } catch (Exception e) {
+                                tollNumber = "";
                                 e.printStackTrace();
                             }
 
-                            if (versionCode==val){
+                            if (versionCode == val) {
 
-                            }else {
+                            } else {
                                 showDialogForAppUpdate(Navigation.this);
                             }
 
@@ -1447,8 +1493,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
-        if (!isConnected){
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.drawer_layout),"No Internet Connection!",false);
+        if (!isConnected) {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.drawer_layout), "No Internet Connection!", false);
         }
     }
 
@@ -1462,19 +1508,19 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     @Override
                     public void onSuccess(UserDetailResponse response) {
 
-                        if (response.getUser().getStatus()==0){
+                        if (response.getUser().getStatus() == 0) {
                             showDialogBlocked(Navigation.this);
-                        }else {
+                        } else {
                             BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
 
                             //BaseApp.getInstance().toastHelper().log(HomeActivity.class, BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER));
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED, String.valueOf(response.getUser().getEmail_verified()));
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE, String.valueOf(response.getUser().getPasscode()));
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_EMAIL,response.getUser().getEmail());
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME,response.getUser().getFirst_name());
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME,response.getUser().getLast_name());
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED,String.valueOf(response.getUser().getBlocked()));
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED,String.valueOf(response.getUser().getPackage_status()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_EMAIL, response.getUser().getEmail());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME, response.getUser().getFirst_name());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME, response.getUser().getLast_name());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED, String.valueOf(response.getUser().getBlocked()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED, String.valueOf(response.getUser().getPackage_status()));
                         }
                     }
 
@@ -1503,7 +1549,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     }
 
     public void showDialogLogoutAll(Activity activity) {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(activity);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
 
         dialog.setTitle("SafePe Alert")
                 .setCancelable(false)
@@ -1529,31 +1575,31 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
     private void getFirebaseToken(String userId) {
 
-        if (TextUtils.isEmpty(FirebaseToken)){
-            FirebaseToken=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN);
+        if (TextUtils.isEmpty(FirebaseToken)) {
+            FirebaseToken = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN);
         }
-      //  loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        //  loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
 
-        BaseApp.getInstance().getDisposable().add(apiService.getFirebaseToken(userId,FirebaseToken)
+        BaseApp.getInstance().getDisposable().add(apiService.getFirebaseToken(userId, FirebaseToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
                     @Override
                     public void onSuccess(BaseResponse response) {
-                      //  loadingDialog.hideDialog();
+                        //  loadingDialog.hideDialog();
 
-                        if (response.getStatus()){
+                        if (response.getStatus()) {
 
-                        }else {
+                        } else {
                             Toast.makeText(Navigation.this, response.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                      //  loadingDialog.hideDialog();
+                        //  loadingDialog.hideDialog();
                         Toast.makeText(Navigation.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
                     }
@@ -1585,7 +1631,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             for (int x = 0; x < bitMatrixWidth; x++) {
 
                 pixels[offset + x] = bitMatrix.get(x, y) ?
-                        getResources().getColor(R.color.bue_A800):getResources().getColor(R.color.white);
+                        getResources().getColor(R.color.bue_A800) : getResources().getColor(R.color.white);
             }
         }
         Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444);
@@ -1624,5 +1670,40 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, false, e.getCause());
                     }
                 }));
+    }
+
+
+
+    private void getPrmotionalOffer() {
+
+       // loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+
+
+        final PromotionRequest promotionRequest = new PromotionRequest();
+        promotionRequest.setType("1");
+        BaseApp.getInstance().getDisposable().add(apiService.getPromotionOffer(promotionRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<PromotionResponse>() {
+                    @Override
+                    public void onSuccess(PromotionResponse promotionResponse) {
+
+                        NUM_PAGES= promotionResponse.getData().size();
+                        loadingDialog.hideDialog();
+                        if (promotionResponse.isStatus()) {
+
+                            OfferPagerAdapter adapter = new OfferPagerAdapter(Navigation.this,promotionResponse.getData());
+                            viewpager.setAdapter(adapter);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                    }
+                }));
+
+
     }
 }

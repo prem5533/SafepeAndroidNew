@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_below="@+id/operator"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
@@ -101,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView6"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
@@ -113,18 +113,56 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/white_button_grayborder"
+                android:orientation="horizontal"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginRight="20dp"
-                android:orientation="vertical"
-                android:background="@drawable/white_button_grayborder">
+                android:gravity="start|center"
+                android:layout_marginRight="20dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                <LinearLayout
+                    android:id="@+id/layout_select_mobile_operator"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/ic_receipt" />
+                    <TextView
+                        android:id="@+id/tv_select_mobile_operator"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Select Operator"
+                        android:padding="10dp"
+                        android:textColor="#373836"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_down_security"
+                        android:layout_marginRight="10dp"/>
+                </LinearLayout>
 
                 <Spinner
                     android:id="@+id/operatorPostpaid"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_below="@+id/textView5"
-                    android:nextFocusForward="@+id/username"/>
+                    android:layout_marginLeft="5dp"
+                    android:backgroundTint="@color/red_theme"
+                    android:nextFocusForward="@+id/username"
+                    android:visibility="gone"/>
+                </FrameLayout>
             </LinearLayout>
 
             <TextView
@@ -165,7 +203,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/mobile"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
@@ -207,23 +245,7 @@
 
 
 
-            <Button
-                android:id="@+id/Paybtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/amount"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/rounded_buttons"
-                android:padding="10dp"
-                android:text="Pay Bill"
-                android:textColor="#fff"
-                android:layout_marginBottom="30dp"
-                android:visibility="gone"
-                android:textSize="15sp"
-                android:fontFamily="@font/roboto_regular" />
+
 
             <TextView
                 android:layout_weight="1"
@@ -237,6 +259,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/yellow_theme"
                 android:paddingLeft="0dp"
+                android:visibility="gone"
                 />
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_amount"
@@ -357,6 +380,22 @@
                     android:layout_marginRight="5dp"/>
             </LinearLayout>
             <Button
+                android:id="@+id/Paybtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/amount"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rounded_buttons"
+                android:padding="10dp"
+                android:text="Pay Bill"
+                android:textColor="#fff"
+                android:layout_marginBottom="30dp"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular" />
+            <Button
                 android:id="@+id/btnCheckBill"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -369,6 +408,7 @@
                 android:padding="10dp"
                 android:text="Check Bill"
                 android:textColor="#fff"
+                android:visibility="gone"
                 android:layout_marginBottom="30dp"
                 android:textSize="15sp"
                 android:fontFamily="@font/roboto_regular" />

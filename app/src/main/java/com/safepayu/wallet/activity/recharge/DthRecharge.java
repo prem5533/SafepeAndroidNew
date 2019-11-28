@@ -11,17 +11,20 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.LoginActivity;
 import com.safepayu.wallet.activity.PaymentType;
+import com.safepayu.wallet.adapter.SpinnerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -30,8 +33,8 @@ import com.safepayu.wallet.models.response.OperatorResponse;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
-import androidx.cardview.widget.CardView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -47,6 +50,8 @@ public class DthRecharge extends BaseActivity {
     double totalAmount = 0.0f, minusAmount = 0.0f;
     private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;;
     private CardView cardAmount;
+    LinearLayout layoutSelectDthOperator;
+    List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,7 @@ public class DthRecharge extends BaseActivity {
         tvRechargeamount = findViewById(R.id.tv_rechargeamount);
         tvWalletCashback = findViewById(R.id.tv_walletcashback);
         tvTotalAmountpay = findViewById(R.id.tv_total_amountpay);
-
+        layoutSelectDthOperator = findViewById(R.id.layout_select_mobile_operator);
 
         OperatorNameList=new ArrayList<>();
         IdList=new ArrayList<>();
@@ -82,9 +87,12 @@ public class DthRecharge extends BaseActivity {
         OperatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                OperatorText=OperatorSpinner.getItemAtPosition(i).toString();
+               /* OperatorText=OperatorSpinner.getItemAtPosition(i).toString();
                 OperatorCode=OperatorCodeList.get(i);
-                OperatorId=IdList.get(i);
+                OperatorId=IdList.get(i);*/
+                OperatorText=mOperList.get(i).getOperator_name();
+                OperatorCode= mOperList.get(i).getOperator_code();
+                OperatorId= String.valueOf(mOperList.get(i).getId());
             }
 
             @Override
@@ -97,6 +105,13 @@ public class DthRecharge extends BaseActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        layoutSelectDthOperator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layoutSelectDthOperator.setVisibility(View.GONE);
+                OperatorSpinner.setVisibility(View.VISIBLE);
             }
         });
 
@@ -245,6 +260,8 @@ public class DthRecharge extends BaseActivity {
                         intent.putExtra("OperatorCode",OperatorCode);
                         intent.putExtra("CircleCode","51");
                         intent.putExtra("OperatorId",OperatorId);
+                        intent.putExtra("walletCashback", tvWalletCashback.getText().toString());
+                        intent.putExtra("totalAmount", tvTotalAmountpay.getText().toString());
                         startActivity(intent);
                         finish();
                     }
@@ -267,15 +284,17 @@ public class DthRecharge extends BaseActivity {
                     public void onSuccess(OperatorResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            for (int i=0;i<response.getOperators().size();i++){
+                        /*    for (int i=0;i<response.getOperators().size();i++){
                                 OperatorNameList.add(response.getOperators().get(i).getOperator_name());
                                 IdList.add(String.valueOf(response.getOperators().get(i).getId()));
                                 OperatorCodeList.add(response.getOperators().get(i).getOperator_code());
-                            }
+                            }*/
 
-                            ArrayAdapter<String> TransferType= new ArrayAdapter<>(DthRecharge.this,android.R.layout.simple_spinner_item,OperatorNameList);
-                            TransferType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            OperatorSpinner.setAdapter(TransferType);
+                            mOperList=response.getOperators();
+                            for (int i = 0; i < response.getOperators().size(); i++) {
+
+                                SpinnerAdapter customAdapter=new SpinnerAdapter(getApplicationContext(),mOperList);
+                                OperatorSpinner.setAdapter(customAdapter); }
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.dthRechargeLayout),response.getMessage(),false);
                         }

@@ -11,17 +11,20 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.LoginActivity;
 import com.safepayu.wallet.activity.PaymentType;
+import com.safepayu.wallet.adapter.SpinnerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -30,6 +33,7 @@ import com.safepayu.wallet.models.response.OperatorResponse;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -45,7 +49,10 @@ public class PostpaidLandlineBillpay extends BaseActivity {
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
     double totalAmount = 0.0f, minusAmount = 0.0f;
-    private TextView AmountTotalTV;
+    private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;
+    private CardView cardAmount;
+    LinearLayout layoutSelectBillOper;
+    List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,11 @@ public class PostpaidLandlineBillpay extends BaseActivity {
         OperatorSpinner = findViewById(R.id.operatorPostpaid);
         MobileED = findViewById(R.id.mobilePostpaid);
         AmountTotalTV = findViewById(R.id.calculatedamount_bill);
+        layoutSelectBillOper = findViewById(R.id.layout_select_mobile_operator);
+        cardAmount = findViewById(R.id.card_amount);
+        tvRechargeamount = findViewById(R.id.tv_rechargeamount);
+        tvWalletCashback = findViewById(R.id.tv_walletcashback);
+        tvTotalAmountpay = findViewById(R.id.tv_total_amountpay);
 
         OperatorNameList=new ArrayList<>();
         IdList=new ArrayList<>();
@@ -78,9 +90,9 @@ public class PostpaidLandlineBillpay extends BaseActivity {
         OperatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                OperatorText=OperatorSpinner.getItemAtPosition(i).toString();
-                OperatorCode=OperatorCodeList.get(i);
-                OperatorId=IdList.get(i);
+                OperatorText=mOperList.get(i).getOperator_name();
+                OperatorCode= mOperList.get(i).getOperator_code();
+                OperatorId= String.valueOf(mOperList.get(i).getId());
             }
 
             @Override
@@ -119,6 +131,13 @@ public class PostpaidLandlineBillpay extends BaseActivity {
                 finish();
             }
         });
+        layoutSelectBillOper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layoutSelectBillOper.setVisibility(View.GONE);
+                OperatorSpinner.setVisibility(View.VISIBLE);
+            }
+        });
 
         PayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +150,7 @@ public class PostpaidLandlineBillpay extends BaseActivity {
             }
         });
 
-        BillCheckBtn.setOnClickListener(new View.OnClickListener() {
+       /* BillCheckBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 textView.setVisibility(View.GONE);
@@ -140,7 +159,7 @@ public class PostpaidLandlineBillpay extends BaseActivity {
                 PayBtn.setVisibility(View.VISIBLE);
 
             }
-        });
+        });*/
 
         AmountEd.addTextChangedListener(new TextWatcher() {
             @Override
@@ -156,19 +175,28 @@ public class PostpaidLandlineBillpay extends BaseActivity {
                     if (num <=1000) {
                         CalculateAmount(num);
                         String text = AmountEd.getText().toString().trim() + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
-                        AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
+                      //  AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
+                        cardAmount.setVisibility(View.VISIBLE);
+                        tvRechargeamount.setText(AmountEd.getText().toString().trim() + " " + getResources().getString(R.string.rupees));
+                        tvWalletCashback.setText(" -  " + new DecimalFormat("##.##").format(minusAmount) + " " + getResources().getString(R.string.rupees));
+                        tvTotalAmountpay.setText(String.format("%.2f", totalAmount) + " " + getResources().getString(R.string.rupees));
+                    }
 
                     else if (num>1000){
                         CalculateAmount1Per(num);
                         String text = AmountEd.getText().toString().trim()  + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
-                        AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
+                        //AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
+                        tvRechargeamount.setText(AmountEd.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
+                        tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
+                        tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));
+                    }
 
                     else {
                         AmountTotalTV.setText("0.0");
                     }
                 }
                 else {
-                    AmountTotalTV.setText(" ");
+                    cardAmount.setVisibility(View.GONE);
                 }
             }
 
@@ -237,6 +265,8 @@ public class PostpaidLandlineBillpay extends BaseActivity {
                             intent.putExtra("OperatorCode",OperatorCode);
                             intent.putExtra("CircleCode","51");
                             intent.putExtra("OperatorId",OperatorId);
+                            intent.putExtra("walletCashback", tvWalletCashback.getText().toString());
+                            intent.putExtra("totalAmount", tvTotalAmountpay.getText().toString());
                             startActivity(intent);
                             finish();
                         }
@@ -262,15 +292,10 @@ public class PostpaidLandlineBillpay extends BaseActivity {
                     public void onSuccess(OperatorResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            for (int i=0;i<response.getOperators().size();i++){
-                                OperatorNameList.add(response.getOperators().get(i).getOperator_name());
-                                IdList.add(String.valueOf(response.getOperators().get(i).getId()));
-                                OperatorCodeList.add(response.getOperators().get(i).getOperator_code());
-                            }
-
-                            ArrayAdapter<String> TransferType= new ArrayAdapter<>(PostpaidLandlineBillpay.this,android.R.layout.simple_spinner_item,OperatorNameList);
-                            TransferType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            OperatorSpinner.setAdapter(TransferType);
+                            mOperList=response.getOperators();
+                            for (int i = 0; i < response.getOperators().size(); i++) {
+                                SpinnerAdapter customAdapter=new SpinnerAdapter(getApplicationContext(),mOperList);
+                                OperatorSpinner.setAdapter(customAdapter); }
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),response.getMessage(),false);
                         }

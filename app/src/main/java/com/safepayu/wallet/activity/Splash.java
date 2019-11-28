@@ -8,13 +8,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
+
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.MultiDex;
 
 public class Splash extends AppCompatActivity implements PasscodeClickListener {
 
@@ -59,7 +59,7 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
     @Override
     public void onPasscodeMatch(boolean isPasscodeMatched) {
         if (isPasscodeMatched){
-            startActivity(new Intent(Splash.this, Navigation.class));
+            startActivity(new Intent(Splash.this, SplashViewPagerActivity.class));
             finish();
         }else {
             Toast.makeText(this, "Invalid Passcode", Toast.LENGTH_SHORT).show();

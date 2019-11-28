@@ -49,6 +49,7 @@ public class AppVersionResponse {
          */
 
         private String tollfree;
+        private String logo;
 
 
         public String getVersion_name() {
@@ -73,6 +74,14 @@ public class AppVersionResponse {
 
         public void setTollfree(String tollfree) {
             this.tollfree = tollfree;
+        }
+
+        public String getLogo() {
+            return logo;
+        }
+
+        public void setLogo(String logo) {
+            this.logo = logo;
         }
     }
 }

@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#f7f8f8">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -10,8 +11,9 @@
         android:layout_height="wrap_content"
         app:tabMode="scrollable"
         app:tabBackground="@color/colorPrimary"
-        app:tabTextColor="#E0E0E0"
-        app:tabSelectedTextColor="#ffffff"
+        app:tabSelectedTextColor="@color/yellow"
+        app:tabTextColor="@color/white"
+        app:tabIndicatorColor="@color/yellow"
         app:tabGravity="fill"/>
 
     <com.malinskiy.superrecyclerview.SuperRecyclerView
@@ -25,13 +27,16 @@
         app:layout_moreProgress="@layout/view_more_progress"
         app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"
         app:recyclerClipToPadding="false"
-        app:scrollbarStyle="insideInset"/>
+        app:scrollbarStyle="insideInset"
+        android:layout_marginTop="5dp"/>
 
     <Button
         android:id="@+id/cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Cancel" />
+        android:text="Cancel"
+        android:textSize="15sp"
+        android:fontFamily="@font/roboto_regular"/>
 
 </RelativeLayout>

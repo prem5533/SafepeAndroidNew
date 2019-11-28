@@ -103,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
-                        android:text="In Progress..."
+                        android:text="Instant Payment"
                         android:textColor="@color/clay_yellow"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/roboto_bold">
@@ -126,6 +126,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="20dp"
                         android:text="00:00"
+                        android:visibility="gone"
                         android:textColor="@color/bue_A800"
                         android:textStyle="bold"
                         app:fontCustom="@string/Roboto" />

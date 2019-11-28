@@ -7,7 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,7 +22,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 
+import java.text.NumberFormat;
+
 import pl.droidsonroids.gif.GifImageView;
+
+import static android.view.Gravity.CENTER_VERTICAL;
 
 public class PaidOrderActivity extends AppCompatActivity {
     private TextView tvNeedHelp,StatusTV,DateTV,TxnIdTV,AmountTV,ProductInfoTV;
@@ -114,7 +121,7 @@ public class PaidOrderActivity extends AppCompatActivity {
         }
 
         StatusTV.setText(status);
-        AmountTV.setText(getResources().getString(R.string.rupees)+" "+Amount);
+        AmountTV.setText(getResources().getString(R.string.rupees)+" "+ NumberFormat.getIntegerInstance().format(Integer.parseInt(Amount)));
         DateTV.setText(date);
         ProductInfoTV.setText(productinfo);
 
@@ -138,9 +145,9 @@ public class PaidOrderActivity extends AppCompatActivity {
     }
 
     public void showDialogAfterBankTrans(Activity activity,String Message) {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(activity);
+      //  AlertDialog.Builder dialog=new AlertDialog.Builder(activity);
 
-        dialog.setTitle("SafePe Alert")
+   /*     dialog.setTitle("SafePe Alert")
                 .setCancelable(false)
                 .setMessage(Message)
 
@@ -156,6 +163,75 @@ public class PaidOrderActivity extends AppCompatActivity {
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 //.setNegativeButton(android.R.string.no, null)
                 .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
-                .show();
+                .show();*/
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        // Set the alert dialog title
+        builder.setTitle("SafePe Alert");
+        // Set a message for alert dialog
+        builder.setMessage(Message);
+        // Must call show() prior to fetching text view
+
+        builder  .setIcon(getResources().getDrawable(R.drawable.new_safepe_logo));
+        // Set a positive button for alert dialog
+      //  builder.setPositiveButton("Say",null);
+        // Specifying a listener allows you to take an action before dismissing the dialog.
+        // The dialog is automatically dismissed when a dialog button is clicked.
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Continue with delete operation
+                dialog.dismiss();
+            }
+        });
+
+        // Set a negative button for alert dialog
+     //   builder.setNegativeButton("No",null);
+
+        // Create the alert dialog
+        AlertDialog dialog = builder.create();
+
+        // Finally, display the alert dialog
+        dialog.show();
+        TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+        messageText.setGravity(Gravity.CENTER|CENTER_VERTICAL);
+        messageText.setPadding(40, 120, 40, 40);
+        messageText.setTextSize(16);
+        dialog.setCanceledOnTouchOutside(false);
+        // Get screen width and height in pixels
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        // The absolute width of the available display size in pixels.
+        int displayWidth = displayMetrics.widthPixels;
+        // The absolute height of the available display size in pixels.
+        int displayHeight = displayMetrics.heightPixels;
+
+        // Initialize a new window manager layout parameters
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+
+        // Copy the alert dialog window attributes to new layout parameter instance
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+
+        // Set the alert dialog window width and height
+        // Set alert dialog width equal to screen width 90%
+        // int dialogWindowWidth = (int) (displayWidth * 0.9f);
+        // Set alert dialog height equal to screen height 90%
+        // int dialogWindowHeight = (int) (displayHeight * 0.9f);
+
+        // Set alert dialog width equal to screen width 70%
+        int dialogWindowWidth = (int) (displayWidth * 0.9f);
+        // Set alert dialog height equal to screen height 70%
+        int dialogWindowHeight = (int) (displayHeight * 0.5f);
+
+        // Set the width and height for the layout parameters
+        // This will bet the width and height of alert dialog
+        layoutParams.width = dialogWindowWidth;
+        layoutParams.height = dialogWindowHeight;
+
+        // Apply the newly created layout parameters to the alert dialog window
+        dialog.getWindow().setAttributes(layoutParams);
     }
-}
+
+
+    }
+

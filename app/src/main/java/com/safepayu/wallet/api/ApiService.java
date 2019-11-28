@@ -7,6 +7,7 @@ import com.safepayu.wallet.models.request.CheckEmailMobileRequest;
 import com.safepayu.wallet.models.request.ForgetPasswordRequest;
 import com.safepayu.wallet.models.request.HashKeyRequest;
 import com.safepayu.wallet.models.request.Login;
+import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.request.RechargeRequest;
 import com.safepayu.wallet.models.request.Register;
 import com.safepayu.wallet.models.request.ResetPasscodeModel;
@@ -35,6 +36,7 @@ import com.safepayu.wallet.models.response.NotificationResponse;
 import com.safepayu.wallet.models.response.OperatorResponse;
 import com.safepayu.wallet.models.response.PackageDetailsResponse;
 import com.safepayu.wallet.models.response.PackageListData;
+import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.models.response.RechargeHistoryResponse;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
@@ -197,6 +199,9 @@ public interface ApiService {
     @GET("Flights/Airports?flightType=1")
     Single<FlightSourceResponse> getFlightSources();
 
+    @POST("api/safepe/promotionalImages")
+    Single<PromotionResponse>getPromotionOffer(@Body PromotionRequest promotionRequest);
+
 
     //*************Flight Booking *******************//
     @GET("api/safepe/getFlightAirport")
@@ -209,8 +214,6 @@ public interface ApiService {
     Single<FlightBlockTicketResponse> getFlightBlockTicket(@Body FlightBlockTicketRequest flightBlockTicketRequest);
 
 
-
-
     //*************Bus Booking *******************//
     @POST("api/safepe/postBusLocationList")
     Single<BusSourcesResponse> getBusSourcres();
@@ -220,6 +223,7 @@ public interface ApiService {
 
     @POST("api/safepe/postBusTripDetails")
     Single<BusTripDetailsResponse> getBusTripDetails(@Body BusTripDetailsRequest busTripDetailsRequest);
+
 
     //*************Hotel Booking *******************//
     @POST("api/safepe/hotelSources")

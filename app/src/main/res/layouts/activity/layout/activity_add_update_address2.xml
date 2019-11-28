@@ -260,11 +260,12 @@
                     android:padding="10dp"
                     android:background="@drawable/edittext_rounded"
                     android:layout_height="wrap_content"
-                    android:hint="India"
+                    android:text="India"
                     android:fontFamily="@font/roboto_regular"
                     android:textSize="13sp"
                     android:layout_marginLeft="10dp"
                     android:maxLength="6"
+                    android:enabled="false"
                     android:layout_marginBottom="20dp"/>
 
                 <ImageView

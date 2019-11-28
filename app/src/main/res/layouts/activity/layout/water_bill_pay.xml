@@ -44,34 +44,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:text="Select Operator"
-                android:textColor="#373836"
-                android:textSize="12sp"
-                android:fontFamily="@font/roboto_regular"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/white_button_grayborder">
-
-                <Spinner
-                    android:id="@+id/operatorWater"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/textView5"
-                    android:nextFocusForward="@+id/textView" />
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView"
@@ -85,21 +57,105 @@
                 android:textColor="#373836"
                 android:textSize="12sp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_button_grayborder"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="4dp"
+            android:gravity="start|center"
+            android:layout_marginRight="20dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_smartphone" />
+
             <EditText
                 android:id="@+id/customeridWater"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView"
                 android:layout_gravity="center"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="0dp"
-                android:background="@drawable/white_button_grayborder"
                 android:inputType="number"
                 android:nextFocusForward="@+id/amount"
                 android:padding="10dp"
+                android:hint="Customer ID"
                 android:textColor="#373836"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:background="@null"/>
+        </LinearLayout>
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Select Operator"
+                android:textColor="#373836"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto_regular"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_button_grayborder"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="4dp"
+                android:gravity="start|center"
+                android:layout_marginRight="20dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                <LinearLayout
+                    android:id="@+id/layout_select_mobile_operator"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/ic_drop" />
+                    <TextView
+                        android:id="@+id/tv_select_mobile_operator"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Select Operator"
+                        android:padding="10dp"
+                        android:textColor="#373836"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_down_security"
+                        android:layout_marginRight="10dp"/>
+                </LinearLayout>
+            <Spinner
+                    android:id="@+id/operatorWater"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/textView5"
+                    android:layout_marginLeft="5dp"
+                    android:backgroundTint="@color/red_theme"
+                    android:nextFocusForward="@+id/textView"
+                android:visibility="gone"/>
+                </FrameLayout>
+            </LinearLayout>
+
+
 
 
 
@@ -109,27 +165,39 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/mobile"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center"
                 android:text="Amount"
                 android:textColor="#373836"
                 android:textSize="12sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_button_grayborder"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="4dp"
+            android:gravity="start|center"
+            android:layout_marginRight="20dp">
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_rupee_indian" />
             <EditText
                 android:id="@+id/amountWater"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="0dp"
-                android:background="@drawable/white_button_grayborder"
                 android:inputType="number"
                 android:padding="10dp"
                 android:textColor="#373836"
-
                 android:textSize="15sp"
+                android:background="@null"
+                android:hint="Amount"
                 android:fontFamily="@font/roboto_regular" />
+        </LinearLayout>
             <TextView
                 android:layout_weight="1"
                 android:id="@+id/calculatedamount"

@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.cardview.widget.CardView;
 
 import com.easebuzz.payment.kit.PWECouponsActivity;
 import com.safepayu.wallet.BaseActivity;
@@ -34,11 +37,11 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import androidx.cardview.widget.CardView;
 import datamodels.StaticDataModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -55,11 +58,12 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
     private Button btn_proceed_netBanking, proceed_upi, proceed_wallet, proceed_card,BackBtn,btn_addMoney_card;
     private Button ProceedWalletBtn;
     private LoadingDialog loadingDialog;
-    private TextView AmountTV,tvPaymentRechargeamount;
+    private TextView AmountTV,tvPaymentRechargeamount,tvPaymentCashBack,tvPaymentTotal;
     private CardView Card_fillLayout;
+    private ImageView imageService;
 
     //recharge/bill payment parameter
-    private String RechargePaymentId="",Amount="",PaymentTypeText="",PaymentFor="",RechargeTypeId="",OperatorCode="",CircleCode="",OperatorId="";
+    private String RechargePaymentId="",Amount="",PaymentTypeText="",PaymentFor="",RechargeTypeId="",OperatorCode="",CircleCode="",OperatorId="",WalletCashback,TotalDeductAmount;
 
     private String merchant_trxnId="",merchant_productInfo="",customer_firstName="",customer_email_id="",customer_phone="";
     private String merchant_udf1="",merchant_udf2="",merchant_udf3="",merchant_udf4="",merchant_udf5="";
@@ -79,6 +83,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         NetBankingBtnLayout = (RelativeLayout) findViewById(R.id.radioLayout2);
         WalletBtnLayout = (RelativeLayout) findViewById(R.id.radioLayout4);
         Card_fillLayout=findViewById(R.id.card_fillLayout);
+        imageService=findViewById(R.id.image_service);
 
         cardLayout = (LinearLayout) findViewById(R.id.card_layout);
         UpiLayout = (LinearLayout) findViewById(R.id.upi_layout);
@@ -91,9 +96,12 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         BackBtn=findViewById(R.id.sendmoney_back_btn);
         ProceedWalletBtn=findViewById(R.id.btn_proceed_wallet);
         tvPaymentRechargeamount = findViewById(R.id.tv_payment_rechargeamount);
+        tvPaymentCashBack = findViewById(R.id.tv_payment_walletcashback);
+        tvPaymentTotal = findViewById(R.id.tv_payment_total_amountpay);
 
         AmountTV = findViewById(R.id.tv_walletAddedAmount);
-        tvPaymentRechargeamount.setText(Amount);
+
+
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,14 +190,37 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             OperatorCode=intent.getStringExtra("OperatorCode");
             CircleCode=intent.getStringExtra("CircleCode");
             OperatorId=intent.getStringExtra("OperatorId");
+            WalletCashback=intent.getStringExtra("walletCashback");
+            TotalDeductAmount=intent.getStringExtra("totalAmount");
 
-            AmountTV.setText(getResources().getString(R.string.rupees)+" "+Amount);
+            AmountTV.setText(getResources().getString(R.string.rupees)+" "+ NumberFormat.getIntegerInstance().format(Integer.parseInt(Amount)));
             if (PaymentFor.equalsIgnoreCase("Wallet") || PaymentFor.equalsIgnoreCase("Buy Package")) {
                 WalletBtnLayout.setVisibility(GONE);
             }
             NetBankingBtnLayout.setVisibility(GONE);
             upiBtnLayout.setVisibility(GONE);
             Card_fillLayout.setVisibility(GONE);
+            tvPaymentCashBack.setText(WalletCashback);
+            tvPaymentTotal.setText(TotalDeductAmount);
+            if (RechargeTypeId.equals("1")){
+            imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_mobile));
+            }
+           else if (RechargeTypeId.equals("2")){
+                imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_tv));
+            }
+            else if (RechargeTypeId.equals("3")){
+                imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_flash));
+            }
+            else if (RechargeTypeId.equals("4")){
+                imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_drop));
+            }
+            else if (RechargeTypeId.equals("5")){
+                imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_fire));
+            }
+            else if (RechargeTypeId.equals("6")){
+                imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_receipt));
+            }
+            tvPaymentRechargeamount.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(Amount)));
         }catch (Exception e){
             e.printStackTrace();
         }
