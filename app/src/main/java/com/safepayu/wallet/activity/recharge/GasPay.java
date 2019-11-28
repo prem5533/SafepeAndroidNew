@@ -14,14 +14,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.LoginActivity;
 import com.safepayu.wallet.activity.PaymentType;
+import com.safepayu.wallet.adapter.SpinnerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -30,6 +34,7 @@ import com.safepayu.wallet.models.response.OperatorResponse;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -43,8 +48,11 @@ public class GasPay extends BaseActivity {
     String OperatorText="",OperatorCode="",OperatorId="";
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
-    private TextView AmountTotalTV;
+    private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;
     double totalAmount = 0.0f, minusAmount = 0.0f;
+    private CardView cardAmount;
+    LinearLayout layoutSelectGasOper;
+    List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,11 @@ public class GasPay extends BaseActivity {
         AmountED=findViewById(R.id.amountGas);
         AmountTotalTV = findViewById(R.id.calculatedamount);
         GasIdED=findViewById(R.id.gasID);
+        layoutSelectGasOper = findViewById(R.id.layout_select_mobile_operator);
+        cardAmount = findViewById(R.id.card_amount);
+        tvRechargeamount = findViewById(R.id.tv_rechargeamount);
+        tvWalletCashback = findViewById(R.id.tv_walletcashback);
+        tvTotalAmountpay = findViewById(R.id.tv_total_amountpay);
 
         OperatorNameList=new ArrayList<>();
         IdList=new ArrayList<>();
@@ -77,7 +90,13 @@ public class GasPay extends BaseActivity {
                 finish();
             }
         });
-
+        layoutSelectGasOper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layoutSelectGasOper.setVisibility(View.GONE);
+                OperatorSpinner.setVisibility(View.VISIBLE);
+            }
+        });
         GasPayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,9 +111,9 @@ public class GasPay extends BaseActivity {
         OperatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                OperatorText=OperatorSpinner.getItemAtPosition(i).toString();
-                OperatorCode=OperatorCodeList.get(i);
-                OperatorId=IdList.get(i);
+                OperatorText=mOperList.get(i).getOperator_name();
+                OperatorCode= mOperList.get(i).getOperator_code();
+                OperatorId= String.valueOf(mOperList.get(i).getId());
             }
 
             @Override
@@ -142,20 +161,26 @@ public class GasPay extends BaseActivity {
                     int num = Integer.parseInt(Amount);
                     if (num <=1000) {
                         CalculateAmount(num);
-                        String text = AmountED.getText().toString().trim() + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
-                        AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
+                        String text = AmountED.getText().toString().trim() + " - " + new DecimalFormat("##.##").format(minusAmount) + " = ";
+                        //   AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
+                        cardAmount.setVisibility(View.VISIBLE);
+                        tvRechargeamount.setText(AmountED.getText().toString().trim() + " " + getResources().getString(R.string.rupees));
+                        tvWalletCashback.setText(" -  " + new DecimalFormat("##.##").format(minusAmount) + " " + getResources().getString(R.string.rupees));
+                        tvTotalAmountpay.setText(String.format("%.2f", totalAmount) + " " + getResources().getString(R.string.rupees));
+                    }
 
                     else if (num>1000){
                         CalculateAmount1Per(num);
                         String text = AmountED.getText().toString().trim()  + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
-                        AmountTotalTV.setText(text + String.format("%.2f", totalAmount)); }
-
+                   //     AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
+                        tvRechargeamount.setText(AmountED.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
+                        tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
+                        tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees)); }
                     else {
                         AmountTotalTV.setText("0.0");
-                    }
-                }
+                    } }
                 else {
-                    AmountTotalTV.setText(" ");
+                    cardAmount.setVisibility(View.GONE);
                 }
             }
 
@@ -226,6 +251,8 @@ public class GasPay extends BaseActivity {
                         intent.putExtra("OperatorCode",OperatorCode);
                         intent.putExtra("CircleCode","51");
                         intent.putExtra("OperatorId",OperatorId);
+                        intent.putExtra("walletCashback", tvWalletCashback.getText().toString());
+                        intent.putExtra("totalAmount", tvTotalAmountpay.getText().toString());
                         startActivity(intent);
                         finish();
                     }
@@ -248,15 +275,10 @@ public class GasPay extends BaseActivity {
                     public void onSuccess(OperatorResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            for (int i=0;i<response.getOperators().size();i++){
-                                OperatorNameList.add(response.getOperators().get(i).getOperator_name());
-                                IdList.add(String.valueOf(response.getOperators().get(i).getId()));
-                                OperatorCodeList.add(response.getOperators().get(i).getOperator_code());
-                            }
-
-                            ArrayAdapter<String> TransferType= new ArrayAdapter<>(GasPay.this,android.R.layout.simple_spinner_item,OperatorNameList);
-                            TransferType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            OperatorSpinner.setAdapter(TransferType);
+                            mOperList=response.getOperators();
+                            for (int i = 0; i < response.getOperators().size(); i++) {
+                                SpinnerAdapter customAdapter=new SpinnerAdapter(getApplicationContext(),mOperList);
+                                OperatorSpinner.setAdapter(customAdapter); }
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.gasPayLayout),response.getMessage(),false);
                         }

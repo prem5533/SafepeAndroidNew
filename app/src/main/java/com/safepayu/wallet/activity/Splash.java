@@ -59,7 +59,7 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
     @Override
     public void onPasscodeMatch(boolean isPasscodeMatched) {
         if (isPasscodeMatched){
-            startActivity(new Intent(Splash.this, Navigation.class));
+            startActivity(new Intent(Splash.this, SplashViewPagerActivity.class));
             finish();
         }else {
             Toast.makeText(this, "Invalid Passcode", Toast.LENGTH_SHORT).show();

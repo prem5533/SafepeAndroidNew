@@ -72,7 +72,8 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
         delete.setOnClickListener(this);
 
 
-        txvEnter.setText("Enter the Passcode to Access\nYour SafePe Wallet");
+        //txvEnter.setText("Enter the Passcode to Access\nYour SafePe Wallet");
+        txvEnter.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME)+" "+BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_LAST_NAME));
 
 
         edtxPassCode.addTextChangedListener(new TextWatcher() {

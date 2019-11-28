@@ -140,9 +140,9 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
                 finish();
                 break;
             case R.id.continue_btn:
-                Intent intent = new Intent(getApplicationContext(),FlightPassengerDetailActivity.class);
+              /*  Intent intent = new Intent(getApplicationContext(),FlightPassengerDetailActivity.class);
                 intent.putExtra("total_travellers",totalTravellers);
-                startActivity(intent);
+                startActivity(intent);*/
                 break;
         }
     }

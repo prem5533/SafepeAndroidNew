@@ -693,18 +693,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:hint="Amount reflect in your account"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:paddingLeft="5dp"
-                            android:gravity="left"/>
 
                         <TextView
                             android:layout_weight="1"
@@ -718,8 +708,117 @@
                             android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/yellow"
                             android:paddingLeft="0dp"
-                            android:gravity="right"/>
+                            android:gravity="right"
+                            android:visibility="gone"/>
 
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/card_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="5dp"
+                        >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:background="@color/white">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Amount reflect in your account"
+                                    android:textColor="@color/red_theme"
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:padding="10dp"
+                                    android:gravity="left"
+                                    />
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height=".5dp"
+                                    android:background="@color/yellow"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"/>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Withdrawal Amount"
+                                        android:textSize="13sp"
+                                        android:textColor="@color/black"
+                                        android:padding="10dp"
+                                        android:fontFamily="@font/roboto_bold"
+                                        android:layout_weight="1"/>
+                                    <TextView
+                                        android:id="@+id/tv_withdrawalamount"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="10"
+                                        android:textSize="13sp"
+                                        android:textColor="@color/black"
+                                        android:padding="10dp"
+                                        android:fontFamily="@font/roboto_regular"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Transaction Fee"
+                                        android:textSize="13sp"
+                                        android:textColor="@color/black"
+                                        android:padding="10dp"
+                                        android:fontFamily="@font/roboto_bold"
+                                        android:layout_weight="1"/>
+                                    <TextView
+                                        android:id="@+id/tv_sendtax"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="10"
+                                        android:textSize="13sp"
+                                        android:textColor="@color/black"
+                                        android:padding="10dp"
+                                        android:fontFamily="@font/roboto_regular"/>
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height=".5dp"
+                                    android:background="@color/divider"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"/>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Total Amount"
+                                        android:textSize="13sp"
+                                        android:textColor="@color/black"
+                                        android:padding="10dp"
+                                        android:fontFamily="@font/roboto_bold"
+                                        android:layout_weight="1"/>
+                                    <TextView
+                                        android:id="@+id/tv_total_amountsendmoney"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="10"
+                                        android:textSize="13sp"
+                                        android:textColor="@color/black"
+                                        android:padding="10dp"
+                                        android:fontFamily="@font/roboto_regular"/>
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
                     <Button
@@ -846,7 +945,7 @@
                                 android:orientation="vertical"
                                 android:gravity="bottom"
                                 android:padding="5dp"
-                                android:layout_marginBottom="5dp"
+                                android:layout_marginBottom="20dp"
                               >
                                 <TextView
                                     android:id="@+id/tv_bank_click_here"

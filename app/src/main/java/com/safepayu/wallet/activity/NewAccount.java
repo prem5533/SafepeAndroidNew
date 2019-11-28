@@ -40,6 +40,7 @@ import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BaseResponse1;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
+import com.squareup.picasso.Picasso;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -55,7 +56,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     boolean mobileCheck=false,emailCheck=false,showPass=false,referralCheck=false;
     private ImageView ShowHidePasswordBtn;
     private String strReferalcode;
-
+    private ImageView signup_logo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +68,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 finish();
             }
         });
-
+        String imagePath = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LOGO_IMAGE);
         loadingDialog = new LoadingDialog(this);
         firstName = findViewById(R.id.et_firstName);
         lastName = findViewById(R.id.et_lastName);
@@ -80,6 +81,9 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         ShowHidePasswordBtn= findViewById(R.id.show_hide_password_newAccount);
         VerifyReffralBtn=findViewById(R.id.verify_referral);
         verifyAlready=findViewById(R.id.verify_already);
+        signup_logo=findViewById(R.id.signup_logo);
+        Picasso.get().load(imagePath).into(signup_logo);
+
         ShowHidePasswordBtn.setOnClickListener(this);
         VerifyReffralBtn.setOnClickListener(this);
 
@@ -178,7 +182,10 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 // TODO Auto-generated method stub
             }
         });
-        if (strReferalcode.equals("")){
+        if (strReferalcode==null){
+            referralCode.setText("8376097766");
+        }
+     else    if (strReferalcode.equals("")){
             referralCode.setText("8376097766");
         }
         else {

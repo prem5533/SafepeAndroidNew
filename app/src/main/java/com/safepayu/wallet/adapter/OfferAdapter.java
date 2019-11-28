@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.models.response.Offer;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +83,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.RechargeOffe
 
         final Offer data = offers.get(position);
 
-        holder.amount.setText(data.getAmount());
+        holder.amount.setText(context.getResources().getString(R.string.rupees) + " " +NumberFormat.getIntegerInstance().format(Integer.parseInt(data.getAmount())));
         holder.validity.setText(data.getValidity());
         holder.description.setText(data.getShortdesc());
         holder.type.setText(data.getTalktime());

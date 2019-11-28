@@ -23,6 +23,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -38,6 +40,8 @@ import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -50,7 +54,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
 
     Button BackBtn,WithDrawBtn;
     private LinearLayout WithdrawAmountlayout,AddBankBenBtn;
-    private  TextView AmountTotalTV;
+    private  TextView AmountTotalTV,tvWithdrawalAmount,tvTax,tvTotalAmountsendmoney;
     private Spinner BankBenSpinner;
     private EditText AmountED;
     private RadioGroup radioGroup;
@@ -61,6 +65,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
     TextView TImer;
     TransferWalletToBankResponse responseData;
     TransferWalletToBankRequest transferWalletToBankRequestDate;
+    private CardView cardAmount;
 
     ArrayList<String> NameList,IdList,BenIdList;
     private static int SPLASH_TIME_OUT = 59000;
@@ -72,6 +77,8 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
     private ImageView im_cross;
 
     private ApiService apiService;
+    double totalAmount=0.0f,minusAmount=0.0f;
+    int checkAmount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +95,13 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         radioGroup=findViewById(R.id.radioGroupWithdraw);
         WithDrawBtn=findViewById(R.id.btnWithdraw);
         AmountTotalTV=findViewById(R.id.calculatedamount);
+        tvWithdrawalAmount=findViewById(R.id.tv_withdrawalamount);
+        tvTax=findViewById(R.id.tv_sendtax);
+        tvTotalAmountsendmoney=findViewById(R.id.tv_total_amountsendmoney);
         AmountED=findViewById(R.id.withdrawAmount);
+        cardAmount = findViewById(R.id.card_amount);
         BankBenSpinner.setVisibility(View.GONE);
+        cardAmount.setVisibility(View.GONE);
 
         NameList=new ArrayList<>();
         IdList=new ArrayList<>();
@@ -163,11 +175,15 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
 
                 // TODO Auto-generated method stub
                 if (s.length()>2){
+                    cardAmount.setVisibility(View.VISIBLE);
                     double amt=CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()));
                     String text = AmountED.getText().toString().trim()+" - Tax = ";
                     AmountTotalTV.setText(text+String.format("%.2f", amt));
+                    tvWithdrawalAmount.setText(AmountED.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
+                    tvTax.setText(" -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
+                    tvTotalAmountsendmoney.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));
                 }else {
-                    AmountTotalTV.setText("0.0");
+                    cardAmount.setVisibility(View.GONE);
                 }
             }
 
@@ -379,15 +395,15 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
 
         DateTV.setText(response.getDate());
         TxnIdTV.setText(response.getTransactionId());
-        AmountTV.setText(AmountED.getText().toString());
+        AmountTV.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(AmountED.getText().toString())));
         ProductInfoTV.setText("Transfer Wallet To Bank");
 
-        countDownTimer.start();
+       countDownTimer.start();
 
         dialogStatus.show();
     }
 
-    CountDownTimer countDownTimer = new CountDownTimer(10000, 1000) {
+    CountDownTimer countDownTimer = new CountDownTimer(0, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
             int seconds = (int) (millisUntilFinished / 1000);
@@ -433,17 +449,14 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
     }
 
     private double CalculateAmount(int amount){
-
-        double totalAmount=0.0f,minusAmount=0.0f;
-        int checkAmount=0;
-
         minusAmount=((((double) amount) / 100) * 3.56);
         totalAmount=(double)amount- minusAmount;
         checkAmount=(int)minusAmount;
         if (checkAmount>9){
 
         }else {
-            totalAmount=(double)amount-(double)10;
+            minusAmount=10;
+            totalAmount=(double)amount-(double)minusAmount;
         }
 
         return totalAmount;

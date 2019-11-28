@@ -44,12 +44,14 @@ import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.UserResponse;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.http.Url;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener, SnackBarActionClickListener {
     private static String TAG = LoginActivity.class.getName();
@@ -59,14 +61,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private LoadingDialog loadingDialog;
     String versionName = "", appUrl = "https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
     int versionCode = 0;
-    private ImageView im_cross, ShowHidePasswordBtn;
+    private ImageView im_cross, ShowHidePasswordBtn,loginImageLogo;
     private boolean showPass = false, checkedRemember=false;
     private LoginResponse loginResponse;
+    String url;
 
     //Otp Dialog
     TextView TimerTV;
     EditText OtpED;
     Button continueButton, resendButton;
+     String ImagePath="http://india.safepayu.com/safepe-new/public/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
 
         mobileNo = findViewById(R.id.et_mobileNo);
+        loginImageLogo = findViewById(R.id.login_image_logo);
+
         password = findViewById(R.id.et_password);
         RememberMeCB = findViewById(R.id.cb_rememberMe);
         ShowHidePasswordBtn = findViewById(R.id.show_hide_password);
@@ -133,6 +139,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
 //        checkPermission();
         getAppVersion();
+
+
+
     }
 
     @Override
@@ -293,6 +302,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         if (response.isStatus()) {
                             int val = Integer.parseInt(response.getVersionData().getVal());
 
+                             url = response.getVersionData().getLogo();
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ImagePath+url);
+                             Picasso.get().load(ImagePath+url).into(loginImageLogo);
+
                             if (versionCode == val) {
 
                             } else {
@@ -386,7 +399,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case 0:
                 if (response.getRemember_me().equalsIgnoreCase("1")){
                     SaveLoginDetails(response);
-                    startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    startActivity(new Intent(LoginActivity.this,SplashViewPagerActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 }else {
                     resendOtp();

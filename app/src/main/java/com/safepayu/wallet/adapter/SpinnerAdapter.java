@@ -48,7 +48,7 @@ public class SpinnerAdapter extends BaseAdapter {
         ImageView icon = (ImageView) convertView.findViewById(R.id.imageView);
         TextView names = (TextView) convertView.findViewById(R.id.textView);
         names.setText(mOperList.get(position).getOperator_name());
-        Picasso.get().load("http://india.safepayu.com/safepe-testing/public/"+mOperList.get(position).getImage()).into(icon);
+        Picasso.get().load("http://india.safepayu.com/safepe-new/public/"+mOperList.get(position).getImage()).into(icon);
         return convertView;
     }
 }

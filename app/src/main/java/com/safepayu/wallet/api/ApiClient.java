@@ -23,8 +23,8 @@ public class ApiClient {
 //http://13.232.191.38/safepe-new/public/
     //http://india.safepayu.com/safepe-testing/public/
    // http://india.safepayu.com/safepe-new/public/
-
-    private static final String BASE_URL = "http://india.safepayu.com/safepe-testing/public/";
+    public  static String ImagePath = "http://india.safepayu.com/safepe-new/public/";
+    private static  String BASE_URL = "http://india.safepayu.com/safepe-new/public/";
     private static Retrofit retrofit = null;
     private static int REQUEST_TIMEOUT = 60;
     private static OkHttpClient okHttpClient;
