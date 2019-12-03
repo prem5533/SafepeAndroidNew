@@ -3,9 +3,9 @@ package com.safepayu.wallet.service;
 import android.app.IntentService;
 import android.content.Intent;
 
-import com.safepayu.wallet.halper.Config;
-
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.safepayu.wallet.helper.Config;
 
 public class OtpVerifyService extends IntentService {
     private static String TAG = OtpVerifyService.class.getSimpleName();

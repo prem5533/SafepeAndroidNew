@@ -3,6 +3,7 @@ package com.safepayu.wallet.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -22,7 +25,6 @@ import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
 
-import androidx.annotation.Nullable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -58,6 +60,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         add_address.setOnClickListener(this);
         update_address.setOnClickListener(this);
         current_location.setChecked(false);
+        etCountry.setEnabled(false);
 
         //*******************get data *****************
         Location = getIntent().getStringExtra("location");
@@ -90,21 +93,6 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
                 if (isChecked) {
                     Intent intent = new Intent(AddUpdateAddress.this, MapsActivity.class);
                     startActivityForResult(intent, STATIC_INTEGER_VALUE);
-
-                //  Toast.makeText(getApplicationContext(),"Map Coming Soon",Toast.LENGTH_SHORT).show();
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                            // TODO: Consider calling
-//                            //    Activity#requestPermissions
-//                            // here to request the missing permissions, and then overriding
-//                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                            //                                          int[] grantResults)
-//                            // to handle the case where the user grants the permission. See the documentation
-//                            // for Activity#requestPermissions for more details.
-//                            return;
-//                        }
-//                    }
-//                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, AddUpdateAddress.this);
                 }
             }
         });
@@ -123,10 +111,15 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
                     mapSelectPincode = data.getStringExtra("select_pincode");
                     mapSelectCountry = data.getStringExtra("select_country");
 
+                    if (TextUtils.isEmpty(mapSelectCountry) || !mapSelectCountry.equalsIgnoreCase("India")){
+                        etCountry.setText("India");
+                    }else {
+                        etCountry.setText(mapSelectCountry);
+                    }
+
                     etLocation.setText(mapSelectLocality);
                     etCity.setText(mapSelectCity);
                     etState.setText(mapSelectState);
-                    etCountry.setText(mapSelectCountry);
                     etPincode.setText(mapSelectPincode);
                     // TODO Update your TextView.
                 }
@@ -177,8 +170,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
             etCity.requestFocus();
             BaseApp.getInstance().toastHelper().showSnackBar(etCity, "Please enter city", true);
             return false;
-        }
-        else if (etState.getText().toString().trim().length() == 0) {
+        } else if (etState.getText().toString().trim().length() == 0) {
             etState.requestFocus();
             BaseApp.getInstance().toastHelper().showSnackBar(etState, "Please enter state", true);
             return false;
@@ -186,8 +178,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
             etPincode.requestFocus();
             BaseApp.getInstance().toastHelper().showSnackBar(etPincode, "Please enter pincode", true);
             return false;
-        }
-        else if (etCountry.getText().toString().trim().length() == 0) {
+        } else if (etCountry.getText().toString().trim().length() == 0) {
             etCountry.requestFocus();
             BaseApp.getInstance().toastHelper().showSnackBar(etCountry, "Please enter country", true);
             return false;

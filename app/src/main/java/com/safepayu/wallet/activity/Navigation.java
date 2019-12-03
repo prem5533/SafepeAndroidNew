@@ -41,6 +41,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -64,8 +65,9 @@ import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
 import com.safepayu.wallet.activity.recharge.GasPay;
 import com.safepayu.wallet.activity.recharge.InsuranceActivity;
+import com.safepayu.wallet.activity.recharge.LandlineBillPay;
 import com.safepayu.wallet.activity.recharge.MobileRecharge;
-import com.safepayu.wallet.activity.recharge.PostpaidLandlineBillpay;
+import com.safepayu.wallet.activity.recharge.PostpaidBillpay;
 import com.safepayu.wallet.activity.recharge.WaterBillPay;
 import com.safepayu.wallet.adapter.OfferPagerAdapter;
 import com.safepayu.wallet.api.ApiClient;
@@ -76,7 +78,6 @@ import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
-import com.squareup.picasso.Picasso;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -86,6 +87,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.safepayu.wallet.activity.Profile.QRcodeWidth;
+import static com.safepayu.wallet.activity.SplashViewPagerActivity.promotionResponse1;
 
 public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -100,7 +102,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     private int versionCode = 0;
     private LoadingDialog loadingDialog;
     private LinearLayout liMetro, liFlight, liBusTicket, liTrainTicket, liHotles, liDonation, liToll, liFlood, liCredit, liInsurance, limovie, liGoogleplay, lihotel,
-            liBigBazaar, liBrandFactory, liKFC, liDominos, liLogoutAllDevices, linearSecurityTab;
+            liBigBazaar, liBrandFactory, liKFC, liDominos, liLogoutAllDevices, linearSecurityTab,linearGiftCoupon;
     public static int BadgeCount = 0;
     public static TextView BadgeCountTV;
     Dialog dialog;
@@ -108,7 +110,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     ImageView ImageViewNotiDialog, imageDownSecurity, imageUpSecurity,headerLogo,navLogo;
     private RelativeLayout searchLayout_nav;
     public static String TitleNotiDialogText = "", ContentNotiDialogText = "", tollNumber = "";
-    public static Bitmap ImageNotiDialog;
     private ViewPager viewpager;
     private String url;
 
@@ -120,9 +121,11 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     public static Bitmap qrCodeImage;
     int NUM_PAGES,currentPage = 0;
     Timer timer;
+    private OfferPagerAdapter adapter;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
     String ImagePath="http://india.safepayu.com/safepe-new/public/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -303,6 +306,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liDominos = findViewById(R.id.layout_dominos);
         linearSecurityTab = findViewById(R.id.linear_security_tab);
         liSecurity = findViewById(R.id.li_security);
+        linearGiftCoupon =findViewById(R.id.layout_giftCoupon);
 
 
         //********************set listener&*****************
@@ -338,6 +342,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         payBill.setOnClickListener(this);
         dth.setOnClickListener(this);
         liCredit.setOnClickListener(this);
+        linearGiftCoupon.setOnClickListener(this);
 
         //  payShop.setOnClickListener(this);
         // sendToBank.setOnClickListener(this);
@@ -359,10 +364,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liKFC.setOnClickListener(this);
         liBrandFactory.setOnClickListener(this);
         liBigBazaar.setOnClickListener(this);
-
-
-        getPrmotionalOffer();
-
 
         imageDownSecurity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -411,6 +412,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
             }
         });
+
         imageUpSecurity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -423,7 +425,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             @Override
             public void onClick(View v) {
 
-               // startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
                 startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
@@ -454,6 +455,32 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             }
         });
 
+
+        NUM_PAGES= promotionResponse1.getData().size();
+        loadingDialog.hideDialog();
+        adapter = new OfferPagerAdapter(Navigation.this,promotionResponse1.getData());
+        viewpager.setAdapter(adapter);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        if (promotionResponse1.getData().size()>1){
+            tabLayout.setupWithViewPager(viewpager, true);
+        }
+
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         createNotificationChannel();
         getFirebaseToken(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
@@ -606,11 +633,11 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
 
             case R.id.layout_pay_bill:
-                startActivity(new Intent(Navigation.this, PostpaidLandlineBillpay.class));
+                startActivity(new Intent(Navigation.this, PostpaidBillpay.class));
                 break;
 
             case R.id.layout_broadband:
-                startActivity(new Intent(Navigation.this, PostpaidLandlineBillpay.class));
+                startActivity(new Intent(Navigation.this, LandlineBillPay.class));
                 break;
 
             case R.id.layout_dth:
@@ -691,6 +718,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_dominos:
+                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.layout_giftCoupon:
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -1693,7 +1723,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         loadingDialog.hideDialog();
                         if (promotionResponse.isStatus()) {
 
-                            OfferPagerAdapter adapter = new OfferPagerAdapter(Navigation.this,promotionResponse.getData());
+                            adapter = new OfferPagerAdapter(Navigation.this,promotionResponse.getData());
                             viewpager.setAdapter(adapter);
                         }
                     }

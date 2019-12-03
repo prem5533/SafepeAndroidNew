@@ -114,8 +114,11 @@ public class BusListActivity extends AppCompatActivity implements View.OnClickLi
         busTripDetailsRequest.setSeatsAvailable(busSelectModel1.getAvailableSeats());
         busTripDetailsRequest.setReturnDate("");
 
+
         overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
-        startActivity(new Intent(BusListActivity.this, BusSeat_DetailActivity.class));
+        Intent intent=new Intent(BusListActivity.this, BusSeat_DetailActivity.class);
+        intent.putExtra("tripDetail",SourceName+" To "+DestinationName+"\n"+BusDate);
+        startActivity(intent);
     }
 
 

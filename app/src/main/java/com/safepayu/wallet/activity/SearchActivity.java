@@ -26,7 +26,7 @@ import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
 import com.safepayu.wallet.activity.recharge.GasPay;
 import com.safepayu.wallet.activity.recharge.MobileRecharge;
-import com.safepayu.wallet.activity.recharge.PostpaidLandlineBillpay;
+import com.safepayu.wallet.activity.recharge.PostpaidBillpay;
 import com.safepayu.wallet.activity.recharge.WaterBillPay;
 import com.safepayu.wallet.adapter.SearchAdapter;
 
@@ -357,12 +357,12 @@ public class SearchActivity extends BaseActivity implements SearchAdapter.OnList
 
         }else if (SearchItem.equalsIgnoreCase("Postpaid Bill Payment")){
 
-            startActivity(new Intent(getApplicationContext(), PostpaidLandlineBillpay.class));
+            startActivity(new Intent(getApplicationContext(), PostpaidBillpay.class));
             overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
 
         }else if (SearchItem.equalsIgnoreCase("Landine Bill Payment")){
 
-            startActivity(new Intent(getApplicationContext(), PostpaidLandlineBillpay.class));
+            startActivity(new Intent(getApplicationContext(), PostpaidBillpay.class));
             overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
 
         }else if (SearchItem.equalsIgnoreCase("Electricity Bill Payment")){

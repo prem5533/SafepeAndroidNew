@@ -40,14 +40,13 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.enums.ButtonActions;
-import com.safepayu.wallet.halper.Config;
+import com.safepayu.wallet.helper.Config;
 import com.safepayu.wallet.listener.SnackBarActionClickListener;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.UserResponse;
-import com.squareup.picasso.Picasso;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;

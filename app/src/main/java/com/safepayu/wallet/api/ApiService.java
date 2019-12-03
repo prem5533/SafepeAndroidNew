@@ -20,6 +20,8 @@ import com.safepayu.wallet.models.request.booking.flight.AvailableFlightRequest;
 import com.safepayu.wallet.models.request.booking.flight.FlightBlockTicketRequest;
 import com.safepayu.wallet.models.request.booking_bus.BusListRequest;
 import com.safepayu.wallet.models.request.booking_bus.BusTripDetailsRequest;
+import com.safepayu.wallet.models.request.booking_hotel.AvailableHotelRequest;
+import com.safepayu.wallet.models.request.booking_hotel.HotelDetailsRequest;
 import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -38,6 +40,7 @@ import com.safepayu.wallet.models.response.PackageDetailsResponse;
 import com.safepayu.wallet.models.response.PackageListData;
 import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.models.response.RechargeHistoryResponse;
+import com.safepayu.wallet.models.response.RechargeResponse;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
@@ -50,6 +53,7 @@ import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
 import com.safepayu.wallet.models.response.WalletHistoryResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
+import com.safepayu.wallet.models.response.booking.HotelDetailResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusListResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusSourcesResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusTripDetailsResponse;
@@ -57,6 +61,7 @@ import com.safepayu.wallet.models.response.booking.flight.AirportLocationRespons
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightBlockTicketResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightSourceResponse;
+import com.safepayu.wallet.models.response.booking.hotel.AvailableHotelsResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelSourcesResponse;
 
 import io.reactivex.Single;
@@ -123,7 +128,7 @@ public interface ApiService {
     Single<PackageDetailsResponse> getPackageDetails();
 
     @POST("api/safepe/recharge")
-    Single<BaseResponse> doRecharge(@Body RechargeRequest rechargeRequest);
+    Single<RechargeResponse> doRecharge(@Body RechargeRequest rechargeRequest);
 
     @POST("api/safepe/hasKey")
     Single<HashKeyResponse> getHashKey(@Body HashKeyRequest hashKeyRequest);
@@ -228,4 +233,10 @@ public interface ApiService {
     //*************Hotel Booking *******************//
     @POST("api/safepe/hotelSources")
     Single<HotelSourcesResponse> getHotelSources();
+
+    @POST("api/safepe/hotelAvailable")
+    Single<AvailableHotelsResponse> getHotelAvailable(@Body AvailableHotelRequest availableHotelRequest);
+
+    @POST("api/safepe/hotelDetails")
+    Single<HotelDetailResponse> getHotelDetails(@Body HotelDetailsRequest hotelDetailsRequest);
 }

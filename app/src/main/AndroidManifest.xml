@@ -49,6 +49,7 @@
         <activity android:name=".activity.booking.TollActivity" />
         <activity android:name=".activity.booking.DonationActivity" />
         <activity android:name=".activity.booking.hotel.HotelActivity" />
+        <activity android:name=".activity.booking.hotel.AvailableHotels" />
         <activity android:name=".activity.BellNotifictionActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -65,6 +66,7 @@
         <activity android:name=".activity.booking.bus.BusActivity" />
         <activity android:name=".activity.booking.flight.FlightsActivity" />
         <activity android:name=".activity.booking.MetroActivity" />
+        <activity android:name=".activity.booking.hotel.HotelDetails" />
         <activity android:name=".activity.PaidOrderActivity" />
         <activity android:name=".activity.CreatePassCodeActivity" />
         <activity
@@ -85,9 +87,10 @@
         <activity android:name=".activity.PaymentType" />
         <activity android:name=".activity.recharge.MobileRecharge" />
         <activity android:name=".activity.recharge.DthRecharge" />
-        <activity android:name=".activity.recharge.PostpaidLandlineBillpay" />
+        <activity android:name=".activity.recharge.PostpaidBillpay" />
         <activity android:name=".activity.recharge.WaterBillPay" />
         <activity android:name=".activity.recharge.ElectricityPay" />
+        <activity android:name=".activity.recharge.LandlineBillPay" />
         <activity android:name=".activity.recharge.GasPay" />
         <activity android:name=".activity.Profile" />
         <activity android:name=".activity.Commission" />

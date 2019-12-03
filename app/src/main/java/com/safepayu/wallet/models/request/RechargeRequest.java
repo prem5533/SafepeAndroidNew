@@ -26,6 +26,12 @@ public class RechargeRequest {
     private String operator_id;
     private String payment_mode;
     private String description;
+    /**
+     * stdCode : 22
+     */
+
+    private String stdCode;
+
 
     public String getTransaction_id() {
         return transaction_id;
@@ -105,5 +111,13 @@ public class RechargeRequest {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStdCode() {
+        return stdCode;
+    }
+
+    public void setStdCode(String stdCode) {
+        this.stdCode = stdCode;
     }
 }

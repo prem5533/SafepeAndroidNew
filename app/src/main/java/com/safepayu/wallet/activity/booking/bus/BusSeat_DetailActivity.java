@@ -1,6 +1,7 @@
 package com.safepayu.wallet.activity.booking.bus;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,7 @@ public class BusSeat_DetailActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapter adapterViewPager;
+    private TextView TripDetailTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +35,13 @@ public class BusSeat_DetailActivity extends AppCompatActivity {
     }
 
     private void findId() {
-        tabLayout = (TabLayout)findViewById(R.id.tabs);
-        viewPager = (ViewPager)findViewById(R.id.viewpager);
+        TripDetailTv = findViewById(R.id.tripDetailBus);
+        tabLayout = findViewById(R.id.tabs);
+        viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+
+        TripDetailTv.setText(getIntent().getStringExtra("tripDetail"));
 
     }
 

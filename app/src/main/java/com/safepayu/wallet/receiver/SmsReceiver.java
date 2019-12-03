@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
-import com.safepayu.wallet.halper.Config;
+import com.safepayu.wallet.helper.Config;
 import com.safepayu.wallet.service.OtpVerifyService;
 
 public class SmsReceiver extends BroadcastReceiver {
