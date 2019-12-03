@@ -196,6 +196,24 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
             }
         });
+
+        showDialogViewPager(Navigation.this);
+    }
+
+    private void showDialogViewPager(Navigation navigation) {
+        final Dialog dialog = new Dialog(navigation);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.activity_splash_view_pager);
+
+
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
     }
 
     @Override
