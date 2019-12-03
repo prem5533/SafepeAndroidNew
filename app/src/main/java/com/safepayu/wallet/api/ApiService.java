@@ -1,6 +1,5 @@
 package com.safepayu.wallet.api;
 
-import com.google.android.gms.analytics.ecommerce.Promotion;
 import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.BuyPackage;
 import com.safepayu.wallet.models.request.ChangePassword;
@@ -18,9 +17,11 @@ import com.safepayu.wallet.models.request.SendToWalletRequest;
 import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
 import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.request.booking.flight.AvailableFlightRequest;
-import com.safepayu.wallet.models.request.booking.flight.AvailableFlightRequest;
 import com.safepayu.wallet.models.request.booking.flight.FlightBlockTicketRequest;
 import com.safepayu.wallet.models.request.booking_bus.BusListRequest;
+import com.safepayu.wallet.models.request.booking_bus.BusTripDetailsRequest;
+import com.safepayu.wallet.models.request.booking_hotel.AvailableHotelRequest;
+import com.safepayu.wallet.models.request.booking_hotel.HotelDetailsRequest;
 import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -39,6 +40,7 @@ import com.safepayu.wallet.models.response.PackageDetailsResponse;
 import com.safepayu.wallet.models.response.PackageListData;
 import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.models.response.RechargeHistoryResponse;
+import com.safepayu.wallet.models.response.RechargeResponse;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
@@ -51,15 +53,16 @@ import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
 import com.safepayu.wallet.models.response.WalletHistoryResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
-
-import com.safepayu.wallet.models.response.booking.flight.AirportLocationResponse;
-import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
+import com.safepayu.wallet.models.response.booking.HotelDetailResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusListResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusSourcesResponse;
+import com.safepayu.wallet.models.response.booking.bus.BusTripDetailsResponse;
 import com.safepayu.wallet.models.response.booking.flight.AirportLocationResponse;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightBlockTicketResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightSourceResponse;
+import com.safepayu.wallet.models.response.booking.hotel.AvailableHotelsResponse;
+import com.safepayu.wallet.models.response.booking.hotel.HotelSourcesResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.Body;
@@ -125,7 +128,7 @@ public interface ApiService {
     Single<PackageDetailsResponse> getPackageDetails();
 
     @POST("api/safepe/recharge")
-    Single<BaseResponse> doRecharge(@Body RechargeRequest rechargeRequest);
+    Single<RechargeResponse> doRecharge(@Body RechargeRequest rechargeRequest);
 
     @POST("api/safepe/hasKey")
     Single<HashKeyResponse> getHashKey(@Body HashKeyRequest hashKeyRequest);
@@ -216,8 +219,6 @@ public interface ApiService {
     Single<FlightBlockTicketResponse> getFlightBlockTicket(@Body FlightBlockTicketRequest flightBlockTicketRequest);
 
 
-
-
     //*************Bus Booking *******************//
     @POST("api/safepe/postBusLocationList")
     Single<BusSourcesResponse> getBusSourcres();
@@ -225,5 +226,17 @@ public interface ApiService {
     @POST("api/safepe/postBusAvailable")
     Single<BusListResponse> getBusAvailable(@Body BusListRequest busListRequest);
 
+    @POST("api/safepe/postBusTripDetails")
+    Single<BusTripDetailsResponse> getBusTripDetails(@Body BusTripDetailsRequest busTripDetailsRequest);
 
+
+    //*************Hotel Booking *******************//
+    @POST("api/safepe/hotelSources")
+    Single<HotelSourcesResponse> getHotelSources();
+
+    @POST("api/safepe/hotelAvailable")
+    Single<AvailableHotelsResponse> getHotelAvailable(@Body AvailableHotelRequest availableHotelRequest);
+
+    @POST("api/safepe/hotelDetails")
+    Single<HotelDetailResponse> getHotelDetails(@Body HotelDetailsRequest hotelDetailsRequest);
 }

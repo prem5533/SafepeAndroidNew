@@ -1,33 +1,23 @@
 package com.safepayu.wallet.activity.booking.flight;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Movie;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.adapter.fight.FlightDetailAdapter;
-import com.safepayu.wallet.adapter.fight.OneWayFlightListAdapter;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
-import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import static com.safepayu.wallet.activity.booking.flight.FlightListActivity.MY_PREFS_NAME;
 

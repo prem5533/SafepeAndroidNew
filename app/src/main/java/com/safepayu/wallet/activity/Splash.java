@@ -9,13 +9,13 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
+
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.MultiDex;
 
 public class Splash extends AppCompatActivity implements PasscodeClickListener {
 

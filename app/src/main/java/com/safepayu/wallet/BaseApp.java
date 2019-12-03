@@ -6,7 +6,7 @@ import android.os.Handler;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
-import com.safepayu.wallet.halper.ToastHelper;
+import com.safepayu.wallet.helper.ToastHelper;
 import com.safepayu.wallet.utils.CommonUtils;
 import com.safepayu.wallet.utils.DateUtil;
 import com.safepayu.wallet.utils.SharedPref;

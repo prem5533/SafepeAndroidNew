@@ -22,7 +22,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.halper.Config;
+import com.safepayu.wallet.helper.Config;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.UserResponse;

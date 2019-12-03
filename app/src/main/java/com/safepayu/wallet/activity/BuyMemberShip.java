@@ -24,7 +24,7 @@ import com.safepayu.wallet.adapter.PackageListAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.halper.RecyclerLayoutManager;
+import com.safepayu.wallet.helper.RecyclerLayoutManager;
 import com.safepayu.wallet.models.request.BuyPackage;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BuyPackageResponse;

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="@color/yellow_theme"
+    android:layout_marginBottom="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/imageHotel_availableHotelAdapter"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/safepe_logo"
+            android:scaleType="fitXY"
+            android:padding="5dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:id="@+id/hotelName_availableHotelAdapter"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Hotel Name"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:id="@+id/hotelPrice_availableHotelAdapter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="999"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/hotelLocation_availableHotelAdapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Noida"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"/>
+
+            <RatingBar
+                android:id="@+id/ratingBar_availableHotelAdapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:rating="2.0"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:layout_marginTop="-20dp"
+                android:layout_marginLeft="-60dp"
+                android:theme="@style/RatingBar"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/services_availableHotelAdapter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Noida"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:id="@+id/moreBtn_availableHotelAdapter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:text="+ More"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

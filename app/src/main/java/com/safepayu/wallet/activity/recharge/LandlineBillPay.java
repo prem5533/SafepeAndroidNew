@@ -11,7 +11,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -40,20 +39,21 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class PostpaidLandlineBillpay extends BaseActivity {
+public class LandlineBillPay  extends BaseActivity {
 
-    Button PayBtn,BackBtn,BillCheckBtn ;
-    TextView textView;
+    private Button PayBtn,BackBtn,BillCheckBtn ;
+    private TextView textView;
     private Spinner OperatorSpinner;
-    private EditText MobileED ,AmountEd;
-    String OperatorText="",OperatorCode="",OperatorId="";
+    private EditText MobileED ,AmountEd, STDED;
+    private String OperatorText="",OperatorCode="",OperatorId="";
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
     double totalAmount = 0.0f, minusAmount = 0.0f;
     private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;
     private CardView cardAmount;
-    LinearLayout layoutSelectBillOper;
-    List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
+    private LinearLayout layoutSelectBillOper;
+    private List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
+    public static String StdCode="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +75,8 @@ public class PostpaidLandlineBillpay extends BaseActivity {
         tvRechargeamount = findViewById(R.id.tv_rechargeamount);
         tvWalletCashback = findViewById(R.id.tv_walletcashback);
         tvTotalAmountpay = findViewById(R.id.tv_total_amountpay);
+        STDED = findViewById(R.id.stdCode);
+
 
         OperatorNameList=new ArrayList<>();
         IdList=new ArrayList<>();
@@ -176,7 +178,7 @@ public class PostpaidLandlineBillpay extends BaseActivity {
                     if (num <=1000) {
                         CalculateAmount(num);
                         String text = AmountEd.getText().toString().trim() + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
-                      //  AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
+                        //  AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
                         cardAmount.setVisibility(View.VISIBLE);
                         tvRechargeamount.setText(AmountEd.getText().toString().trim() + " " + getResources().getString(R.string.rupees));
                         tvWalletCashback.setText(" -  " + new DecimalFormat("##.##").format(minusAmount) + " " + getResources().getString(R.string.rupees));
@@ -223,7 +225,7 @@ public class PostpaidLandlineBillpay extends BaseActivity {
 
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.postpaid_landline_billpay;
+        return R.layout.landline_billpay;
     }
 
     @Override
@@ -244,36 +246,41 @@ public class PostpaidLandlineBillpay extends BaseActivity {
         if (TextUtils.isEmpty(MobileED.getText().toString().trim())){
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Enter Mobile Number",false);
         }else {
-            if (TextUtils.isEmpty(AmountEd.getText().toString().trim())){
-                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Enter Amount",false);
+            if (TextUtils.isEmpty(STDED.getText().toString().trim()) || STDED.getText().toString().length()<3){
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Enter STD Code",false);
             }else {
-                if (Mobile.length()>9 || Mobile.length()<0){
-                    if (Amount==0 || Amount<0){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Enter Amount",false);
-                    }else {
-
-                        if (TextUtils.isEmpty(OperatorCode) || OperatorCode.equals("0")){
-
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Select Operator",false);
-                        }else {
-                            Intent intent=new Intent(PostpaidLandlineBillpay.this,PaymentType.class);
-                            overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
-                            intent.putExtra("RechargePaymentId",Mobile);
-                            intent.putExtra("Amount",String.valueOf(Amount));
-                            intent.putExtra("PaymentType","Bill Payment");
-                            intent.putExtra("PaymentFor","Postpaid");
-                            intent.putExtra("RechargeTypeId","6");
-                            intent.putExtra("OperatorCode",OperatorCode);
-                            intent.putExtra("CircleCode","51");
-                            intent.putExtra("OperatorId",OperatorId);
-                            intent.putExtra("walletCashback", tvWalletCashback.getText().toString());
-                            intent.putExtra("totalAmount", tvTotalAmountpay.getText().toString());
-                            startActivity(intent);
-                            finish();
-                        }
-                    }
+                if (TextUtils.isEmpty(AmountEd.getText().toString().trim())){
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Enter Amount",false);
                 }else {
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Enter Correct Mobile Number",false);
+                    if (Mobile.length()>9 || Mobile.length()<0){
+                        if (Amount==0 || Amount<0){
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Enter Amount",false);
+                        }else {
+
+                            if (TextUtils.isEmpty(OperatorCode) || OperatorCode.equals("0")){
+
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Select Operator",false);
+                            }else {
+                                StdCode=STDED.getText().toString().trim();
+                                Intent intent=new Intent(LandlineBillPay.this, PaymentType.class);
+                                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                                intent.putExtra("RechargePaymentId",Mobile);
+                                intent.putExtra("Amount",String.valueOf(Amount));
+                                intent.putExtra("PaymentType","Bill Payment");
+                                intent.putExtra("PaymentFor","Landline");
+                                intent.putExtra("RechargeTypeId","7");
+                                intent.putExtra("OperatorCode",OperatorCode);
+                                intent.putExtra("CircleCode","51");
+                                intent.putExtra("OperatorId",OperatorId);
+                                intent.putExtra("walletCashback", tvWalletCashback.getText().toString());
+                                intent.putExtra("totalAmount", tvTotalAmountpay.getText().toString());
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    }else {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Enter Correct Mobile Number",false);
+                    }
                 }
             }
         }
@@ -285,7 +292,7 @@ public class PostpaidLandlineBillpay extends BaseActivity {
 
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
-        BaseApp.getInstance().getDisposable().add(apiService.getOperators("6")
+        BaseApp.getInstance().getDisposable().add(apiService.getOperators("7")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<OperatorResponse>() {
@@ -366,5 +373,6 @@ public class PostpaidLandlineBillpay extends BaseActivity {
         return totalAmount;
     }
 }
+
 
 

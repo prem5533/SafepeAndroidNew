@@ -5,20 +5,16 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.multidex.MultiDex;
 
 import com.bumptech.glide.Glide;
@@ -33,7 +29,7 @@ import pl.droidsonroids.gif.GifImageView;
 import static android.view.Gravity.CENTER_VERTICAL;
 
 public class PaidOrderActivity extends AppCompatActivity {
-    private TextView tvNeedHelp,StatusTV,DateTV,TxnIdTV,AmountTV,ProductInfoTV;
+    private TextView tvNeedHelp,StatusTV,DateTV,TxnIdTV,AmountTV,ProductInfoTV,ServiceInfoTV;
     private GifImageView gifImageView;
     private String status="",txnid="",Amount="",date="",productinfo="",Message="";
     private Button BackBtn;
@@ -56,11 +52,7 @@ public class PaidOrderActivity extends AppCompatActivity {
             date=intentStatus.getStringExtra("date");
             productinfo=intentStatus.getStringExtra("productinfo");
             txnid=intentStatus.getStringExtra("txnid");
-            try{
-                Message=intentStatus.getStringExtra("msg");
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            Message=intentStatus.getStringExtra("Message");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -92,8 +84,9 @@ public class PaidOrderActivity extends AppCompatActivity {
         AmountTV = findViewById(R.id.tv_paid_rs);
         ProductInfoTV = findViewById(R.id.productInfo);
         BackBtn=findViewById(R.id.status_back_btn);
+        ServiceInfoTV=findViewById(R.id.serviceInfo);
 
-        String PendingText="";
+        String PendingText=Message;
 
         try{
             if (productinfo.contains("wallet") || productinfo.contains("Wallet")){
@@ -109,19 +102,19 @@ public class PaidOrderActivity extends AppCompatActivity {
            // gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.success));
             Glide.with(getApplicationContext()).load(R.drawable.success).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
             StatusTV.setTextColor(getResources().getColor(R.color.green_500));
-        }
-        else if (status.equalsIgnoreCase("pending")){
+            ServiceInfoTV.setText(PendingText);
+        } else if (status.equalsIgnoreCase("pending")){
             //gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.pending));
 
             Glide.with(getApplicationContext()).load(R.drawable.pending2).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
-
+            ServiceInfoTV.setText(PendingText);
             StatusTV.setTextColor(getResources().getColor(R.color.clay_yellow));
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.statusorderLayout),PendingText,true);
-        }
-        else {
+        } else {
        //     gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.failed_gif));
             Glide.with(getApplicationContext()).load(R.drawable.failed_gif).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
             StatusTV.setTextColor(getResources().getColor(R.color.red_400));
+            ServiceInfoTV.setText(PendingText);
         }
 
         StatusTV.setText(status);
@@ -149,25 +142,6 @@ public class PaidOrderActivity extends AppCompatActivity {
     }
 
     public void showDialogAfterBankTrans(Activity activity,String Message) {
-      //  AlertDialog.Builder dialog=new AlertDialog.Builder(activity);
-
-   /*     dialog.setTitle("SafePe Alert")
-                .setCancelable(false)
-                .setMessage(Message)
-
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Continue with delete operation
-                        dialog.dismiss();
-                    }
-                })
-
-                // A null listener allows the button to dismiss the dialog and take no further action.
-                //.setNegativeButton(android.R.string.no, null)
-                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
-                .show();*/
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 

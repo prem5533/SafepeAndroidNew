@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f7f8f8"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#f7f8f8"
     android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
@@ -18,20 +18,26 @@
             android:layout_marginBottom="20dp"
             android:background="#f7f8f8"
             android:padding="4dp">
+
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="120dp">
+                android:layout_height="130dp"
+                android:background="@color/yellow_theme">
+
+            </androidx.viewpager.widget.ViewPager>
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"
+                app:tabMaxWidth="30dp"
+                android:layout_gravity="bottom|center"
+                android:layout_marginTop="-15dp"/>
 
-             />
-
-            </androidx.viewpager.widget.ViewPager>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -480,19 +486,42 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
-                <LinearLayout
-                    android:id="@+id/layout_other"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/home_screen_icons_back"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="invisible">
+                    android:layout_weight="1">
 
+                    <LinearLayout
+                        android:id="@+id/layout_giftCoupon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/home_screen_icons_back"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/google_play"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/gift_coupon64" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="Gift Coupon"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
 

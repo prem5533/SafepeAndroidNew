@@ -1,7 +1,6 @@
 package com.safepayu.wallet.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,9 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.Navigation;
 import com.safepayu.wallet.models.response.PromotionResponse;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OfferPagerAdapter  extends PagerAdapter {

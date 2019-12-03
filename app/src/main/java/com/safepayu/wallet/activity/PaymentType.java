@@ -1,6 +1,8 @@
 package com.safepayu.wallet.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+
 import com.easebuzz.payment.kit.PWECouponsActivity;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -24,9 +28,9 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.HashKeyRequest;
 import com.safepayu.wallet.models.request.RechargeRequest;
 import com.safepayu.wallet.models.request.SendPaymentGatewayDetailsRequest;
-import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.models.response.HashKeyResponse;
+import com.safepayu.wallet.models.response.RechargeResponse;
 import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
@@ -40,7 +44,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import androidx.cardview.widget.CardView;
 import datamodels.StaticDataModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -49,6 +52,7 @@ import io.reactivex.schedulers.Schedulers;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.safepayu.wallet.activity.MemberBankAddPackages.buyPackageFromDB;
+import static com.safepayu.wallet.activity.recharge.LandlineBillPay.StdCode;
 
 public class PaymentType extends BaseActivity implements PasscodeClickListener {
 
@@ -159,6 +163,12 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                 hashKeyRequest.setMerchant_productInfo(PaymentFor+" "+PaymentTypeText);
                 hashKeyRequest.setCustomer_email_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
 
+                if (PaymentTypeText.equalsIgnoreCase("Add Money")) {
+                    hashKeyRequest.setType("1");
+                }else {
+                    hashKeyRequest.setType("0");
+                }
+
                 if (isNetworkAvailable()){
                     getHashKey(hashKeyRequest);
                 }else {
@@ -199,24 +209,28 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             NetBankingBtnLayout.setVisibility(GONE);
             upiBtnLayout.setVisibility(GONE);
             Card_fillLayout.setVisibility(GONE);
-            tvPaymentCashBack.setText(WalletCashback);
-            tvPaymentTotal.setText(TotalDeductAmount);
+
+            if (PaymentTypeText.equalsIgnoreCase("Add Money")) {
+                tvPaymentCashBack.setText(getResources().getString(R.string.rupees)+" "+ "0");
+                tvPaymentTotal.setText(getResources().getString(R.string.rupees)+" "+ Amount);
+            }else {
+                tvPaymentCashBack.setText(WalletCashback);
+                tvPaymentTotal.setText(TotalDeductAmount);
+            }
+
             if (RechargeTypeId.equals("1")){
             imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_mobile));
-            }
-           else if (RechargeTypeId.equals("2")){
+            }else if (RechargeTypeId.equals("2")){
                 imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_tv));
-            }
-            else if (RechargeTypeId.equals("3")){
+            } else if (RechargeTypeId.equals("3")){
                 imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_flash));
-            }
-            else if (RechargeTypeId.equals("4")){
+            } else if (RechargeTypeId.equals("4")){
                 imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_drop));
-            }
-            else if (RechargeTypeId.equals("5")){
+            } else if (RechargeTypeId.equals("5")){
                 imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_fire));
-            }
-            else if (RechargeTypeId.equals("6")){
+            } else if (RechargeTypeId.equals("6")){
+                imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_receipt));
+            }else if (RechargeTypeId.equals("7")){
                 imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_receipt));
             }
             tvPaymentRechargeamount.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(Amount)));
@@ -256,33 +270,51 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         BaseApp.getInstance().getDisposable().add(apiService.doRecharge(rechargeRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                .subscribeWith(new DisposableSingleObserver<RechargeResponse>() {
                     @Override
-                    public void onSuccess(BaseResponse response) {
+                    public void onSuccess(RechargeResponse response) {
                         loadingDialog.hideDialog();
                         String date=new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
-                        if (response.getStatus()) {
+                        if (response.isStatus()) {
 
                             if (response.getStatusCode()==0){
                                 intentRecharge.putExtra("status","pending");
                             }else {
                                 intentRecharge.putExtra("status","success");
                             }
+                            try{
+                                intentRecharge.putExtra("Amount",Amount);
+                                intentRecharge.putExtra("date",date);
+                                intentRecharge.putExtra("productinfo",PaymentFor+" "+PaymentTypeText);
+                                intentRecharge.putExtra("txnid",rechargeRequest.getTransaction_id());
+                                intentRecharge.putExtra("Message",response.getMessage());
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            startActivity(intentRecharge);
+                            finish();
                            // Toast.makeText(PaymentType.this, response.getMessage(), Toast.LENGTH_SHORT).show();
                         }else {
-                            intentRecharge.putExtra("status","failed");
+
+                            if (response.getStatusCode()==2){
+                                intentRecharge.putExtra("status","failed");
+                                try{
+                                    intentRecharge.putExtra("Amount",Amount);
+                                    intentRecharge.putExtra("date",date);
+                                    intentRecharge.putExtra("productinfo",PaymentFor+" "+PaymentTypeText);
+                                    intentRecharge.putExtra("txnid",rechargeRequest.getTransaction_id());
+                                    intentRecharge.putExtra("Message",response.getMessage());
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                                startActivity(intentRecharge);
+                                finish();
+                            }else {
+                                showMessage(response.getMessage());
+                            }
+
                             //BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),response.getMessage(),false);
                         }
-                        try{
-                            intentRecharge.putExtra("Amount",Amount);
-                            intentRecharge.putExtra("date",date);
-                            intentRecharge.putExtra("productinfo",PaymentFor+" "+PaymentTypeText);
-                            intentRecharge.putExtra("txnid",rechargeRequest.getTransaction_id());
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        startActivity(intentRecharge);
-                        finish();
                     }
 
                     @Override
@@ -294,6 +326,31 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                 }));
 
     }
+
+    public void showMessage(String Message) {
+        new AlertDialog.Builder(PaymentType.this)
+                .setTitle("SafePe Alert")
+                .setMessage(Message)
+                .setCancelable(false)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                //.setPositiveButton(android.R.string.yes, null)
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+                        dialog.dismiss();
+                        finish();
+                    }
+                })
+                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .show();
+    }
+
 
     private void saveTransactionDetails(SendPaymentGatewayDetailsRequest sendPaymentGatewayDetailsRequest) {
 
@@ -513,10 +570,11 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                     rechargeRequest.setNumber(RechargePaymentId);
                     rechargeRequest.setOperator_code(OperatorCode);
                     rechargeRequest.setRecharge_type(RechargeTypeId);
-                    rechargeRequest.setOperator_id(OperatorId);
+                    rechargeRequest.setOperator_id(RechargeTypeId);
                     rechargeRequest.setTransaction_id(easepayid);
                     rechargeRequest.setPayment_mode("bank");
                     rechargeRequest.setNumber_type("");
+                    rechargeRequest.setStdCode(StdCode);
                     rechargeRequest.setDescription(PaymentFor+" "+PaymentTypeText);
 
                     doRecharge(rechargeRequest);
@@ -569,10 +627,11 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                 rechargeRequest.setNumber(RechargePaymentId);
                 rechargeRequest.setOperator_code(OperatorCode);
                 rechargeRequest.setRecharge_type(RechargeTypeId);
-                rechargeRequest.setOperator_id(OperatorId);
+                rechargeRequest.setOperator_id(RechargeTypeId);
                 rechargeRequest.setTransaction_id("");
                 rechargeRequest.setPayment_mode("wallet");
                 rechargeRequest.setNumber_type("");
+                rechargeRequest.setStdCode(StdCode);
                 rechargeRequest.setDescription(PaymentFor+" "+PaymentTypeText);
 
                 doRecharge(rechargeRequest);

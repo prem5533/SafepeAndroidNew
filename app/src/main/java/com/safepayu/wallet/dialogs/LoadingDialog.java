@@ -1,6 +1,5 @@
 package com.safepayu.wallet.dialogs;
 
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;

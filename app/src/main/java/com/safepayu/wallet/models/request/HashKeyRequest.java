@@ -15,6 +15,8 @@ public class HashKeyRequest {
     private String customer_firstName;
     private String customer_email_id;
 
+    private String type;
+
     public String getMerchant_payment_amount() {
         return merchant_payment_amount;
     }
@@ -45,5 +47,13 @@ public class HashKeyRequest {
 
     public void setCustomer_email_id(String customer_email_id) {
         this.customer_email_id = customer_email_id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

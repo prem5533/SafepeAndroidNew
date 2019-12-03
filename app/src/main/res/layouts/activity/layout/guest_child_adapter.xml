@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Child Age - "
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <EditText
+            android:id="@+id/age_childAdapter"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:hint="5"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:inputType="number"
+            android:maxLength="2"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:gravity="center"/>
+    </LinearLayout>
+
+</LinearLayout>

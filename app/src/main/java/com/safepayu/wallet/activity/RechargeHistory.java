@@ -19,7 +19,7 @@ import com.safepayu.wallet.adapter.RechargeHistoryAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.halper.RecyclerLayoutManager;
+import com.safepayu.wallet.helper.RecyclerLayoutManager;
 import com.safepayu.wallet.models.response.RechargeHistoryResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

@@ -1,6 +1,13 @@
 package com.safepayu.wallet.activity.booking.bus;
 
 import android.os.Bundle;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.safepayu.wallet.R;
@@ -12,30 +19,29 @@ import com.safepayu.wallet.fragment.bus.SelectSeatFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 public class BusSeat_DetailActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapter adapterViewPager;
+    private TextView TripDetailTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_seat__detail);
+
         findId();
     }
 
     private void findId() {
-        tabLayout = (TabLayout)findViewById(R.id.tabs);
-        viewPager = (ViewPager)findViewById(R.id.viewpager);
+        TripDetailTv = findViewById(R.id.tripDetailBus);
+        tabLayout = findViewById(R.id.tabs);
+        viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+
+        TripDetailTv.setText(getIntent().getStringExtra("tripDetail"));
 
     }
 

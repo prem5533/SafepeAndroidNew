@@ -66,8 +66,7 @@
                                 android:layout_width="70dp"
                                 android:src="@drawable/safelogo_transparent"
                                 android:layout_marginLeft="0dp"
-                                android:layout_marginTop="0dp"
-                                />
+                                android:layout_marginTop="0dp" />
 
                             <ImageView
                                 android:layout_height="wrap_content"
@@ -139,8 +138,7 @@
             android:background="#f7f8f8">
             <include layout="@layout/nav_header_home"></include>
 
-            <include layout="@layout/side_navigation_menu"
-                ></include>
+            <include layout="@layout/side_navigation_menu"></include>
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 

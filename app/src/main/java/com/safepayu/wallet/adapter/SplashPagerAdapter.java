@@ -21,8 +21,6 @@ public class SplashPagerAdapter extends PagerAdapter {
     // Declare Variables
     private Context context;
     private List<PromotionResponse.DataBean> simage;
-    private LayoutInflater inflater;
-
 
     public SplashPagerAdapter(Context context, List<PromotionResponse.DataBean> simage) {
         this.context = context;
@@ -50,6 +48,7 @@ public class SplashPagerAdapter extends PagerAdapter {
 
         image_pager= (ImageView) itemView.findViewById(R.id.im);
         Picasso.get().load("http://india.safepayu.com/safepe-new/public/"+ simage.get(position).getImage()).into(image_pager);
+
 
 
         // add viewpager_item.xml to ViewPager

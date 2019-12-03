@@ -1,23 +1,21 @@
 package com.safepayu.wallet.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Html;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.adapter.OfferPagerAdapter;
 import com.safepayu.wallet.adapter.SplashPagerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -25,9 +23,7 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.response.PromotionResponse;
 
-import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -40,7 +36,8 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
     private LinearLayout llPagerDots;
     private TextView[] dots;
     SplashPagerAdapter splashPagerAdapter;
-    private TextView tv_skip,tv_done;
+    private TextView tv_skip,tv_done,skipBtn;
+    public static PromotionResponse promotionResponse1;
 
     int NUM_PAGES,currentPage = 0;
     Timer timer;
@@ -54,6 +51,7 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
         findId();
         if (isNetworkAvailable()) {
             getPrmotionalOffer();
+            getPrmotionalOfferType1();
         } else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.splash_pager), "No Internet Connection", false);
         }
@@ -89,9 +87,11 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
         llPagerDots = (LinearLayout) findViewById(R.id.ll_dots);
         tv_skip =  findViewById(R.id.tvskip);
         tv_done =  findViewById(R.id.tvdone);
+        skipBtn =  findViewById(R.id.skipBtn);
 
         tv_skip.setOnClickListener(this);
         tv_done.setOnClickListener(this);
+        skipBtn.setOnClickListener(this);
 
         intro_images.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -136,14 +136,16 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
                     @Override
                     public void onSuccess(PromotionResponse promotionResponse) {
 
-                        NUM_PAGES= promotionResponse.getData().size();
+                        if (promotionResponse.isStatus()){
+                            NUM_PAGES= promotionResponse.getData().size();
 
-                        loadingDialog.hideDialog();
-                        if (promotionResponse.isStatus()) {
+                            loadingDialog.hideDialog();
+                            if (promotionResponse.isStatus()) {
 
-                         splashPagerAdapter = new SplashPagerAdapter(SplashViewPagerActivity.this,promotionResponse.getData());
-                            intro_images.setAdapter(splashPagerAdapter);
-                            dotscount   =  splashPagerAdapter.getCount();
+                                splashPagerAdapter = new SplashPagerAdapter(SplashViewPagerActivity.this,promotionResponse.getData());
+                                intro_images.setAdapter(splashPagerAdapter);
+                                dotscount   =  splashPagerAdapter.getCount();
+                            }
                         }
                     }
 
@@ -151,7 +153,34 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                     }
-                })); }
+                }));
+    }
+
+    private void getPrmotionalOfferType1() {
+
+        // loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+
+
+        final PromotionRequest promotionRequest = new PromotionRequest();
+        promotionRequest.setType("1");
+        BaseApp.getInstance().getDisposable().add(apiService.getPromotionOffer(promotionRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<PromotionResponse>() {
+                    @Override
+                    public void onSuccess(PromotionResponse promotionResponse) {
+                        promotionResponse1=promotionResponse;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                    }
+                }));
+
+
+    }
 
     private void addBottomDots(int position) {
         dots = new TextView[NUM_PAGES];
@@ -193,6 +222,11 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
                 intro_images.setCurrentItem(tab);
                 break;
             case R.id.tvdone:
+                startActivity(new Intent(SplashViewPagerActivity.this, Navigation.class));
+                finish();
+                break;
+
+            case R.id.skipBtn:
                 startActivity(new Intent(SplashViewPagerActivity.this, Navigation.class));
                 finish();
                 break;

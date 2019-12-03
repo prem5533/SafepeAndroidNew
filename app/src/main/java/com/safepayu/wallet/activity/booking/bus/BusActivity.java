@@ -136,6 +136,7 @@ public class BusActivity extends AppCompatActivity implements View.OnClickListen
                 intent.putExtra("DestinationNameId",DestinationNameId);
                 intent.putExtra("BusDate",BusDate.getText().toString());
                 startActivity(intent);
+
                 break;
 
             case R.id.tv_bus_date:

@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="5dp">
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/recharge_back_btn">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,7 +35,8 @@
                 android:gravity="center"
                 android:fontFamily="@font/roboto_bold"
                 android:textColor="#fff"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:id="@+id/tripDetailBus"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +44,8 @@
                 android:gravity="center"
                 android:fontFamily="@font/roboto_regular"
                 android:textColor="#fff"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone"/>
         </LinearLayout>
 
 

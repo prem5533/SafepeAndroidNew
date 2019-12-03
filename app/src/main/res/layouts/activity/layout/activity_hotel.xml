@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.booking.HotelActivity">
+    tools:context=".activity.booking.hotel.HotelActivity">
     <RelativeLayout
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
@@ -33,32 +33,28 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
         android:layout_below="@id/headerbar"
         android:background="@color/white">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp"
-        android:layout_marginTop="10dp"
-        >
+        android:layout_marginTop="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp"
-            >
+            android:padding="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,16 +64,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/goingto"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textColor="@color/darker_gray"
                     android:fontFamily="@font/roboto_regular"/>
                 <TextView
-                    android:id="@+id/tv_flight_class_type"
+                    android:id="@+id/tv_HotelCity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="City, Are or Hotel Name"
+                    android:text="City or Area"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_marginTop="5dp"/>
             </LinearLayout>
@@ -97,14 +93,15 @@
                     android:textSize="14sp"
                     android:gravity="right|bottom"
                     android:fontFamily="@font/roboto_regular"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"/>
             </LinearLayout>
         </LinearLayout>
             <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider"
-            android:layout_marginTop="10dp"></View>
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
 
@@ -127,26 +124,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Check-In"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textColor="@color/darker_gray"
                 android:fontFamily="@font/roboto_regular"/>
 
 
                 <TextView
-                    android:id="@+id/tv_departure_date"
+                    android:id="@+id/tv_CheckIn_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="21 Oct"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/roboto_regular"
-                    android:layout_marginTop="5dp"
-                    ></TextView>
+                    android:layout_marginTop="5dp"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/divider"
-                    android:layout_marginTop="10dp"></View>
+                    android:layout_marginTop="10dp"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/li_checkout_tab"
@@ -160,66 +156,62 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Check-Out"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textColor="@color/darker_gray"
                     android:fontFamily="@font/roboto_regular"/>
 
                 <TextView
-                    android:id="@+id/tv_return_date"
+                    android:id="@+id/tv_CheckOut_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="22 Oct"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/roboto_regular"
-                    android:layout_marginTop="5dp"
-                    ></TextView>
+                    android:layout_marginTop="5dp"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/divider"
-                    android:layout_marginTop="10dp"></View>
+                    android:layout_marginTop="10dp"/>
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp"
-            android:layout_marginTop="10dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <LinearLayout
+            android:id="@+id/travellersLayout_hotel">
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/travellers"
-                    android:textSize="12sp"
-                    android:textColor="@color/darker_gray"
-                    android:fontFamily="@font/roboto_regular"/>
-                <TextView
-                    android:id="@+id/tv_number_traveller"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1 Adult-1 Economy"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:layout_marginTop="5dp"/>
-            </LinearLayout>     </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider"
-                android:layout_marginTop="10dp"></View>
+                android:text="Travellers"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto_regular"/>
 
+            <TextView
+                android:id="@+id/travellers_hotel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rooms - 1, Adult - 1, Child - 0"
+                android:textColor="@color/darker_gray"
+                android:textSize="16sp"
+                android:fontFamily="@font/roboto_regular"
+                android:padding="5dp"
+                android:layout_marginLeft="5dp"/>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginTop="10dp"/>
+
+
         <Button
             android:id="@+id/search_hotel_btn"
             android:layout_width="match_parent"
@@ -227,7 +219,7 @@
             android:layout_below="@+id/amount"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/rounded_buttons"

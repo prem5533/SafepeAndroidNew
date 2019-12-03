@@ -21,7 +21,7 @@ import com.safepayu.wallet.adapter.PackageAdapterForWalletNew;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.halper.RecyclerLayoutManager;
+import com.safepayu.wallet.helper.RecyclerLayoutManager;
 import com.safepayu.wallet.models.response.PackageListData;
 
 import java.util.ArrayList;
@@ -181,8 +181,18 @@ public class WalletAddMoney extends BaseActivity implements PackageAdapterForWal
         PackNameTV.setText(PackName);
         AmountTV.setText(AMount);
         AmountToPayTV.setText(Amount2Pay);
+        String amt="";
+        for (int i=0;i<Amount2Pay.length();i++){
+            char ch=Amount2Pay.charAt(i);
+            if (ch=='.'){
+                break;
+            }else {
+                amt=amt+ch;
+            }
+        }
 
-        Button dialogButton = (Button) dialog.findViewById(R.id.payBtn_WalletDialog);
+        Button dialogButton = dialog.findViewById(R.id.payBtn_WalletDialog);
+        final String finalAmt = amt;
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,7 +204,7 @@ public class WalletAddMoney extends BaseActivity implements PackageAdapterForWal
                     Intent intent = new Intent(WalletAddMoney.this, PaymentType.class);
                     overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                     intent.putExtra("RechargePaymentId", "");
-                    intent.putExtra("Amount", Amount2Pay);
+                    intent.putExtra("Amount", finalAmt);
                     intent.putExtra("PaymentType", "Add Money");
                     intent.putExtra("PaymentFor", "Wallet");
                     intent.putExtra("RechargeTypeId", "0");

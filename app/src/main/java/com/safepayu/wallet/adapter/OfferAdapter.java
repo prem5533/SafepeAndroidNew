@@ -6,15 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.models.response.Offer;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.RechargeOfferViewHolder> {
 
