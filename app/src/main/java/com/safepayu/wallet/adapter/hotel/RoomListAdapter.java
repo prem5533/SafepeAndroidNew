@@ -22,7 +22,6 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.Flight
     private RoomListAdapter.LocationListListener locationListListener;
     private List<HotelDetailResponse.DataBean.RoomDetailsBean> RoomDetailsList;
 
-
     public  interface  LocationListListener {
         void onLocationClickTo (int position,List<HotelDetailResponse.DataBean.RoomDetailsBean> RoomDetailsList);
     }

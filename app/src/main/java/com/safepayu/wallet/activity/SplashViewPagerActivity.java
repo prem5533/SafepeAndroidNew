@@ -23,11 +23,15 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.response.PromotionResponse;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.safepayu.wallet.activity.Splash.promotionResponse1;
 
 public class SplashViewPagerActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -37,7 +41,7 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
     private TextView[] dots;
     SplashPagerAdapter splashPagerAdapter;
     private TextView tv_skip,tv_done,skipBtn;
-    public static PromotionResponse promotionResponse1;
+
 
     int NUM_PAGES,currentPage = 0;
     Timer timer;
@@ -51,7 +55,7 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
         findId();
         if (isNetworkAvailable()) {
             getPrmotionalOffer();
-            getPrmotionalOfferType1();
+            //getPrmotionalOfferType1();
         } else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.splash_pager), "No Internet Connection", false);
         }
@@ -88,6 +92,24 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
         tv_skip =  findViewById(R.id.tvskip);
         tv_done =  findViewById(R.id.tvdone);
         skipBtn =  findViewById(R.id.skipBtn);
+
+
+        try {
+            if (promotionResponse1.isStatus() ){
+
+            }else {
+                List<PromotionResponse.DataBean> data=new ArrayList<>();
+
+                PromotionResponse.DataBean dataBean=new PromotionResponse.DataBean();
+                dataBean.setImage("not found");
+                data.add(dataBean);
+                data.add(dataBean);
+                promotionResponse1.setData(data);
+            }
+        }catch (Exception e){
+
+            e.printStackTrace();
+        }
 
         tv_skip.setOnClickListener(this);
         tv_done.setOnClickListener(this);
@@ -156,31 +178,34 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
                 }));
     }
 
-    private void getPrmotionalOfferType1() {
-
-        // loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
-
-
-        final PromotionRequest promotionRequest = new PromotionRequest();
-        promotionRequest.setType("1");
-        BaseApp.getInstance().getDisposable().add(apiService.getPromotionOffer(promotionRequest)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<PromotionResponse>() {
-                    @Override
-                    public void onSuccess(PromotionResponse promotionResponse) {
-                        promotionResponse1=promotionResponse;
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        loadingDialog.hideDialog();
-                    }
-                }));
-
-
-    }
+//    private void getPrmotionalOfferType1() {
+//
+//        // loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+//        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+//
+//
+//        final PromotionRequest promotionRequest = new PromotionRequest();
+//        promotionRequest.setType("1");
+//        BaseApp.getInstance().getDisposable().add(apiService.getPromotionOffer(promotionRequest)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeWith(new DisposableSingleObserver<PromotionResponse>() {
+//                    @Override
+//                    public void onSuccess(PromotionResponse promotionResponse) {
+//                        promotionResponse1=promotionResponse;
+//                        tv_skip.setEnabled(true);
+//                        tv_done.setEnabled(true);
+//                        skipBtn.setEnabled(true);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        loadingDialog.hideDialog();
+//                    }
+//                }));
+//
+//
+//    }
 
     private void addBottomDots(int position) {
         dots = new TextView[NUM_PAGES];

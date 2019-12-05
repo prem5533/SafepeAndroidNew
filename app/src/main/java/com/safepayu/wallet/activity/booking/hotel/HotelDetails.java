@@ -1,6 +1,8 @@
 package com.safepayu.wallet.activity.booking.hotel;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -13,7 +15,6 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.MultiDex;
@@ -249,7 +250,46 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onLocationClickTo(int position, List<HotelDetailResponse.DataBean.RoomDetailsBean> RoomDetailsList) {
 
-        Toast.makeText(this, RoomDetailsList.get(position).getRoomType(), Toast.LENGTH_SHORT).show();
+        showMessage(RoomDetailsList.get(position).getRoomType(),RoomDetailsList);
+    }
 
+    public void showMessage(String Message,List<HotelDetailResponse.DataBean.RoomDetailsBean> RoomDetailsList) {
+        new AlertDialog.Builder(HotelDetails.this)
+                .setTitle("Room Detail")
+                .setMessage(Message)
+                .setCancelable(false)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                //.setPositiveButton(android.R.string.yes, null)
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                        Intent intent=new Intent(HotelDetails.this,BookHotel.class);
+                        intent.putExtra("HotelId",HotelId);
+                        intent.putExtra("SourceName",SourceName);
+                        intent.putExtra("HotelName",HotelName);
+                        intent.putExtra("WebService",WebService);
+                        intent.putExtra("Provider",Provider);
+                        intent.putExtra("ImgUrl",ImgUrl);
+                        intent.putExtra("CityId",hotelDetailsRequest.getCityId());
+                        startActivity(intent);
+                        dialog.dismiss();
+
+                    }
+                })
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                        dialog.dismiss();
+                    }
+                })
+
+                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .show();
     }
 }

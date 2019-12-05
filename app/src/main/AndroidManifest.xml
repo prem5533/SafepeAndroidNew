@@ -67,6 +67,7 @@
         <activity android:name=".activity.booking.flight.FlightsActivity" />
         <activity android:name=".activity.booking.MetroActivity" />
         <activity android:name=".activity.booking.hotel.HotelDetails" />
+        <activity android:name=".activity.booking.hotel.BookHotel" />
         <activity android:name=".activity.PaidOrderActivity" />
         <activity android:name=".activity.CreatePassCodeActivity" />
         <activity

@@ -149,7 +149,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                     availableHotelRequest.setDestinationId(SourceNameId);
                     availableHotelRequest.setChildrenAges(ChildAgeList);
 
-                    Intent intent=new Intent(HotelActivity.this,AvailableHotels.class);
+                    Intent intent=new Intent(HotelActivity.this,BookHotel.class);
                     intent.putExtra("SourceName",SourceName);
                     startActivity(intent);
                 }
@@ -463,9 +463,9 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                 RoomTotal=1;
                 TotalGuest=1;
             }
-
+            GuestDialog.dismiss();
+            TravellerTV.setText("Rooms - "+RoomTotal+", Adult - "+AdultTotal+", Child - "+ChildTotal);
         }
-        GuestDialog.dismiss();
-        TravellerTV.setText("Rooms - "+RoomTotal+", Adult - "+AdultTotal+", Child - "+ChildTotal);
+
     }
 }

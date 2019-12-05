@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,11 +15,20 @@ import androidx.multidex.MultiDex;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.api.ApiClient;
+import com.safepayu.wallet.api.ApiService;
+import com.safepayu.wallet.models.request.PromotionRequest;
+import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+
 public class Splash extends AppCompatActivity implements PasscodeClickListener {
 
+    public static PromotionResponse promotionResponse1;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -61,13 +71,56 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
     @Override
     public void onPasscodeMatch(boolean isPasscodeMatched) {
         if (isPasscodeMatched){
-            startActivity(new Intent(Splash.this, Navigation.class));
-            finish();
+            if (isNetworkAvailable()){
+                getPromotionalOfferType1();
+            }else {
+                Toast.makeText(this, "Internet Is Not Connected", Toast.LENGTH_SHORT).show();
+            }
         }else {
             Toast.makeText(this, "Invalid Passcode", Toast.LENGTH_SHORT).show();
             PasscodeDialog passcodeDialog = new PasscodeDialog(Splash.this, Splash.this, "");
             passcodeDialog.show();
         }
+
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void getPromotionalOfferType1() {
+
+        // loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+
+
+        final PromotionRequest promotionRequest = new PromotionRequest();
+        promotionRequest.setType("1");
+        BaseApp.getInstance().getDisposable().add(apiService.getPromotionOffer(promotionRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<PromotionResponse>() {
+                    @Override
+                    public void onSuccess(PromotionResponse promotionResponse) {
+                        try {
+                            promotionResponse1=promotionResponse;
+                            startActivity(new Intent(Splash.this, SplashViewPagerActivity.class));
+                            finish();
+                        }catch (Exception e){
+                            Toast.makeText(Splash.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                }));
+
 
     }
 

@@ -99,7 +99,8 @@
                     android:textSize="13sp"
                     android:inputType="text"
                     android:singleLine="true"
-                    android:imeOptions="actionNext"/>
+                    android:imeOptions="actionNext"
+                    android:digits="0123456789 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ ,"/>
 
                 <ImageView
                     android:layout_width="25dp"
@@ -143,7 +144,8 @@
                     android:layout_marginBottom="10dp"
                     android:inputType="text"
                     android:singleLine="true"
-                    android:imeOptions="actionNext"/>
+                    android:imeOptions="actionNext"
+                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
 
                 <ImageView
                     android:layout_width="25dp"
@@ -190,7 +192,8 @@
                     android:layout_marginBottom="10dp"
                     android:inputType="text"
                     android:singleLine="true"
-                    android:imeOptions="actionNext"/>
+                    android:imeOptions="actionNext"
+                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
 
                 <ImageView
                     android:layout_width="25dp"
@@ -236,7 +239,8 @@
                     android:layout_marginBottom="6dp"
                     android:inputType="number"
                     android:singleLine="true"
-                    android:imeOptions="actionDone"/>
+                    android:imeOptions="actionDone"
+                    android:digits="0123456789"/>
 
                 <ImageView
                     android:layout_width="25dp"

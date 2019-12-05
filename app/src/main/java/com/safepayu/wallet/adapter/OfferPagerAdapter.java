@@ -48,7 +48,11 @@ public class OfferPagerAdapter  extends PagerAdapter {
         View itemView = LayoutInflater.from(context).inflate(R.layout.offer_pager_adapter,container,false);
 
         image_pager= (ImageView) itemView.findViewById(R.id.im);
-        Picasso.get().load("http://india.safepayu.com/safepe-new/public/"+ simage.get(position).getImage()).into(image_pager);
+        Picasso.get()
+                .load("http://13.233.29.145/safepe-adminapi/public/"+ simage.get(position)
+                .getImage())
+                .error(context.getResources().getDrawable(R.drawable.image_not_available))
+                .into(image_pager);
 
 
         // add viewpager_item.xml to ViewPager

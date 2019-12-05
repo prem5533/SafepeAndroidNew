@@ -22,7 +22,8 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="130dp">
+                android:layout_height="150dp"
+                android:background="@color/yellow_theme">
 
             </androidx.viewpager.widget.ViewPager>
 
@@ -34,7 +35,6 @@
                 app:tabGravity="center"
                 app:tabIndicatorHeight="0dp"
                 app:tabMaxWidth="30dp"
-                android:visibility="gone"
                 android:layout_gravity="bottom|center"
                 android:layout_marginTop="-15dp"/>
 

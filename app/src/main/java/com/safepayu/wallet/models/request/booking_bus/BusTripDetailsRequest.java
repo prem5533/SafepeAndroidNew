@@ -28,11 +28,18 @@ public class BusTripDetailsRequest {
     private String returnDate;
     private String seatsAvailable;
     /**
-     * seatsAvailable : seatsAvailable
+     * source : delhi
+     * destination : agra
      */
 
-
-
+    private String source;
+    private String destination;
+    private String busType;
+    
+    /**
+     * busType : 2+2
+     * seatsAvailable : seatsAvailable
+     */
 
     public String getTripId() {
         return tripId;
@@ -120,5 +127,29 @@ public class BusTripDetailsRequest {
 
     public void setSeatsAvailable(String seatsAvailable) {
         this.seatsAvailable = seatsAvailable;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getBusType() {
+        return busType;
+    }
+
+    public void setBusType(String busType) {
+        this.busType = busType;
     }
 }

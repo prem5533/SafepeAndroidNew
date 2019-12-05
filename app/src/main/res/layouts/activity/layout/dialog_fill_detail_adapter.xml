@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/fillDetailAdapter"
+    android:layout_margin="5dp"
+    android:padding="5dp">
+
+    <com.safepayu.wallet.custom_view.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Medium"
+        app:fontCustom="@string/Roboto"
+        android:textAllCaps="false"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:text="Passenger 1"
+        android:gravity="center"
+        android:id="@+id/passengerNo_fillDetailAdapter"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        android:layout_margin="5dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.safepayu.wallet.custom_view.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Medium"
+            app:fontCustom="@string/Roboto"
+            android:textAllCaps="false"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Name"
+            android:layout_marginTop="5dp"/>
+
+        <EditText
+            android:id="@+id/name_fillDetailAdapter"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:hint="Name"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:inputType="text"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.safepayu.wallet.custom_view.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Medium"
+            app:fontCustom="@string/Roboto"
+            android:textAllCaps="false"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Age"
+            android:layout_marginTop="5dp"/>
+
+        <EditText
+            android:id="@+id/age_fillDetailAdapter"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:hint="Age"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:inputType="number"
+            android:maxLength="3"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.safepayu.wallet.custom_view.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Medium"
+            app:fontCustom="@string/Roboto"
+            android:textAllCaps="false"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Gender"
+            android:layout_marginTop="5dp"/>
+
+            <RadioGroup
+                android:id="@+id/radioGrp_fillDetailAdapter"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentRight="true">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/male_fillDetailAdapter"
+                    android:layout_weight="1"
+                    android:text="Male"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/female_fillDetailAdapter"
+                    android:layout_weight="1"
+                    android:text="Female"/>
+            </RadioGroup>
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/emailLayout_fillDetailAdapter"
+        android:visibility="gone">
+
+        <com.safepayu.wallet.custom_view.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Medium"
+            app:fontCustom="@string/Roboto"
+            android:textAllCaps="false"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Email"
+            android:layout_marginTop="5dp"/>
+
+        <EditText
+            android:id="@+id/email_fillDetailAdapter"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:hint="Email"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:inputType="textEmailAddress"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/red_600"
+        android:layout_margin="5dp"/>
+</LinearLayout>

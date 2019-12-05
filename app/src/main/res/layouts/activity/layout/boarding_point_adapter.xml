@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/radioGrp_boardingDroppingAdapter">
+
+
+    </RadioGroup>
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioBtn_boardingDroppingAdapter" />
+
+    <com.safepayu.wallet.custom_view.CustomTextView
+        android:id="@+id/time_boardingDroppingAdapter"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        style="@style/TextAppearance.AppCompat.Medium"
+        app:fontCustom="@string/Roboto"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:text="9:40 PM"
+        android:gravity="center"/>
+
+    <com.safepayu.wallet.custom_view.CustomTextView
+        android:id="@+id/place_boardingDroppingAdapter"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        style="@style/TextAppearance.AppCompat.Medium"
+        app:fontCustom="@string/Roboto"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="RK Ashram, Delhi"
+        android:gravity="center"/>
+
+</LinearLayout>
