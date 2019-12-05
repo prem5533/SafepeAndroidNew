@@ -47,7 +47,7 @@ public class SplashPagerAdapter extends PagerAdapter {
         View itemView = LayoutInflater.from(context).inflate(R.layout.spalsh_pager_adapter,container,false);
 
         image_pager= (ImageView) itemView.findViewById(R.id.im);
-        Picasso.get().load("http://india.safepayu.com/safepe-new/public/"+ simage.get(position).getImage()).into(image_pager);
+        Picasso.get().load("http://13.233.29.145/safepe-adminapi/public/"+ simage.get(position).getImage()).into(image_pager);
 
 
 

@@ -87,7 +87,11 @@ public class AvailableHotelAdapter extends RecyclerView.Adapter<AvailableHotelAd
 
             tvHotelStar.setNumStars(Integer.parseInt(AvailableHotels.get(position).getStarRating()));
 
-            Picasso.get().load(AvailableHotels.get(position).getHotelImages().get(0).getImagepath()).into(ivHotelImage);
+            try {
+                Picasso.get().load(AvailableHotels.get(position).getHotelImages().get(0).getImagepath()).into(ivHotelImage);
+            }catch (Exception er){
+                er.printStackTrace();
+            }
 
             if (AvailableHotels.get(position).getFacilities().length()>30){
                 String facility=AvailableHotels.get(position).getFacilities();

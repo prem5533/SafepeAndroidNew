@@ -87,7 +87,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.safepayu.wallet.activity.Profile.QRcodeWidth;
-import static com.safepayu.wallet.activity.SplashViewPagerActivity.promotionResponse1;
+import static com.safepayu.wallet.activity.Splash.promotionResponse1;
 
 public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 

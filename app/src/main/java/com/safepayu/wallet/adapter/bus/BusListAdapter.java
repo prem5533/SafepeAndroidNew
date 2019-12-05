@@ -25,7 +25,7 @@ public class BusListAdapter extends RecyclerView.Adapter<BusListAdapter.BusViewH
     }
 
     public interface OnBusItemClickListener {
-        void onBusItemSelect(BusSelectModel busSelectModel);
+        void onBusItemSelect(int position,BusSelectModel busSelectModel);
     }
 
 
@@ -63,7 +63,7 @@ public class BusListAdapter extends RecyclerView.Adapter<BusListAdapter.BusViewH
                 //seatListener.seatsAvailable(busSelectModel);
 
 
-                onItemClickListener.onBusItemSelect(busSelectModel);
+                onItemClickListener.onBusItemSelect(position,busSelectModel);
             }
         });
     }

@@ -37,6 +37,8 @@ public class BusListActivity extends AppCompatActivity implements View.OnClickLi
     private String SourceName="",SourceNameId="",DestinationName="",DestinationNameId="",SourceTypeeee="",BusDate="",TripType="";
     SeatListener seatListener;
     public static BusTripDetailsRequest busTripDetailsRequest;
+    public static BusListResponse response1;
+    public static int SelectedBusList=0;
 
     public  interface  SeatListener {
         void seatsAvailable (BusListAdapter.BusSelectModel busSelectModel);
@@ -99,7 +101,7 @@ public class BusListActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onBusItemSelect(BusListAdapter.BusSelectModel busSelectModel1) {
+    public void onBusItemSelect(int position,BusListAdapter.BusSelectModel busSelectModel1) {
         Toast.makeText(this, busSelectModel1.getAvailableSeats(), Toast.LENGTH_SHORT).show();
         //seatListener.seatsAvailable(busSelectModel);
 
@@ -108,12 +110,16 @@ public class BusListActivity extends AppCompatActivity implements View.OnClickLi
         busTripDetailsRequest.setJourneyDate(BusDate);
         busTripDetailsRequest.setSourceId(SourceNameId);
         busTripDetailsRequest.setTripType(TripType);
+        busTripDetailsRequest.setSource(SourceName);
+        busTripDetailsRequest.setDestination(DestinationName);
+        busTripDetailsRequest.setBusType(busSelectModel1.getBusType());
         busTripDetailsRequest.setTravelOperator(busSelectModel1.getTravelOperator());
         busTripDetailsRequest.setProvider(busSelectModel1.getProvider());
         busTripDetailsRequest.setTripId(busSelectModel1.getTripId());
         busTripDetailsRequest.setSeatsAvailable(busSelectModel1.getAvailableSeats());
         busTripDetailsRequest.setReturnDate("");
 
+        SelectedBusList=position;
 
         overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
         Intent intent=new Intent(BusListActivity.this, BusSeat_DetailActivity.class);
@@ -138,8 +144,11 @@ public class BusListActivity extends AppCompatActivity implements View.OnClickLi
                         if (response.isStatus()) {
                             try {
                                 if (response.getData().getAvailableTrips().size()>0){
+                                    response1=response;
                                     busListAdapter = new BusListAdapter(BusListActivity.this,response.getData(),BusListActivity.this);
                                     recyclerViewBus.setAdapter(busListAdapter);
+
+
                                 }else {
                                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.busListLayout), "No Data Found", false);
                                 }
