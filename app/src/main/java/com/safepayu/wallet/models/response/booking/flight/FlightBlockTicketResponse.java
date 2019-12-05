@@ -14,6 +14,8 @@ public class FlightBlockTicketResponse {
     private String message;
     private DataBean data;
 
+
+
     public boolean isStatus() {
         return status;
     }

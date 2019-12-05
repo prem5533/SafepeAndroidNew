@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/red_theme"
+    android:background="@drawable/button_background_gradient_diagonal"
     android:id="@+id/splash_pager"
     android:fitsSystemWindows="true">
 
@@ -20,7 +20,7 @@
             android:text="NEXT"
             android:fontFamily="@font/roboto_bold"
             android:layout_margin="20dp"
-            android:textColor="@color/white"
+            android:textColor="@color/yellow"
             android:layout_gravity="right"/>
 
         <TextView
@@ -34,7 +34,7 @@
             android:text="SKIP"
             android:fontFamily="@font/roboto_bold"
             android:layout_margin="20dp"
-            android:textColor="@color/white"
+            android:textColor="@color/yellow"
             android:layout_gravity="left"/>
 
 
@@ -48,7 +48,7 @@
             android:text="DONE"
             android:fontFamily="@font/roboto_bold"
             android:layout_margin="20dp"
-            android:textColor="@color/white"
+            android:textColor="@color/yellow"
             android:visibility="gone"
             />
     </FrameLayout>
@@ -57,10 +57,12 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager_introduction"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:layout_below="@+id/frame"
-        android:layout_marginTop="141dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="120dp"
         android:background="@null"
         android:fitsSystemWindows="true"
         android:visibility="visible"

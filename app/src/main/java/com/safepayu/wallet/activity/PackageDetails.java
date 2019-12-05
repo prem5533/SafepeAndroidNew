@@ -27,7 +27,7 @@ public class PackageDetails extends BaseActivity {
 
     Button BackBtn;
     private LoadingDialog loadingDialog;
-    private TextView PackageNameTV,PackageAmountTV,BonusAmountTV,BalanceAmountTV,BonusCreditTv;
+    private TextView PackageNameTV,PackageAmountTV,BonusAmountTV,BalanceAmountTV,BonusCreditTv,txtPckgStatus;
     private ImageView image_logo;
 
     @Override
@@ -44,6 +44,7 @@ public class PackageDetails extends BaseActivity {
         BalanceAmountTV=findViewById(R.id.txtPckgAmountBalance);
         BonusCreditTv=findViewById(R.id.txtPckgAmountCredit);
         image_logo=findViewById(R.id.image_logo);
+        txtPckgStatus=findViewById(R.id.txtPckgSttus);
       //  Picasso.get().load(imagePath).into(image_logo);
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,10 +93,12 @@ public class PackageDetails extends BaseActivity {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
                             PackageNameTV.setText(response.getPackageX().getPackage_name());
-                            PackageAmountTV.setText(getResources().getString(R.string.rupees)+String.valueOf(response.getPackageX().getPackage_amount()));
-                            BonusAmountTV.setText(getResources().getString(R.string.rupees)+String.valueOf(response.getPackageX().getBonus_amount()));
-                            BalanceAmountTV.setText(getResources().getString(R.string.rupees)+String.valueOf(response.getPackageX().getBalance_amount()));
-                            BonusCreditTv.setText(getResources().getString(R.string.rupees)+String.valueOf(response.getPackageX().getBonus_credited()));
+                            PackageAmountTV.setText(getResources().getString(R.string.rupees)+response.getPackageX().getPackage_amount());
+                            BonusAmountTV.setText(getResources().getString(R.string.rupees)+response.getPackageX().getBonus_amount());
+                            BalanceAmountTV.setText(getResources().getString(R.string.rupees)+response.getPackageX().getBalance_amount());
+                            BonusCreditTv.setText(getResources().getString(R.string.rupees)+response.getPackageX().getBonus_credited());
+                            txtPckgStatus.setText(response.getPackageX().getPackagestatus());
+
 
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);

@@ -2,14 +2,17 @@ package com.safepayu.wallet.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -33,6 +36,7 @@ public class PaidOrderActivity extends AppCompatActivity {
     private GifImageView gifImageView;
     private String status="",txnid="",Amount="",date="",productinfo="",Message="";
     private Button BackBtn;
+    private Dialog dialog;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -90,9 +94,18 @@ public class PaidOrderActivity extends AppCompatActivity {
 
         try{
             if (productinfo.contains("wallet") || productinfo.contains("Wallet")){
-                PendingText="Due To Server Down, It Might Take 5 Mins To 3 Hrs. Have Patience For Transaction. Sorry For The Inconvenience. \nThank You!";
+                PendingText="It Might Take 5 Mins To 3 Hrs. Have Patience For Transaction. Sorry For The Inconvenience. \nThank You!";
             }else {
-                PendingText="Due To Server Down, It Might Take 5 Mins To 3 Hrs For Recharge. Have Patience. Sorry For The Inconvenience. \nThank You!";
+                PendingText="It Might Take 5 Mins To 3 Hrs For Recharge. Have Patience. Sorry For The Inconvenience. \nThank You!";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            if (productinfo.contains("Package") || productinfo.contains("package")){
+
+                showPkgDialog();
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -118,7 +131,7 @@ public class PaidOrderActivity extends AppCompatActivity {
         }
 
         StatusTV.setText(status);
-        AmountTV.setText(getResources().getString(R.string.rupees)+" "+ NumberFormat.getIntegerInstance().format(Integer.parseInt(Amount)));
+        AmountTV.setText(getResources().getString(R.string.rupees)+" "+Amount);
         DateTV.setText(date);
         ProductInfoTV.setText(productinfo);
 
@@ -210,6 +223,32 @@ public class PaidOrderActivity extends AppCompatActivity {
         dialog.getWindow().setAttributes(layoutParams);
     }
 
+    private void showPkgDialog() {
+
+        dialog = new Dialog(PaidOrderActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.pkg_detail_dialog);
+
+        Button btn_back_home_page = dialog.findViewById(R.id.btn_back_home_page);
+        btn_back_home_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                dialog.dismiss();
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+        dialog.show();
 
     }
+
+}
 

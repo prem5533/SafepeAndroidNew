@@ -18,7 +18,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/class_"
+                android:text="@string/reviewfilght_details"
                 android:textSize="18sp"
                 android:textColor="@color/red_theme"
                 android:layout_margin="10dp"
@@ -127,6 +127,15 @@
                             android:layout_marginLeft="-25dp"
                             android:src="@drawable/ic_next"
                             android:visibility="gone"/>
+                        <TextView
+                            android:id="@+id/tv_flight_booking_stop"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="12sp"
+                            android:text=""
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/roboto_regular"/>
                     </LinearLayout>
 
                     <TextView
@@ -160,15 +169,16 @@
                             android:textColor="@color/black"
                             android:fontFamily="@font/roboto_regular"
                             android:layout_marginLeft="10dp"/>
+
                         <TextView
                             android:id="@+id/tv_flight_booking_dep_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="Fri, 15 Nov 19"
-                            android:textSize="12sp"
-                            android:textColor="@color/black"
+                            android:layout_marginLeft="10dp"
                             android:fontFamily="@font/roboto_regular"
-                            android:layout_marginLeft="10dp"/>
+                            android:hint="Fri, 15 Nov 19"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
 
 
                     </LinearLayout>

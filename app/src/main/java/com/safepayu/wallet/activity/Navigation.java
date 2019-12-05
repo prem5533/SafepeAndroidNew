@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -18,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -41,7 +44,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -54,6 +56,7 @@ import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.DonationActivity;
+
 import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.MovieActivity;
 import com.safepayu.wallet.activity.booking.TollActivity;
@@ -67,18 +70,24 @@ import com.safepayu.wallet.activity.recharge.GasPay;
 import com.safepayu.wallet.activity.recharge.InsuranceActivity;
 import com.safepayu.wallet.activity.recharge.LandlineBillPay;
 import com.safepayu.wallet.activity.recharge.MobileRecharge;
+
 import com.safepayu.wallet.activity.recharge.PostpaidBillpay;
 import com.safepayu.wallet.activity.recharge.WaterBillPay;
 import com.safepayu.wallet.adapter.OfferPagerAdapter;
+import com.safepayu.wallet.adapter.SplashPagerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.PromotionRequest;
+import com.safepayu.wallet.models.request.SaveAddressRequest;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -87,7 +96,6 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.safepayu.wallet.activity.Profile.QRcodeWidth;
-import static com.safepayu.wallet.activity.SplashViewPagerActivity.promotionResponse1;
 
 public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -102,7 +110,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     private int versionCode = 0;
     private LoadingDialog loadingDialog;
     private LinearLayout liMetro, liFlight, liBusTicket, liTrainTicket, liHotles, liDonation, liToll, liFlood, liCredit, liInsurance, limovie, liGoogleplay, lihotel,
-            liBigBazaar, liBrandFactory, liKFC, liDominos, liLogoutAllDevices, linearSecurityTab,linearGiftCoupon;
+            liBigBazaar, liBrandFactory, liKFC, liDominos, liLogoutAllDevices, linearSecurityTab;
     public static int BadgeCount = 0;
     public static TextView BadgeCountTV;
     Dialog dialog;
@@ -110,9 +118,15 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     ImageView ImageViewNotiDialog, imageDownSecurity, imageUpSecurity,headerLogo,navLogo;
     private RelativeLayout searchLayout_nav;
     public static String TitleNotiDialogText = "", ContentNotiDialogText = "", tollNumber = "";
+    public static Bitmap ImageNotiDialog;
     private ViewPager viewpager;
     private String url;
 
+    private ViewPager intro_images;
+    private LinearLayout llPagerDots;
+    private TextView[] dots;
+    SplashPagerAdapter splashPagerAdapter;
+    private TextView tv_skip,tv_done,skipBtn;
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
             liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity;
@@ -121,11 +135,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     public static Bitmap qrCodeImage;
     int NUM_PAGES,currentPage = 0;
     Timer timer;
-    private OfferPagerAdapter adapter;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
     String ImagePath="http://india.safepayu.com/safepe-new/public/";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,16 +209,63 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             }
         });
 
-        showDialogViewPager(Navigation.this);
+        showDialogViewPger(Navigation.this);
     }
 
-    private void showDialogViewPager(Navigation navigation) {
-        final Dialog dialog = new Dialog(navigation);
+    private void showDialogViewPger(Navigation navigation) {
+
+        dialog = new Dialog(navigation);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
         dialog.setContentView(R.layout.activity_splash_view_pager);
 
+    //    recyclerViewLocationList = dialog.findViewById(R.id.airport_locaiton_list);
 
+        intro_images = dialog. findViewById(R.id.pager_introduction);
+        llPagerDots = dialog. findViewById(R.id.ll_dots);
+        tv_skip = dialog. findViewById(R.id.tvskip);
+        tv_done = dialog. findViewById(R.id.tvdone);
+        skipBtn = dialog. findViewById(R.id.skipBtn);
+
+
+        tv_skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int tab = intro_images.getCurrentItem();
+                tab++;
+                intro_images.setCurrentItem(tab);
+            }
+        });
+        tv_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  startActivity(new Intent(SplashViewPagerActivity.this, Navigation.class));
+                dialog.dismiss();
+            }
+        });
+        skipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+        intro_images.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                addBottomDots(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
@@ -214,7 +273,83 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
         dialog.getWindow().setAttributes(lp);
         dialog.show();
+
+        if (isNetworkAvailable()) {
+            getPrmotionalOfferView();
+         //   getPrmotionalOfferType1();
+        } else {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.splash_pager), "No Internet Connection", false);
+        }
+
     }
+
+    private void getPrmotionalOfferView() {
+// loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+
+
+        final PromotionRequest promotionRequest = new PromotionRequest();
+        promotionRequest.setType("2");
+        BaseApp.getInstance().getDisposable().add(apiService.getPromotionOffer(promotionRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<PromotionResponse>() {
+                    @Override
+                    public void onSuccess(PromotionResponse promotionResponse) {
+
+                        if (promotionResponse.isStatus()){
+                            NUM_PAGES= promotionResponse.getData().size();
+                            if (NUM_PAGES==1){
+                                tv_skip.setVisibility(View.GONE);
+
+                            }
+                            loadingDialog.hideDialog();
+                            if (promotionResponse.isStatus()) {
+
+                                splashPagerAdapter = new SplashPagerAdapter(Navigation.this,promotionResponse.getData());
+                                intro_images.setAdapter(splashPagerAdapter);
+                             //   dotscount   =  splashPagerAdapter.getCount();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                    }
+                }));
+    }
+    private void addBottomDots(int position) {
+        dots = new TextView[NUM_PAGES];
+
+       if (NUM_PAGES-1==position){
+            //   tv_skip.setText("DONE");]
+            tv_done.setVisibility(View.VISIBLE);
+            tv_skip.setVisibility(View.GONE);
+
+        }
+        else if (position<NUM_PAGES-1){
+            tv_done.setVisibility(View.GONE);
+            tv_skip.setVisibility(View.VISIBLE);
+        }
+
+
+        llPagerDots.removeAllViews();
+        for (int i = 0; i < dots.length; i++) {
+            dots[i] = new TextView(this);
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(35);
+            dots[i].setTextColor(Color.parseColor("#ffffff"));
+            llPagerDots.addView(dots[i]);
+        }
+
+        if (dots.length > 0){
+            dots[position].setTextColor(Color.parseColor("#fdb632"));
+        }
+
+
+    }
+
 
     @Override
     protected int getLayoutResourceId() {
@@ -324,7 +459,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liDominos = findViewById(R.id.layout_dominos);
         linearSecurityTab = findViewById(R.id.linear_security_tab);
         liSecurity = findViewById(R.id.li_security);
-        linearGiftCoupon =findViewById(R.id.layout_giftCoupon);
 
 
         //********************set listener&*****************
@@ -360,7 +494,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         payBill.setOnClickListener(this);
         dth.setOnClickListener(this);
         liCredit.setOnClickListener(this);
-        linearGiftCoupon.setOnClickListener(this);
 
         //  payShop.setOnClickListener(this);
         // sendToBank.setOnClickListener(this);
@@ -382,6 +515,10 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liKFC.setOnClickListener(this);
         liBrandFactory.setOnClickListener(this);
         liBigBazaar.setOnClickListener(this);
+
+
+        getPrmotionalOffer();
+
 
         imageDownSecurity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -430,7 +567,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
             }
         });
-
         imageUpSecurity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -443,6 +579,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             @Override
             public void onClick(View v) {
 
+               // startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
                 startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
@@ -473,32 +610,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             }
         });
 
-
-        NUM_PAGES= promotionResponse1.getData().size();
-        loadingDialog.hideDialog();
-        adapter = new OfferPagerAdapter(Navigation.this,promotionResponse1.getData());
-        viewpager.setAdapter(adapter);
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        if (promotionResponse1.getData().size()>1){
-            tabLayout.setupWithViewPager(viewpager, true);
-        }
-
-        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         createNotificationChannel();
         getFirebaseToken(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
@@ -736,9 +847,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_dominos:
-                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.layout_giftCoupon:
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -1741,7 +1849,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         loadingDialog.hideDialog();
                         if (promotionResponse.isStatus()) {
 
-                            adapter = new OfferPagerAdapter(Navigation.this,promotionResponse.getData());
+                            OfferPagerAdapter adapter = new OfferPagerAdapter(Navigation.this,promotionResponse.getData());
                             viewpager.setAdapter(adapter);
                         }
                     }

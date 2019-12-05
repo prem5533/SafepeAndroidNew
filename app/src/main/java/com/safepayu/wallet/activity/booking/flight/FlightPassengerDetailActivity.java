@@ -9,7 +9,9 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,38 +21,60 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.adapter.fight.FlighPassengerBookingDialog;
+import com.safepayu.wallet.api.ApiClient;
+import com.safepayu.wallet.api.ApiService;
+import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.booking.flight.AvailableFlightRequest;
+import com.safepayu.wallet.models.request.booking.flight.FlightBlockTicketRequest;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
+import com.safepayu.wallet.models.response.booking.flight.FlightBlockTicketResponse;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.safepayu.wallet.activity.booking.flight.FlightListActivity.MY_PREFS_NAME;
 
 public class FlightPassengerDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tvFlightPassengerDateTravellersClass,tvFlightPassengerTo,tvFlightPassengerFrom,tvTotalFlightFare,tvTotalNavellersNumber,tvChild,tvInfant;
-    private String Source,Destination,JourneyDate,TrvaellersCount,ClassType,Adults,Infants,Children;
+    private String Source,Destination,JourneyDate,TrvaellersCount,ClassType,Adults,Infants,Children,FlightImage,TravelClass,AirLineCode,AirLineNumber;
     private Button backbtnFlightPassenger,continue_btn;
     private EditText etFlightpMobileNumber,etFlightpEmailNumber;
-    public   Dialog dialog;
+    public  Dialog dialog;
+    private LoadingDialog loadingDialog;
     private RecyclerView recyclerTravellerInfo;
-    private ImageView imageCancel;
+    private ImageView imageCancel,image_flight_detail_pop_up;
+    private TextView tv_flightbooking_name_popup,tv_flightbooking_classname_popup,tvFlightBookingSourceName_popup,tvFlightBookingDestiName_popup,
+            tvFlightBookingDepDate,tvFlightDetailDestiDate,tvFlightBookingDuration,tv_flight_booking_stop,tv_flight_booking_dep_time,tv_flight_booking_arrival_time;
     String json;
+
     AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
     private FlighPassengerBookingDialog flighPassengerBookingDialog;
-    private LinearLayout itemAdult,itemChild,itemInfant;
+    private LinearLayout itemAdult,itemChild,itemInfant,lFarebreakup;
     TextView  tv_infant_btn,tv_adult_btn,tv_child_btn;
     private LinearLayout  linear_infant_traveller_info,linear_adult_traveller_info,linear_child_traveller_info;
     private EditText etFlightpAdultFname,FlightpAdultFname;
-    private String flightAdultFNme,flightAdultLName,flightAdultDob,flightChildFNme,flightChildLNme,flightChildDob,flightInfantFNme,flightInfantLNme,flightInfantDob;
+    private String flightAdultFNme,flightAdultLName,flightAdultDob,flightChildFNme,flightChildLNme,flightChildDob,flightInfantFNme,flightInfantLNme,flightInfantDob,
+            Fullname;
     final List<View> li = new ArrayList<>();
     final List<View> liChild = new ArrayList<>();
     final List<View> liInfant = new ArrayList<>();
+    List<String>adultList = new ArrayList<>();
+    List<String>DobList = new ArrayList<>();
+    FlightBlockTicketResponse FlightResponse;
+
+    private FlightBlockTicketRequest flightBlockTicketRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +83,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
     }
 
     private void findId() {
+        loadingDialog = new LoadingDialog(this);
         tvFlightPassengerDateTravellersClass = findViewById(R.id.tv_flightpassenger_date_travellers_class);
         tvFlightPassengerTo = findViewById(R.id.tvflightpassenger_to_where);
         tvFlightPassengerFrom = findViewById(R.id.tvflightpassenger_from_where);
@@ -67,6 +92,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         tvTotalNavellersNumber = findViewById(R.id.tv_total_travellers_no);
         etFlightpMobileNumber = findViewById(R.id.et_flightp_mobile_number);
         etFlightpEmailNumber = findViewById(R.id.et_flightp_email_number);
+        lFarebreakup = findViewById(R.id.l_farebreakup);
         continue_btn = findViewById(R.id.continue_btn);
         tvChild = findViewById(R.id.tv_child);
         tvInfant = findViewById(R.id.tv_infant);
@@ -85,11 +111,34 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         Adults = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_ADULTS);
         Infants = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_INFANTS);
         Children = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_CHILDREN);
+        FlightImage = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_IMAGE);
+        TravelClass =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_CLASS);
+        AirLineCode =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_CODE);
+        AirLineNumber =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_FLIGHT_NUMBER);
 
+        if (Infants.equals("")){
+            Infants="0";
+        }
+        if (Children.equals("")){
+            Children = "0";
+        }
+
+        if (TravelClass.equals("E")){
+            TravelClass = "Economy";
+        }
+        else  if (TravelClass.equals("PE")){
+            TravelClass = "Preminum Economy";
+        }
+        else  if (TravelClass.equals("B")){
+            TravelClass = "Business";
+        }else  if (TravelClass.equals("F")){
+            TravelClass = "First Class";
+        }
 
         //***********set listener*******************
         backbtnFlightPassenger.setOnClickListener(this);
         continue_btn.setOnClickListener(this);
+        lFarebreakup.setOnClickListener(this);
 
         //*************set data***********
 
@@ -101,6 +150,47 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         tvTotalFlightFare.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
         etFlightpMobileNumber.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
         etFlightpEmailNumber.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
+
+        String DOBLIST = "21-10-1985";
+        DobList.add(DOBLIST);
+
+        List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> internationalFlights = new ArrayList<>();
+        List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticReturnFlights = new ArrayList<>();
+        List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticOnwardFlights = new ArrayList<>();
+        int flightType = 1;
+        switch (flightType) {
+            case 1:
+                domesticOnwardFlights.add(mdata);
+                break;
+            case 2:
+                break;
+            case 3:
+              //  internationalFlights.add(mdata);
+                break;
+        }
+
+        flightBlockTicketRequest = new FlightBlockTicketRequest();
+        FlightBlockTicketRequest.Data data = new FlightBlockTicketRequest.Data(internationalFlights, domesticReturnFlights, domesticOnwardFlights);
+        flightBlockTicketRequest.setData(data);
+        flightBlockTicketRequest.setInfantPax(Infants);
+        flightBlockTicketRequest.setAdultPax(Adults);
+        flightBlockTicketRequest.setChildPax(Children);
+        flightBlockTicketRequest.setNames(adultList);
+        flightBlockTicketRequest.setDob(DobList);
+        flightBlockTicketRequest.setTripType("1");
+        flightBlockTicketRequest.setFlightType("1");
+        flightBlockTicketRequest.setPayment_mode("bank");
+
+
+
+
+     /*   FlightBlockTicketRequest.DataBean.DomesticOnwardFlightsBean domesticOnwardFlightsBean;
+        domesticOnwardFlightsBean=dataBean.getDomesticOnwardFlights();
+
+        List<FlightBlockTicketRequest.DataBean.DomesticOnwardFlightsBean> DomesticOnwardFlights;
+        List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> DomesticOnwardFlightsRe = null;
+        DomesticOnwardFlights=DomesticOnwardFlightsRe;*/
+
 
         //****************set adult, child, infant layout**************
 
@@ -129,7 +219,6 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             tv_adult_btn =   li.get(a).findViewById(R.id.tv_adult_btn);
             linear_adult_traveller_info = li.get(a).findViewById(R.id.linear_adult_traveller_info);
             etFlightpAdultFname = li.get(a).findViewById(R.id.et_flightp_adult_fname);
-
         }
 
 
@@ -231,17 +320,27 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             case R.id.continue_btn:
                // showDialog(FlightPassengerDetailActivity.this);
                 if (validate()) {
+                    getflightBlockTicket(flightBlockTicketRequest);
 
                 }
 
                 break;
+
+            case R.id.l_farebreakup:
+
+                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+                break;
         }
     }
+
+
 
     private boolean validate() {
 
         EditText fnameAdult, lnameAdult, dobAdult,fnameChild,lnameChild,dobChild,fnameInfant,lnameInfant,dobInfant;
         int a;
+        adultList.clear();
         for (a = 0; a < li.size(); a++) {
 
             fnameAdult = ((EditText) li.get(a).findViewById(R.id.et_flightp_adult_fname));
@@ -250,14 +349,23 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             flightAdultFNme = fnameAdult.getText().toString().trim();
             flightAdultLName = lnameAdult.getText().toString().trim();
             flightAdultDob = dobAdult.getText().toString().trim();
-            if (flightAdultFNme.equals("") && flightAdultFNme.isEmpty()) {
+            if (fnameAdult.getText().toString().trim().length() == 0)  {
+
                 Toast.makeText(getApplicationContext(), "Please enter adult first name", Toast.LENGTH_LONG).show();
+                return  false;
             } else if (flightAdultLName.equals("") && flightAdultLName.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter adult last name", Toast.LENGTH_LONG).show();
+                return  false;
             } else if (flightAdultDob.equals("") && flightAdultDob.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter adult dob", Toast.LENGTH_LONG).show();
+                return  false;
             }
+
+
+            Fullname = "Miss."+"|"+flightAdultFNme+"|"+flightAdultLName+"|"+"adt";
+             adultList.add(Fullname);
         }
+
         int c;
         for (c = 0; c < liChild.size(); c++){
             fnameChild = ((EditText) liChild.get(c).findViewById(R.id.et_flightp_child_fname));
@@ -268,10 +376,13 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             flightChildDob = dobChild.getText().toString().trim();
             if (flightChildFNme.equals("") && flightChildFNme.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter child first name", Toast.LENGTH_LONG).show();
+                return  false;
             } else if (flightChildLNme.equals("") && flightChildLNme.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter child last name", Toast.LENGTH_LONG).show();
+                return  false;
             } else if (flightChildDob.equals("") && flightChildDob.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter child adult dob", Toast.LENGTH_LONG).show();
+                return  false;
             }
         }
         int f;
@@ -285,14 +396,17 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             flightInfantDob= dobInfant.getText().toString().trim();
             if (flightInfantFNme.equals("") && flightInfantFNme.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter infant first name", Toast.LENGTH_LONG).show();
+                return  false;
             } else if (flightInfantLNme.equals("") && flightInfantLNme.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter infant last name", Toast.LENGTH_LONG).show();
+                return  false;
             } else if (flightInfantDob.equals("") && flightInfantDob.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter inant adult dob", Toast.LENGTH_LONG).show();
+                return  false;
             }
         }
 
-            return true;
+        return true;
         }
 
    /* private void checkBtn() {
@@ -324,6 +438,17 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         dialog.setContentView(R.layout.flight_final_booking_details_dialog);
         recyclerTravellerInfo = dialog.findViewById(R.id.recyler_traveller_info);
         imageCancel = dialog.findViewById(R.id.image_cancel);
+        image_flight_detail_pop_up = dialog.findViewById(R.id.image_flight_detail);
+        tv_flightbooking_name_popup = dialog.findViewById(R.id.tv_flightbooking_name);
+        tv_flightbooking_classname_popup = dialog.findViewById(R.id.tv_flightbooking_classname);
+        tvFlightBookingSourceName_popup = dialog.findViewById(R.id.tv_flight_booking_source_name);
+        tvFlightBookingDestiName_popup = dialog.findViewById(R.id.tv_flight_detail_desti_name);
+        tvFlightBookingDepDate = dialog.findViewById(R.id.tv_flight_booking_dep_date);
+        tvFlightDetailDestiDate = dialog.findViewById(R.id.tv_flight_detail_desti_date);
+        tvFlightBookingDuration = dialog.findViewById(R.id.tv_flight_booking_duration);
+        tv_flight_booking_stop = dialog.findViewById(R.id.tv_flight_booking_stop);
+        tv_flight_booking_dep_time = dialog.findViewById(R.id.tv_flight_booking_dep_time);
+        tv_flight_booking_arrival_time = dialog.findViewById(R.id.tv_flight_booking_arrival_time);
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         Window window = dialog.getWindow();
@@ -334,16 +459,150 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(lp);
         dialog.show();
-
+        Picasso.get().load(FlightImage).into(image_flight_detail_pop_up);
+        tv_flightbooking_name_popup.setText(mdata.getFlightSegments().get(0).getAirLineName()+" " +AirLineCode+" "+AirLineNumber);
+        tv_flightbooking_classname_popup.setText(TravelClass);
+        tvFlightBookingSourceName_popup.setText(Source);
+        tvFlightBookingDestiName_popup.setText(Destination);
         imageCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
+
+        //************set flight time***********
+        int flightStop =   mdata.getFlightSegments().size();
+        String Date, Time, h, m;
+        String depTime = mdata.getFlightSegments().get(0).getDepartureDateTimeZone();
+        String[] separated = depTime.split(" ");
+        Date = separated[0];
+        Time = separated[1];
+        String[] separatedTime = Time.split(":");
+        h = separatedTime[0];
+        m = separatedTime[1];
+        tv_flight_booking_dep_time.setText(h + ":" + m);
+
+        if (flightStop>1){
+            String arrTime = mdata.getFlightSegments().get(flightStop-1).getArrivalDateTimeZone();
+            String[] arrTimeseparated = arrTime.split(" ");
+            Date = arrTimeseparated[0];
+            Time = arrTimeseparated[1];
+            String[] separatedArrTime = Time.split(":");
+            h = separatedArrTime[0];
+            m = separatedArrTime[1];
+            tv_flight_booking_arrival_time.setText(h + ":" + m);
+
+        }
+        else {
+            String arrTime = mdata.getFlightSegments().get(0).getArrivalDateTimeZone();
+            String[] arrTimeseparated = arrTime.split(" ");
+            Date = arrTimeseparated[0];
+            Time = arrTimeseparated[1];
+            String[] separatedArrTime = Time.split(":");
+            h = separatedArrTime[0];
+            m = separatedArrTime[1];
+            tv_flight_booking_arrival_time.setText(h + ":" + m);
+        }
+        //*****************calculate total hour & minute**************
+
+        int     sum = 0;
+        int mintemp = 0;
+        int hourtemp = 0;
+        if (flightStop>0){
+            for (int i = 0; i<mdata.getFlightSegments().size();i++){
+                String duration [] = mdata.getFlightSegments().get(i).getDuration().split(":");
+                String hour = duration[0];
+                String min = duration[1];
+                String durat [] = min.split(" ");
+                String a = durat[0];
+                String b = durat[1];
+
+
+                hourtemp = Integer.parseInt(hour)*60;
+                mintemp = Integer.parseInt(a)+hourtemp;
+                sum = sum+mintemp;
+            }
+
+            int hours = sum / 60; //since both are ints, you get an int
+            int minutes = sum % 60;
+
+
+            tvFlightBookingDuration.setText(hours+"h "+minutes+"m");
+        }
+        //*********set flight count*****************
+        if ( mdata.getFlightSegments().size()>1){
+            tv_flight_booking_stop.setText(mdata.getFlightSegments().size()-1 +" Stop");
+
+        }
+        else  if (String.valueOf(mdata.getFlightSegments().get(0).getIntNumStops()).equals("null")){
+            tv_flight_booking_stop.setText("Non Stop");
+        }
+        else {
+            tv_flight_booking_stop.setText(String.valueOf(mdata.getFlightSegments().get(0).getIntNumStops())+"Stop");
+        }
+
+
         recyclerTravellerInfo.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         flighPassengerBookingDialog = new FlighPassengerBookingDialog(getApplicationContext());
         recyclerTravellerInfo.setAdapter(flighPassengerBookingDialog);
     }
+
+    //****************bottom sheet dialog fragment**********************
+
+
+    public static class BottomSheetFragment extends BottomSheetDialogFragment{
+
+        public BottomSheetFragment() {
+        }
+
+        @Override
+        public void onCreate( Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+            View view =  inflater.inflate(R.layout.flight_fare_breakup_dialog, container, false);
+            setStyle(STYLE_NORMAL, R.style. AppBottomSheetDialogTheme);
+
+            findId(view);
+            return view;
+        }
+
+        private void findId(View view) {
+        }
+
+    }
+    private void getflightBlockTicket(final FlightBlockTicketRequest flightBlockTicketRequest) {
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+        BaseApp.getInstance().getDisposable().add(apiService.getFlightBlockTicket(flightBlockTicketRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<FlightBlockTicketResponse>() {
+                    @Override
+                    public void onSuccess(FlightBlockTicketResponse flightBlockTicketResponse) {
+                        loadingDialog.hideDialog();
+                        FlightResponse = flightBlockTicketResponse;
+                        if (flightBlockTicketResponse.isStatus()) {
+                            Toast.makeText(getApplicationContext(),flightBlockTicketResponse.getMessage(),Toast.LENGTH_LONG).show();
+                            showDialog(FlightPassengerDetailActivity.this);
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        Log.e(BaseApp.getInstance().toastHelper().getTag(FlightPassengerDetailActivity.class), "onError: " + e.getMessage());
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.flight_passenger), false, e.getCause());
+                    }
+                }));
+    }
+
 }
 

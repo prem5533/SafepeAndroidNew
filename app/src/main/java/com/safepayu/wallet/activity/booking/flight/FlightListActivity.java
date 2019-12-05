@@ -45,7 +45,7 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
     private AvailableFlightRequest availableFlightRequest;
     private TextView tvFlightDateTravellersClass,tvFlightFromWhere,tvFlightToWhere;
     private String Source,Destination,JourneyDate,TripType,User,UserType,Adults,Infants,Children,FlightType,ReturnDate,TravelClass,TrvaellersCount,ClassType;
-
+    AvailableFlightResponse FlightResponse;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,11 +140,11 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
                     public void onSuccess(AvailableFlightResponse availableFlightResponse) {
                         loadingDialog.hideDialog();
                         if (availableFlightResponse.isStatus()) {
-
+                            FlightResponse = availableFlightResponse;
                             if (availableFlightResponse.getData().getDomesticOnwardFlights().size()>0){
 
                                 recyclerViewFlightList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-                                oneWayFlightListAdapter = new OneWayFlightListAdapter(getApplicationContext(), availableFlightResponse.getData().getDomesticOnwardFlights(),FlightListActivity.this);
+                                oneWayFlightListAdapter = new OneWayFlightListAdapter(getApplicationContext(), availableFlightResponse.getData().getDomesticOnwardFlights(),FlightListActivity.this,FlightListActivity.this);
                                 recyclerViewFlightList.setAdapter(oneWayFlightListAdapter);
 
 
@@ -170,10 +170,10 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
 
        // BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE_FULL_NAME,mFlightItemListenre.getFlightSegments().get(0).getIntDepartureAirportName());
       //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DESTINATION_FULL_NAME,mFlightItemListenre.getFlightSegments().get(0).getIntArrivalAirportName());
-//        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_IMAGE,"http://webapi.i2space.co.in/"+mFlightItemListenre.getFlightSegments().get(0).getImagePath());
-//        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_NAME,mFlightItemListenre.getFlightSegments().get(0).getAirLineName());
-//        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_CODE,mFlightItemListenre.getFlightSegments().get(0).getOperatingAirlineCode());
-//        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_FLIGHT_NUMBER,mFlightItemListenre.getFlightSegments().get(0).getOperatingAirlineFlightNumber());
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_IMAGE,"http://webapi.i2space.co.in/"+mFlightItemListenre.getFlightSegments().get(0).getImagePath());
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_NAME,mFlightItemListenre.getFlightSegments().get(0).getAirLineName());
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_CODE,mFlightItemListenre.getFlightSegments().get(0).getOperatingAirlineCode());
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_FLIGHT_NUMBER,mFlightItemListenre.getFlightSegments().get(0).getOperatingAirlineFlightNumber());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION,mFlightItemListenre.getFlightSegments().get(0).getDuration());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_HAND_BAGGAGE,mFlightItemListenre.getFlightSegments().get(0).getBaggageAllowed().getHandBaggage());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_CHECKIN_BAGGAGE,mFlightItemListenre.getFlightSegments().get(0).getBaggageAllowed().getCheckInBaggage());
@@ -195,5 +195,16 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void onFlight(int position) {
+
+     //   AvailableFlightResponse mFlightItemListenre = new AvailableFlightResponse();
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(FlightResponse.getData().getDomesticOnwardFlights().get(position));
+        editor.putString("MyObject", json);
+        editor.commit();
     }
 }

@@ -1,14 +1,18 @@
 package com.safepayu.wallet.activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +26,7 @@ import com.easebuzz.payment.kit.PWECouponsActivity;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -64,6 +69,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
     private TextView AmountTV,tvPaymentRechargeamount,tvPaymentCashBack,tvPaymentTotal;
     private CardView Card_fillLayout;
     private ImageView imageService;
+    private Button btn_back_home_page;
 
     //recharge/bill payment parameter
     private String RechargePaymentId="",Amount="",PaymentTypeText="",PaymentFor="",RechargeTypeId="",OperatorCode="",CircleCode="",OperatorId="",WalletCashback,TotalDeductAmount;
@@ -73,6 +79,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
     private String customer_address1="",customer_address2="",customer_city="",customer_state="",customer_country="",customer_zipcode="";
     private String hash="",payment_mode="",customers_unique_id="";
     private float merchant_payment_amount= (float) 1.0;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +87,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         setToolbar(false, null, false);
 
         loadingDialog = new LoadingDialog(this);
-
+        dialog = new Dialog(this);
         cardBtnLayout = (RelativeLayout) findViewById(R.id.radioLayout1);
         upiBtnLayout = (RelativeLayout) findViewById(R.id.radioLayout3);
         NetBankingBtnLayout = (RelativeLayout) findViewById(R.id.radioLayout2);
@@ -238,6 +245,8 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             e.printStackTrace();
         }
     }
+
+
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
