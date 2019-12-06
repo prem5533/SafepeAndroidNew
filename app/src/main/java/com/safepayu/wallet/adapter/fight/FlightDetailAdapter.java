@@ -128,8 +128,8 @@ public class FlightDetailAdapter extends RecyclerView.Adapter<FlightDetailAdapte
             String modd = septt[1];
             String ddd = septt[2];
 
-            String dateZonee= ddd+"/"+modd+"/"+ydd;
-            date = new Date(dateZonee);
+            String dateZonee= modd+"/"+ddd+"/"+ydd;
+          Date  date = new Date(dateZonee);
             s  = DateFormat.format("dd-MMM-yyyy", date.getTime());
             String daymonthYear1 = (String) s;
             String[] sep1 = daymonthYear1.split("-");
@@ -140,6 +140,7 @@ public class FlightDetailAdapter extends RecyclerView.Adapter<FlightDetailAdapte
             SimpleDateFormat sdateformat = new SimpleDateFormat("EEE");
             String day_Week = sdateformat.format(date);
             tvFlightDetailDestiDate.setText(day_Week+", "+da+mon+" "+ye);
+
         }
     }
 }

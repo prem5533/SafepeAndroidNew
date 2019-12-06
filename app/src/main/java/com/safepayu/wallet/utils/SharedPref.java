@@ -16,6 +16,7 @@ public class SharedPref {
     public final String ACCESS_TOKEN = "accessToken";
     public final String ACCESS_TOKEN_EXPIRE_IN = "accessTokenExpiresIn";
     public final String USER_ID = "userId";
+    public final String DEP_DAY = "depDay";
     public final String USER_EMAIL = "userEmail";
     public final String USER_FIRST_NAME = "User_first_name";
     public final String USER_LAST_NAME = "User_last_name";

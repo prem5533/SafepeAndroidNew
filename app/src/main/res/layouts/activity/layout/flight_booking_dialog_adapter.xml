@@ -13,14 +13,15 @@
        >
         <ImageView
             android:id="@+id/flight_passenger_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@color/colorAccent"
             android:padding="10dp"/>
         <TextView
+            android:id="@+id/tv_passenger_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Adult 1"
+            android:text="Adult "
             android:textSize="14sp"
             android:fontFamily="@font/roboto_regular"
             android:textColor="@color/darker_gray"

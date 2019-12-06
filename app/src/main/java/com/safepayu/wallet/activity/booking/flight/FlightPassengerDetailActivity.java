@@ -5,9 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,9 +29,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.booking.BookingPaymentActivity;
 import com.safepayu.wallet.adapter.fight.FlighPassengerBookingDialog;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
+import com.safepayu.wallet.dialogs.DatePicker;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.booking.flight.AvailableFlightRequest;
 import com.safepayu.wallet.models.request.booking.flight.FlightBlockTicketRequest;
@@ -36,7 +42,9 @@ import com.safepayu.wallet.models.response.booking.flight.FlightBlockTicketRespo
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -56,17 +64,19 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
     private RecyclerView recyclerTravellerInfo;
     private ImageView imageCancel,image_flight_detail_pop_up;
     private TextView tv_flightbooking_name_popup,tv_flightbooking_classname_popup,tvFlightBookingSourceName_popup,tvFlightBookingDestiName_popup,
-            tvFlightBookingDepDate,tvFlightDetailDestiDate,tvFlightBookingDuration,tv_flight_booking_stop,tv_flight_booking_dep_time,tv_flight_booking_arrival_time;
+            tvFlightBookingDepDate,tvFlightDetailDestiDate,tvFlightBookingDuration,tv_flight_booking_stop,tv_flight_booking_dep_time,tv_flight_booking_arrival_time,tv_gender;
     String json;
+    private Button flightBookBtn;
 
     AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
     private FlighPassengerBookingDialog flighPassengerBookingDialog;
     private LinearLayout itemAdult,itemChild,itemInfant,lFarebreakup;
     TextView  tv_infant_btn,tv_adult_btn,tv_child_btn;
     private LinearLayout  linear_infant_traveller_info,linear_adult_traveller_info,linear_child_traveller_info;
-    private EditText etFlightpAdultFname,FlightpAdultFname;
+    private EditText etFlightpAdultFname,FlightpAdultFname,dobAdult;
     private String flightAdultFNme,flightAdultLName,flightAdultDob,flightChildFNme,flightChildLNme,flightChildDob,flightInfantFNme,flightInfantLNme,flightInfantDob,
-            Fullname;
+            Fullname,radioGender,childFullNme,infantFullNme;
+    ImageView flight_adult_dob;
     final List<View> li = new ArrayList<>();
     final List<View> liChild = new ArrayList<>();
     final List<View> liInfant = new ArrayList<>();
@@ -151,8 +161,6 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         etFlightpMobileNumber.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
         etFlightpEmailNumber.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
 
-        String DOBLIST = "21-10-1985";
-        DobList.add(DOBLIST);
 
         List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> internationalFlights = new ArrayList<>();
         List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticReturnFlights = new ArrayList<>();
@@ -200,6 +208,16 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         View view = getLayoutInflater().inflate(R.layout.flight_traveller_adult_info,null);
        TextView t=  view.findViewById(R.id.tv_adult_btn);
        final LinearLayout linearLayout = view.findViewById(R.id.linear_adult_traveller_info);
+       final EditText etFlightAdultDOB = view.findViewById(R.id.et_flightp_adult_dob);
+
+
+       etFlightAdultDOB.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               DatePicker datePicker = DatePicker.newInstance(etFlightAdultDOB, null);
+               datePicker.show(getSupportFragmentManager(), "datePicker");
+           }
+       });
 
        FlightpAdultFname = view.findViewById(R.id.et_flightp_adult_fname);
 
@@ -238,6 +256,14 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 View view = getLayoutInflater().inflate(R.layout.flight_traveller_child_info, null);
                 TextView t = view.findViewById(R.id.tv_child_btn);
                 final LinearLayout linearLayout = view.findViewById(R.id.linear_child_traveller_info);
+                final EditText etFlightChildDOB = view.findViewById(R.id.et_flightp_child_dob);
+                etFlightChildDOB.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatePicker datePicker = DatePicker.newInstance(etFlightChildDOB, null);
+                        datePicker.show(getSupportFragmentManager(), "datePicker");
+                    }
+                });
                 linearLayout.setVisibility(View.GONE);
                 final int pos = i;
                 t.setOnClickListener(new View.OnClickListener() {
@@ -275,6 +301,14 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 TextView t = view.findViewById(R.id.tv_infant_btn);
                 final LinearLayout linearLayout = view.findViewById(R.id.linear_infant_traveller_info);
                 linearLayout.setVisibility(View.GONE);
+                final EditText etFlightInfantDOB = view.findViewById(R.id.et_flightp_infant_dob);
+                etFlightInfantDOB.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatePicker datePicker = DatePicker.newInstance(etFlightInfantDOB, null);
+                        datePicker.show(getSupportFragmentManager(), "datePicker");
+                    }
+                });
                 final int pos = i;
                 t.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -320,6 +354,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             case R.id.continue_btn:
                // showDialog(FlightPassengerDetailActivity.this);
                 if (validate()) {
+
                     getflightBlockTicket(flightBlockTicketRequest);
 
                 }
@@ -338,17 +373,24 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
 
     private boolean validate() {
 
-        EditText fnameAdult, lnameAdult, dobAdult,fnameChild,lnameChild,dobChild,fnameInfant,lnameInfant,dobInfant;
+        EditText fnameAdult, lnameAdult,fnameChild,lnameChild,dobChild,fnameInfant,lnameInfant,dobInfant;
+        String selectedRadioButtonText = " ";
         int a;
         adultList.clear();
+        DobList.clear();
         for (a = 0; a < li.size(); a++) {
 
             fnameAdult = ((EditText) li.get(a).findViewById(R.id.et_flightp_adult_fname));
             lnameAdult = ((EditText) li.get(a).findViewById(R.id.et_flightp_adult_lname));
             dobAdult = ((EditText) li.get(a).findViewById(R.id.et_flightp_adult_dob));
+            tv_gender = ((TextView) li.get(a).findViewById(R.id.tv_gender));
+             RadioGroup  radioGen = ((RadioGroup) li.get(a).findViewById(R.id.radio_gender));
+
             flightAdultFNme = fnameAdult.getText().toString().trim();
             flightAdultLName = lnameAdult.getText().toString().trim();
             flightAdultDob = dobAdult.getText().toString().trim();
+            radioGender = tv_gender.getText().toString();
+
             if (fnameAdult.getText().toString().trim().length() == 0)  {
 
                 Toast.makeText(getApplicationContext(), "Please enter adult first name", Toast.LENGTH_LONG).show();
@@ -361,9 +403,24 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 return  false;
             }
 
+            //************Gender Radio *************************
+            int selectedRadioButtonID = radioGen.getCheckedRadioButtonId();
+            // If nothing is selected from Radio Group, then it return -1
+            if (selectedRadioButtonID != -1) {
+                RadioButton selectedRadioButton = radioGen.findViewById(selectedRadioButtonID);
+                 selectedRadioButtonText = selectedRadioButton.getText().toString();
+             //   Toast.makeText(getApplicationContext(),selectedRadioButtonText,Toast.LENGTH_LONG).show();
+                tv_gender.setText(selectedRadioButtonText);
 
-            Fullname = "Miss."+"|"+flightAdultFNme+"|"+flightAdultLName+"|"+"adt";
+            } else{
+                Toast.makeText(getApplicationContext(), "Nothing selected from Radio Group.", Toast.LENGTH_SHORT).show();
+
+            }
+
+            Fullname = selectedRadioButtonText+"|"+flightAdultFNme+"|"+flightAdultLName+"|"+"adt";
              adultList.add(Fullname);
+             DobList.add(flightAdultDob);
+
         }
 
         int c;
@@ -384,6 +441,9 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 Toast.makeText(getApplicationContext(), "Please enter child adult dob", Toast.LENGTH_LONG).show();
                 return  false;
             }
+            childFullNme = "Mstr."+"|"+flightChildFNme+"|"+flightChildLNme+"|"+"chd";
+            adultList.add(childFullNme);
+            DobList.add(flightChildDob);
         }
         int f;
         for (f = 0; f < liInfant.size(); f++) {
@@ -404,6 +464,9 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 Toast.makeText(getApplicationContext(), "Please enter inant adult dob", Toast.LENGTH_LONG).show();
                 return  false;
             }
+            infantFullNme = "Mstr."+"|"+flightInfantFNme+"|"+flightInfantLNme+"|"+"inft";
+            adultList.add(infantFullNme);
+            DobList.add(flightInfantDob);
         }
 
         return true;
@@ -432,7 +495,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
 
 
     private void showDialog(FlightPassengerDetailActivity flightPassengerDetailActivity) {
-
+         CharSequence s;
         dialog = new Dialog(flightPassengerDetailActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.flight_final_booking_details_dialog);
@@ -449,6 +512,16 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         tv_flight_booking_stop = dialog.findViewById(R.id.tv_flight_booking_stop);
         tv_flight_booking_dep_time = dialog.findViewById(R.id.tv_flight_booking_dep_time);
         tv_flight_booking_arrival_time = dialog.findViewById(R.id.tv_flight_booking_arrival_time);
+        flightBookBtn = dialog.findViewById(R.id.flight_book_btn);
+        flightBookBtn.setText("Pay "+getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+        //**************Go to payment activity*************
+        flightBookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent = new Intent(getApplicationContext(), BookingPaymentActivity.class);
+                startActivity(intent);
+            }
+        });
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         Window window = dialog.getWindow();
@@ -474,35 +547,88 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         //************set flight time***********
         int flightStop =   mdata.getFlightSegments().size();
         String Date, Time, h, m;
-        String depTime = mdata.getFlightSegments().get(0).getDepartureDateTimeZone();
-        String[] separated = depTime.split(" ");
+        String depTime = mdata.getFlightSegments().get(0).getDepartureDateTime();
+        String[] separated = depTime.split("T");
         Date = separated[0];
         Time = separated[1];
         String[] separatedTime = Time.split(":");
         h = separatedTime[0];
         m = separatedTime[1];
         tv_flight_booking_dep_time.setText(h + ":" + m);
+//date departure
+        String[] sept = Date.split("-");
+        String yd = sept[0];
+        String mod = sept[1];
+        String dd = sept[2];
+
+        String dateZone= dd+"/"+mod+"/"+yd;
+        Date  date = new Date(dateZone);
+        s  = DateFormat.format("dd-MMM-yyyy", date.getTime());
+        String daymonthYear = (String) s;
+        String[] sep = daymonthYear.split("-");
+        String d = sep[0];
+        String mo = sep[1];
+        String y = sep[2];
+        SimpleDateFormat simpledateformat = new SimpleDateFormat("EEE");
+        String dayOfWeek = simpledateformat.format(date);
+        tvFlightBookingDepDate.setText(dayOfWeek+", "+d+mo+" "+y);
 
         if (flightStop>1){
-            String arrTime = mdata.getFlightSegments().get(flightStop-1).getArrivalDateTimeZone();
-            String[] arrTimeseparated = arrTime.split(" ");
+            String arrTime = mdata.getFlightSegments().get(flightStop-1).getArrivalDateTime();
+            String[] arrTimeseparated = arrTime.split("T");
             Date = arrTimeseparated[0];
             Time = arrTimeseparated[1];
             String[] separatedArrTime = Time.split(":");
             h = separatedArrTime[0];
             m = separatedArrTime[1];
             tv_flight_booking_arrival_time.setText(h + ":" + m);
+
+            String[] septt = Date.split("-");
+            String ydd = septt[0];
+            String modd = septt[1];
+            String ddd = septt[2];
+
+            String dateZonee= modd+"/"+ddd+"/"+ydd;
+            Date  datee = new Date(dateZonee);
+            s  = DateFormat.format("dd-MMM-yyyy", datee.getTime());
+            String daymonthYear1 = (String) s;
+            String[] sep1 = daymonthYear1.split("-");
+            String da = sep1[0];
+            String mon = sep1[1];
+            String ye = sep1[2];
+
+            SimpleDateFormat sdateformat = new SimpleDateFormat("EEE");
+            String day_Week = sdateformat.format(datee);
+            tvFlightDetailDestiDate.setText(day_Week+", "+da+mon+" "+ye);
 
         }
         else {
-            String arrTime = mdata.getFlightSegments().get(0).getArrivalDateTimeZone();
-            String[] arrTimeseparated = arrTime.split(" ");
+            String arrTime = mdata.getFlightSegments().get(0).getArrivalDateTime();
+            String[] arrTimeseparated = arrTime.split("T");
             Date = arrTimeseparated[0];
             Time = arrTimeseparated[1];
             String[] separatedArrTime = Time.split(":");
             h = separatedArrTime[0];
             m = separatedArrTime[1];
             tv_flight_booking_arrival_time.setText(h + ":" + m);
+
+            String[] septt = Date.split("-");
+            String ydd = septt[0];
+            String modd = septt[1];
+            String ddd = septt[2];
+
+            String dateZonee= modd+"/"+ddd+"/"+ydd;
+            Date  datee = new Date(dateZonee);
+            s  = DateFormat.format("dd-MMM-yyyy", datee.getTime());
+            String daymonthYear1 = (String) s;
+            String[] sep1 = daymonthYear1.split("-");
+            String da = sep1[0];
+            String mon = sep1[1];
+            String ye = sep1[2];
+
+            SimpleDateFormat sdateformat = new SimpleDateFormat("EEE");
+            String day_Week = sdateformat.format(datee);
+            tvFlightDetailDestiDate.setText(day_Week+", "+da+mon+" "+ye);
         }
         //*****************calculate total hour & minute**************
 
@@ -542,10 +668,10 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             tv_flight_booking_stop.setText(String.valueOf(mdata.getFlightSegments().get(0).getIntNumStops())+"Stop");
         }
 
-
         recyclerTravellerInfo.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        flighPassengerBookingDialog = new FlighPassengerBookingDialog(getApplicationContext());
+        flighPassengerBookingDialog = new FlighPassengerBookingDialog(getApplicationContext(),FlightResponse.getData().getTickets());
         recyclerTravellerInfo.setAdapter(flighPassengerBookingDialog);
+
     }
 
     //****************bottom sheet dialog fragment**********************
