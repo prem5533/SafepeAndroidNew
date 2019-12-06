@@ -624,9 +624,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     };
 
     private void verifyOtp(String otp) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    Activity#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for Activity#requestPermissions for more details.
+                return;
+            }
+        }
+
+
+
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(mobileNo.getText().toString().trim(), null);
+        request.setDeviceid(BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
         request.setOtp(otp);
         BaseApp.getInstance().getDisposable().add(apiService.verifyOTP(request)
                 .subscribeOn(Schedulers.io())

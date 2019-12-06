@@ -1,8 +1,11 @@
 package com.safepayu.wallet.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -50,24 +53,25 @@ import io.reactivex.schedulers.Schedulers;
 
 import static android.view.View.VISIBLE;
 
-public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChangeListener, PasscodeClickListener {
+public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChangeListener, PasscodeClickListener {
 
-    Button BackBtn,WithDrawBtn;
-    private LinearLayout WithdrawAmountlayout,AddBankBenBtn;
-    private  TextView AmountTotalTV,tvWithdrawalAmount,tvTax,tvTotalAmountsendmoney;
+    Button BackBtn, WithDrawBtn;
+    private LinearLayout WithdrawAmountlayout, AddBankBenBtn;
+    private TextView AmountTotalTV, tvWithdrawalAmount, tvTax, tvTotalAmountsendmoney;
     private Spinner BankBenSpinner;
     private EditText AmountED;
     private RadioGroup radioGroup;
-    private String Mode="",BenID="",Mobile="";;
+    private String Mode = "", BenID = "", Mobile = "";
+    ;
     private LoadingDialog loadingDialog;
-    private boolean CheckNet=false;
+    private boolean CheckNet = false;
     Dialog dialogStatus;
     TextView TImer;
     TransferWalletToBankResponse responseData;
     TransferWalletToBankRequest transferWalletToBankRequestDate;
     private CardView cardAmount;
 
-    ArrayList<String> NameList,IdList,BenIdList;
+    ArrayList<String> NameList, IdList, BenIdList;
     private static int SPLASH_TIME_OUT = 59000;
 
     //Otp Dialog
@@ -77,8 +81,8 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
     private ImageView im_cross;
 
     private ApiService apiService;
-    double totalAmount=0.0f,minusAmount=0.0f;
-    int checkAmount=0;
+    double totalAmount = 0.0f, minusAmount = 0.0f;
+    int checkAmount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,25 +91,25 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
 
         loadingDialog = new LoadingDialog(this);
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-        
-        AddBankBenBtn=findViewById(R.id.BankBenAddBtn);
-        BackBtn=findViewById(R.id.send_back_btn);
-        WithdrawAmountlayout=findViewById(R.id.withdrawAmountlayout);
-        BankBenSpinner=findViewById(R.id.bankBenSpinner);
-        radioGroup=findViewById(R.id.radioGroupWithdraw);
-        WithDrawBtn=findViewById(R.id.btnWithdraw);
-        AmountTotalTV=findViewById(R.id.calculatedamount);
-        tvWithdrawalAmount=findViewById(R.id.tv_withdrawalamount);
-        tvTax=findViewById(R.id.tv_sendtax);
-        tvTotalAmountsendmoney=findViewById(R.id.tv_total_amountsendmoney);
-        AmountED=findViewById(R.id.withdrawAmount);
+
+        AddBankBenBtn = findViewById(R.id.BankBenAddBtn);
+        BackBtn = findViewById(R.id.send_back_btn);
+        WithdrawAmountlayout = findViewById(R.id.withdrawAmountlayout);
+        BankBenSpinner = findViewById(R.id.bankBenSpinner);
+        radioGroup = findViewById(R.id.radioGroupWithdraw);
+        WithDrawBtn = findViewById(R.id.btnWithdraw);
+        AmountTotalTV = findViewById(R.id.calculatedamount);
+        tvWithdrawalAmount = findViewById(R.id.tv_withdrawalamount);
+        tvTax = findViewById(R.id.tv_sendtax);
+        tvTotalAmountsendmoney = findViewById(R.id.tv_total_amountsendmoney);
+        AmountED = findViewById(R.id.withdrawAmount);
         cardAmount = findViewById(R.id.card_amount);
         BankBenSpinner.setVisibility(View.GONE);
         cardAmount.setVisibility(View.GONE);
 
-        NameList=new ArrayList<>();
-        IdList=new ArrayList<>();
-        BenIdList=new ArrayList<>();
+        NameList = new ArrayList<>();
+        IdList = new ArrayList<>();
+        BenIdList = new ArrayList<>();
 
         NameList.clear();
         IdList.clear();
@@ -122,12 +126,12 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         AddBankBenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Goto Your Profile and Verify Your Email First",true);
-                }else {
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Buy Membership To Enjoy App's Features",true);
-                    }else {
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Goto Your Profile and Verify Your Email First", true);
+                } else {
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
+                    } else {
                         startActivity(new Intent(getApplicationContext(), AddBeneficiary.class));
                         overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                     }
@@ -140,15 +144,15 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
             @Override
             public void onClick(View view) {
 
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Goto Your Profile and Verify Your Email First",true);
-                }else {
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Buy Membership To Enjoy App's Features",true);
-                    }else {
-                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")){
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Withdraw Is Closed Today",true);
-                        }else {
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Goto Your Profile and Verify Your Email First", true);
+                } else {
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
+                    } else {
+                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")) {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Withdraw Is Closed Today", true);
+                        } else {
                             CheckValidate();
                         }
                     }
@@ -160,7 +164,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         BankBenSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                BenID=BenIdList.get(i);
+                BenID = BenIdList.get(i);
             }
 
             @Override
@@ -174,15 +178,15 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 // TODO Auto-generated method stub
-                if (s.length()>2){
+                if (s.length() > 2) {
                     cardAmount.setVisibility(View.VISIBLE);
-                    double amt=CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()));
-                    String text = AmountED.getText().toString().trim()+" - Tax = ";
-                    AmountTotalTV.setText(text+String.format("%.2f", amt));
-                    tvWithdrawalAmount.setText(AmountED.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
-                    tvTax.setText(" -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
-                    tvTotalAmountsendmoney.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));
-                }else {
+                    double amt = CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()));
+                    String text = AmountED.getText().toString().trim() + " - Tax = ";
+                    AmountTotalTV.setText(text + String.format("%.2f", amt));
+                    tvWithdrawalAmount.setText(AmountED.getText().toString().trim() + " " + getResources().getString(R.string.rupees));
+                    tvTax.setText(" -  " + new DecimalFormat("##.##").format(minusAmount) + " " + getResources().getString(R.string.rupees));
+                    tvTotalAmountsendmoney.setText(String.format("%.2f", totalAmount) + " " + getResources().getString(R.string.rupees));
+                } else {
                     cardAmount.setVisibility(View.GONE);
                 }
             }
@@ -201,52 +205,52 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         });
 
         try {
-            Mobile=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
+            Mobile = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
             getBenList();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    private void CheckValidate(){
-        int Amount= 0;
+    private void CheckValidate() {
+        int Amount = 0;
         try {
-            Amount= Integer.parseInt(AmountED.getText().toString().trim());
-        }catch (Exception e){
+            Amount = Integer.parseInt(AmountED.getText().toString().trim());
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (Mode.equalsIgnoreCase("UPI")){
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Coming Soon",false);
-        }else  if (Mode.equalsIgnoreCase("Bank Transfer")){
-            if (TextUtils.isEmpty(AmountED.getText().toString().trim())){
-                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Enter Amount",false);
-            }else {
-                if (Amount<8001 && Amount>99){//99
+        if (Mode.equalsIgnoreCase("UPI")) {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Coming Soon", false);
+        } else if (Mode.equalsIgnoreCase("Bank Transfer")) {
+            if (TextUtils.isEmpty(AmountED.getText().toString().trim())) {
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Enter Amount", false);
+            } else {
+                if (Amount < 8001 && Amount > 99) {//99
 
-                    if (TextUtils.isEmpty(BenID)){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Select Any Beneficiary",false);
-                    }else {
-                        TransferWalletToBankRequest transferWalletToBankRequest=new TransferWalletToBankRequest();
+                    if (TextUtils.isEmpty(BenID)) {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Select Any Beneficiary", false);
+                    } else {
+                        TransferWalletToBankRequest transferWalletToBankRequest = new TransferWalletToBankRequest();
                         transferWalletToBankRequest.setAmount(String.valueOf(Amount));
                         transferWalletToBankRequest.setBeneId(BenID);
-                        transferWalletToBankRequestDate=transferWalletToBankRequest;
+                        transferWalletToBankRequestDate = transferWalletToBankRequest;
 
                         if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                            startActivity(new Intent(SendMoney.this,CreatePassCodeActivity.class));
+                            startActivity(new Intent(SendMoney.this, CreatePassCodeActivity.class));
                         } else {
                             PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoney.this, SendMoney.this, "");
                             passcodeDialog.show();
                         }
                     }
 
-                }else {
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Please Enter Amount Between Rs 100 And Rs 8000 ",false);
+                } else {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Enter Amount Between Rs 100 And Rs 8000 ", false);
                 }
             }
-        }else {
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Choose Mode Of Transfer",false);
+        } else {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Choose Mode Of Transfer", false);
         }
 
 
@@ -260,16 +264,16 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
 
-        if (isConnected){
-            CheckNet=true;
-        }else {
-            CheckNet=false;
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Check Your Internet Connection ",false);
+        if (isConnected) {
+            CheckNet = true;
+        } else {
+            CheckNet = false;
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Check Your Internet Connection ", false);
         }
 
     }
 
-    private void getBenList(){
+    private void getBenList() {
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
@@ -282,38 +286,38 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
                     @Override
                     public void onSuccess(GetBeneficiaryResponse response) {
                         loadingDialog.hideDialog();
-                        try{
+                        try {
                             if (response.isStatus()) {
 
-                                try{
-                                    if (response.getBeneficiary().size()>0){
-                                        try{
-                                            for (int i=0;i<response.getBeneficiary().size();i++){
+                                try {
+                                    if (response.getBeneficiary().size() > 0) {
+                                        try {
+                                            for (int i = 0; i < response.getBeneficiary().size(); i++) {
                                                 NameList.add(response.getBeneficiary().get(i).getName());
                                                 IdList.add(String.valueOf(response.getBeneficiary().get(i).getId()));
                                                 BenIdList.add(response.getBeneficiary().get(i).getBenId());
                                             }
 
-                                            try{
-                                                ArrayAdapter<String> TransferType= new ArrayAdapter<>(SendMoney.this,android.R.layout.simple_spinner_item,NameList);
+                                            try {
+                                                ArrayAdapter<String> TransferType = new ArrayAdapter<>(SendMoney.this, android.R.layout.simple_spinner_item, NameList);
                                                 TransferType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                                 BankBenSpinner.setAdapter(TransferType);
-                                            }catch (Exception e){
+                                            } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
-                                        }catch (Exception e){
+                                        } catch (Exception e) {
                                             e.printStackTrace();
                                         }
-                                    }else {
-                                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"No Beneficiary Found!. Please Add One",true);
+                                    } else {
+                                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "No Beneficiary Found!. Please Add One", true);
                                     }
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                            }else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);
+                            } else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), response.getMessage(), true);
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -328,7 +332,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
 
     }
 
-    private void WithAmountMethod(TransferWalletToBankRequest transferWalletToBankRequest){
+    private void WithAmountMethod(TransferWalletToBankRequest transferWalletToBankRequest) {
 
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
@@ -342,10 +346,10 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
                     @Override
                     public void onSuccess(TransferWalletToBankResponse response) {
                         loadingDialog.hideDialog();
-                        responseData=response;
+                        responseData = response;
                         ShowPending(response);
 
-                        if (response.getStatusCode()==401){
+                        if (response.getStatusCode() == 401) {
 
                         }
                     }
@@ -364,22 +368,22 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.upiradiobtn:
-                Mode="UPI";
+                Mode = "UPI";
                 WithdrawAmountlayout.setVisibility(VISIBLE);
                 BankBenSpinner.setVisibility(View.GONE);
-                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Coming Soon",false);
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Coming Soon", false);
                 break;
 
             case R.id.bankradiobtn:
-                Mode="Bank Transfer";
+                Mode = "Bank Transfer";
                 WithdrawAmountlayout.setVisibility(VISIBLE);
                 BankBenSpinner.setVisibility(VISIBLE);
                 break;
         }
     }
 
-    private void ShowPending(TransferWalletToBankResponse response){
-        TextView tvNeedHelp,StatusTV,DateTV,TxnIdTV,AmountTV,ProductInfoTV;
+    private void ShowPending(TransferWalletToBankResponse response) {
+        TextView tvNeedHelp, StatusTV, DateTV, TxnIdTV, AmountTV, ProductInfoTV;
 
         dialogStatus = new Dialog(SendMoney.this, android.R.style.Theme_Light);
         dialogStatus.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -398,7 +402,7 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
         AmountTV.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(AmountED.getText().toString())));
         ProductInfoTV.setText("Transfer Wallet To Bank");
 
-       countDownTimer.start();
+        countDownTimer.start();
 
         dialogStatus.show();
     }
@@ -414,23 +418,23 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
 
         @Override
         public void onFinish() {
-            final Intent intentStatus=new Intent(SendMoney.this,PaidOrderActivity.class);
+            final Intent intentStatus = new Intent(SendMoney.this, PaidOrderActivity.class);
 
-            if (responseData.getStatusCode()==1){
-                intentStatus.putExtra("status","success");
-            }else if (responseData.getStatusCode()==2){
+            if (responseData.getStatusCode() == 1) {
+                intentStatus.putExtra("status", "success");
+            } else if (responseData.getStatusCode() == 2) {
                 //Toast.makeText(SendMoney.this, responseData.getMessage(), Toast.LENGTH_SHORT).show();
-                intentStatus.putExtra("status","success");
+                intentStatus.putExtra("status", "success");
                 //change status to pending on bank issue resolved
-            }else {
+            } else {
                 Toast.makeText(SendMoney.this, responseData.getMessage(), Toast.LENGTH_LONG).show();
-                intentStatus.putExtra("status","failed");
+                intentStatus.putExtra("status", "failed");
             }
-            intentStatus.putExtra("txnid",responseData.getTransactionId());
-            intentStatus.putExtra("Amount",AmountED.getText().toString().trim());
-            intentStatus.putExtra("date",responseData.getDate());
-            intentStatus.putExtra("productinfo","Wallet To Bank Transaction");
-            intentStatus.putExtra("msg",responseData.getMessage());
+            intentStatus.putExtra("txnid", responseData.getTransactionId());
+            intentStatus.putExtra("Amount", AmountED.getText().toString().trim());
+            intentStatus.putExtra("date", responseData.getDate());
+            intentStatus.putExtra("productinfo", "Wallet To Bank Transaction");
+            intentStatus.putExtra("msg", responseData.getMessage());
             startActivity(intentStatus);
             finish();
             dialogStatus.dismiss();
@@ -440,23 +444,23 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
 
     @Override
     public void onPasscodeMatch(boolean isPasscodeMatched) {
-        if (isPasscodeMatched){
+        if (isPasscodeMatched) {
             WithAmountMethod(transferWalletToBankRequestDate);
-        }else {
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),"Invalid Passcode",false);
+        } else {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Invalid Passcode", false);
         }
 
     }
 
-    private double CalculateAmount(int amount){
-        minusAmount=((((double) amount) / 100) * 3.56);
-        totalAmount=(double)amount- minusAmount;
-        checkAmount=(int)minusAmount;
-        if (checkAmount>9){
+    private double CalculateAmount(int amount) {
+        minusAmount = ((((double) amount) / 100) * 3.56);
+        totalAmount = (double) amount - minusAmount;
+        checkAmount = (int) minusAmount;
+        if (checkAmount > 9) {
 
-        }else {
-            minusAmount=10;
-            totalAmount=(double)amount-(double)minusAmount;
+        } else {
+            minusAmount = 10;
+            totalAmount = (double) amount - (double) minusAmount;
         }
 
         return totalAmount;
@@ -494,8 +498,22 @@ public class SendMoney extends BaseActivity implements  RadioGroup.OnCheckedChan
 
     private void verifyOtp(String otp) {
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    Activity#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for Activity#requestPermissions for more details.
+                return;
+            }
+        }
+
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(Mobile, null);
+        request.setDeviceid(BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
         request.setOtp(otp);
         BaseApp.getInstance().getDisposable().add(apiService.verifyOTP(request)
                 .subscribeOn(Schedulers.io())

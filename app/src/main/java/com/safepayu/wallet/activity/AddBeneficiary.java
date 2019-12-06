@@ -1,9 +1,12 @@
 package com.safepayu.wallet.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -35,13 +38,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AddBeneficiary extends BaseActivity {
 
-    private Button BackBtn,AddBenBtn;
-    private EditText AccountNameED,AccountNumberED,AccountConfirmED,IFSCED;
+    private Button BackBtn, AddBenBtn;
+    private EditText AccountNameED, AccountNumberED, AccountConfirmED, IFSCED;
     private LoadingDialog loadingDialog;
-    private boolean CheckNet=false;
-    private ImageView showAccNo,HideAccNo;
+    private boolean CheckNet = false;
+    private ImageView showAccNo, HideAccNo;
     private ApiService apiService;
-    private String Mobile="";
+    private String Mobile = "";
     private AddBeneficiaryRequest addBeneficiaryRequest;
     //Otp Dialog
     TextView TimerTV;
@@ -56,18 +59,18 @@ public class AddBeneficiary extends BaseActivity {
 
         loadingDialog = new LoadingDialog(this);
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-        addBeneficiaryRequest=new AddBeneficiaryRequest();
+        addBeneficiaryRequest = new AddBeneficiaryRequest();
 
-        Mobile=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
+        Mobile = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
 
-        BackBtn=findViewById(R.id.send_back_btn);
-        AccountNameED=findViewById(R.id.accountName);
-        AccountNumberED=findViewById(R.id.accountNumber);
-        AccountConfirmED=findViewById(R.id.confirmAccountNumber);
-        IFSCED=findViewById(R.id.ifscCode);
-        AddBenBtn=findViewById(R.id.bankAddBtn);
-        showAccNo=findViewById(R.id.password_visible);
-        HideAccNo=findViewById(R.id.password_invisible);
+        BackBtn = findViewById(R.id.send_back_btn);
+        AccountNameED = findViewById(R.id.accountName);
+        AccountNumberED = findViewById(R.id.accountNumber);
+        AccountConfirmED = findViewById(R.id.confirmAccountNumber);
+        IFSCED = findViewById(R.id.ifscCode);
+        AddBenBtn = findViewById(R.id.bankAddBtn);
+        showAccNo = findViewById(R.id.password_visible);
+        HideAccNo = findViewById(R.id.password_invisible);
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +94,7 @@ public class AddBeneficiary extends BaseActivity {
                 AccountConfirmED.setTransformationMethod(null);
                 try {
                     AccountConfirmED.setSelection(AccountConfirmED.getText().toString().length());
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -106,7 +109,7 @@ public class AddBeneficiary extends BaseActivity {
                 AccountConfirmED.setTransformationMethod(new PasswordTransformationMethod());
                 try {
                     AccountConfirmED.setSelection(AccountConfirmED.getText().toString().length());
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -121,44 +124,44 @@ public class AddBeneficiary extends BaseActivity {
 
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
-        if (isConnected){
-            CheckNet=true;
-        }else {
-            CheckNet =false;
+        if (isConnected) {
+            CheckNet = true;
+        } else {
+            CheckNet = false;
         }
 
     }
 
-    private void CheckValidate(){
+    private void CheckValidate() {
 
-        String AccountN=AccountNameED.getText().toString().trim();
-        String AccountNF=AccountConfirmED.getText().toString().trim();
+        String AccountN = AccountNameED.getText().toString().trim();
+        String AccountNF = AccountConfirmED.getText().toString().trim();
 
-        if (TextUtils.isEmpty(AccountNameED.getText().toString().trim())){
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout),"Please Enter Name As On Account",false);
-        }else {
-            if (TextUtils.isEmpty(AccountNumberED.getText().toString().trim())){
-                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout),"Please Enter Account Number",false);
-            }else {
-                if (TextUtils.isEmpty(AccountConfirmED.getText().toString().trim())){
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout),"Please Enter Account Number To Confirm",false);
-                }else {
-                    if (TextUtils.isEmpty(IFSCED.getText().toString().trim())){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout),"Please Enter IFSC Code",false);
-                    }else {
-                        if (AccountN.equals(AccountNF)){
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout),"Please Same Account Number In Both Account's Field",false);
-                        }else {
+        if (TextUtils.isEmpty(AccountNameED.getText().toString().trim())) {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Please Enter Name As On Account", false);
+        } else {
+            if (TextUtils.isEmpty(AccountNumberED.getText().toString().trim())) {
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Please Enter Account Number", false);
+            } else {
+                if (TextUtils.isEmpty(AccountConfirmED.getText().toString().trim())) {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Please Enter Account Number To Confirm", false);
+                } else {
+                    if (TextUtils.isEmpty(IFSCED.getText().toString().trim())) {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Please Enter IFSC Code", false);
+                    } else {
+                        if (AccountN.equals(AccountNF)) {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Please Same Account Number In Both Account's Field", false);
+                        } else {
                             addBeneficiaryRequest.setName(AccountNameED.getText().toString().trim());
                             addBeneficiaryRequest.setBank_account(AccountNumberED.getText().toString().trim());
                             addBeneficiaryRequest.setIfsc_code(IFSCED.getText().toString().trim());
                             addBeneficiaryRequest.setUpi("");
                             addBeneficiaryRequest.setPaytm("");
 
-                            if (CheckNet){
+                            if (CheckNet) {
                                 resendOtp();
-                            }else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout),"Check Your Internet Connection!",false);
+                            } else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Check Your Internet Connection!", false);
                             }
                         }
                     }
@@ -167,7 +170,7 @@ public class AddBeneficiary extends BaseActivity {
         }
     }
 
-    private void addBenMethod(AddBeneficiaryRequest addBeneficiaryRequest){
+    private void addBenMethod(AddBeneficiaryRequest addBeneficiaryRequest) {
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
@@ -179,9 +182,9 @@ public class AddBeneficiary extends BaseActivity {
                     public void onSuccess(AddBeneficiaryResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            showDialogAfterAddBen(AddBeneficiary.this,response.getMessage());
-                        }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout),response.getMessage()+"\n"+response.getReason(),true);
+                            showDialogAfterAddBen(AddBeneficiary.this, response.getMessage());
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), response.getMessage() + "\n" + response.getReason(), true);
                         }
                     }
 
@@ -227,9 +230,23 @@ public class AddBeneficiary extends BaseActivity {
 
     private void verifyOtp(String otp) {
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    Activity#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for Activity#requestPermissions for more details.
+                return;
+            }
+        }
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(Mobile, null);
         request.setOtp(otp);
+        request.setDeviceid(BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
         BaseApp.getInstance().getDisposable().add(apiService.verifyOTP(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
