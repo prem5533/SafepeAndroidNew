@@ -1,6 +1,9 @@
 package com.safepayu.wallet.activity;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -27,7 +30,6 @@ import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.ForgetPasswordResponse;
 import com.safepayu.wallet.models.response.UserResponse;
-import com.squareup.picasso.Picasso;
 
 import java.util.Random;
 
@@ -48,8 +50,8 @@ public class ForgetPassword extends AppCompatActivity {
     LinearLayout layout1, layout2, layout3;
     private LoadingDialog loadingDialog;
     ApiService apiService;
-    private ImageView ShowHidePasswordBtn,forgotImage;
-    boolean showPass=false;
+    private ImageView ShowHidePasswordBtn, forgotImage;
+    boolean showPass = false;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -71,10 +73,10 @@ public class ForgetPassword extends AppCompatActivity {
         enter_otp = (EditText) findViewById(R.id.enter_otp);
         enter_password = (EditText) findViewById(R.id.enter_password);
         confrimPasswordED = findViewById(R.id.confirm_password);
-        ShowHidePasswordBtn= findViewById(R.id.show_hide_password_forgetPass);
+        ShowHidePasswordBtn = findViewById(R.id.show_hide_password_forgetPass);
         forgotImage = findViewById(R.id.forgot_image);
 
-      //  Picasso.get().load(imagePath).into(forgotImage);
+        //  Picasso.get().load(imagePath).into(forgotImage);
         otpToSend = 0;
         Random r = new Random();
         Otpval = r.nextInt(9999 - 1000) + 1000;
@@ -134,23 +136,23 @@ public class ForgetPassword extends AppCompatActivity {
         ShowHidePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (showPass){
-                    showPass=false;
+                if (showPass) {
+                    showPass = false;
                     ShowHidePasswordBtn.setImageDrawable(getResources().getDrawable(R.drawable.show_password48));
                     enter_password.setTransformationMethod(new PasswordTransformationMethod());
                     try {
                         enter_password.setSelection(enter_password.getText().toString().length());
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                }else {
-                    showPass=true;
+                } else {
+                    showPass = true;
                     ShowHidePasswordBtn.setImageDrawable(getResources().getDrawable(R.drawable.hide_password48));
                     enter_password.setTransformationMethod(null);
                     try {
                         enter_password.setSelection(enter_password.getText().toString().length());
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -166,8 +168,8 @@ public class ForgetPassword extends AppCompatActivity {
             enter_otp.setError("Please Enter OPT");
             enter_otp.requestFocus();
             return;
-        }else {
-            verifyOtp( enter_otp.getText().toString().trim());
+        } else {
+            verifyOtp(enter_otp.getText().toString().trim());
         }
     }
 
@@ -229,7 +231,7 @@ public class ForgetPassword extends AppCompatActivity {
                 }));
     }
 
-    CountDownTimer countDownTimer = new CountDownTimer(4*60000, 1000) {
+    CountDownTimer countDownTimer = new CountDownTimer(4 * 60000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
             int seconds = (int) (millisUntilFinished / 1000);
@@ -247,8 +249,23 @@ public class ForgetPassword extends AppCompatActivity {
 
     private void verifyOtp(String otp) {
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    Activity#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for Activity#requestPermissions for more details.
+                return;
+            }
+        }
+
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(edit_number.getText().toString().trim(), null);
+        request.setDeviceid(BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
         request.setOtp(otp);
         BaseApp.getInstance().getDisposable().add(apiService.verifyOTP(request)
                 .subscribeOn(Schedulers.io())
