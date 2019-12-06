@@ -124,7 +124,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     private OfferPagerAdapter adapter;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
-    String ImagePath="http://india.safepayu.com/safepe-new/public/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -455,7 +454,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             }
         });
 
-
         try {
             NUM_PAGES= promotionResponse1.getData().size();
             loadingDialog.hideDialog();
@@ -482,10 +480,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
                 }
             });
-        } catch (Exception e){
+        }catch (Exception e){
             e.printStackTrace();
         }
-
 
         createNotificationChannel();
         getFirebaseToken(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
@@ -1462,7 +1459,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         if (response.isStatus()) {
                             int val = Integer.parseInt(response.getVersionData().getVal());
                             url = response.getVersionData().getLogo();
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ImagePath+url);
+                            //BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ApiClient.ImagePath+url);
                        /*     Picasso.get().load(ImagePath+url).into(headerLogo);
                             Picasso.get().load(ImagePath+url).into(navLogo);*/
 

@@ -60,7 +60,6 @@ import com.safepayu.wallet.models.response.booking.bus.BusTripDetailsResponse;
 import com.safepayu.wallet.models.response.booking.flight.AirportLocationResponse;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightBlockTicketResponse;
-import com.safepayu.wallet.models.response.booking.flight.FlightSourceResponse;
 import com.safepayu.wallet.models.response.booking.hotel.AvailableHotelsResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelSourcesResponse;
 
@@ -75,168 +74,165 @@ public interface ApiService {
 //    @Header("X-Bearer-Token") String authorization
 
     // Register new user
-    @POST("api/safepe/createUser")
+    @POST("api/secure/payment/api/createUser")
     Single<UserResponse1> register(@Body Register registerRequest);
 
     // Login user
-    @POST("api/safepe/login")
+    @POST("api/secure/payment/api/login")
     Single<LoginResponse> login(@Body Login loginRequest);
     // Resend OTP
-    @POST("api/safepe/resendOTP")
+    @POST("api/secure/payment/api/resendOTP")
     Single<BaseResponse> resendOtp(@Body Login loginRequest);
     // verify OTP
-    @POST("api/safepe/verifyOTP")
+    @POST("api/secure/payment/api/verifyOTP")
     Single<UserResponse> verifyOTP(@Body Login loginRequest);
     // Create PassCode
-    @POST("api/safepe/savePasscode")
+    @POST("api/secure/payment/api/savePasscode")
     Single<UserDetailResponse> savePassCode(@Body Login loginRequest);
     // All Packages listing
-    @GET("api/safepe/getAllPackages")
+    @GET("api/secure/payment/api/getAllPackages")
     Single<PackageListData> getAllPackages();
     // All Packages listing
-    @GET("api/safepe/getUser")
+    @GET("api/secure/payment/api/getUser")
     Single<UserDetailResponse> getUserDetails();
 
-    @POST("api/safepe/buyPackage")
+    @POST("api/secure/payment/api/buyPackage")
     Single<BuyPackageResponse> buyPackage(@Body BuyPackage buyPackage);
 
-    @POST("api/safepe/resetPasscode")
+    @POST("api/secure/payment/api/resetPasscode")
     Single<BaseResponse> resetPasscode(@Body ResetPasscodeModel resetPasscodeModel);
 
-    @POST("api/safepe/saveBeneficiary")
+    @POST("api/secure/payment/api/saveBeneficiary")
     Single<AddBeneficiaryResponse> addBeneficiary(@Body AddBeneficiaryRequest addBeneficiaryRequest);
 
-    @POST("api/safepe/getBeneficiaryDetails")
+    @POST("api/secure/payment/api/getBeneficiaryDetails")
     Single<GetBeneficiaryResponse> getBeneficiary();;
 
-    @POST("api/safepe/transferWalletToBank")
+    @POST("api/secure/payment/api/transferWalletToBank")
     Single<TransferWalletToBankResponse> transferWalletToBank(@Body TransferWalletToBankRequest transferWalletToBankRequest);
 
-    @POST("api/safepe/updateUserAddress")
+    @POST("api/secure/payment/api/updateUserAddress")
     Single<UpdateAddressResponse>updateAddress(@Body UpdateAddress updateAddress);
 
-    @POST("api/safepe/changePassword")
+    @POST("api/secure/payment/api/changePassword")
     Single<UserResponse>changePwd(@Body ChangePassword changePassword);
 
-    @POST("api/safepe/walletToWallet")
+    @POST("api/secure/payment/api/walletToWallet")
     Single<SendToWalletResponse> transferWalletToWallet(@Body SendToWalletRequest sendToWalletRequest);
 
-    @POST("api/safepe/getWalletDetails")
+    @POST("api/secure/payment/api/getWalletDetails")
     Single<WalletResponse> getWalletDetails();;
 
-    @POST("api/safepe/getLatestUserBuyPackage")
+    @POST("api/secure/payment/api/getLatestUserBuyPackage")
     Single<PackageDetailsResponse> getPackageDetails();
 
-    @POST("api/safepe/recharge")
+    @POST("api/secure/payment/api/recharge")
     Single<RechargeResponse> doRecharge(@Body RechargeRequest rechargeRequest);
 
-    @POST("api/safepe/hasKey")
+    @POST("api/secure/payment/api/hasKey")
     Single<HashKeyResponse> getHashKey(@Body HashKeyRequest hashKeyRequest);
 
     @FormUrlEncoded
-    @POST("api/safepe/getAllOperators")
+    @POST("api/secure/payment/api/getAllOperators")
     Single<OperatorResponse> getOperators(@Field("operator_type") String operator_type);
 
     @FormUrlEncoded
-    @POST("api/safepe/getCustOperator")
+    @POST("api/secure/payment/api/getCustOperator")
     Single<CustOperatorResponse> getMobileOperator(@Field("number") String number);
 
-    @POST("api/safepe/forgotPassword")
+    @POST("api/secure/payment/api/forgotPassword")
     Single<ForgetPasswordResponse> getForgetPassword(@Body ForgetPasswordRequest forgetPasswordResponse);
 
-    @POST("api/safepe/addBankToWallet")
+    @POST("api/secure/payment/api/addBankToWallet")
     Single<SendPaymentGatewayDetailsResponse> addBankToWallet(@Body SendPaymentGatewayDetailsRequest sendPaymentGatewayDetailsRequest);
 
     @FormUrlEncoded
-    @POST("api/safepe/commitionToWallet")
+    @POST("api/secure/payment/api/commitionToWallet")
     Single<CommissionWalletTransferResponse> transferCommWalletToMainWallet(@Field("amount") String amount);
 
     @FormUrlEncoded
-    @POST("api/safepe/findVenificairyName")
+    @POST("api/secure/payment/api/findVenificairyName")
     Single<ReferralCodeResponse> getReferralDetails(@Field("referral_code") String referral_code, @Field("type") String type, @Field("mobile") String mobile);
 
     @FormUrlEncoded
-    @POST("api/safepe/sendVerifyEmailLink")
+    @POST("api/secure/payment/api/sendVerifyEmailLink")
     Single<BaseResponse> verifyEmail(@Field("userid") String userid,@Field("email") String email);
 
-    @GET("api/safepe/rechargeHistory")
+    @GET("api/secure/payment/api/rechargeHistory")
     Single<RechargeHistoryResponse> getRechargeHistory();
 
-    @GET("api/safepe/wallletHistory")
+    @GET("api/secure/payment/api/wallletHistory")
     Single<WalletHistoryResponse> getWalletHistory();
 
-    @GET("api/safepe/getVersion")
+    @GET("api/secure/payment/api/getVersion")
     Single<AppVersionResponse> getAppVersion();
 
     @FormUrlEncoded
-    @POST("api/safepe/refer")
+    @POST("api/secure/payment/api/refer")
     Single<BaseResponse> sendRefer(@Field("mobile") String mobile);
 
-    @POST("api/safepe/SaveUserAddress")
+    @POST("api/secure/payment/api/SaveUserAddress")
     Single<SaveAddressResponse> addAddress(@Body SaveAddressRequest saveAddressRequest);
 
-    @POST("api/safepe/getCommitionWithBusinessAmount")
+    @POST("api/secure/payment/api/getCommitionWithBusinessAmount")
     Single<CommissionDetailsResponse> getCommissionDetails();
 
     @FormUrlEncoded
-    @POST("api/safepe/getUserDetails")
+    @POST("api/secure/payment/api/getUserDetails")
     Single<UpiUserDetailsResponse> getUserDetailUPI(@Field("userid") String userid);
 
-    @POST("api/safepe/checkUserMobile")
+    @POST("api/secure/payment/api/checkUserMobile")
     Single<BaseResponse> checkEmailMobile(@Body CheckEmailMobileRequest checkEmailMobileRequest );
 
     @FormUrlEncoded
-    @POST("api/safepe/getFirebaseTocken")
+    @POST("api/secure/payment/api/getFirebaseTocken")
     Single<BaseResponse> getFirebaseToken(@Field("userid") String userid, @Field("token") String token);
 
-    @GET("api/safepe/getNotificationData")
+    @GET("api/secure/payment/api/getNotificationData")
     Single<NotificationResponse> getNotificationData();
 
-    @POST("api/safepe/logoutAlldevices")
+    @POST("api/secure/payment/api/logoutAlldevices")
     Single<BaseResponse> getlogoutAlldevices();
 
-    @GET("api/safepe/bankPaymentList")
+    @GET("api/secure/payment/api/bankPaymentList")
     Single<MyOrderResponse>getBankPayment();
 
-    @GET("api/safepe/checkBuyPackage")
+    @GET("api/secure/payment/api/checkBuyPackage")
     Single<BaseResponse> getcheckBuyPackage();
 
-    @GET("Flights/Airports?flightType=1")
-    Single<FlightSourceResponse> getFlightSources();
-
-    @POST("api/safepe/promotionalImages")
+    @POST("api/secure/payment/api/promotionalImages")
     Single<PromotionResponse>getPromotionOffer(@Body PromotionRequest promotionRequest);
 
 
     //*************Flight Booking *******************//
-    @GET("api/safepe/getFlightAirport")
+    @GET("api/secure/payment/api/getFlightAirport")
     Single<AirportLocationResponse> getAirportLocation();
 
-    @POST("api/safepe/getFlightAvailable")
+    @POST("api/secure/payment/api/getFlightAvailable")
     Single<AvailableFlightResponse> getAvailableFlight(@Body AvailableFlightRequest availableFlightRequest);
 
-    @POST("api/safepe/getFlightBlockTicket ")
+    @POST("api/secure/payment/api/getFlightBlockTicket ")
     Single<FlightBlockTicketResponse> getFlightBlockTicket(@Body FlightBlockTicketRequest flightBlockTicketRequest);
 
 
     //*************Bus Booking *******************//
-    @POST("api/safepe/postBusLocationList")
+    @POST("api/secure/payment/api/postBusLocationList")
     Single<BusSourcesResponse> getBusSourcres();
 
-    @POST("api/safepe/postBusAvailable")
+    @POST("api/secure/payment/api/postBusAvailable")
     Single<BusListResponse> getBusAvailable(@Body BusListRequest busListRequest);
 
-    @POST("api/safepe/postBusTripDetails")
+    @POST("api/secure/payment/api/postBusTripDetails")
     Single<BusTripDetailsResponse> getBusTripDetails(@Body BusTripDetailsRequest busTripDetailsRequest);
 
 
     //*************Hotel Booking *******************//
-    @POST("api/safepe/hotelSources")
+    @POST("api/secure/payment/api/hotelSources")
     Single<HotelSourcesResponse> getHotelSources();
 
-    @POST("api/safepe/hotelAvailable")
+    @POST("api/secure/payment/api/hotelAvailable")
     Single<AvailableHotelsResponse> getHotelAvailable(@Body AvailableHotelRequest availableHotelRequest);
 
-    @POST("api/safepe/hotelDetails")
+    @POST("api/secure/payment/api/hotelDetails")
     Single<HotelDetailResponse> getHotelDetails(@Body HotelDetailsRequest hotelDetailsRequest);
 }

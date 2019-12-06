@@ -115,7 +115,6 @@ public class ChildGuestAdapter extends RecyclerView.Adapter<ChildGuestAdapter.Fl
                                     AgeBoth=firstAge+"~"+secondAge;
                                 }
 
-
                                 try{
                                     ChildAgeList.set(ParentPos,AgeBoth);
                                 }catch (Exception e){
@@ -128,7 +127,6 @@ public class ChildGuestAdapter extends RecyclerView.Adapter<ChildGuestAdapter.Fl
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-
                 }
 
                 @Override

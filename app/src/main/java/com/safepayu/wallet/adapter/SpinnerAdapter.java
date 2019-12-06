@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.models.response.OperatorResponse;
 import com.squareup.picasso.Picasso;
 
@@ -48,7 +49,7 @@ public class SpinnerAdapter extends BaseAdapter {
         ImageView icon = (ImageView) convertView.findViewById(R.id.imageView);
         TextView names = (TextView) convertView.findViewById(R.id.textView);
         names.setText(mOperList.get(position).getOperator_name());
-        Picasso.get().load("http://india.safepayu.com/safepe-new/public/"+mOperList.get(position).getImage()).into(icon);
+        Picasso.get().load(ApiClient.ImagePath+mOperList.get(position).getImage()).into(icon);
         return convertView;
     }
 }

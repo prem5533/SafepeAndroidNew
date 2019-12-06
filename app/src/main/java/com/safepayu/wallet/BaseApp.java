@@ -15,6 +15,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class BaseApp extends MultiDexApplication {
     private static BaseApp mInstance;
+    public static String Code="*9@8#7$6%5&4*";
 
     public static synchronized BaseApp getInstance() {
         return mInstance;
