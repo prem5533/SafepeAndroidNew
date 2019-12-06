@@ -83,7 +83,6 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
      private int STATUS_RESERVED = 3;
      private String selectedIds,SeatsSelected="";
      private Dialog dialog,fillDetailDialog;
-     public static Button proceedBtnFillDetailDialog;
 
      {
          selectedIds = "";
@@ -129,6 +128,7 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
          dialog = new Dialog(getActivity());
          dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
          dialog.setContentView(R.layout.dialog_show_seat_selection);
+         dialog.setCancelable(false);
 
          WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
          Window window = dialog.getWindow();
@@ -223,8 +223,9 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
          proceedBtn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                 dialog.dismiss();
+
                  showDialogFillDetail( );
+                 dialog.dismiss();
              }
          });
 
@@ -258,6 +259,7 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
          fillDetailDialog = new Dialog(getActivity());
          fillDetailDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
          fillDetailDialog.setContentView(R.layout.dialog_fill_detail);
+         fillDetailDialog.setCancelable(false);
 
          WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
          Window window = fillDetailDialog.getWindow();
@@ -289,22 +291,15 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
              }
          });
 
-         proceedBtnFillDetailDialog=fillDetailDialog.findViewById(R.id.proceedBtn_fillDetailDialog);
-
-         proceedBtnFillDetailDialog.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 fillDetailDialog.dismiss();
-             }
-         });
-
-
          fillDetailDialog.show();
 
      }
 
      @Override
-     public void onLocationClickTo(int position) {
+     public void onFillDetailClickTo(int position,ArrayList<String> NameList,ArrayList<String>  AgeList,ArrayList<String>  GenderList,
+                                   String EmailTexT) {
+         fillDetailDialog.dismiss();
+         Toast.makeText(getActivity(), EmailTexT, Toast.LENGTH_SHORT).show();
 
      }
 

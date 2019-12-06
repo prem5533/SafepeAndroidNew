@@ -17,6 +17,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import static com.safepayu.wallet.api.ApiClient.ImagePath;
+
 public class SplashPagerAdapter extends PagerAdapter {
     // Declare Variables
     private Context context;
@@ -47,7 +49,7 @@ public class SplashPagerAdapter extends PagerAdapter {
         View itemView = LayoutInflater.from(context).inflate(R.layout.spalsh_pager_adapter,container,false);
 
         image_pager= (ImageView) itemView.findViewById(R.id.im);
-        Picasso.get().load("http://13.233.29.145/safepe-adminapi/public/"+ simage.get(position).getImage()).into(image_pager);
+        Picasso.get().load(ImagePath+ simage.get(position).getImage()).into(image_pager);
 
 
 

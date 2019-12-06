@@ -12,6 +12,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.models.response.PromotionResponse;
 import com.squareup.picasso.Picasso;
 
@@ -49,7 +50,7 @@ public class OfferPagerAdapter  extends PagerAdapter {
 
         image_pager= (ImageView) itemView.findViewById(R.id.im);
         Picasso.get()
-                .load("http://13.233.29.145/safepe-adminapi/public/"+ simage.get(position)
+                .load(ApiClient.ImagePath+ simage.get(position)
                 .getImage())
                 .error(context.getResources().getDrawable(R.drawable.image_not_available))
                 .into(image_pager);

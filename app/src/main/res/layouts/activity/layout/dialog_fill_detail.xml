@@ -68,28 +68,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider"
-                android:layout_margin="5dp"/>
-
-            <Button
-                android:id="@+id/proceedBtn_fillDetailDialog"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/rounded_buttons"
-                android:padding="10dp"
-                android:text="Proceed"
-                android:textColor="#fff"
-                android:textSize="15sp"
-                android:fontFamily="@font/roboto_regular"/>
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

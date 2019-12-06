@@ -19,13 +19,15 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.safepayu.wallet.BaseApp.Code;
+
 public class ApiClient {
 //http://13.232.191.38/safepe-new/public/
     //http://india.safepayu.com/safepe-testing/public/
    // http://india.safepayu.com/safepe-new/public/
 
-    private static final String BASE_URL = "http://13.233.29.145/safepe-adminapi/public/";
-    public  static String ImagePath = "http://india.safepayu.com/safepe-new/public/";
+    private static final String BASE_URL = "http://alias.safepeindia.com/";
+    public  static String ImagePath = "http://alias.safepeindia.com/";
     private static Retrofit retrofit = null;
     private static int REQUEST_TIMEOUT = 60;
     private static OkHttpClient okHttpClient;
@@ -61,9 +63,12 @@ public class ApiClient {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
-                Request.Builder requestBuilder = original.newBuilder()
+                Request.Builder requestBuilder = null;
+                requestBuilder = original.newBuilder()
                         .addHeader("Accept", "application/json")
-                        .addHeader("Content-Type", "application/json");
+                        .addHeader("Content-Type", "application/json")
+                        .addHeader("security", Code);
+
 
                 // Adding Authorization token (API Key)
                 // Requests will be denied without API key

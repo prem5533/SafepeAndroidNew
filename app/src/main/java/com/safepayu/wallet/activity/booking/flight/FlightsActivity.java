@@ -24,19 +24,21 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.RechargeHistory;
 import com.safepayu.wallet.adapter.fight.FlightLocationAdapter;
 import com.safepayu.wallet.api.ApiClient;
-import com.safepayu.wallet.api.ApiClientBooking;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.FlightDatePicker;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-
 import com.safepayu.wallet.models.response.booking.flight.AirportLocationResponse;
-import com.safepayu.wallet.models.response.booking.flight.FlightSourceResponse;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -60,10 +62,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.MultiDex;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -733,48 +731,6 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
 
-    }
-
-
-    private void getFlightSources(String flightType) {
-          loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-
-        ApiService apiService = ApiClientBooking.getClient(this).create(ApiService.class);
-
-        BaseApp.getInstance().getDisposable().add(apiService.getFlightSources()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<FlightSourceResponse>() {
-                    @Override
-                    public void onSuccess(FlightSourceResponse response) {
-                          loadingDialog.hideDialog();
-
-
-//                          if (response.getBankDetails().size()>0){
-//                              for (int i=0;i<response.getBankDetails().size();i++){
-//                                  AirportCodeList.add(response.getBankDetails().get(i).getAirportCode());
-//                                  CityList.add(response.getBankDetails().get(i).getCity());
-//                                  AirportDescList.add(response.getBankDetails().get(i).getAirportDesc());
-//                              }
-//                              ArrayAdapter<String> adapter = new ArrayAdapter<String>(FlightsActivity.this, android.R.layout.simple_dropdown_item_1line, CityList);
-//                              SourceACTV.setAdapter(adapter);
-//                              SourceACTV.setThreshold(3);
-//                          }else {
-//                              BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_flight),"No Data Found",true);
-//                          }
-
-                        AirportCodeList.add(response.getAirportCode());
-                        CityList.add(response.getCity());
-                        AirportDescList.add(response.getAirportDesc());
-                    }
-
-
-                    @Override
-                    public void onError(Throwable e) {
-                          loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_flight),e.getMessage(),true);
-                    }
-                }));
     }
 
     public class GetSoureces extends AsyncTask<Object, Void, Object> {

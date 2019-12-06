@@ -124,7 +124,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     private OfferPagerAdapter adapter;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
-    String ImagePath="http://india.safepayu.com/safepe-new/public/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -455,32 +454,35 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             }
         });
 
+        try {
+            NUM_PAGES= promotionResponse1.getData().size();
+            loadingDialog.hideDialog();
+            adapter = new OfferPagerAdapter(Navigation.this,promotionResponse1.getData());
+            viewpager.setAdapter(adapter);
+            TabLayout tabLayout = findViewById(R.id.tab_layout);
+            if (promotionResponse1.getData().size()>1){
+                tabLayout.setupWithViewPager(viewpager, true);
+            }
 
-        NUM_PAGES= promotionResponse1.getData().size();
-        loadingDialog.hideDialog();
-        adapter = new OfferPagerAdapter(Navigation.this,promotionResponse1.getData());
-        viewpager.setAdapter(adapter);
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        if (promotionResponse1.getData().size()>1){
-            tabLayout.setupWithViewPager(viewpager, true);
+            viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
-        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         createNotificationChannel();
         getFirebaseToken(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
@@ -1457,7 +1459,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         if (response.isStatus()) {
                             int val = Integer.parseInt(response.getVersionData().getVal());
                             url = response.getVersionData().getLogo();
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ImagePath+url);
+                            //BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ApiClient.ImagePath+url);
                        /*     Picasso.get().load(ImagePath+url).into(headerLogo);
                             Picasso.get().load(ImagePath+url).into(navLogo);*/
 
