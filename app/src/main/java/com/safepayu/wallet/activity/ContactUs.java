@@ -193,7 +193,7 @@ public class ContactUs extends BaseActivity implements View.OnClickListener {
                 try{
                     startActivity(Intent.createChooser(emailIntent, "Send mail..."));
                 }catch (Exception e){
-                    Log.e("SendEmailERRO", e.toString());
+                    //Log.e("SendEmailERRO", e.toString());
                 }
                 break;
         }

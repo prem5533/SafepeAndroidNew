@@ -232,7 +232,7 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.sendMoneyToWalletLayout), true, e);
                     }
@@ -275,7 +275,7 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.sendMoneyToWalletLayout), true, e);
                     }
                 }));

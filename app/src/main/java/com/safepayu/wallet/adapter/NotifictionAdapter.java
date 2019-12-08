@@ -91,7 +91,7 @@ public class NotifictionAdapter  extends RecyclerView.Adapter<NotifictionAdapter
             hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60));
             min = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
             hours = (hours < 0 ? -hours : hours);
-            Log.i("======= Hours"," :: "+hours);*/
+            //Log.i("======= Hours"," :: "+hours);*/
         }
     }
 }

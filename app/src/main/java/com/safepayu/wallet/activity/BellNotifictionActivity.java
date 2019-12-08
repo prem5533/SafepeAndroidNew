@@ -93,7 +93,7 @@ public class BellNotifictionActivity extends AppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(BellNotifictionActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(BellNotifictionActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.notificationLayout), false, e.getCause());
                     }
                 }));

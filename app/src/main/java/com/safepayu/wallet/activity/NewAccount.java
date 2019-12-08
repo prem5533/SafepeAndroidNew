@@ -82,7 +82,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         VerifyReffralBtn=findViewById(R.id.verify_referral);
         verifyAlready=findViewById(R.id.verify_already);
         signup_logo=findViewById(R.id.signup_logo);
-        Picasso.get().load(imagePath).into(signup_logo);
+      //  Picasso.get().load(imagePath).into(signup_logo);
 
         ShowHidePasswordBtn.setOnClickListener(this);
         VerifyReffralBtn.setOnClickListener(this);
@@ -419,7 +419,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(NewAccount.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(NewAccount.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.newAccountLayout), true, e);
 
@@ -461,7 +461,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.newAccountLayout), true, e);
                     }
                 }));
@@ -490,7 +490,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.newAccountLayout), true, e);
                     }
                 }));
@@ -519,7 +519,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.newAccountLayout), true, e);
                     }
                 }));

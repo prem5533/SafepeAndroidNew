@@ -74,6 +74,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+     //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setToolbar(false, null, true);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -114,7 +115,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
-                            Log.v("getInstanceId failed", "getInstanceId failed", task.getException());
+                            //Log.v("getInstanceId failed", "getInstanceId failed", task.getException());
                             return;
                         }
                         // Get new Instance ID token
@@ -302,7 +303,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             int val = Integer.parseInt(response.getVersionData().getVal());
 
                              url = response.getVersionData().getLogo();
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ImagePath+url);
+                          //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ImagePath+url);
                            //  Picasso.get().load(ImagePath+url).into(loginImageLogo);
 
                             if (versionCode == val) {
@@ -319,7 +320,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
+                      //  Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.walletHistoryLayout), false, e.getCause());
                     }
                 }));
@@ -385,7 +386,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
                     }
@@ -600,7 +601,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
                     }
@@ -662,7 +663,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
                     }
@@ -691,7 +692,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                      //  Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), true, e);
                     }

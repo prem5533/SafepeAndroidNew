@@ -258,7 +258,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
 
                 try {
                     date1=new SimpleDateFormat("dd-MMM-yyyy").parse(s1);
-                    Log.e("ds", String.valueOf(date1));
+                    //Log.e("ds", String.valueOf(date1));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -800,7 +800,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
             if (status_code == 200) {
                 try {
                     jsonArray = new JSONArray(response);
-                    Log.v("response",response.toString());
+                    //Log.v("response",response.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -890,7 +890,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.flight_location_layout), false, e.getCause());
                     }
                 }));

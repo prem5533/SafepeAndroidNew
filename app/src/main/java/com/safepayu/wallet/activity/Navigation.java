@@ -155,7 +155,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
-                            Log.v("getInstanceId failed", "getInstanceId failed", task.getException());
+                            //Log.v("getInstanceId failed", "getInstanceId failed", task.getException());
                             return;
                         }
                         // Get new Instance ID token
@@ -1484,7 +1484,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, false, e.getCause());
                     }
                 }));
@@ -1558,7 +1558,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, true, e);
                     }
                 }));

@@ -66,7 +66,7 @@ public class ToastHelper {
      * for showing Log
      */
     public void log(Class<?> mClass, String msg) {
-        Log.e(mClass.getName(), msg);
+        //Log.e(mClass.getName(), msg);
     }
 
     /**

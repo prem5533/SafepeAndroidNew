@@ -45,7 +45,7 @@ public class KeyRect {
                 if (hasRippleEffect) {
                     float animatedValue = (float) animation.getAnimatedValue();
                     rippleRadius = (int) animatedValue;
-                    Log.i("Ripple start", "radius " + rippleRadius);
+                    //Log.i("Ripple start", "radius " + rippleRadius);
                     circleAlpha = (int) (MAX_RIPPLE_ALPHA - (animatedValue * circleAlphaOffset));
                     interpolatedValueListener.onValueUpdated();
                 }

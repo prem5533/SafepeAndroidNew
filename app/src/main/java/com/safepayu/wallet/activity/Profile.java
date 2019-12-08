@@ -87,8 +87,8 @@ public class Profile extends BaseActivity implements View.OnClickListener {
             List<Address> addresses = geocoder.getFromLocation(23.322, 43.23232, 1);
             String address = addresses.get(0).getAddressLine(0);
 
-            Log.d("mylog", "Complete Address: " + addresses.toString());
-            Log.d("mylog", "Address: " + address);
+            //Log.d("mylog", "Complete Address: " + addresses.toString());
+            //Log.d("mylog", "Address: " + address);
         } catch (IOException e) {
             e.printStackTrace();
         }*/
@@ -130,7 +130,7 @@ public class Profile extends BaseActivity implements View.OnClickListener {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(Profile.class), "onError: " + e.getMessage());
+                       // Log.e(BaseApp.getInstance().toastHelper().getTag(Profile.class), "onError: " + e.getMessage());
 
 
                     }
@@ -234,7 +234,7 @@ public class Profile extends BaseActivity implements View.OnClickListener {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(AddUpdateAddress.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(AddUpdateAddress.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                     }
                 }));
@@ -331,7 +331,7 @@ public class Profile extends BaseActivity implements View.OnClickListener {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.addUpdateAddressLayout), true, e);
                     }

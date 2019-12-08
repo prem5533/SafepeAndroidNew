@@ -183,14 +183,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     String[] separated = address.split(",");
                     first = separated[0];// this will contain "Fruit"
                     second = separated[1];
-                    Log.d("DDRE", first + second);
+                    //Log.d("DDRE", first + second);
                     markerOptions.title("" + latLng + "," + subLocality + "," + state
                             + "," + country);
                     tvLatLong.setText(address);
                     Toast.makeText(getApplicationContext(), address, Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
-                Log.e("Location Address Loader", "Unable connect to Geocoder", e);
+                //Log.e("Location Address Loader", "Unable connect to Geocoder", e);
                 e.printStackTrace();
             }
         }
@@ -206,20 +206,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDragStart(Marker marker) {
-                Log.d("System out", "onMarkerDragStart..." + marker.getPosition().latitude + "..." + marker.getPosition().longitude);
+                //Log.d("System out", "onMarkerDragStart..." + marker.getPosition().latitude + "..." + marker.getPosition().longitude);
                 //   Toast.makeText(MapActivity.this, String.format("Drag from"+marker.getPosition().latitude + marker.getPosition().longitude),Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onMarkerDrag(Marker marker) {
-                Log.i("System out", "onMarkerDrag...");
+                //Log.i("System out", "onMarkerDrag...");
                 //    Toast.makeText(MapActivity.this, String.format("Drag To"+marker.getPosition().latitude + marker.getPosition().longitude),Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onMarkerDragEnd(Marker marker) {
-                Log.d("System out", "onMarkerDragEnd..." + marker.getPosition().latitude + "..." + marker.getPosition().longitude);
+                //Log.d("System out", "onMarkerDragEnd..." + marker.getPosition().latitude + "..." + marker.getPosition().longitude);
                 //     Toast.makeText(MapActivity.this, String.format("Drag end"+marker.getPosition().latitude + marker.getPosition().longitude),Toast.LENGTH_SHORT).show();
                 geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                 try {
@@ -244,7 +244,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Toast.makeText(getApplicationContext(), address, Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Log.e("Location Address Loader", "Unable connect to Geocoder", e);
+                    //Log.e("Location Address Loader", "Unable connect to Geocoder", e);
                     e.printStackTrace();
                 }
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));

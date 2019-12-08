@@ -20,6 +20,15 @@ public class TransferWalletToBankResponse {
     private String transactionId;
     private String date;
     private int statusCode;
+    private String utr ;
+
+    public String getUtr() {
+        return utr;
+    }
+
+    public void setUtr(String utr) {
+        this.utr = utr;
+    }
 
     public boolean isStatus() {
         return status;

@@ -154,7 +154,7 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(FlightListActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(FlightListActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.flight_list), false, e.getCause());
                     }
                 }));

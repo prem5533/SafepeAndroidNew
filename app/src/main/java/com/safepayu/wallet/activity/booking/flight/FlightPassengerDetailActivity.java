@@ -486,9 +486,9 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             flightInfantDob =    ((EditText)li.get(a).findViewById(R.id.et_flightp_infant_dob)).getText().toString();
 
             Toast.makeText(getApplicationContext(),flightAdultFNme,Toast.LENGTH_LONG).show();
-           Log.e("flightfname",flightAdultFNme);
-           Log.e("flightfname",flightAdultLName);
-           Log.e("flightfname",flightAdultDob);
+           //Log.e("flightfname",flightAdultFNme);
+           //Log.e("flightfname",flightAdultLName);
+           //Log.e("flightfname",flightAdultDob);
         }*/
 
  //   }
@@ -724,7 +724,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(FlightPassengerDetailActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(FlightPassengerDetailActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.flight_passenger), false, e.getCause());
                     }
                 }));

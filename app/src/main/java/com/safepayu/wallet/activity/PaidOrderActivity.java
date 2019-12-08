@@ -32,9 +32,9 @@ import pl.droidsonroids.gif.GifImageView;
 import static android.view.Gravity.CENTER_VERTICAL;
 
 public class PaidOrderActivity extends AppCompatActivity {
-    private TextView tvNeedHelp,StatusTV,DateTV,TxnIdTV,AmountTV,ProductInfoTV,ServiceInfoTV;
+    private TextView tvNeedHelp,StatusTV,DateTV,TxnIdTV,AmountTV,ProductInfoTV,ServiceInfoTV,tvSafepeUtrId;
     private GifImageView gifImageView;
-    private String status="",txnid="",Amount="",date="",productinfo="",Message="";
+    private String status="",txnid="",Amount="",date="",productinfo="",Message="",UTR="";
     private Button BackBtn;
     private Dialog dialog;
 
@@ -57,6 +57,7 @@ public class PaidOrderActivity extends AppCompatActivity {
             productinfo=intentStatus.getStringExtra("productinfo");
             txnid=intentStatus.getStringExtra("txnid");
             Message=intentStatus.getStringExtra("Message");
+            UTR=intentStatus.getStringExtra("utr_id");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -89,6 +90,7 @@ public class PaidOrderActivity extends AppCompatActivity {
         ProductInfoTV = findViewById(R.id.productInfo);
         BackBtn=findViewById(R.id.status_back_btn);
         ServiceInfoTV=findViewById(R.id.serviceInfo);
+        tvSafepeUtrId=findViewById(R.id.tv_safepe_utr_id);
 
         String PendingText=Message;
 
@@ -96,7 +98,7 @@ public class PaidOrderActivity extends AppCompatActivity {
             if (productinfo.contains("wallet") || productinfo.contains("Wallet")){
                 PendingText="It Might Take 5 Mins To 3 Hrs. Have Patience For Transaction. Sorry For The Inconvenience. \nThank You!";
             }else {
-                PendingText="It Might Take 5 Mins To 3 Hrs For Recharge. Have Patience. Sorry For The Inconvenience. \nThank You!";
+             //   PendingText="It Might Take 5 Mins To 3 Hrs For Recharge. Have Patience. Sorry For The Inconvenience. \nThank You!";
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -115,12 +117,29 @@ public class PaidOrderActivity extends AppCompatActivity {
            // gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.success));
             Glide.with(getApplicationContext()).load(R.drawable.success).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
             StatusTV.setTextColor(getResources().getColor(R.color.green_500));
-            ServiceInfoTV.setText(PendingText);
+            if(PendingText.equals("It Might Take 5 Mins To 3 Hrs. Have Patience For Transaction. Sorry For The Inconvenience. \nThank You!")){
+                ServiceInfoTV.setVisibility(View.GONE);
+            }
+            else {
+                ServiceInfoTV.setText(PendingText);
+            }
+            if (UTR==null){
+                tvSafepeUtrId.setVisibility(View.GONE);
+            }{
+                tvSafepeUtrId.setText("UTR ID: "+UTR);
+            }
+
         } else if (status.equalsIgnoreCase("pending")){
             //gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.pending));
 
             Glide.with(getApplicationContext()).load(R.drawable.pending2).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
             ServiceInfoTV.setText(PendingText);
+            if (UTR==null){
+                tvSafepeUtrId.setVisibility(View.GONE);
+            }{
+                tvSafepeUtrId.setText("UTR ID: "+UTR);
+            }
+
             StatusTV.setTextColor(getResources().getColor(R.color.clay_yellow));
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.statusorderLayout),PendingText,true);
         } else {
@@ -128,6 +147,7 @@ public class PaidOrderActivity extends AppCompatActivity {
             Glide.with(getApplicationContext()).load(R.drawable.failed_gif).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
             StatusTV.setTextColor(getResources().getColor(R.color.red_400));
             ServiceInfoTV.setText(PendingText);
+            tvSafepeUtrId.setVisibility(View.GONE);
         }
 
         StatusTV.setText(status);
@@ -138,7 +158,7 @@ public class PaidOrderActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(txnid)){
             TxnIdTV.setVisibility(View.GONE);
         }else {
-            TxnIdTV.setText("Txn ID: "+txnid);
+            TxnIdTV.setText("S_P (Txn ID): "+txnid);
         }
 
         if (productinfo.equalsIgnoreCase("Wallet To Bank Transaction")){

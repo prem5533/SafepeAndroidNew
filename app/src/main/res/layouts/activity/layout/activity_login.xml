@@ -165,85 +165,85 @@
                 </LinearLayout>
             </FrameLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_gravity="bottom"
-                android:gravity="bottom"
-                android:layout_marginTop="40dp"
-                >
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider" />
-
-                <LinearLayout
-                    android:id="@+id/btn.forgetPass"
-                    android:layout_width="match_parent"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <com.safepayu.wallet.custom_view.CustomTextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:padding="20dp"
-                        style="@style/TextAppearance.AppCompat.Small"
-                        app:fontCustom="@string/Roboto"
-                        android:textStyle="normal"
-                        android:textSize="15sp"
-                        android:textColor="@color/bue_A800"
-                        android:text="@string/forgot_password" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:padding="5dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_right_arrow"
-                        android:layout_marginRight="10dp"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider" />
-
-                <LinearLayout
-                    android:id="@+id/btn.newAccount"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <com.safepayu.wallet.custom_view.CustomTextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        style="@style/TextAppearance.AppCompat.Small"
-                        app:fontCustom="@string/Roboto"
-                        android:padding="20dp"
-                        android:textStyle="normal"
-                        android:textSize="15sp"
-                        android:textColor="@color/bue_A800"
-                        android:text="@string/create_new_account" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:padding="5dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_right_arrow"
-                        android:layout_marginRight="10dp"/>
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:layout_marginTop="40dp"
+        >
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:id="@+id/btn.forgetPass"
+            android:layout_width="match_parent"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.safepayu.wallet.custom_view.CustomTextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                style="@style/TextAppearance.AppCompat.Small"
+                app:fontCustom="@string/Roboto"
+                android:textStyle="normal"
+                android:textSize="15sp"
+                android:textColor="@color/bue_A800"
+                android:text="@string/forgot_password" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:padding="5dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_right_arrow"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:id="@+id/btn.newAccount"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.safepayu.wallet.custom_view.CustomTextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Small"
+                app:fontCustom="@string/Roboto"
+                android:padding="20dp"
+                android:textStyle="normal"
+                android:textSize="15sp"
+                android:textColor="@color/bue_A800"
+                android:text="@string/create_new_account" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:padding="5dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_right_arrow"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
