@@ -67,7 +67,7 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scan_view);
-        Log.e("onCreate", "onCreate");
+        //Log.e("onCreate", "onCreate");
 
         loadingDialog=new LoadingDialog(this);
         mScannerView = findViewById(R.id.scanView);

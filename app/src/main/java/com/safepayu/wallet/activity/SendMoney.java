@@ -324,7 +324,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
                     }
@@ -356,7 +356,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
                     }
@@ -435,6 +435,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
             intentStatus.putExtra("date", responseData.getDate());
             intentStatus.putExtra("productinfo", "Wallet To Bank Transaction");
             intentStatus.putExtra("msg", responseData.getMessage());
+            intentStatus.putExtra("utr_id", responseData.getUtr());
             startActivity(intentStatus);
             finish();
             dialogStatus.dismiss();
@@ -489,7 +490,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
                     }
@@ -531,7 +532,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
                     }

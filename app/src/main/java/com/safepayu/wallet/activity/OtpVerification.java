@@ -175,7 +175,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.otpLayout), true, e);
                     }
@@ -222,7 +222,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.otpLayout), true, e);
                     }

@@ -108,7 +108,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
 
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, true, e);
                     }

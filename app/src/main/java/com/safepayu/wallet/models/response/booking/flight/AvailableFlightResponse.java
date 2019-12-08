@@ -5,9 +5,6 @@ import java.util.List;
 
 public class AvailableFlightResponse {
 
-
-
-
     private boolean status;
     private String message;
     private DataBean data;

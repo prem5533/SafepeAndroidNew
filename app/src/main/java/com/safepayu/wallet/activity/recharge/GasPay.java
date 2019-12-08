@@ -285,7 +285,7 @@ public class GasPay extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.gasPayLayout), true, e);
                     }
@@ -318,7 +318,7 @@ public class GasPay extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.mobileRechargeLayout), true, e);
                     }
                 }));

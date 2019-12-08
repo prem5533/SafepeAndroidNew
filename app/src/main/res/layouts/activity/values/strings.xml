@@ -45,7 +45,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="copyright">\u00a9</string>
     <string name="book_round_trip">Book two\nway trips</string>
-    <string name="gst_number_tax">GST Number for tax benefit (Optionl)</string>
+    <string name="gst_number_tax">GST Number for tax benefit (Optional)</string>
     <string name="flight_term_condition">I understand &amp; agree with the all Terms and Conditions of SafePe</string>
 
 </resources>

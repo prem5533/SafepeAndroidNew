@@ -155,7 +155,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
-                            Log.v("getInstanceId failed", "getInstanceId failed", task.getException());
+                            //Log.v("getInstanceId failed", "getInstanceId failed", task.getException());
                             return;
                         }
                         // Get new Instance ID token
@@ -186,7 +186,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
 
         dialog.getWindow().setAttributes(lp);
-      //  dialog.show();
+        //  dialog.show();
 
         searchLayout_nav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1484,7 +1484,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, false, e.getCause());
                     }
                 }));
@@ -1558,7 +1558,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, true, e);
                     }
                 }));
@@ -1708,7 +1708,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
     private void getPrmotionalOffer() {
 
-       // loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        // loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
 
 

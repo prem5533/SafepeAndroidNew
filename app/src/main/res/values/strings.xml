@@ -93,6 +93,7 @@
     <string name="electricity_payment_time">Payment will be added in your account within 48 hours.</string>
     <string name="gas_payment_time">Payment will be added in your account within 24 hours.</string>
     <string name="landline_payment_time">Payment will be added in your account within 2 hours.</string>
+    <string name="reviewfilght_details">Review below details!</string>
 
 
 

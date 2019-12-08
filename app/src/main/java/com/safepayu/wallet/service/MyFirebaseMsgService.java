@@ -28,8 +28,8 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         //Log data to Log Cat
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
-        Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
+        //Log.d(TAG, "From: " + remoteMessage.getFrom());
+        //Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
 
         BadgeCount=BadgeCount+1;
 
@@ -51,13 +51,13 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
-        Log.d("token",token);
+        //Log.d("token",token);
         sendRegistrationToServer(token);
     }
 
     private void sendRegistrationToServer(String token) {
         // sending gcm token to server
-        Log.e(TAG, "sendRegistrationToServer: " + token);
+      //  Log.e(TAG, "sendRegistrationToServer: " + token);
     }
 
     private void createNotification(RemoteMessage remoteMessage) {

@@ -27,12 +27,14 @@ public class OneWayFlightListAdapter extends RecyclerView.Adapter<OneWayFlightLi
 
     public interface OnFlightItemListener{
         void onFlightItemListerne(int position, AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mFlightItemListenre);
+        void onFlight(int position);
     }
 
-    public OneWayFlightListAdapter(Context context, List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> mItem,OnFlightItemListener onFlightItemListener) {
+    public OneWayFlightListAdapter(Context context, List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> mItem,OnFlightItemListener onFlightItemListener,OnFlightItemListener onFlight) {
         this.context = context;
         this.mItem = mItem;
         this.onFlightItemListener = onFlightItemListener;
+        this.onFlightItemListener = onFlight;
     }
 
     @NonNull
@@ -138,8 +140,8 @@ public class OneWayFlightListAdapter extends RecyclerView.Adapter<OneWayFlightLi
 
             //************set flight time***********
             String Date, Time, h, m;
-            String depTime = mItem.get(position).getFlightSegments().get(0).getDepartureDateTimeZone();
-            String[] separated = depTime.split(" ");
+            String depTime = mItem.get(position).getFlightSegments().get(0).getDepartureDateTime();
+            String[] separated = depTime.split("T");
             Date = separated[0];
             Time = separated[1];
             String[] separatedTime = Time.split(":");
@@ -147,14 +149,28 @@ public class OneWayFlightListAdapter extends RecyclerView.Adapter<OneWayFlightLi
             m = separatedTime[1];
             tvDepartureFlightTime.setText(h + ":" + m);
 
-            String arrTime = mItem.get(position).getFlightSegments().get(0).getArrivalDateTimeZone();
-            String[] arrTimeseparated = arrTime.split(" ");
-            Date = arrTimeseparated[0];
-            Time = arrTimeseparated[1];
-            String[] separatedArrTime = Time.split(":");
-            h = separatedArrTime[0];
-            m = separatedArrTime[1];
-            tvArrivalFlightTime.setText(h + ":" + m);
+            if (flightStop>1){
+                String arrTime = mItem.get(position).getFlightSegments().get(flightStop-1).getArrivalDateTime();
+                String[] arrTimeseparated = arrTime.split("T");
+                Date = arrTimeseparated[0];
+                Time = arrTimeseparated[1];
+                String[] separatedArrTime = Time.split(":");
+                h = separatedArrTime[0];
+                m = separatedArrTime[1];
+                tvArrivalFlightTime.setText(h + ":" + m);
+
+            }
+            else {
+                String arrTime = mItem.get(position).getFlightSegments().get(0).getArrivalDateTime();
+                String[] arrTimeseparated = arrTime.split("T");
+                Date = arrTimeseparated[0];
+                Time = arrTimeseparated[1];
+                String[] separatedArrTime = Time.split(":");
+                h = separatedArrTime[0];
+                m = separatedArrTime[1];
+                tvArrivalFlightTime.setText(h + ":" + m);
+            }
+
 
             //*************set image****************
             Picasso.get().load("http://webapi.i2space.co.in/" + mItem.get(position).getFlightSegments().get(0).getImagePath()).into(imageFlight);
@@ -194,6 +210,7 @@ public class OneWayFlightListAdapter extends RecyclerView.Adapter<OneWayFlightLi
         public void onClick(View v) {
             if (onFlightItemListener != null) {
                 onFlightItemListener.onFlightItemListerne(getLayoutPosition(),mItem.get(getLayoutPosition()) );
+                onFlightItemListener.onFlight(getLayoutPosition());
 
             }
         }

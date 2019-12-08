@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.api.ApiClient;
 
 public class Geneology extends BaseActivity {
 
@@ -55,7 +56,9 @@ public class Geneology extends BaseActivity {
         myWebView.setWebChromeClient(new WebChromeClient());
 
         String userid = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
-        url = "http://india.safepayu.com/safepe-testing/public/Genealogy/" + userid;
+        url = "http://alias.safepeindia.com/Genealogy/" + userid;
+       // alias.safepeindia.com/api/secure/payment/api/Genealogy/
+       // http://alias.safepeindia.com/Genealogy/u7207405714
         myWebView.loadUrl(url);
 
         send_back_btn = findViewById(R.id.send_back_btn);

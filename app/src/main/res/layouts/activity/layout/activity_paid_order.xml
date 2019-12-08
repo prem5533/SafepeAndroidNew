@@ -187,17 +187,17 @@
                         android:layout_margin="5dp">
                     </TextView>
 
+
                     <TextView
-                        android:id="@+id/tv_date_time"
+                        android:id="@+id/tv_safepe_utr_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
-                        android:text="October 04 , 02:15PM"
-                        android:textColor="@color/yellow"
+                        android:text=""
+                        android:textColor="@color/green_500"
                         android:fontFamily="@font/roboto_medium"
-                        android:layout_marginTop="20dp"
-                        >
-                    </TextView>
+                        android:layout_marginTop="10dp"
+                        />
 
                     <TextView
                         android:id="@+id/txnId"
@@ -207,10 +207,21 @@
                         android:text="Txn ID: 16367868787"
                         android:textColor="@color/red_theme"
                         android:fontFamily="@font/roboto_medium"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="5dp"
+
                         >
                     </TextView>
+                    <TextView
+                        android:id="@+id/tv_date_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="October 04 , 02:15PM"
+                        android:textColor="@color/yellow"
+                        android:fontFamily="@font/roboto_medium"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="20dp"
+                        />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -218,7 +229,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_buttons"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp">
                 <TextView
                     android:id="@+id/tv_needhelp"
                     android:layout_width="wrap_content"

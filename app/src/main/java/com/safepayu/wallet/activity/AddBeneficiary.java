@@ -190,7 +190,7 @@ public class AddBeneficiary extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.addBeneficiaryLayout), true, e);
                     }
@@ -221,7 +221,7 @@ public class AddBeneficiary extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.addBeneficiaryLayout), true, e);
                     }
@@ -263,7 +263,7 @@ public class AddBeneficiary extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.addBeneficiaryLayout), true, e);
                     }

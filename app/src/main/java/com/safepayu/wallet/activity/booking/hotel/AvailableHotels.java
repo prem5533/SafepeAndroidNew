@@ -117,7 +117,7 @@ public class AvailableHotels extends AppCompatActivity  implements View.OnClickL
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.available_hotelsLayout), false, e.getCause());
                     }
                 }));

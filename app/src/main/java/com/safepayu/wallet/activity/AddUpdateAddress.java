@@ -211,7 +211,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(AddUpdateAddress.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(AddUpdateAddress.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                     }
                 }));
@@ -250,7 +250,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(AddUpdateAddress.class), "onError: " + e.getMessage());
+                     //   Log.e(BaseApp.getInstance().toastHelper().getTag(AddUpdateAddress.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                     }
                 }));

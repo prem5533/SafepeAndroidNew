@@ -47,6 +47,7 @@
             android:hint="First Name"
             android:textSize="14sp"
             android:padding="10dp"
+            android:singleLine="true"
             android:fontFamily="@font/roboto_regular"
             android:textColorHint="@color/grey"
             android:textColor="@color/black"
@@ -63,6 +64,7 @@
             android:hint="Last Name"
             android:textSize="14sp"
             android:padding="10dp"
+            android:singleLine="true"
             android:fontFamily="@font/roboto_regular"
             android:textColorHint="@color/grey"
             android:textColor="@color/black"
@@ -84,9 +86,11 @@
                 android:hint="Date of birth"
                 android:textSize="14sp"
                 android:padding="10dp"
+                android:singleLine="true"
                 android:fontFamily="@font/roboto_regular"
                 android:textColorHint="@color/grey"
                 android:textColor="@color/black"
+                android:focusable="false"
                 android:background="@null"
                 android:layout_weight="1"/>
             <ImageView

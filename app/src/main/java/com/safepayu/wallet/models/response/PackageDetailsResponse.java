@@ -13,8 +13,20 @@ public class PackageDetailsResponse {
 
     private boolean status;
     private String message;
+
+
     @SerializedName("package")
     private PackageBean packageX;
+    /**
+     * packagestatus :
+     */
+
+
+
+    /**
+     * packagestatus :
+     */
+
 
     public boolean isStatus() {
         return status;
@@ -70,6 +82,12 @@ public class PackageDetailsResponse {
         private String buy_date;
         private String payment_mode;
         private Object document_attached;
+        /**
+         * packagestatus :
+         */
+
+        private String packagestatus;
+
 
         public int getId() {
             return id;
@@ -173,6 +191,14 @@ public class PackageDetailsResponse {
 
         public void setDocument_attached(Object document_attached) {
             this.document_attached = document_attached;
+        }
+
+        public String getPackagestatus() {
+            return packagestatus;
+        }
+
+        public void setPackagestatus(String packagestatus) {
+            this.packagestatus = packagestatus;
         }
     }
 }

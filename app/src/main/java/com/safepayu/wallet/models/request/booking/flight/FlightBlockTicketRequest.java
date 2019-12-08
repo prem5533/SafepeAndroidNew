@@ -1,8 +1,11 @@
 package com.safepayu.wallet.models.request.booking.flight;
 
+import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
+
 import java.util.List;
 
-public class FlightBlockTicketRequest {
+public class FlightBlockTicketRequest  {
+
 
     /**
      * flightType : 1
@@ -18,13 +21,16 @@ public class FlightBlockTicketRequest {
 
     private String flightType;
     private String tripType;
-    private DataBean data;
+    private Data data;
     private String InfantPax;
     private String AdultPax;
     private String ChildPax;
+    private String payment_mode;
     private List<String> Names;
     private List<String> PassportDetails;
     private List<String> dob;
+
+
 
     public String getFlightType() {
         return flightType;
@@ -42,11 +48,11 @@ public class FlightBlockTicketRequest {
         this.tripType = tripType;
     }
 
-    public DataBean getData() {
+    public Data getData() {
         return data;
     }
 
-    public void setData(DataBean data) {
+    public void setData(Data data) {
         this.data = data;
     }
 
@@ -90,6 +96,14 @@ public class FlightBlockTicketRequest {
         this.PassportDetails = PassportDetails;
     }
 
+    public String getPayment_mode() {
+        return payment_mode;
+    }
+
+    public void setPayment_mode(String payment_mode) {
+        this.payment_mode = payment_mode;
+    }
+
     public List<String> getDob() {
         return dob;
     }
@@ -98,34 +112,51 @@ public class FlightBlockTicketRequest {
         this.dob = dob;
     }
 
-    public static class DataBean {
-        private List<?> InternationalFlights;
+    public void setDomesticOnwardFlights(AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata) {
+    }
+
+    public static class Data {
+    /*    private List<?> InternationalFlights;
         private List<DomesticOnwardFlightsBean> DomesticOnwardFlights;
         private List<DomesticReturnFlightsBean> DomesticReturnFlights;
+*/
+    List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> InternationalFlights;
+        List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> DomesticReturnFlights;
+        List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> DomesticOnwardFlights;
 
-        public List<?> getInternationalFlights() {
+        public Data() {
+        }
+
+        public Data(List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> internationalFlights, List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticReturnFlights, List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticOnwardFlights) {
+            InternationalFlights = internationalFlights;
+            DomesticReturnFlights = domesticReturnFlights;
+            DomesticOnwardFlights = domesticOnwardFlights;
+        }
+
+        public List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> getInternationalFlights() {
             return InternationalFlights;
         }
 
-        public void setInternationalFlights(List<?> InternationalFlights) {
-            this.InternationalFlights = InternationalFlights;
+        public void setInternationalFlights(List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> internationalFlights) {
+            InternationalFlights = internationalFlights;
         }
 
-        public List<DomesticOnwardFlightsBean> getDomesticOnwardFlights() {
-            return DomesticOnwardFlights;
-        }
-
-        public void setDomesticOnwardFlights(List<DomesticOnwardFlightsBean> DomesticOnwardFlights) {
-            this.DomesticOnwardFlights = DomesticOnwardFlights;
-        }
-
-        public List<DomesticReturnFlightsBean> getDomesticReturnFlights() {
+        public List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> getDomesticReturnFlights() {
             return DomesticReturnFlights;
         }
 
-        public void setDomesticReturnFlights(List<DomesticReturnFlightsBean> DomesticReturnFlights) {
-            this.DomesticReturnFlights = DomesticReturnFlights;
+        public void setDomesticReturnFlights(List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticReturnFlights) {
+            DomesticReturnFlights = domesticReturnFlights;
         }
+
+        public List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> getDomesticOnwardFlights() {
+            return DomesticOnwardFlights;
+        }
+
+        public void setDomesticOnwardFlights(List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticOnwardFlights) {
+            DomesticOnwardFlights = domesticOnwardFlights;
+        }
+
 
         public static class DomesticOnwardFlightsBean {
             /**

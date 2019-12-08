@@ -70,7 +70,6 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
                 intro_images.setCurrentItem(currentPage++, true);
             }
         };
-
         timer = new Timer(); // This will create a new Thread
         timer.schedule(new TimerTask() { // task to be scheduled
             @Override
@@ -211,7 +210,7 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
         dots = new TextView[NUM_PAGES];
 
         if (NUM_PAGES-1==position){
-         //   tv_skip.setText("DONE");]
+            //   tv_skip.setText("DONE");]
             tv_done.setVisibility(View.VISIBLE);
             tv_skip.setVisibility(View.GONE);
 

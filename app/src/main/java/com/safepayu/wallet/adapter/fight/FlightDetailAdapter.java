@@ -87,17 +87,22 @@ public class FlightDetailAdapter extends RecyclerView.Adapter<FlightDetailAdapte
             tvFlightDetailDuration.setText(mdata.get(position).getDuration());
 
             String Date, Date1, Time, h, m;
-            String depTime = mdata.get(position).getDepartureDateTimeZone();
-            String[] separated = depTime.split(" ");
+            String depTime = mdata.get(position).getDepartureDateTime();
+            String[] separated = depTime.split("T");
             Date = separated[0];
             Time = separated[1];
             String[] separatedTime = Time.split(":");
             h = separatedTime[0];
             m = separatedTime[1];
             tvFlightDetailDepTime.setText(h + ":" + m);
+            String[] sept = Date.split("-");
+            String yd = sept[0];
+            String mod = sept[1];
+            String dd = sept[2];
 
-            date = new Date(Date);
-            s  = DateFormat.format("dd-MMM-yyyy ", date.getTime());
+            String dateZone= dd+"/"+mod+"/"+yd;
+            date = new Date(dateZone);
+            s  = DateFormat.format("dd-MMM-yyyy", date.getTime());
             String daymonthYear = (String) s;
             String[] sep = daymonthYear.split("-");
             String d = sep[0];
@@ -109,8 +114,8 @@ public class FlightDetailAdapter extends RecyclerView.Adapter<FlightDetailAdapte
             tvFlightDetailDepDate.setText(dayOfWeek+", "+d+mo+" "+y);
 
 
-            String arrTime = mdata.get(position).getArrivalDateTimeZone();
-            String[] arrTimeseparated = arrTime.split(" ");
+            String arrTime = mdata.get(position).getArrivalDateTime();
+            String[] arrTimeseparated = arrTime.split("T");
             Date1 = arrTimeseparated[0];
             Time = arrTimeseparated[1];
             String[] separatedArrTime = Time.split(":");
@@ -118,8 +123,14 @@ public class FlightDetailAdapter extends RecyclerView.Adapter<FlightDetailAdapte
             m = separatedArrTime[1];
             tvFlightDetailArrivalTime.setText(h + ":" + m);
 
-            date = new Date(Date1);
-            s  = DateFormat.format("dd-MMM-yyyy ", date.getTime());
+            String[] septt = Date1.split("-");
+            String ydd = septt[0];
+            String modd = septt[1];
+            String ddd = septt[2];
+
+            String dateZonee= modd+"/"+ddd+"/"+ydd;
+          Date  date = new Date(dateZonee);
+            s  = DateFormat.format("dd-MMM-yyyy", date.getTime());
             String daymonthYear1 = (String) s;
             String[] sep1 = daymonthYear1.split("-");
             String da = sep1[0];
@@ -129,6 +140,7 @@ public class FlightDetailAdapter extends RecyclerView.Adapter<FlightDetailAdapte
             SimpleDateFormat sdateformat = new SimpleDateFormat("EEE");
             String day_Week = sdateformat.format(date);
             tvFlightDetailDestiDate.setText(day_Week+", "+da+mon+" "+ye);
+
         }
     }
 }

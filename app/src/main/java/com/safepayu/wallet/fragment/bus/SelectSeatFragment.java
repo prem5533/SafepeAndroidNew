@@ -576,7 +576,7 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
                      @Override
                      public void onError(Throwable e) {
                          loadingDialog.hideDialog();
-                         Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
+                         //Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
                          BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.busSeatLayout), false, e.getCause());
                      }
                  }));

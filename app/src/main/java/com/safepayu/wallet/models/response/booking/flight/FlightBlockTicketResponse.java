@@ -4,10 +4,11 @@ import java.util.List;
 
 public class FlightBlockTicketResponse {
 
+
     /**
      * status : true
      * message : Ticket booked successully
-     * data : {"ReferenceNo":"300378015987","APIReferenceNo":"","Message":"Ticket booked successully","ResponseStatus":200,"RefundResponse":null,"BookingStatus":3,"GDFPNRNo":"NPC3O8E1","EticketNo":"B8RSH8XH|0N8WUX0F","Flightuid":null,"Passworduid":"","TransactionId":"NPC3O8E1","LastTicketDate":null,"TransactionDetails":null,"Tickets":[{"ChangeRequestId":null,"EticketNo":"B8RSH8XH","TicketId":"712227","FlightuId":"","PassuId":"384119","GivenName":"Guru","SurName":"Bahrath","NameReference":"Mr. Guru Bahrath","TripType":1,"Status":0},{"ChangeRequestId":null,"EticketNo":"0N8WUX0F","TicketId":"927894","FlightuId":"","PassuId":"282391","GivenName":"Radhika","SurName":"Bahrath","NameReference":"Mrs. Radhika Bahrath","TripType":1,"Status":0}]}
+     * data : {"ReferenceNo":"300620016446","APIReferenceNo":"7W1VJZEG","Message":"Ticket booked successully","ResponseStatus":200,"RefundResponse":null,"BookingStatus":3,"GDFPNRNo":"I1PXMYVA","EticketNo":"TL7L6WG2|4C1RXLEF|VWQGKB84","Flightuid":null,"Passworduid":"","TransactionId":"I1PXMYVA","LastTicketDate":null,"TransactionDetails":null,"Tickets":[{"ChangeRequestId":null,"EticketNo":"TL7L6WG2","TicketId":"315358","FlightuId":"","PassuId":"224616","GivenName":"adult","SurName":"test","NameReference":"Ms. adult test","TripType":1,"Status":0,"title":"Ms."},{"ChangeRequestId":null,"EticketNo":"4C1RXLEF","TicketId":"755246","FlightuId":"","PassuId":"687222","GivenName":"child","SurName":"test","NameReference":"Mstr. child test","TripType":1,"Status":0,"title":"chld"},{"ChangeRequestId":null,"EticketNo":"VWQGKB84","TicketId":"455466","FlightuId":"","PassuId":"518458","GivenName":"infant","SurName":"test","NameReference":"Mstr. infant test","TripType":1,"Status":0,"title":"inft"}]}
      */
 
     private boolean status;
@@ -40,20 +41,20 @@ public class FlightBlockTicketResponse {
 
     public static class DataBean {
         /**
-         * ReferenceNo : 300378015987
-         * APIReferenceNo :
+         * ReferenceNo : 300620016446
+         * APIReferenceNo : 7W1VJZEG
          * Message : Ticket booked successully
          * ResponseStatus : 200
          * RefundResponse : null
          * BookingStatus : 3
-         * GDFPNRNo : NPC3O8E1
-         * EticketNo : B8RSH8XH|0N8WUX0F
+         * GDFPNRNo : I1PXMYVA
+         * EticketNo : TL7L6WG2|4C1RXLEF|VWQGKB84
          * Flightuid : null
          * Passworduid :
-         * TransactionId : NPC3O8E1
+         * TransactionId : I1PXMYVA
          * LastTicketDate : null
          * TransactionDetails : null
-         * Tickets : [{"ChangeRequestId":null,"EticketNo":"B8RSH8XH","TicketId":"712227","FlightuId":"","PassuId":"384119","GivenName":"Guru","SurName":"Bahrath","NameReference":"Mr. Guru Bahrath","TripType":1,"Status":0},{"ChangeRequestId":null,"EticketNo":"0N8WUX0F","TicketId":"927894","FlightuId":"","PassuId":"282391","GivenName":"Radhika","SurName":"Bahrath","NameReference":"Mrs. Radhika Bahrath","TripType":1,"Status":0}]
+         * Tickets : [{"ChangeRequestId":null,"EticketNo":"TL7L6WG2","TicketId":"315358","FlightuId":"","PassuId":"224616","GivenName":"adult","SurName":"test","NameReference":"Ms. adult test","TripType":1,"Status":0,"title":"Ms."},{"ChangeRequestId":null,"EticketNo":"4C1RXLEF","TicketId":"755246","FlightuId":"","PassuId":"687222","GivenName":"child","SurName":"test","NameReference":"Mstr. child test","TripType":1,"Status":0,"title":"chld"},{"ChangeRequestId":null,"EticketNo":"VWQGKB84","TicketId":"455466","FlightuId":"","PassuId":"518458","GivenName":"infant","SurName":"test","NameReference":"Mstr. infant test","TripType":1,"Status":0,"title":"inft"}]
          */
 
         private String ReferenceNo;
@@ -186,15 +187,16 @@ public class FlightBlockTicketResponse {
         public static class TicketsBean {
             /**
              * ChangeRequestId : null
-             * EticketNo : B8RSH8XH
-             * TicketId : 712227
+             * EticketNo : TL7L6WG2
+             * TicketId : 315358
              * FlightuId :
-             * PassuId : 384119
-             * GivenName : Guru
-             * SurName : Bahrath
-             * NameReference : Mr. Guru Bahrath
+             * PassuId : 224616
+             * GivenName : adult
+             * SurName : test
+             * NameReference : Ms. adult test
              * TripType : 1
              * Status : 0
+             * title : Ms.
              */
 
             private Object ChangeRequestId;
@@ -207,6 +209,7 @@ public class FlightBlockTicketResponse {
             private String NameReference;
             private int TripType;
             private int Status;
+            private String title;
 
             public Object getChangeRequestId() {
                 return ChangeRequestId;
@@ -286,6 +289,14 @@ public class FlightBlockTicketResponse {
 
             public void setStatus(int Status) {
                 this.Status = Status;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
             }
         }
     }

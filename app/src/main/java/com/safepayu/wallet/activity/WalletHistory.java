@@ -192,7 +192,7 @@ public class WalletHistory extends BaseActivity implements WalletHistoryAdapter.
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.walletHistoryLayout), false, e.getCause());
                     }
                 }));
