@@ -5,14 +5,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,7 +22,6 @@ import com.easebuzz.payment.kit.PWECouponsActivity;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -620,7 +615,6 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             }
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Payment Failed",false);
         }
-
     }
 
     @Override

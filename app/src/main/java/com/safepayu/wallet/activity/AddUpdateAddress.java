@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -190,7 +189,8 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
-        UpdateAddress update = new UpdateAddress(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID), etLocation.getText().toString(), etCity.getText().toString(), etState.getText().toString(),etCountry.getText().toString(), etPincode.getText().toString() );
+        final UpdateAddress update = new UpdateAddress(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID),
+                etLocation.getText().toString(), etCity.getText().toString(), etState.getText().toString(),etCountry.getText().toString(), etPincode.getText().toString() );
 
         BaseApp.getInstance().getDisposable().add(apiService.updateAddress(update)
                 .subscribeOn(Schedulers.io())
@@ -200,6 +200,9 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
                     public void onSuccess(UpdateAddressResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()){
+
+                            String address=update.getLocation()+" "+update.getCity()+" "+update.getState()+" "+update.getCountry()+" "+update.getPin();
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ADDRESS,address);
                             Toast.makeText(AddUpdateAddress.this, "Address Updated Successfully", Toast.LENGTH_SHORT).show();
                             finish();
 
@@ -221,7 +224,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
-        SaveAddressRequest saveAddressRequest = new SaveAddressRequest( );
+        final SaveAddressRequest saveAddressRequest = new SaveAddressRequest( );
         saveAddressRequest.setUser_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
         saveAddressRequest.setLocation(etLocation.getText().toString().trim());
         saveAddressRequest.setState(etState.getText().toString().trim());
@@ -238,6 +241,9 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
                     public void onSuccess(SaveAddressResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()){
+                            String address=saveAddressRequest.getLocation()+" "+saveAddressRequest.getCity()+" "
+                                    +saveAddressRequest.getState()+" "+saveAddressRequest.getCountry()+" "+saveAddressRequest.getPin();
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ADDRESS,address);
 
                             String Msg="Address Updated Successfully.\n Verification Link Has Been Sent To Your Email. Please Verify ";
                             Toast.makeText(AddUpdateAddress.this, Msg, Toast.LENGTH_LONG).show();

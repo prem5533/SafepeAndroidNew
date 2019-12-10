@@ -5,7 +5,7 @@
         <domain includeSubdomains="true">india.safepayu.com</domain>
         <domain includeSubdomains="true">api.sakshamapp.com</domain>
         <domain includeSubdomains="true">webapi.i2space.co.in</domain>
-        <domain includeSubdomains="true">13.233.29.145</domain>
+        <domain includeSubdomains="true">15.206.175.119</domain>
         <domain includeSubdomains="true">alias.safepeindia.com</domain>
     </domain-config>
 </network-security-config>

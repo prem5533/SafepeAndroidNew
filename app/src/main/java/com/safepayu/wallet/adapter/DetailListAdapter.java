@@ -87,7 +87,11 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.Fl
             recyclerViewAdultList.setAdapter(nameListAdultAdapter);
 
 
-            childSize=Integer.parseInt(HotelActivity.availableHotelRequest.getChildren().get(position));
+            try{
+                childSize=Integer.parseInt(HotelActivity.availableHotelRequest.getChildren().get(position));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
             recyclerViewChildList.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 

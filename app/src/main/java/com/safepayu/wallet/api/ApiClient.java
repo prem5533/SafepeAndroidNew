@@ -25,8 +25,9 @@ public class ApiClient {
 //http://13.232.191.38/safepe-new/public/
     //http://india.safepayu.com/safepe-testing/public/
    // http://india.safepayu.com/safepe-new/public/
-
+//http://15.206.175.119/safepe-testing/public/api/secure/payment/api/login
     private static final String BASE_URL = "http://alias.safepeindia.com/";
+    private static final String BASE_URL_TEST = "http://15.206.175.119/safepe-testing/public/";
     public  static String ImagePath = "http://alias.safepeindia.com/";
     private static Retrofit retrofit = null;
     private static int REQUEST_TIMEOUT = 60;
@@ -39,7 +40,7 @@ public class ApiClient {
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(BASE_URL_TEST)
                     .client(okHttpClient)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
@@ -66,14 +67,15 @@ public class ApiClient {
                 Request.Builder requestBuilder = null;
                 requestBuilder = original.newBuilder()
                         .addHeader("Accept", "application/json")
-                        .addHeader("Content-Type", "application/json")
-                        .addHeader("security", Code);
+                        .addHeader("Content-Type", "application/json");
+
 
 
                 // Adding Authorization token (API Key)
                 // Requests will be denied without API key
                 if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN)!=null) {
-                        requestBuilder.addHeader("Authorization", "Bearer "+BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN));
+                    requestBuilder.addHeader("security", Code);
+                    requestBuilder.addHeader("Authorization", "Bearer "+BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN));
                 }
                 Request request = requestBuilder.build();
                 Response response = chain.proceed(request);

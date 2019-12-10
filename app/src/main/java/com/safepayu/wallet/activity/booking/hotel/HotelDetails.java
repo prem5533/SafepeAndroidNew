@@ -1,20 +1,28 @@
 package com.safepayu.wallet.activity.booking.hotel;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.MultiDex;
@@ -23,16 +31,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.RechargeHistory;
 import com.safepayu.wallet.adapter.hotel.RoomListAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.helper.MySpannable;
+import com.safepayu.wallet.models.request.booking_hotel.BookHotelRequest;
 import com.safepayu.wallet.models.request.booking_hotel.HotelDetailsRequest;
 import com.safepayu.wallet.models.response.booking.HotelDetailResponse;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -47,9 +56,15 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
     private TextView HotelCityTV,tvHotelName,tvHotelStar,tvHotelAddress,tvHotelFacility,tvHotelDescription;
     private ImageView ivHotelImage;
     private Button BackBtn;
-    private String HotelId="",SourceName="",HotelName="",Provider="",WebService="",ImgUrl="",Description="",Facility="";
+    private String HotelId="",SourceName="",HotelName="",Provider="",WebService="",ImgUrl="",Description="",Facility="",DestinationId="";
+    private String MobileNo="",EmailId="",GenderDialog="";
     private HotelDetailsRequest hotelDetailsRequest;
     private RecyclerView recyclerViewRoomList;
+    private Dialog fillDetailDialog;
+    private List<List<String>> NamesPList,AgesPList,GendersPList;
+    private List<String> NamesChList,AgesChList,GendersChList;
+    HotelDetailResponse hotelDetailResponse;
+    BookHotelRequest bookHotelRequest=new BookHotelRequest();
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -66,6 +81,14 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
 
     private void findId() {
         loadingDialog = new LoadingDialog(this);
+        NamesPList=new ArrayList<>();
+        AgesPList=new ArrayList<>();
+        GendersPList=new ArrayList<>();
+
+        NamesChList=new ArrayList<>();
+        AgesChList=new ArrayList<>();
+        GendersChList=new ArrayList<>();
+        hotelDetailResponse=new HotelDetailResponse();
 
         HotelCityTV=findViewById(R.id.cityHotel_hotelDetailLayout);
         BackBtn=findViewById(R.id.backBtn_hotelDetailLayout);
@@ -89,6 +112,7 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
             WebService=intent.getStringExtra("WebService");
             Provider=intent.getStringExtra("Provider");
             ImgUrl=intent.getStringExtra("ImgUrl");
+            DestinationId=intent.getStringExtra("DestinationId");
 
             HotelCityTV.setText(HotelName+" - "+SourceName);
 
@@ -205,6 +229,7 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                         if (response.isStatus()) {
                             try {
 
+                                hotelDetailResponse=response;
                                 tvHotelName.setText(response.getData().getHotelName());
                                 tvHotelStar.setText(response.getData().getStarRating()+" Star Hotel");
                                 tvHotelAddress.setText(response.getData().getHotelAddress());
@@ -251,6 +276,52 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
     public void onLocationClickTo(int position, List<HotelDetailResponse.DataBean.RoomDetailsBean> RoomDetailsList) {
 
         showMessage(RoomDetailsList.get(position).getRoomType(),RoomDetailsList);
+
+        List<BookHotelRequest.RoomDetailsBean> roomDetails=new ArrayList<>();
+
+        BookHotelRequest.RoomDetailsBean roomDetailsBean=new BookHotelRequest.RoomDetailsBean();
+        roomDetailsBean.setSoldout(hotelDetailResponse.getData().getRoomDetails().get(position).isSoldout());
+        roomDetailsBean.setRoomIndex(hotelDetailResponse.getData().getRoomDetails().get(position).getRoomIndex());
+        roomDetailsBean.setRateType(hotelDetailResponse.getData().getRoomDetails().get(position).getRateType());
+        roomDetailsBean.setHotelPackage(hotelDetailResponse.getData().getRoomDetails().get(position).getHotelPackage());
+        roomDetailsBean.setRoomType(hotelDetailResponse.getData().getRoomDetails().get(position).getRoomType());
+        roomDetailsBean.setRoomBasis(hotelDetailResponse.getData().getRoomDetails().get(position).getRoomBasis());
+        roomDetailsBean.setRoomTypeCode(hotelDetailResponse.getData().getRoomDetails().get(position).getRoomTypeCode());
+        roomDetailsBean.setRatePlanCode(hotelDetailResponse.getData().getRoomDetails().get(position).getRatePlanCode());
+        roomDetailsBean.setValiddays(hotelDetailResponse.getData().getRoomDetails().get(position).getValiddays());
+        roomDetailsBean.setWsKey(hotelDetailResponse.getData().getRoomDetails().get(position).getWsKey());
+        roomDetailsBean.setExtGuestTotal(hotelDetailResponse.getData().getRoomDetails().get(position).getExtGuestTotal());
+        roomDetailsBean.setRoomTotal(hotelDetailResponse.getData().getRoomDetails().get(position).getRoomTotal());
+        roomDetailsBean.setRoomNetTotal(hotelDetailResponse.getData().getRoomDetails().get(position).getRoomNetTotal());
+        roomDetailsBean.setServicetaxTotal(hotelDetailResponse.getData().getRoomDetails().get(position).getServicetaxTotal());
+        roomDetailsBean.setDiscount(hotelDetailResponse.getData().getRoomDetails().get(position).getDiscount());
+        roomDetailsBean.setCommission(hotelDetailResponse.getData().getRoomDetails().get(position).getCommission());
+        roomDetailsBean.setExpediaPropertyId(hotelDetailResponse.getData().getRoomDetails().get(position).getExpediaPropertyId());
+        roomDetailsBean.setRoomCancellationPolicy(hotelDetailResponse.getData().getRoomDetails().get(position).getRoomCancellationPolicy());
+        roomDetailsBean.setNoOfPax(hotelDetailResponse.getData().getRoomDetails().get(position).getNoOfPax());
+        roomDetailsBean.setRefundRule(hotelDetailResponse.getData().getRoomDetails().get(position).getRefundRule());
+        roomDetailsBean.setInclusions(hotelDetailResponse.getData().getRoomDetails().get(position).getInclusions());
+        roomDetailsBean.setExclusions(hotelDetailResponse.getData().getRoomDetails().get(position).getExclusions());
+        roomDetailsBean.setRoomCount(hotelDetailResponse.getData().getRoomDetails().get(position).getRoomCount());
+        roomDetailsBean.setMaxAdultOccupancy(hotelDetailResponse.getData().getRoomDetails().get(position).getMaxAdultOccupancy());
+        roomDetailsBean.setMaxChildOccupancy(hotelDetailResponse.getData().getRoomDetails().get(position).getMaxChildOccupancy());
+        roomDetailsBean.setBedType(hotelDetailResponse.getData().getRoomDetails().get(position).getBedType());
+        roomDetailsBean.setRoomView(hotelDetailResponse.getData().getRoomDetails().get(position).getRoomView());
+        roomDetailsBean.setRoomDescription(hotelDetailResponse.getData().getRoomDetails().get(position).getRoomDescription());
+        roomDetailsBean.setRoomAmenities(hotelDetailResponse.getData().getRoomDetails().get(position).getRoomAmenities());
+        roomDetailsBean.setIncExcCondition(hotelDetailResponse.getData().getRoomDetails().get(position).getIncExcCondition());
+        roomDetailsBean.setIsInclusion(false);
+        roomDetailsBean.setImages(hotelDetailResponse.getData().getRoomDetails().get(position).getImages());
+
+        BookHotelRequest.RoomDetailsBean.PartnerFareDatailsBean partnerFareDatailsBean=new BookHotelRequest.RoomDetailsBean.PartnerFareDatailsBean();
+        partnerFareDatailsBean.setCommission(hotelDetailResponse.getData().getRoomDetails().get(position).getPartnerFareDatails().getCommission());
+        partnerFareDatailsBean.setCommissionType(hotelDetailResponse.getData().getRoomDetails().get(position).getPartnerFareDatails().getCommissionType());
+        partnerFareDatailsBean.setNetFares(hotelDetailResponse.getData().getRoomDetails().get(position).getPartnerFareDatails().getNetFares());
+
+        roomDetailsBean.setPartnerFareDatails(partnerFareDatailsBean);
+        roomDetails.add(roomDetailsBean);
+
+        bookHotelRequest.setRoomDetails(roomDetails);
     }
 
     public void showMessage(String Message,List<HotelDetailResponse.DataBean.RoomDetailsBean> RoomDetailsList) {
@@ -276,7 +347,8 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                         intent.putExtra("Provider",Provider);
                         intent.putExtra("ImgUrl",ImgUrl);
                         intent.putExtra("CityId",hotelDetailsRequest.getCityId());
-                        startActivity(intent);
+                        //startActivity(intent);
+                        showDialogFillDetail();
                         dialog.dismiss();
 
                     }
@@ -292,4 +364,167 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                 .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
                 .show();
     }
+
+    private void showDialogFillDetail( ) {
+
+        fillDetailDialog = new Dialog(this);
+        fillDetailDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        fillDetailDialog.setContentView(R.layout.dialog_fill_hotel_detail);
+        fillDetailDialog.setCancelable(false);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = fillDetailDialog.getWindow();
+        fillDetailDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+
+        final EditText edName,edMobile,edEmail,edAge;
+        RadioGroup radioGroupGender;
+
+        edName=fillDetailDialog.findViewById(R.id.name_fillDetailHotelDialog);
+        edMobile=fillDetailDialog.findViewById(R.id.phone_fillDetailHotelDialog);
+        edEmail=fillDetailDialog.findViewById(R.id.email_fillDetailHotelDialog);
+        edAge=fillDetailDialog.findViewById(R.id.age_fillDetailHotelDialog);
+        radioGroupGender=fillDetailDialog.findViewById(R.id.radioGrp_fillDetailHotelDialog);
+
+        if (NamesChList.size()>0){
+            edName.setText(NamesChList.get(0));
+            edAge.setText(AgesChList.get(0));
+            edEmail.setText(EmailId);
+            edMobile.setText(MobileNo);
+
+            try {
+                if (GendersChList.get(0).equalsIgnoreCase("Male")){
+                    ((RadioButton)radioGroupGender.getChildAt(0)).setChecked(true);
+                }else if (GendersChList.get(0).equalsIgnoreCase("Female")){
+                    ((RadioButton)radioGroupGender.getChildAt(1)).setChecked(true);
+                }else {
+                    ((RadioButton)radioGroupGender.getChildAt(2)).setChecked(true);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+
+        radioGroupGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                RadioButton rb=fillDetailDialog.findViewById(checkedId);
+                GenderDialog=rb.getText().toString();
+                Toast.makeText(HotelDetails.this, rb.getText(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button backBtn_fillDetailDialog=fillDetailDialog.findViewById(R.id.backBtn_fillDetailHotelDialog);
+
+        backBtn_fillDetailDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fillDetailDialog.dismiss();
+            }
+        });
+
+        Button proceedBtn_fillDetailDialog=fillDetailDialog.findViewById(R.id.proceedBtn_fillDetailHotelDialog);
+
+        proceedBtn_fillDetailDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    GetGuestDetail(edName.getText().toString().trim(),edAge.getText().toString().trim(),edEmail.getText().toString().trim(),
+                            edMobile.getText().toString().trim(),GenderDialog);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        fillDetailDialog.show();
+
+    }
+
+    private void GetGuestDetail(String NameDialog,String AgeDialog,String EmailDialog,String MobileDialog,String GenderDialog){
+
+        if (TextUtils.isEmpty(NameDialog)){
+            Toast.makeText(this, "Please Enter Your Name", Toast.LENGTH_SHORT).show();
+        }else {
+            if (TextUtils.isEmpty(AgeDialog)){
+                Toast.makeText(this, "Please Enter Your Age", Toast.LENGTH_SHORT).show();
+            }else {
+                if (Integer.parseInt(AgeDialog)>100){
+                    Toast.makeText(this, "Please Enter Correct Your Age", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (TextUtils.isEmpty(EmailDialog)){
+                        Toast.makeText(this, "Please Enter Your Email", Toast.LENGTH_SHORT).show();
+                    }else {
+                        if (!BaseApp.getInstance().commonUtils().isValidEmail(EmailDialog)){
+                            Toast.makeText(this, "Please Enter Correct Your Email", Toast.LENGTH_SHORT).show();
+                        }else {
+                            if (TextUtils.isEmpty(MobileDialog)){
+                                Toast.makeText(this, "Please Enter Your Mobile Number", Toast.LENGTH_SHORT).show();
+                            }else {
+                                if (MobileDialog.length()<10){
+                                    Toast.makeText(this, "Please Enter Your Correct Mobile Number", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    if (TextUtils.isEmpty(GenderDialog)){
+                                        Toast.makeText(this, "Please Select Your Gender", Toast.LENGTH_SHORT).show();
+                                    }else {
+                                        MobileNo=MobileDialog;
+                                        EmailId=EmailDialog;
+
+                                        if (NamesChList.size()>0){
+                                            NamesChList.set(0,NameDialog);
+                                            AgesChList.set(0,AgeDialog);
+                                            GendersChList.set(0,GenderDialog);
+
+                                            NamesPList.set(0,NamesChList);
+                                            AgesPList.set(0,AgesChList);
+                                            GendersPList.set(0,GendersChList);
+                                        }else {
+                                            NamesChList.add(NameDialog);
+                                            AgesChList.add(AgeDialog);
+                                            GendersChList.add(GenderDialog);
+
+                                            NamesPList.add(NamesChList);
+                                            AgesPList.add(AgesChList);
+                                            GendersPList.add(GendersChList);
+                                        }
+
+                                        bookHotelRequest.setNationality("IN");
+                                        bookHotelRequest.setNames(NamesPList);
+                                        bookHotelRequest.setAges(AgesPList);
+                                        bookHotelRequest.setGenders(GendersPList);
+                                        bookHotelRequest.setAddress(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ADDRESS));
+                                        bookHotelRequest.setEmailId(EmailId);
+                                        bookHotelRequest.setMobileNo(MobileNo);
+                                        bookHotelRequest.setCountry("India");
+                                        bookHotelRequest.setProvider(Provider);
+                                        bookHotelRequest.setStatus(1);
+                                        bookHotelRequest.setDestinationId(DestinationId);
+                                        bookHotelRequest.setCityName(SourceName);
+                                        bookHotelRequest.setArrivalDate(availableHotelRequest.getArrivalDate());
+                                        bookHotelRequest.setDepartureDate(availableHotelRequest.getDepartureDate());
+                                        bookHotelRequest.setRooms(Integer.parseInt(availableHotelRequest.getRooms()));
+                                        bookHotelRequest.setAdults(availableHotelRequest.getAdults());
+                                        bookHotelRequest.setChildren(availableHotelRequest.getChildren());
+                                        //bookHotelRequest.setChildrenAges(availableHotelRequest.getChildrenAges());
+                                        bookHotelRequest.setHotelType(Integer.parseInt(availableHotelRequest.getHoteltype()));
+
+
+
+
+
+                                        fillDetailDialog.dismiss();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
