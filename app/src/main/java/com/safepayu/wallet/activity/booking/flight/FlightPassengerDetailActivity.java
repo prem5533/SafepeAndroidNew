@@ -47,6 +47,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.transform.Source;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -68,7 +70,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
     String json;
     private Button flightBookBtn;
 
-    AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
+  public   AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
     private FlighPassengerBookingDialog flighPassengerBookingDialog;
     private LinearLayout itemAdult,itemChild,itemInfant,lFarebreakup;
     TextView  tv_infant_btn,tv_adult_btn,tv_child_btn;
@@ -677,7 +679,8 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
     //****************bottom sheet dialog fragment**********************
 
 
-    public static class BottomSheetFragment extends BottomSheetDialogFragment{
+    public class BottomSheetFragment extends BottomSheetDialogFragment{
+        TextView tvTotalBaseFare,tvTotalTaxFee,tvAirfare,tvConvenienceFee,tvTotalPaid;
 
         public BottomSheetFragment() {
         }
@@ -694,11 +697,19 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             View view =  inflater.inflate(R.layout.flight_fare_breakup_dialog, container, false);
             setStyle(STYLE_NORMAL, R.style. AppBottomSheetDialogTheme);
 
+
             findId(view);
             return view;
         }
 
         private void findId(View view) {
+            tvTotalBaseFare = view.findViewById(R.id.tv_total_base_fare);
+            tvTotalTaxFee = view.findViewById(R.id.tv_total_tax_fee);
+            tvAirfare = view.findViewById(R.id.tv_airfare);
+            tvConvenienceFee = view.findViewById(R.id.tv_convenience_fee);
+            tvTotalPaid = view.findViewById(R.id.tv_total_paid);
+
+        //    tvTotalBaseFare.setText(mdata.getFareDetails().getChargeableFares().getActualBaseFare());
         }
 
     }
