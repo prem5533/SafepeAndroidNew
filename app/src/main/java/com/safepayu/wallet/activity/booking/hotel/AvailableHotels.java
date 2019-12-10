@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.RechargeHistory;
 import com.safepayu.wallet.adapter.hotel.AvailableHotelAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -166,6 +164,7 @@ public class AvailableHotels extends AppCompatActivity  implements View.OnClickL
         intent.putExtra("WebService",WebService);
         intent.putExtra("Provider",Provider);
         intent.putExtra("ImgUrl",ImgUrl);
+        intent.putExtra("DestinationId",availableHotelRequest.getDestinationId());
         startActivity(intent);
 
     }

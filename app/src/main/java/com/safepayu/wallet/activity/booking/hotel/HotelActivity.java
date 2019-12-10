@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.RechargeHistory;
 import com.safepayu.wallet.adapter.hotel.GuestSelectAdapter;
 import com.safepayu.wallet.adapter.hotel.HotelSourcesAdapter;
 import com.safepayu.wallet.api.ApiClient;
@@ -149,7 +147,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                     availableHotelRequest.setDestinationId(SourceNameId);
                     availableHotelRequest.setChildrenAges(ChildAgeList);
 
-                    Intent intent=new Intent(HotelActivity.this,BookHotel.class);
+                    Intent intent=new Intent(HotelActivity.this,AvailableHotels.class);
                     intent.putExtra("SourceName",SourceName);
                     startActivity(intent);
                 }
