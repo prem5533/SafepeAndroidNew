@@ -1,0 +1,278 @@
+package com.safepayu.wallet.activity.booking.flight;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.safepayu.wallet.BaseApp;
+import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.Navigation;
+import com.safepayu.wallet.adapter.fight.FlighPassengerBookingDialog;
+import com.safepayu.wallet.api.ApiClient;
+import com.safepayu.wallet.api.ApiService;
+import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.booking.flight.FlightBlockTicketRequest;
+import com.safepayu.wallet.models.request.booking.flight.FlightBookingDetailRequest;
+import com.safepayu.wallet.models.response.booking.flight.CancelBookTicketResponse;
+import com.safepayu.wallet.models.response.booking.flight.FlightBookingDetailResponse;
+import com.squareup.picasso.Picasso;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+import pl.droidsonroids.gif.GifImageView;
+
+public class FlightBookDetailActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private TextView tvBookingStatus, tvSafeJourney,tvFlightRefrenceNo,tvFlightTimeDate,tvFlightSourceDestination,tvFlightEticketNo,tvFlightCancelTicket,tvTicketTimeDateTraveller,
+    tvTicketSource,tvTicketDestination,tvTicketSourceTime,tvTicketTotalTime,tvTicketDestinationTime,tvTicketSourceAirportname,tvTicketDetinationAirportname,tvFlightNumber,tvFlightCode;
+    private LoadingDialog loadingDialog;
+    FlightBookingDetailRequest flightBookingDetailRequest;
+    private String ReferanceNo ="",Source,Destination,JourneyDate,DepTime,ArrivalTime,DurationTime,AirLineCode,AirLineNumber,FlightImage,TotalTravellers;
+    private LinearLayout liFlightName;
+    private ImageView imFlightLogo;
+    private GifImageView statusImage;
+    private RecyclerView travellerListName;
+    private FlighPassengerBookingDialog flighPassengerBookingDialog;
+    private Button backBtn;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_flight_book_detail);
+        findId();
+        if (isNetworkAvailable()){
+            getFlightBookingDetails();
+        }else {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Please Check Your Internet Connection",false);
+        }
+
+    }
+
+    private void findId() {
+        loadingDialog = new LoadingDialog(this);
+        backBtn = findViewById(R.id.recharge_back_btn);
+        tvBookingStatus = findViewById(R.id.tv_booking_status);
+        tvSafeJourney = findViewById(R.id.tv_safe_journey);
+        tvFlightRefrenceNo = findViewById(R.id.tv_flight_refrence_no);
+        tvFlightTimeDate = findViewById(R.id.tv_flight_time_date);
+        tvFlightSourceDestination = findViewById(R.id.tv_flight_source_destination);
+        tvFlightEticketNo = findViewById(R.id.tv_flight_eticket_no);
+        tvFlightCancelTicket = findViewById(R.id.tv_flight_cancel_ticket);
+        tvTicketTimeDateTraveller = findViewById(R.id.tv_ticket_time_date_traveller);
+        tvTicketSource = findViewById(R.id.tv_ticket_source);
+        tvTicketDestination = findViewById(R.id.tv_ticket_destination);
+        tvTicketSourceTime = findViewById(R.id.tv_ticket_source_time);
+        tvTicketTotalTime = findViewById(R.id.tv_ticket_total_time);
+        tvTicketDestinationTime = findViewById(R.id.tv_ticket_destination_time);
+        tvTicketSourceAirportname = findViewById(R.id.tv_ticket_source_airportname);
+        tvTicketDetinationAirportname = findViewById(R.id.tv_ticket_detination_airportname);
+        travellerListName = findViewById(R.id.list_traveller_details);
+        tvFlightCode = findViewById(R.id.tv_flight_code);
+        tvFlightNumber = findViewById(R.id.tv_flight_number);
+        imFlightLogo = findViewById(R.id.im_flight_logo);
+        liFlightName = findViewById(R.id.li_flight_name);
+        statusImage = findViewById(R.id.statusImage);
+        tvFlightCancelTicket.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+
+        //***************get data****************
+        Source =   BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE);
+        Destination =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_DESTINATION);
+        ReferanceNo = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_REFERENCE_NO);
+        JourneyDate = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY);
+        DepTime = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME);
+        ArrivalTime = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME);
+        DurationTime = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION_TIME);
+        AirLineCode =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_CODE);
+        AirLineNumber =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_FLIGHT_NUMBER);
+        FlightImage = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_IMAGE);
+        TotalTravellers = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().TotalTravellers);
+    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void getFlightBookingDetails() {
+
+        flightBookingDetailRequest = new FlightBookingDetailRequest();
+        flightBookingDetailRequest.setReferenceNo("300356016556");
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+        BaseApp.getInstance().getDisposable().add(apiService.getFlightBookingDetails(flightBookingDetailRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<FlightBookingDetailResponse>(){
+                    @Override
+                    public void onSuccess(FlightBookingDetailResponse flightBookingDetailResponse) {
+                        loadingDialog.hideDialog();
+                        int bs = flightBookingDetailResponse.getData().getBookingStatus();
+                        tvFlightEticketNo.setText("PNR - "+flightBookingDetailResponse.getData().getAPIRefNo());
+                        if (flightBookingDetailResponse.getData().getBookingStatus()==3){
+                            tvBookingStatus.setText("Booking Successful");
+                            tvSafeJourney.setText("Have a safe journey!");
+                            tvFlightRefrenceNo.setText(flightBookingDetailResponse.getData().getBookingRefNo());
+                            tvFlightTimeDate.setText(flightBookingDetailResponse.getData().getBookingDate());
+
+                        }
+                        else if (bs==5){
+                            statusImage.setVisibility(View.GONE);
+                            tvBookingStatus.setText("Booking Cancel");
+                            tvSafeJourney.setText("Ticket cancelled successfully!");
+                            tvFlightCancelTicket.setVisibility(View.GONE);
+
+                        }
+                        tvFlightSourceDestination.setText(Source+" - "+Destination);
+                          tvTicketTimeDateTraveller.setText(JourneyDate+" | "+TotalTravellers + " Traveller");
+                       // tvTicketTimeDateTraveller.setText(JourneyDate+" | "+"" + " Traveller");
+                        tvTicketSource.setText(Source);
+                        tvTicketDestination.setText(Destination);
+                        tvTicketSourceTime.setText(DepTime);
+                        tvTicketDestinationTime.setText(ArrivalTime);
+                        tvTicketTotalTime.setText(DurationTime);
+                        tvTicketSourceAirportname.setText(flightBookingDetailResponse.getData().getSourceName());
+                        tvTicketDetinationAirportname.setText(flightBookingDetailResponse.getData().getDestinationName());
+                        tvFlightCode.setText(AirLineCode);
+                        tvFlightNumber.setText(AirLineNumber);
+                        Picasso.get().load(FlightImage).into(imFlightLogo);
+
+                        travellerListName.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                        flighPassengerBookingDialog = new FlighPassengerBookingDialog(getApplicationContext(),flightBookingDetailResponse.getData().getTickets());
+                        travellerListName.setAdapter(flighPassengerBookingDialog);
+                    /*   */
+                    /*    if (flightBookingDetailResponse.getAirlineName().equals("Indigo")){
+                            liFlightName.setBackgroundColor(Color.parseColor("#011b94"));
+                        }
+                        else  if (flightBookingDetailResponse.getAirlineName().equals("Air India")){
+                            liFlightName.setBackgroundColor(Color.parseColor("#c0062e"));
+                        }
+                        else  if (flightBookingDetailResponse.getAirlineName().equals("SpiceJet")){
+                            liFlightName.setBackgroundColor(Color.parseColor("#bf112f"));
+                        }
+                        else  if (flightBookingDetailResponse.getAirlineName().equals("GoAir")){
+                            liFlightName.setBackgroundColor(Color.parseColor("#253881"));
+                        }
+                        else  if (flightBookingDetailResponse.getAirlineName().equals("Vistara")){
+                            liFlightName.setBackgroundColor(Color.parseColor("#47143d"));
+                        }
+                        else {
+                            liFlightName.setBackgroundColor(Color.parseColor("#ffffff"));
+                        }*/
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.flight_book_detail), false, e.getCause());
+                    }
+                }));
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_flight_cancel_ticket:
+                showDialogCancelTicket(FlightBookDetailActivity.this);
+
+                break;
+            case R.id.recharge_back_btn:
+                overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
+                finish();
+                break;
+        }
+    }
+
+    public void showDialogCancelTicket(Activity activity) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+
+        dialog.setTitle("SafePe Alert")
+                .setCancelable(false)
+                .setMessage("\nAre you sure you want to cancel this ticket\n")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+                        if (isNetworkAvailable()){
+                            getCancelBookTicket();
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Please Check Your Internet Connection",false);
+                        }
+
+                        dialog.dismiss();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .show();
+    }
+
+    private void getCancelBookTicket() {
+        flightBookingDetailRequest = new FlightBookingDetailRequest();
+        flightBookingDetailRequest.setReferenceNo("300356016556");
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+        BaseApp.getInstance().getDisposable().add(apiService.getFlightCancelTicket(flightBookingDetailRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CancelBookTicketResponse>(){
+            @Override
+            public void onSuccess(CancelBookTicketResponse response) {
+                loadingDialog.hideDialog();
+                if (response.isStatus()) {
+                    statusImage.setVisibility(View.GONE);
+                    tvBookingStatus.setText("Booking Cancel");
+                    tvSafeJourney.setText("Ticket cancelled successfully!");
+                    tvFlightTimeDate.setText(response.getData().getCancelTime());
+                    tvFlightEticketNo.setText("PNR - "+response.getData().getAPIReferenceNo());
+
+                    if (response.getData().getCancellations().get(0).getCancelStatus()==5){
+                        tvFlightCancelTicket.setVisibility(View.GONE);
+                    }
+                   else if (response.getData().getCancellations().get(0).getCancelStatus()==6){
+                        tvFlightCancelTicket.setVisibility(View.GONE);
+                    } else if (response.getData().getCancellations().get(0).getCancelStatus()==12){
+                        tvFlightCancelTicket.setVisibility(View.GONE);
+                    }
+                   else {
+                        tvFlightCancelTicket.setVisibility(View.VISIBLE);
+                    }
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                loadingDialog.hideDialog();
+                BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.flight_book_detail), false, e.getCause());
+            }
+        }));
+
+    }
+}

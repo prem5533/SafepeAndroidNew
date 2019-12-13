@@ -261,6 +261,7 @@ public class DthRecharge extends BaseActivity {
                         intent.putExtra("CircleCode","51");
                         intent.putExtra("OperatorId",OperatorId);
                         intent.putExtra("walletCashback", tvWalletCashback.getText().toString());
+
                         intent.putExtra("totalAmount", tvTotalAmountpay.getText().toString());
                         startActivity(intent);
                         finish();

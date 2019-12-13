@@ -31,6 +31,7 @@ import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.BookingPaymentActivity;
 import com.safepayu.wallet.adapter.fight.FlighPassengerBookingDialog;
+import com.safepayu.wallet.adapter.fight.FlightTravellersList;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.DatePicker;
@@ -70,8 +71,9 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
     String json;
     private Button flightBookBtn;
 
-  public   AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
+  public  static AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
     private FlighPassengerBookingDialog flighPassengerBookingDialog;
+
     private LinearLayout itemAdult,itemChild,itemInfant,lFarebreakup;
     TextView  tv_infant_btn,tv_adult_btn,tv_child_btn;
     private LinearLayout  linear_infant_traveller_info,linear_adult_traveller_info,linear_child_traveller_info;
@@ -82,9 +84,10 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
     final List<View> li = new ArrayList<>();
     final List<View> liChild = new ArrayList<>();
     final List<View> liInfant = new ArrayList<>();
-    List<String>adultList = new ArrayList<>();
-    List<String>DobList = new ArrayList<>();
+    ArrayList<String>adultList = new ArrayList<>();
+    ArrayList<String>DobList = new ArrayList<>();
     FlightBlockTicketResponse FlightResponse;
+    FlightTravellersList flightTravellersList;
 
     private FlightBlockTicketRequest flightBlockTicketRequest;
     @Override
@@ -162,36 +165,6 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         tvTotalFlightFare.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
         etFlightpMobileNumber.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
         etFlightpEmailNumber.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
-
-
-        List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> internationalFlights = new ArrayList<>();
-        List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticReturnFlights = new ArrayList<>();
-        List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticOnwardFlights = new ArrayList<>();
-        int flightType = 1;
-        switch (flightType) {
-            case 1:
-                domesticOnwardFlights.add(mdata);
-                break;
-            case 2:
-                break;
-            case 3:
-              //  internationalFlights.add(mdata);
-                break;
-        }
-
-        flightBlockTicketRequest = new FlightBlockTicketRequest();
-        FlightBlockTicketRequest.Data data = new FlightBlockTicketRequest.Data(internationalFlights, domesticReturnFlights, domesticOnwardFlights);
-        flightBlockTicketRequest.setData(data);
-        flightBlockTicketRequest.setInfantPax(Infants);
-        flightBlockTicketRequest.setAdultPax(Adults);
-        flightBlockTicketRequest.setChildPax(Children);
-        flightBlockTicketRequest.setNames(adultList);
-        flightBlockTicketRequest.setDob(DobList);
-        flightBlockTicketRequest.setTripType("1");
-        flightBlockTicketRequest.setFlightType("1");
-        flightBlockTicketRequest.setPayment_mode("bank");
-
-
 
 
      /*   FlightBlockTicketRequest.DataBean.DomesticOnwardFlightsBean domesticOnwardFlightsBean;
@@ -357,8 +330,8 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                // showDialog(FlightPassengerDetailActivity.this);
                 if (validate()) {
 
-                    getflightBlockTicket(flightBlockTicketRequest);
-
+                 //   getflightBlockTicket(flightBlockTicketRequest);
+                    showDialog(FlightPassengerDetailActivity.this);
                 }
 
                 break;
@@ -419,7 +392,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
 
             }
 
-            Fullname = selectedRadioButtonText+"|"+flightAdultFNme+"|"+flightAdultLName+"|"+"adt";
+            Fullname = selectedRadioButtonText+"~"+flightAdultFNme+"~"+flightAdultLName+"~"+"adt";
              adultList.add(Fullname);
              DobList.add(flightAdultDob);
 
@@ -443,7 +416,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 Toast.makeText(getApplicationContext(), "Please enter child adult dob", Toast.LENGTH_LONG).show();
                 return  false;
             }
-            childFullNme = "Mstr."+"|"+flightChildFNme+"|"+flightChildLNme+"|"+"chd";
+            childFullNme = "Mstr."+"~"+flightChildFNme+"~"+flightChildLNme+"~"+"chd";
             adultList.add(childFullNme);
             DobList.add(flightChildDob);
         }
@@ -466,7 +439,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 Toast.makeText(getApplicationContext(), "Please enter inant adult dob", Toast.LENGTH_LONG).show();
                 return  false;
             }
-            infantFullNme = "Mstr."+"|"+flightInfantFNme+"|"+flightInfantLNme+"|"+"inft";
+            infantFullNme = "Mstr."+"~"+flightInfantFNme+"~"+flightInfantLNme+"~"+"inft";
             adultList.add(infantFullNme);
             DobList.add(flightInfantDob);
         }
@@ -521,6 +494,8 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             @Override
             public void onClick(View v) {
                 Intent  intent = new Intent(getApplicationContext(), BookingPaymentActivity.class);
+                intent.putExtra("adult_list", adultList);
+                intent.putExtra("dob_list", DobList);
                 startActivity(intent);
             }
         });
@@ -557,6 +532,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         h = separatedTime[0];
         m = separatedTime[1];
         tv_flight_booking_dep_time.setText(h + ":" + m);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME,h + ":" + m);
 //date departure
         String[] sept = Date.split("-");
         String yd = sept[0];
@@ -574,6 +550,8 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         SimpleDateFormat simpledateformat = new SimpleDateFormat("EEE");
         String dayOfWeek = simpledateformat.format(date);
         tvFlightBookingDepDate.setText(dayOfWeek+", "+d+mo+" "+y);
+        String dayofWeek = dayOfWeek+", "+d+mo+" "+y;
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY,dayofWeek);
 
         if (flightStop>1){
             String arrTime = mdata.getFlightSegments().get(flightStop-1).getArrivalDateTime();
@@ -584,6 +562,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             h = separatedArrTime[0];
             m = separatedArrTime[1];
             tv_flight_booking_arrival_time.setText(h + ":" + m);
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,h + ":" + m);
 
             String[] septt = Date.split("-");
             String ydd = septt[0];
@@ -613,6 +592,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             h = separatedArrTime[0];
             m = separatedArrTime[1];
             tv_flight_booking_arrival_time.setText(h + ":" + m);
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,h + ":" + m);
 
             String[] septt = Date.split("-");
             String ydd = septt[0];
@@ -657,6 +637,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
 
 
             tvFlightBookingDuration.setText(hours+"h "+minutes+"m");
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION_TIME,hours+"h "+minutes+"m");
         }
         //*********set flight count*****************
         if ( mdata.getFlightSegments().size()>1){
@@ -671,16 +652,19 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         }
 
         recyclerTravellerInfo.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        flighPassengerBookingDialog = new FlighPassengerBookingDialog(getApplicationContext(),FlightResponse.getData().getTickets());
-        recyclerTravellerInfo.setAdapter(flighPassengerBookingDialog);
+       /* flighPassengerBookingDialog = new FlighPassengerBookingDialog(getApplicationContext(),FlightResponse.getData().getTickets());
+        recyclerTravellerInfo.setAdapter(flighPassengerBookingDialog);*/
+        flightTravellersList = new FlightTravellersList(getApplicationContext(),adultList);
+        recyclerTravellerInfo.setAdapter(flightTravellersList);
 
     }
 
     //****************bottom sheet dialog fragment**********************
 
 
-    public class BottomSheetFragment extends BottomSheetDialogFragment{
+    public static class BottomSheetFragment extends BottomSheetDialogFragment{
         TextView tvTotalBaseFare,tvTotalTaxFee,tvAirfare,tvConvenienceFee,tvTotalPaid;
+        private ImageView imageCancel;
 
         public BottomSheetFragment() {
         }
@@ -708,8 +692,19 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             tvAirfare = view.findViewById(R.id.tv_airfare);
             tvConvenienceFee = view.findViewById(R.id.tv_convenience_fee);
             tvTotalPaid = view.findViewById(R.id.tv_total_paid);
+            imageCancel = view.findViewById(R.id.image_cancel);
 
-        //    tvTotalBaseFare.setText(mdata.getFareDetails().getChargeableFares().getActualBaseFare());
+            tvTotalBaseFare.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getActualBaseFare()));
+            tvTotalTaxFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getTax()));
+            tvAirfare.setText(String.valueOf(mdata.getFareDetails().getTotalFare()));
+            tvConvenienceFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getConveniencefee()));
+            tvTotalPaid.setText(String.valueOf(mdata.getFareDetails().getTotalFare()));
+            imageCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
         }
 
     }

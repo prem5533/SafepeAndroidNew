@@ -8,21 +8,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.safepayu.wallet.R;
-import com.safepayu.wallet.models.response.booking.flight.FlightBlockTicketResponse;
-import com.safepayu.wallet.models.response.booking.flight.FlightBookingDetailResponse;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.safepayu.wallet.R;
+import com.safepayu.wallet.models.request.booking.flight.FlightHistoryResponse;
+import com.safepayu.wallet.models.response.booking.flight.FlightBookingDetailResponse;
+
 import java.util.List;
 
-public class FlighPassengerBookingDialog  extends RecyclerView.Adapter<FlighPassengerBookingDialog.BookingViewHolder> {
+public class FlighHistoryPassengerBookingDialog extends RecyclerView.Adapter<FlighHistoryPassengerBookingDialog.BookingViewHolder> {
     private Context context;
-    private List<FlightBookingDetailResponse.DataBean.TicketsBean >flightTravellerTicket;
+    private List<FlightHistoryResponse.DataBean.TicketsBean >flightTravellerTicket;
 
-    public FlighPassengerBookingDialog(Context context, List<FlightBookingDetailResponse.DataBean.TicketsBean> flightTravellerTicket) {
+
+    public FlighHistoryPassengerBookingDialog(Context context, List<FlightHistoryResponse.DataBean.TicketsBean> flightTravellerTicket) {
         this.context = context;
         this.flightTravellerTicket = flightTravellerTicket;
     }

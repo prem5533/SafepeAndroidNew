@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.booking.flight.FlightHistoryActivity;
 import com.safepayu.wallet.adapter.MyOrdersAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -28,7 +29,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.OnPackageSelectListener {
+public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.OnPackageSelectListener, View.OnClickListener {
 
     private RecyclerView recyclerMyOrders;
     private RecyclerLayoutManager layoutManager;
@@ -40,7 +41,7 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
     private Dialog dialogStatus;
     private TextView tvTransactionIdTV,tvCustomerNumberId,tvAmount,tvRechargeType,tvDescriptionText,tvOperationText,tvContactSupport,tvDate,tvStatus,tvCustomerNameNumber
     ,GoToWalletBtn;
-    LinearLayout layoutDescription;
+    LinearLayout layoutDescription,layoutFlightHistory;
 
 
     @Override
@@ -49,6 +50,8 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
 
         loadingDialog = new LoadingDialog(this);
         recyclerMyOrders = findViewById(R.id.list_orderHistory);
+        layoutFlightHistory=findViewById(R.id.layout_flight_history);
+
         backBtn = findViewById(R.id.myorder_back_btn);
 
 
@@ -70,6 +73,8 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
         tvCustomerNameNumber=dialogStatus.findViewById(R.id.tv_customer_name_number);
         tvDate=dialogStatus.findViewById(R.id.tv_detil_time_date);
         tvStatus=dialogStatus.findViewById(R.id.tv_status);
+
+        layoutFlightHistory.setOnClickListener(this);
 
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -187,5 +192,15 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
         String part2 = parts[1]; // 034556
         tvCustomerNumberId.setText(part2);
         dialogStatus.show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.layout_flight_history:
+                Intent intent = new Intent( MyOrdersActivity.this, FlightHistoryActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

@@ -166,8 +166,8 @@
                     android:textColor="@color/black"/>
             </LinearLayout>
 </LinearLayout>
+      <!--  <include layout="@layout/flight_amount_footer"/>-->
     </LinearLayout>
-        <include layout="@layout/flight_amount_footer"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

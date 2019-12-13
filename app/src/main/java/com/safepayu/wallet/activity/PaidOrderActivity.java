@@ -146,7 +146,12 @@ public class PaidOrderActivity extends AppCompatActivity {
        //     gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.failed_gif));
             Glide.with(getApplicationContext()).load(R.drawable.failed_gif).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
             StatusTV.setTextColor(getResources().getColor(R.color.red_400));
-            ServiceInfoTV.setText(PendingText);
+            if(PendingText.equals("It Might Take 5 Mins To 3 Hrs. Have Patience For Transaction. Sorry For The Inconvenience. \nThank You!")){
+                ServiceInfoTV.setVisibility(View.GONE);
+            }
+            else {
+                ServiceInfoTV.setText(PendingText);
+            }
             tvSafepeUtrId.setVisibility(View.GONE);
         }
 

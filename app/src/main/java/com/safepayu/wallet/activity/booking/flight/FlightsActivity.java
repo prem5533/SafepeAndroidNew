@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -92,7 +93,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
     private String daymonthYear,d,m,y,dayOfWeek;
     SimpleDateFormat simpledateformat;
     public static TextView tvAdultsCount,tvChildrenCount,tvInfantCount,tv_done;
-
+    public static String b,AdultsCount,ChildCount,InfantCount;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -347,6 +348,12 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         
         //*************************************************************
       //  BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_flight),"Coming Soon",false);
+
+        if (AdultsCount == null) {
+            AdultsCount="1";
+            ChildCount="";
+            InfantCount="";
+        }
         Intent intent = new Intent(FlightsActivity.this,FlightListActivity.class);
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE,tvSourceFlightAirportCode.getText().toString());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DESTINATION,tvDestinationFlightAirportCode.getText().toString());
@@ -354,9 +361,9 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TRIP_TYPE,"1");
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_USER,"");
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_USER_TYPE,"5");
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ADULTS,tvAdultsCount.getText().toString());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_INFANTS,tvInfantCount.getText().toString());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_CHILDREN,tvChildrenCount.getText().toString());
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ADULTS,AdultsCount);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_INFANTS,InfantCount);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_CHILDREN,ChildCount);
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TYPE,"1");
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_RETURN_DATE,"");
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_CLASS,tc);
@@ -447,6 +454,9 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
             tvInfantCount.setText("" +mintegerInfant);
             tvChildrenCount.setText("" + mintegerChild);
 
+            AdultsCount = tvAdultsCount.getText().toString();
+            ChildCount = tvChildrenCount.getText().toString();
+            InfantCount = tvInfantCount.getText().toString();
 
 
         }

@@ -18,6 +18,8 @@ import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
 import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.request.booking.flight.AvailableFlightRequest;
 import com.safepayu.wallet.models.request.booking.flight.FlightBlockTicketRequest;
+import com.safepayu.wallet.models.request.booking.flight.FlightBookingDetailRequest;
+import com.safepayu.wallet.models.request.booking.flight.FlightHistoryResponse;
 import com.safepayu.wallet.models.request.booking_bus.BusListRequest;
 import com.safepayu.wallet.models.request.booking_bus.BusTripDetailsRequest;
 import com.safepayu.wallet.models.request.booking_hotel.AvailableHotelRequest;
@@ -52,6 +54,7 @@ import com.safepayu.wallet.models.response.UserDetailResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
 import com.safepayu.wallet.models.response.WalletHistoryResponse;
+import com.safepayu.wallet.models.response.WalletLimitResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
 import com.safepayu.wallet.models.response.booking.HotelDetailResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusListResponse;
@@ -59,7 +62,9 @@ import com.safepayu.wallet.models.response.booking.bus.BusSourcesResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusTripDetailsResponse;
 import com.safepayu.wallet.models.response.booking.flight.AirportLocationResponse;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
+import com.safepayu.wallet.models.response.booking.flight.CancelBookTicketResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightBlockTicketResponse;
+import com.safepayu.wallet.models.response.booking.flight.FlightBookingDetailResponse;
 import com.safepayu.wallet.models.response.booking.hotel.AvailableHotelsResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelSourcesResponse;
 
@@ -203,6 +208,8 @@ public interface ApiService {
     @POST("api/secure/payment/api/promotionalImages")
     Single<PromotionResponse>getPromotionOffer(@Body PromotionRequest promotionRequest);
 
+    @GET("api/secure/payment/api/walletLimitLeft")
+    Single<WalletLimitResponse>getWalletLimitLeft();
 
     //*************Flight Booking *******************//
     @GET("api/secure/payment/api/getFlightAirport")
@@ -213,6 +220,15 @@ public interface ApiService {
 
     @POST("api/secure/payment/api/getFlightBlockTicket ")
     Single<FlightBlockTicketResponse> getFlightBlockTicket(@Body FlightBlockTicketRequest flightBlockTicketRequest);
+
+    @POST("api/secure/payment/api/getFlightBookingDetails")
+    Single<FlightBookingDetailResponse> getFlightBookingDetails(@Body FlightBookingDetailRequest flightBookingDetailRequest);
+
+    @POST("api/secure/payment/api/getFlightCancelTicket")
+    Single<CancelBookTicketResponse> getFlightCancelTicket(@Body FlightBookingDetailRequest flightBookingDetailRequest);
+
+    @GET("api/secure/payment/api/getFlightHistory")
+    Single<FlightHistoryResponse> getFlightHistory();
 
 
     //*************Bus Booking *******************//

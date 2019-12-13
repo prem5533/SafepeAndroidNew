@@ -136,6 +136,7 @@ public class WalletActivity extends BaseActivity {
                         if (response.isStatus()) {
                             AmountTV.setText(getResources().getString(R.string.rupees)+" "+ NumberFormat.getInstance().format(response.getWallet().getAmount()));
 
+
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);
                         }
