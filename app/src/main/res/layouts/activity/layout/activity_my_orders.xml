@@ -34,9 +34,6 @@
             android:textColor="#fff"
             android:textSize="18sp" />
     </RelativeLayout>
-
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_orderHistory"
         android:layout_width="match_parent"
