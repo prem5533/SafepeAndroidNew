@@ -12,9 +12,9 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,7 +40,6 @@ import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BaseResponse1;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
-import com.squareup.picasso.Picasso;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -57,6 +56,8 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     private ImageView ShowHidePasswordBtn;
     private String strReferalcode;
     private ImageView signup_logo;
+    private TextView tvShowTerms;
+    private CheckBox chTermCond;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,10 +83,13 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         VerifyReffralBtn=findViewById(R.id.verify_referral);
         verifyAlready=findViewById(R.id.verify_already);
         signup_logo=findViewById(R.id.signup_logo);
+        chTermCond=findViewById(R.id.ch_term_cond);
+        tvShowTerms=findViewById(R.id.tv_show_terms);
       //  Picasso.get().load(imagePath).into(signup_logo);
 
         ShowHidePasswordBtn.setOnClickListener(this);
         VerifyReffralBtn.setOnClickListener(this);
+        tvShowTerms.setOnClickListener(this);
 
         strReferalcode= BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
         mobileNo.addTextChangedListener(new MobileEditTextWatcher(mobileNo));
@@ -270,12 +274,18 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 getReferralDetails();
 
                 break;
+            case R.id.tv_show_terms:
+
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("http://www.safepeindia.com/term$conditions.php"));
+                startActivity(i);
+                break;
         }
     }
 
     private Boolean validate() {
 
-        if (firstName.getText().toString().trim().length() == 0) {
+   if (firstName.getText().toString().trim().length() == 0) {
             firstName.requestFocus();
             BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter first name", true);
             return false;
@@ -312,8 +322,10 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
             return false;
         } else if (referralCode.getText().toString().trim().length() == 0) {
             referralCode.requestFocus();
-
             return false;
+        }
+         else if (!chTermCond.isChecked()){
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout),"Please Accept Term & Conditions", true);
         }
         return true;
     }

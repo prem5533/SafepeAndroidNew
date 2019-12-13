@@ -33,7 +33,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.booking.BookingPaymentActivity"></activity>
+        <activity android:name=".activity.booking.flight.FlightHistoryActivity"></activity>
+        <activity android:name=".activity.booking.flight.FlightBookDetailActivity" />
+        <activity android:name=".activity.booking.BookingPaymentActivity" />
         <activity android:name=".activity.SplashViewPagerActivity" />
         <activity
             android:name=".activity.booking.flight.FlightPassengerDetailActivity"
@@ -80,7 +82,8 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".activity.OtpVerification" />
         <activity android:name=".activity.NewAccount" />
-        <activity android:name=".activity.LoginActivity"
+        <activity
+            android:name=".activity.LoginActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity
             android:name=".activity.Navigation"

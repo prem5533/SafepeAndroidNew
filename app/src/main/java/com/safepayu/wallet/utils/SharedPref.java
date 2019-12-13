@@ -59,6 +59,11 @@ public class SharedPref {
     public final String FLIGHT_TOTAL_FARE = "flight_total_fare";
     public final String FLIGHT_DEP_TIME = "flight_dep_time";
     public final String FLIGHT_ARRIVAL_TIME = "flight_arrival_time";
+    public final String FLIGHT_REFERENCE_NO = "flight_reference_no";
+    public final String FLIGHT_START_JOURNEY = "flight_start_journey";
+    public final String FLIGHT_DURATION_TIME = "flight_duration_time";
+    public final String TotalTravellers = "total_travellers";
+
 
     public SharedPref(Context context) {
         this.context = context;

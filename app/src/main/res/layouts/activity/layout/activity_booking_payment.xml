@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/payment"
     tools:context=".activity.booking.BookingPaymentActivity">
         <RelativeLayout
             android:id="@+id/headerbar"
@@ -110,10 +110,21 @@
                 android:padding="10dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tv_walletlimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="@color/red"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text=""
+                    />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_margin="5dp">
 
                     <CheckBox
                     android:id="@+id/check_box_wallet"
@@ -124,6 +135,16 @@
                     android:textColor="@color/black"
                         android:layout_weight="1"
                     android:buttonTint="@color/red_theme"/>
+                    <TextView
+                        android:id="@+id/tv_wallet_deduct_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"
+                        android:visibility="gone"
+                        android:fontFamily="@font/roboto_bold"
+                        android:layout_marginRight="10dp"/>
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -133,7 +154,8 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:orientation="horizontal"
-                 android:layout_marginLeft="30dp">
+                 android:layout_marginLeft="30dp"
+                 android:layout_marginTop="-10dp">
                  <TextView
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
@@ -147,13 +169,70 @@
                      android:layout_height="wrap_content"
                      android:text="0.00"
                      android:textSize="12sp"
-
                      android:textColor="@color/darker_gray"
                      android:fontFamily="@font/roboto_regular"
-                     android:layout_marginLeft="5dp"/>
+                     android:layout_marginLeft="5dp"
+                     />
              </LinearLayout>
-            </LinearLayout>
 
+            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:padding="10dp"
+                    android:layout_marginTop="5dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+
+                        <CheckBox
+                            android:id="@+id/check_box_gateway_payment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Debit/Credit Card/Upi/Net Banking"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:buttonTint="@color/red_theme"/>
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_credit_card"/>
+
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_gateway_deduct_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:textSize="15sp"
+                        android:gravity="right"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_bold"
+                        android:layout_marginLeft="20dp"/>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_booking_pay_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/rounded_buttons"
+                    android:padding="10dp"
+                    android:textAllCaps="false"
+                    android:text="Pay 507"
+                    android:textColor="#fff"
+                    android:textSize="16sp" />
             </LinearLayout>
         </ScrollView>
     <LinearLayout

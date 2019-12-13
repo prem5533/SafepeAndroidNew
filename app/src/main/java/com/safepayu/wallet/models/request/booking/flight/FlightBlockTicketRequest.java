@@ -26,11 +26,27 @@ public class FlightBlockTicketRequest  {
     private String AdultPax;
     private String ChildPax;
     private String payment_mode;
+    private String payment_wallet;
+    private String payment_bank;
     private List<String> Names;
     private List<String> PassportDetails;
     private List<String> dob;
 
+    public String getPayment_wallet() {
+        return payment_wallet;
+    }
 
+    public void setPayment_wallet(String payment_wallet) {
+        this.payment_wallet = payment_wallet;
+    }
+
+    public String getPayment_bank() {
+        return payment_bank;
+    }
+
+    public void setPayment_bank(String payment_bank) {
+        this.payment_bank = payment_bank;
+    }
 
     public String getFlightType() {
         return flightType;

@@ -229,7 +229,7 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="50dp">
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -248,6 +248,24 @@
                         android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/bue_A700"/>
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_show_terms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text="Show Terms "
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/yellow"
+                    android:padding="5dp"/>
+
+                <CheckBox
+                    android:id="@+id/ch_term_cond"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:buttonTint="@color/red_theme"
+                    android:text="Please confirm that you agree to our term &amp; conditions"/>
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     style="@style/TextAppearance.AppCompat.Large"

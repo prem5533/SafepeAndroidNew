@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -135,6 +134,7 @@ public class WalletActivity extends BaseActivity {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
                             AmountTV.setText(getResources().getString(R.string.rupees)+" "+ NumberFormat.getInstance().format(response.getWallet().getAmount()));
+
 
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);

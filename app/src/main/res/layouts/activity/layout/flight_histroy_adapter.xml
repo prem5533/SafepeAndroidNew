@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_flight_ticket_ref_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="refnu"
+                android:padding="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/roboto_regular"/>
+            <TextView
+                android:id="@+id/tv_flight_booking_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Booking Status"
+                android:padding="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+                android:visibility="gone"
+                android:fontFamily="@font/roboto_regular"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,7 +21,6 @@ import androidx.cardview.widget.CardView;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.LoginActivity;
 import com.safepayu.wallet.activity.PaymentType;
 import com.safepayu.wallet.adapter.SpinnerAdapter;
 import com.safepayu.wallet.api.ApiClient;
@@ -261,6 +259,7 @@ public class DthRecharge extends BaseActivity {
                         intent.putExtra("CircleCode","51");
                         intent.putExtra("OperatorId",OperatorId);
                         intent.putExtra("walletCashback", tvWalletCashback.getText().toString());
+
                         intent.putExtra("totalAmount", tvTotalAmountpay.getText().toString());
                         startActivity(intent);
                         finish();

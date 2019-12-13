@@ -34,7 +34,8 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
     AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
     private RecyclerView recyle_flight_detail;
     private FlightDetailAdapter flightDetailAdapter;
-    private Button continueBtn,backbtnFlightList;
+    private Button continueBtn,backbtnFlightList,backBtn;
+
 
 
     @Override
@@ -56,6 +57,7 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
 
     private void findId() {
         tvFlightdetailsDateTravellersClass = findViewById(R.id.tv_flightdetails_date_travellers_class);
+        backBtn = findViewById(R.id.recharge_back_btn);
         tvFlightdetailsTo = findViewById(R.id.tvflightdetails_to_where);
         tvFlightdetailsFrom = findViewById(R.id.tvflightdetails_from_where);
         continueBtn = findViewById(R.id.continue_btn);
@@ -72,6 +74,7 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
         //************set listener*************
         continueBtn.setOnClickListener(this);
         backbtnFlightList.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
 
 
         //***************get data****************
@@ -133,9 +136,14 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
                 finish();
                 break;
             case R.id.continue_btn:
-              /*  Intent intent = new Intent(getApplicationContext(),FlightPassengerDetailActivity.class);
+                Intent intent = new Intent(getApplicationContext(),FlightPassengerDetailActivity.class);
                 intent.putExtra("total_travellers",totalTravellers);
-                startActivity(intent);*/
+                startActivity(intent);
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().TotalTravellers,String.valueOf(totalTravellers));
+                break;
+            case R.id.recharge_back_btn:
+                overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
+                finish();
                 break;
         }
     }
