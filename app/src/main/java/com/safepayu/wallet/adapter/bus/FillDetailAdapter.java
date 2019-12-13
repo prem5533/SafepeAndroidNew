@@ -2,6 +2,7 @@ package com.safepayu.wallet.adapter.bus;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +30,11 @@ public class FillDetailAdapter extends RecyclerView.Adapter<FillDetailAdapter.Fl
     private int size=0;
     private String EmailText="";
     private ArrayList<String> NameList,AgeList,GenderList;
+    private String CardType="",CardId="";
 
     public  interface  FillDetailListener {
         void onFillDetailClickTo (int position,ArrayList<String> NameList,ArrayList<String>  AgeList,ArrayList<String>  GenderList,
-                                String EmailTexT);
+                                String EmailTexT,String CardType,String CardId);
     }
 
     public FillDetailAdapter(Context context,  int size1, FillDetailAdapter.FillDetailListener boardingListListener) {
@@ -70,9 +72,9 @@ public class FillDetailAdapter extends RecyclerView.Adapter<FillDetailAdapter.Fl
 
     public class FlightLocationListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvPassengerNo ;
-        private RadioGroup radioGroup;
-        private EditText edName,edAge,edEmail;
-        private RelativeLayout rlEmail;
+        private RadioGroup radioGroup,radioGroupCard;
+        private EditText edName,edAge,edEmail,edCardNumber;
+        private RelativeLayout rlEmail,rlCardType,rlCardNumber;
         private Button ProceedBtn;
         public FlightLocationListViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -80,8 +82,12 @@ public class FillDetailAdapter extends RecyclerView.Adapter<FillDetailAdapter.Fl
             edName = itemView.findViewById(R.id.name_fillDetailAdapter);
             edAge = itemView.findViewById(R.id.age_fillDetailAdapter);
             edEmail = itemView.findViewById(R.id.email_fillDetailAdapter);
+            edCardNumber = itemView.findViewById(R.id.cardId_fillDetailAdapter);
             radioGroup = itemView.findViewById(R.id.radioGrp_fillDetailAdapter);
+            radioGroupCard= itemView.findViewById(R.id.radioGrpCard_fillDetailAdapter);
             rlEmail = itemView.findViewById(R.id.emailLayout_fillDetailAdapter);
+            rlCardNumber = itemView.findViewById(R.id.cardNumberLayout);
+            rlCardType = itemView.findViewById(R.id.cardLayout);
             ProceedBtn = itemView.findViewById(R.id.proceedBtn_fillDetailAdapter);
 
             itemView.setOnClickListener(this);
@@ -92,6 +98,8 @@ public class FillDetailAdapter extends RecyclerView.Adapter<FillDetailAdapter.Fl
             tvPassengerNo.setText("Passenger "+(position+1));
             if (position==0){
                 rlEmail.setVisibility(View.VISIBLE);
+                rlCardNumber.setVisibility(View.VISIBLE);
+                rlCardType.setVisibility(View.VISIBLE);
             }
             if (position==size-1){
                 ProceedBtn.setVisibility(View.VISIBLE);
@@ -103,7 +111,16 @@ public class FillDetailAdapter extends RecyclerView.Adapter<FillDetailAdapter.Fl
                     RadioButton rb=itemView.findViewById(checkedId);
 
                     GenderList.set(position,rb.getText().toString());
-                    Toast.makeText(context, rb.getText(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+            radioGroupCard.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                    RadioButton rb=itemView.findViewById(checkedId);
+
+                    CardType=rb.getText().toString();
                 }
             });
 
@@ -190,6 +207,43 @@ public class FillDetailAdapter extends RecyclerView.Adapter<FillDetailAdapter.Fl
                     // TODO Auto-generated method stub
                 }
             });
+
+            edCardNumber.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    // TODO Auto-generated method stub
+                    try {
+                        if (CardType.equalsIgnoreCase("PAN")){
+                            if (s.length()<10){
+
+                            }else {
+                                CardId=edCardNumber.getText().toString();
+                            }
+                        }else {
+                            if (s.length()<12){
+
+                            }else {
+                                CardId=edCardNumber.getText().toString();
+                            }
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    // TODO Auto-generated method stub
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                    // TODO Auto-generated method stub
+                }
+            });
         }
 
         @Override
@@ -197,7 +251,13 @@ public class FillDetailAdapter extends RecyclerView.Adapter<FillDetailAdapter.Fl
             switch (view.getId()) {
                 case R.id.proceedBtn_fillDetailAdapter:
                     if (fillDetailListener != null) {
-                        fillDetailListener.onFillDetailClickTo(getLayoutPosition(),NameList,AgeList,GenderList,EmailText);
+                        if (TextUtils.isEmpty(CardType)){
+                            Toast.makeText(context, "Please Select Card Type", Toast.LENGTH_SHORT).show();
+                        }else {
+                            fillDetailListener.onFillDetailClickTo(getLayoutPosition(),NameList,AgeList,GenderList,EmailText,
+                                     CardType, CardId);
+                        }
+
                     }
                     break;
             }

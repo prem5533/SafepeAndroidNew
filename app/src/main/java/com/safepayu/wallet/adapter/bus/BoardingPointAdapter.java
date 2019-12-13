@@ -24,7 +24,7 @@ public class BoardingPointAdapter extends RecyclerView.Adapter<BoardingPointAdap
     private int lastSelectedPosition=0;
 
     public  interface  BoardingListListener {
-        void onLocationClickTo (int position,String Buslist);
+        void onLocationClickTo (int position,List<BusListResponse.DataBean.AvailableTripsBean.BoardingTimesBean> BoardingTimes);
     }
 
     public BoardingPointAdapter(Context context,  List<BusListResponse.DataBean.AvailableTripsBean.BoardingTimesBean> BoardingTimes1, BoardingPointAdapter.BoardingListListener boardingListListener) {
@@ -64,8 +64,6 @@ public class BoardingPointAdapter extends RecyclerView.Adapter<BoardingPointAdap
                 public void onClick(View v) {
                     lastSelectedPosition = getAdapterPosition();
                     notifyDataSetChanged();
-
-                    Toast.makeText(context,"selected offer is " + tvTime.getText().toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -88,7 +86,7 @@ public class BoardingPointAdapter extends RecyclerView.Adapter<BoardingPointAdap
         public void onClick(View v) {
 
             if (boardingListListener != null) {
-                boardingListListener.onLocationClickTo(getLayoutPosition(),tvTime.getText().toString());
+                boardingListListener.onLocationClickTo(getLayoutPosition(),BoardingTimes);
                 Toast.makeText(context, tvTime.getText().toString(), Toast.LENGTH_SHORT).show();
 
             }

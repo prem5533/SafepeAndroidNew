@@ -2,7 +2,6 @@ package com.safepayu.wallet.activity.booking.bus;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.RechargeHistory;
 import com.safepayu.wallet.adapter.bus.BusListAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -147,7 +145,6 @@ public class BusListActivity extends AppCompatActivity implements View.OnClickLi
                                     response1=response;
                                     busListAdapter = new BusListAdapter(BusListActivity.this,response.getData(),BusListActivity.this);
                                     recyclerViewBus.setAdapter(busListAdapter);
-
 
                                 }else {
                                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.busListLayout), "No Data Found", false);

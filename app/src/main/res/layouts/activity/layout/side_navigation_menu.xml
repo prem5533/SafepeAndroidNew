@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#f7f8f8"
-    >
+    android:background="#f7f8f8">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -416,31 +415,6 @@
                     android:orientation="vertical"
                     android:layout_marginLeft="20dp">
                     <LinearLayout
-                        android:id="@+id/li_logoutAlldevice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="15dp"
-                      >
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_logout_all" />
-
-                        <TextView
-                            android:id="@+id/tv_logoutAlldevice"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Logout From All Devices"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"
-                            android:layout_marginLeft="20dp"
-                            android:fontFamily="@font/roboto_regular"/>
-                    </LinearLayout>
-                    <LinearLayout
                         android:id="@+id/li_change_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -464,11 +438,35 @@
                             android:layout_marginLeft="20dp"
                             android:fontFamily="@font/roboto_regular"/>
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/li_change_passwordChild"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="15dp">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_changepassword"/>
+
+                        <TextView
+                            android:id="@+id/tv_change_passwordChild"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Change Password"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="20dp"
+                            android:fontFamily="@font/roboto_regular"/>
+                    </LinearLayout>
                 </LinearLayout>
 
-
                 <LinearLayout
-                    android:id="@+id/li_logout"
+                    android:id="@+id/li_LogoutParent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -479,17 +477,94 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_logout"/>
+                        android:src="@drawable/ic_security" />
 
                     <TextView
-                        android:id="@+id/tv_logout"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tv_logoutText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Logout"
                         android:textSize="15sp"
                         android:textColor="@color/black"
                         android:layout_marginLeft="20dp"
-                        android:fontFamily="@font/roboto_regular"/>
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_weight="1"/>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/image_down_arrowLogout"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_down_security"
+                            android:padding="10dp"/>
+                        <ImageView
+                            android:id="@+id/image_up_arrowLogout"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_up_security"
+                            android:padding="10dp"
+                            android:visibility="gone"/>
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_logout_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="20dp">
+                    <LinearLayout
+                        android:id="@+id/li_logoutAlldevice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="15dp">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_logout_all" />
+
+                        <TextView
+                            android:id="@+id/tv_logoutAlldevice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Logout From All Devices"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="20dp"
+                            android:fontFamily="@font/roboto_regular"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/li_logout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="15dp"
+                        android:focusableInTouchMode="true">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_logout"/>
+
+                        <TextView
+                            android:id="@+id/tv_logout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Logout"
+                            android:textSize="15sp"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="20dp"
+                            android:fontFamily="@font/roboto_regular"/>
+                    </LinearLayout>
                 </LinearLayout>
 
 

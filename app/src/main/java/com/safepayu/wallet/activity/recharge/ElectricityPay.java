@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,7 +21,6 @@ import androidx.cardview.widget.CardView;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.LoginActivity;
 import com.safepayu.wallet.activity.PaymentType;
 import com.safepayu.wallet.adapter.SpinnerAdapter;
 import com.safepayu.wallet.api.ApiClient;
@@ -170,19 +168,17 @@ public class ElectricityPay extends BaseActivity {
                         tvRechargeamount.setText(AmountED.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
                         tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
                         tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));
-                    }
-
-                    else if (num>1000){
+                    } else if (num>1000){
                         CalculateAmount1Per(num);
                         String text = AmountED.getText().toString().trim()  + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
                       //  AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
                         tvRechargeamount.setText(AmountED.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
                         tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
                         tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));
-                    }
-                    else {
+                    } else {
                         AmountTotalTV.setText("0.0");
-                    } }
+                    }
+                }
                 else {
                     cardAmount.setVisibility(View.GONE);
 
@@ -282,7 +278,8 @@ public class ElectricityPay extends BaseActivity {
                             mOperList=response.getOperators();
                             for (int i = 0; i < response.getOperators().size(); i++) {
                                 SpinnerAdapter customAdapter=new SpinnerAdapter(getApplicationContext(),mOperList);
-                                OperatorSpinner.setAdapter(customAdapter); }
+                                OperatorSpinner.setAdapter(customAdapter);
+                            }
 
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),response.getMessage(),false);

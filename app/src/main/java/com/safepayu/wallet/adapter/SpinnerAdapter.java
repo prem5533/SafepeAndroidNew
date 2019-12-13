@@ -1,6 +1,7 @@
 package com.safepayu.wallet.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +47,19 @@ public class SpinnerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(context).inflate(R.layout.spinner_custom_layout, null);
-        ImageView icon = (ImageView) convertView.findViewById(R.id.imageView);
-        TextView names = (TextView) convertView.findViewById(R.id.textView);
+        ImageView icon = convertView.findViewById(R.id.imageView);
+        TextView names =  convertView.findViewById(R.id.textView);
+
         names.setText(mOperList.get(position).getOperator_name());
-        Picasso.get().load(ApiClient.ImagePath+mOperList.get(position).getImage()).into(icon);
+
+        try {
+            if (!TextUtils.isEmpty(mOperList.get(position).getImage()))
+            Picasso.get().load(ApiClient.ImagePath+mOperList.get(position).getImage()).into(icon);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         return convertView;
     }
 }

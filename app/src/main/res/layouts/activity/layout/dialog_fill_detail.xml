@@ -10,14 +10,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        android:padding="10dp">
 
         <Button
             android:id="@+id/backBtn_fillDetailDialog"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
             android:background="@drawable/ic_arrow_back_black_24dp" />
 
         <com.safepayu.wallet.custom_view.CustomTextView
@@ -26,7 +26,6 @@
             style="@style/TextAppearance.AppCompat.Medium"
             app:fontCustom="@string/Roboto"
             android:textAllCaps="false"
-            android:layout_marginLeft="10dp"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:text="Passenger's Details"
@@ -42,7 +41,8 @@
         android:layout_below="@id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:background="@color/grey_200">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,6 +61,11 @@
                 android:textColor="@color/grey_700"
                 android:textSize="16sp"
                 android:text="Please Fill All Required Details" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_700"
+                android:layout_margin="2dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/bus_passengers_fillDetailDialog"

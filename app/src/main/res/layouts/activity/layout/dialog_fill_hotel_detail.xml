@@ -1,24 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/fillDetailAdapter"
-    android:padding="5dp"
-    android:layout_margin="2dp"
-    app:cardCornerRadius="5dp"
-    android:background="@color/white">
+    android:background="#f7f8f8"
+    android:id="@+id/fillDetailHotelDialog">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="5dp"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/backBtn_fillDetailHotelDialog"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_arrow_back_black_24dp" />
+
+        <com.safepayu.wallet.custom_view.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Medium"
+            app:fontCustom="@string/Roboto"
+            android:textAllCaps="false"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Guest's Details"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/backBtn_seatSelectionDialog"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_below="@id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:layout_margin="10dp">
 
             <com.safepayu.wallet.custom_view.CustomTextView
                 android:layout_width="wrap_content"
@@ -26,23 +56,25 @@
                 style="@style/TextAppearance.AppCompat.Medium"
                 app:fontCustom="@string/Roboto"
                 android:textAllCaps="false"
+                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/black"
+                android:textColor="@color/grey_700"
                 android:textSize="16sp"
-                android:text="Passenger 1"
-                android:gravity="center"
+                android:text="Please Fill All Required Details" />
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fillDetailAdapter"
                 android:layout_margin="5dp"
-                android:id="@+id/passengerNo_fillDetailAdapter"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grey_400"
-                android:layout_margin="5dp"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:padding="5dp">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_margin="5dp"/>
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     android:layout_width="wrap_content"
@@ -51,29 +83,24 @@
                     app:fontCustom="@string/Roboto"
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="Name"
+                    android:text="First Name"
                     android:layout_marginTop="5dp"/>
 
+
                 <EditText
-                    android:id="@+id/name_fillDetailAdapter"
-                    android:layout_width="220dp"
+                    android:id="@+id/name_fillDetailHotelDialog"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:hint="Name"
+                    android:hint="First Name"
                     android:imeOptions="actionNext"
                     android:singleLine="true"
                     android:inputType="text"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     android:layout_width="wrap_content"
@@ -82,32 +109,50 @@
                     app:fontCustom="@string/Roboto"
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:text="Last Name"
+                    android:layout_marginTop="5dp"/>
+
+
+                <EditText
+                    android:id="@+id/nameLast_fillDetailHotelDialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:hint="Last Name"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:inputType="text"/>
+
+                <com.safepayu.wallet.custom_view.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    app:fontCustom="@string/Roboto"
+                    android:textAllCaps="false"
+                    android:layout_alignParentLeft="true"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:text="Age"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="10dp"/>
 
                 <EditText
-                    android:id="@+id/age_fillDetailAdapter"
-                    android:layout_width="220dp"
+                    android:id="@+id/age_fillDetailHotelDialog"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:hint="Age"
-                    android:imeOptions="actionDone"
+                    android:hint="99"
+                    android:imeOptions="actionNext"
                     android:singleLine="true"
                     android:inputType="number"
                     android:maxLength="3"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/emailLayout_fillDetailAdapter"
-                android:visibility="gone">
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     android:layout_width="wrap_content"
@@ -116,49 +161,18 @@
                     app:fontCustom="@string/Roboto"
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:text="Email"
-                    android:layout_marginTop="5dp"/>
-
-                <EditText
-                    android:id="@+id/email_fillDetailAdapter"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_alignParentRight="true"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:hint="Email"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"
-                    android:inputType="textEmailAddress"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.safepayu.wallet.custom_view.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    app:fontCustom="@string/Roboto"
-                    android:textAllCaps="false"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:text="Gender"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="10dp"/>
 
                 <RadioGroup
-                    android:id="@+id/radioGrp_fillDetailAdapter"
-                    android:layout_width="220dp"
+                    android:id="@+id/radioGrp_fillDetailHotelDialog"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_alignParentRight="true">
+                    android:layout_alignParentRight="true"
+                    android:weightSum="3">
 
                     <RadioButton
                         android:layout_width="wrap_content"
@@ -173,14 +187,14 @@
                         android:id="@+id/female_fillDetailAdapter"
                         android:layout_weight="1"
                         android:text="Female"/>
-                </RadioGroup>
-            </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/cardLayout"
-                android:visibility="gone">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/other_fillDetailAdapter"
+                        android:layout_weight="1"
+                        android:text="Other"/>
+                </RadioGroup>
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     android:layout_width="wrap_content"
@@ -189,83 +203,68 @@
                     app:fontCustom="@string/Roboto"
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="Card Proof"
-                    android:layout_marginTop="5dp"/>
-
-                <RadioGroup
-                    android:id="@+id/radioGrpCard_fillDetailAdapter"
-                    android:layout_width="220dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_alignParentRight="true">
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="PAN"/>
-
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Aadhaar"/>
-                </RadioGroup>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/cardNumberLayout"
-                android:visibility="gone">
-
-                <com.safepayu.wallet.custom_view.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    app:fontCustom="@string/Roboto"
-                    android:textAllCaps="false"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:text="Card Number"
+                    android:text="Email"
                     android:layout_marginTop="10dp"/>
 
                 <EditText
-                    android:id="@+id/cardId_fillDetailAdapter"
-                    android:layout_width="220dp"
+                    android:id="@+id/email_fillDetailHotelDialog"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:hint="Card Number"
+                    android:hint="example@gmail.com"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:inputType="textEmailAddress"/>
+
+                <com.safepayu.wallet.custom_view.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    app:fontCustom="@string/Roboto"
+                    android:textAllCaps="false"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:text="Mobile"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/phone_fillDetailHotelDialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:hint="9999966666"
                     android:imeOptions="actionDone"
                     android:singleLine="true"
-                    android:inputType="text"/>
-            </RelativeLayout>
+                    android:inputType="number"
+                    android:maxLength="10"/>
+
+                <Button
+                    android:id="@+id/proceedBtn_fillDetailHotelDialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/rounded_buttons"
+                    android:padding="10dp"
+                    android:text="Proceed"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"/>
+            </LinearLayout>
 
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <Button
-            android:id="@+id/proceedBtn_fillDetailAdapter"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_buttons"
-            android:padding="10dp"
-            android:text="Proceed"
-            android:textColor="#fff"
-            android:textSize="15sp"
-            android:fontFamily="@font/roboto_regular"
-            android:visibility="gone"/>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+</LinearLayout>

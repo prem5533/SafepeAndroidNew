@@ -234,6 +234,8 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                 imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_receipt));
             }else if (RechargeTypeId.equals("7")){
                 imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_receipt));
+            }else if (RechargeTypeId.equals("8")){
+                imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_metro));
             }
             tvPaymentRechargeamount.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(Amount)));
         }catch (Exception e){

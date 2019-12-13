@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/profileLayout">
 
 
     <RelativeLayout
@@ -167,8 +168,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        >
+                        android:layout_marginLeft="10dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -191,8 +191,7 @@
                                 android:fontFamily="@font/roboto_regular"
                                 android:textColor="@color/black"
                                 android:textSize="14sp"
-                                android:layout_weight="1"
-                                />
+                                android:layout_weight="1" />
                             <ImageView
                                 android:layout_width="10dp"
                                 android:layout_height="10dp"
@@ -755,7 +754,10 @@
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -774,7 +776,10 @@
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -793,7 +798,10 @@
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -854,7 +862,6 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentRight="true"
-
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/ic_done_black_24dp" />

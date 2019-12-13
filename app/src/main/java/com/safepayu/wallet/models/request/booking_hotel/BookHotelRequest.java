@@ -31,6 +31,7 @@ public class BookHotelRequest {
      * hotelType : 1
      */
 
+
     private String Nationality;
     private String Address;
     private String MobileNo;
@@ -55,6 +56,15 @@ public class BookHotelRequest {
     private List<String> adults;
     private List<String> children;
     private List<List<String>> childrenAges;
+    /**
+     * payment_mode : wallet
+     * wallet_amount : 20
+     * bank_amount : 5
+     */
+
+    private String payment_mode;
+    private String wallet_amount;
+    private String bank_amount;
 
     public String getNationality() {
         return Nationality;
@@ -246,6 +256,30 @@ public class BookHotelRequest {
 
     public void setChildrenAges(List<List<String>> childrenAges) {
         this.childrenAges = childrenAges;
+    }
+
+    public String getPayment_mode() {
+        return payment_mode;
+    }
+
+    public void setPayment_mode(String payment_mode) {
+        this.payment_mode = payment_mode;
+    }
+
+    public String getWallet_amount() {
+        return wallet_amount;
+    }
+
+    public void setWallet_amount(String wallet_amount) {
+        this.wallet_amount = wallet_amount;
+    }
+
+    public String getBank_amount() {
+        return bank_amount;
+    }
+
+    public void setBank_amount(String bank_amount) {
+        this.bank_amount = bank_amount;
     }
 
     public static class HotelDetailsBean {

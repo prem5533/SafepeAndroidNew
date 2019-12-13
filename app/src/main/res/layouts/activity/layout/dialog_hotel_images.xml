@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#f7f8f8"
+    android:id="@+id/hotelImages">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/backBtn_hotelImages"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_arrow_back_black_24dp" />
+
+        <com.safepayu.wallet.custom_view.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Medium"
+            app:fontCustom="@string/Roboto"
+            android:textAllCaps="false"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Hotel Images"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/backBtn_seatSelectionDialog"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/imageList_hotelImages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"/>
+
+</LinearLayout>

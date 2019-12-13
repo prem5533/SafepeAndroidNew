@@ -24,7 +24,7 @@ public class DroppingPointAdapter  extends RecyclerView.Adapter<DroppingPointAda
     private int lastSelectedPosition=0;
 
     public  interface  DroppingListListener {
-        void onDroppingClickTo (int position,String Buslist);
+        void onDroppingClickTo (int position,List<BusListResponse.DataBean.AvailableTripsBean.DroppingTimesBean> DroppingTimes);
     }
 
     public DroppingPointAdapter(Context context, List<BusListResponse.DataBean.AvailableTripsBean.DroppingTimesBean> DroppingTimes1, DroppingPointAdapter.DroppingListListener boardingListListener) {
@@ -87,8 +87,7 @@ public class DroppingPointAdapter  extends RecyclerView.Adapter<DroppingPointAda
         public void onClick(View v) {
 
             if (boardingListListener != null) {
-                boardingListListener.onDroppingClickTo(getLayoutPosition(),tvTime.getText().toString());
-                Toast.makeText(context, tvTime.getText().toString(), Toast.LENGTH_SHORT).show();
+                boardingListListener.onDroppingClickTo(getLayoutPosition(),DroppingTimes);
 
             }
 

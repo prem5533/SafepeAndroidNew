@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/kycLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.booking.MetroActivity">
+
+    <RelativeLayout
+        android:id="@+id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/red_theme"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/backBtn_kycLayout"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_arrow_back_white_24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text="KYC"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            android:visibility="gone"
+            android:id="@+id/statusKycLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Enter Name"
+                android:textColor="#373836"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto_regular"/>
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/kycRegisterLayout"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="* - Mandatory Fields"
+                    android:textColor="#373836"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="Enter Name"
+                    android:textColor="#373836"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <EditText
+                    android:id="@+id/name_kycLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:hint="Name"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/white_button_grayborder"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="Enter Mobile"
+                    android:textColor="#373836"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <EditText
+                    android:id="@+id/mobile_kycLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:hint="Mobile"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/white_button_grayborder"
+                    android:fontFamily="@font/roboto_regular"
+                    android:maxLength="10"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/operator"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="Enter Email"
+                    android:textColor="#373836"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <EditText
+                    android:id="@+id/email_kycLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:hint="Email"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/white_button_grayborder"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/operator"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="Enter Shop Name"
+                    android:textColor="#373836"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <EditText
+                    android:id="@+id/shopName_kycLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:hint="Shop Name"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/white_button_grayborder"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView6"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="Select State"
+                    android:textColor="#373836"
+                    android:textSize="15dp"
+                    android:visibility="gone"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/white_button_grayborder"
+                    android:visibility="gone">
+
+                    <Spinner
+                        android:id="@+id/state"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/textView4"
+                        android:nextFocusForward="@+id/city"/>
+
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_below="@+id/operator"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="City"
+                    android:textColor="#373836"
+                    android:textSize="15sp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <EditText
+                    android:id="@+id/city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView6"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/white_button_grayborder"
+                    android:inputType="text"
+                    android:nextFocusForward="@+id/operator"
+                    android:padding="15dp"
+                    android:textColor="#373836"
+                    android:textSize="15sp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView6"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="0dp"
+                    android:gravity="center"
+                    android:text="Select Country "
+                    android:textColor="#373836"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:visibility="gone"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/white_button_grayborder"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="20dp"
+                    android:visibility="gone">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+                        <Spinner
+                            android:id="@+id/countryList_kycLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:backgroundTint="@color/red_theme"/>
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView6"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="0dp"
+                    android:gravity="center"
+                    android:text="Select State "
+                    android:textColor="#373836"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/white_button_grayborder"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="20dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+                        <Spinner
+                            android:id="@+id/stateList_kycLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:backgroundTint="@color/red_theme"/>
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/operator"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="Enter Address"
+                    android:textColor="#373836"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <EditText
+                    android:id="@+id/address_kycLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:hint="Address"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/white_button_grayborder"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="Enter Pin Code"
+                    android:textColor="#373836"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <EditText
+                    android:id="@+id/pinCode_kycLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:hint="Pin Code"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/white_button_grayborder"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/operator"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="Enter Date Of Birth"
+                    android:textColor="#373836"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <TextView
+                    android:id="@+id/dob_kycLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:hint="DOB"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/white_button_grayborder"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="Enter PAN"
+                    android:textColor="#373836"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <EditText
+                    android:id="@+id/pan_kycLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:hint="PAN"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/white_button_grayborder"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/operator"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="Enter Aadhaar Card Number"
+                    android:textColor="#373836"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"/>
+
+                <EditText
+                    android:id="@+id/adhar_kycLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:hint="Aadhaar Number"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/white_button_grayborder"
+                    android:fontFamily="@font/roboto_regular"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="start|center"
+                android:id="@+id/imageLayoutAdhar">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Click Here To Upload\nAadhaar Image *"
+                    android:textSize="15sp"
+                    android:padding="10dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/imageAdhar_kycLayout"
+                    android:background="@drawable/ic_picture"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="start|center"
+                android:id="@+id/imageLayoutPan">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Click Here To Upload\nPan Image *"
+                    android:textSize="15sp"
+                    android:padding="10dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/imagePan_kycLayout"
+                    android:background="@drawable/ic_picture"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="start|center"
+                android:id="@+id/imageLayoutSelf">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Click Here To Upload\nYour Image *"
+                    android:textSize="15sp"
+                    android:padding="10dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/imageSelf_kycLayout"
+                    android:background="@drawable/ic_picture"
+                    android:scaleType="fitXY"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/register_kycLayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_margin="30dp"
+                android:background="@drawable/rounded_buttons"
+                android:textAllCaps="false"
+                android:text="Register"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:fontFamily="@font/roboto_regular" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

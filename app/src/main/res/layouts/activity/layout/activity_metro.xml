@@ -13,7 +13,7 @@
         android:paddingBottom="5dp">
 
         <Button
-            android:id="@+id/recharge_back_btn"
+            android:id="@+id/metro_backBtn"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
@@ -36,61 +36,393 @@
     <ScrollView
         android:layout_below="@id/headerbar"
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context="com.xwallet.wallet.Fragments.PostpaidRechrge">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="20dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/operator"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Card Number"
+                android:textColor="#373836"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto_regular"/>
 
             <LinearLayout
-                android:id="@+id/li_metro_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_button_grayborder"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="4dp"
+                android:gravity="start|center"
+                android:layout_marginRight="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_user"/>
+
+                <EditText
+                    android:id="@+id/cardNumber_metroLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView2"
+                    android:layout_gravity="center"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:nextFocusForward="@+id/state"
+                    android:padding="10dp"
+                    android:textColor="#373836"
+                    android:textSize="15sp"
+                    android:hint="Card Number"
+                    android:background="@null"
+                    android:fontFamily="@font/roboto_regular"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView6"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Select State"
+                android:textColor="#373836"
+                android:textSize="15dp"
+                android:visibility="gone"/>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                >
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/white_button_grayborder"
+                android:visibility="gone">
 
+                <Spinner
+                    android:id="@+id/state"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/textView4"
+                    android:nextFocusForward="@+id/city"/>
+
+            </LinearLayout>
             <TextView
-                android:id="@+id/tv_metro_type"
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/operator"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="City"
+                android:textColor="#373836"
+                android:textSize="15sp"
+                android:visibility="gone"
+                android:fontFamily="@font/roboto_regular"/>
+
+            <EditText
+                android:id="@+id/city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Metro"
+                android:layout_below="@+id/textView6"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/white_button_grayborder"
+                android:inputType="text"
+                android:nextFocusForward="@+id/operator"
+                android:padding="15dp"
+                android:textColor="#373836"
                 android:textSize="15sp"
-                android:fontFamily="@font/roboto_regular"
-                android:padding="10dp"></TextView>
-                <View
+                android:visibility="gone"
+                android:fontFamily="@font/roboto_regular"/>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView6"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="0dp"
+                android:gravity="center"
+                android:text="Select Metro "
+                android:textColor="#373836"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto_regular"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_button_grayborder"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="4dp"
+                android:gravity="start|center"
+                android:layout_marginRight="20dp">
+
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider"></View>
+                    android:layout_height="40dp">
+                    <LinearLayout
+                        android:id="@+id/layoutSelect_metroOperator"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/ic_flash"/>
+                        <TextView
+                            android:id="@+id/tvMetroOperator_metroLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Select Operator"
+                            android:padding="10dp"
+                            android:textColor="#373836"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"/>
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_down_security"
+                            android:layout_marginRight="10dp"/>
+                    </LinearLayout>
+                    <Spinner
+                        android:id="@+id/operator_metro"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:backgroundTint="@color/red_theme"
+                        android:layout_below="@+id/textView5"
+                        android:nextFocusForward="@+id/amount"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone"/>
+                </FrameLayout>
+
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mobile"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Amount"
+                android:textColor="#373836"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto_regular"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_button_grayborder"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="4dp"
+                android:gravity="start|center"
+                android:layout_marginRight="20dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_rupee_indian" />
+
+                <EditText
+                    android:id="@+id/amount_metroLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:fontFamily="@font/roboto_regular"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:nextFocusForward="@+id/btn"
+                    android:padding="10dp"
+                    android:textColor="#373836"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/calculatedamount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text=" "
+                android:textSize="14sp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/yellow_theme"
+                android:paddingLeft="0dp"
+                android:visibility="gone" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardAmount_metroLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Recharge Amount"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:id="@+id/tv_rechargeamount_metroLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_regular"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wallet Cashback"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:id="@+id/tv_walletcashback_metroLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_regular"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/divider"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Amount"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:id="@+id/tv_total_amountpay_metroLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_regular"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="start|center"
+                android:background="@color/white">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_bookmark"
+                    android:padding="10dp"
+                    android:layout_marginLeft="5dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@string/electricity_payment_time"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="12sp"
+                    android:layout_marginRight="5dp"/>
+            </LinearLayout>
+
+
             <Button
-                android:id="@+id/proceed_btn"
+                android:id="@+id/payBtn_metroLayout"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_below="@+id/amount"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_buttons"
-                android:padding="10dp"
-                android:text="Proceed"
+                android:textAllCaps="false"
+                android:text="Proceed To Pay"
                 android:textColor="#fff"
                 android:textSize="15sp"
-                android:fontFamily="@font/roboto_regular"/>
+                android:fontFamily="@font/roboto_regular" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/metro_status"
-                android:textSize="12sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:fontFamily="@font/roboto_regular"></TextView>
 
         </LinearLayout>
     </ScrollView>

@@ -12,6 +12,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
@@ -63,6 +64,8 @@ public class AvailableHotelAdapter extends RecyclerView.Adapter<AvailableHotelAd
         private TextView tvHotelName,tvHotelPrice,tvHotelLocality,tvHotelDescription,tvMore ;
         private ImageView ivHotelImage;
         private RatingBar tvHotelStar;
+        private RecyclerView recyclerViewStars;
+        private StarsAdapter starsAdapter;
         public FlightLocationListViewHolder(@NonNull View itemView) {
             super(itemView);
             tvHotelName = itemView.findViewById(R.id.hotelName_availableHotelAdapter);
@@ -72,6 +75,8 @@ public class AvailableHotelAdapter extends RecyclerView.Adapter<AvailableHotelAd
             tvHotelDescription = itemView.findViewById(R.id.services_availableHotelAdapter);
             tvMore = itemView.findViewById(R.id.moreBtn_availableHotelAdapter);
             ivHotelImage = itemView.findViewById(R.id.imageHotel_availableHotelAdapter);
+            recyclerViewStars = itemView.findViewById(R.id.stars_availableHotelAdapter);
+            recyclerViewStars.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
             itemView.setOnClickListener(this);
         }
@@ -82,13 +87,36 @@ public class AvailableHotelAdapter extends RecyclerView.Adapter<AvailableHotelAd
             if (TextUtils.isEmpty(LocalityList.get(position))){
                 tvHotelLocality.setText(" ");
             }else {
-                LocalityList.get(position);
+                tvHotelLocality.setText(LocalityList.get(position));
             }
 
             tvHotelStar.setNumStars(Integer.parseInt(AvailableHotels.get(position).getStarRating()));
 
             try {
-                Picasso.get().load(AvailableHotels.get(position).getHotelImages().get(0).getImagepath()).into(ivHotelImage);
+                String Star=AvailableHotels.get(position).getStarRating();
+                if (Star.contains(".")){
+                    Star=Star.substring(0,1);
+                    starsAdapter=new StarsAdapter(context,AvailableHotels.get(position).getStarRating(),Integer.parseInt(Star)+1);
+                }else {
+                    starsAdapter=new StarsAdapter(context,AvailableHotels.get(position).getStarRating(),Integer.parseInt(Star));
+                }
+
+                recyclerViewStars.setAdapter(starsAdapter);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            try {
+
+                if (TextUtils.isEmpty(AvailableHotels.get(position).getHotelImages().get(0).getImagepath())){
+                    ivHotelImage.setImageDrawable(context.getResources().getDrawable(R.drawable.image_not_available));
+                }else {
+                    Picasso.get()
+                            .load(AvailableHotels.get(position).getHotelImages().get(0).getImagepath())
+                            .error(context.getResources().getDrawable(R.drawable.image_not_available))
+                            .into(ivHotelImage);
+                }
+
             }catch (Exception er){
                 er.printStackTrace();
             }

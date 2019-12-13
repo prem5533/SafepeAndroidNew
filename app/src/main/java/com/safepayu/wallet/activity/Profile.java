@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -24,7 +23,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.models.request.ChangePassword;
+import com.safepayu.wallet.models.request.ChangePasswordRequest;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
 import com.safepayu.wallet.models.response.UserResponse;
@@ -39,8 +38,8 @@ import static com.safepayu.wallet.activity.Navigation.qrCodeImage;
 public class Profile extends BaseActivity implements View.OnClickListener {
 
     Button BackBtn,UpdateAddressBtn,btnChangePassSubmit;
-    TextView ChangePassBtn,tvPhoneNumber, tvEmil,tvDOB, tvAddress,tvPincode,tvUsername1,tvSponserId,tvSponserName,tvSponserContactNumber;
-    LinearLayout ChangePassLayout, ShowMyQRcodeLayout;
+    TextView tvPhoneNumber, tvEmil,tvDOB, tvAddress,tvPincode,tvUsername1,tvSponserId,tvSponserName,tvSponserContactNumber;
+    LinearLayout ChangePassLayout, ShowMyQRcodeLayout,ChangePassBtn;
     int ChangePassVisibility=0;
     UserDetailResponse uResponse;
     private EditText etOldPassword, etNewPassword, etConfirmPassword;
@@ -58,7 +57,7 @@ public class Profile extends BaseActivity implements View.OnClickListener {
         getProfileData();
 
         ShowMyQRcodeLayout=findViewById(R.id.showMyQRcode);
-        ChangePassBtn=findViewById(R.id.changePassBtn);
+        ChangePassBtn=findViewById(R.id.change_pass_button);
         BackBtn=findViewById(R.id.backbtn_from_profile);
         ChangePassLayout=findViewById(R.id.change_pass_layout);
         UpdateAddressBtn=findViewById(R.id.addressupdateBtn);
@@ -116,23 +115,25 @@ public class Profile extends BaseActivity implements View.OnClickListener {
                     @Override
                     public void onSuccess(UserDetailResponse userResponse) {
 //                        BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(userResponse.getUser()));
-                        uResponse = userResponse;
-                        tvUsername1.setText(userResponse.getUser().getFirst_name()+" "+ userResponse.getUser().getLast_name());
-                        tvPhoneNumber.setText(userResponse.getUser().getMobile());
-                        tvEmil.setText(userResponse.getUser().getEmail());
-                        tvDOB.setText(userResponse.getUser().getDob());
-                        tvAddress.setText(userResponse.getUser().getLocation()+" "+ userResponse.getUser().getCity()+" "+userResponse.getUser().getState()+" "+userResponse.getUser().getCountry());
-                        tvPincode.setText(String.valueOf(userResponse.getUser().getPin()));
-                        tvSponserId.setText(userResponse.getUser().getReferral_recieved());
-                        tvSponserContactNumber.setText(userResponse.getUser().getReferral_recieved());
-                        tvSponserName.setText(userResponse.getUser().getSponsorname());
+                        if (userResponse.isStatus()){
+                            uResponse = userResponse;
+                            tvUsername1.setText(userResponse.getUser().getFirst_name()+" "+ userResponse.getUser().getLast_name());
+                            tvPhoneNumber.setText(userResponse.getUser().getMobile());
+                            tvEmil.setText(userResponse.getUser().getEmail());
+                            tvDOB.setText(userResponse.getUser().getDob());
+                            tvAddress.setText(userResponse.getUser().getLocation()+" "+ userResponse.getUser().getCity()+" "+userResponse.getUser().getState()+" "+userResponse.getUser().getCountry());
+                            tvPincode.setText(String.valueOf(userResponse.getUser().getPin()));
+                            tvSponserId.setText(userResponse.getUser().getReferral_recieved());
+                            tvSponserContactNumber.setText(userResponse.getUser().getReferral_recieved());
+                            tvSponserName.setText(userResponse.getUser().getSponsorname());
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.profileLayout),userResponse.getMessage(),false);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                       // Log.e(BaseApp.getInstance().toastHelper().getTag(Profile.class), "onError: " + e.getMessage());
-
-
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.profileLayout),e.getMessage(),false);
                     }
                 }));
 
@@ -167,15 +168,18 @@ public class Profile extends BaseActivity implements View.OnClickListener {
                 startActivity(i);
                 finish();
                 break;
-            case R.id.changePassBtn:
-                if (ChangePassVisibility==0){
-                    ChangePassLayout.setVisibility(View.VISIBLE);
-                    ChangePassVisibility=1;
+            case R.id.change_pass_button:
+                Intent intentChPassword=new Intent(Profile.this, ChangePassword.class);
+                startActivity(intentChPassword);
 
-                }else {
-                    ChangePassLayout.setVisibility(View.GONE);
-                    ChangePassVisibility=0;
-                }
+//                if (ChangePassVisibility==0){
+//                    ChangePassLayout.setVisibility(View.VISIBLE);
+//                    ChangePassVisibility=1;
+//
+//                }else {
+//                    ChangePassLayout.setVisibility(View.GONE);
+//                    ChangePassVisibility=0;
+//                }
                 break;
             case R.id.change_pass_submit:
 
@@ -210,9 +214,11 @@ public class Profile extends BaseActivity implements View.OnClickListener {
         return true;
     }
     private void changePassword() {
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
-        ChangePassword changePassword = new ChangePassword(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID),etOldPassword.getText().toString(),etNewPassword.getText().toString(),etConfirmPassword.getText().toString());
+        ChangePasswordRequest changePassword = new ChangePasswordRequest(etOldPassword.getText().toString(),etNewPassword.getText().toString(),etConfirmPassword.getText().toString());
         BaseApp.getInstance().getDisposable().add(apiService.changePwd(changePassword)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -223,19 +229,16 @@ public class Profile extends BaseActivity implements View.OnClickListener {
                         if (response.getStatus()){
                             Toast.makeText(getApplicationContext(),response.getSuccess(),Toast.LENGTH_SHORT).show();
                             finish();
-
-                           //BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addUpdateAddressLayout), response.getSuccess(), false);
-
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addUpdateAddressLayout),response.getMessage(),false);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.profileLayout),response.getMessage(),false);
                         }
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        //Log.e(BaseApp.getInstance().toastHelper().getTag(AddUpdateAddress.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.profileLayout),e.getMessage(),false);
+
                     }
                 }));
     }
@@ -325,7 +328,7 @@ public class Profile extends BaseActivity implements View.OnClickListener {
                             finish();
                         } else {
 
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addUpdateAddressLayout), response.getMessage(), true);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.profileLayout), response.getMessage(), true);
                         }
                     }
 
@@ -333,7 +336,7 @@ public class Profile extends BaseActivity implements View.OnClickListener {
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.addUpdateAddressLayout), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.profileLayout), true, e);
                     }
                 }));
     }

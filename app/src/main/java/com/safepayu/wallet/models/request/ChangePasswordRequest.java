@@ -3,11 +3,8 @@ package com.safepayu.wallet.models.request;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ChangePassword {
+public class ChangePasswordRequest {
 
-    @SerializedName("user_id")
-    @Expose
-    String user_id;
     @SerializedName("current")
     @Expose
     String current;
@@ -18,19 +15,10 @@ public class ChangePassword {
     @Expose
     String password_confirmation;
 
-    public ChangePassword(String user_id, String current, String password, String password_confirmation) {
-        this.user_id = user_id;
+    public ChangePasswordRequest(String current, String password, String password_confirmation) {
         this.current = current;
         this.password = password;
         this.password_confirmation = password_confirmation;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
     }
 
     public String getCurrent() {

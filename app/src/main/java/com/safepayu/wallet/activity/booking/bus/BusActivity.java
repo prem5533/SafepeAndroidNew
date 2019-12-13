@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.RechargeHistory;
 import com.safepayu.wallet.adapter.bus.BusSourcesAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -283,13 +281,13 @@ public class BusActivity extends AppCompatActivity implements View.OnClickListen
                                     locationName.setAdapter(adapter);
                                     locationName.setThreshold(3);
                                 }else {
-                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.flight_location_layout), "No Data Found", false);
+                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_bus), "No Data Found", false);
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         } else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.flight_location_layout), response.getMessage(), false);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_bus), response.getMessage(), false);
                         }
                     }
 
@@ -297,7 +295,7 @@ public class BusActivity extends AppCompatActivity implements View.OnClickListen
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.flight_location_layout), false, e.getCause());
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.relative_bus), false, e.getCause());
                     }
                 }));
 

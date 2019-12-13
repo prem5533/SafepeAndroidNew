@@ -2,10 +2,11 @@ package com.safepayu.wallet.api;
 
 import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.BuyPackage;
-import com.safepayu.wallet.models.request.ChangePassword;
+import com.safepayu.wallet.models.request.ChangePasswordRequest;
 import com.safepayu.wallet.models.request.CheckEmailMobileRequest;
 import com.safepayu.wallet.models.request.ForgetPasswordRequest;
 import com.safepayu.wallet.models.request.HashKeyRequest;
+import com.safepayu.wallet.models.request.KycRequest;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.request.RechargeRequest;
@@ -18,9 +19,11 @@ import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
 import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.request.booking.flight.AvailableFlightRequest;
 import com.safepayu.wallet.models.request.booking.flight.FlightBlockTicketRequest;
+import com.safepayu.wallet.models.request.booking_bus.BusBlockingRequest;
 import com.safepayu.wallet.models.request.booking_bus.BusListRequest;
 import com.safepayu.wallet.models.request.booking_bus.BusTripDetailsRequest;
 import com.safepayu.wallet.models.request.booking_hotel.AvailableHotelRequest;
+import com.safepayu.wallet.models.request.booking_hotel.BookHotelRequest;
 import com.safepayu.wallet.models.request.booking_hotel.HotelDetailsRequest;
 import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
 import com.safepayu.wallet.models.response.AppVersionResponse;
@@ -28,6 +31,7 @@ import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.models.response.CommissionDetailsResponse;
 import com.safepayu.wallet.models.response.CommissionWalletTransferResponse;
+import com.safepayu.wallet.models.response.CountryListResponse;
 import com.safepayu.wallet.models.response.CustOperatorResponse;
 import com.safepayu.wallet.models.response.ForgetPasswordResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
@@ -45,6 +49,7 @@ import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
 import com.safepayu.wallet.models.response.SendToWalletResponse;
+import com.safepayu.wallet.models.response.StateListResponse;
 import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
 import com.safepayu.wallet.models.response.UpiUserDetailsResponse;
@@ -54,6 +59,8 @@ import com.safepayu.wallet.models.response.UserResponse1;
 import com.safepayu.wallet.models.response.WalletHistoryResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
 import com.safepayu.wallet.models.response.booking.HotelDetailResponse;
+import com.safepayu.wallet.models.response.booking.bus.BusBlockingResponse;
+import com.safepayu.wallet.models.response.booking.bus.BusBookingResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusListResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusSourcesResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusTripDetailsResponse;
@@ -61,6 +68,7 @@ import com.safepayu.wallet.models.response.booking.flight.AirportLocationRespons
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightBlockTicketResponse;
 import com.safepayu.wallet.models.response.booking.hotel.AvailableHotelsResponse;
+import com.safepayu.wallet.models.response.booking.hotel.HotelBookResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelSourcesResponse;
 
 import io.reactivex.Single;
@@ -115,7 +123,7 @@ public interface ApiService {
     Single<UpdateAddressResponse>updateAddress(@Body UpdateAddress updateAddress);
 
     @POST("api/secure/payment/api/changePassword")
-    Single<UserResponse>changePwd(@Body ChangePassword changePassword);
+    Single<UserResponse>changePwd(@Body ChangePasswordRequest changePassword);
 
     @POST("api/secure/payment/api/walletToWallet")
     Single<SendToWalletResponse> transferWalletToWallet(@Body SendToWalletRequest sendToWalletRequest);
@@ -203,6 +211,19 @@ public interface ApiService {
     @POST("api/secure/payment/api/promotionalImages")
     Single<PromotionResponse>getPromotionOffer(@Body PromotionRequest promotionRequest);
 
+    @POST("api/secure/payment/api/registerKyc")
+    Single<BaseResponse> getKYCDone(@Body KycRequest kycRequest);
+
+    @GET("api/secure/payment/api/statusKyc")
+    Single<BaseResponse> getKycCheck();
+
+    @GET("api/secure/payment/api/countryList")
+    Single<CountryListResponse> getCountryList();
+
+    @FormUrlEncoded
+    @POST("api/secure/payment/api/stateList")
+    Single<StateListResponse> getStateList(@Field("country_id") String country_id);
+
 
     //*************Flight Booking *******************//
     @GET("api/secure/payment/api/getFlightAirport")
@@ -225,6 +246,13 @@ public interface ApiService {
     @POST("api/secure/payment/api/postBusTripDetails")
     Single<BusTripDetailsResponse> getBusTripDetails(@Body BusTripDetailsRequest busTripDetailsRequest);
 
+    @POST("api/secure/payment/api/postBusTripDetails")
+    Single<BusBlockingResponse> getBusBlocking(@Body BusBlockingRequest busBookingRequest);
+
+    @FormUrlEncoded
+    @POST("api/secure/payment/api/getFirebaseTocken")
+    Single<BusBookingResponse> getBookingBus(@Field("referenceNo") String referenceNo);
+
 
     //*************Hotel Booking *******************//
     @POST("api/secure/payment/api/hotelSources")
@@ -235,4 +263,7 @@ public interface ApiService {
 
     @POST("api/secure/payment/api/hotelDetails")
     Single<HotelDetailResponse> getHotelDetails(@Body HotelDetailsRequest hotelDetailsRequest);
+
+    @POST("api/secure/payment/api/hotelBlock")
+    Single<HotelBookResponse> getHotelBook(@Body BookHotelRequest bookHotelRequest);
 }
