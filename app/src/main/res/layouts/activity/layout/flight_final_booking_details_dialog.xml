@@ -36,6 +36,12 @@
             android:layout_height="1dp"
             android:background="@color/yellow"
             android:layout_marginTop="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -210,6 +216,189 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lreturn_detail_popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:visibility="gone">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_margin="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center">
+            <ImageView
+                android:id="@+id/image_flight_detail_return"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_airplane"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/tv_flightbooking_name_return"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Indigo"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tv_flightbooking_classname_return"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Economy"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:id="@+id/tv_flight_booking_dep_time_return"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_bold"
+                    android:layout_weight="1"/>
+
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="70dp">
+                    <TextView
+                        android:id="@+id/tv_flight_booking_duration_return"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_regular"/>
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@color/darker_gray"
+                        />
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="-25dp"
+                        android:src="@drawable/ic_next"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/tv_flight_booking_stop_return"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:text=""
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_regular"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_flight_booking_arrival_time_return"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_bold"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="right"
+                    android:layout_weight="1" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/tv_flight_booking_source_name_return"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Delhi"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginLeft="10dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_flight_booking_dep_date_return"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Fri, 15 Nov 19"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:layout_marginRight="10dp">
+                    <TextView
+                        android:id="@+id/tv_flight_detail_desti_name_return"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Goa"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        />
+                    <TextView
+                        android:id="@+id/tv_flight_detail_desti_date_return"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Fri, 15 Nov 19"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
         </LinearLayout>
         <View
             android:layout_width="match_parent"

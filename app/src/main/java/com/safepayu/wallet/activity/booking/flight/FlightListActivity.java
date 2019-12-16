@@ -177,7 +177,7 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION,mFlightItemListenre.getFlightSegments().get(0).getDuration());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_HAND_BAGGAGE,mFlightItemListenre.getFlightSegments().get(0).getBaggageAllowed().getHandBaggage());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_CHECKIN_BAGGAGE,mFlightItemListenre.getFlightSegments().get(0).getBaggageAllowed().getCheckInBaggage());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_CHECKIN_BAGGAGE,mFlightItemListenre.getFlightSegments().get(0).getBaggageAllowed().getCheckInBaggage());
+
      //   BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME,mFlightItemListenre.getFlightSegments().get(0).getDepartureDateTimeZone());
       //  BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,mFlightItemListenre.getFlightSegments().get(0).getArrivalDateTimeZone());
         BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE,String.valueOf(mFlightItemListenre.getFareDetails().getTotalFare()));

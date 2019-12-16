@@ -63,6 +63,9 @@ public class SharedPref {
     public final String FLIGHT_START_JOURNEY = "flight_start_journey";
     public final String FLIGHT_DURATION_TIME = "flight_duration_time";
     public final String TotalTravellers = "total_travellers";
+    public final String FLIGHT_SOURCE_DATE = "flight_source_date";
+    public final String FLIGHT_TWOWAY_RETURN_DATE = "flight_two_way_date";
+    public final String TOTALFARE_RETURN_ONWARDS = "flight_total_fare_return_onward";
 
 
     public SharedPref(Context context) {

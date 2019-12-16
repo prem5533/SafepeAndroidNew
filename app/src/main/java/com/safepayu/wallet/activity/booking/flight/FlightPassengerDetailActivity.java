@@ -55,19 +55,22 @@ import static com.safepayu.wallet.activity.booking.flight.FlightListActivity.MY_
 public class FlightPassengerDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tvFlightPassengerDateTravellersClass,tvFlightPassengerTo,tvFlightPassengerFrom,tvTotalFlightFare,tvTotalNavellersNumber,tvChild,tvInfant;
-    private String Source,Destination,JourneyDate,TrvaellersCount,ClassType,Adults,Infants,Children,FlightImage,TravelClass,AirLineCode,AirLineNumber;
+    private String Source,Destination,JourneyDate,TrvaellersCount,ClassType,Adults,Infants,Children,FlightImage,TravelClass,AirLineCode,AirLineNumber,TripType,TotalFareReturnOnward;
     private Button backbtnFlightPassenger,continue_btn;
     private EditText etFlightpMobileNumber,etFlightpEmailNumber;
     public  Dialog dialog;
     private LoadingDialog loadingDialog;
     private RecyclerView recyclerTravellerInfo;
-    private ImageView imageCancel,image_flight_detail_pop_up;
+    private ImageView imageCancel,image_flight_detail_pop_up,image_flight_detail_return;
     private TextView tv_flightbooking_name_popup,tv_flightbooking_classname_popup,tvFlightBookingSourceName_popup,tvFlightBookingDestiName_popup,
-            tvFlightBookingDepDate,tvFlightDetailDestiDate,tvFlightBookingDuration,tv_flight_booking_stop,tv_flight_booking_dep_time,tv_flight_booking_arrival_time,tv_gender;
+            tvFlightBookingDepDate,tvFlightDetailDestiDate,tvFlightBookingDuration,tv_flight_booking_stop,tv_flight_booking_dep_time,tv_flight_booking_arrival_time,tv_gender,
+            tv_flightbooking_name_return,tv_flightbooking_classname_return,tv_flight_booking_source_name_return,tv_flight_detail_desti_name_return,tv_flight_booking_dep_date_return,
+            tv_flight_detail_desti_date_return,tv_flight_booking_duration_return,tv_flight_booking_stop_return,tv_flight_booking_dep_time_return,tv_flight_booking_arrival_time_return;
     String json;
     private Button flightBookBtn;
 
   public  static AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
+  public  static AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mdataReturn;
     private FlighPassengerBookingDialog flighPassengerBookingDialog;
 
     private LinearLayout itemAdult,itemChild,itemInfant,lFarebreakup;
@@ -76,6 +79,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
     private EditText etFlightpAdultFname,FlightpAdultFname,dobAdult;
     private String flightAdultFNme,flightAdultLName,flightAdultDob,flightChildFNme,flightChildLNme,flightChildDob,flightInfantFNme,flightInfantLNme,flightInfantDob,
             Fullname,radioGender,childFullNme,infantFullNme;
+    private LinearLayout lreturn_detail_popup;
     ImageView flight_adult_dob;
     final List<View> li = new ArrayList<>();
     final List<View> liChild = new ArrayList<>();
@@ -84,6 +88,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
     ArrayList<String>DobList = new ArrayList<>();
     FlightBlockTicketResponse FlightResponse;
     FlightTravellersList flightTravellersList;
+    Gson gson;
 
     private FlightBlockTicketRequest flightBlockTicketRequest;
     @Override
@@ -108,10 +113,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         tvChild = findViewById(R.id.tv_child);
         tvInfant = findViewById(R.id.tv_infant);
 
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        Gson gson = new Gson();
-        json = prefs.getString("MyObject", "");
-        mdata = gson.fromJson(json, AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean.class);
+
 
         //***************get data****************
         Source =   BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE);
@@ -126,6 +128,25 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         TravelClass =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_CLASS);
         AirLineCode =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_CODE);
         AirLineNumber =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_FLIGHT_NUMBER);
+        TripType =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRIP_TYPE);
+        TotalFareReturnOnward =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().TOTALFARE_RETURN_ONWARDS);
+
+
+        if (TripType.equals("1")){
+            SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+             gson = new Gson();
+            json = prefs.getString("MyObject", "");
+            mdata = gson.fromJson(json, AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean.class);
+        }
+        else if (TripType.equals("2")){
+            SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+            gson = new Gson();
+            json = prefs.getString("MyObjectOnward", "");
+            mdata = gson.fromJson(json,AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean.class);
+
+            json = prefs.getString("MyObjectReturn", "");
+            mdataReturn = gson.fromJson(json,AvailableFlightResponse.DataBean.DomesticReturnFlightsBean.class);
+        }
 
         if (Infants.equals("")){
             Infants="0";
@@ -158,7 +179,13 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         tvFlightPassengerFrom.setText(Source);
         tvFlightPassengerTo.setText(Destination);
         tvTotalNavellersNumber.setText("For " + totalTravellers + " Traveller");
-        tvTotalFlightFare.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+        if (TripType.equals("1")){
+            tvTotalFlightFare.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+        }
+        else if (TripType.equals("2")){
+            tvTotalFlightFare.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
+
+        }
         etFlightpMobileNumber.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
         etFlightpEmailNumber.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
 
@@ -484,7 +511,21 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         tv_flight_booking_dep_time = dialog.findViewById(R.id.tv_flight_booking_dep_time);
         tv_flight_booking_arrival_time = dialog.findViewById(R.id.tv_flight_booking_arrival_time);
         flightBookBtn = dialog.findViewById(R.id.flight_book_btn);
-        flightBookBtn.setText("Pay "+getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+
+        // return flight detail
+        image_flight_detail_return = dialog.findViewById(R.id.image_flight_detail_return);
+        tv_flightbooking_name_return = dialog.findViewById(R.id.tv_flightbooking_name_return);
+        tv_flightbooking_classname_return = dialog.findViewById(R.id.tv_flightbooking_classname_return);
+        tv_flight_booking_source_name_return = dialog.findViewById(R.id.tv_flight_booking_source_name_return);
+        tv_flight_detail_desti_name_return = dialog.findViewById(R.id.tv_flight_detail_desti_name_return);
+        tv_flight_booking_dep_date_return = dialog.findViewById(R.id.tv_flight_booking_dep_date_return);
+        tv_flight_detail_desti_date_return = dialog.findViewById(R.id.tv_flight_detail_desti_date_return);
+        tv_flight_booking_duration_return = dialog.findViewById(R.id.tv_flight_booking_duration_return);
+        tv_flight_booking_stop_return = dialog.findViewById(R.id.tv_flight_booking_stop_return);
+        tv_flight_booking_dep_time_return = dialog.findViewById(R.id.tv_flight_booking_dep_time_return);
+        tv_flight_booking_arrival_time_return = dialog.findViewById(R.id.tv_flight_booking_arrival_time_return);
+        lreturn_detail_popup = dialog.findViewById(R.id.lreturn_detail_popup);
+
         //**************Go to payment activity*************
         flightBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -505,11 +546,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(lp);
         dialog.show();
-        Picasso.get().load(FlightImage).into(image_flight_detail_pop_up);
-        tv_flightbooking_name_popup.setText(mdata.getFlightSegments().get(0).getAirLineName()+" " +AirLineCode+" "+AirLineNumber);
         tv_flightbooking_classname_popup.setText(TravelClass);
-        tvFlightBookingSourceName_popup.setText(Source);
-        tvFlightBookingDestiName_popup.setText(Destination);
         imageCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -517,135 +554,429 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             }
         });
 
-        //************set flight time***********
-        int flightStop =   mdata.getFlightSegments().size();
-        String Date, Time, h, m;
-        String depTime = mdata.getFlightSegments().get(0).getDepartureDateTime();
-        String[] separated = depTime.split("T");
-        Date = separated[0];
-        Time = separated[1];
-        String[] separatedTime = Time.split(":");
-        h = separatedTime[0];
-        m = separatedTime[1];
-        tv_flight_booking_dep_time.setText(h + ":" + m);
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME,h + ":" + m);
+        //********************for return flight detail  ************************Trip Type 2*************************************
+        if (TripType.equals("2")){
+
+            Picasso.get().load("http://webapi.i2space.co.in/"+mdata.getFlightSegments().get(0).getImagePath()).into(image_flight_detail_pop_up);
+            tv_flightbooking_name_popup.setText(mdata.getFlightSegments().get(0).getAirLineName()+" " +mdata.getFlightSegments().get(0).getOperatingAirlineCode()+" "+mdata.getFlightSegments().get(0).getOperatingAirlineFlightNumber());
+            flightBookBtn.setText("Pay "+getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
+
+            tvFlightBookingSourceName_popup.setText(Source);
+            tvFlightBookingDestiName_popup.setText(Destination);
+
+
+            //************set flight time onward***********
+            int flightStop =   mdata.getFlightSegments().size();
+            String Date, Time, h, m;
+            String depTime = mdata.getFlightSegments().get(0).getDepartureDateTime();
+            String[] separated = depTime.split("T");
+            Date = separated[0];
+            Time = separated[1];
+            String[] separatedTime = Time.split(":");
+            h = separatedTime[0];
+            m = separatedTime[1];
+            tv_flight_booking_dep_time.setText(h + ":" + m);
+          //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME,h + ":" + m);
 //date departure
-        String[] sept = Date.split("-");
-        String yd = sept[0];
-        String mod = sept[1];
-        String dd = sept[2];
+            String[] sept = Date.split("-");
+            String yd = sept[0];
+            String mod = sept[1];
+            String dd = sept[2];
 
-        String dateZone= dd+"/"+mod+"/"+yd;
-        Date  date = new Date(dateZone);
-        s  = DateFormat.format("dd-MMM-yyyy", date.getTime());
-        String daymonthYear = (String) s;
-        String[] sep = daymonthYear.split("-");
-        String d = sep[0];
-        String mo = sep[1];
-        String y = sep[2];
-        SimpleDateFormat simpledateformat = new SimpleDateFormat("EEE");
-        String dayOfWeek = simpledateformat.format(date);
-        tvFlightBookingDepDate.setText(dayOfWeek+", "+d+mo+" "+y);
-        String dayofWeek = dayOfWeek+", "+d+mo+" "+y;
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY,dayofWeek);
+            String dateZone= dd+"/"+mod+"/"+yd;
+            Date  date = new Date(dateZone);
+            s  = DateFormat.format("dd-MMM-yyyy", date.getTime());
+            String daymonthYear = (String) s;
+            String[] sep = daymonthYear.split("-");
+            String d = sep[0];
+            String mo = sep[1];
+            String y = sep[2];
+            SimpleDateFormat simpledateformat = new SimpleDateFormat("EEE");
+            String dayOfWeek = simpledateformat.format(date);
+            tvFlightBookingDepDate.setText(dayOfWeek+", "+d+mo+" "+y);
+            String dayofWeek = dayOfWeek+", "+d+mo+" "+y;
+         //   BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY,dayofWeek);
 
-        if (flightStop>1){
-            String arrTime = mdata.getFlightSegments().get(flightStop-1).getArrivalDateTime();
-            String[] arrTimeseparated = arrTime.split("T");
-            Date = arrTimeseparated[0];
-            Time = arrTimeseparated[1];
-            String[] separatedArrTime = Time.split(":");
-            h = separatedArrTime[0];
-            m = separatedArrTime[1];
-            tv_flight_booking_arrival_time.setText(h + ":" + m);
-            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,h + ":" + m);
+            if (flightStop>1){
+                String arrTime = mdata.getFlightSegments().get(flightStop-1).getArrivalDateTime();
+                String[] arrTimeseparated = arrTime.split("T");
+                Date = arrTimeseparated[0];
+                Time = arrTimeseparated[1];
+                String[] separatedArrTime = Time.split(":");
+                h = separatedArrTime[0];
+                m = separatedArrTime[1];
+                tv_flight_booking_arrival_time.setText(h + ":" + m);
+              //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,h + ":" + m);
 
-            String[] septt = Date.split("-");
-            String ydd = septt[0];
-            String modd = septt[1];
-            String ddd = septt[2];
+                String[] septt = Date.split("-");
+                String ydd = septt[0];
+                String modd = septt[1];
+                String ddd = septt[2];
 
-            String dateZonee= modd+"/"+ddd+"/"+ydd;
-            Date  datee = new Date(dateZonee);
-            s  = DateFormat.format("dd-MMM-yyyy", datee.getTime());
-            String daymonthYear1 = (String) s;
-            String[] sep1 = daymonthYear1.split("-");
-            String da = sep1[0];
-            String mon = sep1[1];
-            String ye = sep1[2];
+                String dateZonee= modd+"/"+ddd+"/"+ydd;
+                Date  datee = new Date(dateZonee);
+                s  = DateFormat.format("dd-MMM-yyyy", datee.getTime());
+                String daymonthYear1 = (String) s;
+                String[] sep1 = daymonthYear1.split("-");
+                String da = sep1[0];
+                String mon = sep1[1];
+                String ye = sep1[2];
 
-            SimpleDateFormat sdateformat = new SimpleDateFormat("EEE");
-            String day_Week = sdateformat.format(datee);
-            tvFlightDetailDestiDate.setText(day_Week+", "+da+mon+" "+ye);
+                SimpleDateFormat sdateformat = new SimpleDateFormat("EEE");
+                String day_Week = sdateformat.format(datee);
+                tvFlightDetailDestiDate.setText(day_Week+", "+da+mon+" "+ye);
 
-        }
-        else {
-            String arrTime = mdata.getFlightSegments().get(0).getArrivalDateTime();
-            String[] arrTimeseparated = arrTime.split("T");
-            Date = arrTimeseparated[0];
-            Time = arrTimeseparated[1];
-            String[] separatedArrTime = Time.split(":");
-            h = separatedArrTime[0];
-            m = separatedArrTime[1];
-            tv_flight_booking_arrival_time.setText(h + ":" + m);
-            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,h + ":" + m);
+            }
+            else {
+                String arrTime = mdata.getFlightSegments().get(0).getArrivalDateTime();
+                String[] arrTimeseparated = arrTime.split("T");
+                Date = arrTimeseparated[0];
+                Time = arrTimeseparated[1];
+                String[] separatedArrTime = Time.split(":");
+                h = separatedArrTime[0];
+                m = separatedArrTime[1];
+                tv_flight_booking_arrival_time.setText(h + ":" + m);
+              //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,h + ":" + m);
 
-            String[] septt = Date.split("-");
-            String ydd = septt[0];
-            String modd = septt[1];
-            String ddd = septt[2];
+                String[] septt = Date.split("-");
+                String ydd = septt[0];
+                String modd = septt[1];
+                String ddd = septt[2];
 
-            String dateZonee= modd+"/"+ddd+"/"+ydd;
-            Date  datee = new Date(dateZonee);
-            s  = DateFormat.format("dd-MMM-yyyy", datee.getTime());
-            String daymonthYear1 = (String) s;
-            String[] sep1 = daymonthYear1.split("-");
-            String da = sep1[0];
-            String mon = sep1[1];
-            String ye = sep1[2];
+                String dateZonee= modd+"/"+ddd+"/"+ydd;
+                Date  datee = new Date(dateZonee);
+                s  = DateFormat.format("dd-MMM-yyyy", datee.getTime());
+                String daymonthYear1 = (String) s;
+                String[] sep1 = daymonthYear1.split("-");
+                String da = sep1[0];
+                String mon = sep1[1];
+                String ye = sep1[2];
 
-            SimpleDateFormat sdateformat = new SimpleDateFormat("EEE");
-            String day_Week = sdateformat.format(datee);
-            tvFlightDetailDestiDate.setText(day_Week+", "+da+mon+" "+ye);
-        }
-        //*****************calculate total hour & minute**************
+                SimpleDateFormat sdateformat = new SimpleDateFormat("EEE");
+                String day_Week = sdateformat.format(datee);
+                tvFlightDetailDestiDate.setText(day_Week+", "+da+mon+" "+ye);
+            }
+            //*****************calculate total hour & minute onward**************
 
-        int     sum = 0;
-        int mintemp = 0;
-        int hourtemp = 0;
-        if (flightStop>0){
-            for (int i = 0; i<mdata.getFlightSegments().size();i++){
-                String duration [] = mdata.getFlightSegments().get(i).getDuration().split(":");
-                String hour = duration[0];
-                String min = duration[1];
-                String durat [] = min.split(" ");
-                String a = durat[0];
-                String b = durat[1];
+            int     sum = 0;
+            int mintemp = 0;
+            int hourtemp = 0;
+            if (flightStop>0){
+                for (int i = 0; i<mdata.getFlightSegments().size();i++){
+                    String duration [] = mdata.getFlightSegments().get(i).getDuration().split(":");
+                    String hour = duration[0];
+                    String min = duration[1];
+                    String durat [] = min.split(" ");
+                    String a = durat[0];
+                    String b = durat[1];
 
 
-                hourtemp = Integer.parseInt(hour)*60;
-                mintemp = Integer.parseInt(a)+hourtemp;
-                sum = sum+mintemp;
+                    hourtemp = Integer.parseInt(hour)*60;
+                    mintemp = Integer.parseInt(a)+hourtemp;
+                    sum = sum+mintemp;
+                }
+
+                int hours = sum / 60; //since both are ints, you get an int
+                int minutes = sum % 60;
+
+
+                tvFlightBookingDuration.setText(hours+"h "+minutes+"m");
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION_TIME,hours+"h "+minutes+"m");
+            }
+            //*********set flight count onward*****************
+            if ( mdata.getFlightSegments().size()>1){
+                tv_flight_booking_stop.setText(mdata.getFlightSegments().size()-1 +" Stop");
+
+            }
+            else  if (String.valueOf(mdata.getFlightSegments().get(0).getIntNumStops()).equals("null")){
+                tv_flight_booking_stop.setText("Non Stop");
+            }
+            else {
+                tv_flight_booking_stop.setText(String.valueOf(mdata.getFlightSegments().get(0).getIntNumStops())+"Stop");
             }
 
-            int hours = sum / 60; //since both are ints, you get an int
-            int minutes = sum % 60;
+
+            //////////////****************************RETURN**************************
+
+            lreturn_detail_popup.setVisibility(View.VISIBLE);
+            Picasso.get().load("http://webapi.i2space.co.in/"+mdataReturn.getFlightSegments().get(0).getImagePath()).into(image_flight_detail_return);
+            tv_flightbooking_name_return.setText(mdataReturn.getFlightSegments().get(0).getAirLineName()+" " +mdataReturn.getFlightSegments().get(0).getOperatingAirlineCode()+" "+mdataReturn.getFlightSegments().get(0).getOperatingAirlineFlightNumber());
+            tv_flightbooking_classname_return.setText(TravelClass);
+            tv_flight_booking_source_name_return.setText(mdataReturn.getFlightSegments().get(0).getDepartureAirportCode());
+            tv_flight_detail_desti_name_return.setText(Source);
+
+            //************set flight time***********
+            int flightStopReturn =   mdataReturn.getFlightSegments().size();
+            String DateReturn, TimeReturn, hr, mr;
+            String depTimeReturn = mdataReturn.getFlightSegments().get(0).getDepartureDateTime();
+            String[] separatedReturn = depTimeReturn.split("T");
+            DateReturn = separatedReturn[0];
+            TimeReturn = separatedReturn[1];
+            String[] separatedTimeReturn = TimeReturn.split(":");
+            hr = separatedTimeReturn[0];
+            mr = separatedTimeReturn[1];
+            tv_flight_booking_dep_time_return.setText(hr + ":" + mr);
+          //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME,h + ":" + m);
+//date departure
+            String[] septt = DateReturn.split("-");
+            String ydd = septt[0];
+            String ddd = septt[1];
+            String modd = septt[2];
+
+            String dateZonee= ddd+"/"+modd+"/"+ydd;
+            Date  datee = new Date(dateZonee);
+            s  = DateFormat.format("dd-MMM-yyyy", datee.getTime());
+            String daymonthYearReturn = (String) s;
+            String[] sepp = daymonthYearReturn.split("-");
+            String dr = sepp[0];
+            String moo = sepp[1];
+            String yy = sepp[2];
+            SimpleDateFormat simpledateformatReturn = new SimpleDateFormat("EEE");
+            String dayOfWeekReturn = simpledateformatReturn.format(datee);
+            tv_flight_booking_dep_date_return.setText(dayOfWeekReturn+", "+dr+moo+" "+yy);
+            String dayofWeekr = dayOfWeekReturn+", "+dr+moo+" "+yy;
+          //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY,dayofWeek);
+
+            if (flightStopReturn>1){
+                String arrTime = mdataReturn.getFlightSegments().get(flightStopReturn-1).getArrivalDateTime();
+                String[] arrTimeseparated = arrTime.split("T");
+                DateReturn = arrTimeseparated[0];
+                TimeReturn = arrTimeseparated[1];
+                String[] separatedArrTime = TimeReturn.split(":");
+                h = separatedArrTime[0];
+                m = separatedArrTime[1];
+                tv_flight_booking_arrival_time_return.setText(h + ":" + m);
+            //    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,h + ":" + m);
+
+                String[] septtt = DateReturn.split("-");
+                String yddd = septtt[0];
+                String moddd = septtt[1];
+                String dddd = septtt[2];
+
+                String dateZoneee= moddd+"/"+dddd+"/"+yddd;
+                Date  dateee = new Date(dateZoneee);
+                s  = DateFormat.format("dd-MMM-yyyy", dateee.getTime());
+                String daymonthYear1 = (String) s;
+                String[] sep1 = daymonthYear1.split("-");
+                String da = sep1[0];
+                String mon = sep1[1];
+                String ye = sep1[2];
+
+                SimpleDateFormat sdateformat = new SimpleDateFormat("EEE");
+                String day_Week = sdateformat.format(datee);
+                tv_flight_detail_desti_date_return.setText(day_Week+", "+da+mon+" "+ye);
+
+            }
+            else {
+                String arrTime = mdataReturn.getFlightSegments().get(0).getArrivalDateTime();
+                String[] arrTimeseparated = arrTime.split("T");
+                DateReturn = arrTimeseparated[0];
+                TimeReturn = arrTimeseparated[1];
+                String[] separatedArrTime = TimeReturn.split(":");
+                h = separatedArrTime[0];
+                m = separatedArrTime[1];
+                tv_flight_booking_arrival_time_return.setText(h + ":" + m);
+         //       BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,h + ":" + m);
+
+                String[] septtt = DateReturn.split("-");
+                String yddd = septtt[0];
+                String moddd = septtt[1];
+                String dddd = septtt[2];
+
+                String dateZoneee= moddd+"/"+dddd+"/"+yddd;
+                Date  dateee = new Date(dateZoneee);
+                s  = DateFormat.format("dd-MMM-yyyy", dateee.getTime());
+                String daymonthYear1 = (String) s;
+                String[] sep1 = daymonthYear1.split("-");
+                String da = sep1[0];
+                String mon = sep1[1];
+                String ye = sep1[2];
+
+                SimpleDateFormat sdateformat = new SimpleDateFormat("EEE");
+                String day_Week = sdateformat.format(datee);
+                tv_flight_detail_desti_date_return.setText(day_Week+", "+da+mon+" "+ye);
+            }
+
+            //*****************calculate total hour & minute**************
+
+              /* sum = 0;
+             mintemp = 0;
+            hourtemp = 0;*/
+            if (flightStopReturn>0){
+                for (int i = 0; i<mdataReturn.getFlightSegments().size();i++){
+                    String duration [] = mdataReturn.getFlightSegments().get(i).getDuration().split(":");
+                    String hour = duration[0];
+                    String min = duration[1];
+                    String durat [] = min.split(" ");
+                    String a = durat[0];
+                    String b = durat[1];
 
 
-            tvFlightBookingDuration.setText(hours+"h "+minutes+"m");
-            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION_TIME,hours+"h "+minutes+"m");
-        }
-        //*********set flight count*****************
-        if ( mdata.getFlightSegments().size()>1){
-            tv_flight_booking_stop.setText(mdata.getFlightSegments().size()-1 +" Stop");
+                    hourtemp = Integer.parseInt(hour)*60;
+                    mintemp = Integer.parseInt(a)+hourtemp;
+                    sum = sum+mintemp;
+                }
+
+                int hours = sum / 60; //since both are ints, you get an int
+                int minutes = sum % 60;
+
+
+                tv_flight_booking_duration_return.setText(hours+"h "+minutes+"m");
+             //   BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION_TIME,hours+"h "+minutes+"m");
+            }
+            //*********set flight count*****************
+            if ( mdataReturn.getFlightSegments().size()>1){
+                tv_flight_booking_stop_return.setText(mdataReturn.getFlightSegments().size()-1 +" Stop");
+
+            }
+            else  if (String.valueOf(mdataReturn.getFlightSegments().get(0).getIntNumStops()).equals("null")){
+                tv_flight_booking_stop_return.setText("Non Stop");
+            }
+            else {
+                tv_flight_booking_stop_return.setText(String.valueOf(mdataReturn.getFlightSegments().get(0).getIntNumStops())+"Stop");
+            }
+        } //*******************************************************Trip Type 1***************
+        else if (TripType.equals("1")) {
+
+            Picasso.get().load(FlightImage).into(image_flight_detail_pop_up);
+            tv_flightbooking_name_popup.setText(mdata.getFlightSegments().get(0).getAirLineName()+" " +AirLineCode+" "+AirLineNumber);
+            tvFlightBookingSourceName_popup.setText(Source);
+            tvFlightBookingDestiName_popup.setText(Destination);
+
+            flightBookBtn.setText("Pay "+getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+
+            //************set flight time onward***********
+            int flightStop =   mdata.getFlightSegments().size();
+            String Date, Time, h, m;
+            String depTime = mdata.getFlightSegments().get(0).getDepartureDateTime();
+            String[] separated = depTime.split("T");
+            Date = separated[0];
+            Time = separated[1];
+            String[] separatedTime = Time.split(":");
+            h = separatedTime[0];
+            m = separatedTime[1];
+            tv_flight_booking_dep_time.setText(h + ":" + m);
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME,h + ":" + m);
+//date departure
+            String[] sept = Date.split("-");
+            String yd = sept[0];
+            String mod = sept[1];
+            String dd = sept[2];
+
+            String dateZone= dd+"/"+mod+"/"+yd;
+            Date  date = new Date(dateZone);
+            s  = DateFormat.format("dd-MMM-yyyy", date.getTime());
+            String daymonthYear = (String) s;
+            String[] sep = daymonthYear.split("-");
+            String d = sep[0];
+            String mo = sep[1];
+            String y = sep[2];
+            SimpleDateFormat simpledateformat = new SimpleDateFormat("EEE");
+            String dayOfWeek = simpledateformat.format(date);
+            tvFlightBookingDepDate.setText(dayOfWeek+", "+d+mo+" "+y);
+            String dayofWeek = dayOfWeek+", "+d+mo+" "+y;
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY,dayofWeek);
+
+            if (flightStop>1){
+                String arrTime = mdata.getFlightSegments().get(flightStop-1).getArrivalDateTime();
+                String[] arrTimeseparated = arrTime.split("T");
+                Date = arrTimeseparated[0];
+                Time = arrTimeseparated[1];
+                String[] separatedArrTime = Time.split(":");
+                h = separatedArrTime[0];
+                m = separatedArrTime[1];
+                tv_flight_booking_arrival_time.setText(h + ":" + m);
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,h + ":" + m);
+
+                String[] septt = Date.split("-");
+                String ydd = septt[0];
+                String modd = septt[1];
+                String ddd = septt[2];
+
+                String dateZonee= modd+"/"+ddd+"/"+ydd;
+                Date  datee = new Date(dateZonee);
+                s  = DateFormat.format("dd-MMM-yyyy", datee.getTime());
+                String daymonthYear1 = (String) s;
+                String[] sep1 = daymonthYear1.split("-");
+                String da = sep1[0];
+                String mon = sep1[1];
+                String ye = sep1[2];
+
+                SimpleDateFormat sdateformat = new SimpleDateFormat("EEE");
+                String day_Week = sdateformat.format(datee);
+                tvFlightDetailDestiDate.setText(day_Week+", "+da+mon+" "+ye);
+
+            }
+            else {
+                String arrTime = mdata.getFlightSegments().get(0).getArrivalDateTime();
+                String[] arrTimeseparated = arrTime.split("T");
+                Date = arrTimeseparated[0];
+                Time = arrTimeseparated[1];
+                String[] separatedArrTime = Time.split(":");
+                h = separatedArrTime[0];
+                m = separatedArrTime[1];
+                tv_flight_booking_arrival_time.setText(h + ":" + m);
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,h + ":" + m);
+
+                String[] septt = Date.split("-");
+                String ydd = septt[0];
+                String modd = septt[1];
+                String ddd = septt[2];
+
+                String dateZonee= modd+"/"+ddd+"/"+ydd;
+                Date  datee = new Date(dateZonee);
+                s  = DateFormat.format("dd-MMM-yyyy", datee.getTime());
+                String daymonthYear1 = (String) s;
+                String[] sep1 = daymonthYear1.split("-");
+                String da = sep1[0];
+                String mon = sep1[1];
+                String ye = sep1[2];
+
+                SimpleDateFormat sdateformat = new SimpleDateFormat("EEE");
+                String day_Week = sdateformat.format(datee);
+                tvFlightDetailDestiDate.setText(day_Week+", "+da+mon+" "+ye);
+            }
+            //*****************calculate total hour & minute onward**************
+
+            int     sum = 0;
+            int mintemp = 0;
+            int hourtemp = 0;
+            if (flightStop>0){
+                for (int i = 0; i<mdata.getFlightSegments().size();i++){
+                    String duration [] = mdata.getFlightSegments().get(i).getDuration().split(":");
+                    String hour = duration[0];
+                    String min = duration[1];
+                    String durat [] = min.split(" ");
+                    String a = durat[0];
+                    String b = durat[1];
+
+
+                    hourtemp = Integer.parseInt(hour)*60;
+                    mintemp = Integer.parseInt(a)+hourtemp;
+                    sum = sum+mintemp;
+                }
+
+                int hours = sum / 60; //since both are ints, you get an int
+                int minutes = sum % 60;
+
+
+                tvFlightBookingDuration.setText(hours+"h "+minutes+"m");
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION_TIME,hours+"h "+minutes+"m");
+            }
+            //*********set flight count onward*****************
+            if ( mdata.getFlightSegments().size()>1){
+                tv_flight_booking_stop.setText(mdata.getFlightSegments().size()-1 +" Stop");
+
+            }
+            else  if (String.valueOf(mdata.getFlightSegments().get(0).getIntNumStops()).equals("null")){
+                tv_flight_booking_stop.setText("Non Stop");
+            }
+            else {
+                tv_flight_booking_stop.setText(String.valueOf(mdata.getFlightSegments().get(0).getIntNumStops())+"Stop");
+            }
 
         }
-        else  if (String.valueOf(mdata.getFlightSegments().get(0).getIntNumStops()).equals("null")){
-            tv_flight_booking_stop.setText("Non Stop");
-        }
-        else {
-            tv_flight_booking_stop.setText(String.valueOf(mdata.getFlightSegments().get(0).getIntNumStops())+"Stop");
-        }
+
 
         recyclerTravellerInfo.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
        /* flighPassengerBookingDialog = new FlighPassengerBookingDialog(getApplicationContext(),FlightResponse.getData().getTickets());

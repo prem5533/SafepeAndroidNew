@@ -66,7 +66,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class FlightsActivity extends AppCompatActivity implements View.OnClickListener , FlightLocationAdapter.LocationListListener {
-     private TextView tvOneWay, tvTwoWay,SourceDescTV,DestinationDescTV,tvDepartureDate ,tvReturnDate,tvDepartureMonthYear,tvDepartureDay ,tvReturnMonthYear,
+     private TextView tvOneWay, tvTwoWay,SourceDescTV,DestinationDescTV,tvDepartureDate ,tvReturnDate,tvDepartureMonthYear,tvDepartureDay ,tvReturnMonthYear,tv_departure_mo_ye,
              tvReturnDay;
      public static TextView tvFlightTraveller,tvFlightClassType;
     private ImageView imageOneWay, imageTwoWay;
@@ -85,12 +85,13 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
     private TextView   tvSourceFlightDescName,tvSourceFlightAirportCode,tvDestinationFlightAirportCode,tvRound;
     private  SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
-    private CharSequence s;
+    private CharSequence s,onwardDte;
     Date date,tomorrow,date1;
-    private String daymonthYear,d,m,y,dayOfWeek;
+    private String daymonthYear,d,m,y,dayOfWeek,TripType,FlightReturnDate ,a,onwardDate,onwardMonth,onwardYear;
     SimpleDateFormat simpledateformat;
     public static TextView tvAdultsCount,tvChildrenCount,tvInfantCount,tv_done;
-    public static String b,AdultsCount,ChildCount,InfantCount;
+    public static String AdultsCount,ChildCount,InfantCount;
+    String tc = "",travellersClass;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -130,6 +131,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         tvSourceFlightAirportCode = findViewById(R.id.source_flight_airport_code);
         tvDestinationFlightAirportCode = findViewById(R.id.destination_flight_airport_code);
         tvDepartureMonthYear = findViewById(R.id.tv_departure_month_year);
+        tv_departure_mo_ye = findViewById(R.id.tv_departure_mo_ye);
         tvDepartureDay = findViewById(R.id.tv_departure_day);
         tvRound = findViewById(R.id.tv_round);
         liDate = findViewById(R.id.lidate);
@@ -155,6 +157,8 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         tvOneWay.setBackgroundDrawable(getResources().getDrawable(R.drawable.green_rounded));
         tvOneWay.setTextColor(getResources().getColor(R.color.white));
         imageOneWay.setVisibility(View.VISIBLE);
+        TripType = "1";
+
 
 
         liDepartureTab.setOnClickListener(this);
@@ -185,6 +189,14 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
 
         date = new Date();
         s  = DateFormat.format("dd-MMM-yyyy ", date.getTime());
+
+        onwardDte  = DateFormat.format("dd-MM-yyyy ", date.getTime());
+        String dayMonthYear = (String) onwardDte;
+        String[] separate = dayMonthYear.split("-");
+       onwardDate = separate[0];
+       onwardMonth= separate[1];
+        onwardYear = separate[2];
+
         String daymonthYear = (String) s;
         String[] separated = daymonthYear.split("-");
         String d = separated[0];
@@ -192,13 +204,19 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         String y = separated[2];
         tvDepartureDate.setText(d);
         tvDepartureMonthYear.setText(m +" "+y);
+        tv_departure_mo_ye.setText(onwardDate+"-"+onwardMonth +"-"+onwardYear);
 
         SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
         String dayOfWeek = simpledateformat.format(date);
 
+
         tvDepartureDay.setText(dayOfWeek);
 
+        SimpleDateFormat simple = new SimpleDateFormat("EEE");
+        String dayWeek = simple.format(date);
 
+        String DepDate= dayWeek+","+d+" "+m;
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE_DATE,DepDate);
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE,tvSourceFlightAirportCode.getText().toString());
 
 
@@ -217,7 +235,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
                 imageTwoWay.setVisibility(View.GONE);
                 tvRound.setVisibility(View.VISIBLE);
                 liDate.setVisibility(View.GONE);
-
+                TripType = "1";
 
                 break;
             case  R.id.tv_twoway:
@@ -229,7 +247,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
                 imageTwoWay.setVisibility(View.VISIBLE);
                 tvRound.setVisibility(View.GONE);
                 liDate.setVisibility(View.VISIBLE);
-
+                TripType = "2";
 
 
                 date = new Date();
@@ -243,11 +261,18 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
                 tvReturnDate.setText(d);
                 tvReturnMonthYear.setText(m +" "+y);
 
+
                  simpledateformat = new SimpleDateFormat("EEEE");
                 String dayOfWeek = simpledateformat.format(tomorrow);
                 tvReturnDay.setText(dayOfWeek);
 
+                SimpleDateFormat simple = new SimpleDateFormat("EEE");
+                String dayWeek = simple.format(tomorrow);
+                String ReturnDate= dayWeek+","+d+" "+m;
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TWOWAY_RETURN_DATE,ReturnDate);
+
                 String monthYear = tvDepartureMonthYear.getText().toString();
+               // String monthYear = tv_departure_mo_ye.getText().toString();
                 String[] separate = monthYear.split(" ");
                 String  month = separate[0];
                 String year = separate[1];
@@ -293,6 +318,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
                 editor.putString("date", "dDate");
                 editor.apply();
                  datePicker = FlightDatePicker.newInstance(null, tvDepartureDate,tvDepartureMonthYear,tvDepartureDay);
+                // datePicker = FlightDatePicker.newInstance(null, tvDepartureDate,tvDepartureMonthYear,tvDepartureDay,tv_departure_mo_ye);
                 datePicker.show(getSupportFragmentManager(), "datePicker");
 
 
@@ -329,8 +355,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
 
         //*********split travellers count
 
-        String tc = "";
-        String travellersClass = tvFlightClassType.getText().toString();
+        travellersClass = tvFlightClassType.getText().toString();
         if (travellersClass.equals("Economy")){
             tc = "E";
         }
@@ -351,24 +376,23 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
             ChildCount="";
             InfantCount="";
         }
-        Intent intent = new Intent(FlightsActivity.this,FlightListActivity.class);
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE,tvSourceFlightAirportCode.getText().toString());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DESTINATION,tvDestinationFlightAirportCode.getText().toString());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_JOURNEY_DATE,"01-01-2020");
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TRIP_TYPE,"1");
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_USER,"");
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_USER_TYPE,"5");
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ADULTS,AdultsCount);
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_INFANTS,InfantCount);
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_CHILDREN,ChildCount);
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TYPE,"1");
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_RETURN_DATE,"");
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_CLASS,tc);
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_COUNT,tvFlightTraveller.getText().toString());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_CLASS_TYPE,travellersClass);
+        if (TripType.equals("2")){
+            FlightReturnDate = "03-01-2020";
+           // if (tvReturnDate.getText().toString().isEmpty()&&tvReturnMonthYear.getText().toString().isEmpty());
+            Intent intent = new Intent(FlightsActivity.this,TwoWayListActivity.class);
+            flightTypeData();
+            startActivity(intent);
+        }
+        else if (TripType.equals("1")){
+            FlightReturnDate = "";
+            Intent intent = new Intent(FlightsActivity.this,FlightListActivity.class);
+            flightTypeData();
+            startActivity(intent);
+        }
 
-        startActivity(intent);
     }
+
+
 
 
     @Override
@@ -919,7 +943,30 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         simpledateformat = new SimpleDateFormat("EEEE");
         dayOfWeek = simpledateformat.format(tomorrow);
         tvReturnDay.setText(dayOfWeek);
+
+        SimpleDateFormat simple = new SimpleDateFormat("EEE");
+        String dayWeek = simple.format(tomorrow);
+        String ReturnDate= dayWeek+","+d+" "+m;
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TWOWAY_RETURN_DATE,ReturnDate);
     }
 
+    private void flightTypeData() {
+
+        String D =      tv_departure_mo_ye.getText().toString();
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE,tvSourceFlightAirportCode.getText().toString());
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DESTINATION,tvDestinationFlightAirportCode.getText().toString());
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_JOURNEY_DATE,"01-01-2020");
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TRIP_TYPE,TripType);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_USER,"");
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_USER_TYPE,"5");
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ADULTS,AdultsCount);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_INFANTS,InfantCount);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_CHILDREN,ChildCount);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TYPE,"1");
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_RETURN_DATE,FlightReturnDate);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_CLASS,tc);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_COUNT,tvFlightTraveller.getText().toString());
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_CLASS_TYPE,travellersClass);
+    }
 
 }

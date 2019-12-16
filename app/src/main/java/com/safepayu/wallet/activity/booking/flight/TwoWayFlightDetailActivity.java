@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,45 +17,81 @@ import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.adapter.fight.FlightDetailAdapter;
+import com.safepayu.wallet.adapter.fight.FlightReturnDetailAdapter;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
+import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Date;
 
 import static com.safepayu.wallet.activity.booking.flight.FlightListActivity.MY_PREFS_NAME;
 
-public class FlightDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class TwoWayFlightDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String Source,Destination,JourneyDate,TripType,User,UserType,Adults,Infants,Children,FlightType,ReturnDate,TravelClass,TrvaellersCount,ClassType;
-    private TextView tvFlightdetailsDateTravellersClass,tvFlightdetailsTo,tvFlightdetailsFrom,tvFlightHandBaggage,tvFlightCheckInBaggage,tvTotalFlightFare,tvTotalNavellersNumber;
+    private TextView tvFlightdetailsDateTravellersClass,tvFlightdetailsTo,tvFlightdetailsFrom,tvFlightHandBaggage,tvFlightCheckInBaggage,tvTotalFlightFare,tvTotalNavellersNumber,
+            tvOnwardName,tv_return_name,tvFlightHandBaggageReturn,tvFlightCheckinBaggageReturn;
+    private ImageView onwardImage,return_image;
     private CharSequence s;
     private Date date;
-    int totalTravellers;
+    int totalTravellers,onwardsAmount,ReturnAmout ,TotalAmount;
+    private LinearLayout lreturn;
     String json;
     Gson gson;
-    AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
+    AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdataOnwards;
+    AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mdataReturn;
     private RecyclerView recyle_flight_detail,recycle_flight_return_detail;
     private FlightDetailAdapter flightDetailAdapter;
+    private FlightReturnDetailAdapter flightReturnDetailAdapter;
     private Button continueBtn,backbtnFlightList,backBtn;
+
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_flight_detail);
+        setContentView(R.layout.activity_two_way_flight_detail);
 
         findId();
 
          SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
          gson = new Gson();
-         json = prefs.getString("MyObject", "");
-         mdata = gson.fromJson(json,AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean.class);
+         json = prefs.getString("MyObjectOnward", "");
+        mdataOnwards = gson.fromJson(json,AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean.class);
+
+        json = prefs.getString("MyObjectReturn", "");
+        mdataReturn = gson.fromJson(json,AvailableFlightResponse.DataBean.DomesticReturnFlightsBean.class);
 
         recyle_flight_detail.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        flightDetailAdapter = new FlightDetailAdapter(getApplicationContext(), mdata.getFlightSegments());
+        flightDetailAdapter = new FlightDetailAdapter(getApplicationContext(), mdataOnwards.getFlightSegments());
         recyle_flight_detail.setAdapter(flightDetailAdapter);
+
+        recycle_flight_return_detail.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        flightReturnDetailAdapter = new FlightReturnDetailAdapter(getApplicationContext(), mdataReturn.getFlightSegments());
+        recycle_flight_return_detail.setAdapter(flightReturnDetailAdapter);
+
+        tvFlightCheckinBaggageReturn.setText(mdataReturn.getFlightSegments().get(0).getBaggageAllowed().getCheckInBaggage());
+           if (mdataOnwards.getFlightSegments().get(0).getBaggageAllowed().getHandBaggage().equals("")){
+            tvFlightHandBaggage.setText("Not allowed");
+        } else {
+            tvFlightHandBaggage.setText(mdataOnwards.getFlightSegments().get(0).getBaggageAllowed().getHandBaggage());
+        }
+        if (mdataReturn.getFlightSegments().get(0).getBaggageAllowed().getHandBaggage().equals("")){
+          tvFlightHandBaggageReturn.setText("Not allowed");
+        } else {
+          tvFlightHandBaggageReturn.setText(mdataReturn.getFlightSegments().get(0).getBaggageAllowed().getHandBaggage());
+        }
+        Picasso.get().load("http://webapi.i2space.co.in/"+mdataOnwards.getFlightSegments().get(0).getImagePath()).into(onwardImage);
+        Picasso.get().load("http://webapi.i2space.co.in/"+mdataReturn.getFlightSegments().get(0).getImagePath()).into(return_image);
+        onwardsAmount = mdataOnwards.getFareDetails().getTotalFare();
+        ReturnAmout = mdataReturn.getFareDetails().getTotalFare();
+        TotalAmount =onwardsAmount+ReturnAmout;
+        tvTotalFlightFare.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(TotalAmount));
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().TOTALFARE_RETURN_ONWARDS,String.valueOf(TotalAmount));
     }
+
 
     private void findId() {
         tvFlightdetailsDateTravellersClass = findViewById(R.id.tv_flightdetails_date_travellers_class);
@@ -62,6 +100,7 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
         tvFlightdetailsFrom = findViewById(R.id.tvflightdetails_from_where);
         continueBtn = findViewById(R.id.continue_btn);
         backbtnFlightList = findViewById(R.id.backbtn_flight_list);
+        lreturn = findViewById(R.id.lreturn);
 
 
         tvFlightHandBaggage = findViewById(R.id.tv_flight_hand_baggage);
@@ -70,6 +109,12 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
         tvTotalNavellersNumber = findViewById(R.id.tv_total_travellers_no);
         recyle_flight_detail = findViewById(R.id.recycle_flight_detail);
         recycle_flight_return_detail = findViewById(R.id.recycle_flight_return_detail);
+        tvOnwardName = findViewById(R.id.tv_onward_name);
+        tv_return_name = findViewById(R.id.tv_return_name);
+        tvFlightHandBaggageReturn = findViewById(R.id.tv_flight_hand_baggage_return);
+        tvFlightCheckinBaggageReturn = findViewById(R.id.tv_flight_checkin_baggage_return);
+        onwardImage = findViewById(R.id.onward_image);
+        return_image = findViewById(R.id.return_image);
 
 
         //************set listener*************
@@ -96,7 +141,14 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
         ClassType = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_CLASS_TYPE);
         ClassType = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_CLASS_TYPE);
 
+        if (TripType.equals("1")){
+            recycle_flight_return_detail.setVisibility(View.GONE);
+            lreturn.setVisibility(View.GONE);
 
+        }else if (TripType.equals("2")){
+            recycle_flight_return_detail.setVisibility(View.VISIBLE);
+            lreturn.setVisibility(View.VISIBLE);
+        }
 
         if (Infants.equals("") && Children.equals("")) {
             Infants = "0";
@@ -111,6 +163,8 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
         } else {
             totalTravellers = Integer.parseInt(Adults) + Integer.parseInt(Children) + Integer.parseInt(Infants);
         }
+        tvOnwardName.setText(Source +"-"+ Destination);
+        tv_return_name.setText(Destination +"-"+ Source);
 
 
         //*************set data***********
@@ -120,11 +174,7 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
         tvFlightdetailsTo.setText(Destination);
 
 
-        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_HAND_BAGGAGE).equals("")) {
-            tvFlightHandBaggage.setText("Not allowed");
-        } else {
-            tvFlightHandBaggage.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_HAND_BAGGAGE));
-        }
+
 
         tvFlightCheckInBaggage.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_CHECKIN_BAGGAGE));
         tvTotalNavellersNumber.setText("For " + totalTravellers + " Traveller");

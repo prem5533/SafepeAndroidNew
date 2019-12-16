@@ -57,8 +57,9 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
     private LoadingDialog loadingDialog;
     WalletLimitResponse WalletResponse;
     String json;
-    private String Source, Destination, JourneyDate, TrvaellersCount, ClassType, Adults, Infants, Children, FlightImage, TravelClass, AirLineCode, AirLineNumber;
+    private String Source, Destination, JourneyDate, TrvaellersCount, ClassType,TripType, Adults, Infants, Children, FlightImage, TravelClass, AirLineCode, AirLineNumber,TotalFareReturnOnward;
     public static AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
+    public  static AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mdataReturn;
     private FlightBlockTicketRequest flightBlockTicketRequest;
     FlightBlockTicketResponse FlightResponse;
     //recharge/bill payment parameter
@@ -74,10 +75,12 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
     boolean walletcheck = true;
     String PaymentBank,PaymentWallet,bank_rs,wallet_rs;
     List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> internationalFlights = new ArrayList<>();
-    List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticReturnFlights = new ArrayList<>();
+    List<AvailableFlightResponse.DataBean.DomesticReturnFlightsBean> domesticReturnFlights = new ArrayList<>();
     List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticOnwardFlights = new ArrayList<>();
+    List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domestictwoFlights = new ArrayList<>();
     ArrayList<String> adultList;
     ArrayList<String> DobList;
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,11 +110,6 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
 
 
         //***************get data****************
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        Gson gson = new Gson();
-        json = prefs.getString("MyObject", "");
-        mdata = gson.fromJson(json, AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean.class);
-
 
         Source = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE);
         Destination = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_DESTINATION);
@@ -125,6 +123,34 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
         TravelClass = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_CLASS);
         AirLineCode = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_CODE);
         AirLineNumber = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_FLIGHT_NUMBER);
+        TotalFareReturnOnward =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().TOTALFARE_RETURN_ONWARDS);
+        TripType =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRIP_TYPE);
+
+        if (TripType.equals("1")){
+            SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+             gson = new Gson();
+            json = prefs.getString("MyObject", "");
+            mdata = gson.fromJson(json, AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean.class);
+
+        }
+        else if (TripType.equals("2")){
+            SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+            gson = new Gson();
+            json = prefs.getString("MyObjectOnward", "");
+            mdata = gson.fromJson(json,AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean.class);
+
+            json = prefs.getString("MyObjectReturn", "");
+            mdataReturn = gson.fromJson(json,AvailableFlightResponse.DataBean.DomesticReturnFlightsBean.class);
+        }
+
+
+
+        if (TripType.equals("1")){
+            tvFlightPayAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+        }else if (TripType.equals("2")){
+            tvFlightPayAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
+        }
+
 
         if (Infants.equals("")) {
             Infants = "0";
@@ -144,11 +170,14 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
         }
 
         int flightType = 1;
-        switch (flightType) {
+        switch (Integer.parseInt(TripType)) {
             case 1:
                 domesticOnwardFlights.add(mdata);
                 break;
             case 2:
+                domesticReturnFlights.add(mdataReturn);
+                domesticOnwardFlights.add(mdata);
+
                 break;
             case 3:
                 //  internationalFlights.add(mdata);
@@ -163,7 +192,6 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
 
       //  btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
 
-        tvFlightPayAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
      //   tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
 
         checkBoxWallet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -242,8 +270,17 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
                     tvWalletDeductAmount.setVisibility(View.GONE);
                     tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                     checkBoxGatewayPayment.setChecked(true);
-                    tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
-                    btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " +  NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+                    if (TripType.equals("1")){
+                        btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " +  NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+
+                    }
+                    else if (TripType.equals("2")){
+                        btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " +  NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
+                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " +NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
+
+
+                    }
                 }
             }
         });
@@ -272,7 +309,13 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
                             }
 
                             tvTotalBalanceWallet.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format((int) Double.parseDouble(walletLimitResponse.getData().getWallet_balance())));
-                            tFare = Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE));
+                            if (TripType.equals("1")){
+                                tFare = Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE));
+                            }
+                            else if (TripType.equals("2")){
+                                tFare = (Integer.parseInt(TotalFareReturnOnward));
+                            }
+
                             walletDeduct =WalletResponse.getData().getLimit();
 
                             if (tFare>walletDeduct){
@@ -537,7 +580,7 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
         flightBlockTicketRequest.setChildPax(Children);
         flightBlockTicketRequest.setNames(adultList);
         flightBlockTicketRequest.setDob(DobList);
-        flightBlockTicketRequest.setTripType("1");
+        flightBlockTicketRequest.setTripType(TripType);
         flightBlockTicketRequest.setFlightType("1");
         if (tFare>walletDeduct){
             flightBlockTicketRequest.setPayment_wallet(String.valueOf(WalletResponse.getData().getLimit()));
