@@ -39,7 +39,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
     tvTicketSource,tvTicketDestination,tvTicketSourceTime,tvTicketTotalTime,tvTicketDestinationTime,tvTicketSourceAirportname,tvTicketDetinationAirportname,tvFlightNumber,tvFlightCode;
     private LoadingDialog loadingDialog;
     FlightBookingDetailRequest flightBookingDetailRequest;
-    private String ReferanceNo ="",Source,Destination,JourneyDate,DepTime,ArrivalTime,DurationTime,AirLineCode,AirLineNumber,FlightImage,TotalTravellers;
+    private String ReferanceNo ="",Source,Destination,JourneyDate,DepTime,ArrivalTime,DurationTime,AirLineCode,AirLineNumber,FlightImage,TotalTravellers,TripType;
     private LinearLayout liFlightName;
     private ImageView imFlightLogo;
     private GifImageView statusImage;
@@ -99,6 +99,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
         AirLineNumber =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_FLIGHT_NUMBER);
         FlightImage = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_IMAGE);
         TotalTravellers = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().TotalTravellers);
+        TripType =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRIP_TYPE);
     }
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -110,7 +111,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
     private void getFlightBookingDetails() {
 
         flightBookingDetailRequest = new FlightBookingDetailRequest();
-        flightBookingDetailRequest.setReferenceNo("300356016556");
+        flightBookingDetailRequest.setReferenceNo("300905016582");
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);

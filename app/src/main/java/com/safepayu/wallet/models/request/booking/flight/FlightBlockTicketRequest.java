@@ -137,13 +137,13 @@ public class FlightBlockTicketRequest  {
         private List<DomesticReturnFlightsBean> DomesticReturnFlights;
 */
     List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> InternationalFlights;
-        List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> DomesticReturnFlights;
+        List<AvailableFlightResponse.DataBean.DomesticReturnFlightsBean> DomesticReturnFlights;
         List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> DomesticOnwardFlights;
 
         public Data() {
         }
 
-        public Data(List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> internationalFlights, List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticReturnFlights, List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticOnwardFlights) {
+        public Data(List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> internationalFlights, List<AvailableFlightResponse.DataBean.DomesticReturnFlightsBean> domesticReturnFlights, List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticOnwardFlights) {
             InternationalFlights = internationalFlights;
             DomesticReturnFlights = domesticReturnFlights;
             DomesticOnwardFlights = domesticOnwardFlights;
@@ -157,11 +157,11 @@ public class FlightBlockTicketRequest  {
             InternationalFlights = internationalFlights;
         }
 
-        public List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> getDomesticReturnFlights() {
+        public List<AvailableFlightResponse.DataBean.DomesticReturnFlightsBean> getDomesticReturnFlights() {
             return DomesticReturnFlights;
         }
 
-        public void setDomesticReturnFlights(List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> domesticReturnFlights) {
+        public void setDomesticReturnFlights(List<AvailableFlightResponse.DataBean.DomesticReturnFlightsBean> domesticReturnFlights) {
             DomesticReturnFlights = domesticReturnFlights;
         }
 
@@ -832,6 +832,7 @@ public class FlightBlockTicketRequest  {
             public static class RequestDetailsBean {
                 /**
                  * TravelClass : null
+                 * Mode : DOMESTIC
                  * Mode : DOMESTIC
                  * Source : HYD
                  * Destination : BLR

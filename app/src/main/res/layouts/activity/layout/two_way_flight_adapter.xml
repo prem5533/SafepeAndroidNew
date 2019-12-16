@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/li_onwards"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -76,19 +77,79 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1">
+
             <TextView
                 android:id="@+id/tv_take_flight_time"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="21h 30m"
-                android:textSize="10sp"
+                android:layout_height="match_parent"
                 android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/bue_A800" />
+                android:text="21h 30m"
+                android:textColor="@color/bue_A800"
+                android:textSize="10sp" />
 
-            <View
-                android:layout_width="35dp"
-                android:layout_height="1dp"
-                android:background="@color/darker_gray" />
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/non_stop"
+                    android:layout_width="35dp"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone" />
+                <FrameLayout
+                    android:id="@+id/frame_one_stop"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:src="@drawable/dot"
+                        android:layout_gravity="center" />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@color/divider"
+                        android:layout_gravity="center"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frame_two_stop"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="5dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:src="@drawable/dot"
+                            android:layout_gravity="start"
+                            android:layout_weight="1" />
+                        <ImageView
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:src="@drawable/dot"
+                            android:layout_gravity="start"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@color/divider"
+
+                        android:layout_gravity="center"/>
+                </FrameLayout>
+
+            </FrameLayout>
         </LinearLayout>
         <TextView
             android:id="@+id/tv_flight_arrival_time"

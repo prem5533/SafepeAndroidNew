@@ -34,6 +34,7 @@
                     android:orientation="horizontal"
                     android:gravity="start|center">
                     <TextView
+                        android:id="@+id/tv_two_way_from"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -45,11 +46,12 @@
                         android:id="@+id/image_one_way"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:src="@drawable/ic_one_way_white"
+                        android:src="@drawable/ic_rightleftarrows"
                         android:padding="11dp"
                         />
 
                     <TextView
+                        android:id="@+id/tv_two_way_to"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -59,6 +61,7 @@
                         android:textSize="18sp" />
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/tv_twoway_date_travellers_class"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="6 Nov, 1 Adult, Economy"
@@ -88,134 +91,156 @@
                     android:id="@+id/flight_price_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-              />
+                    android:background="@color/white" />
+
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="2dp">
+                    android:layout_marginTop="2dp"
+                    android:gravity="center">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height=".5dp"
-                                android:background="@color/divider"/>
+                                android:background="@color/divider" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:gravity="center"
                                 android:layout_gravity="center"
+                                android:gravity="center"
+                                android:orientation="horizontal"
                                 android:padding="10dp">
+
                                 <TextView
+                                    android:id="@+id/tv_onwards_flight_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_regular"
                                     android:text="DEL - GOI"
-                                    android:textSize="10sp"
                                     android:textColor="@color/black"
-                                    android:fontFamily="@font/roboto_regular"/>
+                                    android:textSize="10sp" />
+
                                 <ImageView
                                     android:layout_width="10dp"
                                     android:layout_height="10dp"
-                                    android:src="@drawable/ic_less_than"
+                                    android:layout_marginLeft="5dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginLeft="5dp"/>
+                                    android:src="@drawable/ic_less_than" />
+
                                 <TextView
+                                    android:id="@+id/tv_onwards_flight_date"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_regular"
                                     android:text="Wed, 06 Nov"
-                                    android:textSize="10sp"
                                     android:textColor="@color/blue_grey_400"
-                                    android:fontFamily="@font/roboto_regular" />
+                                    android:textSize="10sp" />
+
                                 <ImageView
                                     android:layout_width="10dp"
                                     android:layout_height="10dp"
-                                    android:src="@drawable/ic_greater_than"
-                                    android:layout_marginLeft="10dp"/>
+                                    android:layout_marginLeft="10dp"
+                                    android:src="@drawable/ic_greater_than" />
                             </LinearLayout>
+
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height=".5dp"
-                                android:background="@color/divider"/>
+                                android:background="@color/divider" />
+
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/flight_list1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/white"
-                                android:layout_marginBottom="60dp"/>
+                                android:layout_marginBottom="65dp"
+                                android:background="@color/white" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
                             android:layout_weight="1"
                             android:gravity="center"
-                            >
+                            android:orientation="vertical">
+
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height=".5dp"
-                                android:background="@color/divider"/>
+                                android:background="@color/divider" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:gravity="center"
                                 android:layout_gravity="center"
+                                android:gravity="center"
+                                android:orientation="horizontal"
                                 android:padding="10dp">
+
                                 <TextView
+                                    android:id="@+id/tv_return_flight_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_regular"
                                     android:text="GOI - DEL"
-                                    android:textSize="10sp"
                                     android:textColor="@color/black"
-                                    android:fontFamily="@font/roboto_regular"/>
+                                    android:textSize="10sp" />
+
                                 <ImageView
                                     android:layout_width="10dp"
                                     android:layout_height="10dp"
-                                    android:src="@drawable/ic_less_than"
+                                    android:layout_marginLeft="5dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginLeft="5dp"/>
+                                    android:src="@drawable/ic_less_than" />
+
                                 <TextView
+                                    android:id="@+id/tv_return_flight_date"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_regular"
                                     android:text="Wed, 07 Nov"
-                                    android:textSize="10sp"
                                     android:textColor="@color/blue_grey_400"
-                                    android:fontFamily="@font/roboto_regular" />
+                                    android:textSize="10sp" />
+
                                 <ImageView
                                     android:layout_width="10dp"
                                     android:layout_height="10dp"
-                                    android:src="@drawable/ic_greater_than"
-                                    android:layout_marginLeft="10dp"/>
+                                    android:layout_marginLeft="10dp"
+                                    android:src="@drawable/ic_greater_than" />
                             </LinearLayout>
+
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height=".5dp"
-                                android:background="@color/divider"/>
+                                android:background="@color/divider" />
+
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/flight_list2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:background="@color/white"
-                                android:layout_marginBottom="60dp"/>
+                                android:layout_marginBottom="65dp"
+                                android:background="@color/white" />
                         </LinearLayout>
 
                     </LinearLayout>
+
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:background="@color/divider"/>
+                        android:background="@color/divider" />
                 </FrameLayout>
             </LinearLayout>
 
@@ -238,7 +263,73 @@
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_menu"
         android:layout_gravity="bottom"
-
+        android:visibility="gone"
         />
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_gravity="bottom"
+       android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="@color/yellow"
+        android:visibility="gone">
+    </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="60dp"
+           android:orientation="horizontal"
+           android:background="@color/yellow">
+           <LinearLayout
+               android:id="@+id/l_farebreakup"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:layout_gravity="start|center"
+               android:layout_weight="1"
+               android:layout_marginLeft="20dp"
+               >
+
+               <TextView
+                   android:id="@+id/total_flight_fare"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text=""
+                   android:textColor="@color/black"
+                   android:textSize="20sp"
+                   android:fontFamily="@font/roboto_bold" />
+
+               <TextView
+                   android:id="@+id/tv_total_travellers_no"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text=""
+                   android:textColor="@color/black"
+                   android:textSize="12sp"
+                   android:fontFamily="@font/roboto_bold" />
+           </LinearLayout>
+
+           <Button
+               android:id="@+id/continue_btn"
+               android:layout_width="match_parent"
+               android:layout_height="40dp"
+               android:layout_below="@+id/amount"
+               android:layout_gravity="center"
+               android:layout_marginTop="20dp"
+               android:layout_marginRight="20dp"
+               android:layout_marginBottom="20dp"
+               android:background="@drawable/rounded_buttons"
+               android:padding="10dp"
+               android:text="CONTINUE"
+               android:textColor="#fff"
+               android:textSize="15sp"
+               android:fontFamily="@font/roboto_regular"
+               android:layout_weight="1"/>
+       </LinearLayout>
+   </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

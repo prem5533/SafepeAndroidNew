@@ -3,12 +3,14 @@ package com.safepayu.wallet.activity.booking.flight;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -22,12 +24,6 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.booking.flight.AvailableFlightRequest;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -177,7 +173,7 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION,mFlightItemListenre.getFlightSegments().get(0).getDuration());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_HAND_BAGGAGE,mFlightItemListenre.getFlightSegments().get(0).getBaggageAllowed().getHandBaggage());
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_CHECKIN_BAGGAGE,mFlightItemListenre.getFlightSegments().get(0).getBaggageAllowed().getCheckInBaggage());
-        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_CHECKIN_BAGGAGE,mFlightItemListenre.getFlightSegments().get(0).getBaggageAllowed().getCheckInBaggage());
+
      //   BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME,mFlightItemListenre.getFlightSegments().get(0).getDepartureDateTimeZone());
       //  BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,mFlightItemListenre.getFlightSegments().get(0).getArrivalDateTimeZone());
         BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE,String.valueOf(mFlightItemListenre.getFareDetails().getTotalFare()));

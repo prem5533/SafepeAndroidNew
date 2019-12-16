@@ -54,6 +54,7 @@
         <activity android:name=".activity.booking.hotel.HotelActivity" />
         <activity android:name=".activity.booking.hotel.AvailableHotels" />
         <activity android:name=".activity.BellNotifictionActivity" />
+        <activity android:name=".activity.booking.flight.TwoWayFlightDetailActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

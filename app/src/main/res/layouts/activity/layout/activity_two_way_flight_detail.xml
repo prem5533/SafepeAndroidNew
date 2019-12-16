@@ -87,17 +87,31 @@
                     android:layout_height="wrap_content" />
             </androidx.cardview.widget.CardView>
 
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
+                android:id="@+id/lreturn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycle_flight_return_detail"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Return Flight"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_margin="5dp"/>
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/>
-            </androidx.cardview.widget.CardView>
+                    android:layout_margin="5dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycle_flight_return_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"/>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
 
 
             <LinearLayout
@@ -115,6 +129,24 @@
                         android:textColor="@color/black"
                         android:fontFamily="@font/roboto_regular"
                         android:layout_margin="10dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp">
+                    <ImageView
+                        android:id="@+id/onward_image"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"/>
+                    <TextView
+                        android:id="@+id/tv_onward_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="5dp"/>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -166,6 +198,92 @@
                         android:layout_marginLeft="5dp" />
                     <TextView
                         android:id="@+id/tv_flight_checkin_baggage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height=".5dp"
+                    android:background="@color/divider"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp">
+                    <ImageView
+                        android:id="@+id/return_image"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"/>
+                    <TextView
+                        android:id="@+id/tv_return_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="start|center">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_hand_bag"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hand Baggage - "
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginLeft="5dp"/>
+                    <TextView
+                        android:id="@+id/tv_flight_hand_baggage_return"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="start|center"
+                    >
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_checkinbag"
+                        android:padding="5dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Check-in Baggage - "
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginLeft="5dp" />
+                    <TextView
+                        android:id="@+id/tv_flight_checkin_baggage_return"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" "

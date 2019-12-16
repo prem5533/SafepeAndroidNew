@@ -307,6 +307,15 @@
                                     android:text=""
                                     android:textColor="@color/darker_gray"
                                     android:textSize="12sp" />
+                                <TextView
+                                    android:id="@+id/tv_departure_mo_ye"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:text=""
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"
+                                    android:visibility="gone"/>
                             </LinearLayout>
 
                         </LinearLayout>

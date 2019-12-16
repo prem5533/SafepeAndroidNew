@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,35 +18,33 @@ import com.squareup.picasso.Picasso;
 import java.text.NumberFormat;
 import java.util.List;
 
-public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightListAdapter.FlightTwoWayViewHodler> {
+public class TwoWayReturnFlightListAdapter extends RecyclerView.Adapter<TwoWayReturnFlightListAdapter.FlightTwoWayViewHodler> {
 
     private Context context;
-    private List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> mItem;
-    private OnFlightItemListener onFlightItemListener;
-    int index = -1,   selectedPosition;
-    private View selectedPackageView;
+    private List<AvailableFlightResponse.DataBean.DomesticReturnFlightsBean> mItem;
+    private OnFlightItemReturnListener onFlightItemReturnListener;
 
-    public interface OnFlightItemListener{
-        void onFlightItemListerne(int position, AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mFlightItemListenre,LinearLayout liOnward);
+
+    public interface OnFlightItemReturnListener{
+        void onFlightItemReturnListerne(int position, AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mFlightItemListenre);
     }
 
-    public TwoWayFlightListAdapter(Context context, List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> mItem, OnFlightItemListener onFlightItemListener) {
+    public TwoWayReturnFlightListAdapter(Context context, List<AvailableFlightResponse.DataBean.DomesticReturnFlightsBean> mItem, OnFlightItemReturnListener onFlightItemReturnListener) {
         this.context = context;
         this.mItem = mItem;
-        this.onFlightItemListener = onFlightItemListener;
+        this.onFlightItemReturnListener = onFlightItemReturnListener;
     }
 
     @NonNull
     @Override
     public FlightTwoWayViewHodler onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.two_way_flight_adapter,parent,false);
-        return new TwoWayFlightListAdapter.FlightTwoWayViewHodler(view);
+        return new TwoWayReturnFlightListAdapter.FlightTwoWayViewHodler(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FlightTwoWayViewHodler holder, int position) {
         holder.bindData(position);
-
     }
 
     @Override
@@ -60,7 +57,6 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
         private ImageView imageFlight;
         private FrameLayout frameTwoStopLine,frameOneStop;
         private View non_stop;
-        private LinearLayout liOnwards;
 
         public FlightTwoWayViewHodler(@NonNull View itemView) {
             super(itemView);
@@ -74,29 +70,11 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
             frameTwoStopLine = itemView.findViewById(R.id.frame_two_stop);
             frameOneStop = itemView.findViewById(R.id.frame_one_stop);
             non_stop = itemView.findViewById(R.id.non_stop);
-            liOnwards = itemView.findViewById(R.id.li_onwards);
 
             itemView.setOnClickListener(this);
         }
 
         public void bindData(int position) {
-
-          //  selectedPosition = getAdapterPosition();
-
-        /*    try{
-                if (selectedPackageView == null) {
-                    selectedPackageView = itemView;
-                    itemView.setBackgroundColor(context.getResources().getColor(R.color.green_100));
-                } else {
-
-                    selectedPackageView.setBackgroundColor(context.getResources().getColor(R.color.white));
-                    selectedPackageView = itemView;
-                    itemView.setBackgroundColor(context.getResources().getColor(R.color.green_100));
-
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }*/
 
             int flightStop =   mItem.get(position).getFlightSegments().size();
             tvflight_name1.setText(mItem.get(position).getFlightSegments().get(0).getAirLineName());
@@ -191,19 +169,13 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
                 non_stop.setVisibility(View.VISIBLE);
             }
 
-
-
-
         }
 
         @Override
         public void onClick(View v) {
-            if (onFlightItemListener != null) {
-                onFlightItemListener.onFlightItemListerne(getLayoutPosition(),mItem.get(getLayoutPosition()),liOnwards);
-               // notifyDataSetChanged();
+            if (onFlightItemReturnListener != null) {
+                onFlightItemReturnListener.onFlightItemReturnListerne(getLayoutPosition(),mItem.get(getLayoutPosition()) );
             }
-
-
         }
     }
 }
