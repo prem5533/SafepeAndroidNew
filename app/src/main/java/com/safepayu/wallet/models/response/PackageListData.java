@@ -46,6 +46,14 @@ public class PackageListData extends BaseResponse {
         String packageName;
         @SerializedName("package_amount")
         Double packageAmount;
+        /**
+         * image : uploaded/packagesImage/8635415763337990.jpg
+         * description : If it didn't help
+         */
+
+        private String image;
+        private String description;
+
 
         public Packages() {
         }
@@ -87,6 +95,22 @@ public class PackageListData extends BaseResponse {
                     ", packageName='" + packageName + '\'' +
                     ", packageAmount=" + packageAmount +
                     '}';
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
         }
     }
 

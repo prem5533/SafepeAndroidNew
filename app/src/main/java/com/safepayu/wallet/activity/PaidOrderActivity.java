@@ -90,6 +90,14 @@ public class PaidOrderActivity extends AppCompatActivity {
         ServiceInfoTV=findViewById(R.id.serviceInfo);
         tvSafepeUtrId=findViewById(R.id.tv_safepe_utr_id);
 
+        try {
+            if (Message==null || TextUtils.isEmpty(Message)){
+                Message="";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         String PendingText=Message;
 
         try{
@@ -115,26 +123,27 @@ public class PaidOrderActivity extends AppCompatActivity {
            // gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.success));
             Glide.with(getApplicationContext()).load(R.drawable.success).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
             StatusTV.setTextColor(getResources().getColor(R.color.green_500));
-            if(PendingText.equals("It Might Take 5 Mins To 3 Hrs. Have Patience For Transaction. Sorry For The Inconvenience. \nThank You!")){
-                ServiceInfoTV.setVisibility(View.GONE);
-            }
-            else {
-                ServiceInfoTV.setText(PendingText);
-            }
-            if (UTR==null){
+//            if(PendingText.equalsIgnoreCase("It Might Take 5 Mins To 3 Hrs. Have Patience For Transaction. Sorry For The Inconvenience. \nThank You!")){
+//                ServiceInfoTV.setVisibility(View.GONE);
+//            } else {
+//                ServiceInfoTV.setText(PendingText);
+//            }
+            if (UTR==null  || TextUtils.isEmpty(UTR)){
                 tvSafepeUtrId.setVisibility(View.GONE);
-            }{
+            }else {
                 tvSafepeUtrId.setText("UTR ID: "+UTR);
             }
+
+            ServiceInfoTV.setText(PendingText);
 
         } else if (status.equalsIgnoreCase("pending")){
             //gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.pending));
 
             Glide.with(getApplicationContext()).load(R.drawable.pending2).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
             ServiceInfoTV.setText(PendingText);
-            if (UTR==null){
+            if (UTR==null || TextUtils.isEmpty(UTR)){
                 tvSafepeUtrId.setVisibility(View.GONE);
-            }{
+            }else {
                 tvSafepeUtrId.setText("UTR ID: "+UTR);
             }
 
@@ -144,13 +153,14 @@ public class PaidOrderActivity extends AppCompatActivity {
        //     gifImageView.setImageDrawable(getResources().getDrawable(R.drawable.failed_gif));
             Glide.with(getApplicationContext()).load(R.drawable.failed_gif).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).crossFade().into(gifImageView);
             StatusTV.setTextColor(getResources().getColor(R.color.red_400));
-            if(PendingText.equals("It Might Take 5 Mins To 3 Hrs. Have Patience For Transaction. Sorry For The Inconvenience. \nThank You!")){
-                ServiceInfoTV.setVisibility(View.GONE);
-            }
-            else {
-                ServiceInfoTV.setText(PendingText);
-            }
+//            if(PendingText.equals("It Might Take 5 Mins To 3 Hrs. Have Patience For Transaction. Sorry For The Inconvenience. \nThank You!")){
+//                ServiceInfoTV.setVisibility(View.GONE);
+//            } else {
+//                ServiceInfoTV.setText(PendingText);
+//            }
             tvSafepeUtrId.setVisibility(View.GONE);
+
+            ServiceInfoTV.setText(PendingText);
         }
 
         StatusTV.setText(status);

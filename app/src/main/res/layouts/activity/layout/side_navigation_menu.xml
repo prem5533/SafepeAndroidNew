@@ -560,7 +560,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Logout"
-                            android:textSize="15sp"
+                            android:textSize="13sp"
                             android:textColor="@color/black"
                             android:layout_marginLeft="20dp"
                             android:fontFamily="@font/roboto_regular"/>

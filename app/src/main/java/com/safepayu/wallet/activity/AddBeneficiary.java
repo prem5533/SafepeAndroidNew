@@ -6,12 +6,14 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -28,9 +30,19 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.Login;
+import com.safepayu.wallet.models.request.SendOtpRequest;
 import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.UserResponse;
+
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -46,8 +58,9 @@ public class AddBeneficiary extends BaseActivity {
     private ApiService apiService;
     private String Mobile = "";
     private AddBeneficiaryRequest addBeneficiaryRequest;
+    private boolean checkIfsc=false;
     //Otp Dialog
-    TextView TimerTV;
+    TextView TimerTV,VerifyIfscBtn;
     EditText OtpED;
     Button continueButton, resendButton;
     private ImageView im_cross;
@@ -71,6 +84,7 @@ public class AddBeneficiary extends BaseActivity {
         AddBenBtn = findViewById(R.id.bankAddBtn);
         showAccNo = findViewById(R.id.password_visible);
         HideAccNo = findViewById(R.id.password_invisible);
+        VerifyIfscBtn = findViewById(R.id.verifyIfscBtn);
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +126,46 @@ public class AddBeneficiary extends BaseActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        VerifyIfscBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(IFSCED.getText().toString().trim())){
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Please Enter IFSC Code", false);
+                }else {
+                    if (checkIfsc){
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "IFSC Code Already Verified", false);
+                    }else {
+                        new CheckIfscMethod().execute();
+                    }
+                }
+            }
+        });
+
+        IFSCED.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+
+                if (checkIfsc){
+                    checkIfsc=false;
+                }
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                // TODO Auto-generated method stub
             }
         });
     }
@@ -158,10 +212,14 @@ public class AddBeneficiary extends BaseActivity {
                             addBeneficiaryRequest.setUpi("");
                             addBeneficiaryRequest.setPaytm("");
 
-                            if (CheckNet) {
-                                resendOtp();
-                            } else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Check Your Internet Connection!", false);
+                            if (checkIfsc){
+                                if (CheckNet) {
+                                    resendOtp();
+                                } else {
+                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Check Your Internet Connection!", false);
+                                }
+                            }else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Please Verify Your IFSC Code First", false);
                             }
                         }
                     }
@@ -202,8 +260,11 @@ public class AddBeneficiary extends BaseActivity {
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(Mobile, null);
+        SendOtpRequest sendOtpRequest=new SendOtpRequest();
+        sendOtpRequest.setMobile(Mobile);
+        sendOtpRequest.setType("3");
 
-        BaseApp.getInstance().getDisposable().add(apiService.resendOtp(request)
+        BaseApp.getInstance().getDisposable().add(apiService.resendOtp(sendOtpRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
@@ -356,5 +417,74 @@ public class AddBeneficiary extends BaseActivity {
                 //.setNegativeButton(android.R.string.no, null)
                 .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
                 .show();
+    }
+
+    public class CheckIfscMethod extends AsyncTask<String, String, String> {
+        String apiUrl = "https://ifsc.razorpay.com/" + IFSCED.getText().toString().trim();
+
+
+        protected void onPreExecute() {
+            loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        }
+
+        protected String doInBackground(String... urls) {
+
+            String result = null;
+            try {
+                URL url = new URL(apiUrl);
+
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                StringBuilder sb = new StringBuilder();
+
+                con.setAllowUserInteraction(false);
+                con.setInstanceFollowRedirects(true);
+                // con.setRequestMethod("POST");
+                con.connect();
+                if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    try {
+                        InputStream in = new BufferedInputStream(con.getInputStream());
+
+                        BufferedReader bufferedReader = new BufferedReader(
+                                new InputStreamReader(in));
+
+                        String json;
+
+                        while ((json = bufferedReader.readLine()) != null) {
+                            sb.append(json);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    result = sb.toString().trim();
+                } else {
+
+                    //    return null;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                // return null;
+            }
+            return result;
+        }
+
+        protected void onPostExecute(String response) {
+            loadingDialog.hideDialog();
+
+            try {
+
+                if (TextUtils.isEmpty(new JSONObject(response).getString("IFSC"))){
+                    checkIfsc=false;
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Wrong IFSC Code", false);
+                }else {
+                    checkIfsc=true;
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "IFSC Code Verified", false);
+                }
+            } catch (Exception e) {
+                checkIfsc=false;
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Wrong IFSC Code", false);
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -247,9 +247,6 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
                 }
             }
         });
-
-
-
     }
 
 
@@ -542,8 +539,7 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
         if (tFare>walletDeduct){
             flightBlockTicketRequest.setPayment_wallet(String.valueOf(WalletResponse.getData().getLimit()));
             flightBlockTicketRequest.setPayment_bank(String.valueOf(subAmount));
-        }
-        else {
+        } else {
             if (b){
                 flightBlockTicketRequest.setPayment_wallet(String.valueOf(0));
                 flightBlockTicketRequest.setPayment_bank(String.valueOf(tFare));

@@ -425,13 +425,15 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
 
         try {
             for (int ag=0;ag<ChildAgeList.size();ag++){
-                String age=ChildAgeList.get(ag);
-                if (age.contains("0")){
-                    checkAge=false;
-                    Toast.makeText(HotelActivity.this, "Please Enter Age Of Every Child", Toast.LENGTH_SHORT).show();
-                    break;
-                }else {
-                    checkAge=true;
+                if (!ChildNoList.get(ag).equals("0")){
+                    String age=ChildAgeList.get(ag);
+                    if (age.contains("0")){
+                        checkAge=false;
+                        Toast.makeText(HotelActivity.this, "Please Enter Age Of Every Child", Toast.LENGTH_SHORT).show();
+                        break;
+                    }else {
+                        checkAge=true;
+                    }
                 }
             }
         }catch (Exception e){
@@ -451,6 +453,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
             }
 
             if (ChildNoList.size()>0){
+                AdultNoStringList.clear();
                 AdultTotal=0;
                 for (int ad=0;ad<AdultNoList.size();ad++){
                     AdultTotal=AdultTotal+AdultNoList.get(ad);
@@ -461,9 +464,17 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                 RoomTotal=1;
                 TotalGuest=1;
             }
-            GuestDialog.dismiss();
-            TravellerTV.setText("Rooms - "+RoomTotal+", Adult - "+AdultTotal+", Child - "+ChildTotal);
+
+        }else {
+            RoomTotal=RoomList.size();
+            AdultTotal=0;
+            for (int ad=0;ad<AdultNoList.size();ad++){
+                AdultTotal=AdultTotal+AdultNoList.get(ad);
+                AdultNoStringList.add(""+AdultNoList.get(ad));
+            }
         }
+        TravellerTV.setText("Rooms - "+RoomTotal+", Adult - "+AdultTotal+", Child - "+ChildTotal);
+        GuestDialog.dismiss();
 
     }
 }

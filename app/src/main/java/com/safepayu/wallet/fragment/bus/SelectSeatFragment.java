@@ -78,6 +78,21 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
 //             + "AA_AA/"
 //             + "_____/";
 
+     //     String seats = "U_AA/"
+//             + "U_AA/"
+//             + "U_UU/"
+//             + "A_AA/"
+//             + "A_AA/"
+//             + "U_UU/"
+//             + "A_AA/"
+//             + "A_AA/"
+//             + "A_UU/"
+//             + "U_AA/"
+//             + "R_AA/"
+//             + "A_UU/"
+//             + "A_AA/"
+//             + "_____/";
+
 
      List<TextView> seatViewList = new ArrayList<>();
      private int seatSize = 80;
@@ -373,6 +388,91 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
 
      }
 
+     private String SeatsCounts2(int NoOfSeats){
+         String SeatsArrangement="";
+         int length=0,rowLength=0,seatNumber=0;
+
+         if (SeatLists.get(seatNumber).getIsAvailableSeat().equalsIgnoreCase("True")){
+             SeatsArrangement=SeatsArrangement+"A";
+         }else {
+             SeatsArrangement=SeatsArrangement+"U";
+         }
+         NoOfSeats=NoOfSeats+1;
+         for (int i=1;i<NoOfSeats;i++) {
+
+             length = SeatsArrangement.length();
+
+             try {
+                 if (length % 5 == 0) {
+                     rowLength = 0;
+                     NoOfSeats = NoOfSeats + 2;
+                 } else {
+                     try {
+                         rowLength = length % 5;
+                     } catch (Exception e) {
+                         rowLength = SeatsArrangement.length();
+                         e.printStackTrace();
+                     }
+                 }
+
+                 if (rowLength==0){
+                     if (CheckSeatAvailable(SeatLists.get(seatNumber).getIsAvailableSeat())){
+                         SeatsArrangement=SeatsArrangement+"A";
+                     }else {
+                         SeatsArrangement=SeatsArrangement+"U";
+                     }
+                 }else if (rowLength==1){
+                     SeatsArrangement=SeatsArrangement+"_";
+                 }else if (rowLength==4){
+                     SeatsArrangement=SeatsArrangement+"/";
+                 }else {
+                     if (CheckSeatAvailable(SeatLists.get(seatNumber).getIsAvailableSeat())){
+                         SeatsArrangement=SeatsArrangement+"A";
+                     }else {
+                         SeatsArrangement=SeatsArrangement+"U";
+                     }
+                 }
+
+             } catch (Exception e) {
+                 rowLength = SeatsArrangement.length();
+                 e.printStackTrace();
+             }
+         }
+
+//         try {
+//             try {
+//                 length=SeatsArrangement.length();
+//                 try {
+//                     rowLength=length%6;
+//                     if (rowLength==5){
+//                         SeatsArrangement=SeatsArrangement+"/";
+//                     }else if (rowLength==2){
+//                         SeatsArrangement=SeatsArrangement+"_";
+//                     }
+//                 }catch (Exception e){
+//                     e.printStackTrace();
+//                 }
+//             }catch (Exception e){
+//                 e.printStackTrace();
+//             }
+//
+//             if (SeatLists.get(seatNumber+1).getIsAvailableSeat().equalsIgnoreCase("True")){
+//                 SeatsArrangement=SeatsArrangement+"A";
+//             }else {
+//                 SeatsArrangement=SeatsArrangement+"U";
+//             }
+//             if (SeatLists.get(seatNumber+2).getIsAvailableSeat().equalsIgnoreCase("True")){
+//                 SeatsArrangement=SeatsArrangement+"A";
+//             }else {
+//                 SeatsArrangement=SeatsArrangement+"U";
+//             }
+//         }catch (Exception e){
+//             e.printStackTrace();
+//         }
+
+         return SeatsArrangement+"/";
+     }
+
      private String SeatsCounts(int NoOfSeats){
          String SeatsArrangement="";
          int length=0,rowLength=0,seatNumber=0;
@@ -635,7 +735,12 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
                                      ZIndex.add(String.valueOf(response.getData().getSeats().get(index).getZindex()));
                                  }
                                  SeatLists=response.getData().getSeats();
-                                 seats=SeatsCounts(response.getData().getSeats().size());
+
+                                 if (response.getData().getLayoutType().equalsIgnoreCase("2+1")){
+                                     seats=SeatsCounts2(response.getData().getSeats().size());
+                                 }else {
+                                     seats=SeatsCounts(response.getData().getSeats().size());
+                                 }
 
                                  MakeSeat(rootView);
                              } catch (Exception e) {

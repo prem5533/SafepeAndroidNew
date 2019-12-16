@@ -13,6 +13,7 @@ import com.safepayu.wallet.models.request.RechargeRequest;
 import com.safepayu.wallet.models.request.Register;
 import com.safepayu.wallet.models.request.ResetPasscodeModel;
 import com.safepayu.wallet.models.request.SaveAddressRequest;
+import com.safepayu.wallet.models.request.SendOtpRequest;
 import com.safepayu.wallet.models.request.SendPaymentGatewayDetailsRequest;
 import com.safepayu.wallet.models.request.SendToWalletRequest;
 import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
@@ -95,7 +96,7 @@ public interface ApiService {
     Single<LoginResponse> login(@Body Login loginRequest);
     // Resend OTP
     @POST("api/secure/payment/api/resendOTP")
-    Single<BaseResponse> resendOtp(@Body Login loginRequest);
+    Single<BaseResponse> resendOtp(@Body SendOtpRequest sendOtpRequest);
     // verify OTP
     @POST("api/secure/payment/api/verifyOTP")
     Single<UserResponse> verifyOTP(@Body Login loginRequest);

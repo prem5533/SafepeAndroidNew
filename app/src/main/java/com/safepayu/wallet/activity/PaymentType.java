@@ -62,7 +62,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
     private Button ProceedWalletBtn;
     private LoadingDialog loadingDialog;
     private TextView AmountTV,tvPaymentRechargeamount,tvPaymentCashBack,tvPaymentTotal;
-    private CardView Card_fillLayout;
+    private CardView Card_fillLayout,cardViewCashbackText,cardViewCardAmount;
     private ImageView imageService;
     private Button btn_back_home_page;
 
@@ -88,7 +88,9 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         NetBankingBtnLayout = (RelativeLayout) findViewById(R.id.radioLayout2);
         WalletBtnLayout = (RelativeLayout) findViewById(R.id.radioLayout4);
         Card_fillLayout=findViewById(R.id.card_fillLayout);
+        cardViewCashbackText=findViewById(R.id.cashbackText);
         imageService=findViewById(R.id.image_service);
+        cardViewCardAmount=findViewById(R.id.card_amount);
 
         cardLayout = (LinearLayout) findViewById(R.id.card_layout);
         UpiLayout = (LinearLayout) findViewById(R.id.upi_layout);
@@ -212,9 +214,13 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             upiBtnLayout.setVisibility(GONE);
             Card_fillLayout.setVisibility(GONE);
 
-            if (PaymentTypeText.equalsIgnoreCase("Add Money")) {
+            if (PaymentTypeText.equalsIgnoreCase("Add Money") ||
+                    PaymentFor.equalsIgnoreCase("Wallet") ||
+                    PaymentFor.equalsIgnoreCase("Buy Package")) {
                 tvPaymentCashBack.setText(getResources().getString(R.string.rupees)+" "+ "0");
                 tvPaymentTotal.setText(getResources().getString(R.string.rupees)+" "+ Amount);
+                cardViewCashbackText.setVisibility(GONE);
+                cardViewCardAmount.setVisibility(GONE);
             }else {
                 tvPaymentCashBack.setText(WalletCashback);
                 tvPaymentTotal.setText(TotalDeductAmount);
@@ -237,7 +243,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             }else if (RechargeTypeId.equals("8")){
                 imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_metro));
             }
-            tvPaymentRechargeamount.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(Amount)));
+            tvPaymentRechargeamount.setText(getResources().getString(R.string.rupees)+" "+Amount);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -674,6 +680,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                         intentStatus.putExtra("txnid",txnid);
                         intentStatus.putExtra("Amount",Amount);
                         intentStatus.putExtra("date",currentDate);
+                        intentStatus.putExtra("Message",response.getMessage());
                         intentStatus.putExtra("productinfo",PaymentFor+" "+PaymentTypeText);
                         startActivity(intentStatus);
                         finish();

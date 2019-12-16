@@ -7,5 +7,7 @@
         <domain includeSubdomains="true">webapi.i2space.co.in</domain>
         <domain includeSubdomains="true">15.206.175.119</domain>
         <domain includeSubdomains="true">alias.safepeindia.com</domain>
+        <domain includeSubdomains="true">testing.safepeindia.com</domain>
+        <domain includeSubdomains="true">ifsc.razorpay.com</domain>
     </domain-config>
 </network-security-config>

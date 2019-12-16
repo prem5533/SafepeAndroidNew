@@ -11,7 +11,6 @@ import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -35,6 +34,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.Login;
+import com.safepayu.wallet.models.request.SendOtpRequest;
 import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
@@ -472,7 +472,11 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(Mobile, null);
 
-        BaseApp.getInstance().getDisposable().add(apiService.resendOtp(request)
+        SendOtpRequest sendOtpRequest=new SendOtpRequest();
+        sendOtpRequest.setMobile(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
+        sendOtpRequest.setType("3");
+
+        BaseApp.getInstance().getDisposable().add(apiService.resendOtp(sendOtpRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<BaseResponse>() {

@@ -6,7 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,12 +30,14 @@ import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.models.response.PackageListData;
 import com.safepayu.wallet.utils.PasscodeClickListener;
+import com.squareup.picasso.Picasso;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.view.View.VISIBLE;
+import static com.safepayu.wallet.api.ApiClient.BASE_URL;
 
 public class BuyMemberShip extends BaseActivity implements PackageListAdapter.OnPackageSelectListener, View.OnClickListener,
         RadioGroup.OnCheckedChangeListener, PasscodeClickListener {
@@ -94,7 +96,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
 
         FinalAmount=CalculateAmount(selectedPackage.getPackageAmount());
 
-        showDialog(BuyMemberShip.this, PackageID, PackageName, String.valueOf(selectedPackage.getPackageAmount()), String.valueOf(BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount)));
+        showDialog(BuyMemberShip.this,selectedPackage);
     }
 
     @Override
@@ -303,111 +305,30 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         }
     }
 
-    public void showDialog(Activity activity, final String PackageID, String PackName, String AMount, final String Amount2Pay) {
+    public void showDialog(Activity activity, PackageListData.Packages selectedPackage) {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.single_package_detail);
 
-//        TextView PackNameTV = dialog.findViewById(R.id.packageName_WalletDialog);
-//        TextView AmountTV = dialog.findViewById(R.id.packageAmount_WalletDialog);
-//        TextView AmountToPayTV = dialog.findViewById(R.id.totalAmountPay_WalletDialog);
-//        TextView bonusAmount = dialog.findViewById(R.id.bonusAmount_WalletDialog);
-//        TextView bonuscREDIT = dialog.findViewById(R.id.bonusCredit_WalletDialog);
         ImageView imageView = dialog.findViewById(R.id.image_package1);
         TextView PackNameTV = dialog.findViewById(R.id.package_detail_dialog);
 
-        String PromotionalText="Wallet cash back Rs 10,400.\n" +
-                "Cash back can be redeemed Rs 52 on working days.\n" +
-                "Validity 200 Days.\n" +
-                "Additional 18% GST Will be charged from the account.";
+        PackNameTV.setText(selectedPackage.getDescription());
 
-        String NanoText="Wallet cash back Rs.20,800.\n" +
-                "Cash back can be redeemed\n" +
-                "Rs. 104 on working days.\n" +
-                "Validity 200 Days.\n" +
-                "Additional 18% GST Will be charged from the account.";
+        try {
+            if (TextUtils.isEmpty(selectedPackage.getImage())){
+                imageView.setImageDrawable(getResources().getDrawable(R.drawable.image_not_available));
+            }else {
+                Picasso.get()
+                        .load(BASE_URL+ selectedPackage.getImage())
+                        .error(getResources().getDrawable(R.drawable.image_not_available))
+                        .into(imageView);
+            }
 
-        String ProText="Wallet cash back Rs.52,000.\n" +
-                "Cash back can be redeemed Rs.260 on working days.\n" +
-                "Validity 200 Days.\n" +
-                "Additional 18% GST Will be charged from the account.";
-
-        String SilverText="Wallet cash back Rs 1,04,000.\n" +
-                "Cash back can be redeemed Rs.520 on working days.\n" +
-                "Validity 200 Days.\n" +
-                "Additional 18% GST Will be charged from the account.";
-
-        String SilverPlusText="Wallet cash back Rs 1,56,000.\n" +
-                "Cash back can be redeemed\n" +
-                "Rs.780 on working days.\n" +
-                "Validity 200 Days.\n" +
-                "Additional 18% GST Will be charged from the account.";
-
-        String GoldText="Wallet cash back Rs 2,08,000.\n" +
-                "Cash back can be redeemed\n" +
-                "Rs.1040 on working days.\n" +
-                "Validity 200 Days.\n" +
-                "Additional 18% GST Will be charged from the account.";
-
-        String TitaniumText="Wallet cash back Rs 3,12,000 .\n" +
-                "Cash back can be redeemed\n" +
-                "Rs. 1560 on working days.\n" +
-                "Validity 200 Days.\n" +
-                "Additional 18% GST Will be charged from the account.";
-
-        String DiamondText="Wallet cash back Rs 4,16,000 .\n" +
-                "Cash back can be redeemed\n" +
-                "Rs.2080 on working days.\n" +
-                "Validity 200 Days.\n" +
-                "Additional 18% GST Will be charged from the account.";
-
-        if (PackName.equalsIgnoreCase("Promotional")){
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.promotional_package));
-            PackNameTV.setText(PromotionalText);
-        }else if (PackName.equalsIgnoreCase("Nano")){
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.nano_package));
-            PackNameTV.setText(NanoText);
-        }else if (PackName.equalsIgnoreCase("Pro")){
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.pro_package));
-            PackNameTV.setText(ProText);
-        }else if (PackName.equalsIgnoreCase("Silver")){
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.silver_package));
-            PackNameTV.setText(SilverText);
-        }else if (PackName.equalsIgnoreCase("Silver Plus")){
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.silver_plus_package));
-            PackNameTV.setText(SilverPlusText);
-        }else if (PackName.equalsIgnoreCase("Gold")){
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.gold_package));
-            PackNameTV.setText(GoldText);
-        }else if (PackName.equalsIgnoreCase("Titanium")){
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.titanium_package));
-            PackNameTV.setText(TitaniumText);
-        }else if (PackName.equalsIgnoreCase("Diamond")){
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.diamond_package));
-            PackNameTV.setText(DiamondText);
+        }catch (Exception er){
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.image_not_available));
+            er.printStackTrace();
         }
-
-
-//        try{
-//            double bonusAmout=CalculateAmount((int)Float.parseFloat(PackageAmount));
-//            bonuscREDIT.setText(getResources().getString(R.string.rupees)+" "+(int)bonusAmout);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        try{
-//            bonusAmount.setText(getResources().getString(R.string.rupees)+" "+2*(int)Float.parseFloat(PackageAmount));
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        PackNameTV.setText(PackName);
-//        AmountTV.setText(getResources().getString(R.string.rupees)+" "+AMount);
-//        AmountToPayTV.setText(getResources().getString(R.string.rupees)+" "+Amount2Pay);
-//
-//
-//        Button dialogButton = (Button) dialog.findViewById(R.id.payBtn_WalletDialog);
-//        dialogButton.setVisibility(View.GONE);
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());

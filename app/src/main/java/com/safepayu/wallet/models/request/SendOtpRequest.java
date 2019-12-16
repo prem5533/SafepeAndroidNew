@@ -1,13 +1,29 @@
 package com.safepayu.wallet.models.request;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class SendOtpRequest {
-    @SerializedName("mobile")
-    @Expose
-    String mobile;
-    @SerializedName("type")
-    @Expose
-    String type;
+
+
+    /**
+     * mobile : 9999988888
+     * type : 1
+     */
+
+    private String mobile;
+    private String type;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

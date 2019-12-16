@@ -28,7 +28,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class Splash extends AppCompatActivity implements PasscodeClickListener {
 
-    public static PromotionResponse promotionResponse1;
+    public static PromotionResponse promotionResponse1=new PromotionResponse();
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -49,11 +49,13 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
         }else {
             showDialogVersion(this);
         }
+
     }
 
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
+            getPromotionalOfferType121();
             if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN) != null) {
                 if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
                     startActivity(new Intent(Splash.this,CreatePassCodeActivity.class));
@@ -108,8 +110,47 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
                         try {
                             if (promotionResponse.isStatus()){
                                 promotionResponse1=promotionResponse;
-                                startActivity(new Intent(Splash.this, SplashViewPagerActivity.class));
-                                finish();
+
+                            }else {
+                                promotionResponse1.setStatus(false);
+                            }
+                            startActivity(new Intent(Splash.this, SplashViewPagerActivity.class));
+                            finish();
+                        }catch (Exception e){
+                            Toast.makeText(Splash.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        promotionResponse1.setStatus(false);
+                    }
+                }));
+
+
+    }
+
+    private void getPromotionalOfferType121() {
+
+        // loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+
+
+        final PromotionRequest promotionRequest = new PromotionRequest();
+        promotionRequest.setType("1");
+        BaseApp.getInstance().getDisposable().add(apiService.getPromotionOffer(promotionRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<PromotionResponse>() {
+                    @Override
+                    public void onSuccess(PromotionResponse promotionResponse) {
+                        try {
+                            if (promotionResponse.isStatus()){
+                                promotionResponse1=promotionResponse;
+
+                            }else {
+                                promotionResponse1.setStatus(false);
                             }
                         }catch (Exception e){
                             Toast.makeText(Splash.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
@@ -119,7 +160,7 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        promotionResponse1.setStatus(false);
                     }
                 }));
 

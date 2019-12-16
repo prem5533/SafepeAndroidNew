@@ -71,7 +71,7 @@
                     android:id="@+id/card_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                  android:layout_marginTop="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Recharge Amount"
+                                android:text="Amount"
                                 android:textSize="13sp"
                                 android:textColor="@color/black"
                                 android:padding="10dp"
@@ -100,7 +100,7 @@
                                 android:layout_height="47dp"
                                 android:fontFamily="@font/roboto_regular"
                                 android:padding="10dp"
-                                android:text="10"
+                                android:text="0"
                                 android:textColor="@color/black"
                                 android:textSize="13sp" />
                         </LinearLayout>
@@ -121,7 +121,7 @@
                                 android:id="@+id/tv_payment_walletcashback"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="10"
+                                android:text="0"
                                 android:textSize="13sp"
                                 android:textColor="@color/black"
                                 android:padding="10dp"
@@ -150,7 +150,7 @@
                                 android:id="@+id/tv_payment_total_amountpay"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="10"
+                                android:text="0"
                                 android:textSize="13sp"
                                 android:textColor="@color/black"
                                 android:padding="10dp"
@@ -196,7 +196,7 @@
                         android:layout_centerVertical="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="10dp"
-                        android:text="₹ 507"
+                        android:text="0"
                         android:paddingRight="10dp"
                         android:textStyle="bold"
                         android:fontFamily="@font/roboto_bold"
@@ -210,7 +210,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="10dp"
-                    >
+                    android:id="@+id/cashbackText">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

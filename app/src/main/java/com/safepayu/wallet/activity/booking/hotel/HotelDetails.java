@@ -227,7 +227,6 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                     }
                 }
             }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length(), 0);
-
         }
         return ssb;
 
@@ -453,14 +452,14 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                 .setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Continue with delete operation
-                        Intent intent=new Intent(HotelDetails.this,BookHotel.class);
-                        intent.putExtra("HotelId",HotelId);
-                        intent.putExtra("SourceName",SourceName);
-                        intent.putExtra("HotelName",HotelName);
-                        intent.putExtra("WebService",WebService);
-                        intent.putExtra("Provider",Provider);
-                        intent.putExtra("ImgUrl",ImgUrl);
-                        intent.putExtra("CityId",hotelDetailsRequest.getCityId());
+//                        Intent intent=new Intent(HotelDetails.this,BookHotel.class);
+//                        intent.putExtra("HotelId",HotelId);
+//                        intent.putExtra("SourceName",SourceName);
+//                        intent.putExtra("HotelName",HotelName);
+//                        intent.putExtra("WebService",WebService);
+//                        intent.putExtra("Provider",Provider);
+//                        intent.putExtra("ImgUrl",ImgUrl);
+//                        intent.putExtra("CityId",hotelDetailsRequest.getCityId());
                         //startActivity(intent);
                         showDialogFillDetail();
                         dialog.dismiss();
@@ -686,7 +685,6 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                     }
                 }
             }
-
         }
     }
 

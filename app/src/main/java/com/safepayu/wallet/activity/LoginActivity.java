@@ -14,7 +14,6 @@ import android.provider.Settings;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -43,6 +42,7 @@ import com.safepayu.wallet.enums.ButtonActions;
 import com.safepayu.wallet.helper.Config;
 import com.safepayu.wallet.listener.SnackBarActionClickListener;
 import com.safepayu.wallet.models.request.Login;
+import com.safepayu.wallet.models.request.SendOtpRequest;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
@@ -582,7 +582,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(mobileNo.getText().toString().trim(), null);
 
-        BaseApp.getInstance().getDisposable().add(apiService.resendOtp(request)
+        SendOtpRequest sendOtpRequest=new SendOtpRequest();
+        sendOtpRequest.setMobile(mobileNo.getText().toString().trim());
+        sendOtpRequest.setType("1");
+
+        BaseApp.getInstance().getDisposable().add(apiService.resendOtp(sendOtpRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<BaseResponse>() {

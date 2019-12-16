@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +26,7 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.ForgetPasswordRequest;
 import com.safepayu.wallet.models.request.Login;
+import com.safepayu.wallet.models.request.SendOtpRequest;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.ForgetPasswordResponse;
 import com.safepayu.wallet.models.response.UserResponse;
@@ -205,7 +205,11 @@ public class ForgetPassword extends AppCompatActivity {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(edit_number.getText().toString().trim(), null);
 
-        BaseApp.getInstance().getDisposable().add(apiService.resendOtp(request)
+        SendOtpRequest sendOtpRequest=new SendOtpRequest();
+        sendOtpRequest.setMobile(edit_number.getText().toString().trim());
+        sendOtpRequest.setType("2");
+
+        BaseApp.getInstance().getDisposable().add(apiService.resendOtp(sendOtpRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<BaseResponse>() {

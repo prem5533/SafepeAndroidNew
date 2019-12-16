@@ -26,8 +26,8 @@ public class ApiClient {
     //http://india.safepayu.com/safepe-testing/public/
    // http://india.safepayu.com/safepe-new/public/
 //http://15.206.175.119/safepe-testing/public/api/secure/payment/api/login
-    private static final String BASE_URL = "http://alias.safepeindia.com/";
-    private static final String BASE_URL_TEST = "http://testing.safepeindia.com/";
+    public static final String BASE_URL = "http://alias.safepeindia.com/";
+    public static final String BASE_URL_TEST = "http://testing.safepeindia.com/";
     public  static String ImagePath = "http://alias.safepeindia.com/";
     private static Retrofit retrofit = null;
     private static int REQUEST_TIMEOUT = 60;
