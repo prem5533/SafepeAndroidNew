@@ -58,6 +58,7 @@ import com.safepayu.wallet.activity.booking.MovieActivity;
 import com.safepayu.wallet.activity.booking.TollActivity;
 import com.safepayu.wallet.activity.booking.TrainActivity;
 import com.safepayu.wallet.activity.booking.bus.BusActivity;
+import com.safepayu.wallet.activity.booking.flight.FlightBookDetailActivity;
 import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
 import com.safepayu.wallet.activity.booking.hotel.HotelActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
@@ -454,8 +455,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
-             //   startActivity(new Intent(Navigation.this, FlightBookDetailActivity.class));
+              //  startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
+                startActivity(new Intent(Navigation.this, FlightBookDetailActivity.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
             }

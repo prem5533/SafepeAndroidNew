@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+       >
+        <ImageView
+            android:id="@+id/flight_passenger_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@color/colorAccent"
+            android:padding="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_flight_passenge_full_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mr. Ram"
+            android:textSize="15sp"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/black"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_ticket_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/black"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E TicketNo -"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/tv_passenger_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/darker_gray"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/tvView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"/>
+</LinearLayout>

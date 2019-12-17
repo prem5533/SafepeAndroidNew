@@ -22,14 +22,14 @@ public class FlightDatePicker extends DialogFragment implements DatePickerDialog
     private TextView textView ,tvDepMonth ,tvWeekDay,tvDepmY;
     int dayOfWeek;
 
-    public static FlightDatePicker newInstance(EditText editText, TextView textView,TextView tvDepMonthYear,TextView tvDepartureDay) //TextView tv_departure_mo_ye
+    public static FlightDatePicker newInstance(EditText editText, TextView textView,TextView tvDepMonthYear,TextView tvDepartureDay,TextView tv_departure_mo_ye)
      {
         FlightDatePicker fragment = new FlightDatePicker();
         fragment.editText = editText;
         fragment.textView = textView;
         fragment.tvDepMonth = tvDepMonthYear;
         fragment.tvWeekDay = tvDepartureDay;
-      //  fragment.tvDepmY = tv_departure_mo_ye;
+        fragment.tvDepmY = tv_departure_mo_ye;
         return fragment;
     }
 
@@ -64,8 +64,8 @@ public class FlightDatePicker extends DialogFragment implements DatePickerDialog
                 String y = separated[2];
                 textView.setText(d);
                 tvDepMonth.setText(m + " " + y);
-               /* String date2 = BaseApp.getInstance().dateUtil().parseStringDate((year + "-" + (month + 1) + "-" + day), BaseApp.getInstance().dateUtil().yyyy_MM_dd, BaseApp.getInstance().dateUtil().dd_MM_yyyy);
-                tvDepmY.setText(date2);*/
+                String date2 = BaseApp.getInstance().dateUtil().parseStringDate((year + "-" + (month + 1) + "-" + day), BaseApp.getInstance().dateUtil().yyyy_MM_dd, BaseApp.getInstance().dateUtil().dd_MM_yyyy);
+                tvDepmY.setText(date2);
 
                 SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
                 Date date1 = new Date(year, month, day - 1);
@@ -83,6 +83,8 @@ public class FlightDatePicker extends DialogFragment implements DatePickerDialog
                 String y = separated[2];
                 textView.setText(d);
                 tvDepMonth.setText(m + " " + y);
+                String date2 = BaseApp.getInstance().dateUtil().parseStringDate((year + "-" + (month + 1) + "-" + day), BaseApp.getInstance().dateUtil().yyyy_MM_dd, BaseApp.getInstance().dateUtil().dd_MM_yyyy);
+                tvDepmY.setText(date2);
 
                 SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
                 Date date1 = new Date(year, month, day - 1);

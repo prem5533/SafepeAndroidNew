@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.adapter.fight.FlighPassengerBookingDialog;
@@ -24,6 +27,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.booking.flight.FlightBookingDetailRequest;
+import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
 import com.safepayu.wallet.models.response.booking.flight.CancelBookTicketResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightBookingDetailResponse;
 import com.squareup.picasso.Picasso;
@@ -36,16 +40,25 @@ import pl.droidsonroids.gif.GifImageView;
 public class FlightBookDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tvBookingStatus, tvSafeJourney,tvFlightRefrenceNo,tvFlightTimeDate,tvFlightSourceDestination,tvFlightEticketNo,tvFlightCancelTicket,tvTicketTimeDateTraveller,
-    tvTicketSource,tvTicketDestination,tvTicketSourceTime,tvTicketTotalTime,tvTicketDestinationTime,tvTicketSourceAirportname,tvTicketDetinationAirportname,tvFlightNumber,tvFlightCode;
+    tvTicketSource,tvTicketDestination,tvTicketSourceTime,tvTicketTotalTime,tvTicketDestinationTime,tvTicketSourceAirportname,tvTicketDetinationAirportname,tvFlightNumber,tvFlightCode,
+            tvFlightSourceDestinationReturn,tvFlightCodeReturn,tvFlightNumberReturn,tvTicketTimeDateTravellerReturn,tvTicketSourceReturn,tvTicketDestinationReturn,tvTicketTotalTimeReturn,
+            tvTicketSourceAirportnameReturn,tvTicketDetinationAirportnameReturn,tvTicketSourceTimeReturn,tvTicketDestinationTimeReturn;
     private LoadingDialog loadingDialog;
     FlightBookingDetailRequest flightBookingDetailRequest;
-    private String ReferanceNo ="",Source,Destination,JourneyDate,DepTime,ArrivalTime,DurationTime,AirLineCode,AirLineNumber,FlightImage,TotalTravellers,TripType;
-    private LinearLayout liFlightName;
-    private ImageView imFlightLogo;
+    private String ReferanceNo ="",Source,Destination,JourneyDate,DepTime,ArrivalTime,DurationTime,AirLineCode,AirLineNumber,FlightImage,TotalTravellers,TripType,
+            DurationTimeReturn,FlightDepTimeReturn,FlightArrivalTimeReturn,FlightImageReturn,FlightImageOnward,FlightJourneyReturn;
+    private LinearLayout liFlightName,lretunrticket,liFlightNameReturn;
+    private ImageView imFlightLogo,imFlightLogoReturn;
     private GifImageView statusImage;
     private RecyclerView travellerListName;
     private FlighPassengerBookingDialog flighPassengerBookingDialog;
     private Button backBtn;
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
+    String json;
+    Gson gson;
+
+    public  static AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
+    public  static AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mdataReturn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +66,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
         setContentView(R.layout.activity_flight_book_detail);
         findId();
         if (isNetworkAvailable()){
+
             getFlightBookingDetails();
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Please Check Your Internet Connection",false);
@@ -78,14 +92,32 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
         tvTicketDestinationTime = findViewById(R.id.tv_ticket_destination_time);
         tvTicketSourceAirportname = findViewById(R.id.tv_ticket_source_airportname);
         tvTicketDetinationAirportname = findViewById(R.id.tv_ticket_detination_airportname);
+        tvTicketSourceAirportnameReturn = findViewById(R.id.tv_ticket_source_airportname_return);
+        tvTicketDetinationAirportnameReturn = findViewById(R.id.tv_ticket_detination_airportname_return);
+
+        //RETURN
+        tvFlightSourceDestinationReturn = findViewById(R.id.tv_flight_source_destination_return);
+        tvFlightCodeReturn = findViewById(R.id.tv_flight_code_return);
+        tvFlightNumberReturn = findViewById(R.id.tv_flight_number_return);
+        tvTicketTimeDateTravellerReturn = findViewById(R.id.tv_ticket_time_date_traveller_return);
+        tvTicketSourceReturn = findViewById(R.id.tv_ticket_source_return);
+        tvTicketDestinationReturn = findViewById(R.id.tv_ticket_destination_return);
+        tvTicketTotalTimeReturn = findViewById(R.id.tv_ticket_total_time_return);
+        tvTicketSourceTimeReturn = findViewById(R.id.tv_ticket_source_time_return);
+        tvTicketDestinationTimeReturn = findViewById(R.id.tv_ticket_destination_time_return);
+
+
+        lretunrticket = findViewById(R.id.lretunrticket);
         travellerListName = findViewById(R.id.list_traveller_details);
         tvFlightCode = findViewById(R.id.tv_flight_code);
         tvFlightNumber = findViewById(R.id.tv_flight_number);
         imFlightLogo = findViewById(R.id.im_flight_logo);
+        imFlightLogoReturn = findViewById(R.id.im_flight_logo_return);
         liFlightName = findViewById(R.id.li_flight_name);
+        liFlightNameReturn = findViewById(R.id.li_flight_name_return);
         statusImage = findViewById(R.id.statusImage);
         tvFlightCancelTicket.setOnClickListener(this);
-        backBtn.setOnClickListener(this);
+     //   backBtn.setOnClickListener(this);
 
         //***************get data****************
         Source =   BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE);
@@ -95,11 +127,28 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
         DepTime = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME);
         ArrivalTime = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME);
         DurationTime = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION_TIME);
+        DurationTimeReturn = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION_TIME_RETURN);
         AirLineCode =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_CODE);
         AirLineNumber =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_FLIGHT_NUMBER);
         FlightImage = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_IMAGE);
+        FlightImageReturn = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_RETURN_IMAGE);
+        FlightImageOnward = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_ONWARD_IMAGE);
         TotalTravellers = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().TotalTravellers);
         TripType =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRIP_TYPE);
+        FlightDepTimeReturn =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME_RETURN);
+        FlightArrivalTimeReturn =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME_RETURN);
+        FlightJourneyReturn =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY_RETURN);
+
+
+       if (TripType.equals("2")){
+            SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+            gson = new Gson();
+            json = prefs.getString("MyObjectOnward", "");
+            mdata = gson.fromJson(json, AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean.class);
+
+            json = prefs.getString("MyObjectReturn", "");
+            mdataReturn = gson.fromJson(json,AvailableFlightResponse.DataBean.DomesticReturnFlightsBean.class);
+        }
     }
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -111,7 +160,8 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
     private void getFlightBookingDetails() {
 
         flightBookingDetailRequest = new FlightBookingDetailRequest();
-        flightBookingDetailRequest.setReferenceNo("300905016582");
+      //  flightBookingDetailRequest.setReferenceNo("300905016582");
+        flightBookingDetailRequest.setReferenceNo("300344016590");
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
@@ -123,37 +173,129 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
                     public void onSuccess(FlightBookingDetailResponse flightBookingDetailResponse) {
                         loadingDialog.hideDialog();
                         int bs = flightBookingDetailResponse.getData().getBookingStatus();
-                        tvFlightEticketNo.setText("PNR - "+flightBookingDetailResponse.getData().getAPIRefNo());
-                        if (flightBookingDetailResponse.getData().getBookingStatus()==3){
+                        tvFlightEticketNo.setText("PNR - " + flightBookingDetailResponse.getData().getAPIRefNo());
+                        tvTicketSourceAirportname.setText(flightBookingDetailResponse.getData().getSourceName());
+                        tvTicketDetinationAirportname.setText(flightBookingDetailResponse.getData().getDestinationName());
+                        tvTicketTotalTime.setText(DurationTime);
+                        if (flightBookingDetailResponse.getData().getBookingStatus() == 3) {
                             tvBookingStatus.setText("Booking Successful");
                             tvSafeJourney.setText("Have a safe journey!");
                             tvFlightRefrenceNo.setText(flightBookingDetailResponse.getData().getBookingRefNo());
                             tvFlightTimeDate.setText(flightBookingDetailResponse.getData().getBookingDate());
 
-                        }
-                        else if (bs==5){
+                        } else if (bs == 5) {
                             statusImage.setVisibility(View.GONE);
                             tvBookingStatus.setText("Booking Cancel");
                             tvSafeJourney.setText("Ticket cancelled successfully!");
                             tvFlightCancelTicket.setVisibility(View.GONE);
 
                         }
-                        tvFlightSourceDestination.setText(Source+" - "+Destination);
-                          tvTicketTimeDateTraveller.setText(JourneyDate+" | "+TotalTravellers + " Traveller");
-                       // tvTicketTimeDateTraveller.setText(JourneyDate+" | "+"" + " Traveller");
-                        tvTicketSource.setText(Source);
-                        tvTicketDestination.setText(Destination);
-                        tvTicketSourceTime.setText(DepTime);
-                        tvTicketDestinationTime.setText(ArrivalTime);
-                        tvTicketTotalTime.setText(DurationTime);
-                        tvTicketSourceAirportname.setText(flightBookingDetailResponse.getData().getSourceName());
-                        tvTicketDetinationAirportname.setText(flightBookingDetailResponse.getData().getDestinationName());
-                        tvFlightCode.setText(AirLineCode);
-                        tvFlightNumber.setText(AirLineNumber);
-                        Picasso.get().load(FlightImage).into(imFlightLogo);
+                        if (TripType.equals("1")) {
+                            lretunrticket.setVisibility(View.GONE);
 
+
+                            tvFlightSourceDestination.setText(Source + " - " + Destination);
+                            tvTicketTimeDateTraveller.setText(JourneyDate + " | " + TotalTravellers + " Traveller");
+                            // tvTicketTimeDateTraveller.setText(JourneyDate+" | "+"" + " Traveller");
+                            tvTicketSource.setText(Source);
+                            tvTicketDestination.setText(Destination);
+                            tvTicketSourceTime.setText(DepTime);
+                            tvTicketDestinationTime.setText(ArrivalTime);
+
+                            tvFlightCode.setText(AirLineCode);
+                            tvFlightNumber.setText(AirLineNumber);
+                            Picasso.get().load(FlightImage).into(imFlightLogo);
+
+                            if (flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getAirLineName().equals("Indigo")){
+                                liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.indigo));
+                            }
+
+                            else  if (flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getAirLineName().equals("Air India")){
+                                liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.airindia));
+                            }
+                            else  if (flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getAirLineName().equals("SpiceJet")){
+                                liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.spicejet));
+                            }
+                            else  if (flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getAirLineName().equals("GoAir")){
+                                liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.goair));
+                            }
+                            else  if (flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getAirLineName().equals("Vistara")){
+                                liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.vistara));
+                            }
+                            else {
+                                liFlightName.setBackgroundColor(Color.parseColor("#ffffff"));
+                            }
+
+                        }
+                        else if (TripType.equals("2")){
+
+                            lretunrticket.setVisibility(View.VISIBLE);
+                            tvFlightSourceDestination.setText(flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getDepartureAirportCode() + " - " +flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getArrivalAirportCode());
+                            tvFlightSourceDestinationReturn.setText(flightBookingDetailResponse.getData().getReturnFlightSegments().get(0).getDepartureAirportCode() + " - " +flightBookingDetailResponse.getData().getReturnFlightSegments().get(0).getArrivalAirportCode());
+                            Picasso.get().load(FlightImageOnward).into(imFlightLogo);
+                            Picasso.get().load(FlightImageReturn).into(imFlightLogoReturn);
+                            tvFlightCode.setText(flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getOperatingAirlineCode());
+                            tvFlightCodeReturn.setText(flightBookingDetailResponse.getData().getReturnFlightSegments().get(0).getImageFileName());
+                            tvFlightNumber.setText(flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getOperatingAirlineFlightNumber());
+                            tvFlightNumberReturn.setText(flightBookingDetailResponse.getData().getReturnFlightSegments().get(0).getOperatingAirlineFlightNumber());
+                            tvTicketSource.setText(flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getDepartureAirportCode());
+                            tvTicketDestination.setText(  flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getArrivalAirportCode());
+                            tvTicketSourceReturn.setText(  flightBookingDetailResponse.getData().getReturnFlightSegments().get(0).getDepartureAirportCode());
+                            tvTicketDestinationReturn.setText(flightBookingDetailResponse.getData().getReturnFlightSegments().get(0).getArrivalAirportCode());
+                            tvTicketDetinationAirportnameReturn.setText(flightBookingDetailResponse.getData().getSourceName());
+                            tvTicketSourceAirportnameReturn.setText(flightBookingDetailResponse.getData().getDestinationName());
+                            tvTicketTotalTimeReturn.setText(DurationTimeReturn);
+                            tvTicketSourceTimeReturn.setText(FlightDepTimeReturn);
+                            tvTicketDestinationTimeReturn.setText(FlightArrivalTimeReturn);
+                            tvTicketSourceTime.setText(DepTime);
+                            tvTicketDestinationTime.setText(ArrivalTime);
+                            tvTicketTimeDateTraveller.setText(JourneyDate + " | " + TotalTravellers + " Traveller");
+                            tvTicketTimeDateTravellerReturn.setText(FlightJourneyReturn + " | " + TotalTravellers + " Traveller");
+
+                            if (flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getAirLineName().equals("Indigo")){
+                                liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.indigo));
+                            }
+
+                            else  if (flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getAirLineName().equals("Air India")){
+                                liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.airindia));
+                            }
+                            else  if (flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getAirLineName().equals("SpiceJet")){
+                                liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.spicejet));
+                            }
+                            else  if (flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getAirLineName().equals("GoAir")){
+                                liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.goair));
+                            }
+                            else  if (flightBookingDetailResponse.getData().getOnwardFlightSegments().get(0).getAirLineName().equals("Vistara")){
+                                liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.vistara));
+                            }
+                            else {
+                                liFlightName.setBackgroundColor(Color.parseColor("#ffffff"));
+                            }
+
+                            if (flightBookingDetailResponse.getData().getReturnFlightSegments().get(0).getAirLineName().equals("Indigo")){
+                                liFlightNameReturn.setBackgroundDrawable(getResources().getDrawable(R.drawable.indigo));
+                            }
+
+                            else  if (flightBookingDetailResponse.getData().getReturnFlightSegments().get(0).getAirLineName().equals("Air India")){
+                                liFlightNameReturn.setBackgroundDrawable(getResources().getDrawable(R.drawable.airindia));
+                            }
+                            else  if (flightBookingDetailResponse.getData().getReturnFlightSegments().get(0).getAirLineName().equals("SpiceJet")){
+                                liFlightNameReturn.setBackgroundDrawable(getResources().getDrawable(R.drawable.spicejet));
+                            }
+                            else  if (flightBookingDetailResponse.getData().getReturnFlightSegments().get(0).getAirLineName().equals("GoAir")){
+                                liFlightNameReturn.setBackgroundDrawable(getResources().getDrawable(R.drawable.goair));
+
+                            }
+                            else  if (flightBookingDetailResponse.getData().getReturnFlightSegments().get(0).getAirLineName().equals("Vistara")){
+                                liFlightNameReturn.setBackgroundDrawable(getResources().getDrawable(R.drawable.vistara));
+                            }
+                            else {
+                                liFlightNameReturn.setBackgroundColor(Color.parseColor("#ffffff"));
+                            }
+
+                        }
                         travellerListName.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-                        flighPassengerBookingDialog = new FlighPassengerBookingDialog(getApplicationContext(),flightBookingDetailResponse.getData().getTickets());
+                        flighPassengerBookingDialog = new FlighPassengerBookingDialog(getApplicationContext(), flightBookingDetailResponse.getData().getTickets());
                         travellerListName.setAdapter(flighPassengerBookingDialog);
                     /*   */
                     /*    if (flightBookingDetailResponse.getAirlineName().equals("Indigo")){
@@ -174,6 +316,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
                         else {
                             liFlightName.setBackgroundColor(Color.parseColor("#ffffff"));
                         }*/
+
                     }
 
                     @Override

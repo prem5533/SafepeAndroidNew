@@ -1,5 +1,7 @@
 package com.safepayu.wallet.models.response.booking.flight;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class FlightBookingDetailResponse {
@@ -8,7 +10,7 @@ public class FlightBookingDetailResponse {
     /**
      * status : true
      * message : Indicates Payment received, Ticket booked successfully
-     * data : {"DeviceModel":null,"DeviceOS":null,"DeviceOSVersion":null,"DeviceToken":null,"ApplicationType":0,"TicketRefNo":"NA","LastTicketDate":"","FrequentFlyerDetails":"","IsBlockTicket":false,"IsAgentPaymentGateway":false,"BookingResponseXML":"<FlightTicketBookingResponse><ReferenceNo>300821016560<\/ReferenceNo><APIReferenceNo>07XBU4L8<\/APIReferenceNo><Message>Ticket booked successully<\/Message><ResponseStatus>OK<\/ResponseStatus><RefundResponse /><BookingStatus>SuccessTkd<\/BookingStatus><GDFPNRNo>UBJ01QHX<\/GDFPNRNo><EticketNo>0PJTTCTX<\/EticketNo><Flightuid /><Passworduid /><TransactionId>UBJ01QHX<\/TransactionId><LastTicketDate /><TransactionDetails /><Tickets><Eticket><ChangeRequestId /><EticketNo>0PJTTCTX<\/EticketNo><TicketId>328511<\/TicketId><FlightuId /><PassuId>615667<\/PassuId><GivenName>Arpan<\/GivenName><SurName>Singh<\/SurName><NameReference>Mr. Arpan Singh<\/NameReference><TripType>Single<\/TripType><Status>0<\/Status><\/Eticket><\/Tickets><\/FlightTicketBookingResponse>","IsOfflineBooking":false,"EcommerceSegment":[],"BookingRefNo":"300821016560","BookingStatus":3,"APIRefNo":"UBJ01QHX","Provider":"OpvFxVwo03md+gnyIb8Q+A==","PaymentId":null,"Names":"Mr.|Arpan|Singh|adt","ages":"18","Genders":"M","PanNumber":"","telePhone":"","ISD":"","MobileNo":"8375890846","EmailId":"arpan.pundir20@gmail.com","dob":"12-12-2001","psgrtype":"","Address":"C-112  C Block Sector 65","State":"Uttar Pradesh","City":"Noida","PostalCode":"201301","PassportDetails":"","SMSUsageCount":0,"ImagePath":null,"ImagePathRet":null,"Rule":"","key":"70ba73c4-f1cf-4fad-8777-669bef5d3292~OB1~636892207383990597182","RuleRet":"","keyRet":"","FlightId":"","FlightIdRet":"","OnwardFlightSegments":[{"AirEquipType":"320","ArrivalAirportCode":"BLR","ArrivalDateTime":"2020-01-01T09:50:00","ArrivalDateTimeZone":null,"DepartureAirportCode":"HYD","DepartureDateTime":"2020-01-01T08:25:00","DepartureDateTimeZone":null,"Duration":"01:25 hrs","FlightNumber":"151","OperatingAirlineCode":"6E","OperatingAirlineFlightNumber":"151","RPH":"","StopQuantity":"0","AirLineName":"Indigo","AirportTax":"","ImageFileName":"6E","ImagePath":null,"ViaFlight":"","Discount":"0","AirportTaxChild":"0","AirportTaxInfant":"0","AdultTaxBreakup":"0","ChildTaxBreakup":"0","InfantTaxBreakup":"0","OcTax":"0","BookingClass":{"Availability":"9","ResBookDesigCode":"L","IntBIC":""},"BookingClassFare":{"AdultFare":"","Bookingclass":"","ClassType":"L","Farebasiscode":"L0IP","Rule":"Refundable","AdultCommission":"","ChildCommission":"","CommissionOnTCharge":"","ChildFare":"","InfantFare":""},"IntNumStops":"0","IntOperatingAirlineName":"","IntArrivalAirportName":"Bangalore","IntDepartureAirportName":"Hyderabad","IntMarketingAirlineCode":"151","IntLinkSellAgrmnt":"","IntConx":"","IntAirpChg":"","IntInsideAvailOption":"","IntGenTrafRestriction":"","IntDaysOperates":"","IntJourneyTime":"","IntEndDate":"","IntStartTerminal":"","IntEndTerminal":"1","IntFltTm":"","IntLSAInd":"","IntMile":"0","Cabin":null,"itineraryNumber":"637117720587996967-217-1499_ET0","BaggageAllowed":{"CheckInBaggage":"15 KG","HandBaggage":"7 KG"},"PaxWiseBaggageAllowed":[],"AccumulatedDuration":"0","GroundTime":"00:00 hrs"}],"ReturnFlightSegments":[],"FareDetails":{"ChargeableFares":{"ActualBaseFare":0,"Tax":0,"STax":0,"SCharge":0,"TDiscount":0,"TPartnerCommission":0,"NetFare":0,"Conveniencefee":0,"ConveniencefeeType":0,"PartnerFareDatails":null},"NonchargeableFares":{"TCharge":0,"TMarkup":0,"TSdiscount":0},"FareBreakUp":{"FareAry":[]},"OCTax":0,"PartnerFee":0,"PLBEarned":0,"TdsOnPLB":0,"Bonus":0,"TotalFare":0,"ResponseStatus":0,"Status":0,"IsGSTMandatory":false,"Message":null,"RequiredFields":null},"BookingDate":"2019-12-12T18:29:00","PromoCode":null,"PromoCodeAmount":0,"PostMarkup":0,"IsLCC":"true","IsLCCRet":"","BookedFrom":null,"CreatedById":3942,"IsWallet":false,"IsPartnerAgentDetails":{"AgentId":"","ServiceId":null,"ServiceName":null,"Amount":null,"UserCharges":null,"ResCode":null,"ResDesc":null,"Requestid":"","AgentFee":0},"OcTax":0,"CurrencyID":"INR","CurrencyValue":"1","PLBEarned":0,"TdsOnPLB":0,"ActualBaseFare":1472,"Tax":1131,"NetFare":0,"Commission":0,"Bonus":0,"STax":0,"SCharge":0,"TDiscount":0,"TPartnerCommission":0,"TCharge":0,"TMarkup":0,"TSdiscount":0,"PartnerFee":0,"TransactionId":"UBJ01QHX","Conveniencefee":0,"ConveniencefeeType":0,"ConvenienceFeeTotal":0,"EProductPrice":0,"PLBEarnedRet":0,"TdsOnPLBRet":0,"ActualBaseFareRet":0,"NetFareRet":0,"BonusRet":0,"CommissionRet":0,"TaxRet":0,"STaxRet":0,"SChargeRet":0,"TDiscountRet":0,"TSDiscountRet":0,"TPartnerCommissionRet":0,"EProductPriceRet":0,"TChargeRet":0,"TMarkupRet":0,"ConveniencefeeRet":0,"PartnerFeeRet":0,"ConveniencefeeTypeRet":0,"TermsAndConditions":"","OfferInformation":"","GSTDetails":{"GSTCompanyAddress":"","GSTCompanyContactNumber":"","GSTCompanyName":"","GSTNumber":"","GSTCompanyEmail":"","GSTFirstName":null,"GSTLastName":null},"SSRRequests":null,"Tickets":[{"ChangeRequestId":null,"EticketNo":"0PJTTCTX","TicketId":"328511","FlightuId":"","PassuId":"615667","GivenName":"Arpan","SurName":null,"NameReference":"Mr. Arpan Singh","TripType":1,"Status":0}],"IsHoldAllowedRet":false,"IsHoldAllowed":false,"IsGSTMandatoryRet":false,"IsGSTMandatory":false,"RequiredFields":null,"RequiredFieldsRet":null,"Source":"HYD","SourceName":"HYDERABAD, India- (HYD)-Rajiv Gandhi Airport","Destination":"BLR","DestinationName":"BANGALORE, India- (BLR)-Bangalore International Airport","JourneyDate":"01-01-2020","ReturnDate":"01-01-2020","TripType":1,"FlightType":1,"AdultPax":1,"ChildPax":0,"InfantPax":0,"TravelClass":"L","IsNonStopFlight":false,"FlightTimings":null,"AirlineName":null,"User":"","UserType":5,"IsGDS":null,"AffiliateId":null,"WebsiteUrl":null,"MultiFlightsSearch":null}
+     * data : {"DeviceModel":null,"DeviceOS":null,"DeviceOSVersion":null,"DeviceToken":null,"ApplicationType":0,"TicketRefNo":"","LastTicketDate":"","FrequentFlyerDetails":"","IsBlockTicket":false,"IsAgentPaymentGateway":false,"BookingResponseXML":"<FlightTicketBookingResponse><ReferenceNo>300344016590<\/ReferenceNo><APIReferenceNo /><Message>Ticket booked successully<\/Message><ResponseStatus>OK<\/ResponseStatus><RefundResponse /><BookingStatus>SuccessTkd<\/BookingStatus><GDFPNRNo>NQ1FP4P7|VX6WC7UY<\/GDFPNRNo><EticketNo>IC0QFD7O|SBV8F8TH|TN381TRH|T0B6NM0M<\/EticketNo><Flightuid /><Passworduid /><TransactionId>NQ1FP4P7|VX6WC7UY<\/TransactionId><LastTicketDate /><TransactionDetails /><Tickets><Eticket><ChangeRequestId /><EticketNo>IC0QFD7O<\/EticketNo><TicketId>996583<\/TicketId><FlightuId /><PassuId>451944<\/PassuId><GivenName>Guru<\/GivenName><SurName>Bahrath<\/SurName><NameReference>Mr. Guru Bahrath<\/NameReference><TripType>Single<\/TripType><Status>0<\/Status><\/Eticket><Eticket><ChangeRequestId /><EticketNo>SBV8F8TH<\/EticketNo><TicketId>174483<\/TicketId><FlightuId /><PassuId>441721<\/PassuId><GivenName>Guru<\/GivenName><SurName>Bahrath<\/SurName><NameReference>Mr. Guru Bahrath<\/NameReference><TripType>Single<\/TripType><Status>0<\/Status><\/Eticket><Eticket><ChangeRequestId /><EticketNo>TN381TRH<\/EticketNo><TicketId>225732<\/TicketId><FlightuId /><PassuId>799623<\/PassuId><GivenName>Guru<\/GivenName><SurName>Bahrath<\/SurName><NameReference>Mr. Guru Bahrath<\/NameReference><TripType>Round<\/TripType><Status>0<\/Status><\/Eticket><Eticket><ChangeRequestId /><EticketNo>T0B6NM0M<\/EticketNo><TicketId>723626<\/TicketId><FlightuId /><PassuId>325375<\/PassuId><GivenName>Guru<\/GivenName><SurName>Bahrath<\/SurName><NameReference>Mr. Guru Bahrath<\/NameReference><TripType>Round<\/TripType><Status>0<\/Status><\/Eticket><\/Tickets><\/FlightTicketBookingResponse>","IsOfflineBooking":false,"EcommerceSegment":[],"BookingRefNo":"300344016590","BookingStatus":3,"APIRefNo":"NQ1FP4P7|VX6WC7UY","Provider":"OpvFxVwo03md+gnyIb8Q+A==","PaymentId":null,"Names":"Mr.|Guru|Bahrath|adt~Mr.|Guru|Bahrath|adt","ages":"34~29","Genders":"M~M","PanNumber":"","telePhone":"","ISD":"","MobileNo":"9811871855","EmailId":"adarshmandal515@gmail.com","dob":"21-10-1985~25-5-1990","psgrtype":"","Address":"B129  B Block Sector 65","State":"Uttar Pradesh","City":"Noida","PostalCode":"201301","PassportDetails":"","SMSUsageCount":0,"ImagePath":null,"ImagePathRet":null,"Rule":"","keyRet":"49708da0-d821-46e0-a7f4-ccea4ee3831d~IB1~636892211974468103182","FlightId":"","FlightIdRet":"","OnwardFlightSegments":[{"AirEquipType":"320","ArrivalAirportCode":"BLR","ArrivalDateTime":"2020-01-01T09:50:00","ArrivalDateTimeZone":null,"DepartureAirportCode":"HYD","DepartureDateTime":"2020-01-01T08:25:00","DepartureDateTimeZone":null,"Duration":"01:25 hrs","FlightNumber":"151","OperatingAirlineCode":"6E","OperatingAirlineFlightNumber":"151","RPH":"","StopQuantity":"0","AirLineName":"Indigo","AirportTax":"","ImageFileName":"6E","ImagePath":null,"ViaFlight":"","Discount":"0","AirportTaxChild":"0","AirportTaxInfant":"0","AdultTaxBreakup":"0","ChildTaxBreakup":"0","InfantTaxBreakup":"0","OcTax":"0","BookingClass":{"Availability":"9","ResBookDesigCode":"L","IntBIC":""},"BookingClassFare":{"AdultFare":"","Bookingclass":"","ClassType":"L","Farebasiscode":"L0IP","Rule":"Refundable","AdultCommission":"","ChildCommission":"","CommissionOnTCharge":"","ChildFare":"","InfantFare":""},"IntNumStops":"","IntOperatingAirlineName":"","IntArrivalAirportName":"Bangalore","IntDepartureAirportName":"Hyderabad","IntMarketingAirlineCode":"151","IntLinkSellAgrmnt":"","IntConx":"","IntAirpChg":"","IntInsideAvailOption":"","IntGenTrafRestriction":"","IntDaysOperates":"","IntJourneyTime":"","IntEndDate":"","IntStartTerminal":"","IntEndTerminal":"1","IntFltTm":"","IntLSAInd":"","IntMile":"0","Cabin":null,"itineraryNumber":"637095282517603061-217-1499_ET0","BaggageAllowed":{"CheckInBaggage":"15 KG","HandBaggage":"7 KG"},"PaxWiseBaggageAllowed":[],"AccumulatedDuration":"0","GroundTime":"00:00 hrs"}],"ReturnFlightSegments":[{"AirEquipType":"320","ArrivalAirportCode":"HYD","ArrivalDateTime":"2020-01-03T20:00:00","ArrivalDateTimeZone":null,"DepartureAirportCode":"BLR","DepartureDateTime":"2020-01-03T18:45:00","DepartureDateTimeZone":null,"Duration":"01:15 hrs","FlightNumber":"855","OperatingAirl     ineCode":"6E","OperatingAirlineFlightNumber":"855","RPH":"","StopQuantity":"0","AirLineName":"Indigo","AirportTax":"","ImageFileName":"6E","ImagePath":null,"ViaFlight":"","Discount":"0","AirportTaxChild":"0","AirportTaxInfant":"0","AdultTaxBreakup":"0","ChildTaxBreakup":"0","InfantTaxBreakup":"0","OcTax":"0","BookingClass":{"Availability":"9","ResBookDesigCode":"L","IntBIC":""},"BookingClassFare":{"AdultFare":"","Bookingclass":"","ClassType":"L","Farebasiscode":"L0IP","Rule":"Refundable","AdultCommission":"","ChildCommission":"","CommissionOnTCharge":"","ChildFare":"","InfantFare":""},"IntNumStops":"","IntOperatingAirlineName":"","IntArrivalAirportName":"Hyderabad","IntDepartureAirportName":"Bangalore","IntMarketingAirlineCode":"855","IntLinkSellAgrmnt":"","IntConx":"","IntAirpChg":"","IntInsideAvailOption":"","IntGenTrafRestriction":"","IntDaysOperates":"","IntJourneyTime":"","IntEndDate":"","IntStartTerminal":"1","IntEndTerminal":"","IntFltTm":"","IntLSAInd":"","IntMile":"0","Cabin":null,"itineraryNumber":"637095285310831870-217-1499_ETR0","BaggageAllowed":{"CheckInBaggage":"15 KG","HandBaggage":"7 KG"},"PaxWiseBaggageAllowed":null,"AccumulatedDuration":"0","GroundTime":"00:00 hrs"}],"FareDetails":{"ChargeableFares":{"ActualBaseFare":0,"Tax":0,"STax":0,"SCharge":0,"TDiscount":0,"TPartnerCommission":0,"NetFare":0,"Conveniencefee":0,"ConveniencefeeType":0,"PartnerFareDatails":null},"NonchargeableFares":{"TCharge":0,"TMarkup":0,"TSdiscount":0},"FareBreakUp":{"FareAry":[]},"OCTax":0,"PartnerFee":0,"PLBEarned":0,"TdsOnPLB":0,"Bonus":0,"TotalFare":0,"ResponseStatus":0,"Status":0,"IsGSTMandatory":false,"Message":null,"RequiredFields":null},"BookingDate":"2019-12-16T20:09:00","PromoCode":null,"PromoCodeAmount":0,"PostMarkup":0,"IsLCC":"true","IsLCCRet":"true","BookedFrom":null,"CreatedById":3942,"IsWallet":false,"IsPartnerAgentDetails":{"AgentId":"","ServiceId":null,"ServiceName":null,"Amount":null,"UserCharges":null,"ResCode":null,"ResDesc":null,"Requestid":"","AgentFee":0},"OcTax":0,"CurrencyID":"INR","CurrencyValue":"1","PLBEarned":0,"TdsOnPLB":0,"ActualBaseFare":1472,"Tax":1131,"NetFare":0,"Commission":0,"Bonus":0,"STax":0,"SCharge":0,"TDiscount":0,"TPartnerCommission":0,"TCharge":0,"TMarkup":0,"TSdiscount":0,"PartnerFee":0,"TransactionId":"NQ1FP4P7|VX6WC7UY","Conveniencefee":0,"ConveniencefeeType":0,"ConvenienceFeeTotal":0,"EProductPrice":0,"PLBEarnedRet":0,"TdsOnPLBRet":0,"ActualBaseFareRet":4392,"NetFareRet":0,"BonusRet":0,"CommissionRet":0,"TaxRet":1318,"STaxRet":0,"SChargeRet":0,"TDiscountRet":0,"TSDiscountRet":0,"TPartnerCommissionRet":0,"EProductPriceRet":0,"TChargeRet":0,"TMarkupRet":0,"ConveniencefeeRet":0,"PartnerFeeRet":0,"ConveniencefeeTypeRet":0,"TermsAndConditions":"","OfferInformation":"","GSTDetails":{"GSTCompanyAddress":"","GSTCompanyContactNumber":"","GSTCompanyName":"","GSTNumber":"","GSTCompanyEmail":"","GSTFirstName":null,"GSTLastName":null},"SSRRequests":null,"Tickets":[{"ChangeRequestId":null,"EticketNo":"IC0QFD7O","TicketId":"996583","FlightuId":"","PassuId":"451944","GivenName":"Guru","SurName":null,"NameReference":"Mr. Guru Bahrath","TripType":1,"Status":0},{"ChangeRequestId":null,"EticketNo":"SBV8F8TH","TicketId":"174483","FlightuId":"","PassuId":"441721","GivenName":"Guru","SurName":null,"NameReference":"Mr. Guru Bahrath","TripType":1,"Status":0},{"ChangeRequestId":null,"EticketNo":"TN381TRH","TicketId":"225732","FlightuId":"","PassuId":"799623","GivenName":"Guru","SurName":null,"NameReference":"Mr. Guru Bahrath","TripType":2,"Status":0},{"ChangeRequestId":null,"EticketNo":"T0B6NM0M","TicketId":"723626","FlightuId":"","PassuId":"325375","GivenName":"Guru","SurName":null,"NameReference":"Mr. Guru Bahrath","TripType":2,"Status":0}],"IsHoldAllowedRet":false,"IsHoldAllowed":false,"IsGSTMandatoryRet":false,"IsGSTMandatory":false,"RequiredFields":null,"RequiredFieldsRet":null,"Source":"HYD","SourceName":"HYDERABAD, India- (HYD)-Rajiv Gandhi Airport","Destination":"BLR","DestinationName":"BANGALORE, India- (     BLR)-Bangalore International Airport","JourneyDate":"01-01-2020","ReturnDate":"03-01-2020","TripType":2,"FlightType":1,"AdultPax":2,"ChildPax":0,"InfantPax":0,"TravelClass":"L","IsNonStopFlight":false,"FlightTimings":null,"AirlineName":null,"User":"","UserType":5,"IsGDS":null,"AffiliateId":null,"WebsiteUrl":null,"MultiFlightsSearch":null}
      */
 
     private boolean status;
@@ -46,30 +48,30 @@ public class FlightBookingDetailResponse {
          * DeviceOSVersion : null
          * DeviceToken : null
          * ApplicationType : 0
-         * TicketRefNo : NA
+         * TicketRefNo :
          * LastTicketDate :
          * FrequentFlyerDetails :
          * IsBlockTicket : false
          * IsAgentPaymentGateway : false
-         * BookingResponseXML : <FlightTicketBookingResponse><ReferenceNo>300821016560</ReferenceNo><APIReferenceNo>07XBU4L8</APIReferenceNo><Message>Ticket booked successully</Message><ResponseStatus>OK</ResponseStatus><RefundResponse /><BookingStatus>SuccessTkd</BookingStatus><GDFPNRNo>UBJ01QHX</GDFPNRNo><EticketNo>0PJTTCTX</EticketNo><Flightuid /><Passworduid /><TransactionId>UBJ01QHX</TransactionId><LastTicketDate /><TransactionDetails /><Tickets><Eticket><ChangeRequestId /><EticketNo>0PJTTCTX</EticketNo><TicketId>328511</TicketId><FlightuId /><PassuId>615667</PassuId><GivenName>Arpan</GivenName><SurName>Singh</SurName><NameReference>Mr. Arpan Singh</NameReference><TripType>Single</TripType><Status>0</Status></Eticket></Tickets></FlightTicketBookingResponse>
+         * BookingResponseXML : <FlightTicketBookingResponse><ReferenceNo>300344016590</ReferenceNo><APIReferenceNo /><Message>Ticket booked successully</Message><ResponseStatus>OK</ResponseStatus><RefundResponse /><BookingStatus>SuccessTkd</BookingStatus><GDFPNRNo>NQ1FP4P7|VX6WC7UY</GDFPNRNo><EticketNo>IC0QFD7O|SBV8F8TH|TN381TRH|T0B6NM0M</EticketNo><Flightuid /><Passworduid /><TransactionId>NQ1FP4P7|VX6WC7UY</TransactionId><LastTicketDate /><TransactionDetails /><Tickets><Eticket><ChangeRequestId /><EticketNo>IC0QFD7O</EticketNo><TicketId>996583</TicketId><FlightuId /><PassuId>451944</PassuId><GivenName>Guru</GivenName><SurName>Bahrath</SurName><NameReference>Mr. Guru Bahrath</NameReference><TripType>Single</TripType><Status>0</Status></Eticket><Eticket><ChangeRequestId /><EticketNo>SBV8F8TH</EticketNo><TicketId>174483</TicketId><FlightuId /><PassuId>441721</PassuId><GivenName>Guru</GivenName><SurName>Bahrath</SurName><NameReference>Mr. Guru Bahrath</NameReference><TripType>Single</TripType><Status>0</Status></Eticket><Eticket><ChangeRequestId /><EticketNo>TN381TRH</EticketNo><TicketId>225732</TicketId><FlightuId /><PassuId>799623</PassuId><GivenName>Guru</GivenName><SurName>Bahrath</SurName><NameReference>Mr. Guru Bahrath</NameReference><TripType>Round</TripType><Status>0</Status></Eticket><Eticket><ChangeRequestId /><EticketNo>T0B6NM0M</EticketNo><TicketId>723626</TicketId><FlightuId /><PassuId>325375</PassuId><GivenName>Guru</GivenName><SurName>Bahrath</SurName><NameReference>Mr. Guru Bahrath</NameReference><TripType>Round</TripType><Status>0</Status></Eticket></Tickets></FlightTicketBookingResponse>
          * IsOfflineBooking : false
          * EcommerceSegment : []
-         * BookingRefNo : 300821016560
+         * BookingRefNo : 300344016590
          * BookingStatus : 3
-         * APIRefNo : UBJ01QHX
+         * APIRefNo : NQ1FP4P7|VX6WC7UY
          * Provider : OpvFxVwo03md+gnyIb8Q+A==
          * PaymentId : null
-         * Names : Mr.|Arpan|Singh|adt
-         * ages : 18
-         * Genders : M
+         * Names : Mr.|Guru|Bahrath|adt~Mr.|Guru|Bahrath|adt
+         * ages : 34~29
+         * Genders : M~M
          * PanNumber :
          * telePhone :
          * ISD :
-         * MobileNo : 8375890846
-         * EmailId : arpan.pundir20@gmail.com
-         * dob : 12-12-2001
+         * MobileNo : 9811871855
+         * EmailId : adarshmandal515@gmail.com
+         * dob : 21-10-1985~25-5-1990
          * psgrtype :
-         * Address : C-112  C Block Sector 65
+         * Address : B129  B Block Sector 65
          * State : Uttar Pradesh
          * City : Noida
          * PostalCode : 201301
@@ -78,20 +80,18 @@ public class FlightBookingDetailResponse {
          * ImagePath : null
          * ImagePathRet : null
          * Rule :
-         * key : 70ba73c4-f1cf-4fad-8777-669bef5d3292~OB1~636892207383990597182
-         * RuleRet :
-         * keyRet :
+         * keyRet : 49708da0-d821-46e0-a7f4-ccea4ee3831d~IB1~636892211974468103182
          * FlightId :
          * FlightIdRet :
-         * OnwardFlightSegments : [{"AirEquipType":"320","ArrivalAirportCode":"BLR","ArrivalDateTime":"2020-01-01T09:50:00","ArrivalDateTimeZone":null,"DepartureAirportCode":"HYD","DepartureDateTime":"2020-01-01T08:25:00","DepartureDateTimeZone":null,"Duration":"01:25 hrs","FlightNumber":"151","OperatingAirlineCode":"6E","OperatingAirlineFlightNumber":"151","RPH":"","StopQuantity":"0","AirLineName":"Indigo","AirportTax":"","ImageFileName":"6E","ImagePath":null,"ViaFlight":"","Discount":"0","AirportTaxChild":"0","AirportTaxInfant":"0","AdultTaxBreakup":"0","ChildTaxBreakup":"0","InfantTaxBreakup":"0","OcTax":"0","BookingClass":{"Availability":"9","ResBookDesigCode":"L","IntBIC":""},"BookingClassFare":{"AdultFare":"","Bookingclass":"","ClassType":"L","Farebasiscode":"L0IP","Rule":"Refundable","AdultCommission":"","ChildCommission":"","CommissionOnTCharge":"","ChildFare":"","InfantFare":""},"IntNumStops":"0","IntOperatingAirlineName":"","IntArrivalAirportName":"Bangalore","IntDepartureAirportName":"Hyderabad","IntMarketingAirlineCode":"151","IntLinkSellAgrmnt":"","IntConx":"","IntAirpChg":"","IntInsideAvailOption":"","IntGenTrafRestriction":"","IntDaysOperates":"","IntJourneyTime":"","IntEndDate":"","IntStartTerminal":"","IntEndTerminal":"1","IntFltTm":"","IntLSAInd":"","IntMile":"0","Cabin":null,"itineraryNumber":"637117720587996967-217-1499_ET0","BaggageAllowed":{"CheckInBaggage":"15 KG","HandBaggage":"7 KG"},"PaxWiseBaggageAllowed":[],"AccumulatedDuration":"0","GroundTime":"00:00 hrs"}]
-         * ReturnFlightSegments : []
+         * OnwardFlightSegments : [{"AirEquipType":"320","ArrivalAirportCode":"BLR","ArrivalDateTime":"2020-01-01T09:50:00","ArrivalDateTimeZone":null,"DepartureAirportCode":"HYD","DepartureDateTime":"2020-01-01T08:25:00","DepartureDateTimeZone":null,"Duration":"01:25 hrs","FlightNumber":"151","OperatingAirlineCode":"6E","OperatingAirlineFlightNumber":"151","RPH":"","StopQuantity":"0","AirLineName":"Indigo","AirportTax":"","ImageFileName":"6E","ImagePath":null,"ViaFlight":"","Discount":"0","AirportTaxChild":"0","AirportTaxInfant":"0","AdultTaxBreakup":"0","ChildTaxBreakup":"0","InfantTaxBreakup":"0","OcTax":"0","BookingClass":{"Availability":"9","ResBookDesigCode":"L","IntBIC":""},"BookingClassFare":{"AdultFare":"","Bookingclass":"","ClassType":"L","Farebasiscode":"L0IP","Rule":"Refundable","AdultCommission":"","ChildCommission":"","CommissionOnTCharge":"","ChildFare":"","InfantFare":""},"IntNumStops":"","IntOperatingAirlineName":"","IntArrivalAirportName":"Bangalore","IntDepartureAirportName":"Hyderabad","IntMarketingAirlineCode":"151","IntLinkSellAgrmnt":"","IntConx":"","IntAirpChg":"","IntInsideAvailOption":"","IntGenTrafRestriction":"","IntDaysOperates":"","IntJourneyTime":"","IntEndDate":"","IntStartTerminal":"","IntEndTerminal":"1","IntFltTm":"","IntLSAInd":"","IntMile":"0","Cabin":null,"itineraryNumber":"637095282517603061-217-1499_ET0","BaggageAllowed":{"CheckInBaggage":"15 KG","HandBaggage":"7 KG"},"PaxWiseBaggageAllowed":[],"AccumulatedDuration":"0","GroundTime":"00:00 hrs"}]
+         * ReturnFlightSegments : [{"AirEquipType":"320","ArrivalAirportCode":"HYD","ArrivalDateTime":"2020-01-03T20:00:00","ArrivalDateTimeZone":null,"DepartureAirportCode":"BLR","DepartureDateTime":"2020-01-03T18:45:00","DepartureDateTimeZone":null,"Duration":"01:15 hrs","FlightNumber":"855","OperatingAirl     ineCode":"6E","OperatingAirlineFlightNumber":"855","RPH":"","StopQuantity":"0","AirLineName":"Indigo","AirportTax":"","ImageFileName":"6E","ImagePath":null,"ViaFlight":"","Discount":"0","AirportTaxChild":"0","AirportTaxInfant":"0","AdultTaxBreakup":"0","ChildTaxBreakup":"0","InfantTaxBreakup":"0","OcTax":"0","BookingClass":{"Availability":"9","ResBookDesigCode":"L","IntBIC":""},"BookingClassFare":{"AdultFare":"","Bookingclass":"","ClassType":"L","Farebasiscode":"L0IP","Rule":"Refundable","AdultCommission":"","ChildCommission":"","CommissionOnTCharge":"","ChildFare":"","InfantFare":""},"IntNumStops":"","IntOperatingAirlineName":"","IntArrivalAirportName":"Hyderabad","IntDepartureAirportName":"Bangalore","IntMarketingAirlineCode":"855","IntLinkSellAgrmnt":"","IntConx":"","IntAirpChg":"","IntInsideAvailOption":"","IntGenTrafRestriction":"","IntDaysOperates":"","IntJourneyTime":"","IntEndDate":"","IntStartTerminal":"1","IntEndTerminal":"","IntFltTm":"","IntLSAInd":"","IntMile":"0","Cabin":null,"itineraryNumber":"637095285310831870-217-1499_ETR0","BaggageAllowed":{"CheckInBaggage":"15 KG","HandBaggage":"7 KG"},"PaxWiseBaggageAllowed":null,"AccumulatedDuration":"0","GroundTime":"00:00 hrs"}]
          * FareDetails : {"ChargeableFares":{"ActualBaseFare":0,"Tax":0,"STax":0,"SCharge":0,"TDiscount":0,"TPartnerCommission":0,"NetFare":0,"Conveniencefee":0,"ConveniencefeeType":0,"PartnerFareDatails":null},"NonchargeableFares":{"TCharge":0,"TMarkup":0,"TSdiscount":0},"FareBreakUp":{"FareAry":[]},"OCTax":0,"PartnerFee":0,"PLBEarned":0,"TdsOnPLB":0,"Bonus":0,"TotalFare":0,"ResponseStatus":0,"Status":0,"IsGSTMandatory":false,"Message":null,"RequiredFields":null}
-         * BookingDate : 2019-12-12T18:29:00
+         * BookingDate : 2019-12-16T20:09:00
          * PromoCode : null
          * PromoCodeAmount : 0
          * PostMarkup : 0
          * IsLCC : true
-         * IsLCCRet :
+         * IsLCCRet : true
          * BookedFrom : null
          * CreatedById : 3942
          * IsWallet : false
@@ -114,18 +114,18 @@ public class FlightBookingDetailResponse {
          * TMarkup : 0
          * TSdiscount : 0
          * PartnerFee : 0
-         * TransactionId : UBJ01QHX
+         * TransactionId : NQ1FP4P7|VX6WC7UY
          * Conveniencefee : 0
          * ConveniencefeeType : 0
          * ConvenienceFeeTotal : 0
          * EProductPrice : 0
          * PLBEarnedRet : 0
          * TdsOnPLBRet : 0
-         * ActualBaseFareRet : 0
+         * ActualBaseFareRet : 4392
          * NetFareRet : 0
          * BonusRet : 0
          * CommissionRet : 0
-         * TaxRet : 0
+         * TaxRet : 1318
          * STaxRet : 0
          * SChargeRet : 0
          * TDiscountRet : 0
@@ -141,7 +141,7 @@ public class FlightBookingDetailResponse {
          * OfferInformation :
          * GSTDetails : {"GSTCompanyAddress":"","GSTCompanyContactNumber":"","GSTCompanyName":"","GSTNumber":"","GSTCompanyEmail":"","GSTFirstName":null,"GSTLastName":null}
          * SSRRequests : null
-         * Tickets : [{"ChangeRequestId":null,"EticketNo":"0PJTTCTX","TicketId":"328511","FlightuId":"","PassuId":"615667","GivenName":"Arpan","SurName":null,"NameReference":"Mr. Arpan Singh","TripType":1,"Status":0}]
+         * Tickets : [{"ChangeRequestId":null,"EticketNo":"IC0QFD7O","TicketId":"996583","FlightuId":"","PassuId":"451944","GivenName":"Guru","SurName":null,"NameReference":"Mr. Guru Bahrath","TripType":1,"Status":0},{"ChangeRequestId":null,"EticketNo":"SBV8F8TH","TicketId":"174483","FlightuId":"","PassuId":"441721","GivenName":"Guru","SurName":null,"NameReference":"Mr. Guru Bahrath","TripType":1,"Status":0},{"ChangeRequestId":null,"EticketNo":"TN381TRH","TicketId":"225732","FlightuId":"","PassuId":"799623","GivenName":"Guru","SurName":null,"NameReference":"Mr. Guru Bahrath","TripType":2,"Status":0},{"ChangeRequestId":null,"EticketNo":"T0B6NM0M","TicketId":"723626","FlightuId":"","PassuId":"325375","GivenName":"Guru","SurName":null,"NameReference":"Mr. Guru Bahrath","TripType":2,"Status":0}]
          * IsHoldAllowedRet : false
          * IsHoldAllowed : false
          * IsGSTMandatoryRet : false
@@ -151,12 +151,12 @@ public class FlightBookingDetailResponse {
          * Source : HYD
          * SourceName : HYDERABAD, India- (HYD)-Rajiv Gandhi Airport
          * Destination : BLR
-         * DestinationName : BANGALORE, India- (BLR)-Bangalore International Airport
+         * DestinationName : BANGALORE, India- (     BLR)-Bangalore International Airport
          * JourneyDate : 01-01-2020
-         * ReturnDate : 01-01-2020
-         * TripType : 1
+         * ReturnDate : 03-01-2020
+         * TripType : 2
          * FlightType : 1
-         * AdultPax : 1
+         * AdultPax : 2
          * ChildPax : 0
          * InfantPax : 0
          * TravelClass : L
@@ -207,8 +207,6 @@ public class FlightBookingDetailResponse {
         private Object ImagePath;
         private Object ImagePathRet;
         private String Rule;
-        private String key;
-        private String RuleRet;
         private String keyRet;
         private String FlightId;
         private String FlightIdRet;
@@ -297,7 +295,7 @@ public class FlightBookingDetailResponse {
         private Object MultiFlightsSearch;
         private List<?> EcommerceSegment;
         private List<OnwardFlightSegmentsBean> OnwardFlightSegments;
-        private List<?> ReturnFlightSegments;
+        private List<ReturnFlightSegmentsBean> ReturnFlightSegments;
         private List<TicketsBean> Tickets;
 
         public Object getDeviceModel() {
@@ -586,22 +584,6 @@ public class FlightBookingDetailResponse {
 
         public void setRule(String Rule) {
             this.Rule = Rule;
-        }
-
-        public String getKey() {
-            return key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
-
-        public String getRuleRet() {
-            return RuleRet;
-        }
-
-        public void setRuleRet(String RuleRet) {
-            this.RuleRet = RuleRet;
         }
 
         public String getKeyRet() {
@@ -1308,11 +1290,11 @@ public class FlightBookingDetailResponse {
             this.OnwardFlightSegments = OnwardFlightSegments;
         }
 
-        public List<?> getReturnFlightSegments() {
+        public List<ReturnFlightSegmentsBean> getReturnFlightSegments() {
             return ReturnFlightSegments;
         }
 
-        public void setReturnFlightSegments(List<?> ReturnFlightSegments) {
+        public void setReturnFlightSegments(List<ReturnFlightSegmentsBean> ReturnFlightSegments) {
             this.ReturnFlightSegments = ReturnFlightSegments;
         }
 
@@ -1825,7 +1807,7 @@ public class FlightBookingDetailResponse {
              * OcTax : 0
              * BookingClass : {"Availability":"9","ResBookDesigCode":"L","IntBIC":""}
              * BookingClassFare : {"AdultFare":"","Bookingclass":"","ClassType":"L","Farebasiscode":"L0IP","Rule":"Refundable","AdultCommission":"","ChildCommission":"","CommissionOnTCharge":"","ChildFare":"","InfantFare":""}
-             * IntNumStops : 0
+             * IntNumStops :
              * IntOperatingAirlineName :
              * IntArrivalAirportName : Bangalore
              * IntDepartureAirportName : Hyderabad
@@ -1844,7 +1826,7 @@ public class FlightBookingDetailResponse {
              * IntLSAInd :
              * IntMile : 0
              * Cabin : null
-             * itineraryNumber : 637117720587996967-217-1499_ET0
+             * itineraryNumber : 637095282517603061-217-1499_ET0
              * BaggageAllowed : {"CheckInBaggage":"15 KG","HandBaggage":"7 KG"}
              * PaxWiseBaggageAllowed : []
              * AccumulatedDuration : 0
@@ -2480,16 +2462,701 @@ public class FlightBookingDetailResponse {
             }
         }
 
+        public static class ReturnFlightSegmentsBean {
+            /**
+             * AirEquipType : 320
+             * ArrivalAirportCode : HYD
+             * ArrivalDateTime : 2020-01-03T20:00:00
+             * ArrivalDateTimeZone : null
+             * DepartureAirportCode : BLR
+             * DepartureDateTime : 2020-01-03T18:45:00
+             * DepartureDateTimeZone : null
+             * Duration : 01:15 hrs
+             * FlightNumber : 855
+             * OperatingAirl     ineCode : 6E
+             * OperatingAirlineFlightNumber : 855
+             * RPH :
+             * StopQuantity : 0
+             * AirLineName : Indigo
+             * AirportTax :
+             * ImageFileName : 6E
+             * ImagePath : null
+             * ViaFlight :
+             * Discount : 0
+             * AirportTaxChild : 0
+             * AirportTaxInfant : 0
+             * AdultTaxBreakup : 0
+             * ChildTaxBreakup : 0
+             * InfantTaxBreakup : 0
+             * OcTax : 0
+             * BookingClass : {"Availability":"9","ResBookDesigCode":"L","IntBIC":""}
+             * BookingClassFare : {"AdultFare":"","Bookingclass":"","ClassType":"L","Farebasiscode":"L0IP","Rule":"Refundable","AdultCommission":"","ChildCommission":"","CommissionOnTCharge":"","ChildFare":"","InfantFare":""}
+             * IntNumStops :
+             * IntOperatingAirlineName :
+             * IntArrivalAirportName : Hyderabad
+             * IntDepartureAirportName : Bangalore
+             * IntMarketingAirlineCode : 855
+             * IntLinkSellAgrmnt :
+             * IntConx :
+             * IntAirpChg :
+             * IntInsideAvailOption :
+             * IntGenTrafRestriction :
+             * IntDaysOperates :
+             * IntJourneyTime :
+             * IntEndDate :
+             * IntStartTerminal : 1
+             * IntEndTerminal :
+             * IntFltTm :
+             * IntLSAInd :
+             * IntMile : 0
+             * Cabin : null
+             * itineraryNumber : 637095285310831870-217-1499_ETR0
+             * BaggageAllowed : {"CheckInBaggage":"15 KG","HandBaggage":"7 KG"}
+             * PaxWiseBaggageAllowed : null
+             * AccumulatedDuration : 0
+             * GroundTime : 00:00 hrs
+             */
+
+            private String AirEquipType;
+            private String ArrivalAirportCode;
+            private String ArrivalDateTime;
+            private Object ArrivalDateTimeZone;
+            private String DepartureAirportCode;
+            private String DepartureDateTime;
+            private Object DepartureDateTimeZone;
+            private String Duration;
+            private String FlightNumber;
+            @SerializedName("OperatingAirl     ineCode")
+            private String OperatingAirlIneCode303; // FIXME check this code
+            private String OperatingAirlineFlightNumber;
+            private String RPH;
+            private String StopQuantity;
+            private String AirLineName;
+            private String AirportTax;
+            private String ImageFileName;
+            private Object ImagePath;
+            private String ViaFlight;
+            private String Discount;
+            private String AirportTaxChild;
+            private String AirportTaxInfant;
+            private String AdultTaxBreakup;
+            private String ChildTaxBreakup;
+            private String InfantTaxBreakup;
+            private String OcTax;
+            private BookingClassBeanX BookingClass;
+            private BookingClassFareBeanX BookingClassFare;
+            private String IntNumStops;
+            private String IntOperatingAirlineName;
+            private String IntArrivalAirportName;
+            private String IntDepartureAirportName;
+            private String IntMarketingAirlineCode;
+            private String IntLinkSellAgrmnt;
+            private String IntConx;
+            private String IntAirpChg;
+            private String IntInsideAvailOption;
+            private String IntGenTrafRestriction;
+            private String IntDaysOperates;
+            private String IntJourneyTime;
+            private String IntEndDate;
+            private String IntStartTerminal;
+            private String IntEndTerminal;
+            private String IntFltTm;
+            private String IntLSAInd;
+            private String IntMile;
+            private Object Cabin;
+            private String itineraryNumber;
+            private BaggageAllowedBeanX BaggageAllowed;
+            private Object PaxWiseBaggageAllowed;
+            private String AccumulatedDuration;
+            private String GroundTime;
+
+            public String getAirEquipType() {
+                return AirEquipType;
+            }
+
+            public void setAirEquipType(String AirEquipType) {
+                this.AirEquipType = AirEquipType;
+            }
+
+            public String getArrivalAirportCode() {
+                return ArrivalAirportCode;
+            }
+
+            public void setArrivalAirportCode(String ArrivalAirportCode) {
+                this.ArrivalAirportCode = ArrivalAirportCode;
+            }
+
+            public String getArrivalDateTime() {
+                return ArrivalDateTime;
+            }
+
+            public void setArrivalDateTime(String ArrivalDateTime) {
+                this.ArrivalDateTime = ArrivalDateTime;
+            }
+
+            public Object getArrivalDateTimeZone() {
+                return ArrivalDateTimeZone;
+            }
+
+            public void setArrivalDateTimeZone(Object ArrivalDateTimeZone) {
+                this.ArrivalDateTimeZone = ArrivalDateTimeZone;
+            }
+
+            public String getDepartureAirportCode() {
+                return DepartureAirportCode;
+            }
+
+            public void setDepartureAirportCode(String DepartureAirportCode) {
+                this.DepartureAirportCode = DepartureAirportCode;
+            }
+
+            public String getDepartureDateTime() {
+                return DepartureDateTime;
+            }
+
+            public void setDepartureDateTime(String DepartureDateTime) {
+                this.DepartureDateTime = DepartureDateTime;
+            }
+
+            public Object getDepartureDateTimeZone() {
+                return DepartureDateTimeZone;
+            }
+
+            public void setDepartureDateTimeZone(Object DepartureDateTimeZone) {
+                this.DepartureDateTimeZone = DepartureDateTimeZone;
+            }
+
+            public String getDuration() {
+                return Duration;
+            }
+
+            public void setDuration(String Duration) {
+                this.Duration = Duration;
+            }
+
+            public String getFlightNumber() {
+                return FlightNumber;
+            }
+
+            public void setFlightNumber(String FlightNumber) {
+                this.FlightNumber = FlightNumber;
+            }
+
+            public String getOperatingAirlIneCode303() {
+                return OperatingAirlIneCode303;
+            }
+
+            public void setOperatingAirlIneCode303(String operatingAirlIneCode303) {
+                OperatingAirlIneCode303 = operatingAirlIneCode303;
+            }
+
+            public String getOperatingAirlineFlightNumber() {
+                return OperatingAirlineFlightNumber;
+            }
+
+            public void setOperatingAirlineFlightNumber(String OperatingAirlineFlightNumber) {
+                this.OperatingAirlineFlightNumber = OperatingAirlineFlightNumber;
+            }
+
+            public String getRPH() {
+                return RPH;
+            }
+
+            public void setRPH(String RPH) {
+                this.RPH = RPH;
+            }
+
+            public String getStopQuantity() {
+                return StopQuantity;
+            }
+
+            public void setStopQuantity(String StopQuantity) {
+                this.StopQuantity = StopQuantity;
+            }
+
+            public String getAirLineName() {
+                return AirLineName;
+            }
+
+            public void setAirLineName(String AirLineName) {
+                this.AirLineName = AirLineName;
+            }
+
+            public String getAirportTax() {
+                return AirportTax;
+            }
+
+            public void setAirportTax(String AirportTax) {
+                this.AirportTax = AirportTax;
+            }
+
+            public String getImageFileName() {
+                return ImageFileName;
+            }
+
+            public void setImageFileName(String ImageFileName) {
+                this.ImageFileName = ImageFileName;
+            }
+
+            public Object getImagePath() {
+                return ImagePath;
+            }
+
+            public void setImagePath(Object ImagePath) {
+                this.ImagePath = ImagePath;
+            }
+
+            public String getViaFlight() {
+                return ViaFlight;
+            }
+
+            public void setViaFlight(String ViaFlight) {
+                this.ViaFlight = ViaFlight;
+            }
+
+            public String getDiscount() {
+                return Discount;
+            }
+
+            public void setDiscount(String Discount) {
+                this.Discount = Discount;
+            }
+
+            public String getAirportTaxChild() {
+                return AirportTaxChild;
+            }
+
+            public void setAirportTaxChild(String AirportTaxChild) {
+                this.AirportTaxChild = AirportTaxChild;
+            }
+
+            public String getAirportTaxInfant() {
+                return AirportTaxInfant;
+            }
+
+            public void setAirportTaxInfant(String AirportTaxInfant) {
+                this.AirportTaxInfant = AirportTaxInfant;
+            }
+
+            public String getAdultTaxBreakup() {
+                return AdultTaxBreakup;
+            }
+
+            public void setAdultTaxBreakup(String AdultTaxBreakup) {
+                this.AdultTaxBreakup = AdultTaxBreakup;
+            }
+
+            public String getChildTaxBreakup() {
+                return ChildTaxBreakup;
+            }
+
+            public void setChildTaxBreakup(String ChildTaxBreakup) {
+                this.ChildTaxBreakup = ChildTaxBreakup;
+            }
+
+            public String getInfantTaxBreakup() {
+                return InfantTaxBreakup;
+            }
+
+            public void setInfantTaxBreakup(String InfantTaxBreakup) {
+                this.InfantTaxBreakup = InfantTaxBreakup;
+            }
+
+            public String getOcTax() {
+                return OcTax;
+            }
+
+            public void setOcTax(String OcTax) {
+                this.OcTax = OcTax;
+            }
+
+            public BookingClassBeanX getBookingClass() {
+                return BookingClass;
+            }
+
+            public void setBookingClass(BookingClassBeanX BookingClass) {
+                this.BookingClass = BookingClass;
+            }
+
+            public BookingClassFareBeanX getBookingClassFare() {
+                return BookingClassFare;
+            }
+
+            public void setBookingClassFare(BookingClassFareBeanX BookingClassFare) {
+                this.BookingClassFare = BookingClassFare;
+            }
+
+            public String getIntNumStops() {
+                return IntNumStops;
+            }
+
+            public void setIntNumStops(String IntNumStops) {
+                this.IntNumStops = IntNumStops;
+            }
+
+            public String getIntOperatingAirlineName() {
+                return IntOperatingAirlineName;
+            }
+
+            public void setIntOperatingAirlineName(String IntOperatingAirlineName) {
+                this.IntOperatingAirlineName = IntOperatingAirlineName;
+            }
+
+            public String getIntArrivalAirportName() {
+                return IntArrivalAirportName;
+            }
+
+            public void setIntArrivalAirportName(String IntArrivalAirportName) {
+                this.IntArrivalAirportName = IntArrivalAirportName;
+            }
+
+            public String getIntDepartureAirportName() {
+                return IntDepartureAirportName;
+            }
+
+            public void setIntDepartureAirportName(String IntDepartureAirportName) {
+                this.IntDepartureAirportName = IntDepartureAirportName;
+            }
+
+            public String getIntMarketingAirlineCode() {
+                return IntMarketingAirlineCode;
+            }
+
+            public void setIntMarketingAirlineCode(String IntMarketingAirlineCode) {
+                this.IntMarketingAirlineCode = IntMarketingAirlineCode;
+            }
+
+            public String getIntLinkSellAgrmnt() {
+                return IntLinkSellAgrmnt;
+            }
+
+            public void setIntLinkSellAgrmnt(String IntLinkSellAgrmnt) {
+                this.IntLinkSellAgrmnt = IntLinkSellAgrmnt;
+            }
+
+            public String getIntConx() {
+                return IntConx;
+            }
+
+            public void setIntConx(String IntConx) {
+                this.IntConx = IntConx;
+            }
+
+            public String getIntAirpChg() {
+                return IntAirpChg;
+            }
+
+            public void setIntAirpChg(String IntAirpChg) {
+                this.IntAirpChg = IntAirpChg;
+            }
+
+            public String getIntInsideAvailOption() {
+                return IntInsideAvailOption;
+            }
+
+            public void setIntInsideAvailOption(String IntInsideAvailOption) {
+                this.IntInsideAvailOption = IntInsideAvailOption;
+            }
+
+            public String getIntGenTrafRestriction() {
+                return IntGenTrafRestriction;
+            }
+
+            public void setIntGenTrafRestriction(String IntGenTrafRestriction) {
+                this.IntGenTrafRestriction = IntGenTrafRestriction;
+            }
+
+            public String getIntDaysOperates() {
+                return IntDaysOperates;
+            }
+
+            public void setIntDaysOperates(String IntDaysOperates) {
+                this.IntDaysOperates = IntDaysOperates;
+            }
+
+            public String getIntJourneyTime() {
+                return IntJourneyTime;
+            }
+
+            public void setIntJourneyTime(String IntJourneyTime) {
+                this.IntJourneyTime = IntJourneyTime;
+            }
+
+            public String getIntEndDate() {
+                return IntEndDate;
+            }
+
+            public void setIntEndDate(String IntEndDate) {
+                this.IntEndDate = IntEndDate;
+            }
+
+            public String getIntStartTerminal() {
+                return IntStartTerminal;
+            }
+
+            public void setIntStartTerminal(String IntStartTerminal) {
+                this.IntStartTerminal = IntStartTerminal;
+            }
+
+            public String getIntEndTerminal() {
+                return IntEndTerminal;
+            }
+
+            public void setIntEndTerminal(String IntEndTerminal) {
+                this.IntEndTerminal = IntEndTerminal;
+            }
+
+            public String getIntFltTm() {
+                return IntFltTm;
+            }
+
+            public void setIntFltTm(String IntFltTm) {
+                this.IntFltTm = IntFltTm;
+            }
+
+            public String getIntLSAInd() {
+                return IntLSAInd;
+            }
+
+            public void setIntLSAInd(String IntLSAInd) {
+                this.IntLSAInd = IntLSAInd;
+            }
+
+            public String getIntMile() {
+                return IntMile;
+            }
+
+            public void setIntMile(String IntMile) {
+                this.IntMile = IntMile;
+            }
+
+            public Object getCabin() {
+                return Cabin;
+            }
+
+            public void setCabin(Object Cabin) {
+                this.Cabin = Cabin;
+            }
+
+            public String getItineraryNumber() {
+                return itineraryNumber;
+            }
+
+            public void setItineraryNumber(String itineraryNumber) {
+                this.itineraryNumber = itineraryNumber;
+            }
+
+            public BaggageAllowedBeanX getBaggageAllowed() {
+                return BaggageAllowed;
+            }
+
+            public void setBaggageAllowed(BaggageAllowedBeanX BaggageAllowed) {
+                this.BaggageAllowed = BaggageAllowed;
+            }
+
+            public Object getPaxWiseBaggageAllowed() {
+                return PaxWiseBaggageAllowed;
+            }
+
+            public void setPaxWiseBaggageAllowed(Object PaxWiseBaggageAllowed) {
+                this.PaxWiseBaggageAllowed = PaxWiseBaggageAllowed;
+            }
+
+            public String getAccumulatedDuration() {
+                return AccumulatedDuration;
+            }
+
+            public void setAccumulatedDuration(String AccumulatedDuration) {
+                this.AccumulatedDuration = AccumulatedDuration;
+            }
+
+            public String getGroundTime() {
+                return GroundTime;
+            }
+
+            public void setGroundTime(String GroundTime) {
+                this.GroundTime = GroundTime;
+            }
+
+            public static class BookingClassBeanX {
+                /**
+                 * Availability : 9
+                 * ResBookDesigCode : L
+                 * IntBIC :
+                 */
+
+                private String Availability;
+                private String ResBookDesigCode;
+                private String IntBIC;
+
+                public String getAvailability() {
+                    return Availability;
+                }
+
+                public void setAvailability(String Availability) {
+                    this.Availability = Availability;
+                }
+
+                public String getResBookDesigCode() {
+                    return ResBookDesigCode;
+                }
+
+                public void setResBookDesigCode(String ResBookDesigCode) {
+                    this.ResBookDesigCode = ResBookDesigCode;
+                }
+
+                public String getIntBIC() {
+                    return IntBIC;
+                }
+
+                public void setIntBIC(String IntBIC) {
+                    this.IntBIC = IntBIC;
+                }
+            }
+
+            public static class BookingClassFareBeanX {
+                /**
+                 * AdultFare :
+                 * Bookingclass :
+                 * ClassType : L
+                 * Farebasiscode : L0IP
+                 * Rule : Refundable
+                 * AdultCommission :
+                 * ChildCommission :
+                 * CommissionOnTCharge :
+                 * ChildFare :
+                 * InfantFare :
+                 */
+
+                private String AdultFare;
+                private String Bookingclass;
+                private String ClassType;
+                private String Farebasiscode;
+                private String Rule;
+                private String AdultCommission;
+                private String ChildCommission;
+                private String CommissionOnTCharge;
+                private String ChildFare;
+                private String InfantFare;
+
+                public String getAdultFare() {
+                    return AdultFare;
+                }
+
+                public void setAdultFare(String AdultFare) {
+                    this.AdultFare = AdultFare;
+                }
+
+                public String getBookingclass() {
+                    return Bookingclass;
+                }
+
+                public void setBookingclass(String Bookingclass) {
+                    this.Bookingclass = Bookingclass;
+                }
+
+                public String getClassType() {
+                    return ClassType;
+                }
+
+                public void setClassType(String ClassType) {
+                    this.ClassType = ClassType;
+                }
+
+                public String getFarebasiscode() {
+                    return Farebasiscode;
+                }
+
+                public void setFarebasiscode(String Farebasiscode) {
+                    this.Farebasiscode = Farebasiscode;
+                }
+
+                public String getRule() {
+                    return Rule;
+                }
+
+                public void setRule(String Rule) {
+                    this.Rule = Rule;
+                }
+
+                public String getAdultCommission() {
+                    return AdultCommission;
+                }
+
+                public void setAdultCommission(String AdultCommission) {
+                    this.AdultCommission = AdultCommission;
+                }
+
+                public String getChildCommission() {
+                    return ChildCommission;
+                }
+
+                public void setChildCommission(String ChildCommission) {
+                    this.ChildCommission = ChildCommission;
+                }
+
+                public String getCommissionOnTCharge() {
+                    return CommissionOnTCharge;
+                }
+
+                public void setCommissionOnTCharge(String CommissionOnTCharge) {
+                    this.CommissionOnTCharge = CommissionOnTCharge;
+                }
+
+                public String getChildFare() {
+                    return ChildFare;
+                }
+
+                public void setChildFare(String ChildFare) {
+                    this.ChildFare = ChildFare;
+                }
+
+                public String getInfantFare() {
+                    return InfantFare;
+                }
+
+                public void setInfantFare(String InfantFare) {
+                    this.InfantFare = InfantFare;
+                }
+            }
+
+            public static class BaggageAllowedBeanX {
+                /**
+                 * CheckInBaggage : 15 KG
+                 * HandBaggage : 7 KG
+                 */
+
+                private String CheckInBaggage;
+                private String HandBaggage;
+
+                public String getCheckInBaggage() {
+                    return CheckInBaggage;
+                }
+
+                public void setCheckInBaggage(String CheckInBaggage) {
+                    this.CheckInBaggage = CheckInBaggage;
+                }
+
+                public String getHandBaggage() {
+                    return HandBaggage;
+                }
+
+                public void setHandBaggage(String HandBaggage) {
+                    this.HandBaggage = HandBaggage;
+                }
+            }
+        }
+
         public static class TicketsBean {
             /**
              * ChangeRequestId : null
-             * EticketNo : 0PJTTCTX
-             * TicketId : 328511
+             * EticketNo : IC0QFD7O
+             * TicketId : 996583
              * FlightuId :
-             * PassuId : 615667
-             * GivenName : Arpan
+             * PassuId : 451944
+             * GivenName : Guru
              * SurName : null
-             * NameReference : Mr. Arpan Singh
+             * NameReference : Mr. Guru Bahrath
              * TripType : 1
              * Status : 0
              */
