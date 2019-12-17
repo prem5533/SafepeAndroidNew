@@ -34,6 +34,7 @@ import com.safepayu.wallet.adapter.fight.FlightTravellersList;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.DatePicker;
+import com.safepayu.wallet.dialogs.DatePickerChild;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.booking.flight.FlightBlockTicketRequest;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
@@ -258,8 +259,9 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 etFlightChildDOB.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DatePicker datePicker = DatePicker.newInstance(etFlightChildDOB, null);
+                        DatePickerChild datePicker = DatePickerChild.newInstance(etFlightChildDOB, null);
                         datePicker.show(getSupportFragmentManager(), "datePicker");
+
                     }
                 });
                 linearLayout.setVisibility(View.GONE);
@@ -558,6 +560,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         if (TripType.equals("2")){
 
             Picasso.get().load("http://webapi.i2space.co.in/"+mdata.getFlightSegments().get(0).getImagePath()).into(image_flight_detail_pop_up);
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ONWARD_IMAGE,"http://webapi.i2space.co.in/"+mdata.getFlightSegments().get(0).getImagePath());
             tv_flightbooking_name_popup.setText(mdata.getFlightSegments().get(0).getAirLineName()+" " +mdata.getFlightSegments().get(0).getOperatingAirlineCode()+" "+mdata.getFlightSegments().get(0).getOperatingAirlineFlightNumber());
             flightBookBtn.setText("Pay "+getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
 
@@ -576,7 +579,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             h = separatedTime[0];
             m = separatedTime[1];
             tv_flight_booking_dep_time.setText(h + ":" + m);
-          //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME,h + ":" + m);
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME,h + ":" + m);
 //date departure
             String[] sept = Date.split("-");
             String yd = sept[0];
@@ -595,7 +598,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             String dayOfWeek = simpledateformat.format(date);
             tvFlightBookingDepDate.setText(dayOfWeek+", "+d+mo+" "+y);
             String dayofWeek = dayOfWeek+", "+d+mo+" "+y;
-         //   BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY,dayofWeek);
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY,dayofWeek);
 
             if (flightStop>1){
                 String arrTime = mdata.getFlightSegments().get(flightStop-1).getArrivalDateTime();
@@ -700,6 +703,8 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
 
             lreturn_detail_popup.setVisibility(View.VISIBLE);
             Picasso.get().load("http://webapi.i2space.co.in/"+mdataReturn.getFlightSegments().get(0).getImagePath()).into(image_flight_detail_return);
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_RETURN_IMAGE,"http://webapi.i2space.co.in/"+mdataReturn.getFlightSegments().get(0).getImagePath());
+
             tv_flightbooking_name_return.setText(mdataReturn.getFlightSegments().get(0).getAirLineName()+" " +mdataReturn.getFlightSegments().get(0).getOperatingAirlineCode()+" "+mdataReturn.getFlightSegments().get(0).getOperatingAirlineFlightNumber());
             tv_flightbooking_classname_return.setText(TravelClass);
             tv_flight_booking_source_name_return.setText(mdataReturn.getFlightSegments().get(0).getDepartureAirportCode());
@@ -716,7 +721,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             hr = separatedTimeReturn[0];
             mr = separatedTimeReturn[1];
             tv_flight_booking_dep_time_return.setText(hr + ":" + mr);
-          //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME,h + ":" + m);
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME_RETURN,h + ":" + m);
 //date departure
             String[] septt = DateReturn.split("-");
             String ydd = septt[0];
@@ -735,7 +740,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             String dayOfWeekReturn = simpledateformatReturn.format(datee);
             tv_flight_booking_dep_date_return.setText(dayOfWeekReturn+", "+dr+moo+" "+yy);
             String dayofWeekr = dayOfWeekReturn+", "+dr+moo+" "+yy;
-          //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY,dayofWeek);
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY_RETURN,dayofWeek);
 
             if (flightStopReturn>1){
                 String arrTime = mdataReturn.getFlightSegments().get(flightStopReturn-1).getArrivalDateTime();
@@ -746,7 +751,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 h = separatedArrTime[0];
                 m = separatedArrTime[1];
                 tv_flight_booking_arrival_time_return.setText(h + ":" + m);
-            //    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,h + ":" + m);
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME_RETURN,h + ":" + m);
 
                 String[] septtt = DateReturn.split("-");
                 String yddd = septtt[0];
@@ -776,7 +781,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 h = separatedArrTime[0];
                 m = separatedArrTime[1];
                 tv_flight_booking_arrival_time_return.setText(h + ":" + m);
-         //       BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME,h + ":" + m);
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME_RETURN,h + ":" + m);
 
                 String[] septtt = DateReturn.split("-");
                 String yddd = septtt[0];
@@ -822,7 +827,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
 
 
                 tv_flight_booking_duration_return.setText(hours+"h "+minutes+"m");
-             //   BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION_TIME,hours+"h "+minutes+"m");
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION_TIME_RETURN,hours+"h "+minutes+"m");
             }
             //*********set flight count*****************
             if ( mdataReturn.getFlightSegments().size()>1){

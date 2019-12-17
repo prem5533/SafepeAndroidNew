@@ -67,6 +67,12 @@ public class SharedPref {
     public final String FLIGHT_SOURCE_DATE = "flight_source_date";
     public final String FLIGHT_TWOWAY_RETURN_DATE = "flight_two_way_date";
     public final String TOTALFARE_RETURN_ONWARDS = "flight_total_fare_return_onward";
+    public final String FLIGHT_DURATION_TIME_RETURN = "flight_duration_time_return";
+    public final String FLIGHT_DEP_TIME_RETURN = "flight_dep_time_return";
+    public final String FLIGHT_ARRIVAL_TIME_RETURN = "flight_arival_time_return";
+    public final String FLIGHT_RETURN_IMAGE = "flight_return_image";
+    public final String FLIGHT_ONWARD_IMAGE = "flight_onward_image";
+    public final String FLIGHT_START_JOURNEY_RETURN = "flight_journey_return";
 
 
     public SharedPref(Context context) {

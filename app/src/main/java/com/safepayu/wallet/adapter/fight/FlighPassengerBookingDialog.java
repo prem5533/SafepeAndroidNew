@@ -29,7 +29,7 @@ public class FlighPassengerBookingDialog  extends RecyclerView.Adapter<FlighPass
     @Override
     public BookingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.flight_booking_dialog_adapter,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.flight_booking_dialog_adapter_ticket,parent,false);
         return new BookingViewHolder(view);
     }
 
@@ -44,7 +44,7 @@ public class FlighPassengerBookingDialog  extends RecyclerView.Adapter<FlighPass
     }
 
     public class BookingViewHolder extends RecyclerView.ViewHolder {
-        TextView tvFlightPassengeFullName,tvPassengerTitle;
+        TextView tvFlightPassengeFullName,tvPassengerTitle,tvTicketType;
         private ImageView image;
         String gender ,firstName;
         View line_view;
@@ -53,9 +53,9 @@ public class FlighPassengerBookingDialog  extends RecyclerView.Adapter<FlighPass
             tvFlightPassengeFullName = itemView.findViewById(R.id.tv_flight_passenge_full_name);
             image = itemView.findViewById(R.id.flight_passenger_image);
             tvPassengerTitle = itemView.findViewById(R.id.tv_passenger_type);
+            tvTicketType = itemView.findViewById(R.id.tv_ticket_type);
             line_view = itemView.findViewById(R.id.tvView);
-            line_view.setVisibility(View.GONE);
-            tvPassengerTitle.setVisibility(View.GONE);
+
             tvFlightPassengeFullName.setTextColor(context.getResources().getColor(R.color.red_theme));
             tvFlightPassengeFullName.setGravity(Gravity.START );
 
@@ -63,7 +63,14 @@ public class FlighPassengerBookingDialog  extends RecyclerView.Adapter<FlighPass
 
         public void bindData(int position) {
             tvFlightPassengeFullName.setText(flightTravellerTicket.get(position).getNameReference());
+            tvPassengerTitle.setText(flightTravellerTicket.get(position).getEticketNo());
 
+            if (flightTravellerTicket.get(position).getTripType()==1){
+                tvTicketType.setText("Onward");
+            }
+            else if (flightTravellerTicket.get(position).getTripType()==2){
+                tvTicketType.setText("Return");
+            }
 
             String name = flightTravellerTicket.get(position).getNameReference();
 

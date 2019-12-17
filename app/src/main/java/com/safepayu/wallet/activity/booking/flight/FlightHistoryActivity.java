@@ -2,6 +2,7 @@ package com.safepayu.wallet.activity.booking.flight;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,13 +41,17 @@ public class FlightHistoryActivity extends AppCompatActivity implements FlightHi
     private FlightHistroyAdapter flightHistroyAdapter;
     public  Dialog dialog;
     FlightHistoryResponse FHistoryResponse;
-    private String ReferanceNo ="",Source,Destination,JourneyDate,DepTime,ArrivalTime,DurationTime,AirLineCode,AirLineNumber,FlightImage,TotalTravellers;
+    private String ReferanceNo ="",Source,Destination,JourneyDate,DepTime,ArrivalTime,DurationTime,AirLineCode,AirLineNumber,FlightImage,TotalTravellers,
+            TripType,FlightImageReturn,DurationTimeReturn,FlightDepTimeReturn,FlightArrivalTimeReturn,FlightJourneyReturn;
     private TextView tvBookingStatus, tvSafeJourney,tvFlightRefrenceNo,tvFlightTimeDate,tvFlightSourceDestination,tvFlightEticketNo,tvFlightCancelTicket,tvTicketTimeDateTraveller,
-            tvTicketSource,tvTicketDestination,tvTicketSourceTime,tvTicketTotalTime,tvTicketDestinationTime,tvTicketSourceAirportname,tvTicketDetinationAirportname,tvFlightNumber,tvFlightCode;
-    private ImageView imFlightLogo;
+            tvTicketSource,tvTicketDestination,tvTicketSourceTime,tvTicketTotalTime,tvTicketDestinationTime,tvTicketSourceAirportname,tvTicketDetinationAirportname,tvFlightNumber,tvFlightCode,
+            tvFlightSourceDestinationReturn,tvFlightCodeReturn,tvFlightNumberReturn,tvTicketTimeDateTravellerReturn,tvTicketSourceReturn,tvTicketDestinationReturn,
+            tvTicketTotalTimeReturn,tvTicketSourceTimeReturn,tvTicketDestinationTimeReturn,tvTicketSourceAirportnameReturn,tvTicketDetinationAirportnameReturn;
+    private ImageView imFlightLogo,imFlightLogoReturn;
     private GifImageView statusImage;
     private FlighHistoryPassengerBookingDialog flighPassengerBookingDialog;
     private Button backBtn;
+    private LinearLayout liFlightName,lretunrticket,liFlightNameReturn;
 
 
     @Override
@@ -79,6 +85,12 @@ public class FlightHistoryActivity extends AppCompatActivity implements FlightHi
         AirLineNumber =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_OPERATING_AIRLINE_FLIGHT_NUMBER);
         FlightImage = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_IMAGE);
         TotalTravellers = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().TotalTravellers);
+        TripType =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRIP_TYPE);
+        FlightImageReturn = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_RETURN_IMAGE);
+        DurationTimeReturn = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_DURATION_TIME_RETURN);
+        FlightDepTimeReturn =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_DEP_TIME_RETURN);
+        FlightArrivalTimeReturn =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_ARRIVAL_TIME_RETURN);
+        FlightJourneyReturn =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY_RETURN);
     }
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -142,14 +154,53 @@ public class FlightHistoryActivity extends AppCompatActivity implements FlightHi
         tvTicketDestinationTime = dialog.findViewById(R.id.tv_ticket_destination_time);
         tvTicketSourceAirportname = dialog.findViewById(R.id.tv_ticket_source_airportname);
         tvTicketDetinationAirportname = dialog.findViewById(R.id.tv_ticket_detination_airportname);
+
+        //RETURN
+        tvFlightSourceDestinationReturn = dialog.findViewById(R.id.tv_flight_source_destination_return);
+        tvFlightCodeReturn = dialog.findViewById(R.id.tv_flight_code_return);
+        tvFlightNumberReturn = dialog.findViewById(R.id.tv_flight_number_return);
+        tvTicketTimeDateTravellerReturn = dialog.findViewById(R.id.tv_ticket_time_date_traveller_return);
+        tvTicketSourceReturn = dialog.findViewById(R.id.tv_ticket_source_return);
+        tvTicketDestinationReturn = dialog.findViewById(R.id.tv_ticket_destination_return);
+        tvTicketTotalTimeReturn = dialog.findViewById(R.id.tv_ticket_total_time_return);
+        tvTicketSourceTimeReturn = dialog.findViewById(R.id.tv_ticket_source_time_return);
+        tvTicketDestinationTimeReturn = dialog.findViewById(R.id.tv_ticket_destination_time_return);
+        tvTicketSourceAirportnameReturn = dialog.findViewById(R.id.tv_ticket_source_airportname_return);
+        tvTicketDetinationAirportnameReturn = dialog.findViewById(R.id.tv_ticket_detination_airportname_return);
+        imFlightLogoReturn = dialog.findViewById(R.id.im_flight_logo_return);
+        liFlightNameReturn = dialog.findViewById(R.id.li_flight_name_return);
+
         travellerListName = dialog.findViewById(R.id.list_traveller_details);
         tvFlightCode = dialog.findViewById(R.id.tv_flight_code);
         tvFlightNumber = dialog.findViewById(R.id.tv_flight_number);
         imFlightLogo = dialog.findViewById(R.id.im_flight_logo);
-       // liFlightName = findViewById(R.id.li_flight_name);
+        liFlightName = dialog.findViewById(R.id.li_flight_name);
+        lretunrticket = dialog.findViewById(R.id.lretunrticket);
         tvSafeJourney.setVisibility(View.GONE);
         statusImage.setVisibility(View.GONE);
         tvFlightCancelTicket.setVisibility(View.GONE);
+
+        tvFlightEticketNo.setText("PNR - " + mOrderId.getAPIRefNo());
+        if (mOrderId.getOnwardFlightSegments().get(0).getAirLineName().equals("Indigo")){
+            liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.indigo));
+        }
+
+        else  if (mOrderId.getOnwardFlightSegments().get(0).getAirLineName().equals("Air India")){
+            liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.airindia));
+        }
+        else  if (mOrderId.getOnwardFlightSegments().get(0).getAirLineName().equals("SpiceJet")){
+            liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.spicejet));
+        }
+        else  if (mOrderId.getOnwardFlightSegments().get(0).getAirLineName().equals("GoAir")){
+            liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.goair));
+        }
+        else  if (mOrderId.getOnwardFlightSegments().get(0).getAirLineName().equals("Vistara")){
+            liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.vistara));
+        }
+        else {
+            liFlightName.setBackgroundColor(Color.parseColor("#ffffff"));
+        }
+
 
         if (FHistoryResponse.getData().get(position).getBookingStatus()==3){
             tvBookingStatus.setText("Booking Successful");
@@ -178,6 +229,42 @@ public class FlightHistoryActivity extends AppCompatActivity implements FlightHi
         tvFlightNumber.setText(AirLineNumber);
         Picasso.get().load(FlightImage).into(imFlightLogo);
 
+
+        if(mOrderId.getTripType()==2){
+            lretunrticket.setVisibility(View.VISIBLE);
+            tvFlightSourceDestinationReturn.setText(mOrderId.getReturnFlightSegments().get(0).getDepartureAirportCode() + " - " +mOrderId.getReturnFlightSegments().get(0).getArrivalAirportCode());
+            Picasso.get().load(FlightImageReturn).into(imFlightLogoReturn);
+            tvFlightCodeReturn.setText(mOrderId.getReturnFlightSegments().get(0).getImageFileName());
+            tvFlightNumberReturn.setText(mOrderId.getReturnFlightSegments().get(0).getOperatingAirlineFlightNumber());
+            tvTicketSourceReturn.setText(  mOrderId.getReturnFlightSegments().get(0).getDepartureAirportCode());
+            tvTicketDestinationReturn.setText(mOrderId.getReturnFlightSegments().get(0).getArrivalAirportCode());
+            tvTicketDetinationAirportnameReturn.setText(mOrderId.getSourceName());
+            tvTicketSourceAirportnameReturn.setText(mOrderId.getDestinationName());
+            tvTicketTotalTimeReturn.setText(DurationTimeReturn);
+            tvTicketSourceTimeReturn.setText(FlightDepTimeReturn);
+            tvTicketDestinationTimeReturn.setText(FlightArrivalTimeReturn);
+            tvTicketTimeDateTraveller.setText(JourneyDate + " | " + TotalTravellers + " Traveller");
+            tvTicketTimeDateTravellerReturn.setText(FlightJourneyReturn + " | " + TotalTravellers + " Traveller");
+            if (mOrderId.getReturnFlightSegments().get(0).getAirLineName().equals("Indigo")){
+                liFlightNameReturn.setBackgroundDrawable(getResources().getDrawable(R.drawable.indigo));
+            }
+
+            else  if (mOrderId.getReturnFlightSegments().get(0).getAirLineName().equals("Air India")){
+                liFlightNameReturn.setBackgroundDrawable(getResources().getDrawable(R.drawable.airindia));
+            }
+            else  if (mOrderId.getReturnFlightSegments().get(0).getAirLineName().equals("SpiceJet")){
+                liFlightNameReturn.setBackgroundDrawable(getResources().getDrawable(R.drawable.spicejet));
+            }
+            else  if (mOrderId.getReturnFlightSegments().get(0).getAirLineName().equals("GoAir")){
+                liFlightNameReturn.setBackgroundDrawable(getResources().getDrawable(R.drawable.goair));
+            }
+            else  if (mOrderId.getReturnFlightSegments().get(0).getAirLineName().equals("Vistara")){
+                liFlightNameReturn.setBackgroundDrawable(getResources().getDrawable(R.drawable.vistara));
+            }
+            else {
+                liFlightNameReturn.setBackgroundColor(Color.parseColor("#ffffff"));
+            }
+        }
         travellerListName.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         flighPassengerBookingDialog = new FlighHistoryPassengerBookingDialog(getApplicationContext(),mOrderId.getTickets());
         travellerListName.setAdapter(flighPassengerBookingDialog);
