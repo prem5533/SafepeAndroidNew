@@ -2,7 +2,9 @@ package com.safepayu.wallet.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -57,7 +59,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
 
     Button BackBtn, WithDrawBtn;
     private LinearLayout WithdrawAmountlayout, AddBankBenBtn;
-    private TextView AmountTotalTV, tvWithdrawalAmount, tvTax, tvTotalAmountsendmoney;
+    private TextView AmountTotalTV, tvWithdrawalAmount, tvTax, tvTotalAmountsendmoney,tvWalletBalance;
     private Spinner BankBenSpinner;
     private EditText AmountED;
     private RadioGroup radioGroup;
@@ -81,7 +83,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
     private ImageView im_cross;
 
     private ApiService apiService;
-    double totalAmount = 0.0f, minusAmount = 0.0f;
+    double totalAmount = 0.0f, minusAmount = 0.0f,WalletBalance=0.0f;
     int checkAmount = 0;
 
     @Override
@@ -104,6 +106,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
         tvTotalAmountsendmoney = findViewById(R.id.tv_total_amountsendmoney);
         AmountED = findViewById(R.id.withdrawAmount);
         cardAmount = findViewById(R.id.card_amount);
+        tvWalletBalance = findViewById(R.id.walletBalance);
         BankBenSpinner.setVisibility(View.GONE);
         cardAmount.setVisibility(View.GONE);
 
@@ -211,6 +214,14 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
             e.printStackTrace();
         }
 
+        try {
+            WalletBalance= Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().WALLET_BALANCE));
+        }catch (Exception e){
+            WalletBalance=0.0f;
+            e.printStackTrace();
+        }
+
+        tvWalletBalance.setText(getResources().getString(R.string.rupees)+" "+WalletBalance);
     }
 
     private void CheckValidate() {
@@ -232,21 +243,26 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                     if (TextUtils.isEmpty(BenID)) {
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Select Any Beneficiary", false);
                     } else {
-                        TransferWalletToBankRequest transferWalletToBankRequest = new TransferWalletToBankRequest();
-                        transferWalletToBankRequest.setAmount(String.valueOf(Amount));
-                        transferWalletToBankRequest.setBeneId(BenID);
-                        transferWalletToBankRequestDate = transferWalletToBankRequest;
 
-                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                            startActivity(new Intent(SendMoney.this, CreatePassCodeActivity.class));
-                        } else {
-                            PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoney.this, SendMoney.this, "");
-                            passcodeDialog.show();
+                        if (Amount==(int)WalletBalance || Amount<(int)WalletBalance){
+                            TransferWalletToBankRequest transferWalletToBankRequest = new TransferWalletToBankRequest();
+                            transferWalletToBankRequest.setAmount(String.valueOf(Amount));
+                            transferWalletToBankRequest.setBeneId(BenID);
+                            transferWalletToBankRequestDate = transferWalletToBankRequest;
+
+                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+                                startActivity(new Intent(SendMoney.this, CreatePassCodeActivity.class));
+                            } else {
+                                PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoney.this, SendMoney.this, "");
+                                passcodeDialog.show();
+                            }
+                        }else {
+                            showDialogFailed("Please Enter Amount Less Than Wallet Balance");
                         }
                     }
 
                 } else {
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Enter Amount Between Rs 100 And Rs 8000 ", false);
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Enter Amount Between Rs 100 And Rs 8000 ", true);
                 }
             }
         } else {
@@ -346,12 +362,12 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                     @Override
                     public void onSuccess(TransferWalletToBankResponse response) {
                         loadingDialog.hideDialog();
-                        responseData = response;
-                        ShowPending(response);
-
-                        if (response.getStatusCode() == 401) {
-
-                        }
+                       if (response.isStatus()){
+                           responseData = response;
+                           ShowPending(response);
+                       }else {
+                           showDialogFailed(response.getMessage());
+                       }
                     }
 
                     @Override
@@ -434,7 +450,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
             intentStatus.putExtra("Amount", AmountED.getText().toString().trim());
             intentStatus.putExtra("date", responseData.getDate());
             intentStatus.putExtra("productinfo", "Wallet To Bank Transaction");
-            intentStatus.putExtra("msg", responseData.getMessage());
+            intentStatus.putExtra("Message", responseData.getMessage());
             intentStatus.putExtra("utr_id", responseData.getUtr());
             startActivity(intentStatus);
             finish();
@@ -606,6 +622,29 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
 
         dialog.getWindow().setAttributes(lp);
         dialog.show();
+    }
 
+    public void showDialogFailed(String Message) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        dialog.setTitle("SafePe Alert")
+                .setCancelable(false)
+                .setMessage("\n"+Message+"\n")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+
+                        dialog.dismiss();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .show();
     }
 }

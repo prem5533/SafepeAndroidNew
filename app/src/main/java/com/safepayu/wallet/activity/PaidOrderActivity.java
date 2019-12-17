@@ -102,7 +102,7 @@ public class PaidOrderActivity extends AppCompatActivity {
 
         try{
             if (productinfo.contains("wallet") || productinfo.contains("Wallet")){
-                PendingText="It Might Take 5 Mins To 3 Hrs. Have Patience For Transaction. Sorry For The Inconvenience. \nThank You!";
+               // PendingText="It Might Take 5 Mins To 3 Hrs. Have Patience For Transaction. Sorry For The Inconvenience. \nThank You!";
             }else {
              //   PendingText="It Might Take 5 Mins To 3 Hrs For Recharge. Have Patience. Sorry For The Inconvenience. \nThank You!";
             }
@@ -112,9 +112,11 @@ public class PaidOrderActivity extends AppCompatActivity {
 
         try{
             if (productinfo.contains("Package") || productinfo.contains("package")){
-
-                showPkgDialog();
+                if (status.equalsIgnoreCase("success")){
+                    showPkgDialog();
+                }
             }
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -144,7 +146,7 @@ public class PaidOrderActivity extends AppCompatActivity {
             if (UTR==null || TextUtils.isEmpty(UTR)){
                 tvSafepeUtrId.setVisibility(View.GONE);
             }else {
-                tvSafepeUtrId.setText("UTR ID: "+UTR);
+                tvSafepeUtrId.setText("Bank Ref. No. : "+UTR);
             }
 
             StatusTV.setTextColor(getResources().getColor(R.color.clay_yellow));
@@ -181,7 +183,7 @@ public class PaidOrderActivity extends AppCompatActivity {
                         "\nThank You For Using SafePe App.";
                 showDialogAfterBankTrans(this,Message);
             }else {
-                showDialogAfterBankTrans(this,Message);
+                //showDialogAfterBankTrans(this,Message);
             }
 
         }

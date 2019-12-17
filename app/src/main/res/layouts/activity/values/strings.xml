@@ -13,7 +13,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="internet_check">Please Check Your Internet Connection!</string>
-    <string name="scan_msg">This Scan Is Only For Safe Pay App. \nPlease Do Not Scan Other UPI QR Code</string>
+    <string name="scan_msg">This Scan Is Only For SafePe App. \nPlease Do Not Scan Other UPI QR Code</string>
 
     <string name="waringforAppUpdate">You Can\'t Login Without Updating Your App.\n Please Update Your App To Enjoy It\'s Features</string>
 

@@ -3,7 +3,6 @@ package com.safepayu.wallet.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -61,20 +60,26 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
         current_location.setChecked(false);
         etCountry.setEnabled(false);
 
-        //*******************get data *****************
-        Location = getIntent().getStringExtra("location");
-        City = getIntent().getStringExtra("city");
-        State = getIntent().getStringExtra("state");
-        Country = getIntent().getStringExtra("country");
-        Pincode = getIntent().getStringExtra("pincode");
+        try {
+            //*******************get data *****************
+            Location = getIntent().getStringExtra("location");
+            City = getIntent().getStringExtra("city");
+            State = getIntent().getStringExtra("state");
+            Country = getIntent().getStringExtra("country");
+            Pincode = getIntent().getStringExtra("pincode");
 
-        //***************set text*********************
+            //***************set text*********************
 
-        etLocation.setText(Location);
-        etCity.setText(City);
-        etState.setText(State);
-        etCountry.setText(Country);
-        etPincode.setText(Pincode);
+            etLocation.setText(Location);
+            etCity.setText(City);
+            etState.setText(State);
+            etCountry.setText(Country);
+            etPincode.setText(Pincode);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        etCountry.setText("India");
 
 
         if (Location != null && City != null && State != null && Country != null && Pincode != null) {
@@ -110,11 +115,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
                     mapSelectPincode = data.getStringExtra("select_pincode");
                     mapSelectCountry = data.getStringExtra("select_country");
 
-                    if (TextUtils.isEmpty(mapSelectCountry) || !mapSelectCountry.equalsIgnoreCase("India")){
-                        etCountry.setText("India");
-                    }else {
-                        etCountry.setText(mapSelectCountry);
-                    }
+                    etCountry.setText("India");
 
                     etLocation.setText(mapSelectLocality);
                     etCity.setText(mapSelectCity);
@@ -245,7 +246,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
                                     +saveAddressRequest.getState()+" "+saveAddressRequest.getCountry()+" "+saveAddressRequest.getPin();
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ADDRESS,address);
 
-                            String Msg="Address Updated Successfully.\n Verification Link Has Been Sent To Your Email. Please Verify ";
+                            String Msg="Address Updated Successfully. ";
                             Toast.makeText(AddUpdateAddress.this, Msg, Toast.LENGTH_LONG).show();
                             startActivity(new Intent(AddUpdateAddress.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             finish();

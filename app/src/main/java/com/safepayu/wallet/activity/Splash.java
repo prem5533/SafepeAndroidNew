@@ -114,7 +114,7 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
                             }else {
                                 promotionResponse1.setStatus(false);
                             }
-                            startActivity(new Intent(Splash.this, SplashViewPagerActivity.class));
+                            startActivity(new Intent(Splash.this, Navigation.class));
                             finish();
                         }catch (Exception e){
                             Toast.makeText(Splash.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();

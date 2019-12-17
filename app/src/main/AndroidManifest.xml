@@ -49,6 +49,8 @@
         <activity android:name=".activity.MyOrdersActivity" />
         <activity android:name=".activity.booking.MovieActivity" />
         <activity android:name=".activity.recharge.InsuranceActivity" />
+        <activity android:name=".activity.TermsAndCondition"/>
+        <activity android:name=".activity.ScratchActivity"/>
         <activity android:name=".activity.booking.TollActivity" />
         <activity android:name=".activity.booking.DonationActivity" />
         <activity android:name=".activity.booking.hotel.HotelActivity" />

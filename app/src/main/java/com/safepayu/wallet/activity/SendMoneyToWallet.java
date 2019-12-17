@@ -1,6 +1,8 @@
 package com.safepayu.wallet.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -8,12 +10,10 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -38,6 +38,7 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
     private LoadingDialog loadingDialog;
     private TextView tvReferUserName;
     private boolean referralCheck=false;
+    private double WalletBalance=0.0f;
     SendToWalletRequest sendToWalletRequest;
     String Mobile="";
 
@@ -85,7 +86,6 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
                         tvReferUserName.setVisibility(View.GONE);
                     }
                 }
-
             }
 
             @Override
@@ -100,6 +100,15 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
                 // TODO Auto-generated method stub
             }
         });
+
+
+        try {
+            WalletBalance= Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().WALLET_BALANCE));
+        }catch (Exception e){
+            WalletBalance=0.0f;
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -172,20 +181,24 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
                     }else {
                         if (AmountInt<8001 && AmountInt>99){
 
-                            if (referralCheck){
-                                sendToWalletRequest=new SendToWalletRequest();
-                                sendToWalletRequest.setAmount(Amount);
-                                sendToWalletRequest.setMobile(Mobile);
-                                sendToWalletRequest.setUser_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
+                            if (AmountInt==(int)WalletBalance || AmountInt<(int)WalletBalance){
+                                if (referralCheck){
+                                    sendToWalletRequest=new SendToWalletRequest();
+                                    sendToWalletRequest.setAmount(Amount);
+                                    sendToWalletRequest.setMobile(Mobile);
+                                    sendToWalletRequest.setUser_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
 
-                                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                                    startActivity(new Intent(SendMoneyToWallet.this,CreatePassCodeActivity.class));
-                                } else {
-                                    PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoneyToWallet.this, SendMoneyToWallet.this, "");
-                                    passcodeDialog.show();
+                                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+                                        startActivity(new Intent(SendMoneyToWallet.this,CreatePassCodeActivity.class));
+                                    } else {
+                                        PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoneyToWallet.this, SendMoneyToWallet.this, "");
+                                        passcodeDialog.show();
+                                    }
+                                }else {
+                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Transaction User Not Registered Or Blocked",true);
                                 }
                             }else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Transaction User Not Registered Or Blocked",true);
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Enter Amount Less Than Wallet Balance",true);
                             }
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Enter Amount Between Rs 100 And Rs 8000 ",true);
@@ -214,20 +227,17 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
                         Intent intentStatus=new Intent(SendMoneyToWallet.this,PaidOrderActivity.class);
                         if (response.isStatus()) {
 
-
                             intentStatus.putExtra("status","success");
-
+                            intentStatus.putExtra("txnid",response.getUtrId());
+                            intentStatus.putExtra("Amount",AmountED.getText().toString().trim());
+                            intentStatus.putExtra("date",response.getData());
+                            intentStatus.putExtra("productinfo","Wallet To Wallet Transaction");
+                            startActivity(intentStatus);
+                            finish();
                         }else {
-                            intentStatus.putExtra("status","failed");
-                            Toast.makeText(SendMoneyToWallet.this, response.getMessage(), Toast.LENGTH_LONG).show();
-                           // BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),response.getMessage(),false);
+                            showDialogFailed(response.getMessage());
                         }
-                        intentStatus.putExtra("txnid",response.getUtrId());
-                        intentStatus.putExtra("Amount",AmountED.getText().toString().trim());
-                        intentStatus.putExtra("date",response.getData());
-                        intentStatus.putExtra("productinfo","Wallet To Wallet Transaction");
-                        startActivity(intentStatus);
-                        finish();
+
                     }
 
                     @Override
@@ -293,6 +303,29 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Invalid Passcode",false);
         }
+    }
 
+    public void showDialogFailed(String Message) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        dialog.setTitle("SafePe Alert")
+                .setCancelable(false)
+                .setMessage("\n"+Message+"\n")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+
+                        dialog.dismiss();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .show();
     }
 }

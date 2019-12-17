@@ -23,15 +23,11 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.response.PromotionResponse;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.safepayu.wallet.activity.Splash.promotionResponse1;
 
 public class SplashViewPagerActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -91,24 +87,6 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
         tv_skip =  findViewById(R.id.tvskip);
         tv_done =  findViewById(R.id.tvdone);
         skipBtn =  findViewById(R.id.skipBtn);
-
-
-        try {
-            if (promotionResponse1.isStatus() ){
-
-            }else {
-                List<PromotionResponse.DataBean> data=new ArrayList<>();
-
-                PromotionResponse.DataBean dataBean=new PromotionResponse.DataBean();
-                dataBean.setImage("not found");
-                data.add(dataBean);
-                data.add(dataBean);
-                promotionResponse1.setData(data);
-            }
-        }catch (Exception e){
-
-            e.printStackTrace();
-        }
 
         tv_skip.setOnClickListener(this);
         tv_done.setOnClickListener(this);

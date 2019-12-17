@@ -39,7 +39,6 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -51,7 +50,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.safepayu.wallet.activity.MemberBankAddPackages.buyPackageFromDB;
+import static com.safepayu.wallet.activity.BuyMemberShip.buyPackageFromDB;
 import static com.safepayu.wallet.activity.recharge.LandlineBillPay.StdCode;
 
 public class PaymentType extends BaseActivity implements PasscodeClickListener {
@@ -206,7 +205,8 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             WalletCashback=intent.getStringExtra("walletCashback");
             TotalDeductAmount=intent.getStringExtra("totalAmount");
 
-            AmountTV.setText(getResources().getString(R.string.rupees)+" "+ NumberFormat.getIntegerInstance().format(Integer.parseInt(Amount)));
+            AmountTV.setText(getResources().getString(R.string.rupees)+" "+ Amount);
+
             if (PaymentFor.equalsIgnoreCase("Wallet") || PaymentFor.equalsIgnoreCase("Buy Package")) {
                 WalletBtnLayout.setVisibility(GONE);
             }

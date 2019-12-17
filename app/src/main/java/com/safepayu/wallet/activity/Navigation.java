@@ -54,12 +54,7 @@ import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.DonationActivity;
 import com.safepayu.wallet.activity.booking.MetroActivity;
-import com.safepayu.wallet.activity.booking.MovieActivity;
 import com.safepayu.wallet.activity.booking.TollActivity;
-import com.safepayu.wallet.activity.booking.TrainActivity;
-import com.safepayu.wallet.activity.booking.bus.BusActivity;
-import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
-import com.safepayu.wallet.activity.booking.hotel.HotelActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
 import com.safepayu.wallet.activity.recharge.GasPay;
@@ -78,6 +73,8 @@ import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -486,13 +483,34 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         });
 
         try {
-            NUM_PAGES= promotionResponse1.getData().size();
-            loadingDialog.hideDialog();
-            adapter = new OfferPagerAdapter(Navigation.this,promotionResponse1.getData());
-            viewpager.setAdapter(adapter);
-            TabLayout tabLayout = findViewById(R.id.tab_layout);
-            if (promotionResponse1.getData().size()>1){
-                tabLayout.setupWithViewPager(viewpager, true);
+            PromotionResponse.DataBean dataBean=new PromotionResponse.DataBean();
+            List<PromotionResponse.DataBean> data=new ArrayList<>();
+            try {
+                if (!promotionResponse1.isStatus() || promotionResponse1==null){
+                    dataBean.setImage("not found");
+                    data.add(dataBean);
+                    data.add(dataBean);
+                    promotionResponse1.setData(data);
+                }
+            }catch (Exception e){
+                dataBean.setImage("not found");
+                data.add(dataBean);
+                data.add(dataBean);
+                promotionResponse1.setData(data);
+                e.printStackTrace();
+            }
+
+            try {
+                NUM_PAGES= promotionResponse1.getData().size();
+                loadingDialog.hideDialog();
+                adapter = new OfferPagerAdapter(Navigation.this,promotionResponse1.getData());
+                viewpager.setAdapter(adapter);
+                TabLayout tabLayout = findViewById(R.id.tab_layout);
+                if (promotionResponse1.getData().size()>1){
+                    tabLayout.setupWithViewPager(viewpager, true);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
 
             viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -699,16 +717,22 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
 
             case R.id.layout_flight:
-                startActivity(new Intent(Navigation.this, FlightsActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+
+                Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(Navigation.this, FlightsActivity.class));
+//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_bus_tickets:
-                startActivity(new Intent(Navigation.this, BusActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+
+                Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
+
+//                startActivity(new Intent(Navigation.this, BusActivity.class));
+//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_train_ticket:
-                startActivity(new Intent(Navigation.this, TrainActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(Navigation.this, TrainActivity.class));
+//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.credit_layout:
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
@@ -719,16 +743,18 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_movie:
-                startActivity(new Intent(Navigation.this, MovieActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(Navigation.this, MovieActivity.class));
+//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
 
             case R.id.layout_googleplay:
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_hotel:
-                startActivity(new Intent(Navigation.this, HotelActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(Navigation.this, HotelActivity.class));
+//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_donation:
                 startActivity(new Intent(Navigation.this, DonationActivity.class));
@@ -755,6 +781,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
             case R.id.layout_giftCoupon:
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(Navigation.this, ScratchActivity.class));
+//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
 
 

@@ -1,45 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Details uploaded successfully."
-        android:textColor="@color/green"
-        android:layout_margin="20dp"
-        android:fontFamily="@font/roboto_regular"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:layout_weight=".1"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Your pckage will be approved within 3 hours."
-        android:textColor="@color/yellow_theme"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:fontFamily="@font/roboto_regular"
-        android:textSize="16sp"
-        android:gravity="top|center"
-        android:layout_weight="1"
-        android:layout_marginTop="10dp"/>
+    android:orientation="vertical"
+    android:layout_gravity="center">
 
-    <Button
-        android:id="@+id/btn_back_home_page"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="100dp"
-        android:background="@drawable/rounded_buttons"
-        android:padding="10dp"
-        android:text="BACK TO HOMEPAGE"
-        android:textColor="#fff"
-        android:textSize="15sp"
-        android:fontFamily="@font/roboto_regular"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Details uploaded successfully."
+            android:textColor="@color/green"
+            android:layout_margin="20dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_weight=".1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your pckage will be approved within 3 hours."
+            android:textColor="@color/yellow_theme"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="16sp"
+            android:gravity="top|center"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/btn_back_home_page"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/rounded_buttons"
+            android:padding="10dp"
+            android:text="BACK TO HOMEPAGE"
+            android:textColor="#fff"
+            android:textSize="15sp"
+            android:fontFamily="@font/roboto_regular"/>
+    </LinearLayout>
 
 </LinearLayout>

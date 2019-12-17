@@ -503,12 +503,6 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/google_play"
-                            android:visibility="gone" />
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
                             android:src="@drawable/gift_coupon64" />
 
                         <TextView
@@ -516,7 +510,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/roboto_regular"
-                            android:text="Gift Coupon"
+                            android:text="Rewards"
                             android:textColor="@color/black"
                             android:textSize="10sp" />
                     </LinearLayout>

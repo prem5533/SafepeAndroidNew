@@ -61,15 +61,16 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
     private EditText edName,edMobile,edEmail,edAddress,edPincode,edPan,edAdhar,edShopName;
     private TextView tvDob;
     private Spinner StateSpinner;
-    private LinearLayout KycStatusLayout,KycRegisterLayout,PanImageLayout,AadhaarImageLayout,SelfImageLayout;
+    private LinearLayout KycStatusLayout,KycRegisterLayout,PanImageLayout,AadhaarImageLayout,AadhaarImageBackLayout,SelfImageLayout;
     private ArrayList<String> StateIdList,StateNameList,StateCodeList;
-    private ImageView ivSelf,ivPAN,ivAadhaar;
+    private ImageView ivSelf,ivPAN,ivAadhaar,ivAadhaarBack;
     private static final int PICK_IMAGE_CAMERA = 0;
     private static final int PICK_IMAGE_PAN = 1;
     private static final int PICK_IMAGE_AADHAAR = 2;
+    private static final int PICK_IMAGE_AADHAAR_BACK = 3;
     private Bitmap bitmap;
     private File destination = null;
-    private String textBase64Self="",textBase64Pan="",textBase64Aadhaar="",StateName="",StateId="",StateCode="";
+    private String textBase64Self="",textBase64Pan="",textBase64Aadhaar="",textBase64AadhaarBack="",StateName="",StateId="",StateCode="";
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -114,11 +115,13 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
         ivSelf = findViewById(R.id.imageSelf_kycLayout);
         ivPAN = findViewById(R.id.imagePan_kycLayout);
         ivAadhaar = findViewById(R.id.imageAdhar_kycLayout);
+        ivAadhaarBack = findViewById(R.id.imageAdharBack_kycLayout);
 
         KycStatusLayout = findViewById(R.id.statusKycLayout);
         KycRegisterLayout = findViewById(R.id.kycRegisterLayout);
         PanImageLayout = findViewById(R.id.imageLayoutPan);
         AadhaarImageLayout = findViewById(R.id.imageLayoutAdhar);
+        AadhaarImageBackLayout = findViewById(R.id.imageLayoutAdharBack);
         SelfImageLayout = findViewById(R.id.imageLayoutSelf);
 
         BackBtn.setOnClickListener(this);
@@ -126,6 +129,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
         PanImageLayout.setOnClickListener(this);
         AadhaarImageLayout.setOnClickListener(this);
         SelfImageLayout.setOnClickListener(this);
+        AadhaarImageBackLayout.setOnClickListener(this);
         tvDob.setOnClickListener(this);
 
         if (isNetworkAvailable()){
@@ -170,47 +174,35 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
             case R.id.register_kycLayout:
 
                 if (TextUtils.isEmpty(textBase64Aadhaar)){
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),"Check Click Your Aadhaar Image",false);
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout)," Please Click Your Aadhaar Front Image",false);
                 }else {
                     if (TextUtils.isEmpty(textBase64Pan)){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),"Check Click Your PAN Image",false);
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout)," Please Click  Your PAN Image",false);
                     }else {
                         if (TextUtils.isEmpty(textBase64Self)){
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),"Check Click Your Image",false);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout)," Please Click  Your Image",false);
                         }else {
+                            if (TextUtils.isEmpty(textBase64AadhaarBack)){
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout)," Please Click Aadhaar Back Image",false);
+                            }else {
+                                KycRequest kycRequest=new KycRequest();
+                                kycRequest.setAdharCard_img("data:image/png;base64,"+textBase64Aadhaar);
+                                kycRequest.setAdharCardBack_img("data:image/png;base64,"+textBase64AadhaarBack);
+                                kycRequest.setPanCard_img("data:image/png;base64,"+textBase64Pan);
+                                kycRequest.setUser_img("data:image/png;base64,"+textBase64Self);
+                                kycRequest.setMobile(edMobile.getText().toString().trim());
+                                kycRequest.setCustomerName(edName.getText().toString().trim());
+                                kycRequest.setShopName(edShopName.getText().toString().trim());
+                                kycRequest.setAddress(edAddress.getText().toString().trim());
+                                kycRequest.setPincode(edPincode.getText().toString().trim());
+                                kycRequest.setStateCode(StateCode);
+                                kycRequest.setEmail(edEmail.getText().toString().trim());
+                                kycRequest.setPan(edPan.getText().toString().trim());
+                                kycRequest.setDob(tvDob.getText().toString().trim());
+                                kycRequest.setAadhaar(edAdhar.getText().toString().trim());
 
-                            /**
-                             * mobile : 45246236246234
-                             * customerName : dhdfgadgaes
-                             * shopName : gdgexdvs
-                             * address : dgadasds
-                             * pincode : 5623423
-                             * stateCode : sdasd
-                             * email : sdasdf@sdfasd.com
-                             * pan : 3453453
-                             * dob :
-                             * aadhaar :
-                             * panCard_img :
-                             * adharCard_img :
-                             * User_img :
-                             */
-
-                            KycRequest kycRequest=new KycRequest();
-                            kycRequest.setAdharCard_img("data:image/png;base64,"+textBase64Aadhaar);
-                            kycRequest.setPanCard_img("data:image/png;base64,"+textBase64Pan);
-                            kycRequest.setUser_img("data:image/png;base64,"+textBase64Self);
-                            kycRequest.setMobile(edMobile.getText().toString().trim());
-                            kycRequest.setCustomerName(edName.getText().toString().trim());
-                            kycRequest.setShopName(edShopName.getText().toString().trim());
-                            kycRequest.setAddress(edAddress.getText().toString().trim());
-                            kycRequest.setPincode(edPincode.getText().toString().trim());
-                            kycRequest.setStateCode(StateCode);
-                            kycRequest.setEmail(edEmail.getText().toString().trim());
-                            kycRequest.setPan(edPan.getText().toString().trim());
-                            kycRequest.setDob(tvDob.getText().toString().trim());
-                            kycRequest.setAadhaar(edAdhar.getText().toString().trim());
-
-                            getKycDone(kycRequest);
+                                getKycDone(kycRequest);
+                            }
                         }
                     }
                 }
@@ -232,6 +224,17 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
                 if (ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     selectImage(PICK_IMAGE_AADHAAR);
+                } else {
+                    ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    }, 100);
+                }
+                break;
+
+            case R.id.imageLayoutAdharBack:
+                if (ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                        && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    selectImage(PICK_IMAGE_AADHAAR_BACK);
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -298,7 +301,6 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
 
-
             destination = new File(Environment.getExternalStorageDirectory() + "/" +
                     getString(R.string.app_name), "IMG_" + System.currentTimeMillis() + ".jpg");
             FileOutputStream fo;
@@ -324,6 +326,9 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
             }else if (requestCode == PICK_IMAGE_AADHAAR) {
                 ivAadhaar.setImageDrawable(d);
                 textBase64Aadhaar = ConvertToBase64(bitmap);
+            }else if (requestCode == PICK_IMAGE_AADHAAR_BACK) {
+                ivAadhaarBack.setImageDrawable(d);
+                textBase64AadhaarBack = ConvertToBase64(bitmap);
             }
 
         } catch (Exception e) {

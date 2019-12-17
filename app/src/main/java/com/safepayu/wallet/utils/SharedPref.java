@@ -30,6 +30,7 @@ public class SharedPref {
     public final String LOGOUT_ALL = "logout_all";
     public final String LOGO_IMAGE = "logo_image";
     public final String ADDRESS = "address";
+    public final String WALLET_BALANCE = "wallet_balance";
 
     //***********FLIGHT*******************
     public final String FLIGHT_DATE = "flight_date";

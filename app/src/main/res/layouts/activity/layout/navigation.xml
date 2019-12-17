@@ -119,7 +119,7 @@
 
             </LinearLayout>
 
-            <include layout="@layout/dashbord_header_layout"/>
+            <include layout="@layout/dashbord_header_layout" />
 
         </LinearLayout>
 

@@ -99,8 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    >
+                    android:layout_marginRight="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -108,6 +107,43 @@
                         android:orientation="vertical"
                         android:background="#f7f6f8"
                         android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="#F9f9f9"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:text="Wallet Balance"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_regular"/>
+
+                            <TextView
+                                android:id="@+id/walletBalance"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="10dp"
+                                android:gravity="end"
+                                android:text="00"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:layout_marginRight="20dp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@color/divider"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -132,12 +168,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="10dp"
-                                android:layout_marginEnd="20dp"
                                 android:gravity="end"
                                 android:text="₹ 8000"
                                 android:textColor="@color/grey_500"
                                 android:textSize="14sp"
-                                android:fontFamily="@font/roboto_regular"/>
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_marginRight="20dp" />
                         </LinearLayout>
 
                         <View
@@ -166,7 +202,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="10dp"
-                                android:layout_marginEnd="20dp"
+                                android:layout_marginRight="20dp"
                                 android:gravity="end"
                                 android:text="₹ 100"
                                 android:textColor="@color/red"
@@ -535,7 +571,7 @@
                                 android:id="@+id/radioButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="55dp"
-                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_gravity="end"
                                 android:layout_marginTop="16dp"
@@ -546,7 +582,7 @@
                                 android:id="@+id/radioButton2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="55dp"
-                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_gravity="end"
                                 android:layout_marginTop="55dp"
@@ -557,7 +593,7 @@
                                 android:id="@+id/radioButton3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="55dp"
-                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_gravity="end"
                                 android:layout_marginTop="60dp"
@@ -612,7 +648,7 @@
                             <RadioButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_gravity="end"
                                 android:gravity="end"
@@ -641,7 +677,7 @@
                             <RadioButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_gravity="end"
                                 android:gravity="end"

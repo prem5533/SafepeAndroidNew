@@ -15,6 +15,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ import io.reactivex.schedulers.Schedulers;
 public class NewAccount extends BaseActivity implements View.OnClickListener, SnackBarActionClickListener {
 
     private EditText firstName, lastName, email, mobileNo, password, dob, referralCode;
-    private TextView tvReferUserName;
+    private TextView tvReferUserName,tvForReferralBtn;
     private LoadingDialog loadingDialog;
     private Button VerifyReffralBtn,verifyAlready;
     CheckEmailMobileRequest checkEmailMobileRequest;
@@ -56,7 +57,6 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     private ImageView ShowHidePasswordBtn;
     private String strReferalcode;
     private ImageView signup_logo;
-    private TextView tvShowTerms;
     private CheckBox chTermCond;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,14 +82,14 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         ShowHidePasswordBtn= findViewById(R.id.show_hide_password_newAccount);
         VerifyReffralBtn=findViewById(R.id.verify_referral);
         verifyAlready=findViewById(R.id.verify_already);
+        tvForReferralBtn=findViewById(R.id.forRefer);
         signup_logo=findViewById(R.id.signup_logo);
         chTermCond=findViewById(R.id.ch_term_cond);
-        tvShowTerms=findViewById(R.id.tv_show_terms);
       //  Picasso.get().load(imagePath).into(signup_logo);
 
         ShowHidePasswordBtn.setOnClickListener(this);
         VerifyReffralBtn.setOnClickListener(this);
-        tvShowTerms.setOnClickListener(this);
+
 
         strReferalcode= BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
         mobileNo.addTextChangedListener(new MobileEditTextWatcher(mobileNo));
@@ -186,17 +186,33 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 // TODO Auto-generated method stub
             }
         });
-        if (strReferalcode==null){
-            referralCode.setText("8376097766");
-        }
-     else    if (strReferalcode.equals("")){
-            referralCode.setText("8376097766");
-        }
-        else {
-            referralCode.setText(strReferalcode);
-        }
 
-        getReferralDetails();
+//        if (strReferalcode==null){
+//            referralCode.setText("8376097766");
+//        } else if (strReferalcode.equals("")){
+//            referralCode.setText("8376097766");
+//        } else {
+//            referralCode.setText(strReferalcode);
+//        }
+
+        chTermCond.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (chTermCond.isChecked()){
+                    startActivity(new Intent(NewAccount.this,TermsAndCondition.class));
+                }
+            }
+        });
+
+        tvForReferralBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                referralCode.setText("8376097766");
+                referralCode.setSelection(referralCode.getText().toString().length());
+            }
+        });
+
+        //getReferralDetails();
 
         checkPermission();
     }
@@ -274,60 +290,55 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 getReferralDetails();
 
                 break;
-            case R.id.tv_show_terms:
-
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse("http://www.safepeindia.com/term$conditions.php"));
-                startActivity(i);
-                break;
         }
     }
 
     private Boolean validate() {
 
-   if (firstName.getText().toString().trim().length() == 0) {
-            firstName.requestFocus();
-            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter first name", true);
-            return false;
-        } else if (lastName.getText().toString().trim().length() == 0) {
-            lastName.requestFocus();
-            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter last name", true);
-            return false;
-        } else if (email.getText().toString().trim().length() == 0) {
-            email.requestFocus();
-            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter email", true);
-            return false;
-        } else if (!BaseApp.getInstance().commonUtils().isValidEmail(email.getText().toString())) {
-            email.requestFocus();
-            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid email", true);
-            return false;
-        } else if (mobileNo.getText().toString().trim().length() == 0) {
-            mobileNo.requestFocus();
-            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid phone number", true);
-            return false;
-        } else if (PhoneNumberUtils.isGlobalPhoneNumber(mobileNo.getText().toString().trim())) {
-            mobileNo.requestFocus();
-            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid phone number", true);
-            return false;
-        } else if (mobileNo.getText().toString().trim().length() < 10 || mobileNo.getText().toString().trim().length() > 14 || mobileNo.getText().toString().trim().matches(BaseApp.getInstance().commonUtils().phoneNumberRegex) == false) {
-            mobileNo.requestFocus();
-            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid phone number", true);
-            return false;
-        } else if (dob.getText().toString().trim().length() == 0) {
-            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter DOB", true);
-            return false;
-        } else if (password.getText().toString().trim().length() == 0|| password.getText().toString().trim().length()<4) {
-            mobileNo.requestFocus();
-            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter password, password must be 4 digit", true);
-            return false;
-        } else if (referralCode.getText().toString().trim().length() == 0) {
-            referralCode.requestFocus();
-            return false;
-        }
-         else if (!chTermCond.isChecked()){
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout),"Please Accept Term & Conditions", true);
-        }
-        return true;
+       if (firstName.getText().toString().trim().length() == 0) {
+                firstName.requestFocus();
+                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter first name", true);
+                return false;
+            } else if (lastName.getText().toString().trim().length() == 0) {
+                lastName.requestFocus();
+                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter last name", true);
+                return false;
+            } else if (email.getText().toString().trim().length() == 0) {
+                email.requestFocus();
+                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter email", true);
+                return false;
+            } else if (!BaseApp.getInstance().commonUtils().isValidEmail(email.getText().toString())) {
+                email.requestFocus();
+                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid email", true);
+                return false;
+            } else if (mobileNo.getText().toString().trim().length() == 0) {
+                mobileNo.requestFocus();
+                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid phone number", true);
+                return false;
+            } else if (PhoneNumberUtils.isGlobalPhoneNumber(mobileNo.getText().toString().trim())) {
+                mobileNo.requestFocus();
+                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid phone number", true);
+                return false;
+            } else if (mobileNo.getText().toString().trim().length() < 10 || mobileNo.getText().toString().trim().length() > 14 || mobileNo.getText().toString().trim().matches(BaseApp.getInstance().commonUtils().phoneNumberRegex) == false) {
+                mobileNo.requestFocus();
+                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid phone number", true);
+                return false;
+            } else if (dob.getText().toString().trim().length() == 0) {
+                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter DOB", true);
+                return false;
+            } else if (password.getText().toString().trim().length() == 0|| password.getText().toString().trim().length()<4) {
+                mobileNo.requestFocus();
+                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter password, password must be 4 digit", true);
+                return false;
+            } else if (referralCode.getText().toString().trim().length() == 0) {
+                referralCode.requestFocus();
+                return false;
+            } else if (!chTermCond.isChecked()){
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout),"Please Accept Term & Conditions", true);
+                return false;
+            }
+
+            return true;
     }
 
     public Boolean checkPermission() {

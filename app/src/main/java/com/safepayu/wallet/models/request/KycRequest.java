@@ -32,6 +32,12 @@ public class KycRequest {
     private String panCard_img;
     private String adharCard_img;
     private String User_img;
+    /**
+     * adharCardBack_img :
+     */
+
+    private String adharCardBack_img;
+
 
     public String getMobile() {
         return mobile;
@@ -135,5 +141,13 @@ public class KycRequest {
 
     public void setUser_img(String User_img) {
         this.User_img = User_img;
+    }
+
+    public String getAdharCardBack_img() {
+        return adharCardBack_img;
+    }
+
+    public void setAdharCardBack_img(String adharCardBack_img) {
+        this.adharCardBack_img = adharCardBack_img;
     }
 }

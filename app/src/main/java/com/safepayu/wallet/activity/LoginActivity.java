@@ -399,7 +399,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case 0:
                 if (response.getRemember_me().equalsIgnoreCase("1")){
                     SaveLoginDetails(response);
-                    startActivity(new Intent(LoginActivity.this,SplashViewPagerActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 }else {
                     resendOtp();
@@ -425,7 +425,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 //showDialogForEmail(LoginActivity.this);  for mail verification
                 if (response.getRemember_me().equalsIgnoreCase("1")){
                     SaveLoginDetails(response);
-                    startActivity(new Intent(LoginActivity.this,SplashViewPagerActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    startActivity(new Intent(LoginActivity.this,Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 }else {
                     resendOtp();

@@ -18,18 +18,16 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.WalletResponse;
 
-import java.text.NumberFormat;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class WalletActivity extends BaseActivity {
 
-    private TextView AddMoneyToWallet,SendMoney,AmountTV;
+    private TextView AddMoneyToWallet,AmountTV;
     private Button BackBtn;
     private LoadingDialog loadingDialog;
-    private LinearLayout WalletHistoryLayout, RechargeHistoryLayout;
+    private LinearLayout WalletHistoryLayout, RechargeHistoryLayout,SendMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,8 +131,20 @@ public class WalletActivity extends BaseActivity {
                     public void onSuccess(WalletResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            AmountTV.setText(getResources().getString(R.string.rupees)+" "+ NumberFormat.getInstance().format(response.getWallet().getAmount()));
 
+                           try {
+                               if (response.getWallet()==null){
+                                   AmountTV.setText(getResources().getString(R.string.rupees)+" "+ 0.0);
+                                   BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().WALLET_BALANCE,"0.0");
+                               }else {
+                                   AmountTV.setText(getResources().getString(R.string.rupees)+" "+ response.getWallet().getAmount());
+                                   BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().WALLET_BALANCE,String.valueOf(response.getWallet().getAmount()));
+                               }
+                           }catch (Exception e){
+                               AmountTV.setText(getResources().getString(R.string.rupees)+" "+ 0.0);
+                               BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().WALLET_BALANCE,"0.0");
+                               e.printStackTrace();
+                           }
 
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);

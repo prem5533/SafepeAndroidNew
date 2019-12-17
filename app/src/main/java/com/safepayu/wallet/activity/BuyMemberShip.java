@@ -50,7 +50,9 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     private RadioGroup paymentMode;
     private CardView cardView;
     private double FinalAmount;
+    private boolean checkPkg=false;
     String TransactionType="0",PackageID="",PackageName="",PackageAmount;
+    public static BuyPackage buyPackageFromDB=new BuyPackage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,19 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     }
 
     public void showPackageDetails(PackageListData.Packages selectedPackage) {
+
+        try {
+            paymentMode.clearCheck();
+            double pkgAmt=selectedPackage.getPackageAmount();
+            if (49999>(int)pkgAmt){
+                checkPkg=true;
+            }else {
+                checkPkg=false;
+            }
+        }catch (Exception e){
+            checkPkg=false;
+            e.printStackTrace();
+        }
         PackageID=selectedPackage.getId();
         PackageName=selectedPackage.getPackageName();
         PackageAmount= String.valueOf(selectedPackage.getPackageAmount());
@@ -161,16 +176,41 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()){
-                            showDialogPackage(BuyMemberShip.this);
+                            showDialogPackage("\nPackage Already Purchased.\nTo Upgrade Your Package Please Contact SafePe Customer Support\n");
                         }else {
                             if (TransactionType.equalsIgnoreCase("1")){
 
-                                Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
-                                intent.putExtra("TransactionType",TransactionType);
-                                intent.putExtra("PackageID",PackageID);
-                                intent.putExtra("PackageName",PackageName);
+//                                Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
+//                                intent.putExtra("TransactionType",TransactionType);
+//                                intent.putExtra("PackageID",PackageID);
+//                                intent.putExtra("PackageName",PackageName);
+//                                intent.putExtra("Amount",String.valueOf(FinalAmount));
+//                                startActivity(intent);
+
+                                TransactionType="3";
+                                BuyPackage buyPackage=new BuyPackage();
+                                buyPackage.setTransaction_type(TransactionType);
+                                buyPackage.setPackage_id(PackageID);
+                                buyPackage.setBuy_date("");
+                                buyPackage.setPayment_mode("Payment Gateway");
+                                buyPackage.setRefrence_no("");
+                                buyPackage.setDocument_attached("");
+                                buyPackage.setPaid_to_account("By Admin");
+                                buyPackage.setPaid_from_account("");
+                                buyPackageFromDB=buyPackage;
+
+                                Intent intent=new Intent(BuyMemberShip.this,PaymentType.class);
+                                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                                intent.putExtra("RechargePaymentId",BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
                                 intent.putExtra("Amount",String.valueOf(FinalAmount));
+                                intent.putExtra("PaymentType",PackageName);
+                                intent.putExtra("PaymentFor","Buy Package");
+                                intent.putExtra("RechargeTypeId","0");
+                                intent.putExtra("OperatorCode",PackageID);
+                                intent.putExtra("CircleCode","0");
+                                intent.putExtra("OperatorId","");
                                 startActivity(intent);
+                                finish();
                             }else if (TransactionType.equalsIgnoreCase("2")) {
                                 Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
                                 intent.putExtra("TransactionType",TransactionType);
@@ -178,6 +218,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                                 intent.putExtra("PackageName",PackageName);
                                 intent.putExtra("Amount",String.valueOf(FinalAmount));
                                 startActivity(intent);
+
                             }else {
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Transfer Type", false);
                             }
@@ -235,10 +276,15 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
             case R.id.btn_proceed:
                 if (mAdapter.getSelectedData() != null) {
 
-                    checkBuyPackage();
+                    if (checkPkg){
+                        checkBuyPackage();
+                    }else {
+                        paymentMode.clearCheck();
+                        showDialogPackage("Package Amount Grater Than Rs 25000 Can Only Be Purchased From Bank\nPlease Select Bank Transfer");
+                    }
 
                 } else {
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Pacakage", false);
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Package", false);
                 }
                 break;
 
@@ -248,12 +294,12 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         }
     }
 
-    public void showDialogPackage(Activity activity) {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(activity);
+    public void showDialogPackage(String Message) {
+        AlertDialog.Builder dialog=new AlertDialog.Builder(BuyMemberShip.this);
 
         dialog.setTitle("SafePe Alert")
                 .setCancelable(false)
-                .setMessage("\nPackage Already Purchased.\nTo Upgrade Your Package Please Contact SafePe Customer Support\n")
+                .setMessage(Message)
 
                 // Specifying a listener allows you to take an action before dismissing the dialog.
                 // The dialog is automatically dismissed when a dialog button is clicked.
@@ -274,13 +320,22 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rb_walled:
+
                 cardView.setVisibility(View.GONE);
                 TransactionType = "1";
+                if (!checkPkg){
+                    checkPkg=false;
+                    radioGroup.clearCheck();
+                    showDialogPackage("Package Amount Greater Than Rs 25000 Can Only Be Purchased From Bank\nPlease Select Bank Transfer");
+                }
+
+
                 break;
 
             case R.id.rb_bank:
                 cardView.setVisibility(VISIBLE);
                 TransactionType = "2";
+                checkPkg=true;
                 break;
         }
     }

@@ -229,7 +229,7 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginBottom="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -248,15 +248,31 @@
                         android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/bue_A700"/>
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/tv_show_terms"
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:text="Show Terms "
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/yellow"
-                    android:padding="5dp"/>
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="If You Dont't Have Any Referral Code - "
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/bue_A800"/>
+
+                    <TextView
+                        android:id="@+id/forRefer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="Click Here"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/bue_A700"/>
+                </LinearLayout>
+
 
                 <CheckBox
                     android:id="@+id/ch_term_cond"
@@ -265,7 +281,9 @@
                     android:textSize="11sp"
                     android:fontFamily="@font/roboto_regular"
                     android:buttonTint="@color/red_theme"
-                    android:text="Please confirm that you agree to our term &amp; conditions"/>
+                    android:text="Terms &amp; Conditions"
+                    android:textColor="@color/red_theme"
+                    android:checked="true"/>
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     style="@style/TextAppearance.AppCompat.Large"
@@ -276,8 +294,7 @@
                     android:textStyle="normal"
                     app:fontCustom="@string/Roboto" android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/roboto_bold"
-                    />
+                    android:fontFamily="@font/roboto_bold" />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     style="@style/TextAppearance.AppCompat.Caption"
@@ -301,9 +318,7 @@
                     android:text="@string/process"
                     android:layout_marginBottom="30dp"/>
 
-
             </LinearLayout>
-
 
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
@@ -312,8 +327,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="5dp"

@@ -15,7 +15,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +26,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -49,9 +52,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -68,7 +68,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
     private boolean CheckNetConnection=false;
     private ImageView imageView;
     private BuyPackage buyPackage;
-    public static BuyPackage buyPackageFromDB;
+
     LinearLayout LinearSPinnerAmount,walletOptionLayout,banktypeLayout,ImageLayout;
     private static final int PICK_IMAGE_CAMERA = 223;
     private static final int PICK_IMAGE_GALLERY = 623;
@@ -272,7 +272,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                     buyPackage.setPackage_id(PackageID);
                     buyPackage.setBuy_date("");
                     buyPackage.setPayment_mode("Wallet");
-                    buyPackage.setRefrence_no("");
+                    buyPackage.setRefrence_no(ReferenceNumber);
                     buyPackage.setDocument_attached("");
                     buyPackage.setPaid_to_account(BankNameText);
                     buyPackage.setPaid_from_account("");
@@ -288,11 +288,11 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                     buyPackage.setPackage_id(PackageID);
                     buyPackage.setBuy_date("");
                     buyPackage.setPayment_mode("Payment Gateway");
-                    buyPackage.setRefrence_no("");
+                    buyPackage.setRefrence_no(ReferenceNumber);
                     buyPackage.setDocument_attached("");
                     buyPackage.setPaid_to_account("By Admin");
                     buyPackage.setPaid_from_account("");
-                    buyPackageFromDB=buyPackage;
+                    BuyMemberShip.buyPackageFromDB=buyPackage;
 
                     Intent intent=new Intent(MemberBankAddPackages.this,PaymentType.class);
                     overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
@@ -307,7 +307,6 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                     startActivity(intent);
                     finish();
                 }
-
             }
 
         }else {
