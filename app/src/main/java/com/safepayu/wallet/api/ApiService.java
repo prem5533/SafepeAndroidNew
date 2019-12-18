@@ -13,6 +13,7 @@ import com.safepayu.wallet.models.request.RechargeRequest;
 import com.safepayu.wallet.models.request.Register;
 import com.safepayu.wallet.models.request.ResetPasscodeModel;
 import com.safepayu.wallet.models.request.SaveAddressRequest;
+import com.safepayu.wallet.models.request.SaveCoinRequest;
 import com.safepayu.wallet.models.request.SendOtpRequest;
 import com.safepayu.wallet.models.request.SendPaymentGatewayDetailsRequest;
 import com.safepayu.wallet.models.request.SendToWalletRequest;
@@ -32,6 +33,7 @@ import com.safepayu.wallet.models.response.AddBeneficiaryResponse;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BuyPackageResponse;
+import com.safepayu.wallet.models.response.CoinLogResponse;
 import com.safepayu.wallet.models.response.CommissionDetailsResponse;
 import com.safepayu.wallet.models.response.CommissionWalletTransferResponse;
 import com.safepayu.wallet.models.response.CountryListResponse;
@@ -50,6 +52,7 @@ import com.safepayu.wallet.models.response.RechargeHistoryResponse;
 import com.safepayu.wallet.models.response.RechargeResponse;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
+import com.safepayu.wallet.models.response.SaveCoinResponse;
 import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
 import com.safepayu.wallet.models.response.SendToWalletResponse;
 import com.safepayu.wallet.models.response.StateListResponse;
@@ -289,4 +292,11 @@ public interface ApiService {
 
     @POST("api/secure/payment/api/hotelBlock")
     Single<HotelBookResponse> getHotelBook(@Body BookHotelRequest bookHotelRequest);
+
+    //*************Reward Coin *******************//
+    @GET("api/secure/payment/api/coinLog")
+    Single<CoinLogResponse> getcoinLog();
+
+    @POST("api/secure/payment/api/saveCoin")
+    Single<SaveCoinResponse> getSaveCoin(@Body SaveCoinRequest saveCoinRequest);
 }
