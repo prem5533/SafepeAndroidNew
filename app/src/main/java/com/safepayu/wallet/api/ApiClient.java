@@ -26,6 +26,7 @@ public class ApiClient {
     //http://india.safepayu.com/safepe-testing/public/
    // http://india.safepayu.com/safepe-new/public/
 //http://15.206.175.119/safepe-testing/public/api/secure/payment/api/login
+
     public static final String BASE_URL = "http://alias.safepeindia.com/";
     public static final String BASE_URL_TEST = "http://testing.safepeindia.com/";
     public  static String ImagePath = "http://alias.safepeindia.com/";
@@ -40,7 +41,7 @@ public class ApiClient {
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(BASE_URL_TEST)
                     .client(okHttpClient)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())

@@ -53,7 +53,7 @@
                     android:background="@drawable/white_button_grayborder"
                     android:hint="Enter your Otp"
                     android:inputType="number"
-                    android:maxLength="4"
+                    android:maxLength="6"
                     android:padding="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"

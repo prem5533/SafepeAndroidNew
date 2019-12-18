@@ -37,7 +37,6 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.view.View.VISIBLE;
-import static com.safepayu.wallet.api.ApiClient.BASE_URL;
 
 public class BuyMemberShip extends BaseActivity implements PackageListAdapter.OnPackageSelectListener, View.OnClickListener,
         RadioGroup.OnCheckedChangeListener, PasscodeClickListener {
@@ -375,7 +374,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.image_not_available));
             }else {
                 Picasso.get()
-                        .load(BASE_URL+ selectedPackage.getImage())
+                        .load(ApiClient.ImagePath+ selectedPackage.getImage())
                         .error(getResources().getDrawable(R.drawable.image_not_available))
                         .into(imageView);
             }

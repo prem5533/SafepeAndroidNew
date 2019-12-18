@@ -1,14 +1,21 @@
 package com.safepayu.wallet.activity;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,6 +43,8 @@ import java.util.Random;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+
+import static android.view.Gravity.CENTER_VERTICAL;
 
 public class ForgetPassword extends AppCompatActivity {
 
@@ -158,6 +167,102 @@ public class ForgetPassword extends AppCompatActivity {
             }
         });
 
+//        try {
+//            Intent intent = getIntent();
+//            if (intent.getData()!=null){
+//                Log.v("data",intent.getData().toString());
+//
+//                String data=intent.getData().toString();
+//
+//                for (int i=0;i<data.length();i++){
+//                    char c=data.charAt(i);
+//                    if (c=='@'){
+//                        data=data.substring(i+1);
+//                        break;
+//                    }
+//                }
+//                Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+//                showDialogAfterBankTrans(ForgetPassword.this,"Move To SafePe");
+//            }else {
+//                Toast.makeText(this, "Not Working", Toast.LENGTH_SHORT).show();
+//            }
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+
+
+    }
+
+    public void showDialogAfterBankTrans(final Activity activity, String Message) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        // Set the alert dialog title
+        builder.setTitle("SafePe Alert");
+        // Set a message for alert dialog
+        builder.setMessage(Message);
+        // Must call show() prior to fetching text view
+
+        builder  .setIcon(getResources().getDrawable(R.drawable.new_safepe_logo));
+        // Set a positive button for alert dialog
+        //  builder.setPositiveButton("Say",null);
+        // Specifying a listener allows you to take an action before dismissing the dialog.
+        // The dialog is automatically dismissed when a dialog button is clicked.
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Continue with delete operation
+                Intent i = activity.getPackageManager().getLaunchIntentForPackage("com.safepayu.wallet");
+                activity.startActivity(i);
+                finish();
+                dialog.dismiss();
+            }
+        });
+
+        // Set a negative button for alert dialog
+        //   builder.setNegativeButton("No",null);
+
+        // Create the alert dialog
+        AlertDialog dialog = builder.create();
+
+        // Finally, display the alert dialog
+        dialog.show();
+        TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+        messageText.setGravity(Gravity.CENTER|CENTER_VERTICAL);
+        messageText.setPadding(40, 120, 40, 40);
+        messageText.setTextSize(16);
+        dialog.setCanceledOnTouchOutside(false);
+        // Get screen width and height in pixels
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        // The absolute width of the available display size in pixels.
+        int displayWidth = displayMetrics.widthPixels;
+        // The absolute height of the available display size in pixels.
+        int displayHeight = displayMetrics.heightPixels;
+
+        // Initialize a new window manager layout parameters
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+
+        // Copy the alert dialog window attributes to new layout parameter instance
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+
+        // Set the alert dialog window width and height
+        // Set alert dialog width equal to screen width 90%
+        // int dialogWindowWidth = (int) (displayWidth * 0.9f);
+        // Set alert dialog height equal to screen height 90%
+        // int dialogWindowHeight = (int) (displayHeight * 0.9f);
+
+        // Set alert dialog width equal to screen width 70%
+        int dialogWindowWidth = (int) (displayWidth * 0.9f);
+        // Set alert dialog height equal to screen height 70%
+        int dialogWindowHeight = (int) (displayHeight * 0.5f);
+
+        // Set the width and height for the layout parameters
+        // This will bet the width and height of alert dialog
+        layoutParams.width = dialogWindowWidth;
+        layoutParams.height = dialogWindowHeight;
+
+        // Apply the newly created layout parameters to the alert dialog window
+        dialog.getWindow().setAttributes(layoutParams);
     }
 
     void continueOtp() {
@@ -176,7 +281,7 @@ public class ForgetPassword extends AppCompatActivity {
         str_edit_conf_pass = enter_password.getText().toString().trim();
         String confrimPass = confrimPasswordED.getText().toString().trim();
 
-        if (TextUtils.isEmpty(enter_otp.getText().toString().trim())  || enter_otp.getText().toString().length()!=4){
+        if (TextUtils.isEmpty(enter_otp.getText().toString().trim())  || enter_otp.getText().toString().length()!=6){
             enter_otp.setError("Please Enter OTP");
             enter_otp.requestFocus();
         }else {
