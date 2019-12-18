@@ -33,6 +33,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".activity.booking.flight.FlightHistoryActivity"></activity>
         <activity android:name=".activity.booking.flight.FlightBookDetailActivity" />
         <activity android:name=".activity.booking.BookingPaymentActivity" />
@@ -116,7 +117,18 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".activity.MemberBankAddPackages" />
         <activity android:name=".activity.SendMoneyToWallet" />
-        <activity android:name=".activity.ForgetPassword" />
+        <activity android:name=".activity.ForgetPassword" >
+
+<!--            <intent-filter android:autoVerify="true">-->
+<!--                <data android:scheme="http"-->
+<!--                    android:host="alias.safepeindia.com"/>-->
+
+<!--                <action android:name="android.intent.action.VIEW" />-->
+
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity android:name=".activity.ChangePassword"/>
         <activity android:name=".activity.KycUpdate"/>
         <activity android:name=".activity.WalletHistory" />

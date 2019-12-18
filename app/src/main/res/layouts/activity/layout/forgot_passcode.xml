@@ -137,7 +137,7 @@
                         android:background="@drawable/white_button_grayborder"
                         android:hint="Enter your Otp"
                         android:inputType="number"
-                        android:maxLength="4"
+                        android:maxLength="6"
                         android:singleLine="true"
                         android:imeOptions="actionDone"
                         android:padding="10dp"
