@@ -780,9 +780,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_giftCoupon:
-                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(Navigation.this, ScratchActivity.class));
-//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+               // Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Navigation.this, ScratchActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
 
 

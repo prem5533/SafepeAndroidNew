@@ -96,7 +96,6 @@ public class ForgetPassword extends AppCompatActivity {
             public void onClick(View v) {
                 resend_top = true;
                 resendOtp();
-
             }
         });
 
@@ -177,26 +176,31 @@ public class ForgetPassword extends AppCompatActivity {
         str_edit_conf_pass = enter_password.getText().toString().trim();
         String confrimPass = confrimPasswordED.getText().toString().trim();
 
-        if (TextUtils.isEmpty(str_edit_conf_pass)) {
+        if (TextUtils.isEmpty(enter_otp.getText().toString().trim())  || enter_otp.getText().toString().length()!=4){
+            enter_otp.setError("Please Enter OTP");
+            enter_otp.requestFocus();
+        }else {
+            if (TextUtils.isEmpty(str_edit_conf_pass)) {
 
-            enter_password.setError("Please Enter Password");
-            enter_password.requestFocus();
-            confrimPasswordED.setSelection(enter_password.getText().toString().length());
-            return;
-        } else {
-            if (TextUtils.isEmpty(confrimPass)) {
-                confrimPasswordED.setError("Please Enter Password To Confirm");
-                confrimPasswordED.requestFocus();
-                confrimPasswordED.setSelection(confrimPasswordED.getText().toString().length());
+                enter_password.setError("Please Enter Password");
+                enter_password.requestFocus();
+                confrimPasswordED.setSelection(enter_password.getText().toString().length());
+                return;
             } else {
+                if (TextUtils.isEmpty(confrimPass)) {
+                    confrimPasswordED.setError("Please Enter Password To Confirm");
+                    confrimPasswordED.requestFocus();
+                    confrimPasswordED.setSelection(confrimPasswordED.getText().toString().length());
+                } else {
 
-                ForgetPasswordRequest forgetPasswordRequest = new ForgetPasswordRequest();
-                forgetPasswordRequest.setMobile(str_edit_number);
-                forgetPasswordRequest.setOtp(Integer.parseInt(enter_otp.getText().toString().trim()));
-                forgetPasswordRequest.setPassword(str_edit_conf_pass);
-                forgetPasswordRequest.setPassword_confirmation(confrimPass);
+                    ForgetPasswordRequest forgetPasswordRequest = new ForgetPasswordRequest();
+                    forgetPasswordRequest.setMobile(str_edit_number);
+                    forgetPasswordRequest.setOtp(Integer.parseInt(enter_otp.getText().toString().trim()));
+                    forgetPasswordRequest.setPassword(str_edit_conf_pass);
+                    forgetPasswordRequest.setPassword_confirmation(confrimPass);
 
-                resetPassword(forgetPasswordRequest);
+                    resetPassword(forgetPasswordRequest);
+                }
             }
         }
     }
