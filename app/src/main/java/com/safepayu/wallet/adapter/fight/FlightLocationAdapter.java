@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.models.response.booking.flight.AirportLocationResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -50,6 +51,11 @@ public class FlightLocationAdapter extends RecyclerView.Adapter<FlightLocationAd
     @Override
     public int getItemCount() {
         return airportLocationResponse.size();
+    }
+
+    public void filterList( List<AirportLocationResponse.DataBean>filterdNames) {
+       this.airportLocationResponse = filterdNames;
+        notifyDataSetChanged();
     }
 
     public class FlightLocationListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

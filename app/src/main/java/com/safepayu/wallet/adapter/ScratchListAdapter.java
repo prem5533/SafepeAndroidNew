@@ -63,11 +63,11 @@ public class ScratchListAdapter extends RecyclerView.Adapter<ScratchListAdapter.
 
         public void bindData(int position) {
 
-            if (position==2 || position ==4){
+          /*  if (position==2 || position ==4){
                 ivSimple.setVisibility(View.GONE);
             }else {
                 ivScratch.setVisibility(View.GONE);
-            }
+            }*/
 
         }
 

@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:src="@drawable/reward_icon100"/>
+                    android:src="@drawable/ic_gift"/>
 
                 <TextView
                     android:layout_width="match_parent"

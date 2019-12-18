@@ -35,7 +35,6 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScroll"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
@@ -48,64 +47,100 @@
             android:orientation="vertical"
             android:background="@color/grey_200">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="10dp"
                 android:background="@drawable/button_background_gradient_diagonal">
 
-                <TextView
-                    android:layout_width="120dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Value Received"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/grey_100"/>
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Value Received"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/grey_100"/>
 
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:text="20 Coins"
-                    android:textSize="24sp"
-                    android:gravity="center"
-                    android:fontFamily="@font/roboto_bolditalic"
-                    android:textColor="@color/yellow"/>
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="20 Coins"
+                            android:textSize="28sp"
+                            android:gravity="center"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/yellow"/>
 
-                <Button
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="Redeem Rewards"
-                    android:textSize="16sp"
-                    android:textAllCaps="false"
-                    android:gravity="center"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textColor="@color/grey_100"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/rounded_buttons"
-                    android:layout_marginLeft="5dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Redeem Rewards"
+                            android:textSize="16sp"
+                            android:textAllCaps="false"
+                            android:gravity="center"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/grey_100"
+                            android:padding="10dp"
+                            />
+                        <View
+                            android:layout_width="140dp"
+                            android:layout_height="1dp"
+                            android:background="#7BAC51"
+                            android:layout_marginTop="-10dp"
+                            android:layout_marginLeft="5dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="* Minimum Coins Required To Redeem - 100 Coins"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:fontFamily="@font/roboto_bolditalic"
+                            android:textColor="@color/divider"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="* Minimum Coins Required To Reddem - 100 Coins"
-                    android:textSize="13sp"
-                    android:gravity="center"
-                    android:fontFamily="@font/roboto_bolditalic"
-                    android:textColor="@color/white"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="2dp"/>
-
-
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        >
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="bottom|right"
+                            android:src="@drawable/ic_trophy"
+                            android:layout_marginRight="-50dp"
+                         />
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="bottom|right"
+                            android:src="@drawable/ic_reward_coin"
+                            android:layout_marginTop="-10dp"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list_scratchLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="5dp"/>
+                android:layout_margin="10dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

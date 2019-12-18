@@ -35,6 +35,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.DatePicker;
 import com.safepayu.wallet.dialogs.DatePickerChild;
+import com.safepayu.wallet.dialogs.DatePickerInfant;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.booking.flight.FlightBlockTicketRequest;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
@@ -287,6 +288,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             Infants = "0";
             if (Integer.parseInt(Infants)>0){
 
+
                 itemInfant = findViewById(R.id.relflight_infant);
                 for(int i=1; i<=Integer.parseInt(Infants); i++){
                     View view = getLayoutInflater().inflate(R.layout.flight_traveller_infant_info,null);
@@ -305,7 +307,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 etFlightInfantDOB.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DatePicker datePicker = DatePicker.newInstance(etFlightInfantDOB, null);
+                        DatePickerInfant datePicker = DatePickerInfant.newInstance(etFlightInfantDOB, null);
                         datePicker.show(getSupportFragmentManager(), "datePicker");
                     }
                 });
@@ -1026,6 +1028,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             tvTotalPaid = view.findViewById(R.id.tv_total_paid);
             imageCancel = view.findViewById(R.id.image_cancel);
 
+         //   if ()
             tvTotalBaseFare.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getActualBaseFare()));
             tvTotalTaxFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getTax()));
             tvAirfare.setText(String.valueOf(mdata.getFareDetails().getTotalFare()));
