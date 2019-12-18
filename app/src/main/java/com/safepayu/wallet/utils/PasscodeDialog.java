@@ -14,13 +14,21 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.ForgotPasscode;
-import com.squareup.picasso.Picasso;
+import com.safepayu.wallet.api.ApiClient;
+import com.safepayu.wallet.api.ApiService;
+import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.response.BaseResponse;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class PasscodeDialog extends Dialog implements View.OnClickListener {
     private TextView one, two, three, four, five, six, seven, eight, nine, zero, txvEnter, error, forgot_passcode;
@@ -28,6 +36,7 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
     private EditText edtxPassCode;
     private Activity activity;
     ImageView visible,passcode_logo;
+    private LoadingDialog loadingDialog;
 
     private PasscodeClickListener clickListener;
 
@@ -41,6 +50,7 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCancelable(false);
+        loadingDialog = new LoadingDialog(activity);
         setContentView(R.layout.passcode_layout);
         String imagePath = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LOGO_IMAGE);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
@@ -92,12 +102,19 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().equals(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE))) {
-                    clickListener.onPasscodeMatch(true);
-                    dismiss();
-                } else if (s.length() == 4 && !s.toString().equals(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE))) {
-                    error.setText("Invalid Passcode");
-                    error.setVisibility(View.VISIBLE);
+//                if (s.toString().equals(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE))) {
+////                    clickListener.onPasscodeMatch(true);
+////                    dismiss();
+////                } else if (s.length() == 4 && !s.toString().equals(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE))) {
+////                    error.setText("Invalid Passcode");
+////                    error.setVisibility(View.VISIBLE);
+////                }
+////                if (TextUtils.isEmpty(s)) {
+////                    error.setVisibility(View.GONE);
+////                }
+
+                if (s.length() == 4 ) {
+                    getPasscodeVerify(s.toString());
                 }
                 if (TextUtils.isEmpty(s)) {
                     error.setVisibility(View.GONE);
@@ -211,6 +228,34 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
                 }
                 break;
         }
+    }
+
+    private void getPasscodeVerify(String Passcode) {
+
+        loadingDialog.showDialog(activity.getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(activity).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getPasscodeVerify(Passcode)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse baseResponse) {
+                        loadingDialog.hideDialog();
+                        if (baseResponse.getStatus()){
+                            clickListener.onPasscodeMatch(true);
+                        }else{
+                            clickListener.onPasscodeMatch(false);
+                        }
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        Toast.makeText(activity, e.getCause().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }));
 
     }
 }

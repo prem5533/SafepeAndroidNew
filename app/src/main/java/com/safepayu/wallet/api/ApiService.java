@@ -233,6 +233,12 @@ public interface ApiService {
     @GET("api/secure/payment/api/walletLimitLeft")
     Single<WalletLimitResponse>getWalletLimitLeft();
 
+    @FormUrlEncoded
+    @POST("api/secure/payment/api/verifyPasscode")
+    Single<BaseResponse> getPasscodeVerify(@Field("passcode") String passcode);
+
+
+
     //*************Flight Booking *******************//
     @GET("api/secure/payment/api/getFlightAirport")
     Single<AirportLocationResponse> getAirportLocation();

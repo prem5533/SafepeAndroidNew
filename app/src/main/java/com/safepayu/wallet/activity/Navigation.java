@@ -720,16 +720,16 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
             case R.id.layout_flight:
 
-       //         Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
-            /*    startActivity(new Intent(Navigation.this, FlightsActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);*/
+                Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(Navigation.this, FlightsActivity.class));
+//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_bus_tickets:
 
                 Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
 
-              /*  startActivity(new Intent(Navigation.this, BusActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);*/
+//                startActivity(new Intent(Navigation.this, BusActivity.class));
+//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_train_ticket:
                 Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
