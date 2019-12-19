@@ -4,11 +4,13 @@
     android:layout_height="match_parent"
     android:background="@drawable/button_background_gradient_diagonal"
     android:id="@+id/splash_pager"
+    android:orientation="vertical"
     android:fitsSystemWindows="true">
 
     <FrameLayout
+        android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/tvskip"
         android:layout_width="wrap_content"
@@ -73,6 +75,7 @@
         android:background="@null"
         android:fitsSystemWindows="true"
         android:visibility="visible"
+        android:layout_below="@+id/frame"
         tools:listitem="@layout/splash_view_pager_item">
 
     </androidx.viewpager.widget.ViewPager>

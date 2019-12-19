@@ -207,7 +207,7 @@ public class ScratchActivity extends AppCompatActivity implements ScratchListAda
     private void showDialogRedeemNotify() {
         new AlertDialog.Builder(ScratchActivity.this)
                     .setTitle("SafePe Alert")
-                    .setMessage("For Redeem Reward, coin should be equal or greater than 100")
+                    .setMessage("To Redeem Reward, coin should be equal or greater than 100 coins")
                     .setCancelable(false)
 
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {

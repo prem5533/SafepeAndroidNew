@@ -4,8 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/button_background_gradient_diagonal"
+    android:gravity="center"
+    android:background="@null"
     >
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +16,7 @@
         android:textColor="@color/white"
         android:layout_margin="20dp"
         android:gravity="center"
+        android:visibility="gone"
         />
     <RelativeLayout
         android:layout_width="match_parent"
@@ -147,7 +150,7 @@
         android:id="@+id/scratch_view"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        app:overlay_image="@drawable/scratch_card"
+        app:overlay_image="@drawable/scrath"
         app:tile_mode="CLAMP"
         app:overlay_width="300dp"
         app:overlay_height="300dp"

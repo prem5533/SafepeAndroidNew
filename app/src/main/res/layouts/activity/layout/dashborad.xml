@@ -22,9 +22,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@color/yellow_theme">
-
+                android:layout_height="150dp">
             </androidx.viewpager.widget.ViewPager>
 
             <com.google.android.material.tabs.TabLayout
@@ -34,7 +32,7 @@
                 app:tabBackground="@drawable/tab_selector"
                 app:tabGravity="center"
                 app:tabIndicatorHeight="0dp"
-                app:tabMaxWidth="30dp"
+                app:tabMaxWidth="20dp"
                 android:layout_gravity="bottom|center"
                 android:layout_marginTop="-15dp"/>
 
@@ -503,7 +501,7 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/gift_coupon64" />
+                            android:src="@drawable/ic_present" />
 
                         <TextView
                             android:layout_width="wrap_content"
