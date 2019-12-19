@@ -57,7 +57,7 @@ import static com.safepayu.wallet.activity.booking.flight.FlightListActivity.MY_
 public class FlightPassengerDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tvFlightPassengerDateTravellersClass,tvFlightPassengerTo,tvFlightPassengerFrom,tvTotalFlightFare,tvTotalNavellersNumber,tvChild,tvInfant;
-    private String Source,Destination,JourneyDate,TrvaellersCount,ClassType,Adults,Infants,Children,FlightImage,TravelClass,AirLineCode,AirLineNumber,TripType,TotalFareReturnOnward;
+    private String Source,Destination,JourneyDate,TrvaellersCount,ClassType,Adults,Infants,Children,FlightImage,TravelClass,AirLineCode,AirLineNumber,TotalFareReturnOnward;
     private Button backbtnFlightPassenger,continue_btn;
     private EditText etFlightpMobileNumber,etFlightpEmailNumber;
     public  Dialog dialog;
@@ -70,6 +70,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             tv_flight_detail_desti_date_return,tv_flight_booking_duration_return,tv_flight_booking_stop_return,tv_flight_booking_dep_time_return,tv_flight_booking_arrival_time_return;
     String json;
     private Button flightBookBtn;
+    private static String TripType;
 
   public  static AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
   public  static AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mdataReturn;
@@ -1028,12 +1029,21 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             tvTotalPaid = view.findViewById(R.id.tv_total_paid);
             imageCancel = view.findViewById(R.id.image_cancel);
 
-         //   if ()
-            tvTotalBaseFare.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getActualBaseFare()));
-            tvTotalTaxFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getTax()));
-            tvAirfare.setText(String.valueOf(mdata.getFareDetails().getTotalFare()));
-            tvConvenienceFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getConveniencefee()));
-            tvTotalPaid.setText(String.valueOf(mdata.getFareDetails().getTotalFare()));
+            if (TripType.equals("1")){
+                tvTotalBaseFare.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getActualBaseFare()));
+                tvTotalTaxFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getTax()));
+                tvAirfare.setText(String.valueOf(mdata.getFareDetails().getTotalFare()));
+                tvConvenienceFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getConveniencefee()));
+                tvTotalPaid.setText(String.valueOf(mdata.getFareDetails().getTotalFare()));
+            }
+            else if (TripType.equals("2")){
+                tvTotalBaseFare.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getActualBaseFare()+mdataReturn.getFareDetails().getChargeableFares().getActualBaseFare()));
+                tvTotalTaxFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getTax()+mdataReturn.getFareDetails().getChargeableFares().getTax()));
+                tvAirfare.setText(String.valueOf(mdata.getFareDetails().getTotalFare()+mdataReturn.getFareDetails().getTotalFare()));
+                tvConvenienceFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getConveniencefee()+mdataReturn.getFareDetails().getChargeableFares().getConveniencefee()));
+                tvTotalPaid.setText(String.valueOf(mdata.getFareDetails().getTotalFare()+mdataReturn.getFareDetails().getTotalFare()));
+            }
+
             imageCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

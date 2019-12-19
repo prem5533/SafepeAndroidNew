@@ -67,10 +67,17 @@ public class ScratchListAdapter extends RecyclerView.Adapter<ScratchListAdapter.
             ivScratch = itemView.findViewById(R.id.scratch_scratchListAdapter);
             tvNumberCoin = itemView.findViewById(R.id.tv_number_of_coin);
             tvCreatedTime = itemView.findViewById(R.id.tv_reward_created);
+
+
             itemView.setOnClickListener(this);
         }
 
         public void bindData(int position) {
+
+            String duration [] =mCoinItem.get(position).getCreated_at().split(" ");
+            String date = duration[0];
+            String time = duration[1];
+
 
           if (mCoinItem.get(position).getStatus()==0){
               ivSimple.setVisibility(View.GONE);
@@ -80,7 +87,7 @@ public class ScratchListAdapter extends RecyclerView.Adapter<ScratchListAdapter.
               }
               else {
                   tvNumberCoin.setText(String.valueOf(mCoinItem.get(position).getAmount())+" Coins"); }
-              tvCreatedTime.setText(mCoinItem.get(position).getCreated_at());
+              tvCreatedTime.setText(date);
           }
           else if (mCoinItem.get(position).getStatus()==1){
               ivSimple.setVisibility(View.VISIBLE);
@@ -91,7 +98,7 @@ public class ScratchListAdapter extends RecyclerView.Adapter<ScratchListAdapter.
               else {
                   tvNumberCoin.setText(String.valueOf(mCoinItem.get(position).getAmount())+" Coins"); }
 
-              tvCreatedTime.setText(mCoinItem.get(position).getCreated_at());
+              tvCreatedTime.setText(date);
           }
 
 

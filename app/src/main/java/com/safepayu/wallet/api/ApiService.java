@@ -10,6 +10,7 @@ import com.safepayu.wallet.models.request.KycRequest;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.request.RechargeRequest;
+import com.safepayu.wallet.models.request.RedeemCoinRequest;
 import com.safepayu.wallet.models.request.Register;
 import com.safepayu.wallet.models.request.ResetPasscodeModel;
 import com.safepayu.wallet.models.request.SaveAddressRequest;
@@ -50,6 +51,7 @@ import com.safepayu.wallet.models.response.PackageListData;
 import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.models.response.RechargeHistoryResponse;
 import com.safepayu.wallet.models.response.RechargeResponse;
+import com.safepayu.wallet.models.response.RedeemCoinResponse;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.SaveCoinResponse;
@@ -294,9 +296,12 @@ public interface ApiService {
     Single<HotelBookResponse> getHotelBook(@Body BookHotelRequest bookHotelRequest);
 
     //*************Reward Coin *******************//
-    @GET("api/secure/payment/api/coinLog")
+    @GET("api/secure.safepe/api/coinLog")
     Single<CoinLogResponse> getcoinLog();
 
-    @POST("api/secure/payment/api/saveCoin")
+    @POST("api/secure.safepe/api/saveCoin")
     Single<SaveCoinResponse> getSaveCoin(@Body SaveCoinRequest saveCoinRequest);
+
+    @POST("api/secure.safepe/api/redeemCoin")
+    Single<RedeemCoinResponse> getRedeemCoin(@Body RedeemCoinRequest redeemCoinRequest);
 }

@@ -64,6 +64,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -98,7 +99,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
     public static String AdultsCount,ChildCount,InfantCount,adults,infant,child;
     String tc = "",travellersClass;
     private EditText locationNameFlight;
-    private ArrayList<String> FlightSourcesList;
+    List<AirportLocationResponse.DataBean> FlightSourcesList ;
 
 
     @Override
@@ -968,7 +969,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
 
            @Override
            public void afterTextChanged(Editable s) {
-         //      filter(s.toString());
+               filter(s.toString());
            }
        });
 
@@ -986,24 +987,22 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         dialog.show();
 
 
-
         getAirportLocation();
     }
+
+    //*************************Filter Location  List ******************************
     private void filter(String text) {
         //new array list that will hold the filtered data
-        ArrayList<String> filterdNames = new ArrayList<>();
+        ArrayList<AirportLocationResponse.DataBean> filterdNames = new ArrayList<>();
 
         //looping through existing elements
-        for (String s : FlightSourcesList) {
+        for (AirportLocationResponse.DataBean mItem : FlightSourcesList) {
             //if the existing elements contains the search input
-            if (s.toLowerCase().contains(text.toLowerCase())) {
+            if (mItem.getCity().toLowerCase().contains(text.toLowerCase())) {
                 //adding the element to filtered list
-                filterdNames.add(s);
-            }
-        }
-
+                filterdNames.add(mItem); } }
         //calling a method of the adapter class and passing the filtered list
-     //   flightLocationAdapter.filterList(filterdNames);
+       flightLocationAdapter.filterList(filterdNames);
     }
 
     private void getAirportLocation() {
@@ -1020,16 +1019,16 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
                         if (response.isStatus()) {
 
                             try {
-
+                                FlightSourcesList =response.getData();
 
                                 recyclerViewLocationList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
                                 flightLocationAdapter = new FlightLocationAdapter(getApplicationContext(), response.getData(),FlightsActivity.this);
                                 recyclerViewLocationList.setAdapter(flightLocationAdapter);
 
 
-                                    for (int i=0;i<response.getData().size();i++){
-                                    FlightSourcesList.add(response.getData().get(i).getCity());
-                                }
+//                                    for (int i=0;i<response.getData().size();i++){
+//                                  //  FlightSourcesList.add(response.getData().get(i).getCity());
+//                                }
                                /* if (response.getData().size()>0) {
                                     for (int i = 0; i < response.getData().size(); i++) {
                                         BusSourcesList.add(response.getData().get(i).getName());
