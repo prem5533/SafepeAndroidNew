@@ -643,8 +643,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }
 
 
-
-
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(mobileNo.getText().toString().trim(), null);
         request.setDeviceid(BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());

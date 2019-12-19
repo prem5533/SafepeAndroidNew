@@ -52,11 +52,18 @@ public class SpinnerAdapter extends BaseAdapter {
 
         names.setText(mOperList.get(position).getOperator_name());
 
-        try {
-            if (!TextUtils.isEmpty(mOperList.get(position).getImage()))
-            Picasso.get().load(ApiClient.ImagePath+mOperList.get(position).getImage()).into(icon);
+        if (position==0){
+            names.setText("Select Operator");
+        }
 
+        try {
+            if (!TextUtils.isEmpty(mOperList.get(position).getImage())){
+                Picasso.get().load(ApiClient.ImagePath+mOperList.get(position).getImage()).into(icon);
+            }else {
+                icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_wifi));
+            }
         }catch (Exception e){
+            icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_wifi));
             e.printStackTrace();
         }
 

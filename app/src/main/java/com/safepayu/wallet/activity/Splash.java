@@ -64,7 +64,7 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
                     passcodeDialog.show();
                 }
             } else {
-                startActivity(new Intent(Splash.this, LoginActivity.class));
+                startActivity(new Intent(Splash.this, SplashViewPagerActivity.class));
                 finish();
             }
         }
@@ -114,7 +114,7 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
                             }else {
                                 promotionResponse1.setStatus(false);
                             }
-                            startActivity(new Intent(Splash.this, Navigation.class));
+                            startActivity(new Intent(Splash.this, SplashViewPagerActivity.class));
                             finish();
                         }catch (Exception e){
                             Toast.makeText(Splash.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();

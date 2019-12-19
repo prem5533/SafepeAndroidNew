@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,7 +31,6 @@ import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.LoginActivity;
 import com.safepayu.wallet.activity.PaymentType;
 import com.safepayu.wallet.adapter.OfferAdapter;
 import com.safepayu.wallet.adapter.SpinnerAdapter;
@@ -42,6 +40,7 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.CustOperatorResponse;
 import com.safepayu.wallet.models.response.Offer;
 import com.safepayu.wallet.models.response.OperatorResponse;
+import com.safepayu.wallet.models.response.RechargePlanResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -67,7 +66,8 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
     private Spinner OperatorSpinner;
     public static EditText AmountED;
     private EditText MobileED;
-    String OperatorText,OperatorCode,OperatorId ;
+    String OperatorText,OperatorCode="0",OperatorId,OperatorCodeSelected="";
+    private boolean checkOnce=false;
 
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList, IdList, OperatorCodeList,OperatorImage;
@@ -144,14 +144,27 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Enter Your Mobile Number", false);
                 } else {
                     if (MobileED.getText().toString().trim().length() == 10) {
-                        if (isNetworkAvailable()) {
-                            if (offers.isEmpty()) {
-                                new GetOfferData().execute();
+                        if (TextUtils.isEmpty(OperatorCode) || OperatorCode.equals("0")) {
+
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Select Operator", false);
+                        }else {
+                            if (isNetworkAvailable()) {
+//                                if (offers.isEmpty()) {
+//                                    //new GetOfferData().execute();
+//                                    getCustomerOffer();
+//                                } else {
+//                                    if (OperatorCodeSelected.equals(OperatorCode)){
+//                                        dialog.show();
+//                                    }else {
+//                                        getCustomerOffer();
+//                                    }
+//
+//                                }
+
+                                getCustomerOffer();
                             } else {
-                                dialog.show();
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Check Your Internet Connection", false);
                             }
-                        } else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Check Your Internet Connection", false);
                         }
 
                     } else {
@@ -251,29 +264,35 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
             }
         });
 
+        OperatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if (checkOnce){
+
+                }else {
+                    checkOnce=true;
+                }
+                if (i!=0){
+                    OperatorText=mOperList.get(i).getOperator_name();
+                    OperatorCode= mOperList.get(i).getOperator_code();
+                    OperatorId= String.valueOf(mOperList.get(i).getId());
+                    OperatorCodeSelected=OperatorCode;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                checkOnce=false;
+                OperatorCode="0";
+            }
+        });
+
         if (isNetworkAvailable()) {
             getAllOperators();
         } else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Check Your Internet Connection", false);
         }
-
-        OperatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                OperatorText=mOperList.get(i).getOperator_name();
-                OperatorCode= mOperList.get(i).getOperator_code();
-                OperatorId= String.valueOf(mOperList.get(i).getId());
-                  //  Toast.makeText(MobileRecharge.this, "You Select Position: "+OperatorText+i+" ",Toast.LENGTH_SHORT).show();
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
     }
 
@@ -348,6 +367,13 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
 
     private void getAllOperators() {
 
+//        final OperatorResponse.OperatorsBean operatorsBean=new OperatorResponse.OperatorsBean();
+//        operatorsBean.setId(0);
+//        operatorsBean.setImage("");
+//        operatorsBean.setOperator_code("0");
+//        operatorsBean.setOperator_name("Select Operator");
+//        mOperList.add(operatorsBean);
+
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
@@ -360,13 +386,24 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                     public void onSuccess(OperatorResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            mOperList=response.getOperators();
-                       //     mOperList.add(0,"Select");
 
-                            for (int i = 0; i < response.getOperators().size(); i++) {
+                            if (response.getOperators().size()>0){
+                                mOperList=response.getOperators();
+
+//                            for (int i = 0; i < response.getOperators().size(); i++) {
+//                                operatorsBean.setId(response.getOperators().get(i).getId());
+//                                operatorsBean.setImage(response.getOperators().get(i).getImage());
+//                                operatorsBean.setOperator_code(response.getOperators().get(i).getOperator_code());
+//                                operatorsBean.setOperator_name(response.getOperators().get(i).getOperator_name());
+//                                mOperList.add(operatorsBean);
+//                            }
+
 
                                 SpinnerAdapter customAdapter=new SpinnerAdapter(getApplicationContext(),mOperList);
-                                OperatorSpinner.setAdapter(customAdapter); }
+                                OperatorSpinner.setAdapter(customAdapter);
+                            }else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"No Operator Found", false);
+                            }
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), response.getMessage(), false);
                         }
@@ -395,11 +432,11 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                         if (response.isStatus()) {
 
                             try {
-                                OperatorText = response.getOperator().getOperator_name();
-                                OperatorCode = response.getOperator().getOperator_code();
-                                int indexx = OperatorCodeList.indexOf(OperatorCode);
-                                OperatorId = IdList.get(indexx);
-                                OperatorSpinner.setSelection(indexx);
+//                                OperatorText = response.getOperator().getOperator_name();
+//                                OperatorCode = response.getOperator().getOperator_code();
+//                                int indexx = OperatorCodeList.indexOf(OperatorCode);
+//                                OperatorId = IdList.get(indexx);
+//                                OperatorSpinner.setSelection(indexx);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -419,6 +456,109 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         AmountED.setText(offer.getAmount());
         AmountED.setSelection(offer.getAmount().length());
         dialog.dismiss();
+    }
+
+    private void getCustomerOffer() {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getRechargePlan(MobileED.getText().toString().trim(),OperatorCode)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<RechargePlanResponse>() {
+                    @Override
+                    public void onSuccess(RechargePlanResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+
+                            try {
+
+                                if (response.getData().getDATA().size()>0){
+                                    for (int i=0;i<response.getData().getDATA().size();i++){
+                                        Offer offer = new Offer();
+                                        offer.setCategory("3G/4G");
+                                        offer.setSubCategory("");
+                                        offer.setValidity(response.getData().getDATA().get(i).getValidity());
+                                        offer.setShortdesc(response.getData().getDATA().get(i).getDetail());
+                                        offer.setAmount(response.getData().getDATA().get(i).getAmount());
+                                        offer.setTalktime(response.getData().getDATA().get(i).getTalktime());
+                                        offers.add(offer);
+                                    }
+                                }
+
+                                if (response.getData().getRMG().size()>0){
+                                    for (int i=0;i<response.getData().getRMG().size();i++){
+                                        Offer offer = new Offer();
+                                        offer.setCategory("ROAMING");
+                                        offer.setSubCategory("");
+                                        offer.setValidity(response.getData().getRMG().get(i).getValidity());
+                                        offer.setShortdesc(response.getData().getRMG().get(i).getDetail());
+                                        offer.setAmount(response.getData().getRMG().get(i).getAmount());
+                                        offer.setTalktime(response.getData().getRMG().get(i).getTalktime());
+                                        offers.add(offer);
+                                    }
+                                }
+
+
+                                if (response.getData().getTUP().size()>0){
+                                    for (int i=0;i<response.getData().getTUP().size();i++){
+                                        Offer offer = new Offer();
+                                        offer.setCategory("Topup");
+                                        offer.setSubCategory("");
+                                        offer.setValidity(response.getData().getTUP().get(i).getValidity());
+                                        offer.setShortdesc(response.getData().getTUP().get(i).getDetail());
+                                        offer.setAmount(response.getData().getTUP().get(i).getAmount());
+                                        offer.setTalktime(response.getData().getTUP().get(i).getTalktime());
+                                        offers.add(offer);
+                                    }
+                                }
+
+
+                                if (response.getData().getSPL().size()>0){
+                                    for (int i=0;i<response.getData().getSPL().size();i++){
+                                        Offer offer = new Offer();
+                                        offer.setCategory("SPECIAL");
+                                        offer.setSubCategory("");
+                                        offer.setValidity(response.getData().getSPL().get(i).getValidity());
+                                        offer.setShortdesc(response.getData().getSPL().get(i).getDetail());
+                                        offer.setAmount(response.getData().getSPL().get(i).getAmount());
+                                        offer.setTalktime(response.getData().getSPL().get(i).getTalktime());
+                                        offers.add(offer);
+                                    }
+                                }
+
+                                if (response.getData().getFTT().size()>0){
+                                    for (int i=0;i<response.getData().getSPL().size();i++){
+                                        Offer offer = new Offer();
+                                        offer.setCategory("FULL TT");
+                                        offer.setSubCategory("");
+                                        offer.setValidity(response.getData().getSPL().get(i).getValidity());
+                                        offer.setShortdesc(response.getData().getSPL().get(i).getDetail());
+                                        offer.setAmount(response.getData().getSPL().get(i).getAmount());
+                                        offer.setTalktime(response.getData().getSPL().get(i).getTalktime());
+                                        offers.add(offer);
+                                    }
+                                }
+
+
+                                SetOffersDialog(offers);
+
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),response.getMessage(),true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.mobileRechargeLayout), true, e);
+                    }
+                }));
     }
 
     public class GetOfferData extends AsyncTask<String, String, String> {
@@ -512,12 +652,13 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         Button cancelBtn = (Button) dialog.findViewById(R.id.cancel);
 
         TabLayout tabs = (TabLayout) dialog.findViewById(R.id.tabLayout);
-        tabs.addTab(tabs.newTab().setText("FULL TALKTIME")); // FTT
+
+        tabs.addTab(tabs.newTab().setText("SPECIAL"));  // special
+        tabs.addTab(tabs.newTab().setText("3G"));  // 3G
         tabs.addTab(tabs.newTab().setText("Top Up"));  // TUP
         /*tabs.addTab(tabs.newTab().setText("4G"));*/
-        tabs.addTab(tabs.newTab().setText("3G"));  // 3G
-        tabs.addTab(tabs.newTab().setText("2G"));  // 2G
         tabs.addTab(tabs.newTab().setText("ROAMING"));   // RMG
+        tabs.addTab(tabs.newTab().setText("FULL TALKTIME")); // FTT
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -530,12 +671,12 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                 } else if (tab.getText() == "3G") {
 
                     adapter.setOfferType("3G/4G");
-                } else if (tab.getText() == "2G") {
+                } else if (tab.getText() == "SPECIAL") {
 
-                    adapter.setOfferType("2G");
+                    adapter.setOfferType("SPECIAL");
                 } else if (tab.getText() == "ROAMING") {
 
-                    adapter.setOfferType("");
+                    adapter.setOfferType("ROAMING");
                 }
             }
 
