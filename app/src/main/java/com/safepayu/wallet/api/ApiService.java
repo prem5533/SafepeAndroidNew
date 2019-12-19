@@ -47,6 +47,7 @@ import com.safepayu.wallet.models.response.PackageDetailsResponse;
 import com.safepayu.wallet.models.response.PackageListData;
 import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.models.response.RechargeHistoryResponse;
+import com.safepayu.wallet.models.response.RechargePlanResponse;
 import com.safepayu.wallet.models.response.RechargeResponse;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
@@ -153,6 +154,10 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/secure.safepe/api/getCustOperator")
     Single<CustOperatorResponse> getMobileOperator(@Field("number") String number);
+
+    @FormUrlEncoded
+    @POST("api/secure.safepe/api/rechargePlan")
+    Single<RechargePlanResponse> getRechargePlan(@Field("mobile") String mobile, @Field("opId") String opId);
 
     @POST("api/secure.safepe/api/forgotPassword")
     Single<ForgetPasswordResponse> getForgetPassword(@Body ForgetPasswordRequest forgetPasswordResponse);

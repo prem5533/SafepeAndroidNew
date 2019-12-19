@@ -9,12 +9,12 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -253,7 +253,7 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        Toast.makeText(activity, e.getCause().toString(), Toast.LENGTH_SHORT).show();
+                        Log.v("error",e.getMessage());
                     }
                 }));
 
