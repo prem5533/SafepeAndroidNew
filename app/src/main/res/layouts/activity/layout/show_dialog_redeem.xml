@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:background="@drawable/button_background_gradient_diagonal">
+
+    <ImageView
+        android:id="@+id/cross"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:src="@drawable/ic_dialog_close_dark"
+        android:padding="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/safelogo_transparent"
+        android:layout_marginTop="-20dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_rounded">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red_theme"
+                android:layout_marginLeft="5dp"
+                android:text="Minimum Coins Redeem"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="100"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:gravity="right"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/yellow"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text=" Use 10 Coins = Get 1 Rupee"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="13sp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/edittext_rounded"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red_theme"
+            android:layout_marginLeft="5dp"
+            android:text="Total Earn Coin"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="15sp"
+            android:padding="10dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/et_total_coin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text=""
+           android:textColor="@color/black"
+            android:padding="10dp"
+            android:gravity="right"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_marginRight="10dp"
+            android:textSize="15sp"
+            android:inputType="number"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/edittext_rounded"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red_theme"
+            android:layout_marginLeft="5dp"
+            android:text="Redeem Coin"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="15sp"
+            android:padding="10dp"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:id="@+id/et_coin_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="Enter Coin "
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="right"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="15sp"
+            android:inputType="number"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:imeOptions="actionDone"
+            android:maxLength="3"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_redeem"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/amount"
+        android:layout_gravity="center"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/yellow_round_button"
+        android:padding="10dp"
+        android:text="Redeem"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        android:fontFamily="@font/roboto_regular"/>
+
+
+
+</LinearLayout>

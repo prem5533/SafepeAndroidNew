@@ -7,58 +7,65 @@
     android:layout_margin="5dp">
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:id="@+id/simple_scratchListAdapter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:elevation="5dp"
-            app:cardCornerRadius="5dp"
+            app:cardCornerRadius="2dp"
             android:padding="5dp"
-            android:id="@+id/simple_scratchListAdapter">
+            android:layout_margin="1dp"
+         >
+
 
             <LinearLayout
                 android:layout_width="180dp"
-                android:layout_height="180dp"
+                android:layout_height="140dp"
                 android:orientation="vertical"
                 android:layout_gravity="center"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:layout_margin="10dp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/reward_icon100"/>
+                    android:gravity="center"
+                    android:src="@drawable/ic_gift" />
+
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Reward Coin Won"
+                    android:text="Reward Won"
                     android:textSize="14sp"
                     android:gravity="center"
                     android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"/>
 
                 <TextView
+                    android:id="@+id/tv_number_of_coin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="5"
+                    android:text="5 Coin"
                     android:textSize="17sp"
                     android:gravity="center"
-                    android:fontFamily="@font/roboto_bolditalic"
+                    android:fontFamily="@font/roboto_bold"
                     android:textColor="@color/yellow_theme"
                     android:layout_margin="5dp"/>
 
                 <TextView
+                    android:id="@+id/tv_reward_created"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="01 Nov 2019"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:gravity="center"
-                    android:fontFamily="@font/roboto_bolditalic"
+                    android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/grey_600"
                     android:layout_margin="5dp"/>
 
@@ -67,20 +74,44 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:id="@+id/scratch_scratchListAdapter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:elevation="5dp"
-            app:cardCornerRadius="5dp"
+            app:cardCornerRadius="2dp"
             android:padding="5dp"
             android:layout_centerInParent="true"
-            android:id="@+id/scratch_scratchListAdapter">
+            app:cardBackgroundColor="@color/white"
+            android:layout_margin="1dp"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background_gradient_diagonal"
+                android:gravity="center">
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="140dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:src="@drawable/safelogo_transparent"/>
 
-            <ImageView
-                android:layout_width="170dp"
-                android:layout_height="170dp"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:src="@drawable/scratch_card" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Reward"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+
         </androidx.cardview.widget.CardView>
 
 <!--        <com.anupkumarpanwar.scratchview.ScratchView-->

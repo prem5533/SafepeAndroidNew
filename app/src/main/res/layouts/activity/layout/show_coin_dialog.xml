@@ -1,0 +1,160 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@null"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reward"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:visibility="gone"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+      android:layout_margin="0dp">
+
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:gravity="center">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/tv_scrach_card"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+
+            >
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Congratulations!"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_bolditalic"
+                    android:textColor="@color/yellow"
+                    android:layout_margin="5dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp">
+                  <LinearLayout
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:layout_weight="1">
+                      <ImageView
+                          android:layout_width="30dp"
+                          android:layout_height="30dp"
+                          android:layout_marginLeft="30dp"
+                          android:src="@drawable/ic_star"
+                          />
+                      <ImageView
+                          android:layout_width="30dp"
+                          android:layout_height="30dp"
+                          android:layout_margin="30dp"
+                          android:src="@drawable/ic_starryellow"
+                      />
+                  </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:src="@drawable/ic_gift"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="30dp"
+                            android:src="@drawable/ic_staryellow"
+                            />
+                        <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="30dp"
+                        android:src="@drawable/ic_starr"
+                        />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Reward Won"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/tv_number_of_coin_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5 Coin"
+                    android:textSize="17sp"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/yellow_theme"
+                    android:layout_margin="5dp"/>
+
+                <TextView
+                    android:id="@+id/tv_reward_created_dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="01 Nov 2019"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/grey_600"
+                    android:layout_margin="5dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    <com.anupkumarpanwar.scratchview.ScratchView
+        android:id="@+id/scratch_view"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:overlay_image="@drawable/scrath"
+        app:tile_mode="CLAMP"
+        app:overlay_width="300dp"
+        app:overlay_height="300dp"
+        />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -13,12 +13,12 @@ import com.safepayu.wallet.BaseApp;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DatePickerChild extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+public class DatePickerInfant extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     private EditText editText;
     private TextView textView;
 
-    public static DatePickerChild newInstance(EditText editText, TextView textView) {
-        DatePickerChild fragment = new DatePickerChild();
+    public static DatePickerInfant newInstance(EditText editText, TextView textView) {
+        DatePickerInfant fragment = new DatePickerInfant();
         fragment.editText = editText;
         fragment.textView = textView;
         return fragment;
@@ -35,12 +35,11 @@ public class DatePickerChild extends DialogFragment implements DatePickerDialog.
 
         Date today2 = new Date();
         c.setTime(today2);
-        c.add( Calendar.YEAR, -12 ) ;// Subtract 6 months
+        c.add( Calendar.YEAR, -2) ;// Subtract 6 months
         long minDate = c.getTime().getTime(); // Twice!
 
         Date today = new Date();
         c.setTime(today);
-        c.add( Calendar.YEAR, -2 ) ;
         long maxDate = c.getTime().getTime(); // Twice!
 
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);

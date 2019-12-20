@@ -64,7 +64,7 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
                     passcodeDialog.show();
                 }
             } else {
-                startActivity(new Intent(Splash.this, SplashViewPagerActivity.class));
+                startActivity(new Intent(Splash.this, LoginActivity.class));
                 finish();
             }
         }

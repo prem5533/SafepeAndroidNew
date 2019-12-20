@@ -8,14 +8,19 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -59,6 +64,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -92,6 +98,8 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
     public static TextView tvAdultsCount,tvChildrenCount,tvInfantCount,tv_done;
     public static String AdultsCount,ChildCount,InfantCount,adults,infant,child;
     String tc = "",travellersClass;
+    private EditText locationNameFlight;
+    List<AirportLocationResponse.DataBean> FlightSourcesList ;
 
 
     @Override
@@ -154,7 +162,7 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         tvReturnDate.setOnClickListener(this);
         linearFlightDestination.setOnClickListener(this);
         linearFlightSource.setOnClickListener(this);
-        linearFlightSource.setOnClickListener(this);
+
 
         tvOneWay.setBackgroundDrawable(getResources().getDrawable(R.drawable.green_rounded));
         tvOneWay.setTextColor(getResources().getColor(R.color.white));
@@ -452,6 +460,8 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
            // FlightReturnDate = "03-01-2020";
            // if (tvReturnDate.getText().toString().isEmpty()&&tvReturnMonthYear.getText().toString().isEmpty());
             Intent intent = new Intent(FlightsActivity.this,TwoWayListActivity.class);
+            intent.putExtra("dep_date",Depp);
+            intent.putExtra("arrival_date",FlightReturnDate);
             flightTypeData();
             startActivity(intent);
         }
@@ -947,6 +957,23 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         dialog.setContentView(R.layout.dialog_flight_location_list);
 
         recyclerViewLocationList = dialog.findViewById(R.id.airport_locaiton_list);
+        locationNameFlight = dialog.findViewById(R.id.locationNameFlight);
+       locationNameFlight.addTextChangedListener(new TextWatcher() {
+           @Override
+           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+           }
+
+           @Override
+           public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+           }
+
+           @Override
+           public void afterTextChanged(Editable s) {
+               filter(s.toString());
+           }
+       });
 
 
 
@@ -962,8 +989,22 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
         dialog.show();
 
 
-
         getAirportLocation();
+    }
+
+    //*************************Filter Location  List ******************************
+    private void filter(String text) {
+        //new array list that will hold the filtered data
+        ArrayList<AirportLocationResponse.DataBean> filterdNames = new ArrayList<>();
+
+        //looping through existing elements
+        for (AirportLocationResponse.DataBean mItem : FlightSourcesList) {
+            //if the existing elements contains the search input
+            if (mItem.getCity().toLowerCase().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                filterdNames.add(mItem); } }
+        //calling a method of the adapter class and passing the filtered list
+       flightLocationAdapter.filterList(filterdNames);
     }
 
     private void getAirportLocation() {
@@ -978,10 +1019,27 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
                     public void onSuccess(AirportLocationResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
+
                             try {
+                                FlightSourcesList =response.getData();
+
                                 recyclerViewLocationList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
                                 flightLocationAdapter = new FlightLocationAdapter(getApplicationContext(), response.getData(),FlightsActivity.this);
                                 recyclerViewLocationList.setAdapter(flightLocationAdapter);
+
+
+//                                    for (int i=0;i<response.getData().size();i++){
+//                                  //  FlightSourcesList.add(response.getData().get(i).getCity());
+//                                }
+                               /* if (response.getData().size()>0) {
+                                    for (int i = 0; i < response.getData().size(); i++) {
+                                        BusSourcesList.add(response.getData().get(i).getName());
+                                        BusSourcesIdList.add(String.valueOf(response.getData().get(i).getId()));
+                                    }
+                                }
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(FlightsActivity.this, android.R.layout.simple_dropdown_item_1line, BusSourcesList);
+                                locationName.setAdapter(adapter);
+                                locationName.setThreshold(3);*/
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

@@ -74,6 +74,7 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
         tvStatus=dialogStatus.findViewById(R.id.tv_status);
 
         layoutFlightHistory.setOnClickListener(this);
+        layoutFlightHistory.setVisibility(View.GONE);
 
 
         backBtn.setOnClickListener(new View.OnClickListener() {
