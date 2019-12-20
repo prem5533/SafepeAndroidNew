@@ -56,6 +56,7 @@ import com.safepayu.wallet.activity.booking.DonationActivity;
 import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.TollActivity;
 import com.safepayu.wallet.activity.booking.bus.BusActivity;
+import com.safepayu.wallet.activity.booking.flight.FlightBookDetailActivity;
 import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
@@ -453,8 +454,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
-              //  startActivity(new Intent(Navigation.this, FlightBookDetailActivity.class));
+               startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
+               // startActivity(new Intent(Navigation.this, FlightBookDetailActivity.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
             }
@@ -720,9 +721,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
             case R.id.layout_flight:
 
-               // Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Navigation.this, FlightsActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+               Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(Navigation.this, FlightsActivity.class));
+//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_bus_tickets:
 
@@ -741,8 +742,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
 
             case R.id.layout_insurance:
-                startActivity(new Intent(Navigation.this, InsuranceActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+              /*  startActivity(new Intent(Navigation.this, InsuranceActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);*/
                 break;
             case R.id.layout_movie:
                 Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
@@ -759,12 +761,14 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 //                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_donation:
-                startActivity(new Intent(Navigation.this, DonationActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+            /*    startActivity(new Intent(Navigation.this, DonationActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);*/
                 break;
             case R.id.layout_toll:
-                startActivity(new Intent(Navigation.this, TollActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+           /*     startActivity(new Intent(Navigation.this, TollActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);*/
                 break;
             case R.id.layout_flood:
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();

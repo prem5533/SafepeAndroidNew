@@ -143,7 +143,13 @@ public class ScratchActivity extends AppCompatActivity implements ScratchListAda
             @Override
             public void onClick(View v) {
                 if (validate()) {
-                    getRedeemCoin();
+                    if ( Integer.parseInt(etCoinNumber.getText().toString().trim())>99){
+                        getRedeemCoin();
+                    } else {
+                        BaseApp.getInstance().toastHelper().showSnackBar(etCoinNumber, "Minimum coins to be redeemed should be 100", true);
+
+                    }
+
                 }
 
             }
@@ -198,7 +204,7 @@ public class ScratchActivity extends AppCompatActivity implements ScratchListAda
     private boolean validate() {
         if (etCoinNumber.getText().toString().trim().length() == 0) {
             etCoinNumber.requestFocus();
-            BaseApp.getInstance().toastHelper().showSnackBar(etCoinNumber, "Please enter coin number", true);
+            BaseApp.getInstance().toastHelper().showSnackBar(etCoinNumber, "Please enter number of coins to redeem", true);
             return false;
         }
         return true;
@@ -327,7 +333,7 @@ public class ScratchActivity extends AppCompatActivity implements ScratchListAda
         scratchView.setRevealListener(new ScratchView.IRevealListener() {
             @Override
             public void onRevealed(ScratchView scratchView) {
-                Toast.makeText(getApplicationContext(), "Reveled", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Congratulation! You Got " +mLogCoin.getAmount()+" Coins", Toast.LENGTH_LONG).show();
                 if (isNetworkAvailable()){
 
                     getSaveCoin(mLogCoin);
@@ -340,7 +346,7 @@ public class ScratchActivity extends AppCompatActivity implements ScratchListAda
             @Override
             public void onRevealPercentChangedListener(ScratchView scratchView, float percent) {
                 if (percent>=0.1) {
-                    Log.d("Reveal Percentage", "onRevealPercentChangedListener: " + String.valueOf(percent));
+                    //Log.d("Reveal Percentage", "onRevealPercentChangedListener: " + String.valueOf(percent));
                 }
             }
         });

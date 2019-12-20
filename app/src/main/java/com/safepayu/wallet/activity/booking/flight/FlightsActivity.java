@@ -460,6 +460,8 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
            // FlightReturnDate = "03-01-2020";
            // if (tvReturnDate.getText().toString().isEmpty()&&tvReturnMonthYear.getText().toString().isEmpty());
             Intent intent = new Intent(FlightsActivity.this,TwoWayListActivity.class);
+            intent.putExtra("dep_date",Depp);
+            intent.putExtra("arrival_date",FlightReturnDate);
             flightTypeData();
             startActivity(intent);
         }

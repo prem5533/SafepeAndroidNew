@@ -43,7 +43,7 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
     public static BottomNavigationView bottomNavigation;
     private TextView tvFrom, tvTo,tvFlightDateTravellersClass,tvOnwardFlightName,tvReturnFlightName,tvOnwardDate,tvReturnDate,totalFlightFare;
     private String Source,Destination,JourneyDate,TripType,User,UserType,Adults,Infants,Children,FlightType,ReturnDate,TravelClass,TrvaellersCount,ClassType,
-            FlightSourceDate,FlightDestinationDate;
+            FlightSourceDate,FlightDestinationDate,Depp,FlightReturnDate;
     private AvailableFlightRequest availableFlightRequest;
     AvailableFlightResponse FlightResponse;
     private LoadingDialog loadingDialog;
@@ -95,6 +95,9 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
 
 
         //*************get string*********************
+        Intent intent= getIntent();
+        Depp = intent.getExtras().getString("dep_date");
+        FlightReturnDate = intent.getExtras().getString("arrival_date");
         Source =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE);
         Destination =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_DESTINATION);
         JourneyDate =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_JOURNEY_DATE);
@@ -117,8 +120,8 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
         tvFlightDateTravellersClass.setText(JourneyDate+" | "+TrvaellersCount+" | "+ClassType);
         tvOnwardFlightName.setText(Source+" - "+Destination);
         tvReturnFlightName.setText(Destination+" - "+Source);
-        tvOnwardDate.setText(FlightSourceDate);
-        tvReturnDate.setText(FlightDestinationDate);
+        tvOnwardDate.setText(Depp);
+        tvReturnDate.setText(FlightReturnDate);
 
 
         availableFlightRequest=new AvailableFlightRequest();

@@ -101,7 +101,8 @@
                     android:id="@+id/flight_date_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"/>
+                    android:background="@color/white"
+                    android:visibility="gone"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -135,6 +136,7 @@
     </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:visibility="gone"
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

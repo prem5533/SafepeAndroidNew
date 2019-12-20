@@ -48,7 +48,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
     private String ReferanceNo ="",Source,Destination,JourneyDate,DepTime,ArrivalTime,DurationTime,AirLineCode,AirLineNumber,FlightImage,TotalTravellers,TripType,
             DurationTimeReturn,FlightDepTimeReturn,FlightArrivalTimeReturn,FlightImageReturn,FlightImageOnward,FlightJourneyReturn;
     private LinearLayout liFlightName,lretunrticket,liFlightNameReturn;
-    private ImageView imFlightLogo,imFlightLogoReturn;
+    private ImageView imFlightLogo,imFlightLogoReturn,imShare;
     private GifImageView statusImage;
     private RecyclerView travellerListName;
     private FlighPassengerBookingDialog flighPassengerBookingDialog;
@@ -94,6 +94,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
         tvTicketDetinationAirportname = findViewById(R.id.tv_ticket_detination_airportname);
         tvTicketSourceAirportnameReturn = findViewById(R.id.tv_ticket_source_airportname_return);
         tvTicketDetinationAirportnameReturn = findViewById(R.id.tv_ticket_detination_airportname_return);
+        imShare = findViewById(R.id.im_share);
 
         //RETURN
         tvFlightSourceDestinationReturn = findViewById(R.id.tv_flight_source_destination_return);
@@ -117,6 +118,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
         liFlightNameReturn = findViewById(R.id.li_flight_name_return);
         statusImage = findViewById(R.id.statusImage);
         tvFlightCancelTicket.setOnClickListener(this);
+        imShare.setOnClickListener(this);
      //   backBtn.setOnClickListener(this);
 
         //***************get data****************

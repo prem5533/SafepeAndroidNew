@@ -54,13 +54,27 @@
             android:orientation="vertical"
             android:gravity="center"
             android:layout_margin="20dp">
-            <pl.droidsonroids.gif.GifImageView
-                android:id="@+id/statusImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/success"
-                android:layout_gravity="center"
-                android:layout_marginTop="0dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/statusImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/success"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:id="@+id/im_share"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_share" />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_booking_status"
                 android:layout_width="match_parent"

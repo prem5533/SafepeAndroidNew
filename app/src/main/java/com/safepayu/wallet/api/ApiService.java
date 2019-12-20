@@ -164,7 +164,7 @@ public interface ApiService {
     @POST("api/secure.safepe/api/rechargePlan")
     Single<RechargePlanResponse> getRechargePlan(@Field("mobile") String mobile, @Field("opId") String opId);
 
-    @POST("api/secure.safepe/api/forgotPassword")
+    @POST("api/secure.safepe/api/passwordNewCreate")
     Single<ForgetPasswordResponse> getForgetPassword(@Body ForgetPasswordRequest forgetPasswordResponse);
 
     @POST("api/secure.safepe/api/addBankToWallet")

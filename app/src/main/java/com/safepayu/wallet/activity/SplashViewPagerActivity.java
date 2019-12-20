@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -81,6 +82,8 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
 
     private void findId() {
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         loadingDialog = new LoadingDialog(this);
         intro_images = (ViewPager) findViewById(R.id.pager_introduction);
         llPagerDots = (LinearLayout) findViewById(R.id.ll_dots);
@@ -144,6 +147,9 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
                                 splashPagerAdapter = new SplashPagerAdapter(SplashViewPagerActivity.this,promotionResponse.getData());
                                 intro_images.setAdapter(splashPagerAdapter);
                                 dotscount   =  splashPagerAdapter.getCount();
+                                if(dotscount==1){
+                                    tv_skip.setVisibility(View.GONE);
+                                }
                             }
                         }
                     }
@@ -195,7 +201,7 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
         }
         else if (position<NUM_PAGES-1){
             tv_done.setVisibility(View.GONE);
-            tv_skip.setVisibility(View.VISIBLE);
+            tv_skip.setVisibility(View.GONE);
         }
 
         llPagerDots.removeAllViews();

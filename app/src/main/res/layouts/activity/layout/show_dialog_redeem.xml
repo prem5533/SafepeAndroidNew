@@ -155,7 +155,8 @@
             android:inputType="number"
             android:singleLine="true"
             android:layout_weight="1"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionDone"
+            android:maxLength="3"/>
     </LinearLayout>
 
     <Button
