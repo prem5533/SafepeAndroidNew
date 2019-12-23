@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,7 +43,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
     private TextView tvBookingStatus, tvSafeJourney,tvFlightRefrenceNo,tvFlightTimeDate,tvFlightSourceDestination,tvFlightEticketNo,tvFlightCancelTicket,tvTicketTimeDateTraveller,
     tvTicketSource,tvTicketDestination,tvTicketSourceTime,tvTicketTotalTime,tvTicketDestinationTime,tvTicketSourceAirportname,tvTicketDetinationAirportname,tvFlightNumber,tvFlightCode,
             tvFlightSourceDestinationReturn,tvFlightCodeReturn,tvFlightNumberReturn,tvTicketTimeDateTravellerReturn,tvTicketSourceReturn,tvTicketDestinationReturn,tvTicketTotalTimeReturn,
-            tvTicketSourceAirportnameReturn,tvTicketDetinationAirportnameReturn,tvTicketSourceTimeReturn,tvTicketDestinationTimeReturn;
+            tvTicketSourceAirportnameReturn,tvTicketDetinationAirportnameReturn,tvTicketSourceTimeReturn,tvTicketDestinationTimeReturn,tvDownloadTicket;
     private LoadingDialog loadingDialog;
     FlightBookingDetailRequest flightBookingDetailRequest;
     private String ReferanceNo ="",Source,Destination,JourneyDate,DepTime,ArrivalTime,DurationTime,AirLineCode,AirLineNumber,FlightImage,TotalTravellers,TripType,
@@ -94,6 +95,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
         tvTicketDetinationAirportname = findViewById(R.id.tv_ticket_detination_airportname);
         tvTicketSourceAirportnameReturn = findViewById(R.id.tv_ticket_source_airportname_return);
         tvTicketDetinationAirportnameReturn = findViewById(R.id.tv_ticket_detination_airportname_return);
+        tvDownloadTicket = findViewById(R.id.tv_flight_download_ticket);
         imShare = findViewById(R.id.im_share);
 
         //RETURN
@@ -119,6 +121,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
         statusImage = findViewById(R.id.statusImage);
         tvFlightCancelTicket.setOnClickListener(this);
         imShare.setOnClickListener(this);
+        tvDownloadTicket.setOnClickListener(this);
      //   backBtn.setOnClickListener(this);
 
         //***************get data****************
@@ -163,7 +166,8 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
 
         flightBookingDetailRequest = new FlightBookingDetailRequest();
       //  flightBookingDetailRequest.setReferenceNo("300905016582");
-        flightBookingDetailRequest.setReferenceNo("300344016590");
+      //  flightBookingDetailRequest.setReferenceNo("300344016590");
+        flightBookingDetailRequest.setReferenceNo(ReferanceNo);
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
@@ -340,6 +344,9 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
                 overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
                 finish();
                 break;
+            case R.id.tv_flight_download_ticket:
+                Toast.makeText(getApplicationContext(),"Download",Toast.LENGTH_LONG).show();
+                break;
         }
     }
 
@@ -374,7 +381,8 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
 
     private void getCancelBookTicket() {
         flightBookingDetailRequest = new FlightBookingDetailRequest();
-        flightBookingDetailRequest.setReferenceNo("300356016556");
+      //  flightBookingDetailRequest.setReferenceNo("300356016556");
+        flightBookingDetailRequest.setReferenceNo(ReferanceNo);
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
@@ -387,8 +395,8 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
                 loadingDialog.hideDialog();
                 if (response.isStatus()) {
                     statusImage.setVisibility(View.GONE);
-                    tvBookingStatus.setText("Booking Cancel");
-                    tvSafeJourney.setText("Ticket cancelled successfully!");
+                    tvBookingStatus.setText("Cancellation is in progress");
+                 //   tvSafeJourney.setText("Ticket cancelled successfully!");
                     tvFlightTimeDate.setText(response.getData().getCancelTime());
                     tvFlightEticketNo.setText("PNR - "+response.getData().getAPIReferenceNo());
 

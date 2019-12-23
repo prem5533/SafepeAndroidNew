@@ -1,9 +1,13 @@
 package com.safepayu.wallet.activity.booking.flight;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,9 +33,12 @@ import static com.safepayu.wallet.activity.booking.flight.FlightListActivity.MY_
 public class TwoWayFlightDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String Source,Destination,JourneyDate,TripType,User,UserType,Adults,Infants,Children,FlightType,ReturnDate,TravelClass,TrvaellersCount,ClassType;
-    private TextView tvFlightdetailsDateTravellersClass,tvFlightdetailsTo,tvFlightdetailsFrom,tvFlightHandBaggage,tvFlightCheckInBaggage,tvTotalFlightFare,tvTotalNavellersNumber,
-            tvOnwardName,tv_return_name,tvFlightHandBaggageReturn,tvFlightCheckinBaggageReturn;
-    private ImageView onwardImage,return_image;
+    private TextView tvFlightdetailsDateTravellersClass,tvFlightdetailsTo,tvFlightdetailsFrom,tvFlightHandBaggage,tvFlightCheckInBaggage,tvTotalFlightFare,
+            tvTotalNavellersNumber,tvFlightFareRules, tvOnwardName,tv_return_name,tvFlightHandBaggageReturn,tvFlightCheckinBaggageReturn,tvFlightdetailNameDialog,
+            tvFlightdetailNameDialog2,tvCanelTimeDateDialog,tvCanelTimeDateDialog2;
+    private ImageView onwardImage,return_image,imageFlightDetailDilog,imageFlightDetailDilog2;
+    private Button backbtnDialog;
+
     private CharSequence s;
     private Date date;
     int totalTravellers,onwardsAmount,ReturnAmout ,TotalAmount;
@@ -44,6 +51,8 @@ public class TwoWayFlightDetailActivity extends AppCompatActivity implements Vie
     private FlightDetailAdapter flightDetailAdapter;
     private FlightReturnDetailAdapter flightReturnDetailAdapter;
     private Button continueBtn,backbtnFlightList,backBtn;
+    public  Dialog dialog;
+
 
 
 
@@ -99,6 +108,7 @@ public class TwoWayFlightDetailActivity extends AppCompatActivity implements Vie
         tvFlightdetailsFrom = findViewById(R.id.tvflightdetails_from_where);
         continueBtn = findViewById(R.id.continue_btn);
         backbtnFlightList = findViewById(R.id.backbtn_flight_list);
+        tvFlightFareRules = findViewById(R.id.tvflight_fare_rules);
         lreturn = findViewById(R.id.lreturn);
 
 
@@ -120,6 +130,7 @@ public class TwoWayFlightDetailActivity extends AppCompatActivity implements Vie
         continueBtn.setOnClickListener(this);
         backbtnFlightList.setOnClickListener(this);
         backBtn.setOnClickListener(this);
+        tvFlightFareRules.setOnClickListener(this);
 
 
         //***************get data****************
@@ -196,6 +207,59 @@ public class TwoWayFlightDetailActivity extends AppCompatActivity implements Vie
                 overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
                 finish();
                 break;
+            case R.id.tvflight_fare_rules:
+
+                showDialogFareRule(TwoWayFlightDetailActivity.this);
+                break;
         }
+    }
+
+    private void showDialogFareRule(TwoWayFlightDetailActivity twoWayFlightDetailActivity) {
+
+        dialog = new Dialog(twoWayFlightDetailActivity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.flight_fare_rule_dialog);
+        String DateTime =mdataOnwards.getFlightSegments().get(0).getDepartureDateTime();
+        String DT[] = DateTime.split("T");
+        String D = DT[0];
+        String T = DT[1];
+
+
+        backbtnDialog = dialog.findViewById(R.id.backbtn_dialog);
+        tvFlightdetailNameDialog = dialog.findViewById(R.id.tv_flightdetail_name);
+        tvCanelTimeDateDialog = dialog.findViewById(R.id.tv_canel_time_Date);
+        imageFlightDetailDilog = dialog.findViewById(R.id.image_flight_detail);
+        tvFlightdetailNameDialog.setText(Source +" - "+ Destination);
+        tvCanelTimeDateDialog.setText("This airline allows cancellation only before 2 hrs from departure time(Upto "+ D+", "+T+" )");
+        Picasso.get().load("http://webapi.i2space.co.in/"+mdataOnwards.getFlightSegments().get(0).getImagePath()).into(imageFlightDetailDilog);
+
+        String DateTime2 =mdataReturn.getFlightSegments().get(0).getDepartureDateTime();
+        String DT2[] = DateTime2.split("T");
+        String D2 = DT2[0];
+        String T2 = DT2[1];
+        tvFlightdetailNameDialog2 = dialog.findViewById(R.id.tv_flightdetail_name2);
+        tvCanelTimeDateDialog2 = dialog.findViewById(R.id.tv_canel_time_Date2);
+        imageFlightDetailDilog2 = dialog.findViewById(R.id.image_flight_detail2);
+        tvFlightdetailNameDialog2.setText( Destination+" - "+ Source);
+        tvCanelTimeDateDialog2.setText("This airline allows cancellation only before 2 hrs from departure time(Upto "+ D2+", "+T2+" )");
+        Picasso.get().load("http://webapi.i2space.co.in/"+mdataReturn.getFlightSegments().get(0).getImagePath()).into(imageFlightDetailDilog2);
+
+        backbtnDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+        dialog.show();
     }
 }

@@ -28,7 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.OnPackageSelectListener, View.OnClickListener {
+public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.OnPackageSelectListener {
 
     private RecyclerView recyclerMyOrders;
     private RecyclerLayoutManager layoutManager;
@@ -40,7 +40,7 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
     private Dialog dialogStatus;
     private TextView tvTransactionIdTV,tvCustomerNumberId,tvAmount,tvRechargeType,tvDescriptionText,tvOperationText,tvContactSupport,tvDate,tvStatus,tvCustomerNameNumber
     ,GoToWalletBtn;
-    LinearLayout layoutDescription,layoutFlightHistory;
+    LinearLayout layoutDescription;
 
 
     @Override
@@ -49,7 +49,7 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
 
         loadingDialog = new LoadingDialog(this);
         recyclerMyOrders = findViewById(R.id.list_orderHistory);
-        layoutFlightHistory=findViewById(R.id.layout_flight_history);
+
 
         backBtn = findViewById(R.id.myorder_back_btn);
 
@@ -73,8 +73,8 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
         tvDate=dialogStatus.findViewById(R.id.tv_detil_time_date);
         tvStatus=dialogStatus.findViewById(R.id.tv_status);
 
-        layoutFlightHistory.setOnClickListener(this);
-        layoutFlightHistory.setVisibility(View.GONE);
+
+    //    layoutFlightHistory.setVisibility(View.GONE);
 
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -194,13 +194,5 @@ public class MyOrdersActivity extends BaseActivity implements MyOrdersAdapter.On
         dialogStatus.show();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.layout_flight_history:
-                Intent intent = new Intent( MyOrdersActivity.this, FlightHistoryActivity.class);
-                startActivity(intent);
-                break;
-        }
-    }
+
 }
