@@ -207,7 +207,7 @@ public class FlightHistoryActivity extends AppCompatActivity implements FlightHi
             tvBookingStatus.setTextColor(getResources().getColor(R.color.green_500));
         }
         else if (FHistoryResponse.getData().get(position).getBookingStatus()==5){
-            tvBookingStatus.setText("Booking Cancel");
+            tvBookingStatus.setText("Cancellation is in progress");
             tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
         }
         else if (FHistoryResponse.getData().get(position).getBookingStatus()==2){

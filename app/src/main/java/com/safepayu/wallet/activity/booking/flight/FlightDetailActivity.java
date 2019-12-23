@@ -1,10 +1,16 @@
 package com.safepayu.wallet.activity.booking.flight;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +22,7 @@ import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.adapter.fight.FlightDetailAdapter;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.Date;
@@ -24,8 +31,12 @@ import static com.safepayu.wallet.activity.booking.flight.FlightListActivity.MY_
 
 public class FlightDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String Source,Destination,JourneyDate,TripType,User,UserType,Adults,Infants,Children,FlightType,ReturnDate,TravelClass,TrvaellersCount,ClassType;
-    private TextView tvFlightdetailsDateTravellersClass,tvFlightdetailsTo,tvFlightdetailsFrom,tvFlightHandBaggage,tvFlightCheckInBaggage,tvTotalFlightFare,tvTotalNavellersNumber;
+    private String Source,Destination,JourneyDate,TripType,User,UserType,Adults,Infants,Children,FlightType,ReturnDate,TravelClass,TrvaellersCount,ClassType,FlightImage;
+    private TextView tvFlightdetailsDateTravellersClass,tvFlightdetailsTo,tvFlightdetailsFrom,tvFlightHandBaggage,tvFlightCheckInBaggage,tvTotalFlightFare,
+            tvTotalNavellersNumber,tvFlightFareRules,tvFlightdetailNameDialog,tvCanelTimeDateDialog;
+    private Button backbtnDialog;
+    private ImageView imageFlightDetailDilog;
+    private LinearLayout lTrip2;
     private CharSequence s;
     private Date date;
     int totalTravellers;
@@ -35,6 +46,7 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
     private RecyclerView recyle_flight_detail,recycle_flight_return_detail;
     private FlightDetailAdapter flightDetailAdapter;
     private Button continueBtn,backbtnFlightList,backBtn;
+    public  Dialog dialog;
 
 
 
@@ -62,6 +74,7 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
         tvFlightdetailsFrom = findViewById(R.id.tvflightdetails_from_where);
         continueBtn = findViewById(R.id.continue_btn);
         backbtnFlightList = findViewById(R.id.backbtn_flight_list);
+        tvFlightFareRules = findViewById(R.id.tvflight_fare_rules);
 
 
         tvFlightHandBaggage = findViewById(R.id.tv_flight_hand_baggage);
@@ -76,6 +89,7 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
         continueBtn.setOnClickListener(this);
         backbtnFlightList.setOnClickListener(this);
         backBtn.setOnClickListener(this);
+        tvFlightFareRules.setOnClickListener(this);
 
 
         //***************get data****************
@@ -90,7 +104,7 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
         Children = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_CHILDREN);
         //  FlightType =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TYPE);
         //  ReturnDate =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_RETURN_DATE);
-        TravelClass = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_IMAGE);
+        FlightImage = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_IMAGE);
         TrvaellersCount = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_COUNT);
         ClassType = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_CLASS_TYPE);
         ClassType = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRAVELLERS_CLASS_TYPE);
@@ -147,6 +161,52 @@ public class FlightDetailActivity extends AppCompatActivity implements View.OnCl
                 overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
                 finish();
                 break;
+
+            case R.id.tvflight_fare_rules:
+
+                showDialogFareRule(FlightDetailActivity.this);
+                break;
         }
+    }
+
+    private void showDialogFareRule(FlightDetailActivity flightDetailActivity) {
+        dialog = new Dialog(flightDetailActivity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.flight_fare_rule_dialog);
+        String DateTime =mdata.getFlightSegments().get(0).getDepartureDateTime();
+        String DT[] = DateTime.split("T");
+        String D = DT[0];
+        String T = DT[1];
+
+
+        tvFlightdetailNameDialog = dialog.findViewById(R.id.tv_flightdetail_name);
+        backbtnDialog = dialog.findViewById(R.id.backbtn_dialog);
+        lTrip2 = dialog.findViewById(R.id.l_trip2);
+        tvCanelTimeDateDialog = dialog.findViewById(R.id.tv_canel_time_Date);
+        imageFlightDetailDilog = dialog.findViewById(R.id.image_flight_detail);
+        if ( TripType.equals("1")){
+            lTrip2.setVisibility(View.GONE);
+        }
+        tvFlightdetailNameDialog.setText(Source +" - "+ Destination);
+        tvCanelTimeDateDialog.setText("This airline allows cancellation only before 2 hrs from departure time(Upto "+ D+", "+T+" )");
+        Picasso.get().load("http://webapi.i2space.co.in/"+mdata.getFlightSegments().get(0).getImagePath()).into(imageFlightDetailDilog);
+        backbtnDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+        dialog.show();
+
     }
 }

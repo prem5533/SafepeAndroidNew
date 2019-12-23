@@ -376,6 +376,7 @@
                                     android:text="@string/refund_flight"
                                     android:textSize="12sp"
                                     android:textColor="@color/grey_600"
+                                    android:visibility="gone"
                                     android:fontFamily="@font/roboto_regular" />
 
                                 <TextView
@@ -387,6 +388,7 @@
                                     android:textColor="@color/red_theme"
                                     android:fontFamily="@font/roboto_regular"
                                     android:layout_marginTop="10dp"
+                                    android:padding="5dp"
                                     android:layout_marginBottom="10dp"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -398,7 +400,8 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:layout_weight="1"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:visibility="gone">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -420,11 +423,13 @@
                     android:layout_height="1dp"
                     android:background="@color/divider"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -514,7 +519,8 @@
                     android:layout_height="5dp"
                     android:background="#f7f8f8"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -523,12 +529,14 @@
                     android:textSize="18sp"
                     android:textColor="@color/grey_600"
                     android:fontFamily="@font/roboto_regular"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_marginLeft="10dp"
+                    android:visibility="gone"/>
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
