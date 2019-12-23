@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.hotel.HotelActivity;
 import com.safepayu.wallet.adapter.hotel.NameListAdapter;
-import com.safepayu.wallet.models.response.booking.HotelDetailResponse;
+import com.safepayu.wallet.models.response.booking.hotel.HotelDetailResponse;
 
 import java.util.List;
 

@@ -52,16 +52,12 @@ import com.google.zxing.common.BitMatrix;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.booking.DonationActivity;
 import com.safepayu.wallet.activity.booking.MetroActivity;
-import com.safepayu.wallet.activity.booking.TollActivity;
 import com.safepayu.wallet.activity.booking.bus.BusActivity;
-import com.safepayu.wallet.activity.booking.flight.FlightBookDetailActivity;
-import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
+import com.safepayu.wallet.activity.booking.hotel.HotelActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
 import com.safepayu.wallet.activity.recharge.GasPay;
-import com.safepayu.wallet.activity.recharge.InsuranceActivity;
 import com.safepayu.wallet.activity.recharge.LandlineBillPay;
 import com.safepayu.wallet.activity.recharge.MobileRecharge;
 import com.safepayu.wallet.activity.recharge.PostpaidBillpay;
@@ -727,10 +723,10 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
             case R.id.layout_bus_tickets:
 
-                Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
 
-//                startActivity(new Intent(Navigation.this, BusActivity.class));
-//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                startActivity(new Intent(Navigation.this, BusActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_train_ticket:
                 Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
@@ -756,9 +752,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_hotel:
-                Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(Navigation.this, HotelActivity.class));
-//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                //Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Navigation.this, HotelActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_donation:
                 Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
@@ -1637,7 +1633,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.app_update_dialog);
 
-        Button proceedButton = (Button) dialog.findViewById(R.id.proceedBtn_appUpdate);
+        Button proceedButton = dialog.findViewById(R.id.proceedBtn_appUpdate);
         proceedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1646,7 +1642,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             }
         });
 
-        Button cancelBtn_appUpdate = (Button) dialog.findViewById(R.id.cancelBtn_appUpdate);
+        Button cancelBtn_appUpdate = dialog.findViewById(R.id.cancelBtn_appUpdate);
         cancelBtn_appUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

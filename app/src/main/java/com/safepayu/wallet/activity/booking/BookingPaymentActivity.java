@@ -132,8 +132,7 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
             json = prefs.getString("MyObject", "");
             mdata = gson.fromJson(json, AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean.class);
 
-        }
-        else if (TripType.equals("2")){
+        } else if (TripType.equals("2")){
             SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
             gson = new Gson();
             json = prefs.getString("MyObjectOnward", "");
@@ -224,8 +223,7 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
                         btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(subAmount));
 
 
-                    }
-                    else if (tFare<walletDeduct){
+                    } else if (tFare<walletDeduct){
                         tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(tFare));
                         tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(tFare));
                         btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(tFare));
@@ -278,8 +276,6 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
                     else if (TripType.equals("2")){
                         btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " +  NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
                         tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " +NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
-
-
                     }
                 }
             }

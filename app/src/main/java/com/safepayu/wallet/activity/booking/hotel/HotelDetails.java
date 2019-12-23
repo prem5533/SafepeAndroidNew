@@ -40,8 +40,8 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.helper.MySpannable;
 import com.safepayu.wallet.models.request.booking_hotel.BookHotelRequest;
 import com.safepayu.wallet.models.request.booking_hotel.HotelDetailsRequest;
-import com.safepayu.wallet.models.response.booking.HotelDetailResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelBookResponse;
+import com.safepayu.wallet.models.response.booking.hotel.HotelDetailResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -656,7 +656,6 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                                             bookHotelRequest.setNames(NamesPList);
                                             bookHotelRequest.setAges(AgesPList);
                                             bookHotelRequest.setGenders(GendersPList);
-                                            bookHotelRequest.setAddress(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ADDRESS));
                                             bookHotelRequest.setEmailId(EmailId);
                                             bookHotelRequest.setMobileNo(MobileNo);
                                             bookHotelRequest.setCountry("India");
@@ -675,6 +674,16 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                                             bookHotelRequest.setPayment_mode("wallet");
                                             bookHotelRequest.setBank_amount("200.50");
                                             bookHotelRequest.setWallet_amount("30.50");
+
+                                            if (TextUtils.isEmpty(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ADDRESS)) ||
+                                                    BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ADDRESS) ==null){
+                                                bookHotelRequest.setAddress(" NA ");
+
+                                            }else {
+                                                bookHotelRequest.setAddress(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ADDRESS));
+                                            }
+
+
                                             getHotelBook();
                                             fillDetailDialog.dismiss();
                                         }
@@ -702,10 +711,12 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                         if (response.isStatus()) {
 
                             try {
+                                showDialogBook(response.getData().getMessage()+" \nReference No - "+response.getData().getReferenceNo());
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.hotelDetailLayout), response.getData().getMessage()+" \nReference No - "+response.getData().getReferenceNo(), false);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.hotelDetailLayout), response.getMessage(), false);
                         }
@@ -718,6 +729,30 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.hotelDetailLayout), false, e.getCause());
                     }
                 }));
+    }
+
+    public void showDialogBook(String Message) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(HotelDetails.this);
+
+        dialog.setTitle("Booking Confirmation")
+                .setCancelable(false)
+                .setMessage("\n"+Message+"\n")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+                        finish();
+                        dialog.dismiss();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .show();
     }
 
 }
