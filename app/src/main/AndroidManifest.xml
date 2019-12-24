@@ -34,7 +34,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".activity.booking.flight.FlightHistoryActivity"></activity>
+        <activity android:name=".activity.booking.flight.FlightHistoryActivity"/>
+        <activity android:name=".activity.booking.PaymentActivityBooking"/>
         <activity android:name=".activity.booking.flight.FlightBookDetailActivity" />
         <activity android:name=".activity.booking.flight.BookingPaymentActivity" />
         <activity android:name=".activity.SplashViewPagerActivity" />

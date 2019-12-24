@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.models.response.booking.HotelDetailResponse;
+import com.safepayu.wallet.models.response.booking.hotel.HotelDetailResponse;
 
 import java.util.List;
 

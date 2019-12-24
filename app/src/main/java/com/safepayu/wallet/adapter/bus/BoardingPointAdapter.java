@@ -22,9 +22,11 @@ public class BoardingPointAdapter extends RecyclerView.Adapter<BoardingPointAdap
     private List<BusListResponse.DataBean.AvailableTripsBean.BoardingTimesBean> BoardingTimes;
     private BoardingPointAdapter.BoardingListListener boardingListListener;
     private int lastSelectedPosition=0;
+    String BoardId="",BoardName="";
 
     public  interface  BoardingListListener {
-        void onLocationClickTo (int position,List<BusListResponse.DataBean.AvailableTripsBean.BoardingTimesBean> BoardingTimes);
+        void onLocationClickTo (int position,List<BusListResponse.DataBean.AvailableTripsBean.BoardingTimesBean> BoardingTimes,
+                                String BoardId,String BoardName);
     }
 
     public BoardingPointAdapter(Context context,  List<BusListResponse.DataBean.AvailableTripsBean.BoardingTimesBean> BoardingTimes1, BoardingPointAdapter.BoardingListListener boardingListListener) {
@@ -59,37 +61,49 @@ public class BoardingPointAdapter extends RecyclerView.Adapter<BoardingPointAdap
             tvPlace = itemView.findViewById(R.id.place_boardingDroppingAdapter);
             radioButton = itemView.findViewById(R.id.radioBtn_boardingDroppingAdapter);
 
-            radioButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    lastSelectedPosition = getAdapterPosition();
-                    notifyDataSetChanged();
-                }
-            });
+
 
             itemView.setOnClickListener(this);
         }
 
-        public void bindData(int position) {
+        public void bindData(final int position) {
             tvPlace.setText(BoardingTimes.get(position).getLocation());
             tvTime.setText(BoardingTimes.get(position).getTime());
 
             try {
                 radioButton.setChecked(lastSelectedPosition == position);
+                if (boardingListListener != null) {
+                    boardingListListener.onLocationClickTo(getLayoutPosition(),BoardingTimes,BoardingTimes.get(getLayoutPosition()).getPointId(),
+                            BoardingTimes.get(getLayoutPosition()).getLocation());
+                    Toast.makeText(context, tvTime.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }
+
+            radioButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastSelectedPosition = position;
+                    notifyDataSetChanged();
+
+                    BoardId=BoardingTimes.get(getLayoutPosition()).getPointId();
+                    BoardName=BoardingTimes.get(getLayoutPosition()).getLocation();
+                    if (boardingListListener != null) {
+                        boardingListListener.onLocationClickTo(getLayoutPosition(),BoardingTimes,BoardId,BoardName);
+                        Toast.makeText(context, tvTime.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            });
 
         }
 
         @Override
         public void onClick(View v) {
 
-            if (boardingListListener != null) {
-                boardingListListener.onLocationClickTo(getLayoutPosition(),BoardingTimes);
-                Toast.makeText(context, tvTime.getText().toString(), Toast.LENGTH_SHORT).show();
 
-            }
 
         }
     }

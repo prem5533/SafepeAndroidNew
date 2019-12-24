@@ -95,7 +95,7 @@
                         android:layout_centerVertical="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="10dp"
-                        android:text="₹"
+                        android:text="₹ 0"
                         android:paddingRight="10dp"
                         android:textStyle="bold"
                         android:fontFamily="@font/roboto_bold"
@@ -127,14 +127,14 @@
                     android:layout_margin="5dp">
 
                     <CheckBox
-                    android:id="@+id/check_box_wallet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SafePe Wallet Balance"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
+                        android:id="@+id/check_box_wallet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SafePe Wallet Balance"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
                         android:layout_weight="1"
-                    android:buttonTint="@color/red_theme"/>
+                        android:buttonTint="@color/red_theme"/>
                     <TextView
                         android:id="@+id/tv_wallet_deduct_amount"
                         android:layout_width="wrap_content"
@@ -230,7 +230,7 @@
                     android:background="@drawable/rounded_buttons"
                     android:padding="10dp"
                     android:textAllCaps="false"
-                    android:text="Pay 507"
+                    android:text="Pay 0"
                     android:textColor="#fff"
                     android:textSize="16sp" />
             </LinearLayout>

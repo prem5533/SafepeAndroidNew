@@ -254,8 +254,12 @@ public class FillDetailAdapter extends RecyclerView.Adapter<FillDetailAdapter.Fl
                         if (TextUtils.isEmpty(CardType)){
                             Toast.makeText(context, "Please Select Card Type", Toast.LENGTH_SHORT).show();
                         }else {
-                            fillDetailListener.onFillDetailClickTo(getLayoutPosition(),NameList,AgeList,GenderList,EmailText,
-                                     CardType, CardId);
+                            if (TextUtils.isEmpty(CardId)){
+                                Toast.makeText(context, "Please Enter Card Id", Toast.LENGTH_SHORT).show();
+                            }else {
+                                fillDetailListener.onFillDetailClickTo(getLayoutPosition(),NameList,AgeList,GenderList,EmailText,
+                                        CardType, CardId);
+                            }
                         }
 
                     }

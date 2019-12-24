@@ -1,7 +1,9 @@
 package com.safepayu.wallet.fragment.bus;
 
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -56,7 +58,7 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
      private LoadingDialog loadingDialog;
      private ViewGroup layout;
      private String seats ="",BlockingReferenceNo="",BookingReferenceNo="",Names="",Ages="",Genders="";
-     private String DroppingName="",DroppingId="",BoardingName="",BoardingId="";
+     private String DroppingName="",DroppingId="",BoardingName="",BoardingId="",fareSeat="";
      private ArrayList<String> RowList,ColumnList,SeatNoList,ZIndex,SeatCodeSelectedList;
      private List<BusTripDetailsResponse.DataBean.SeatsBean> SeatLists;
      private Button DoneBtn;
@@ -205,7 +207,7 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
                  }
              }
              tvSeatNumbers.setText(seatss);
-             test=Integer.parseInt(SeatLists.get(seatNo+1).getFare());
+             test=Integer.parseInt(SeatLists.get(seatNo).getFare());
              baseFare=baseFare+test;
          }
 
@@ -260,16 +262,30 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
      }
 
      @Override
-     public void onLocationClickTo(int position, List<BusListResponse.DataBean.AvailableTripsBean.BoardingTimesBean> BoardingTimes) {
+     public void onLocationClickTo(int position, List<BusListResponse.DataBean.AvailableTripsBean.BoardingTimesBean> BoardingTimes,
+                                   String BoardId,String BoardName) {
 
-         BoardingName=BoardingTimes.get(position).getLocation();
-         BoardingId=BoardingTimes.get(position).getPointId();
+         if (BoardingTimes.size()==1){
+             BoardingName=BoardingTimes.get(0).getLocation();
+             BoardingId=BoardingTimes.get(0).getPointId();
+         }else {
+             BoardingName=BoardName;
+             BoardingId=BoardId;
+         }
+
      }
 
      @Override
-     public void onDroppingClickTo(int position, List<BusListResponse.DataBean.AvailableTripsBean.DroppingTimesBean> DroppingTimes) {
-         DroppingName=DroppingTimes.get(position).getLocation();
-         DroppingId=DroppingTimes.get(position).getPointId();
+     public void onDroppingClickTo(int position, List<BusListResponse.DataBean.AvailableTripsBean.DroppingTimesBean> DroppingTimes,
+                                   String DropId,String DropName) {
+
+         if (DroppingTimes.size()==1){
+             DroppingName=DroppingTimes.get(0).getLocation();
+             DroppingId=DroppingTimes.get(0).getPointId();
+         }else {
+             DroppingName=DropName;
+             DroppingId=DropId;
+         }
      }
 
 
@@ -329,15 +345,51 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
                                    String EmailTexT,String CardType,String CardId) {
          fillDetailDialog.dismiss();
 
+         String Titles="",SeatNos="",OperatorServiceCharge="",ServiceTax="";
+         Names="";Ages="";Genders="";fareSeat="";SeatCodeSelected="";
          for (int i=0;i<NameList.size();i++){
-             Names=Names+NameList.get(i)+"~";
-             Ages=Ages+AgeList.get(i)+"~";
-             Genders=Genders+GenderList.get(i)+"~";
+             if (SeatNoList.size()-1==i){
+                 Names=Names+NameList.get(i);
+                 Ages=Ages+AgeList.get(i);
+
+                 SeatNos=SeatNos+SeatNoList.get(i);
+
+                 OperatorServiceCharge=OperatorServiceCharge+SeatLists.get(Integer.parseInt(SeatNoList.get(i))-1).getOperatorServiceCharge();
+                 ServiceTax=ServiceTax+SeatLists.get(Integer.parseInt(SeatNoList.get(i))-1).getServicetax();
+
+                 if (GenderList.get(i).equals("Male")){
+                     Titles=Titles+"Mr";
+                     Genders=Genders+"M";
+                 }else if (GenderList.get(i).equals("Female")){
+                     Titles=Titles+"Ms";
+                     Genders=Genders+"F";
+                 }
+
+                 fareSeat=fareSeat+SeatLists.get(Integer.parseInt(SeatNoList.get(i))-1).getFare();
+             }else {
+                 Names=Names+NameList.get(i)+"~";
+                 Ages=Ages+AgeList.get(i)+"~";
+
+                 SeatNos=SeatNos+SeatNoList.get(i)+"~";
+
+                 OperatorServiceCharge=OperatorServiceCharge+SeatLists.get(Integer.parseInt(SeatNoList.get(i))-1).getOperatorServiceCharge()+"~";
+                 ServiceTax=ServiceTax+SeatLists.get(Integer.parseInt(SeatNoList.get(i))-1).getServicetax()+"~";
+
+                 if (GenderList.get(i).equals("Male")){
+                     Titles=Titles+"Mr"+"~";
+                     Genders=Genders+"M"+"~";
+                 }else if (GenderList.get(i).equals("Female")){
+                     Titles=Titles+"Ms"+"~";
+                     Genders=Genders+"F"+"~";
+                 }
+
+                 fareSeat=fareSeat+SeatLists.get(Integer.parseInt(SeatNoList.get(i))-1).getFare()+"~";
+             }
          }
 
          try {
              for (int k=0;k<SeatCodeSelectedList.size();k++){
-                 SeatCodeSelected=SeatCodeSelected+GenderList.get(k)+"~";
+                 SeatCodeSelected=SeatCodeSelected+SeatCodeSelectedList.get(k)+"~";
              }
          }catch (Exception e){
              e.printStackTrace();
@@ -360,8 +412,9 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
          busBookingRequest.setDroppingId(DroppingId);
          busBookingRequest.setDroppingPointDetails(DroppingName);
          busBookingRequest.setEmailId(EmailTexT);
-         busBookingRequest.setFares(String.valueOf(totalFare));
+         busBookingRequest.setFares(fareSeat);
          busBookingRequest.setGenders(Genders);
+         busBookingRequest.setTitles(Titles);
          busBookingRequest.setIdCardNo(CardId);
          busBookingRequest.setIdCardType(CardType);
          busBookingRequest.setIdCardIssuedBy("GOV");
@@ -375,9 +428,10 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
          busBookingRequest.setProvider(busTripDetailsRequest.getProvider());
          busBookingRequest.setState(busTripDetailsRequest.getSource());
          busBookingRequest.setSeatcodes(SeatCodeSelected);
-         busBookingRequest.setSeatNos(SeatsSelected);
-         busBookingRequest.setServiceCharge(response1.getData().getAvailableTrips().get(SelectedBusList).getOperatorServiceCharge());
-         busBookingRequest.setServicetax(response1.getData().getAvailableTrips().get(SelectedBusList).getServiceTax());
+         busBookingRequest.setSeatNos(SeatNos);
+
+         busBookingRequest.setServiceCharge(OperatorServiceCharge);
+         busBookingRequest.setServicetax(ServiceTax);
 
          busBookingRequest.setSourceId(busTripDetailsRequest.getSourceId());
          busBookingRequest.setSourceName(busTripDetailsRequest.getSource());
@@ -671,6 +725,7 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
              if (selectedIds.contains(view.getId() + ",")) {
                  selectedIds = selectedIds.replace(+view.getId() + ",", "");
                  SeatsSelected = SeatsSelected.replace(+view.getId() + "~", "");
+
                  view.setBackgroundResource(R.drawable.ic_seats_book);
 
                  pos=(int) view.getId()-1;
@@ -698,6 +753,7 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
                  }catch (Exception e){
                      e.printStackTrace();
                  }
+
                  pos=(int) view.getId()-1;
                  RowList.add(String.valueOf(SeatLists.get(pos).getRow()));
                  ColumnList.add(String.valueOf(SeatLists.get(pos).getColumn()));
@@ -727,22 +783,22 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
                          if (response.isStatus()) {
                              try {
                                  if (response.getData().getSeats().size()>0){
+                                     for (int index=0;index<response.getData().getSeats().size();index++){
+                                         ZIndex.add(String.valueOf(response.getData().getSeats().get(index).getZindex()));
+                                     }
+                                     SeatLists=response.getData().getSeats();
 
+                                     if (response.getData().getLayoutType().equalsIgnoreCase("2+1")){
+                                         seats=SeatsCounts2(response.getData().getSeats().size());
+                                     }else {
+                                         seats=SeatsCounts(response.getData().getSeats().size());
+                                     }
+
+                                     MakeSeat(rootView);
                                  }else {
                                      BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.busSeatLayout), "No Data Found", false);
                                  }
-                                 for (int index=0;index<response.getData().getSeats().size();index++){
-                                     ZIndex.add(String.valueOf(response.getData().getSeats().get(index).getZindex()));
-                                 }
-                                 SeatLists=response.getData().getSeats();
 
-                                 if (response.getData().getLayoutType().equalsIgnoreCase("2+1")){
-                                     seats=SeatsCounts2(response.getData().getSeats().size());
-                                 }else {
-                                     seats=SeatsCounts(response.getData().getSeats().size());
-                                 }
-
-                                 MakeSeat(rootView);
                              } catch (Exception e) {
                                  e.printStackTrace();
                              }
@@ -775,9 +831,10 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
                          if (response.isStatus()) {
 
                              try {
-                                 BlockingReferenceNo=response.getData().getBlockingReferenceNo();
-                                 BookingReferenceNo=response.getData().getBookingReferenceNo();
-                                 getBusBook();
+                                 BookingReferenceNo=response.getData().getReferenceNo();
+
+                                 showDialogBook(response.getMessage()+"\n Booking Reference No - "+BookingReferenceNo);
+                                 //getBusBook();
                              } catch (Exception e) {
                                  e.printStackTrace();
                              }
@@ -820,5 +877,28 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
                          BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.busSeatLayout), false, e.getCause());
                      }
                  }));
+     }
+
+     public void showDialogBook(String Message) {
+         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+
+         dialog.setTitle("Booking Confirmation")
+                 .setCancelable(false)
+                 .setMessage("\n"+Message+"\n")
+
+                 // Specifying a listener allows you to take an action before dismissing the dialog.
+                 // The dialog is automatically dismissed when a dialog button is clicked.
+                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                     public void onClick(DialogInterface dialog, int which) {
+                         // Continue with delete operation
+                         getActivity().finish();
+                         dialog.dismiss();
+                     }
+                 })
+
+                 // A null listener allows the button to dismiss the dialog and take no further action.
+                 //.setNegativeButton(android.R.string.no, null)
+                 .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                 .show();
      }
  }

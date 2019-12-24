@@ -22,9 +22,11 @@ public class DroppingPointAdapter  extends RecyclerView.Adapter<DroppingPointAda
     private List<BusListResponse.DataBean.AvailableTripsBean.DroppingTimesBean> DroppingTimes;
     private DroppingPointAdapter.DroppingListListener boardingListListener;
     private int lastSelectedPosition=0;
+    private String DropId="",DropName="";
 
     public  interface  DroppingListListener {
-        void onDroppingClickTo (int position,List<BusListResponse.DataBean.AvailableTripsBean.DroppingTimesBean> DroppingTimes);
+        void onDroppingClickTo (int position,List<BusListResponse.DataBean.AvailableTripsBean.DroppingTimesBean> DroppingTimes,
+                                String DropId,String DropName);
     }
 
     public DroppingPointAdapter(Context context, List<BusListResponse.DataBean.AvailableTripsBean.DroppingTimesBean> DroppingTimes1, DroppingPointAdapter.DroppingListListener boardingListListener) {
@@ -59,37 +61,48 @@ public class DroppingPointAdapter  extends RecyclerView.Adapter<DroppingPointAda
             tvPlace = itemView.findViewById(R.id.place_boardingDroppingAdapter);
             radioButton = itemView.findViewById(R.id.radioBtn_boardingDroppingAdapter);
 
-            radioButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    lastSelectedPosition = getAdapterPosition();
-                    notifyDataSetChanged();
 
-                    Toast.makeText(context,"selected offer is " + tvTime.getText().toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
 
             itemView.setOnClickListener(this);
         }
 
-        public void bindData(int position) {
+        public void bindData(final int position) {
             tvPlace.setText(DroppingTimes.get(position).getLocation());
             tvTime.setText(DroppingTimes.get(position).getTime());
 
             try {
                 radioButton.setChecked(lastSelectedPosition == position);
+                if (boardingListListener != null) {
+                    boardingListListener.onDroppingClickTo(getLayoutPosition(),DroppingTimes,DroppingTimes.get(getLayoutPosition()).getPointId(),
+                            DroppingTimes.get(getLayoutPosition()).getLocation());
+
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }
+
+            radioButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastSelectedPosition = position;
+                    notifyDataSetChanged();
+
+                    Toast.makeText(context,"selected offer is " + tvTime.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                    DropId=DroppingTimes.get(getLayoutPosition()).getPointId();
+                    DropName=DroppingTimes.get(getLayoutPosition()).getLocation();
+                    if (boardingListListener != null) {
+                        boardingListListener.onDroppingClickTo(getLayoutPosition(),DroppingTimes,DropId,DropName);
+
+                    }
+
+                }
+            });
         }
 
         @Override
         public void onClick(View v) {
 
-            if (boardingListListener != null) {
-                boardingListListener.onDroppingClickTo(getLayoutPosition(),DroppingTimes);
-
-            }
 
         }
     }

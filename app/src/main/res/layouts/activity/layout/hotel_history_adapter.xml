@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Hotel Name"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/hotelName_hotelHistoryAdapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="ABC"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Hotel Place"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/hotelPlace_hotelHistoryAdapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="HYD"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Check In Date"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/hotelCheckIn_hotelHistoryAdapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="10"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Check Out Date"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/hotelCheckOut_hotelHistoryAdapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="11"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Fare"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/hotelFare_hotelHistoryAdapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="00"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/hotelCancelBtn_hotelHistoryAdapter"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/rounded_buttons"
+                android:padding="5dp"
+                android:text="Cancel Trip"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"
+                android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/downloadBtn_busHistoryAdapter"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/rounded_buttons"
+                android:padding="5dp"
+                android:text="Download Ticket"
+                android:textColor="#fff"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"/>
+
+            <TextView
+                android:id="@+id/hotelCancel_hotelHistoryAdapter"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_gravity="left"
+                android:layout_alignParentLeft="true"
+                android:background="@null"
+                android:padding="5dp"
+                android:text="Trip Canceled"
+                android:textColor="@color/yellow_theme"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_bold"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

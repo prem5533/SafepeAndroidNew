@@ -68,9 +68,10 @@ import com.safepayu.wallet.models.response.UserResponse1;
 import com.safepayu.wallet.models.response.WalletHistoryResponse;
 import com.safepayu.wallet.models.response.WalletLimitResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
-import com.safepayu.wallet.models.response.booking.HotelDetailResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusBlockingResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusBookingResponse;
+import com.safepayu.wallet.models.response.booking.bus.BusCancelResponse;
+import com.safepayu.wallet.models.response.booking.bus.BusHistoryResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusListResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusSourcesResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusTripDetailsResponse;
@@ -82,6 +83,9 @@ import com.safepayu.wallet.models.response.booking.flight.FlightBlockTicketRespo
 import com.safepayu.wallet.models.response.booking.flight.FlightBookingDetailResponse;
 import com.safepayu.wallet.models.response.booking.hotel.AvailableHotelsResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelBookResponse;
+import com.safepayu.wallet.models.response.booking.hotel.HotelCancelResponse;
+import com.safepayu.wallet.models.response.booking.hotel.HotelDetailResponse;
+import com.safepayu.wallet.models.response.booking.hotel.HotelHistoryResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelSourcesResponse;
 
 import io.reactivex.Single;
@@ -282,12 +286,19 @@ public interface ApiService {
     @POST("api/secure.safepe/api/postBusTripDetails")
     Single<BusTripDetailsResponse> getBusTripDetails(@Body BusTripDetailsRequest busTripDetailsRequest);
 
-    @POST("api/secure.safepe/api/postBusTripDetails")
+    @POST("api/secure.safepe/api/postBusBlockTicket")
     Single<BusBlockingResponse> getBusBlocking(@Body BusBlockingRequest busBookingRequest);
 
     @FormUrlEncoded
     @POST("api/secure.safepe/api/getFirebaseTocken")
     Single<BusBookingResponse> getBookingBus(@Field("referenceNo") String referenceNo);
+
+    @GET("api/secure.safepe/api/busHistory")
+    Single<BusHistoryResponse> getBusHistory();
+
+    @FormUrlEncoded
+    @POST("api/secure.safepe/api/postBusCancelTicket")
+    Single<BusCancelResponse> getBusCancel(@Field("referenceNo") String referenceNo, @Field("seatNos") String seatNos);
 
 
     //*************Hotel Booking *******************//
@@ -302,6 +313,14 @@ public interface ApiService {
 
     @POST("api/secure.safepe/api/hotelBlock")
     Single<HotelBookResponse> getHotelBook(@Body BookHotelRequest bookHotelRequest);
+
+    @GET("api/secure.safepe/api/HotelRoomBookingHistory")
+    Single<HotelHistoryResponse> getHotelHistory();
+
+    @FormUrlEncoded
+    @POST("api/secure.safepe/api/hotelCancelRoom")
+    Single<HotelCancelResponse> getHotelCancelRoom(@Field("referenceNo") String referenceNo);
+
 
     //*************Reward Coin *******************//
     @GET("api/secure.safepe/api/coinLog")
