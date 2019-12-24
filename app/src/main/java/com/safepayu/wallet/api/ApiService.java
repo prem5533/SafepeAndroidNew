@@ -77,6 +77,7 @@ import com.safepayu.wallet.models.response.booking.bus.BusTripDetailsResponse;
 import com.safepayu.wallet.models.response.booking.flight.AirportLocationResponse;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
 import com.safepayu.wallet.models.response.booking.flight.CancelBookTicketResponse;
+import com.safepayu.wallet.models.response.booking.flight.FlighPdfResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightBlockTicketResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightBookingDetailResponse;
 import com.safepayu.wallet.models.response.booking.hotel.AvailableHotelsResponse;
@@ -268,6 +269,8 @@ public interface ApiService {
     @GET("api/secure.safepe/api/getFlightHistory")
     Single<FlightHistoryResponse> getFlightHistory();
 
+    @POST("api/secure.safepe/api/getFlightPdf")
+    Single<FlighPdfResponse>getFlightPdf(@Body FlightBookingDetailRequest flightBookingDetailRequest);
 
     //*************Bus Booking *******************//
     @POST("api/secure.safepe/api/postBusLocationList")

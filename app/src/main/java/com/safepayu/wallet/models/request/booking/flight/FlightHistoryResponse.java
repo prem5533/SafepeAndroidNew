@@ -294,7 +294,7 @@ public class FlightHistoryResponse {
         private Object WebsiteUrl;
         private Object MultiFlightsSearch;
         private int onward_fare;
-        private String return_fare;
+        private int return_fare;
         private List<?> EcommerceSegment;
         private List<OnwardFlightSegmentsBean> OnwardFlightSegments;
         private List<ReturnFlightSegmentsBean> ReturnFlightSegments;
@@ -1284,11 +1284,11 @@ public class FlightHistoryResponse {
             this.onward_fare = onward_fare;
         }
 
-        public String getReturn_fare() {
+        public int getReturn_fare() {
             return return_fare;
         }
 
-        public void setReturn_fare(String return_fare) {
+        public void setReturn_fare(int return_fare) {
             this.return_fare = return_fare;
         }
 

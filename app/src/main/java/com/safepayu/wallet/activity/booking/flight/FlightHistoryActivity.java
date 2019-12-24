@@ -215,7 +215,15 @@ public class FlightHistoryActivity extends AppCompatActivity implements FlightHi
             tvBookingStatus.setTextColor(getResources().getColor(R.color.clay_yellow));
         }
         tvFlightRefrenceNo.setText(FHistoryResponse.getData().get(position).getBookingRefNo());
-        tvFlightTimeDate.setText(FHistoryResponse.getData().get(position).getBookingDate());
+
+
+        String DateTime =FHistoryResponse.getData().get(position).getBookingDate();
+        String DT[] = DateTime.split("T");
+        String D = DT[0];
+        String T = DT[1];
+        tvFlightTimeDate.setText(D+" , "+T);
+
+
         tvFlightSourceDestination.setText(Source+" - "+Destination);
         tvTicketTimeDateTraveller.setText(JourneyDate+" | "+TotalTravellers + " Traveller");
         tvTicketSource.setText(Source);

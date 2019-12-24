@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/payment"
-    tools:context=".activity.booking.BookingPaymentActivity">
+    tools:context=".activity.booking.flight.BookingPaymentActivity">
         <RelativeLayout
             android:id="@+id/headerbar"
             android:layout_width="match_parent"

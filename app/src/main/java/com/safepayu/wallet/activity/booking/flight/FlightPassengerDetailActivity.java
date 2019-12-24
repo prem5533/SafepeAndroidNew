@@ -28,7 +28,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.booking.BookingPaymentActivity;
 import com.safepayu.wallet.adapter.fight.FlighPassengerBookingDialog;
 import com.safepayu.wallet.adapter.fight.FlightTravellersList;
 import com.safepayu.wallet.api.ApiClient;

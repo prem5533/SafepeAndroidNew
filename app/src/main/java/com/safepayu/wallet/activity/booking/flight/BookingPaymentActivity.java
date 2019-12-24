@@ -1,4 +1,4 @@
-package com.safepayu.wallet.activity.booking;
+package com.safepayu.wallet.activity.booking.flight;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +20,6 @@ import com.easebuzz.payment.kit.PWECouponsActivity;
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.booking.flight.FlightBookDetailActivity;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;

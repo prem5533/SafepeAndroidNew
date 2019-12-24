@@ -1,10 +1,12 @@
 package com.safepayu.wallet.activity.booking.flight;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +34,10 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.booking.flight.FlightBookingDetailRequest;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
 import com.safepayu.wallet.models.response.booking.flight.CancelBookTicketResponse;
+import com.safepayu.wallet.models.response.booking.flight.FlighPdfResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightBookingDetailResponse;
+import com.safepayu.wallet.utils.pdf.DownloadTask;
+import com.safepayu.wallet.utils.pdf.MarshMallowPermission;
 import com.squareup.picasso.Picasso;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -77,7 +84,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
 
     private void findId() {
         loadingDialog = new LoadingDialog(this);
-        backBtn = findViewById(R.id.recharge_back_btn);
+        backBtn = findViewById(R.id._back_btn);
         tvBookingStatus = findViewById(R.id.tv_booking_status);
         tvSafeJourney = findViewById(R.id.tv_safe_journey);
         tvFlightRefrenceNo = findViewById(R.id.tv_flight_refrence_no);
@@ -97,6 +104,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
         tvTicketDetinationAirportnameReturn = findViewById(R.id.tv_ticket_detination_airportname_return);
         tvDownloadTicket = findViewById(R.id.tv_flight_download_ticket);
         imShare = findViewById(R.id.im_share);
+        backBtn.setOnClickListener(this);
 
         //RETURN
         tvFlightSourceDestinationReturn = findViewById(R.id.tv_flight_source_destination_return);
@@ -166,8 +174,8 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
 
         flightBookingDetailRequest = new FlightBookingDetailRequest();
       //  flightBookingDetailRequest.setReferenceNo("300905016582");
-      //  flightBookingDetailRequest.setReferenceNo("300344016590");
-        flightBookingDetailRequest.setReferenceNo(ReferanceNo);
+       flightBookingDetailRequest.setReferenceNo("300344016590");
+       // flightBookingDetailRequest.setReferenceNo(ReferanceNo);
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
@@ -187,7 +195,12 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
                             tvBookingStatus.setText("Booking Successful");
                             tvSafeJourney.setText("Have a safe journey!");
                             tvFlightRefrenceNo.setText(flightBookingDetailResponse.getData().getBookingRefNo());
-                            tvFlightTimeDate.setText(flightBookingDetailResponse.getData().getBookingDate());
+
+                            String DateTime =flightBookingDetailResponse.getData().getBookingDate();
+                            String DT[] = DateTime.split("T");
+                            String D = DT[0];
+                            String T = DT[1];
+                            tvFlightTimeDate.setText(D+" , "+T);
 
                         } else if (bs == 5) {
                             statusImage.setVisibility(View.GONE);
@@ -340,12 +353,24 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
                 showDialogCancelTicket(FlightBookDetailActivity.this);
 
                 break;
-            case R.id.recharge_back_btn:
+            case R.id._back_btn:
                 overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
                 finish();
                 break;
             case R.id.tv_flight_download_ticket:
-                Toast.makeText(getApplicationContext(),"Download",Toast.LENGTH_LONG).show();
+
+                if (ContextCompat.checkSelfPermission(FlightBookDetailActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                   MarshMallowPermission.requestStoragePermission(getApplicationContext());
+                        getFlightPdf();
+
+
+                }
+                else {
+                    ActivityCompat.requestPermissions(FlightBookDetailActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }, 100);
+                    getFlightPdf();
+                }
                 break;
         }
     }
@@ -381,8 +406,8 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
 
     private void getCancelBookTicket() {
         flightBookingDetailRequest = new FlightBookingDetailRequest();
-      //  flightBookingDetailRequest.setReferenceNo("300356016556");
-        flightBookingDetailRequest.setReferenceNo(ReferanceNo);
+        flightBookingDetailRequest.setReferenceNo("300356016556");
+      //  flightBookingDetailRequest.setReferenceNo(ReferanceNo);
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
@@ -397,7 +422,13 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
                     statusImage.setVisibility(View.GONE);
                     tvBookingStatus.setText("Cancellation is in progress");
                  //   tvSafeJourney.setText("Ticket cancelled successfully!");
-                    tvFlightTimeDate.setText(response.getData().getCancelTime());
+
+                    String DateTime =response.getData().getCancelTime();
+                    String DT[] = DateTime.split("T");
+                    String D = DT[0];
+                    String T = DT[1];
+                    tvFlightTimeDate.setText(D+" , "+T);
+
                     tvFlightEticketNo.setText("PNR - "+response.getData().getAPIReferenceNo());
 
                     if (response.getData().getCancellations().get(0).getCancelStatus()==5){
@@ -426,4 +457,36 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
         }));
 
     }
+    //**********************************for pdf download************************
+    private void getFlightPdf() {
+
+        flightBookingDetailRequest = new FlightBookingDetailRequest();
+        //  flightBookingDetailRequest.setReferenceNo("300905016582");
+        flightBookingDetailRequest.setReferenceNo("300270016738");
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(FlightBookDetailActivity.this).create(ApiService.class);
+        BaseApp.getInstance().getDisposable().add(apiService.getFlightPdf(flightBookingDetailRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<FlighPdfResponse>(){
+                    @Override
+                    public void onSuccess(FlighPdfResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+
+                            new DownloadTask(FlightBookDetailActivity.this, response.getData());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.flight_book_detail), false, e.getCause());
+                    }
+                }));
+
+    }
 }
+
+

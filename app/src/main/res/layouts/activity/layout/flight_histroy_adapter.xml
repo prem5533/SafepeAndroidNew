@@ -1,38 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="1dp">
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="1dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_flight_ticket_ref_no"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="refnu"
-                android:padding="10dp"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-                android:layout_marginLeft="10dp"
-                android:fontFamily="@font/roboto_regular"/>
-            <TextView
-                android:id="@+id/tv_flight_booking_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Booking Status"
-                android:padding="10dp"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-                android:layout_marginLeft="10dp"
-                android:visibility="gone"
-                android:fontFamily="@font/roboto_regular"/>
+                android:orientation="horizontal"
+                android:gravity="center">
 
+                <androidx.cardview.widget.CardView
+                    android:layout_height="46dp"
+                    android:layout_width="46dp"
+                    android:layout_margin="5dp"
+                    app:cardElevation="1dp"
+                    app:cardCornerRadius="23dp"
+                    app:cardBackgroundColor="@color/red_theme">
+
+                    <ImageView
+                        android:id="@+id/image_flight"
+                        android:layout_width="47dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:scaleType="fitXY"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_airplane" />
+
+                </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="5dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/tv_flight_ticket_ref_no"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:id="@+id/tv_flight_amount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="65"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/roboto_bold"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_flight_booking_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Booking Status"
+                            android:textSize="15sp"
+                            android:visibility="gone"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/roboto_regular"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_flightpnr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="14sp"
+                        android:textColor="@color/bue_A800"
+                        android:fontFamily="@font/roboto_regular"/>
+
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="start">
+                <TextView
+                    android:id="@+id/tv_flight_time_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1 Day ago"
+                    android:textSize="12sp"
+                    android:textColor="@color/blue_grey_300"
+                    android:fontFamily="@font/roboto_regular"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                >
+                    <ImageView
+                        android:id="@+id/image_status"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="1dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_success" />
+                    <TextView
+                        android:id="@+id/tv_flight_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Success"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginLeft="5dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 
 </LinearLayout>
