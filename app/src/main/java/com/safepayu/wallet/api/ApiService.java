@@ -70,6 +70,8 @@ import com.safepayu.wallet.models.response.WalletLimitResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusBlockingResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusBookingResponse;
+import com.safepayu.wallet.models.response.booking.bus.BusCancelResponse;
+import com.safepayu.wallet.models.response.booking.bus.BusHistoryResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusListResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusSourcesResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusTripDetailsResponse;
@@ -281,12 +283,19 @@ public interface ApiService {
     @POST("api/secure.safepe/api/postBusTripDetails")
     Single<BusTripDetailsResponse> getBusTripDetails(@Body BusTripDetailsRequest busTripDetailsRequest);
 
-    @POST("api/secure.safepe/api/postBusTripDetails")
+    @POST("api/secure.safepe/api/postBusBlockTicket")
     Single<BusBlockingResponse> getBusBlocking(@Body BusBlockingRequest busBookingRequest);
 
     @FormUrlEncoded
     @POST("api/secure.safepe/api/getFirebaseTocken")
     Single<BusBookingResponse> getBookingBus(@Field("referenceNo") String referenceNo);
+
+    @GET("api/secure.safepe/api/busHistory")
+    Single<BusHistoryResponse> getBusHistory();
+
+    @FormUrlEncoded
+    @POST("api/secure.safepe/api/postBusCancelTicket")
+    Single<BusCancelResponse> getBusCancel(@Field("referenceNo") String referenceNo, @Field("seatNos") String seatNos);
 
 
     //*************Hotel Booking *******************//

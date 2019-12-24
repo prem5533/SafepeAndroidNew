@@ -4,8 +4,8 @@ public class BusBlockingResponse {
 
     /**
      * status : true
-     * message : SUCCESS
-     * data : {"BlockingReferenceNo":"1008303898","BookingReferenceNo":"100301004988","Message":"SUCCESS","IsPriceChange":false,"previousFare":null,"updatedFare":null,"BookingStatus":1,"ResponseStatus":200,"bookingFee":0,"FareBreakUps":null,"TollFee":0,"ReservationFee":0}
+     * message : Bus ticket(s) booked Successfully
+     * data : {"OperatorPNR":null,"ReferenceNo":"100255005152","APIReferenceNo":"00115154","Message":"SUCCESS","BookingStatus":3,"ResponseStatus":200,"RefundResponse":null,"Provider":null}
      */
 
     private boolean status;
@@ -38,47 +38,47 @@ public class BusBlockingResponse {
 
     public static class DataBean {
         /**
-         * BlockingReferenceNo : 1008303898
-         * BookingReferenceNo : 100301004988
+         * OperatorPNR : null
+         * ReferenceNo : 100255005152
+         * APIReferenceNo : 00115154
          * Message : SUCCESS
-         * IsPriceChange : false
-         * previousFare : null
-         * updatedFare : null
-         * BookingStatus : 1
+         * BookingStatus : 3
          * ResponseStatus : 200
-         * bookingFee : 0
-         * FareBreakUps : null
-         * TollFee : 0
-         * ReservationFee : 0
+         * RefundResponse : null
+         * Provider : null
          */
 
-        private String BlockingReferenceNo;
-        private String BookingReferenceNo;
+        private Object OperatorPNR;
+        private String ReferenceNo;
+        private String APIReferenceNo;
         private String Message;
-        private boolean IsPriceChange;
-        private Object previousFare;
-        private Object updatedFare;
         private int BookingStatus;
         private int ResponseStatus;
-        private int bookingFee;
-        private Object FareBreakUps;
-        private int TollFee;
-        private int ReservationFee;
+        private Object RefundResponse;
+        private Object Provider;
 
-        public String getBlockingReferenceNo() {
-            return BlockingReferenceNo;
+        public Object getOperatorPNR() {
+            return OperatorPNR;
         }
 
-        public void setBlockingReferenceNo(String BlockingReferenceNo) {
-            this.BlockingReferenceNo = BlockingReferenceNo;
+        public void setOperatorPNR(Object OperatorPNR) {
+            this.OperatorPNR = OperatorPNR;
         }
 
-        public String getBookingReferenceNo() {
-            return BookingReferenceNo;
+        public String getReferenceNo() {
+            return ReferenceNo;
         }
 
-        public void setBookingReferenceNo(String BookingReferenceNo) {
-            this.BookingReferenceNo = BookingReferenceNo;
+        public void setReferenceNo(String ReferenceNo) {
+            this.ReferenceNo = ReferenceNo;
+        }
+
+        public String getAPIReferenceNo() {
+            return APIReferenceNo;
+        }
+
+        public void setAPIReferenceNo(String APIReferenceNo) {
+            this.APIReferenceNo = APIReferenceNo;
         }
 
         public String getMessage() {
@@ -87,30 +87,6 @@ public class BusBlockingResponse {
 
         public void setMessage(String Message) {
             this.Message = Message;
-        }
-
-        public boolean isIsPriceChange() {
-            return IsPriceChange;
-        }
-
-        public void setIsPriceChange(boolean IsPriceChange) {
-            this.IsPriceChange = IsPriceChange;
-        }
-
-        public Object getPreviousFare() {
-            return previousFare;
-        }
-
-        public void setPreviousFare(Object previousFare) {
-            this.previousFare = previousFare;
-        }
-
-        public Object getUpdatedFare() {
-            return updatedFare;
-        }
-
-        public void setUpdatedFare(Object updatedFare) {
-            this.updatedFare = updatedFare;
         }
 
         public int getBookingStatus() {
@@ -129,36 +105,20 @@ public class BusBlockingResponse {
             this.ResponseStatus = ResponseStatus;
         }
 
-        public int getBookingFee() {
-            return bookingFee;
+        public Object getRefundResponse() {
+            return RefundResponse;
         }
 
-        public void setBookingFee(int bookingFee) {
-            this.bookingFee = bookingFee;
+        public void setRefundResponse(Object RefundResponse) {
+            this.RefundResponse = RefundResponse;
         }
 
-        public Object getFareBreakUps() {
-            return FareBreakUps;
+        public Object getProvider() {
+            return Provider;
         }
 
-        public void setFareBreakUps(Object FareBreakUps) {
-            this.FareBreakUps = FareBreakUps;
-        }
-
-        public int getTollFee() {
-            return TollFee;
-        }
-
-        public void setTollFee(int TollFee) {
-            this.TollFee = TollFee;
-        }
-
-        public int getReservationFee() {
-            return ReservationFee;
-        }
-
-        public void setReservationFee(int ReservationFee) {
-            this.ReservationFee = ReservationFee;
+        public void setProvider(Object Provider) {
+            this.Provider = Provider;
         }
     }
 }

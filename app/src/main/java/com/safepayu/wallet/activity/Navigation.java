@@ -53,6 +53,7 @@ import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.MetroActivity;
+import com.safepayu.wallet.activity.booking.PaymentActivityBooking;
 import com.safepayu.wallet.activity.booking.bus.BusActivity;
 import com.safepayu.wallet.activity.booking.flight.FlightBookDetailActivity;
 import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
@@ -746,8 +747,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
             case R.id.layout_movie:
                 Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(Navigation.this, MovieActivity.class));
-//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                startActivity(new Intent(Navigation.this, PaymentActivityBooking.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
 
             case R.id.layout_googleplay:

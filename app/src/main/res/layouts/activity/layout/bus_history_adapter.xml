@@ -24,13 +24,13 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Hotel Name"
+                android:text="Trip"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:layout_alignParentLeft="true"/>
 
             <TextView
-                android:id="@+id/hotelName_hotelHistoryAdapter"
+                android:id="@+id/trip_busHistoryAdapter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
@@ -49,13 +49,13 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Hotel Place"
+                android:text="Journey Date"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:layout_alignParentLeft="true"/>
 
             <TextView
-                android:id="@+id/hotelPlace_hotelHistoryAdapter"
+                android:id="@+id/tripDate_busHistoryAdapter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
@@ -74,13 +74,13 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Check In Date"
+                android:text="Traveller"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:layout_alignParentLeft="true"/>
 
             <TextView
-                android:id="@+id/hotelCheckIn_hotelHistoryAdapter"
+                android:id="@+id/tripBusName_busHistoryAdapter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
@@ -99,13 +99,13 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Check Out Date"
+                android:text="Seat No."
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:layout_alignParentLeft="true"/>
 
             <TextView
-                android:id="@+id/hotelCheckOut_hotelHistoryAdapter"
+                android:id="@+id/tripSeats_busHistoryAdapter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
@@ -130,7 +130,7 @@
                 android:layout_alignParentLeft="true"/>
 
             <TextView
-                android:id="@+id/hotelFare_hotelHistoryAdapter"
+                android:id="@+id/tripFare_busHistoryAdapter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
@@ -149,7 +149,7 @@
             android:layout_marginBottom="10dp">
 
             <Button
-                android:id="@+id/hotelCancelBtn_hotelHistoryAdapter"
+                android:id="@+id/cancelBtn_busHistoryAdapter"
                 android:layout_width="130dp"
                 android:layout_height="40dp"
                 android:layout_alignParentLeft="true"
@@ -176,7 +176,7 @@
                 android:fontFamily="@font/roboto_regular"/>
 
             <TextView
-                android:id="@+id/hotelCancel_hotelHistoryAdapter"
+                android:id="@+id/cancel_busHistoryAdapter"
                 android:layout_width="130dp"
                 android:layout_height="40dp"
                 android:layout_gravity="left"

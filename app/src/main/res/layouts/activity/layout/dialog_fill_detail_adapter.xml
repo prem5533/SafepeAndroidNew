@@ -232,7 +232,7 @@
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="Card Number"
+                    android:text="Card No."
                     android:layout_marginTop="10dp"/>
 
                 <EditText

@@ -31,7 +31,7 @@ public class HotelHistory  extends Fragment implements HotelBookHistoryAdapter.H
     private RecyclerView rvHistoryList;
     private HotelBookHistoryAdapter adapter;
     private HotelHistoryResponse historyResponse;
-    private  String ReferenceNo="";
+    private String ReferenceNo="";
 
     public HotelHistory() {
         // Required empty public constructor
@@ -47,11 +47,11 @@ public class HotelHistory  extends Fragment implements HotelBookHistoryAdapter.H
         rvHistoryList = rootView.findViewById(R.id.hotelBookList_hotelBookingHistory);
         rvHistoryList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-        getHotelDetail();
+        getHotelHistory();
         return rootView;
     }
 
-    private void getHotelDetail() {
+    private void getHotelHistory() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getActivity()).create(ApiService.class);
 
