@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -174,8 +173,8 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
 
         flightBookingDetailRequest = new FlightBookingDetailRequest();
       //  flightBookingDetailRequest.setReferenceNo("300905016582");
-       flightBookingDetailRequest.setReferenceNo("300344016590");
-       // flightBookingDetailRequest.setReferenceNo(ReferanceNo);
+     //  flightBookingDetailRequest.setReferenceNo("300344016590");
+        flightBookingDetailRequest.setReferenceNo(ReferanceNo);
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
@@ -406,8 +405,8 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
 
     private void getCancelBookTicket() {
         flightBookingDetailRequest = new FlightBookingDetailRequest();
-        flightBookingDetailRequest.setReferenceNo("300356016556");
-      //  flightBookingDetailRequest.setReferenceNo(ReferanceNo);
+       // flightBookingDetailRequest.setReferenceNo("300356016556");
+        flightBookingDetailRequest.setReferenceNo(ReferanceNo);
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
@@ -462,7 +461,8 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
 
         flightBookingDetailRequest = new FlightBookingDetailRequest();
         //  flightBookingDetailRequest.setReferenceNo("300905016582");
-        flightBookingDetailRequest.setReferenceNo("300270016738");
+       // flightBookingDetailRequest.setReferenceNo("300270016738");
+        flightBookingDetailRequest.setReferenceNo(ReferanceNo);
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(FlightBookDetailActivity.this).create(ApiService.class);
         BaseApp.getInstance().getDisposable().add(apiService.getFlightPdf(flightBookingDetailRequest)

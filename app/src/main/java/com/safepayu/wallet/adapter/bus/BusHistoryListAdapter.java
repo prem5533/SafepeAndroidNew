@@ -20,17 +20,23 @@ public class BusHistoryListAdapter extends RecyclerView.Adapter<BusHistoryListAd
 
     private Context context ;
     private BusHistoryListAdapter.BusBookListListener bookListListener;
+    private BusHistoryListAdapter.DownloadListListener downloadListListener;
     private List<BusHistoryResponse.DataBean> data;
 
     public  interface  BusBookListListener {
         void onLocationClickTo (int position,String BookingRefNo, String SeatNos);
     }
 
+    public  interface  DownloadListListener {
+        void onLocationClickTo (String BookingRefNo);
+    }
+
     public BusHistoryListAdapter(Context context, List<BusHistoryResponse.DataBean> data1,
-                                   BusHistoryListAdapter.BusBookListListener bookListListener) {
+                                   BusHistoryListAdapter.BusBookListListener bookListListener,BusHistoryListAdapter.DownloadListListener downloadListListener) {
         this.context = context;
         this.data = data1;
         this.bookListListener=bookListListener;
+        this.downloadListListener=downloadListListener;
     }
 
     @NonNull
@@ -118,6 +124,15 @@ public class BusHistoryListAdapter extends RecyclerView.Adapter<BusHistoryListAd
                     if (bookListListener != null) {
                         bookListListener.onLocationClickTo(getLayoutPosition(),data.get(getLayoutPosition()).getBookingRefNo(),
                                 data.get(getLayoutPosition()).getSeatNos());
+                    }
+                }
+            });
+
+            DownloadBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (downloadListListener != null) {
+                        downloadListListener.onLocationClickTo(data.get(getLayoutPosition()).getBookingRefNo());
                     }
                 }
             });

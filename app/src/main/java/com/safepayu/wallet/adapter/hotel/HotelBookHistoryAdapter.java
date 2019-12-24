@@ -20,16 +20,22 @@ public class HotelBookHistoryAdapter extends RecyclerView.Adapter<HotelBookHisto
     private Context context ;
     private HotelBookHistoryAdapter.HotelBookListListener bookListListener;
     private List<HotelHistoryResponse.DataBean> data;
+    private HotelBookHistoryAdapter.DownloadListListener downloadListListener;
 
     public  interface  HotelBookListListener {
         void onLocationClickTo (int position,String BookingRefNo, HotelHistoryResponse.DataBean.HotelPolicyBean HotelPolicy);
     }
 
+    public  interface  DownloadListListener {
+        void onLocationClickTo (String BookingRefNo);
+    }
+
     public HotelBookHistoryAdapter(Context context, List<HotelHistoryResponse.DataBean> data1,
-                           HotelBookHistoryAdapter.HotelBookListListener bookListListener) {
+                                   HotelBookHistoryAdapter.HotelBookListListener bookListListener, HotelBookHistoryAdapter.DownloadListListener downloadListListener) {
         this.context = context;
         this.data = data1;
         this.bookListListener=bookListListener;
+        this.downloadListListener=downloadListListener;
     }
 
     @NonNull
@@ -51,7 +57,7 @@ public class HotelBookHistoryAdapter extends RecyclerView.Adapter<HotelBookHisto
 
     public class FlightLocationListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvHotelName,tvHotelPrice,tvHotelPlace,tvHotelChickIn, tvHotelChickOut,tvStatus;
-        private Button CancelBtn;
+        private Button CancelBtn,DownloadBtn;
         public FlightLocationListViewHolder(@NonNull View itemView) {
             super(itemView);
             tvHotelName = itemView.findViewById(R.id.hotelName_hotelHistoryAdapter);
@@ -61,6 +67,7 @@ public class HotelBookHistoryAdapter extends RecyclerView.Adapter<HotelBookHisto
             tvHotelPrice = itemView.findViewById(R.id.hotelFare_hotelHistoryAdapter);
             tvStatus = itemView.findViewById(R.id.hotelCancel_hotelHistoryAdapter);
             CancelBtn = itemView.findViewById(R.id.hotelCancelBtn_hotelHistoryAdapter);
+            DownloadBtn = itemView.findViewById(R.id.downloadBtn_hotelHistoryAdapter);
 
             itemView.setOnClickListener(this);
         }
@@ -86,6 +93,15 @@ public class HotelBookHistoryAdapter extends RecyclerView.Adapter<HotelBookHisto
                     if (bookListListener != null) {
                         bookListListener.onLocationClickTo(getLayoutPosition(),data.get(getLayoutPosition()).getBookingRefNo(),
                                 data.get(getLayoutPosition()).getHotelPolicy());
+                    }
+                }
+            });
+
+            DownloadBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (downloadListListener != null) {
+                        downloadListListener.onLocationClickTo(data.get(getLayoutPosition()).getBookingRefNo());
                     }
                 }
             });

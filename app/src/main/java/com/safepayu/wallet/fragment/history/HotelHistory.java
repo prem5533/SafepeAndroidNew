@@ -18,14 +18,17 @@ import com.safepayu.wallet.adapter.hotel.HotelBookHistoryAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.booking.flight.FlightBookingDetailRequest;
+import com.safepayu.wallet.models.response.booking.flight.FlighPdfResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelCancelResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelHistoryResponse;
+import com.safepayu.wallet.utils.pdf.DownloadTask;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class HotelHistory  extends Fragment implements HotelBookHistoryAdapter.HotelBookListListener{
+public class HotelHistory  extends Fragment implements HotelBookHistoryAdapter.HotelBookListListener, HotelBookHistoryAdapter.DownloadListListener {
 
     private LoadingDialog loadingDialog;
     private RecyclerView rvHistoryList;
@@ -65,7 +68,7 @@ public class HotelHistory  extends Fragment implements HotelBookHistoryAdapter.H
                         if (response.isStatus()) {
                             try {
                                 historyResponse=response;
-                                adapter=new HotelBookHistoryAdapter(getActivity(),historyResponse.getData(),HotelHistory.this);
+                                adapter=new HotelBookHistoryAdapter(getActivity(),historyResponse.getData(),HotelHistory.this,HotelHistory.this);
                                 rvHistoryList.setAdapter(adapter);
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -146,5 +149,44 @@ public class HotelHistory  extends Fragment implements HotelBookHistoryAdapter.H
                 //.setNegativeButton(android.R.string.no, null)
                 .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
                 .show();
+    }
+
+    //**********************************for pdf download************************
+    private void getPdf(String REFno) {
+
+        FlightBookingDetailRequest flightBookingDetailRequest = new FlightBookingDetailRequest();
+        //  flightBookingDetailRequest.setReferenceNo("300905016582");
+        // flightBookingDetailRequest.setReferenceNo("300270016738");
+        flightBookingDetailRequest.setReferenceNo(REFno);
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(getActivity()).create(ApiService.class);
+        BaseApp.getInstance().getDisposable().add(apiService.getFlightPdf(flightBookingDetailRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<FlighPdfResponse>(){
+                    @Override
+                    public void onSuccess(FlighPdfResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+
+                            new DownloadTask(getActivity(), response.getData());
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.hotelBookingHistory),response.getMessage(),getAllowEnterTransitionOverlap());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(getView().findViewById(R.id.hotelBookingHistory), false, e.getCause());
+                    }
+                }));
+
+    }
+
+    @Override
+    public void onLocationClickTo(String BookingRefNo) {
+        getPdf( BookingRefNo);
     }
 }

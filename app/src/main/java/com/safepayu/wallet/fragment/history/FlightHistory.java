@@ -3,7 +3,6 @@ package com.safepayu.wallet.fragment.history;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,7 +18,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -29,9 +27,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.MemberBankAddPackages;
-import com.safepayu.wallet.activity.MyOrdersActivity;
-import com.safepayu.wallet.activity.booking.flight.FlightHistoryActivity;
 import com.safepayu.wallet.adapter.fight.FlighHistoryPassengerBookingDialog;
 import com.safepayu.wallet.adapter.fight.FlightHistroyAdapter;
 import com.safepayu.wallet.api.ApiClient;
@@ -56,7 +51,7 @@ public class FlightHistory  extends Fragment implements FlightHistroyAdapter.Fli
     private FlightHistroyAdapter flightHistroyAdapter;
     public Dialog dialog;
     FlightHistoryResponse FHistoryResponse;
-    private String ReferanceNo ="",Source,Destination,JourneyDate,DepTime,ArrivalTime,DurationTime,AirLineCode,AirLineNumber,FlightImage,TotalTravellers,
+    private String  REFno,ReferanceNo ="",Source,Destination,JourneyDate,DepTime,ArrivalTime,DurationTime,AirLineCode,AirLineNumber,FlightImage,TotalTravellers,
             TripType,FlightImageReturn,DurationTimeReturn,FlightDepTimeReturn,FlightArrivalTimeReturn,FlightJourneyReturn;
     private TextView tvBookingStatus, tvSafeJourney,tvFlightRefrenceNo,tvFlightTimeDate,tvFlightSourceDestination,tvFlightEticketNo,tvFlightCancelTicket,tvTicketTimeDateTraveller,
             tvTicketSource,tvTicketDestination,tvTicketSourceTime,tvTicketTotalTime,tvTicketDestinationTime,tvTicketSourceAirportname,tvTicketDetinationAirportname,tvFlightNumber,tvFlightCode,
@@ -226,6 +221,7 @@ public class FlightHistory  extends Fragment implements FlightHistroyAdapter.Fli
 
             }
         });
+
         tvFlightEticketNo.setText("PNR - " + mOrderId.getAPIRefNo());
         if (mOrderId.getOnwardFlightSegments().get(0).getAirLineName().equals("Indigo")){
             liFlightName.setBackgroundDrawable(getResources().getDrawable(R.drawable.indigo));
@@ -281,7 +277,7 @@ public class FlightHistory  extends Fragment implements FlightHistroyAdapter.Fli
         String D = DT[0];
         String T = DT[1];
         tvFlightTimeDate.setText(D+" "+T);
-
+      REFno=  FHistoryResponse.getData().get(position).getBookingRefNo();
         tvFlightRefrenceNo.setText(FHistoryResponse.getData().get(position).getBookingRefNo());
         tvFlightTimeDate.setText(D+" "+T);
         tvFlightSourceDestination.setText(FHistoryResponse.getData().get(position).getOnwardFlightSegments().get(0).getDepartureAirportCode()+" - "+FHistoryResponse.getData().get(position).getOnwardFlightSegments().get(0).getArrivalAirportCode());
@@ -371,7 +367,8 @@ public class FlightHistory  extends Fragment implements FlightHistroyAdapter.Fli
 
         flightBookingDetailRequest = new FlightBookingDetailRequest();
         //  flightBookingDetailRequest.setReferenceNo("300905016582");
-        flightBookingDetailRequest.setReferenceNo("300270016738");
+       // flightBookingDetailRequest.setReferenceNo("300270016738");
+        flightBookingDetailRequest.setReferenceNo(REFno);
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getActivity()).create(ApiService.class);
         BaseApp.getInstance().getDisposable().add(apiService.getFlightPdf(flightBookingDetailRequest)
