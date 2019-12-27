@@ -111,12 +111,13 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
             liOnwards.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    row_index=position;
-                    notifyDataSetChanged();
+
                     if (onFlightItemListener != null) {
                         onFlightItemListener.onFlightItemListerne(getLayoutPosition(),mItem.get(getLayoutPosition()),liOnwards);
                         // notifyDataSetChanged();
                     }
+                    row_index=position;
+                    notifyDataSetChanged();
                 }
             });
 
