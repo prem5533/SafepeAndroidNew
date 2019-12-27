@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.booking.PaymentActivityBooking;
 import com.safepayu.wallet.adapter.hotel.ImageListAdapter;
 import com.safepayu.wallet.adapter.hotel.RoomListAdapter;
 import com.safepayu.wallet.api.ApiClient;
@@ -40,6 +41,7 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.helper.MySpannable;
 import com.safepayu.wallet.models.request.booking_hotel.BookHotelRequest;
 import com.safepayu.wallet.models.request.booking_hotel.HotelDetailsRequest;
+import com.safepayu.wallet.models.response.booking.bus.ConvenienceFeeResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelBookResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelDetailResponse;
 import com.squareup.picasso.Picasso;
@@ -60,14 +62,17 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
     private ImageView ivHotelImage,ivMapBtn;
     private Button BackBtn;
     private String HotelId="",SourceName="",HotelName="",Provider="",WebService="",ImgUrl="",Description="",Facility="",DestinationId="";
-    private String MobileNo="",EmailId="",GenderDialog="",Latitude="",Longitude="";
+    private String MobileNo="",EmailId="",GenderDialog="",Latitude="",Longitude="",Amount2Pay="0";
     private HotelDetailsRequest hotelDetailsRequest;
     private RecyclerView recyclerViewRoomList;
     private Dialog fillDetailDialog,ImageDialog;
     private List<List<String>> NamesPList,AgesPList,GendersPList;
     private List<String> NamesChList,AgesChList,GendersChList,ImageList;
     HotelDetailResponse hotelDetailResponse;
-    BookHotelRequest bookHotelRequest=new BookHotelRequest();
+    public static BookHotelRequest bookHotelRequest=new BookHotelRequest();
+    private Dialog dialogFareDetail;
+    private boolean PerPassengerBooking=false;
+    private int ConvenienceFee=0;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -157,6 +162,7 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
         hotelDetailsRequest.setHotelId(HotelId);
 
         getHotelDetail();
+        getConvenienceFee();
     }
 
     public static void makeTextViewResizable(final TextView tv, final int maxLine, final String expandText, final boolean viewMore) {
@@ -285,6 +291,43 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.hotelDetailLayout), false, e.getCause());
+                    }
+                }));
+    }
+
+    private void getConvenienceFee() {
+        //  loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(HotelDetails.this).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getConvieneceFee("3")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ConvenienceFeeResponse>() {
+                    @Override
+                    public void onSuccess(ConvenienceFeeResponse response) {
+                        // loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+                            try {
+                                if (response.getData().isStatus()){
+                                    PerPassengerBooking=true;
+                                }else {
+                                    PerPassengerBooking=false;
+                                }
+                                ConvenienceFee=response.getData().getFee();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            ConvenienceFee=0;
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.hotelDetailLayout), response.getMessage(), true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.hotelDetailLayout), false, e.getCause());
                     }
                 }));
@@ -434,7 +477,8 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
 
         bookHotelRequest.setHotelDetails(hotelDetailsBean);
 
-        showMessage(RoomDetailsList.get(position).getRoomType(),RoomDetailsList);
+        //showMessage(RoomDetailsList.get(position).getRoomType(),RoomDetailsList);
+        showDialogFareDetail( position,RoomDetailsList);
     }
 
     public void showMessage(String Message,List<HotelDetailResponse.DataBean.RoomDetailsBean> RoomDetailsList) {
@@ -443,39 +487,122 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                 .setMessage(Message)
                 .setCancelable(false)
 
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
+                // Specifying a listener allows you to take an action before dismissing the dialogFareDetail.
+                // The dialogFareDetail is automatically dismissed when a dialogFareDetail button is clicked.
                 //.setPositiveButton(android.R.string.yes, null)
 
-                // A null listener allows the button to dismiss the dialog and take no further action.
+                // A null listener allows the button to dismiss the dialogFareDetail and take no further action.
                 //.setNegativeButton(android.R.string.no, null)
                 .setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Continue with delete operation
-//                        Intent intent=new Intent(HotelDetails.this,BookHotel.class);
-//                        intent.putExtra("HotelId",HotelId);
-//                        intent.putExtra("SourceName",SourceName);
-//                        intent.putExtra("HotelName",HotelName);
-//                        intent.putExtra("WebService",WebService);
-//                        intent.putExtra("Provider",Provider);
-//                        intent.putExtra("ImgUrl",ImgUrl);
-//                        intent.putExtra("CityId",hotelDetailsRequest.getCityId());
-                        //startActivity(intent);
+                    public void onClick(DialogInterface dialogFareDetail, int which) {
                         showDialogFillDetail();
-                        dialog.dismiss();
+                        dialogFareDetail.dismiss();
 
                     }
                 })
 
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialogFareDetail, int which) {
                         // Continue with delete operation
-                        dialog.dismiss();
+                        dialogFareDetail.dismiss();
                     }
                 })
 
                 .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
                 .show();
+    }
+
+    private void showDialogFareDetail(int position, List<HotelDetailResponse.DataBean.RoomDetailsBean> RoomDetailsList ) {
+
+
+        dialogFareDetail = new Dialog(HotelDetails.this);
+        dialogFareDetail.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogFareDetail.setContentView(R.layout.dialog_show_hotel_fare);
+        dialogFareDetail.setCancelable(false);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialogFareDetail.getWindow();
+        dialogFareDetail.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialogFareDetail take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+
+        int noOfRooms=Integer.parseInt(availableHotelRequest.getRooms());
+        double roomPrice=0,totalFare=0,serviceTax=0,conFee=0;
+
+        TextView tvCityName,tvHotelName,tvCheckOutDate,tvCheckInDate,tvRoomType,tvRoomNumbers;
+        TextView tvBaseFareDialog,tvGstDialog,tvConvenienceDialog,tvTotalFareDialog,tvOperatorChrgDialog;
+
+        tvCityName = dialogFareDetail.findViewById(R.id.cityName_hotelFareDialog);
+        tvHotelName = dialogFareDetail.findViewById(R.id.hotelName_hotelFareDialog);
+        tvRoomType = dialogFareDetail.findViewById(R.id.roomType_hotelFareDialog);
+        tvRoomNumbers = dialogFareDetail.findViewById(R.id.noOfRooms_hotelFareDialog);
+        tvCheckOutDate = dialogFareDetail.findViewById(R.id.checkOutDate_hotelFareDialog);
+        tvCheckInDate = dialogFareDetail.findViewById(R.id.checkInDate_hotelFareDialog);
+        tvBaseFareDialog = dialogFareDetail.findViewById(R.id.baseFare_hotelFareDialog);
+        tvGstDialog = dialogFareDetail.findViewById(R.id.gst_hotelFareDialog);
+        tvConvenienceDialog = dialogFareDetail.findViewById(R.id.convenience_hotelFareDialog);
+        tvTotalFareDialog = dialogFareDetail.findViewById(R.id.totalFare_hotelFareDialog);
+        tvOperatorChrgDialog= dialogFareDetail.findViewById(R.id.operatorCharge_hotelFareDialog);
+
+        tvCityName.setText(SourceName);
+        tvHotelName.setText(HotelName);
+        tvCheckOutDate.setText(availableHotelRequest.getDepartureDate());
+        tvCheckInDate.setText(availableHotelRequest.getArrivalDate());
+        tvRoomType.setText(RoomDetailsList.get(position).getRoomType());
+        tvRoomNumbers.setText(availableHotelRequest.getRooms());
+
+        Button back_btn_locationNameBus=dialogFareDetail.findViewById(R.id.backBtn_hotelFareDialog);
+        Button proceedBtn=dialogFareDetail.findViewById(R.id.proceedBtn_hotelFareDialog);
+        Button CancelBtn=dialogFareDetail.findViewById(R.id.cancelBtn_hotelFareDialog);
+
+        back_btn_locationNameBus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogFareDetail.dismiss();
+            }
+        });
+
+        CancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogFareDetail.dismiss();
+            }
+        });
+
+        proceedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogFillDetail();
+                dialogFareDetail.dismiss();
+            }
+        });
+
+        try {
+            roomPrice=noOfRooms*RoomDetailsList.get(position).getRoomTotal();
+            serviceTax=noOfRooms*RoomDetailsList.get(position).getServicetaxTotal();
+
+            if (PerPassengerBooking){
+                conFee=noOfRooms*(double)ConvenienceFee;
+            }else {
+                conFee=(double)ConvenienceFee;
+            }
+
+            totalFare=roomPrice+conFee+serviceTax;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Amount2Pay= String.valueOf((int)totalFare);
+
+        tvBaseFareDialog.setText(getResources().getString(R.string.rupees)+" "+roomPrice);
+        tvGstDialog.setText(getResources().getString(R.string.rupees)+" "+serviceTax);
+        tvConvenienceDialog.setText(getResources().getString(R.string.rupees)+" "+conFee);
+        tvTotalFareDialog.setText(getResources().getString(R.string.rupees)+" "+String.format("%.2f", totalFare));
+
+        dialogFareDetail.show();
+
     }
 
     private void showDialogImages( ) {
@@ -489,7 +616,7 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
         Window window = ImageDialog.getWindow();
         ImageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         lp.copyFrom(window.getAttributes());
-        //This makes the dialog take up the full width
+        //This makes the dialogFareDetail take up the full width
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(lp);
@@ -522,7 +649,7 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
         Window window = fillDetailDialog.getWindow();
         fillDetailDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         lp.copyFrom(window.getAttributes());
-        //This makes the dialog take up the full width
+        //This makes the dialogFareDetail take up the full width
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(lp);
@@ -672,8 +799,8 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                                             bookHotelRequest.setHotelType(Integer.parseInt(availableHotelRequest.getHoteltype()));
 
                                             bookHotelRequest.setPayment_mode("wallet");
-                                            bookHotelRequest.setBank_amount("200.50");
-                                            bookHotelRequest.setWallet_amount("30.50");
+                                            bookHotelRequest.setBank_amount("0");
+                                            bookHotelRequest.setWallet_amount("0");
 
                                             if (TextUtils.isEmpty(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ADDRESS)) ||
                                                     BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ADDRESS) ==null){
@@ -682,9 +809,14 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                                             }else {
                                                 bookHotelRequest.setAddress(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ADDRESS));
                                             }
-
-
-                                            getHotelBook();
+                                            
+                                            //getHotelBook();
+                                            Intent intent = new Intent(HotelDetails.this, PaymentActivityBooking.class);
+                                            overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                                            intent.putExtra("Amount", Amount2Pay);
+                                            intent.putExtra("PaymentFor", "Hotel Booking");
+                                            startActivity(intent);
+                                            finish();
                                             fillDetailDialog.dismiss();
                                         }
                                     }
@@ -732,24 +864,24 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
     }
 
     public void showDialogBook(String Message) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(HotelDetails.this);
+        AlertDialog.Builder dialogFareDetail = new AlertDialog.Builder(HotelDetails.this);
 
-        dialog.setTitle("Booking Confirmation")
+        dialogFareDetail.setTitle("Booking Confirmation")
                 .setCancelable(false)
                 .setMessage("\n"+Message+"\n")
 
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
+                // Specifying a listener allows you to take an action before dismissing the dialogFareDetail.
+                // The dialogFareDetail is automatically dismissed when a dialogFareDetail button is clicked.
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialogFareDetail, int which) {
                         // Continue with delete operation
 
                         finish();
-                        dialog.dismiss();
+                        dialogFareDetail.dismiss();
                     }
                 })
 
-                // A null listener allows the button to dismiss the dialog and take no further action.
+                // A null listener allows the button to dismiss the dialogFareDetail and take no further action.
                 //.setNegativeButton(android.R.string.no, null)
                 .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
                 .show();

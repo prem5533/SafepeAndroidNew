@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#f7f8f8"
-    android:id="@+id/seatSelectionDialog">
+    android:id="@+id/hotelFareDialog">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:layout_margin="5dp">
 
         <Button
-            android:id="@+id/backBtn_seatSelectionDialog"
+            android:id="@+id/backBtn_hotelFareDialog"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
@@ -31,8 +31,10 @@
             android:textSize="16sp"
             android:text="Booking Details"
             android:gravity="center"
+            android:padding="5dp"
             android:layout_toRightOf="@+id/backBtn_seatSelectionDialog"/>
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -52,36 +54,6 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.safepayu.wallet.custom_view.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    app:fontCustom="@string/Roboto"
-                    android:textAllCaps="false"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:text="Travel Date" />
-
-                <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/date_seatSelectionDialog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    app:fontCustom="@string/Roboto"
-                    android:textAllCaps="false"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:text="00-00-2020" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
@@ -93,12 +65,12 @@
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey_800"
                     android:textSize="16sp"
-                    android:text="Source" />
+                    android:text="City Name" />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/sourceName_seatSelectionDialog"
+                    android:id="@+id/cityName_hotelFareDialog"
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -126,74 +98,12 @@
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey_800"
                     android:textSize="16sp"
-                    android:text="Destination" />
+                    android:text="Hotel Name" />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/destinationName_seatSelectionDialog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    app:fontCustom="@string/Roboto"
-                    android:textAllCaps="false"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:text="00" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <com.safepayu.wallet.custom_view.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    app:fontCustom="@string/Roboto"
-                    android:textAllCaps="false"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:text="Travels" />
-
-                <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/travellerName_seatSelectionDialog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    app:fontCustom="@string/Roboto"
-                    android:textAllCaps="false"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:text="00" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <com.safepayu.wallet.custom_view.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    app:fontCustom="@string/Roboto"
-                    android:textAllCaps="false"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:text="Bus Type" />
-
-                <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/busTypeName_seatSelectionDialog"
+                    android:id="@+id/hotelName_hotelFareDialog"
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -219,22 +129,22 @@
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey_800"
                     android:textSize="16sp"
-                    android:text="Number Of Seats" />
+                    android:text="Room Type" />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/numberOfSeats_seatSelectionDialog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/roomType_hotelFareDialog"
                     style="@style/TextAppearance.AppCompat.Medium"
-                    app:fontCustom="@string/Roboto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="200dp"
+                    android:gravity="end"
+                    android:text="00"
                     android:textAllCaps="false"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="0" />
+                    app:fontCustom="@string/Roboto" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -250,12 +160,43 @@
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey_800"
                     android:textSize="16sp"
-                    android:text="Seat Numbers" />
+                    android:text="Number Of Rooms" />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/seatNumber_seatSelectionDialog"
+                    android:id="@+id/noOfRooms_hotelFareDialog"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="200dp"
+                    android:gravity="end"
+                    android:text="00"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:fontCustom="@string/Roboto" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <com.safepayu.wallet.custom_view.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    app:fontCustom="@string/Roboto"
+                    android:textAllCaps="false"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/grey_800"
+                    android:textSize="16sp"
+                    android:text="Check In Date" />
+
+                <com.safepayu.wallet.custom_view.CustomTextView
+                    android:id="@+id/checkInDate_hotelFareDialog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.AppCompat.Medium"
@@ -265,7 +206,38 @@
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="0" />
+                    android:text="00-00-2020" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <com.safepayu.wallet.custom_view.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    app:fontCustom="@string/Roboto"
+                    android:textAllCaps="false"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/grey_800"
+                    android:textSize="16sp"
+                    android:text="Check Out Date" />
+
+                <com.safepayu.wallet.custom_view.CustomTextView
+                    android:id="@+id/checkOutDate_hotelFareDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    app:fontCustom="@string/Roboto"
+                    android:textAllCaps="false"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:text="00-00-2020" />
             </RelativeLayout>
 
             <View
@@ -299,12 +271,12 @@
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey_800"
                     android:textSize="16sp"
                     android:text="Base Fare" />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/baseFare_seatSelectionDialog"
+                    android:id="@+id/baseFare_hotelFareDialog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.AppCompat.Medium"
@@ -330,12 +302,12 @@
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey_800"
                     android:textSize="16sp"
                     android:text="Convenience Fee" />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/convenience_seatSelectionDialog"
+                    android:id="@+id/convenience_hotelFareDialog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.AppCompat.Medium"
@@ -343,7 +315,7 @@
                     android:textAllCaps="false"
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey_800"
                     android:textSize="16sp"
                     android:text="Rs 0" />
             </RelativeLayout>
@@ -361,12 +333,12 @@
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey_800"
                     android:textSize="16sp"
                     android:text="Service Tax" />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/gst_seatSelectionDialog"
+                    android:id="@+id/gst_hotelFareDialog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.AppCompat.Medium"
@@ -382,7 +354,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     android:layout_width="wrap_content"
@@ -392,12 +365,12 @@
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey_800"
                     android:textSize="16sp"
                     android:text="Operator Charge" />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/operatorCharge_seatSelectionDialog"
+                    android:id="@+id/operatorCharge_hotelFareDialog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.AppCompat.Medium"
@@ -423,12 +396,12 @@
                     android:textAllCaps="false"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey_800"
                     android:textSize="16sp"
                     android:text="Total Fare" />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/totalFare_seatSelectionDialog"
+                    android:id="@+id/totalFare_hotelFareDialog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.AppCompat.Medium"
@@ -447,74 +420,39 @@
                 android:background="@color/divider"
                 android:layout_margin="5dp"/>
 
-            <com.safepayu.wallet.custom_view.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextAppearance.AppCompat.Medium"
-                app:fontCustom="@string/Roboto"
-                android:textAllCaps="false"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/grey_700"
-                android:textSize="16sp"
-                android:text="Boarding Points" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/boardingPoints_seatSelectionDialog"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"/>
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_margin="10dp">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider"
-                android:layout_margin="5dp"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.safepayu.wallet.custom_view.CustomTextView
+                <Button
+                    android:id="@+id/cancelBtn_hotelFareDialog"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    app:fontCustom="@string/Roboto"
-                    android:textAllCaps="false"
-                    android:layout_alignParentLeft="true"
+                    android:layout_height="40dp"
+                    android:background="@drawable/rounded_buttons"
+                    android:padding="10dp"
+                    android:text="Cancel"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/grey_700"
-                    android:textSize="16sp"
-                    android:text="Dropping Points" />
-            </RelativeLayout>
+                    android:layout_weight="1"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/dropingPoints_seatSelectionDialog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider"
-                android:layout_margin="5dp"/>
-
-            <Button
-                android:id="@+id/proceedBtn_seatSelectionDialog"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/rounded_buttons"
-                android:padding="10dp"
-                android:text="Proceed"
-                android:textColor="#fff"
-                android:textSize="15sp"
-                android:fontFamily="@font/roboto_regular"/>
+                <Button
+                    android:id="@+id/proceedBtn_hotelFareDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/rounded_buttons"
+                    android:padding="10dp"
+                    android:text="Proceed"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

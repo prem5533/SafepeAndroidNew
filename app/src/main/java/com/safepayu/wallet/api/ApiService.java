@@ -75,6 +75,7 @@ import com.safepayu.wallet.models.response.booking.bus.BusHistoryResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusListResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusSourcesResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusTripDetailsResponse;
+import com.safepayu.wallet.models.response.booking.bus.ConvenienceFeeResponse;
 import com.safepayu.wallet.models.response.booking.flight.AirportLocationResponse;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
 import com.safepayu.wallet.models.response.booking.flight.CancelBookTicketResponse;
@@ -253,6 +254,10 @@ public interface ApiService {
     Single<BaseResponse> getPasscodeVerify(@Field("passcode") String passcode);
 
 
+
+    @FormUrlEncoded
+    @POST("api/secure.safepe/api/getConvieneceFee")
+    Single<ConvenienceFeeResponse> getConvieneceFee(@Field("type") String type );
 
     //*************Flight Booking *******************//
     @GET("api/secure.safepe/api/getFlightAirport")

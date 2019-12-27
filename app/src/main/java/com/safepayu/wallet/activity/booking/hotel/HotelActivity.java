@@ -139,8 +139,8 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
 
                     availableHotelRequest.setAdults(AdultNoStringList);
                     availableHotelRequest.setChildren(ChildNoStringList);
-                    availableHotelRequest.setArrivalDate("30-03-2020");
-                    availableHotelRequest.setDepartureDate("31-03-2020");
+                    availableHotelRequest.setArrivalDate(CheckInTV.getText().toString());
+                    availableHotelRequest.setDepartureDate(CheckOutTV.getText().toString());
                     availableHotelRequest.setNoOfDays(days);
                     availableHotelRequest.setRooms(String.valueOf(RoomTotal));
                     availableHotelRequest.setHoteltype("1");

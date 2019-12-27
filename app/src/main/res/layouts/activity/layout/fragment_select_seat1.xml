@@ -22,7 +22,6 @@
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nestedScroll"
                 android:padding="5dp"
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="vertical"
@@ -133,6 +132,238 @@
                         android:id="@+id/layoutSeat"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider"
+                        android:layout_margin="5dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/fareDetailLayout_busSeatLayout"
+                        android:visibility="visible"
+                        android:background="@drawable/edittext_rounded"
+                        android:layout_margin="5dp"
+                        android:padding="5dp">
+
+                        <com.safepayu.wallet.custom_view.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            app:fontCustom="@string/Roboto"
+                            android:textAllCaps="false"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/grey_700"
+                            android:textSize="16sp"
+                            android:text="Fare Breakup" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_margin="5dp"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/grey_800"
+                                android:textSize="16sp"
+                                android:text="Seat No." />
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:id="@+id/seatNo_busSeatLayout"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginBottom="0dp"
+                                android:text="0"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                app:fontCustom="@string/Roboto"
+                                android:layout_marginRight="10dp"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/grey_800"
+                                android:textSize="16sp"
+                                android:text="Base Fare" />
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:id="@+id/baseFare_busSeatLayout"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginBottom="0dp"
+                                android:text="Rs 0"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                app:fontCustom="@string/Roboto"
+                                android:layout_marginRight="10dp"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/grey_800"
+                                android:textSize="16sp"
+                                android:text="Convenience Fee" />
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:id="@+id/convenience_busSeatLayout"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="0dp"
+                                android:text="Rs 0"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                app:fontCustom="@string/Roboto"
+                                android:layout_marginRight="10dp"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/grey_800"
+                                android:textSize="16sp"
+                                android:text="Service Tax" />
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:id="@+id/gst_busSeatLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:text="Rs 0"
+                                android:layout_marginRight="10dp"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/grey_800"
+                                android:textSize="16sp"
+                                android:text="Operator Charge" />
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:id="@+id/operatorCharge_busSeatLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:text="Rs 0"
+                                android:layout_marginRight="10dp"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/grey_800"
+                                android:textSize="16sp"
+                                android:text="Total Fare" />
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:id="@+id/totalFare_busSeatLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:text="Rs 0"
+                                android:layout_marginRight="10dp"/>
+                        </RelativeLayout>
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/doneBtn_busSeatLayout"

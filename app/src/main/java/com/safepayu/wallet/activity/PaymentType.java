@@ -490,7 +490,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         return hexString.toString();
     }
 
-@Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);

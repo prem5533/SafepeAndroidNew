@@ -56,13 +56,13 @@ public class StarsAdapter extends RecyclerView.Adapter<StarsAdapter.FlightLocati
                         if (position==Size-1){
                             ivStarImage.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_half_star));
                         }else {
-                            ivStarImage.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star));
+                            ivStarImage.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_full));
                         }
                     }else {
-                        ivStarImage.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star));
+                        ivStarImage.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_full));
                     }
             }catch (Exception e){
-                ivStarImage.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star));
+                ivStarImage.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_full));
                 e.printStackTrace();
             }
 

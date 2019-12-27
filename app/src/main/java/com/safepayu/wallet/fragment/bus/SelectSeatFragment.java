@@ -4,6 +4,7 @@ package com.safepayu.wallet.fragment.bus;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.booking.PaymentActivityBooking;
 import com.safepayu.wallet.adapter.bus.BoardingPointAdapter;
 import com.safepayu.wallet.adapter.bus.DroppingPointAdapter;
 import com.safepayu.wallet.adapter.bus.FillDetailAdapter;
@@ -37,6 +39,7 @@ import com.safepayu.wallet.models.response.booking.bus.BusBlockingResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusBookingResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusListResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusTripDetailsResponse;
+import com.safepayu.wallet.models.response.booking.bus.ConvenienceFeeResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,13 +60,17 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
  {
      private LoadingDialog loadingDialog;
      private ViewGroup layout;
+     private LinearLayout FareBreakUpLayout;
+     private TextView tvSeatNos,tvBaseFare,tvConvenienceFee,tvServiceTax,tvOperatorCharge,tvTotal;
      private String seats ="",BlockingReferenceNo="",BookingReferenceNo="",Names="",Ages="",Genders="";
      private String DroppingName="",DroppingId="",BoardingName="",BoardingId="",fareSeat="";
      private ArrayList<String> RowList,ColumnList,SeatNoList,ZIndex,SeatCodeSelectedList;
      private List<BusTripDetailsResponse.DataBean.SeatsBean> SeatLists;
      private Button DoneBtn;
      private double totalFare = 0;
-     BusBlockingRequest busBookingRequest=new BusBlockingRequest();
+     public static BusBlockingRequest busBookingRequest=new BusBlockingRequest();
+     private int ConvenienceFee=0,Amount2Pay=0;
+     private boolean PerPassengerBooking=false;
 
 //     String seats = "UU_AA/"
 //             + "UU_AA/"
@@ -129,6 +136,14 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
         ZIndex=new ArrayList<>();
         SeatCodeSelectedList=new ArrayList<>();
 
+        tvSeatNos=rootView.findViewById(R.id.seatNo_busSeatLayout);
+        tvBaseFare=rootView.findViewById(R.id.baseFare_busSeatLayout);
+        tvConvenienceFee=rootView.findViewById(R.id.convenience_busSeatLayout);
+        tvServiceTax=rootView.findViewById(R.id.gst_busSeatLayout);
+        tvOperatorCharge=rootView.findViewById(R.id.operatorCharge_busSeatLayout);
+        tvTotal=rootView.findViewById(R.id.totalFare_busSeatLayout);
+        FareBreakUpLayout=rootView.findViewById(R.id.fareDetailLayout_busSeatLayout);
+
         DoneBtn=rootView.findViewById(R.id.doneBtn_busSeatLayout);
 
         DoneBtn.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +184,7 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
          window.setAttributes(lp);
 
          TextView tvTravelDate,tvSource,tvDestination,tvTravellerName,tvBusType,tvNoOfSeats,tvSeatNumbers;
-         TextView tvBaseFare,tvGst,tvConvenience,tvTotalFare;
+         TextView tvBaseFareDialog,tvGstDialog,tvConvenienceDialog,tvTotalFareDialog,tvOperatorChrgDialog;
 
          RecyclerView recyclerViewBoarding,recyclerViewDropping;
 
@@ -180,10 +195,11 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
          tvBusType = dialog.findViewById(R.id.busTypeName_seatSelectionDialog);
          tvNoOfSeats = dialog.findViewById(R.id.numberOfSeats_seatSelectionDialog);
          tvSeatNumbers = dialog.findViewById(R.id.seatNumber_seatSelectionDialog);
-         tvBaseFare = dialog.findViewById(R.id.baseFare_seatSelectionDialog);
-         tvGst = dialog.findViewById(R.id.gst_seatSelectionDialog);
-         tvConvenience = dialog.findViewById(R.id.convenience_seatSelectionDialog);
-         tvTotalFare = dialog.findViewById(R.id.totalFare_seatSelectionDialog);
+         tvBaseFareDialog = dialog.findViewById(R.id.baseFare_seatSelectionDialog);
+         tvGstDialog = dialog.findViewById(R.id.gst_seatSelectionDialog);
+         tvConvenienceDialog = dialog.findViewById(R.id.convenience_seatSelectionDialog);
+         tvTotalFareDialog = dialog.findViewById(R.id.totalFare_seatSelectionDialog);
+         tvOperatorChrgDialog= dialog.findViewById(R.id.operatorCharge_seatSelectionDialog);
 
          tvTravelDate.setText(busTripDetailsRequest.getJourneyDate());
          tvSource.setText(busTripDetailsRequest.getSource());
@@ -217,10 +233,16 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
              e.printStackTrace();
          }
 
-         tvBaseFare.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)baseFare);
-         tvGst.setText(getActivity().getResources().getString(R.string.rupees)+" "+GetGstAmount(baseFare));
-         tvConvenience.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)20);
-         tvTotalFare.setText(getActivity().getResources().getString(R.string.rupees)+" "+totalFare);
+//         tvBaseFare.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)baseFare);
+//         tvGst.setText(getActivity().getResources().getString(R.string.rupees)+" "+GetGstAmount(baseFare));
+//         tvConvenience.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)20);
+//         tvTotalFare.setText(getActivity().getResources().getString(R.string.rupees)+" "+totalFare);
+
+         tvBaseFareDialog.setText(tvBaseFare.getText().toString());
+         tvGstDialog.setText(tvServiceTax.getText().toString());
+         tvConvenienceDialog.setText(tvConvenienceFee.getText().toString());
+         tvTotalFareDialog.setText(tvTotal.getText().toString());
+         tvOperatorChrgDialog.setText(tvOperatorCharge.getText().toString());
 
 
          recyclerViewBoarding = dialog.findViewById(R.id.boardingPoints_seatSelectionDialog);
@@ -438,7 +460,14 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
          busBookingRequest.setType("1");
          busBookingRequest.setTripId(busTripDetailsRequest.getTripId());
 
-         getBusBlockSeat();
+         //getBusBlockSeat();
+
+         Intent intent = new Intent(getActivity(), PaymentActivityBooking.class);
+         getActivity().overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+         intent.putExtra("Amount", String.valueOf(Amount2Pay));
+         intent.putExtra("PaymentFor", "Bus Booking");
+         startActivity(intent);
+         getActivity().finish();
 
      }
 
@@ -734,32 +763,49 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
                  ColumnList.remove(String.valueOf(SeatLists.get(pos).getColumn()));
                  SeatNoList.remove(String.valueOf( view.getId()));
                  Toast.makeText(getActivity(), "Unselected - "+view.getId(), Toast.LENGTH_SHORT).show();
+                 if (SeatNoList.size()>0){
+                     FareBreakUpLayout.setVisibility(View.VISIBLE);
+                     ShowFareBreakup();
+                 }else {
+                     FareBreakUpLayout.setVisibility(View.GONE);
+                 }
              } else {
 
-                 selectedIds = selectedIds + view.getId() + ",";
-                 SeatsSelected = SeatsSelected + view.getId() + "~";
+                 if (SeatNoList.size()<5){
+                     selectedIds = selectedIds + view.getId() + ",";
+                     SeatsSelected = SeatsSelected + view.getId() + "~";
 
-                 view.setBackgroundResource(R.drawable.ic_seats_selected);
+                     view.setBackgroundResource(R.drawable.ic_seats_selected);
 
-                 //ZIndexText=ZIndex.get(view.getId());
+                     //ZIndexText=ZIndex.get(view.getId());
 
-                 try {
-                     if (ZIndex.get((view.getId())-1).equalsIgnoreCase("0")){
-                         ZIndexText="Lower Berth";
-                     }else {
-                         ZIndexText="Upper Berth";
+                     try {
+                         if (ZIndex.get((view.getId())-1).equalsIgnoreCase("0")){
+                             ZIndexText="Lower Berth";
+                         }else {
+                             ZIndexText="Upper Berth";
+                         }
+                         SeatCodeSelectedList.add(view.getId()+"S"+ZIndex.get((view.getId())-1));
+                     }catch (Exception e){
+                         e.printStackTrace();
                      }
-                     SeatCodeSelectedList.add(view.getId()+"S"+ZIndex.get((view.getId())-1));
-                 }catch (Exception e){
-                     e.printStackTrace();
+
+                     pos=(int) view.getId()-1;
+                     RowList.add(String.valueOf(SeatLists.get(pos).getRow()));
+                     ColumnList.add(String.valueOf(SeatLists.get(pos).getColumn()));
+                     SeatNoList.add(String.valueOf( view.getId()));
+
+                     Toast.makeText(getActivity(), "Selected - "+view.getId()+" "+ZIndexText, Toast.LENGTH_SHORT).show();
+
+                     if (SeatNoList.size()>0){
+                         FareBreakUpLayout.setVisibility(View.VISIBLE);
+                         ShowFareBreakup();
+                     }else {
+                         FareBreakUpLayout.setVisibility(View.GONE);
+                     }
+                 }else {
+                     Toast.makeText(getActivity(), "Maximum 5 Seats Can Be Booked", Toast.LENGTH_LONG).show();
                  }
-
-                 pos=(int) view.getId()-1;
-                 RowList.add(String.valueOf(SeatLists.get(pos).getRow()));
-                 ColumnList.add(String.valueOf(SeatLists.get(pos).getColumn()));
-                 SeatNoList.add(String.valueOf( view.getId()));
-
-                 Toast.makeText(getActivity(), "Selected - "+view.getId()+" "+ZIndexText, Toast.LENGTH_SHORT).show();
              }
          } else if ((int) view.getTag() == STATUS_BOOKED) {
              Toast.makeText(getActivity(), "Seat " + view.getId() + " is Booked", Toast.LENGTH_SHORT).show();
@@ -767,6 +813,95 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
              Toast.makeText(getActivity(), "Seat " + view.getId() + " is Reserved", Toast.LENGTH_SHORT).show();
          }
      }
+
+     private void ShowFareBreakup(){
+
+         // tvSeatNos,tvBaseFare,tvConvenienceFee,tvServiceTax,tvOperatorCharge,tvTotal
+
+         int baseFare=0,test=0,total=0;
+         int serviceTax = 0,operatorCharge=0,conFee=0;
+         double OC=0;
+         String seatss="";
+         for (int seatNo=0;seatNo<SeatNoList.size();seatNo++){
+             if (SeatNoList.size()==1){
+
+                 seatss=seatss+SeatNoList.get(seatNo);
+             }else {
+                 if (SeatNoList.size()-1==seatNo){
+                     seatss = seatss + SeatNoList.get(seatNo);
+                 }else {
+                     seatss = seatss + SeatNoList.get(seatNo) + ", ";
+                 }
+             }
+
+             try {
+
+                 if (PerPassengerBooking){
+                     conFee=conFee+ConvenienceFee;
+                 }else {
+                     conFee=ConvenienceFee;
+                 }
+                 test=Integer.parseInt(SeatLists.get(Integer.parseInt(SeatNoList.get(seatNo))-1).getFare());
+                 baseFare=baseFare+test;
+                 serviceTax=serviceTax+Integer.parseInt(SeatLists.get(Integer.parseInt(SeatNoList.get(seatNo))-1).getServicetax());
+                 OC= Double.parseDouble(SeatLists.get(Integer.parseInt(SeatNoList.get(seatNo))-1).getOperatorServiceCharge());
+                 operatorCharge= operatorCharge+(int) OC;
+             }catch (Exception e){
+                 baseFare=0;
+                 conFee=0;
+                 serviceTax=0;
+                 operatorCharge=0;
+                 e.printStackTrace();
+             }
+         }
+
+         total=baseFare+conFee+serviceTax+operatorCharge;
+         Amount2Pay=total;
+
+         tvSeatNos.setText(seatss);
+         tvBaseFare.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)baseFare);
+         tvConvenienceFee.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)conFee);
+         tvServiceTax.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)serviceTax);
+         tvOperatorCharge.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)operatorCharge);
+         tvTotal.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)total);
+     }
+
+     private void getConvenienceFee() {
+      //  loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(getActivity()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getConvieneceFee("2")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ConvenienceFeeResponse>() {
+                    @Override
+                    public void onSuccess(ConvenienceFeeResponse response) {
+                       // loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+                            try {
+                                if (response.getData().isStatus()){
+                                    PerPassengerBooking=true;
+                                }else {
+                                    PerPassengerBooking=false;
+                                }
+                                ConvenienceFee=response.getData().getFee();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            ConvenienceFee=0;
+                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.hotelBookingHistory), response.getMessage(), true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.hotelBookingHistory), false, e.getCause());
+                    }
+                }));
+    }
 
      private void getBusSeat(final BusTripDetailsRequest busTripDetailsRequest,final View rootView) {
 
@@ -798,7 +933,7 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
                                  }else {
                                      BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.busSeatLayout), "No Data Found", false);
                                  }
-
+                                 getConvenienceFee();
                              } catch (Exception e) {
                                  e.printStackTrace();
                              }
