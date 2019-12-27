@@ -8,7 +8,7 @@
         android:id="@+id/tv_infant_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+ ADD INFANT 1"
+        android:text="+ ADD INFANT "
         android:layout_marginLeft="20dp"
         android:textSize="15sp"
         android:textColor="@color/yellow_theme"
@@ -52,7 +52,8 @@
             android:fontFamily="@font/roboto_regular"
             android:textColorHint="@color/grey"
             android:textColor="@color/black"
-            android:background="@null"/>
+            android:background="@null"
+            android:imeOptions="actionNext"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -69,7 +70,8 @@
             android:fontFamily="@font/roboto_regular"
             android:textColorHint="@color/grey"
             android:textColor="@color/black"
-            android:background="@null"/>
+            android:background="@null"
+            android:imeOptions="actionDone"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -93,6 +95,7 @@
                 android:textColorHint="@color/grey"
                 android:textColor="@color/black"
                 android:background="@null"
+                android:imeOptions="actionDone"
                 android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/image_infant_dob"

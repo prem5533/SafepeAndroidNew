@@ -7,7 +7,7 @@
         android:id="@+id/tv_adult_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+ ADD ADULT 1"
+        android:text="+ ADD ADULT "
         android:layout_marginLeft="20dp"
         android:textSize="15sp"
         android:textColor="@color/yellow_theme"
@@ -105,7 +105,7 @@
             android:textColorHint="@color/grey"
             android:textColor="@color/black"
             android:background="@null"
-            android:imeOptions="actionNext"
+            android:imeOptions="actionDone"
             android:singleLine="true"/>
         <View
             android:layout_width="match_parent"

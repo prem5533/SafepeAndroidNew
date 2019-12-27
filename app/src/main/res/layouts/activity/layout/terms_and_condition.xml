@@ -13,15 +13,12 @@
 
         <Button
             android:id="@+id/send_back_btnTerms"
-            android:layout_width="wrap_content"
+            android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
-            android:layout_marginTop="10dp"
-            android:text="Back"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:background="@null"/>
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_arrow_back_white_24dp" />
+
 
         <TextView
             android:layout_width="match_parent"

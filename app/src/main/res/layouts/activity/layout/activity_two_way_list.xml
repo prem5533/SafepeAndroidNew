@@ -325,7 +325,7 @@
                android:layout_marginBottom="20dp"
                android:background="@drawable/rounded_buttons"
                android:padding="10dp"
-               android:text="CONTINUE"
+               android:text="Next"
                android:textColor="#fff"
                android:textSize="15sp"
                android:fontFamily="@font/roboto_regular"

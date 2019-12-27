@@ -1,6 +1,7 @@
 package com.safepayu.wallet.adapter.fight;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,10 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
     private Context context;
     private List<AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean> mItem;
     private OnFlightItemListener onFlightItemListener;
-    int index = -1,   selectedPosition;
+    int row_index = -1,   selectedPosition;
     private View selectedPackageView;
+    private int selectedPackagePosition ;
+    private View selectedOnwardView = null;
 
     public interface OnFlightItemListener{
         void onFlightItemListerne(int position, AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mFlightItemListenre,LinearLayout liOnward);
@@ -36,6 +39,13 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
         this.mItem = mItem;
         this.onFlightItemListener = onFlightItemListener;
     }
+
+   /* public AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean getSelectedData() {
+        if (selectedPackagePosition != -1)
+            return mItem.get(selectedPackagePosition);
+        else
+            return null;
+    }*/
 
     @NonNull
     @Override
@@ -79,7 +89,7 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
             itemView.setOnClickListener(this);
         }
 
-        public void bindData(int position) {
+        public void bindData(final int position) {
 
           //  selectedPosition = getAdapterPosition();
 
@@ -98,6 +108,15 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
                 e.printStackTrace();
             }*/
 
+         /*   liOnwards.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    row_index=position;
+                    notifyDataSetChanged();
+                }
+            });
+*/
+            selectedPackagePosition =position;
             int flightStop =   mItem.get(position).getFlightSegments().size();
             tvflight_name1.setText(mItem.get(position).getFlightSegments().get(0).getAirLineName());
             tvflight_name2.setText(mItem.get(position).getFlightSegments().get(0).getOperatingAirlineCode()+" "+mItem.get(position).getFlightSegments().get(0).getOperatingAirlineFlightNumber());
@@ -200,10 +219,26 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
         public void onClick(View v) {
             if (onFlightItemListener != null) {
                 onFlightItemListener.onFlightItemListerne(getLayoutPosition(),mItem.get(getLayoutPosition()),liOnwards);
-               // notifyDataSetChanged();
+
             }
+          /*  if (selectedOnwardView == null) {
+                selectedPackagePosition = getLayoutPosition();
+                selectedOnwardView = liOnwards;
+                liOnwards.setBackground(context.getResources().getDrawable(R.drawable.package_selected));
+            } else {
+                selectedOnwardView.setBackground(context.getResources().getDrawable(R.drawable.package_normal));
+                selectedPackagePosition = getLayoutPosition();
+                selectedOnwardView = liOnwards;
+                liOnwards.setBackground(context.getResources().getDrawable(R.drawable.package_selected));
 
+            }*/
+            row_index=selectedPackagePosition;
+           // notifyDataSetChanged();
 
+            if(row_index==selectedPackagePosition){
+                liOnwards.setBackgroundColor(Color.parseColor("#C8E6C9"));
+            } else
+            { liOnwards.setBackgroundColor(Color.parseColor("#ffffff")); }
         }
     }
 }

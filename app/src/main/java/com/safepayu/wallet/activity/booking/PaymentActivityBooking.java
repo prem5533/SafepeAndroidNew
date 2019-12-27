@@ -258,7 +258,7 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
                             tvTotalBalanceWallet.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format((int) Double.parseDouble(walletLimitResponse.getData().getWallet_balance())));
                             tFare = Integer.parseInt(Amount);
 
-                            walletDeduct =WalletResponse.getData().getLimit();
+                       //     walletDeduct =WalletResponse.getData().getLimit();
 
                             if (tFare>walletDeduct){
                                 int subAmount = tFare-walletDeduct;

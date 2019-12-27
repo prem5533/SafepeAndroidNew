@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.text.format.DateFormat;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +32,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.NewAccount;
+import com.safepayu.wallet.activity.TermsAndCondition;
 import com.safepayu.wallet.adapter.fight.FlighPassengerBookingDialog;
 import com.safepayu.wallet.adapter.fight.FlightTravellersList;
 import com.safepayu.wallet.api.ApiClient;
@@ -36,8 +42,11 @@ import com.safepayu.wallet.dialogs.DatePicker;
 import com.safepayu.wallet.dialogs.DatePickerChild;
 import com.safepayu.wallet.dialogs.DatePickerInfant;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.helper.Config;
+import com.safepayu.wallet.models.request.booking.flight.ConvieneceFeeRequest;
 import com.safepayu.wallet.models.request.booking.flight.FlightBlockTicketRequest;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
+import com.safepayu.wallet.models.response.booking.flight.ConvieneceFeeResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightBlockTicketResponse;
 import com.squareup.picasso.Picasso;
 
@@ -55,12 +64,12 @@ import static com.safepayu.wallet.activity.booking.flight.FlightListActivity.MY_
 
 public class FlightPassengerDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView tvFlightPassengerDateTravellersClass,tvFlightPassengerTo,tvFlightPassengerFrom,tvTotalFlightFare,tvTotalNavellersNumber,tvChild,tvInfant;
+    private TextView tvFlightPassengerDateTravellersClass,tvFlightPassengerTo,tvFlightPassengerFrom,tvTotalNavellersNumber,tvChild,tvInfant;
     private String Source,Destination,JourneyDate,TrvaellersCount,ClassType,Adults,Infants,Children,FlightImage,TravelClass,AirLineCode,AirLineNumber,TotalFareReturnOnward;
     private Button backbtnFlightPassenger,continue_btn;
     private EditText etFlightpMobileNumber,etFlightpEmailNumber;
     public  Dialog dialog;
-    private LoadingDialog loadingDialog;
+    public  static LoadingDialog loadingDialog;
     private RecyclerView recyclerTravellerInfo;
     private ImageView imageCancel,image_flight_detail_pop_up,image_flight_detail_return;
     private TextView tv_flightbooking_name_popup,tv_flightbooking_classname_popup,tvFlightBookingSourceName_popup,tvFlightBookingDestiName_popup,
@@ -70,6 +79,8 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
     String json;
     private Button flightBookBtn;
     private static String TripType;
+    private CheckBox checkboxPassengerTC;
+
 
   public  static AvailableFlightResponse.DataBean.DomesticOnwardFlightsBean mdata;
   public  static AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mdataReturn;
@@ -90,6 +101,11 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
     ArrayList<String>DobList = new ArrayList<>();
     FlightBlockTicketResponse FlightResponse;
     FlightTravellersList flightTravellersList;
+    public  static ConvieneceFeeRequest convieneceFeeRequest;
+    ConvieneceFeeResponse ConvieneceResponse;
+    public  static int ConvieneceFee,totalTravellers ,totalPaid,total2,total1;
+    public  static TextView tvTotalFlightFare;
+
     Gson gson;
 
     private FlightBlockTicketRequest flightBlockTicketRequest;
@@ -98,7 +114,10 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight_passenger_detail);
         findId();
+        getConvieneceFee();
     }
+
+
 
     private void findId() {
         loadingDialog = new LoadingDialog(this);
@@ -114,6 +133,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         continue_btn = findViewById(R.id.continue_btn);
         tvChild = findViewById(R.id.tv_child);
         tvInfant = findViewById(R.id.tv_infant);
+        checkboxPassengerTC = findViewById(R.id.checkbox_passenger_tc);
 
 
 
@@ -133,6 +153,19 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         TripType =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRIP_TYPE);
         TotalFareReturnOnward =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().TOTALFARE_RETURN_ONWARDS);
 
+
+      /*  SpannableString content = new SpannableString("Term and Condition");
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        checkboxPassengerTC.setText(content);*/
+
+        checkboxPassengerTC.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (checkboxPassengerTC.isChecked()){
+                    startActivity(new Intent(FlightPassengerDetailActivity.this, TermsAndCondition.class));
+                }
+            }
+        });
 
         if (TripType.equals("1")){
             SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -176,13 +209,14 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
 
         //*************set data***********
 
-        int totalTravellers = getIntent().getExtras().getInt("total_travellers");
+         totalTravellers = getIntent().getExtras().getInt("total_travellers");
         tvFlightPassengerDateTravellersClass.setText(JourneyDate+" | "+TrvaellersCount+" | "+ClassType);
         tvFlightPassengerFrom.setText(Source);
         tvFlightPassengerTo.setText(Destination);
         tvTotalNavellersNumber.setText("For " + totalTravellers + " Traveller");
         if (TripType.equals("1")){
-            tvTotalFlightFare.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+            int total = ((Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE)))+(ConvieneceFee*totalTravellers));
+           // tvTotalFlightFare.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(total));
         }
         else if (TripType.equals("2")){
             tvTotalFlightFare.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
@@ -357,8 +391,11 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                // showDialog(FlightPassengerDetailActivity.this);
                 if (validate()) {
 
+                    if (validateChkBox()) {
+                        showDialog(FlightPassengerDetailActivity.this);
+                    }
                  //   getflightBlockTicket(flightBlockTicketRequest);
-                    showDialog(FlightPassengerDetailActivity.this);
+
                 }
 
                 break;
@@ -371,6 +408,14 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         }
     }
 
+    private boolean validateChkBox() {
+     if (!checkboxPassengerTC.isChecked()){
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.flight_passenger),"Please Accept Term & Conditions", true);
+            return false;
+        }
+
+        return true;
+    }
 
 
     private boolean validate() {
@@ -440,7 +485,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 Toast.makeText(getApplicationContext(), "Please enter child last name", Toast.LENGTH_LONG).show();
                 return  false;
             } else if (flightChildDob.equals("") && flightChildDob.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please enter child adult dob", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Please enter child dob", Toast.LENGTH_LONG).show();
                 return  false;
             }
             childFullNme = "Mstr."+"~"+flightChildFNme+"~"+flightChildLNme+"~"+"chd";
@@ -463,13 +508,14 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 Toast.makeText(getApplicationContext(), "Please enter infant last name", Toast.LENGTH_LONG).show();
                 return  false;
             } else if (flightInfantDob.equals("") && flightInfantDob.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please enter inant adult dob", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Please enter infant  dob", Toast.LENGTH_LONG).show();
                 return  false;
             }
             infantFullNme = "Mstr."+"~"+flightInfantFNme+"~"+flightInfantLNme+"~"+"inft";
             adultList.add(infantFullNme);
             DobList.add(flightInfantDob);
         }
+
 
         return true;
         }
@@ -495,6 +541,48 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
 
  //   }
 
+
+    private void getConvieneceFee() {
+
+        convieneceFeeRequest = new ConvieneceFeeRequest();
+
+        convieneceFeeRequest.setType("1");
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(FlightPassengerDetailActivity.this).create(ApiService.class);
+        BaseApp.getInstance().getDisposable().add(apiService.getConvieneceFee(convieneceFeeRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ConvieneceFeeResponse>(){
+                    @Override
+                    public void onSuccess(ConvieneceFeeResponse response) {
+                        loadingDialog.hideDialog();
+                        ConvieneceResponse = response;
+                        if (response.isStatus()) {
+
+                            ConvieneceFee = response.getData().getFee();
+                            totalPaid = ConvieneceFee*totalTravellers;
+                           // tvConvenienceFee.setText(String.valueOf(totalPaid));
+
+                            if (TripType.equals("1")){
+                                int total = ((Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE)))+(totalPaid));
+                                tvTotalFlightFare.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(total));
+                            }
+                            else if (TripType.equals("2")){
+                                int total = (Integer.parseInt(TotalFareReturnOnward)+totalPaid);
+                                tvTotalFlightFare.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(total));
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        //  BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.flight_book_detail), false, e.getCause());
+                    }
+                }));
+
+    }
 
     private void showDialog(FlightPassengerDetailActivity flightPassengerDetailActivity) {
          CharSequence s;
@@ -537,6 +625,14 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 Intent  intent = new Intent(getApplicationContext(), BookingPaymentActivity.class);
                 intent.putExtra("adult_list", adultList);
                 intent.putExtra("dob_list", DobList);
+                intent.putExtra("totalPaid",totalPaid);
+            /*    if (TripType.equals("2")){
+                    intent.putExtra("payamount2", String.valueOf(total2));
+                }
+                else if (TripType.equals("1")){
+                    intent.putExtra("payamount", String.valueOf(total1));
+                }*/
+
                 startActivity(intent);
             }
         });
@@ -564,7 +660,8 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             Picasso.get().load("http://webapi.i2space.co.in/"+mdata.getFlightSegments().get(0).getImagePath()).into(image_flight_detail_pop_up);
             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_ONWARD_IMAGE,"http://webapi.i2space.co.in/"+mdata.getFlightSegments().get(0).getImagePath());
             tv_flightbooking_name_popup.setText(mdata.getFlightSegments().get(0).getAirLineName()+" " +mdata.getFlightSegments().get(0).getOperatingAirlineCode()+" "+mdata.getFlightSegments().get(0).getOperatingAirlineFlightNumber());
-            flightBookBtn.setText("Pay "+getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
+             total2 = (totalPaid+Integer.parseInt(TotalFareReturnOnward));
+            flightBookBtn.setText("Pay "+getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(total2));
 
             tvFlightBookingSourceName_popup.setText(Source);
             tvFlightBookingDestiName_popup.setText(Destination);
@@ -742,7 +839,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             String dayOfWeekReturn = simpledateformatReturn.format(datee);
             tv_flight_booking_dep_date_return.setText(dayOfWeekReturn+", "+dr+moo+" "+yy);
             String dayofWeekr = dayOfWeekReturn+", "+dr+moo+" "+yy;
-            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY_RETURN,dayofWeek);
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FLIGHT_START_JOURNEY_RETURN,dayofWeekr);
 
             if (flightStopReturn>1){
                 String arrTime = mdataReturn.getFlightSegments().get(flightStopReturn-1).getArrivalDateTime();
@@ -850,7 +947,8 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             tvFlightBookingSourceName_popup.setText(Source);
             tvFlightBookingDestiName_popup.setText(Destination);
 
-            flightBookBtn.setText("Pay "+getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+             total1  = (Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))+(totalPaid));
+            flightBookBtn.setText("Pay "+getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(total1));
 
             //************set flight time onward***********
             int flightStop =   mdata.getFlightSegments().size();
@@ -1014,11 +1112,10 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
 
             View view =  inflater.inflate(R.layout.flight_fare_breakup_dialog, container, false);
             setStyle(STYLE_NORMAL, R.style. AppBottomSheetDialogTheme);
-
-
             findId(view);
             return view;
         }
+
 
         private void findId(View view) {
             tvTotalBaseFare = view.findViewById(R.id.tv_total_base_fare);
@@ -1027,20 +1124,25 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             tvConvenienceFee = view.findViewById(R.id.tv_convenience_fee);
             tvTotalPaid = view.findViewById(R.id.tv_total_paid);
             imageCancel = view.findViewById(R.id.image_cancel);
-
+            tvConvenienceFee.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(String.valueOf(totalPaid))));
             if (TripType.equals("1")){
-                tvTotalBaseFare.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getActualBaseFare()));
-                tvTotalTaxFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getTax()));
-                tvAirfare.setText(String.valueOf(mdata.getFareDetails().getTotalFare()));
-                tvConvenienceFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getConveniencefee()));
-                tvTotalPaid.setText(String.valueOf(mdata.getFareDetails().getTotalFare()));
+                tvTotalBaseFare.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(String.valueOf(mdata.getFareDetails().getChargeableFares().getActualBaseFare()))));
+                tvTotalTaxFee.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(String.valueOf(mdata.getFareDetails().getChargeableFares().getTax()))));
+                tvAirfare.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(String.valueOf(mdata.getFareDetails().getTotalFare()))));
+            //    tvConvenienceFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getConveniencefee()));
+                int total = (mdata.getFareDetails().getTotalFare()+totalPaid);
+                tvTotalPaid.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(String.valueOf(total))));
+
             }
             else if (TripType.equals("2")){
-                tvTotalBaseFare.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getActualBaseFare()+mdataReturn.getFareDetails().getChargeableFares().getActualBaseFare()));
-                tvTotalTaxFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getTax()+mdataReturn.getFareDetails().getChargeableFares().getTax()));
-                tvAirfare.setText(String.valueOf(mdata.getFareDetails().getTotalFare()+mdataReturn.getFareDetails().getTotalFare()));
-                tvConvenienceFee.setText(String.valueOf(mdata.getFareDetails().getChargeableFares().getConveniencefee()+mdataReturn.getFareDetails().getChargeableFares().getConveniencefee()));
-                tvTotalPaid.setText(String.valueOf(mdata.getFareDetails().getTotalFare()+mdataReturn.getFareDetails().getTotalFare()));
+                tvTotalBaseFare.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(String.valueOf(mdata.getFareDetails().getChargeableFares().getActualBaseFare()+mdataReturn.getFareDetails().getChargeableFares().getActualBaseFare()))));
+                tvTotalTaxFee.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(String.valueOf(mdata.getFareDetails().getChargeableFares().getTax()+mdataReturn.getFareDetails().getChargeableFares().getTax()))));
+                tvAirfare.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(String.valueOf(mdata.getFareDetails().getTotalFare()+mdataReturn.getFareDetails().getTotalFare()))));
+                int a = mdata.getFareDetails().getTotalFare();
+                int b = mdataReturn.getFareDetails().getTotalFare();
+                int total = (a+b+totalPaid);
+                tvTotalPaid.setText(NumberFormat.getIntegerInstance().format(Integer.parseInt(String.valueOf(total))));
+
             }
 
             imageCancel.setOnClickListener(new View.OnClickListener() {
