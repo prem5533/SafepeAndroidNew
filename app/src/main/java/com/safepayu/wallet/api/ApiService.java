@@ -21,6 +21,7 @@ import com.safepayu.wallet.models.request.SendToWalletRequest;
 import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
 import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.request.booking.flight.AvailableFlightRequest;
+import com.safepayu.wallet.models.request.booking.flight.ConvieneceFeeRequest;
 import com.safepayu.wallet.models.request.booking.flight.FlightBlockTicketRequest;
 import com.safepayu.wallet.models.request.booking.flight.FlightBookingDetailRequest;
 import com.safepayu.wallet.models.request.booking.flight.FlightHistoryResponse;
@@ -78,6 +79,7 @@ import com.safepayu.wallet.models.response.booking.bus.BusTripDetailsResponse;
 import com.safepayu.wallet.models.response.booking.flight.AirportLocationResponse;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
 import com.safepayu.wallet.models.response.booking.flight.CancelBookTicketResponse;
+import com.safepayu.wallet.models.response.booking.flight.ConvieneceFeeResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlighPdfResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightBlockTicketResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlightBookingDetailResponse;
@@ -275,6 +277,9 @@ public interface ApiService {
 
     @POST("api/secure.safepe/api/getFlightPdf")
     Single<FlighPdfResponse>getFlightPdf(@Body FlightBookingDetailRequest flightBookingDetailRequest);
+
+    @POST("api/secure.safepe/api/getConvieneceFee")
+    Single<ConvieneceFeeResponse>getConvieneceFee(@Body ConvieneceFeeRequest convieneceFeeRequest);
 
     //*************Bus Booking *******************//
     @POST("api/secure.safepe/api/postBusLocationList")

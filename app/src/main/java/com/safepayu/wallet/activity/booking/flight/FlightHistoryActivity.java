@@ -202,7 +202,55 @@ public class FlightHistoryActivity extends AppCompatActivity implements FlightHi
         }
 
 
-        if (FHistoryResponse.getData().get(position).getBookingStatus()==3){
+        if (FHistoryResponse.getData().get(position).getBookingStatus()==1){
+            tvBookingStatus.setText("Payment received, Ticket booking is under process");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.green_500)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==2){
+            tvBookingStatus.setText("Payment received, Due to some problems We cannot book the ticket. So, cancelled. Payment will be reverted");
+              tvBookingStatus.setTextColor(getResources().getColor(R.color.clay_yellow)); }
+        else  if (FHistoryResponse.getData().get(position).getBookingStatus()==3){
+            tvBookingStatus.setText("Indicates Payment received, Ticket booked successfully");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.green_500)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==4){
+            tvBookingStatus.setText("After successful confirmation of the ticket, if it is cancelled then this is the status, due to flight delay");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.clay_yellow)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==5){
+            tvBookingStatus.setText("Cancellation is in process");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==6){
+            tvBookingStatus.setText("Ticket Cancellation is successfully");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==7){
+            tvBookingStatus.setText("Ticket cancellation is rejected");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==8){
+            tvBookingStatus.setText("Flight ticket is blocked for booking");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==9){
+            tvBookingStatus.setText("Something went wrong in Payment");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==10){
+            tvBookingStatus.setText("Ticket Booking Failed");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==11){
+            tvBookingStatus.setText("Ticket not Found");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==12){
+            tvBookingStatus.setText("Ticket Partially Cancelled");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==13){
+            tvBookingStatus.setText("Partial Cancellation Failed");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==14){
+            tvBookingStatus.setText("Request Processed");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==15){
+            tvBookingStatus.setText("Request Rejected");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400)); }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==16){
+            tvBookingStatus.setText("Ticket Blocking Failed");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400)); }
+      /*  if (FHistoryResponse.getData().get(position).getBookingStatus()==3){
             tvBookingStatus.setText("Booking Successful");
             tvBookingStatus.setTextColor(getResources().getColor(R.color.green_500));
         }
@@ -213,7 +261,7 @@ public class FlightHistoryActivity extends AppCompatActivity implements FlightHi
         else if (FHistoryResponse.getData().get(position).getBookingStatus()==2){
             tvBookingStatus.setText("Payment received, Due to some problems We cannot book the ticket. So, cancelled. Payment will be reverted");
             tvBookingStatus.setTextColor(getResources().getColor(R.color.clay_yellow));
-        }
+        }*/
         tvFlightRefrenceNo.setText(FHistoryResponse.getData().get(position).getBookingRefNo());
 
 

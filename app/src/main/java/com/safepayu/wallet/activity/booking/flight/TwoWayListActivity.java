@@ -89,8 +89,13 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
         twoWayFlightTopAdapter = new TwoWayFlightTopAdapter(getApplicationContext());
         recyclerViewPriceList.setAdapter(twoWayFlightTopAdapter);
 
-
-
+        if (btnContinue.getText().toString().equals("Next")){
+            btnContinue.setEnabled(false);
+        //    Toast.makeText(getApplicationContext(),"Please select Flight",Toast.LENGTH_SHORT).show();
+        }
+        else {
+            btnContinue.setEnabled(true);
+        }
 
 
 
@@ -140,7 +145,7 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
 
         getTwaoWayFlightAvailable(availableFlightRequest);
 
-        onwardReturnCheck();
+      //  onwardReturnCheck();
 
         if (Infants.equals("") && Children.equals("")) {
             Infants = "0";
@@ -159,6 +164,7 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void onwardReturnCheck() {
+
         if (returnFlight && onwardFlight){
             TotalAmount =onwardsAmount+ReturnAmout;
             totalFlightFare.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(TotalAmount));
@@ -191,9 +197,11 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
                 finish();
                 break;
             case R.id.continue_btn:
-             Intent intent = new Intent(getApplicationContext(),TwoWayFlightDetailActivity.class);
+              //  if (twoWayFlightListAdapter.getSelectedData() != null) {
+                    Intent intent = new Intent(getApplicationContext(), TwoWayFlightDetailActivity.class);
 
-             startActivity(intent);
+                    startActivity(intent);
+               // }
                 break;
         }
     }
@@ -249,11 +257,9 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
     }*/
 
     @Override
-    public void onFlightItemReturnListerne(int position, AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mFlightItemListenreReturn) {
-        Toast.makeText(getApplicationContext(),String.valueOf(position),Toast.LENGTH_SHORT).show();
+    public void onFlightItemReturnListerne(int position, AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mFlightItemListenreReturn,final LinearLayout liOnward) {
         ReturnAmout = mFlightItemListenreReturn.getFareDetails().getTotalFare();
-        returnFlight=true;
-        onwardReturnCheck();
+
 
         SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
         Gson gson = new Gson();
@@ -261,6 +267,8 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
         editor.putString("MyObjectReturn", json);
         editor.commit();
 
+        returnFlight=true;
+        onwardReturnCheck();
     }
 
     @Override
@@ -279,7 +287,7 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
 
 
 //        finalIndex = position;
-//        twoWayFlightListAdapter.notifyDataSetChanged();
+      //  twoWayFlightListAdapter.notifyDataSetChanged();
 //
 //        if(finalIndex ==position){
 //            liOnward.setBackgroundColor(getResources().getColor(R.color.green_100));

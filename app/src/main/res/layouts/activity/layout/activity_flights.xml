@@ -481,7 +481,8 @@
                     android:textSize="12sp"
                     android:textColor="@color/bue_A800"
                     android:buttonTint="@color/bue_A800"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"/>
 
                 <Button
                     android:id="@+id/search_flight_btn"

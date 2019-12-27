@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.Navigation;
 import com.safepayu.wallet.adapter.fight.FlighPassengerBookingDialog;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -353,7 +355,9 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
 
                 break;
             case R.id._back_btn:
-                overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
+               Intent intent =  new Intent(FlightBookDetailActivity.this, Navigation.class);
+               startActivity(intent);
+
                 finish();
                 break;
             case R.id.tv_flight_download_ticket:

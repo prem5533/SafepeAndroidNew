@@ -14,7 +14,7 @@
         android:paddingBottom="5dp">
 
         <Button
-            android:id="@+id/recharge_back_btn"
+            android:id="@+id/flight_back_btn"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"

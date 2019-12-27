@@ -69,7 +69,9 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
     private String hash="",payment_mode="",customers_unique_id="";
     private float merchant_payment_amount= (float) 1.0;
     String PaymentMode = "bank",bankAmount="";
-    int tFare,walletDeduct, subAmount,BankAmount;
+    private Button sendmoneyBackBtn;
+    int tFare,BankAmount;
+    Double walletDeduct,subAmount ;
     boolean b = true;
     boolean walletcheck = true;
     String PaymentBank,PaymentWallet,bank_rs,wallet_rs;
@@ -80,7 +82,8 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
     ArrayList<String> adultList;
     ArrayList<String> DobList;
     Gson gson;
-
+    String onwrdpaid = "", returnpaid="";
+    int totalPaid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +98,9 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
 
         adultList = (ArrayList<String>) getIntent().getSerializableExtra("adult_list");
         DobList = (ArrayList<String>) getIntent().getSerializableExtra("dob_list");
+      /*  onwrdpaid = getIntent().getStringExtra("payamount");
+        returnpaid = getIntent().getStringExtra("payamount2");*/
+        totalPaid = getIntent().getExtras().getInt("totalPaid");
         loadingDialog = new LoadingDialog(this);
         tvFlightPayAmount = findViewById(R.id.tv_flight_pay_amount);
         tvWalletlimit = findViewById(R.id.tv_walletlimit);
@@ -104,9 +110,11 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
         btnBookingPayAmount = findViewById(R.id.btn_booking_pay_amount);
         checkBoxWallet = findViewById(R.id.check_box_wallet);
         checkBoxGatewayPayment = findViewById(R.id.check_box_gateway_payment);
+        sendmoneyBackBtn = findViewById(R.id.sendmoney_back_btn);
         btnBookingPayAmount.setOnClickListener(this);
+        sendmoneyBackBtn.setOnClickListener(this);
 
-
+      //  totalPaid = ConvieneceFee*totalTravellers;
 
         //***************get data****************
 
@@ -144,10 +152,9 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
 
 
         if (TripType.equals("1")){
-            tvFlightPayAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+            tvFlightPayAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format((totalPaid +Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE)))));
         }else if (TripType.equals("2")){
-            tvFlightPayAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
-        }
+            tvFlightPayAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+Integer.parseInt(TotalFareReturnOnward))); }
 
 
         if (Infants.equals("")) {
@@ -200,32 +207,32 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
                     tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                     PaymentMode = "wallet";
 
-                    PaymentBank = tvGatewayDeductAmount.getText().toString().trim();
+                    PaymentBank = totalPaid+tvGatewayDeductAmount.getText().toString().trim();
                     String bank[] = PaymentBank.split(" ");
                     String s1 = bank[0];
                      bank_rs = bank[1];
                     Log.e("ban",PaymentBank);
-                    PaymentWallet = tvWalletDeductAmount.getText().toString().trim();
+                    PaymentWallet = totalPaid+tvWalletDeductAmount.getText().toString().trim();
                     String wallet[] = PaymentWallet.split(" ");
                     String s2 = wallet[0];
                     wallet_rs = wallet[1];
                     Log.e("wall",PaymentWallet);
 
-                    if (tFare>walletDeduct){
-                         subAmount = tFare-walletDeduct;
-                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(subAmount));
-                        tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(WalletResponse.getData().getLimit()));
+                    if ( Double.valueOf(tFare)>walletDeduct){
+                        subAmount =       Double.valueOf(tFare)-walletDeduct;
+                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+subAmount));
+                        tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+WalletResponse.getData().getLimit()));
                         checkBoxWallet.setChecked(true);
                         checkBoxGatewayPayment.setChecked(true);
                         checkBoxGatewayPayment.setEnabled(false);
                         tvGatewayDeductAmount.setVisibility(View.VISIBLE);
-                        btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(subAmount));
+                        btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+subAmount));
 
 
                     } else if (tFare<walletDeduct){
-                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(tFare));
-                        tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(tFare));
-                        btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(tFare));
+                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+tFare));
+                        tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+tFare));
+                        btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+tFare));
 
                         if (b){
                             checkBoxGatewayPayment.setChecked(false);
@@ -253,12 +260,12 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
                     }*/
                 } else {
 
-                    PaymentBank = tvGatewayDeductAmount.getText().toString().trim();
+                    PaymentBank = totalPaid+tvGatewayDeductAmount.getText().toString().trim();
                     String bank[] = PaymentBank.split(" ");
                     String s1 = bank[0];
                     bank_rs = bank[1];
                     Log.e("ban",PaymentBank);
-                    PaymentWallet = tvWalletDeductAmount.getText().toString().trim();
+                    PaymentWallet = totalPaid+tvWalletDeductAmount.getText().toString().trim();
                     String wallet[] = PaymentWallet.split(" ");
                     String s2 = wallet[0];
                     wallet_rs = wallet[1];
@@ -268,13 +275,13 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
                     tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                     checkBoxGatewayPayment.setChecked(true);
                     if (TripType.equals("1")){
-                        btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " +  NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
-                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+                        btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " +  NumberFormat.getIntegerInstance().format(totalPaid+Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
+                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
 
                     }
                     else if (TripType.equals("2")){
-                        btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " +  NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
-                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " +NumberFormat.getIntegerInstance().format(Integer.parseInt(TotalFareReturnOnward)));
+                        btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " +  NumberFormat.getIntegerInstance().format(totalPaid+Integer.parseInt(TotalFareReturnOnward)));
+                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " +NumberFormat.getIntegerInstance().format(totalPaid+Integer.parseInt(TotalFareReturnOnward)));
                     }
                 }
             }
@@ -310,20 +317,22 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
                             walletDeduct =WalletResponse.getData().getLimit();
 
                             if (tFare>walletDeduct){
-                                int subAmount = tFare-walletDeduct;
-                                tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(subAmount));
-                                tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(walletLimitResponse.getData().getLimit()));
+                                Double subAmount;
+                               subAmount    =  Double.valueOf(tFare)-walletDeduct;
+                               // int subAmount = tFare-walletDeduct;
+                                tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+subAmount));
+                                tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+walletLimitResponse.getData().getLimit()));
                                 checkBoxWallet.setChecked(true);
                                 checkBoxGatewayPayment.setChecked(true);
                                 checkBoxGatewayPayment.setEnabled(false);
                                 tvGatewayDeductAmount.setVisibility(View.VISIBLE);
-                                btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(subAmount));
+                                btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+subAmount));
 
 
                             } else if (tFare<walletDeduct){
-                                tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(tFare));
-                                tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(tFare));
-                                btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(tFare));
+                                tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+tFare));
+                                tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+tFare));
+                                btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+tFare));
 
 
                             }
@@ -361,7 +370,7 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
                 }
 
                 else  if (checkBoxGatewayPayment.isChecked()&&!String.valueOf(WalletResponse.getData().getLimit()).equals("0")||!Amount.equals("0")){
-                    Amount = btnBookingPayAmount.getText().toString().trim();
+                    Amount = totalPaid+btnBookingPayAmount.getText().toString().trim();
                     String amount[] = Amount.split(" ");
                     String s1 = amount[0];
                     String s2 = amount[1];
@@ -381,8 +390,11 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Please Check Your Internet Connection",false);
                     }
                 }
-
-
+                break;
+            }
+            case R.id.sendmoney_back_btn:{
+                overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
+                finish();
                 break;
             }
         }
@@ -573,14 +585,15 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
         flightBlockTicketRequest.setTripType(TripType);
         flightBlockTicketRequest.setFlightType("1");
         if (tFare>walletDeduct){
-            flightBlockTicketRequest.setPayment_wallet(String.valueOf(WalletResponse.getData().getLimit()));
-            flightBlockTicketRequest.setPayment_bank(String.valueOf(subAmount));
+            flightBlockTicketRequest.setPayment_wallet(totalPaid+String.valueOf(WalletResponse.getData().getLimit()));
+
+            flightBlockTicketRequest.setPayment_bank(String.valueOf(totalPaid+subAmount));
         } else {
             if (b){
                 flightBlockTicketRequest.setPayment_wallet(String.valueOf(0));
-                flightBlockTicketRequest.setPayment_bank(String.valueOf(tFare));
+                flightBlockTicketRequest.setPayment_bank(String.valueOf(totalPaid+tFare));
             }
-            flightBlockTicketRequest.setPayment_wallet(String.valueOf(tFare));
+            flightBlockTicketRequest.setPayment_wallet(String.valueOf(totalPaid+tFare));
             flightBlockTicketRequest.setPayment_bank(String.valueOf(0));
         }
 
