@@ -27,7 +27,7 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
     private OnFlightItemListener onFlightItemListener;
     int row_index = -1,   selectedPosition;
     private View selectedPackageView;
-    private int selectedPackagePosition ;
+    private int selectedPackagePosition = -1;
     private View selectedOnwardView = null;
 
     public interface OnFlightItemListener{
@@ -108,15 +108,22 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
                 e.printStackTrace();
             }*/
 
-         /*   liOnwards.setOnClickListener(new View.OnClickListener() {
+            liOnwards.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     row_index=position;
                     notifyDataSetChanged();
+                    if (onFlightItemListener != null) {
+                        onFlightItemListener.onFlightItemListerne(getLayoutPosition(),mItem.get(getLayoutPosition()),liOnwards);
+                        // notifyDataSetChanged();
+                    }
                 }
             });
-*/
-            selectedPackagePosition =position;
+
+            if(row_index==position){
+                liOnwards.setBackgroundColor(Color.parseColor("#C8E6C9"));
+            } else
+            { liOnwards.setBackgroundColor(Color.parseColor("#ffffff")); }
             int flightStop =   mItem.get(position).getFlightSegments().size();
             tvflight_name1.setText(mItem.get(position).getFlightSegments().get(0).getAirLineName());
             tvflight_name2.setText(mItem.get(position).getFlightSegments().get(0).getOperatingAirlineCode()+" "+mItem.get(position).getFlightSegments().get(0).getOperatingAirlineFlightNumber());
@@ -217,10 +224,10 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
 
         @Override
         public void onClick(View v) {
-            if (onFlightItemListener != null) {
+           /* if (onFlightItemListener != null) {
                 onFlightItemListener.onFlightItemListerne(getLayoutPosition(),mItem.get(getLayoutPosition()),liOnwards);
-
-            }
+               // notifyDataSetChanged();
+            }*/
           /*  if (selectedOnwardView == null) {
                 selectedPackagePosition = getLayoutPosition();
                 selectedOnwardView = liOnwards;
@@ -232,13 +239,7 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
                 liOnwards.setBackground(context.getResources().getDrawable(R.drawable.package_selected));
 
             }*/
-            row_index=selectedPackagePosition;
-           // notifyDataSetChanged();
 
-            if(row_index==selectedPackagePosition){
-                liOnwards.setBackgroundColor(Color.parseColor("#C8E6C9"));
-            } else
-            { liOnwards.setBackgroundColor(Color.parseColor("#ffffff")); }
         }
     }
 }
