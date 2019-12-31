@@ -82,7 +82,6 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         paymentMode.setOnCheckedChangeListener(this);
         findViewById(R.id.backbtn_from_membership).setOnClickListener(this);
 
-
     }
 
     public void showPackageDetails(PackageListData.Packages selectedPackage) {
