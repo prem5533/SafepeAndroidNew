@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.booking.flight.FlightHistoryActivity;
 import com.safepayu.wallet.adapter.MyOrdersAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;

@@ -210,6 +210,88 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
                             tvFlightCancelTicket.setVisibility(View.GONE);
 
                         }
+                     //**************************************
+                     /*   if (flightBookingDetailResponse.getData().getBookingStatus() ==1){
+                            tvBookingStatus.setText("Payment received, Ticket booking is under process");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.green_500));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==2){
+                            tvBookingStatus.setText("Payment received, Due to some problems We cannot book the ticket. So, cancelled. Payment will be reverted");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.clay_yellow));
+                        }
+                        else  if (flightBookingDetailResponse.getData().getBookingStatus() ==3){
+                            tvBookingStatus.setText("Indicates Payment received, Ticket booked successfully");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.green_500));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==4){
+                            tvBookingStatus.setText("After successful confirmation of the ticket, if it is cancelled then this is the status, due to flight delay");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.clay_yellow));
+                            //  imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_pending));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==5){
+                            tvBookingStatus.setText("Cancellation is in process");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+                            tvFlightCancelTicket.setVisibility(View.GONE);
+                            // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==6){
+                            tvBookingStatus.setText("Ticket Cancellation is successfully");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+                            tvFlightCancelTicket.setVisibility(View.GONE);
+                            //imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==7){
+                            tvBookingStatus.setText("Ticket cancellation is rejected");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+                            // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==8){
+                            tvBookingStatus.setText("Flight ticket is blocked for booking");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+                            //imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_success));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==9){
+                            tvBookingStatus.setText("Something went wrong in Payment");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+                            //  imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==10){
+                            tvBookingStatus.setText("Ticket Booking Failed");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+                            //  imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus()==11){
+                            tvBookingStatus.setText("Ticket not Found");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+                            // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==12){
+                            tvBookingStatus.setText("Ticket Partially Cancelled");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+                            tvFlightCancelTicket.setVisibility(View.GONE);
+                            // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==13){
+                            tvBookingStatus.setText("Partial Cancellation Failed");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+                            // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==14){
+                            tvBookingStatus.setText("Request Processed");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+                            // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==15){
+                            tvBookingStatus.setText("Request Rejected");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+                            // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+                        }
+                        else if (flightBookingDetailResponse.getData().getBookingStatus() ==16){
+                            tvBookingStatus.setText("Ticket Blocking Failed");
+                            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+                            // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+                        }*/
+                        //***************************************
                         if (TripType.equals("1")) {
                             lretunrticket.setVisibility(View.GONE);
 
@@ -427,7 +509,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
                  //   tvSafeJourney.setText("Ticket cancelled successfully!");
 
                     String DateTime =response.getData().getCancelTime();
-                    String DT[] = DateTime.split("T");
+                    String DT[] = DateTime.split(" ");
                     String D = DT[0];
                     String T = DT[1];
                     tvFlightTimeDate.setText(D+" , "+T);
@@ -490,6 +572,14 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
                     }
                 }));
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent setIntent = new Intent(FlightBookDetailActivity.this, Navigation.class);
+        setIntent.addCategory(Intent.CATEGORY_HOME);
+        setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(setIntent);
     }
 }
 

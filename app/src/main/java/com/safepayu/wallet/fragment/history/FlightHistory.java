@@ -1,8 +1,10 @@
 package com.safepayu.wallet.fragment.history;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +37,7 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.booking.flight.FlightBookingDetailRequest;
 import com.safepayu.wallet.models.request.booking.flight.FlightHistoryResponse;
+import com.safepayu.wallet.models.response.booking.flight.CancelBookTicketResponse;
 import com.safepayu.wallet.models.response.booking.flight.FlighPdfResponse;
 import com.safepayu.wallet.utils.pdf.DownloadTask;
 import com.safepayu.wallet.utils.pdf.MarshMallowPermission;
@@ -76,8 +80,7 @@ public class FlightHistory  extends Fragment implements FlightHistroyAdapter.Fli
         loadingDialog = new LoadingDialog(getActivity());
 
         flightOrderHistoryList =rootView. findViewById(R.id.flight_order_history_list);
-        backBtn = rootView.findViewById(R.id.recharge_back_btn);
-        backBtn.setOnClickListener(this);
+
 
         //***************get data****************
         Source =   BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE);
@@ -115,10 +118,7 @@ public class FlightHistory  extends Fragment implements FlightHistroyAdapter.Fli
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.recharge_back_btn:
-               getActivity(). overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
-                getActivity().finish();
-                break;
+
 
         }
     }
@@ -178,6 +178,15 @@ public class FlightHistory  extends Fragment implements FlightHistroyAdapter.Fli
         tvTicketSourceAirportname = dialog.findViewById(R.id.tv_ticket_source_airportname);
         tvTicketDetinationAirportname = dialog.findViewById(R.id.tv_ticket_detination_airportname);
         tvFlightDownloadTicket = dialog.findViewById(R.id.tv_flight_download_ticket);
+        backBtn = dialog.findViewById(R.id._back_btn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              dialog.dismiss();
+            }
+        });
+
+
 
         //RETURN
         tvFlightSourceDestinationReturn = dialog.findViewById(R.id.tv_flight_source_destination_return);
@@ -202,7 +211,13 @@ public class FlightHistory  extends Fragment implements FlightHistroyAdapter.Fli
         lretunrticket = dialog.findViewById(R.id.lretunrticket);
         tvSafeJourney.setVisibility(View.GONE);
         statusImage.setVisibility(View.GONE);
-        tvFlightCancelTicket.setVisibility(View.GONE);
+
+        tvFlightCancelTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogCancelTicket(getActivity());
+            }
+        });
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -244,18 +259,99 @@ public class FlightHistory  extends Fragment implements FlightHistroyAdapter.Fli
         }
 
 
-        if (FHistoryResponse.getData().get(position).getBookingStatus()==3){
+        if (FHistoryResponse.getData().get(position).getBookingStatus()==1){
+            tvBookingStatus.setText("Payment received, Ticket booking is under process");
+             tvBookingStatus.setTextColor(getResources().getColor(R.color.green_500));
+     }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==2){
+            tvBookingStatus.setText("Payment received, Due to some problems We cannot book the ticket. So, cancelled. Payment will be reverted");
+              tvBookingStatus.setTextColor(getResources().getColor(R.color.clay_yellow));
+        }
+        else  if (FHistoryResponse.getData().get(position).getBookingStatus()==3){
+            tvBookingStatus.setText("Indicates Payment received, Ticket booked successfully");
+              tvBookingStatus.setTextColor(getResources().getColor(R.color.green_500));
+            }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==4){
+            tvBookingStatus.setText("After successful confirmation of the ticket, if it is cancelled then this is the status, due to flight delay");
+               tvBookingStatus.setTextColor(getResources().getColor(R.color.clay_yellow));
+          //  imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_pending));
+        }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==5){
+            tvBookingStatus.setText("Cancellation is in process");
+             tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+            tvFlightCancelTicket.setVisibility(View.GONE);
+           // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+        }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==6){
+            tvBookingStatus.setText("Ticket Cancellation is successfully");
+             tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+            tvFlightCancelTicket.setVisibility(View.GONE);
+            //imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+        }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==7){
+            tvBookingStatus.setText("Ticket cancellation is rejected");
+             tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+           // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+        }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==8){
+            tvBookingStatus.setText("Flight ticket is blocked for booking");
+             tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+            //imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_success));
+        }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==9){
+            tvBookingStatus.setText("Something went wrong in Payment");
+             tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+          //  imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+            }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==10){
+            tvBookingStatus.setText("Ticket Booking Failed");
+              tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+          //  imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+            }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==11){
+            tvBookingStatus.setText("Ticket not Found");
+               tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+           // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+            }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==12){
+            tvBookingStatus.setText("Ticket Partially Cancelled");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+            tvFlightCancelTicket.setVisibility(View.GONE);
+           // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+        }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==13){
+            tvBookingStatus.setText("Partial Cancellation Failed");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+           // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+        }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==14){
+            tvBookingStatus.setText("Request Processed");
+            tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+           // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+        }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==15){
+            tvBookingStatus.setText("Request Rejected");
+             tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+           // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+        }
+        else if (FHistoryResponse.getData().get(position).getBookingStatus()==16){
+            tvBookingStatus.setText("Ticket Blocking Failed");
+             tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+           // imageViewStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_fail));
+        }
+       /* if (FHistoryResponse.getData().get(position).getBookingStatus()==3){
             tvBookingStatus.setText("Booking Successful");
             tvBookingStatus.setTextColor(getResources().getColor(R.color.green_500));
         }
         else if (FHistoryResponse.getData().get(position).getBookingStatus()==5){
             tvBookingStatus.setText("Cancellation is in progress");
             tvBookingStatus.setTextColor(getResources().getColor(R.color.red_400));
+            tvFlightCancelTicket.setVisibility(View.GONE);
         }
         else if (FHistoryResponse.getData().get(position).getBookingStatus()==2){
             tvBookingStatus.setText("Payment received, Due to some problems We cannot book the ticket. So, cancelled. Payment will be reverted");
             tvBookingStatus.setTextColor(getResources().getColor(R.color.clay_yellow));
-        }
+        }*/
 
 
 
@@ -360,6 +456,89 @@ public class FlightHistory  extends Fragment implements FlightHistroyAdapter.Fli
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(lp);
         dialog.show();
+    }
+
+    private void showDialogCancelTicket(FragmentActivity activity) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+
+        dialog.setTitle("SafePe Alert")
+                .setCancelable(false)
+                .setMessage("\nAre you sure you want to cancel this ticket\n")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+                        if (isNetworkAvailable()){
+                            getCancelBookTicket();
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(getView().findViewById(R.id.flight_book_detail),"Please Check Your Internet Connection",false);
+                        }
+
+                        dialog.dismiss();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .show();
+    }
+
+    private void getCancelBookTicket() {
+
+        flightBookingDetailRequest = new FlightBookingDetailRequest();
+        // flightBookingDetailRequest.setReferenceNo("300356016556");
+        flightBookingDetailRequest.setReferenceNo(REFno);
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(getActivity()).create(ApiService.class);
+        BaseApp.getInstance().getDisposable().add(apiService.getFlightCancelTicket(flightBookingDetailRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CancelBookTicketResponse>(){
+                    @Override
+                    public void onSuccess(CancelBookTicketResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+                            statusImage.setVisibility(View.GONE);
+                            tvBookingStatus.setText("Cancellation is in progress");
+                            //   tvSafeJourney.setText("Ticket cancelled successfully!");
+
+                            String DateTime =response.getData().getCancelTime();
+                            String DT[] = DateTime.split(" ");
+                            String D = DT[0];
+                            String T = DT[1];
+                            tvFlightTimeDate.setText(D+" , "+T);
+
+                            tvFlightEticketNo.setText("PNR - "+response.getData().getAPIReferenceNo());
+
+                            if (response.getData().getCancellations().get(0).getCancelStatus()==5){
+                                tvFlightCancelTicket.setVisibility(View.GONE);
+                            }
+                            else if (response.getData().getCancellations().get(0).getCancelStatus()==6){
+                                tvFlightCancelTicket.setVisibility(View.GONE);
+                            } else if (response.getData().getCancellations().get(0).getCancelStatus()==12){
+                                tvFlightCancelTicket.setVisibility(View.GONE);
+                            }
+                            else {
+                                tvFlightCancelTicket.setVisibility(View.VISIBLE);
+                            }
+
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(getView().findViewById(R.id.flight_book_detail), false, e.getCause());
+                    }
+                }));
     }
 
     //**********************************for pdf download************************

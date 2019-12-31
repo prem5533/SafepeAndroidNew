@@ -30,23 +30,24 @@
         android:layout_marginTop="-40dp"/>
 
     <com.safepayu.wallet.custom_view.CustomTextView
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
-        app:fontCustom="@string/Roboto"
-        android:textStyle="normal"
+        android:layout_height="wrap_content"
         android:padding="10dp"
+        android:text="@string/otp_message"
         android:textSize="15sp"
-        android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:text="@string/otp_message" />
-    <com.safepayu.wallet.custom_view.CustomTextView
-        android:layout_width="wrap_content"
-        app:fontCustom="@string/Roboto"
-        android:id="@+id/tv_mobileNo1"
         android:textStyle="normal"
-        android:textSize="15sp"
-        android:layout_height="wrap_content"
+        app:fontCustom="@string/Roboto" />
+
+    <com.safepayu.wallet.custom_view.CustomTextView
+        android:id="@+id/tv_mobileNo1"
         style="@style/TextAppearance.AppCompat.Medium"
-        android:text="+91 " />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+91 "
+        android:textSize="15sp"
+        android:textStyle="normal"
+        app:fontCustom="@string/Roboto" />
 
     <LinearLayout
         android:layout_width="match_parent"

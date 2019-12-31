@@ -197,11 +197,9 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
                 finish();
                 break;
             case R.id.continue_btn:
-              //  if (twoWayFlightListAdapter.getSelectedData() != null) {
-                    Intent intent = new Intent(getApplicationContext(), TwoWayFlightDetailActivity.class);
+                Intent intent = new Intent(getApplicationContext(), TwoWayFlightDetailActivity.class);
+                startActivity(intent);
 
-                    startActivity(intent);
-               // }
                 break;
         }
     }
@@ -257,7 +255,7 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
     }*/
 
     @Override
-    public void onFlightItemReturnListerne(int position, AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mFlightItemListenreReturn,final LinearLayout liOnward) {
+    public void onFlightItemReturnListerne(int position, AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mFlightItemListenreReturn,final LinearLayout liReturn) {
         ReturnAmout = mFlightItemListenreReturn.getFareDetails().getTotalFare();
 
 
@@ -266,7 +264,6 @@ public class TwoWayListActivity extends AppCompatActivity implements View.OnClic
         json = gson.toJson(mFlightItemListenreReturn);
         editor.putString("MyObjectReturn", json);
         editor.commit();
-
         returnFlight=true;
         onwardReturnCheck();
     }

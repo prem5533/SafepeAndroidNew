@@ -147,6 +147,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_login;
+       // return R.layout.login_demo;
     }
 
     @Override

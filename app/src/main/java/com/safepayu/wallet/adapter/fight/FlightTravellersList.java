@@ -76,7 +76,7 @@ public class FlightTravellersList extends RecyclerView.Adapter<FlightTravellersL
                 image.setImageResource(R.drawable.ic_flight_child_boy);
                 tvPassengerTitle.setText("Child");
             }
-            else if (travellersType.equals("inft")){
+            else if (travellersType.equals("inf")){
                 image.setImageResource(R.drawable.ic_flight_infant);
                 tvPassengerTitle.setText("Infant");
             }
