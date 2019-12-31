@@ -116,15 +116,15 @@ public class TwoWayFlightListAdapter extends RecyclerView.Adapter<TwoWayFlightLi
                         onFlightItemListener.onFlightItemListerne(getLayoutPosition(),mItem.get(getLayoutPosition()),liOnwards);
                         // notifyDataSetChanged();
                     }
-                    row_index=position;
-                    notifyDataSetChanged();
+                 /*   row_index=position;
+                    notifyDataSetChanged();*/
                 }
             });
 
-            if(row_index==position){
+           /* if(row_index==position){
                 liOnwards.setBackgroundColor(Color.parseColor("#C8E6C9"));
             } else
-            { liOnwards.setBackgroundColor(Color.parseColor("#ffffff")); }
+            { liOnwards.setBackgroundColor(Color.parseColor("#ffffff")); }*/
             int flightStop =   mItem.get(position).getFlightSegments().size();
             tvflight_name1.setText(mItem.get(position).getFlightSegments().get(0).getAirLineName());
             tvflight_name2.setText(mItem.get(position).getFlightSegments().get(0).getOperatingAirlineCode()+" "+mItem.get(position).getFlightSegments().get(0).getOperatingAirlineFlightNumber());

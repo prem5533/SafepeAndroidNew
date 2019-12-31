@@ -22,7 +22,7 @@
     <string name="enter_mobile">Enter Mobile</string>
     <string name="dob_hint">dd-MM-yyyy</string>
     <string name="enter_password">Enter Password</string>
-    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password">Forgot Password?</string>
     <string name="create_new_account">Create a New Account</string>
 
     <string name="first_name">First Name</string>
@@ -94,6 +94,7 @@
     <string name="gas_payment_time">Payment will be added in your account within 24 hours.</string>
     <string name="landline_payment_time">Payment will be added in your account within 2 hours.</string>
     <string name="reviewfilght_details">Review below details!</string>
+    <string name="verification_code">A verification codes has been sent to</string>
 
 
 

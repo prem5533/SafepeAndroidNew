@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout.mainLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f5ff"
+    tools:context=".activity.LoginActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <include layout="@layout/toolbar_transparent"
+                android:visibility="gone"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/login_image_logo"
+                    android:layout_width="150dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/logo"
+                    android:adjustViewBounds="true"
+                    android:layout_gravity="top|center"
+                    android:layout_marginTop="30dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="140dp"
+                    android:orientation="vertical">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="450dp">
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="1dp"
+                            android:layout_margin="20dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="5dp"
+                                    android:background="@drawable/blue_green_bg" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="20dp"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:text="@string/login"
+                                    android:textColor="@color/black"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginTop="20dp"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="16dp"
+                                        android:layout_height="34dp"
+                                        android:src="@drawable/ic_mobile_login" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="10dp"
+                                        android:fontFamily="@font/roboto_medium"
+                                        android:text="Mobile Number"
+                                        android:textColor="@color/graynew"
+                                        android:textSize="16sp" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="20dp"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:enabled="false"
+                                        android:focusable="false"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:inputType="number"
+                                        android:padding="10dp"
+                                        android:text="+91 "
+                                        android:textColor="@color/graynew"
+                                        android:textSize="14sp" />
+
+                                    <View
+                                        android:layout_width="1dp"
+                                        android:layout_height="30dp"
+                                        android:background="#ceced7" />
+
+                                    <EditText
+                                        android:id="@+id/et.mobileNo"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@null"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:hint="9876543210"
+                                        android:inputType="number"
+                                        android:maxLength="14"
+                                        android:padding="10dp"
+                                        android:textSize="14sp" />
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="#ceced7" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="20dp"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="16dp"
+                                        android:layout_height="34dp"
+                                        android:src="@drawable/ic_password" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="10dp"
+                                        android:fontFamily="@font/roboto_medium"
+                                        android:text="Password"
+                                        android:textColor="@color/graynew"
+                                        android:textSize="16sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <EditText
+                                        android:id="@+id/et.password"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="20dp"
+                                        android:layout_weight="1"
+                                        android:background="@null"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:hint="******"
+                                        android:inputType="number"
+                                        android:maxLength="14"
+                                        android:padding="10dp"
+                                        android:textSize="14sp" />
+
+                                    <ImageView
+                                        android:id="@+id/show_hide_password"
+                                        android:layout_width="45dp"
+                                        android:layout_height="45dp"
+                                        android:layout_alignParentRight="true"
+                                        android:padding="10dp"
+                                        android:src="@drawable/show_password48" />
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="#ceced7" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="20dp"
+                                    android:layout_marginBottom="50dp"
+                                    android:orientation="horizontal">
+
+                                    <CheckBox
+                                        android:id="@+id/cb_rememberMe"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:buttonTint="#b9b9b9"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:padding="5dp"
+                                        android:text="Remember me"
+                                        android:textColor="@color/graynew"
+                                        android:textSize="14sp" />
+
+                                    <TextView
+                                        android:id="@+id/btn.forgetPass"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:gravity="center|right"
+                                        android:padding="5dp"
+                                        android:text="@string/forgot_password"
+                                        android:textColor="@color/graynew"
+                                        android:textSize="14sp" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <Button
+                            android:id="@+id/btn.login"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/login"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:layout_marginTop="150dp"
+                            android:background="@drawable/blue_green_round_btn"
+                            style="@style/buttonDefault"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginRight="50dp" />
+                    </FrameLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom|center"
+        android:gravity="bottom|center"
+        android:padding="20dp"
+        android:layout_marginBottom="30dp"
+        >
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:textSize="15sp"
+            android:fontFamily="@font/roboto_regular"
+        android:textColor="#27282a"
+        android:text="Don't have an account?"
+            android:padding="5dp"/>
+        <TextView
+            android:id="@+id/btn.newAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="normal"
+            android:textSize="15sp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="#dc0a1d"
+            android:text="Register"
+            android:padding="5dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

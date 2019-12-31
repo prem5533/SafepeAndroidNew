@@ -32,6 +32,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.Navigation;
 import com.safepayu.wallet.activity.NewAccount;
 import com.safepayu.wallet.activity.TermsAndCondition;
 import com.safepayu.wallet.adapter.fight.FlighPassengerBookingDialog;
@@ -511,7 +512,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                 Toast.makeText(getApplicationContext(), "Please enter infant  dob", Toast.LENGTH_LONG).show();
                 return  false;
             }
-            infantFullNme = "Mstr."+"~"+flightInfantFNme+"~"+flightInfantLNme+"~"+"inft";
+            infantFullNme = "Mstr."+"~"+flightInfantFNme+"~"+flightInfantLNme+"~"+"inf";
             adultList.add(infantFullNme);
             DobList.add(flightInfantDob);
         }
@@ -1181,6 +1182,8 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                     }
                 }));
     }
+
+
 
 }
 

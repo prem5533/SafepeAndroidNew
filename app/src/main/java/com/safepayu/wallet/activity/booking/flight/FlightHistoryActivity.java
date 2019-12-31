@@ -340,7 +340,7 @@ public class FlightHistoryActivity extends AppCompatActivity implements FlightHi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.recharge_back_btn:
+            case R.id._back_btn:
                 overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
                 finish();
                 break;

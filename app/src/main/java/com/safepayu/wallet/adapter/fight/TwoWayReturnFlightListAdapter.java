@@ -28,7 +28,7 @@ public class TwoWayReturnFlightListAdapter extends RecyclerView.Adapter<TwoWayRe
 
 
     public interface OnFlightItemReturnListener{
-        void onFlightItemReturnListerne(int position, AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mFlightItemListenre,LinearLayout liOnward);
+        void onFlightItemReturnListerne(int position, AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mFlightItemListenre,LinearLayout liReturn);
     }
 
     public TwoWayReturnFlightListAdapter(Context context, List<AvailableFlightResponse.DataBean.DomesticReturnFlightsBean> mItem, OnFlightItemReturnListener onFlightItemReturnListener) {
@@ -59,7 +59,7 @@ public class TwoWayReturnFlightListAdapter extends RecyclerView.Adapter<TwoWayRe
         private ImageView imageFlight;
         private FrameLayout frameTwoStopLine,frameOneStop;
         private View non_stop;
-        private LinearLayout liOnwards;
+        private LinearLayout liReturn;
         int row_index = -1;
 
         public FlightTwoWayViewHodler(@NonNull View itemView) {
@@ -74,7 +74,7 @@ public class TwoWayReturnFlightListAdapter extends RecyclerView.Adapter<TwoWayRe
             frameTwoStopLine = itemView.findViewById(R.id.frame_two_stop);
             frameOneStop = itemView.findViewById(R.id.frame_one_stop);
             non_stop = itemView.findViewById(R.id.non_stop);
-            liOnwards = itemView.findViewById(R.id.li_onwards);
+            liReturn = itemView.findViewById(R.id.li_onwards);
 
             itemView.setOnClickListener(this);
         }
@@ -92,6 +92,22 @@ public class TwoWayReturnFlightListAdapter extends RecyclerView.Adapter<TwoWayRe
                 liOnwards.setBackgroundColor(Color.parseColor("#C8E6C9"));
             } else
             { liOnwards.setBackgroundColor(Color.parseColor("#ffffff")); }*/
+            liReturn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (onFlightItemReturnListener != null) {
+                        onFlightItemReturnListener.onFlightItemReturnListerne(getLayoutPosition(),mItem.get(getLayoutPosition()),liReturn );
+                    }
+                    row_index=position;
+                    notifyDataSetChanged();
+                }
+            });
+
+            if(row_index==position){
+                liReturn.setBackgroundColor(Color.parseColor("#C8E6C9"));
+            } else
+            { liReturn.setBackgroundColor(Color.parseColor("#ffffff")); }
 
             int flightStop =   mItem.get(position).getFlightSegments().size();
             tvflight_name1.setText(mItem.get(position).getFlightSegments().get(0).getAirLineName());
@@ -190,9 +206,9 @@ public class TwoWayReturnFlightListAdapter extends RecyclerView.Adapter<TwoWayRe
 
         @Override
         public void onClick(View v) {
-            if (onFlightItemReturnListener != null) {
+           /* if (onFlightItemReturnListener != null) {
                 onFlightItemReturnListener.onFlightItemReturnListerne(getLayoutPosition(),mItem.get(getLayoutPosition()),liOnwards );
-            }
+            }*/
         }
     }
 }
