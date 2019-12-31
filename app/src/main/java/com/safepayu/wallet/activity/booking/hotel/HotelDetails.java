@@ -46,8 +46,11 @@ import com.safepayu.wallet.models.response.booking.hotel.HotelBookResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelDetailResponse;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -529,7 +532,23 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
         window.setAttributes(lp);
 
         int noOfRooms=Integer.parseInt(availableHotelRequest.getRooms());
-        double roomPrice=0,totalFare=0,serviceTax=0,conFee=0;
+        double roomPrice=0,totalFare=0,serviceTax=0,conFee=0,noOfDays=0;
+
+
+        String startDate = "", endDate = "";
+        startDate=availableHotelRequest.getArrivalDate().trim();
+        endDate=availableHotelRequest.getDepartureDate().trim();
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            Date dateStart = sdf.parse(startDate);
+            Date dateEnd = sdf.parse(endDate);
+            long diff = dateEnd.getTime() - dateStart.getTime();
+            String dddssd= String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+            noOfDays=Integer.parseInt(dddssd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         TextView tvCityName,tvHotelName,tvCheckOutDate,tvCheckInDate,tvRoomType,tvRoomNumbers;
         TextView tvBaseFareDialog,tvGstDialog,tvConvenienceDialog,tvTotalFareDialog,tvOperatorChrgDialog;
@@ -580,11 +599,11 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
         });
 
         try {
-            roomPrice=noOfRooms*RoomDetailsList.get(position).getRoomTotal();
-            serviceTax=noOfRooms*RoomDetailsList.get(position).getServicetaxTotal();
+            roomPrice=noOfDays*noOfRooms*RoomDetailsList.get(position).getRoomTotal();
+            serviceTax=noOfDays*noOfRooms*RoomDetailsList.get(position).getServicetaxTotal();
 
             if (PerPassengerBooking){
-                conFee=noOfRooms*(double)ConvenienceFee;
+                conFee=noOfDays*noOfRooms*(double)ConvenienceFee;
             }else {
                 conFee=(double)ConvenienceFee;
             }
@@ -598,7 +617,7 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
 
         tvBaseFareDialog.setText(getResources().getString(R.string.rupees)+" "+roomPrice);
         tvGstDialog.setText(getResources().getString(R.string.rupees)+" "+serviceTax);
-        tvConvenienceDialog.setText(getResources().getString(R.string.rupees)+" "+conFee);
+        tvConvenienceDialog.setText(getResources().getString(R.string.rupees)+" "+conFee+"0");
         tvTotalFareDialog.setText(getResources().getString(R.string.rupees)+" "+String.format("%.2f", totalFare));
 
         dialogFareDetail.show();

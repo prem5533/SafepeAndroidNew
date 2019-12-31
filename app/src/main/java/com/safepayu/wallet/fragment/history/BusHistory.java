@@ -179,7 +179,7 @@ public class BusHistory  extends Fragment implements BusHistoryListAdapter.BusBo
         flightBookingDetailRequest.setReferenceNo(REFno);
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getActivity()).create(ApiService.class);
-        BaseApp.getInstance().getDisposable().add(apiService.getFlightPdf(flightBookingDetailRequest)
+        BaseApp.getInstance().getDisposable().add(apiService.getBusPdf(flightBookingDetailRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<FlighPdfResponse>(){

@@ -91,26 +91,30 @@ public class AvailableHotels extends AppCompatActivity  implements View.OnClickL
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
 
-                            if (response.getData().getAvailableHotels().size()>0){
-                                try {
-                                    for (int i=0;i<response.getData().getAvailableHotels().size();i++){
-                                        try {
-                                            locality= GetLocality(Double.parseDouble(response.getData().getAvailableHotels().get(i).getLatitude()),Double.parseDouble(response.getData().getAvailableHotels().get(i).getLatitude()));
-                                        }catch (Exception e){
-                                            locality="";
-                                            e.printStackTrace();
+                            try {
+                                if (response.getData().getAvailableHotels().size()>0){
+                                    try {
+                                        for (int i=0;i<response.getData().getAvailableHotels().size();i++){
+                                            try {
+                                                locality= GetLocality(Double.parseDouble(response.getData().getAvailableHotels().get(i).getLatitude()),Double.parseDouble(response.getData().getAvailableHotels().get(i).getLatitude()));
+                                            }catch (Exception e){
+                                                locality="";
+                                                e.printStackTrace();
+                                            }
+                                            LocalityList.add(locality);
                                         }
-                                        LocalityList.add(locality);
+                                        AvailableHotelList=response.getData().getAvailableHotels();
+                                        availableHotelAdapter=new AvailableHotelAdapter(AvailableHotels.this,response.getData().getAvailableHotels(),LocalityList,AvailableHotels.this);
+                                        recyclerViewHotelList.setAdapter(availableHotelAdapter);
+                                        availableHotelAdapter.notifyDataSetChanged();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-                                    AvailableHotelList=response.getData().getAvailableHotels();
-                                    availableHotelAdapter=new AvailableHotelAdapter(AvailableHotels.this,response.getData().getAvailableHotels(),LocalityList,AvailableHotels.this);
-                                    recyclerViewHotelList.setAdapter(availableHotelAdapter);
-                                    availableHotelAdapter.notifyDataSetChanged();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                                }else {
+                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.available_hotelsLayout), "No Hotel Found Matching Your Requirements", false);
                                 }
-                            }else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.available_hotelsLayout), "No Hotel Found Matching Your Requirements", false);
+                            }catch (Exception e){
+                                e.printStackTrace();
                             }
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.available_hotelsLayout), response.getMesage(), false);

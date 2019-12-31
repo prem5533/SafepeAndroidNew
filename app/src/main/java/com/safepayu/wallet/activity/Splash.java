@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,12 +41,12 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         int phVersion=Build.VERSION.SDK_INT;
         int kitVersion=Build.VERSION_CODES.KITKAT;
 
         if (phVersion >= kitVersion) {
-            BaseApp.getInstance().handler().postDelayed(runnable,2000);
+            BaseApp.getInstance().handler().postDelayed(runnable,3000);
         }else {
             showDialogVersion(this);
         }

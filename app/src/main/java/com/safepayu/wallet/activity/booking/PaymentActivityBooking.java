@@ -1,14 +1,23 @@
 package com.safepayu.wallet.activity.booking;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,6 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.FileProvider;
 
 import com.easebuzz.payment.kit.PWECouponsActivity;
 import com.safepayu.wallet.BaseApp;
@@ -28,16 +39,24 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.HashKeyRequest;
 import com.safepayu.wallet.models.request.SendPaymentGatewayDetailsRequest;
+import com.safepayu.wallet.models.request.booking.flight.FlightBookingDetailRequest;
 import com.safepayu.wallet.models.response.HashKeyResponse;
 import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
 import com.safepayu.wallet.models.response.WalletLimitResponse;
 import com.safepayu.wallet.models.response.booking.bus.BusBlockingResponse;
+import com.safepayu.wallet.models.response.booking.flight.FlighPdfResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelBookResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
+import com.safepayu.wallet.utils.pdf.CheckForSDCard;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
@@ -65,6 +84,9 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
     boolean b = true;
     boolean walletcheck = true;
     String PaymentBank,PaymentWallet,bank_rs,wallet_rs;
+
+    double amount=0,walletBal=0,walletLimit=0;
+    boolean checkWalletBal=false,checkWalletLimit=false;
 
     //recharge/bill payment parameter
     private String Amount="0",PaymentFor="",customer_phone="";
@@ -105,13 +127,46 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
         }catch (Exception e){
             e.printStackTrace();
         }
+
         tvPayAmount.setText(getResources().getString(R.string.rupees)+" "+Double.parseDouble(Amount));
+
+        checkBoxGatewayPayment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked){
+                    checkBoxWallet.setChecked(false);
+                    tvWalletDeductAmount.setVisibility(View.GONE);
+                    tvGatewayDeductAmount.setVisibility(View.VISIBLE);
+                    tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                    btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                }else {
+                    checkBoxWallet.setChecked(true);
+                    checkBoxGatewayPayment.setChecked(false);
+                    tvWalletDeductAmount.setVisibility(View.VISIBLE);
+                    tvGatewayDeductAmount.setVisibility(View.GONE);
+                    tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                    tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                    btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                }
+            }
+        });
 
             checkBoxWallet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked) {
+
+                    checkBoxWallet.setChecked(true);
+                    checkBoxGatewayPayment.setChecked(false);
+                    tvWalletDeductAmount.setVisibility(View.VISIBLE);
+                    tvGatewayDeductAmount.setVisibility(View.GONE);
+                    tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                    tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                    btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+
+
+                    /*
                     tvWalletDeductAmount.setVisibility(View.VISIBLE);
                     tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                     PaymentMode = "wallet";
@@ -136,7 +191,7 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
                         checkBoxGatewayPayment.setEnabled(false);
                         tvGatewayDeductAmount.setVisibility(View.VISIBLE);
 
-                        if (subAmount>Integer.parseInt(WalletResponse.getData().getWallet_balance())){
+                        if (subAmount>(int)Double.parseDouble(WalletResponse.getData().getWallet_balance())){
 
                             int restAmount=subAmount-Integer.parseInt(WalletResponse.getData().getWallet_balance());
 
@@ -160,7 +215,7 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
                         }
                     }
 
-                 /*   double walletDouble = Double.parseDouble(WalletResponse.getData().getWallet_balance());
+                    double walletDouble = Double.parseDouble(WalletResponse.getData().getWallet_balance());
                     double totalDouble = Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE));
                     double sub = totalDouble - walletDouble;
                     int IntValue = (int) sub;
@@ -176,9 +231,17 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
                         btnBookingPayAmount.setText("Pay");
                         checkBoxGatewayPayment.setEnabled(true);
 
-                    }*/
+                    }
+                     */
                 } else {
 
+                    checkBoxWallet.setChecked(false);
+                    tvWalletDeductAmount.setVisibility(View.GONE);
+                    tvGatewayDeductAmount.setVisibility(View.VISIBLE);
+                    tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                    btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+
+                    /*
                     PaymentBank = tvGatewayDeductAmount.getText().toString().trim();
                     String bank[] = PaymentBank.split(" ");
                     String s1 = bank[0];
@@ -195,7 +258,7 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
                     checkBoxGatewayPayment.setChecked(true);
                     btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " +  NumberFormat.getIntegerInstance().format(Integer.parseInt(Amount)));
                     tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(Amount)));
-
+                    */
                 }
             }
         });
@@ -204,11 +267,20 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
             @Override
             public void onClick(View view) {
                 if (checkBoxWallet.isChecked()){
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                        startActivity(new Intent(PaymentActivityBooking.this, CreatePassCodeActivity.class));
-                    } else {
-                        PasscodeDialog passcodeDialog = new PasscodeDialog(PaymentActivityBooking.this, PaymentActivityBooking.this, "");
-                        passcodeDialog.show();
+
+                    if (checkWalletBal){
+                        if (checkWalletLimit){
+                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+                                startActivity(new Intent(PaymentActivityBooking.this, CreatePassCodeActivity.class));
+                            } else {
+                                PasscodeDialog passcodeDialog = new PasscodeDialog(PaymentActivityBooking.this, PaymentActivityBooking.this, "");
+                                passcodeDialog.show();
+                            }
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),"Wallet Limit Is Exceeded",true);
+                        }
+                    }else {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),"Wallet Balance Is Low",true);
                     }
                 }else {
 
@@ -250,15 +322,59 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
                         if (walletLimitResponse.isStatus()) {
                             WalletResponse = walletLimitResponse;
 
+                            try {
+                                walletBal= Double.parseDouble(WalletResponse.getData().getWallet_balance());
+                                amount=Double.parseDouble(Amount);
+                                walletLimit= WalletResponse.getData().getLimit();
+
+                                tvTotalBalanceWallet.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format((int) Double.parseDouble(walletLimitResponse.getData().getWallet_balance())));
+                                tvWalletlimit.setText("* Today's Wallet Limit - Rs. " + new DecimalFormat("##.##").format(walletLimitResponse.getData().getLimit()));
+
+                                if (amount>walletBal){
+                                    checkWalletBal=false;
+                                    checkBoxWallet.setChecked(false);
+                                    checkBoxGatewayPayment.setChecked(true);
+
+                                    tvWalletDeductAmount.setVisibility(View.GONE);
+                                    tvGatewayDeductAmount.setVisibility(View.VISIBLE);
+                                    tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                                    btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                                }else {
+                                    if (amount>walletLimit){
+                                        checkWalletLimit=false;
+                                        checkBoxWallet.setChecked(false);
+                                        checkBoxGatewayPayment.setChecked(true);
+
+                                        tvWalletDeductAmount.setVisibility(View.GONE);
+                                        tvGatewayDeductAmount.setVisibility(View.VISIBLE);
+                                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                                        btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                                    }else {
+                                        checkWalletBal=true;
+                                        checkWalletLimit=true;
+                                        checkBoxWallet.setChecked(true);
+                                        checkBoxGatewayPayment.setChecked(false);
+
+                                        tvGatewayDeductAmount.setVisibility(View.GONE);
+                                        tvWalletDeductAmount.setVisibility(View.VISIBLE);
+                                        tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                                        btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                                    }
+                                }
+                            }catch (Exception e){
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),e.getMessage(),true);
+                                e.printStackTrace();
+                            }
+
+                            /*
                             if (String.valueOf(walletLimitResponse.getData().getLimit()).equals("0")){
                                 tvWalletDeductAmount.setVisibility(View.GONE);
                                 checkBoxWallet.setChecked(false);
                             }
 
-                            tvTotalBalanceWallet.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format((int) Double.parseDouble(walletLimitResponse.getData().getWallet_balance())));
                             tFare = Integer.parseInt(Amount);
 
-                       //     walletDeduct =WalletResponse.getData().getLimit();
+                            walletDeduct =(int)WalletResponse.getData().getLimit();
 
                             if (tFare>walletDeduct){
                                 int subAmount = tFare-walletDeduct;
@@ -277,8 +393,7 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
                                 btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(tFare));
 
 
-                            }
-                            tvWalletlimit.setText("* Today's Wallet Limit - Rs. " + new DecimalFormat("##.##").format(walletLimitResponse.getData().getLimit()));
+                            } */
 
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),walletLimitResponse.getMessage(),false);
@@ -368,6 +483,7 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
                         if (response.isStatus()) {
 
                             try {
+                                BookingReferenceNo=response.getData().getReferenceNo();
                                 showDialogBook(response.getData().getMessage()+" \nReference No - "+response.getData().getReferenceNo());
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment), response.getData().getMessage()+" \nReference No - "+response.getData().getReferenceNo(), false);
                             } catch (Exception e) {
@@ -609,8 +725,228 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
                 })
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
-                //.setNegativeButton(android.R.string.no, null)
+                .setNegativeButton("Download Ticket", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                        if (PaymentFor.equalsIgnoreCase("Hotel Booking")){
+                            Toast.makeText(PaymentActivityBooking.this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+                        }else {
+                            getPdf(BookingReferenceNo);
+                        }
+                        dialog.dismiss();
+                    }
+                })
                 .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
                 .show();
     }
+
+    //**********************************for pdf download************************
+    private void getPdf(String REFno) {
+
+        FlightBookingDetailRequest flightBookingDetailRequest = new FlightBookingDetailRequest();
+        //  flightBookingDetailRequest.setReferenceNo("300905016582");
+        // flightBookingDetailRequest.setReferenceNo("300270016738");
+        flightBookingDetailRequest.setReferenceNo(REFno);
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(PaymentActivityBooking.this).create(ApiService.class);
+        BaseApp.getInstance().getDisposable().add(apiService.getBusPdf(flightBookingDetailRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<FlighPdfResponse>(){
+                    @Override
+                    public void onSuccess(FlighPdfResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+
+                            //new DownloadTask(PaymentActivityBooking.this, response.getData());
+
+                            new DownloadingTask(response.getData()).execute();
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),response.getMessage(),true);
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), false, e.getCause());
+                    }
+                }));
+
+    }
+
+    private class DownloadingTask extends AsyncTask<Void, Void, Void> {
+
+        File apkStorage = null;
+        File outputFile = null;
+        ProgressDialog progressDialog;
+        private String downloadUrl, downloadFileName = "";
+
+        public DownloadingTask(String Url) {
+            this.downloadUrl=Url;
+            downloadFileName = downloadUrl.substring(downloadUrl.lastIndexOf('/'));
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(PaymentActivityBooking.this);
+            progressDialog.setMessage("Downloading...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            try {
+                progressDialog.dismiss();
+                if (outputFile != null) {
+
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            //TODO your background code
+                            File pdfFile = new File(Environment.getExternalStorageDirectory() + "/SafePe/" + downloadFileName);  // -> filename = maven.pdf
+                            Uri path = FileProvider.getUriForFile(PaymentActivityBooking.this,PaymentActivityBooking.this.getApplicationContext().getPackageName() + ".provider",pdfFile);
+                            Intent intent= new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(path, "application/pdf");
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            PendingIntent resultIntent = PendingIntent.getActivity( PaymentActivityBooking.this , 0, intent,
+                                    PendingIntent.FLAG_ONE_SHOT);
+
+                            Uri notificationSoundURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                            NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder( PaymentActivityBooking.this)
+                                    .setSmallIcon(R.drawable.safepe1)
+                                    .setContentTitle("Ticket Downloaded")
+                                    .setContentText(BookingReferenceNo)
+                                    .setStyle( new NotificationCompat.BigTextStyle().bigText("SafePe"))
+
+                                    .setAutoCancel( true )
+                                    .setSound(notificationSoundURI)
+                                    .setContentIntent(resultIntent);
+
+                            NotificationManager notificationManager =
+                                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                            notificationManager.notify(0, mNotificationBuilder.build());
+                        }
+                    });
+
+                    ContextThemeWrapper ctw = new ContextThemeWrapper( PaymentActivityBooking.this, R.style.AppTheme);
+                    final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctw);
+                    alertDialogBuilder.setTitle("Document  ");
+                    alertDialogBuilder.setMessage("Document Downloaded Successfully ");
+                    alertDialogBuilder.setCancelable(false);
+                    alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            startActivity(new Intent(PaymentActivityBooking.this, Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            finish();
+                        }
+                    });
+
+//                    alertDialogBuilder.setNegativeButton("Open Ti",new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            File pdfFile = new File(Environment.getExternalStorageDirectory() + "/SafePe/" + downloadFileName);  // -> filename = maven.pdf
+//                            Uri path = FileProvider.getUriForFile(PaymentActivityBooking.this,PaymentActivityBooking.this.getApplicationContext().getPackageName() + ".provider",pdfFile);
+//                            Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+//                            pdfIntent.setDataAndType(path, "application/pdf");
+//                            pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                            pdfIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                            try{
+//                                startActivity(pdfIntent);
+//                            }catch(ActivityNotFoundException e){
+//                                Toast.makeText(PaymentActivityBooking.this, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                        }
+//                    });
+                    alertDialogBuilder.show();
+
+                } else {
+
+                    Toast.makeText(PaymentActivityBooking.this, "Ticket Downloaded Failed", Toast.LENGTH_LONG).show();
+
+                    Log.e("Error - ", "Download Failed");
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                //Change button text if exception occurs
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                }, 3000);
+                Log.e("Error - ", "Download Failed with Exception - " + e.getLocalizedMessage());
+
+            }
+
+
+            super.onPostExecute(result);
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            try {
+                URL url = new URL(downloadUrl);//Create Download URl
+                HttpURLConnection c = (HttpURLConnection) url.openConnection();//Open Url Connection
+                c.setRequestMethod("GET");//Set Request Method to "GET" since we are grtting data
+                c.connect();//connect the URL Connection
+
+                //If Connection response is not OK then show Logs
+                if (c.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    Log.e("HttpURLConnection Error", "Server returned HTTP " + c.getResponseCode() + " " + c.getResponseMessage());
+                }
+
+
+                //Get File if SD card is present
+                if (new CheckForSDCard().isSDCardPresent()) {
+
+                    apkStorage = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "SafePe");
+                } else
+                    //Toast.makeText(PaymentActivityBooking.this, "Oops!! There is no SD Card.", Toast.LENGTH_SHORT).show();
+
+                //If File is not present create directory
+                if (!apkStorage.exists()) {
+                    apkStorage.mkdir();
+                }
+
+                outputFile = new File(apkStorage, downloadFileName);//Create Output file in Main File
+
+                //Create New File if not present
+                if (!outputFile.exists()) {
+                    outputFile.createNewFile();
+                }
+
+                FileOutputStream fos = new FileOutputStream(outputFile);//Get OutputStream for NewFile Location
+
+                InputStream is = c.getInputStream();//Get InputStream for connection
+
+                byte[] buffer = new byte[1024];//Set buffer type
+                int len1 = 0;//init length
+                while ((len1 = is.read(buffer)) != -1) {
+                    fos.write(buffer, 0, len1);//Write new file
+                }
+
+                //Close all connection after doing task
+                fos.close();
+                is.close();
+
+            } catch (Exception e) {
+
+                //Read exception if something went wrong
+                e.printStackTrace();
+                outputFile = null;
+            }
+
+            return null;
+        }
+    }
+
 }

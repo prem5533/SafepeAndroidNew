@@ -255,8 +255,6 @@ public interface ApiService {
     @POST("api/secure.safepe/api/verifyPasscode")
     Single<BaseResponse> getPasscodeVerify(@Field("passcode") String passcode);
 
-
-
     @FormUrlEncoded
     @POST("api/secure.safepe/api/getConvieneceFee")
     Single<ConvenienceFeeResponse> getConvieneceFee(@Field("type") String type );
@@ -309,6 +307,9 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/secure.safepe/api/postBusCancelTicket")
     Single<BusCancelResponse> getBusCancel(@Field("referenceNo") String referenceNo, @Field("seatNos") String seatNos);
+
+    @POST("api/secure.safepe/api/getBusPdf")
+    Single<FlighPdfResponse> getBusPdf(@Body FlightBookingDetailRequest flightBookingDetailRequest);
 
 
     //*************Hotel Booking *******************//

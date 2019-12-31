@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/newAccountLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="@color/white"
+            android:layout_marginTop="2dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_200"
+            android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <com.safepayu.wallet.custom_view.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="Register"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_bold"
+                    app:fontCustom="@string/Roboto" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_margin="20dp"
+                    app:cardCornerRadius="5dp"
+                    android:elevation="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:layout_margin="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/user"/>
+
+                            <EditText
+                                android:id="@+id/et.firstName"
+                                style="@style/defaultEditTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/first_name"
+                                android:inputType="textCapSentences"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/black"
+                                android:background="@null"
+                                android:paddingLeft="5dp"/>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginTop="2dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/user"/>
+
+                            <EditText
+                                android:id="@+id/et.lastName"
+                                style="@style/defaultEditTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/last_name"
+                                android:inputType="textCapSentences"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/black"
+                                android:background="@null"
+                                android:paddingLeft="5dp"/>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginTop="2dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_email_new"/>
+
+                            <EditText
+                                android:id="@+id/et.email"
+                                style="@style/defaultEditTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/email"
+                                android:inputType="textEmailAddress"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/black"
+                                android:background="@null"
+                                android:paddingLeft="5dp"/>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginTop="2dp"/>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_mobile_new"
+                                android:layout_marginTop="8dp"/>
+
+                            <EditText
+                                android:id="@+id/et.mobileNo"
+                                style="@style/defaultEditTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/enter_mobile"
+                                android:inputType="number"
+                                android:textSize="16sp"
+                                android:maxLength="14"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/black"
+                                android:background="@null"
+                                android:paddingLeft="5dp"/>
+                        </LinearLayout>
+
+                        <com.safepayu.wallet.custom_view.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Headline"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="-5dp"
+                            android:gravity="left"
+                            android:text="W’ll send you a One Time Password"
+                            android:textSize="12sp"
+                            android:textColor="@color/grey_600"
+                            android:fontFamily="@font/roboto_regular"
+                            app:fontCustom="@string/Roboto" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginTop="2dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_dob_new"/>
+
+                            <EditText
+                                android:id="@+id/et.dob"
+                                style="@style/defaultEditTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/dob_hint"
+                                android:inputType="text"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/black"
+                                android:singleLine="true"
+                                android:imeOptions="actionNext"
+                                android:clickable="true"
+                                android:focusable="false"
+                                android:background="@null"
+                                android:paddingLeft="5dp"/>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginTop="2dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_password_new"/>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <EditText
+                                    android:id="@+id/et_password_password"
+                                    style="@style/defaultEditTextStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/enter_password"
+                                    android:inputType="textPassword"
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:textColor="@color/black"
+                                    android:background="@null"
+                                    android:paddingLeft="5dp"/>
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/show_password48"
+                                    android:id="@+id/show_hide_password_newAccount"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginTop="10dp"/>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginTop="2dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_referral_new"/>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp">
+                                <EditText
+                                    android:id="@+id/et.referralCode"
+                                    style="@style/defaultEditTextStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Sponsor ID*"
+                                    android:inputType="text"
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:textColor="@color/black"
+                                    android:background="@null"
+                                    android:paddingLeft="5dp"/>
+
+                                <FrameLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true">
+                                    <Button
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/verify_already"
+                                        android:layout_alignParentRight="true"
+                                        android:background="@null"
+                                        android:text="Verified"
+                                        android:textSize="12sp"
+                                        android:textColor="#00C853"
+                                        android:textAllCaps="false"
+                                        android:visibility="gone"
+                                        android:fontFamily="@font/roboto_regular" />
+
+
+                                    <Button
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/verify_referral"
+                                        android:background="@null"
+                                        android:text="Verify Referral"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/bue_A800"
+                                        android:textAllCaps="false"
+                                        android:fontFamily="@font/roboto_regular" />
+                                </FrameLayout>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginTop="2dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:text="Referral Name - "
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/black"/>
+
+                            <TextView
+                                android:id="@+id/refer_user_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:text=""
+                                android:fontFamily="@font/roboto_bold"
+                                android:textColor="@color/bue_A700"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:text="If You Dont't Have Any Referral Code - "
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/grey_800"/>
+
+                            <TextView
+                                android:id="@+id/forRefer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="13sp"
+                                android:text="Click Here"
+                                android:fontFamily="@font/roboto_bold"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+
+                        <CheckBox
+                            android:id="@+id/ch_term_cond"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="11sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:buttonTint="@color/red_theme"
+                            android:text="Terms &amp; Conditions"
+                            android:textColor="@color/black"
+                            android:checked="true"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:background="@color/white"
+                            android:layout_marginTop="2dp"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btn.process"
+                    style="@style/buttonDefault"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:background="@drawable/blue_green_round_btn"
+                    android:layout_marginTop="-50dp"
+                    android:text="Register"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="Already have an account?"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/grey_800"/>
+
+                    <TextView
+                        android:id="@+id/backToLoginBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="Login"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textColor="@color/yellow_theme"
+                        android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+</RelativeLayout>

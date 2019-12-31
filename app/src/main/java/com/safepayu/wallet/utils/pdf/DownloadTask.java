@@ -61,8 +61,9 @@ public class DownloadTask {
         @Override
         protected void onPostExecute(Void result) {
             try {
+                progressDialog.dismiss();
                 if (outputFile != null) {
-                    progressDialog.dismiss();
+
                     ContextThemeWrapper ctw = new ContextThemeWrapper( context, R.style.AppTheme);
                     final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ctw);
                     alertDialogBuilder.setTitle("Document  ");
