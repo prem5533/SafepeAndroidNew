@@ -331,7 +331,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="1dp"
-                    android:visibility="gone">
+                  >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -368,12 +368,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
                             android:background="@color/divider"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recycle_bank_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:padding="10dp">
+                            android:padding="10dp"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -386,6 +392,7 @@
                                     android:layout_height="wrap_content">
 
                                     <TextView
+                                        android:id="@+id/tv_account_name"
                                         android:layout_width="140dp"
                                         android:layout_height="wrap_content"
                                         android:text="Account Name"
@@ -394,6 +401,7 @@
                                         android:fontFamily="@font/roboto_regular"/>
 
                                     <TextView
+                                        android:id="@+id/tv_technj"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Hixson Technologies"
@@ -482,7 +490,8 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="@color/divider"/>
+                            android:background="@color/divider"
+                            android:visibility="gone"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -490,7 +499,7 @@
                             android:layout_marginTop="10dp"
                             android:orientation="horizontal"
                             android:padding="10dp"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -603,7 +612,8 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
-                            android:background="@color/divider"/>
+                            android:background="@color/divider"
+                            android:visibility="gone"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -615,6 +625,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="horizontal"
+                                android:visibility="gone"
                              >
 
                             <TextView
@@ -638,7 +649,8 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/upi" />
+                                android:src="@drawable/upi"
+                                android:visibility="gone"/>
 
                         </LinearLayout>
                     </LinearLayout>

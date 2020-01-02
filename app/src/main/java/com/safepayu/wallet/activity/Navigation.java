@@ -195,8 +195,10 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     }
 
     @Override
-    protected int getLayoutResourceId() {
+    protected int getLayoutResourceId()
+    {
         return R.layout.navigation;
+      //  return R.layout.navigation_new;
     }
 
     private void setupNavigation() {
@@ -452,9 +454,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             @Override
             public void onClick(View v) {
 
-               startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
+              // startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
              //  startActivity(new Intent(Navigation.this, FlightBookDetailActivity.class));
-             //  startActivity(new Intent(Navigation.this, otpActivityDEMO.class));
+               startActivity(new Intent(Navigation.this, OtpVerification.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
             }

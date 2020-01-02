@@ -151,4 +151,5 @@
 
     <color name="background">#e7ebf5</color>
     <color name="tab_bg">#f5f7fc</color>
+    <color name="blue_new">#196cfe</color>
 </resources>

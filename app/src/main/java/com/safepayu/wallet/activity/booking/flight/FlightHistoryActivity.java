@@ -111,7 +111,8 @@ public class FlightHistoryActivity extends AppCompatActivity implements FlightHi
                         FHistoryResponse = flightHistoryResponse;
                         if (flightHistoryResponse.isStatus()){
 
-                            loadingDialog.hideDialog(); flightOrderHistoryList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                            loadingDialog.hideDialog();
+                            flightOrderHistoryList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
                             flightHistroyAdapter = new FlightHistroyAdapter(getApplicationContext(),flightHistoryResponse.getData(),FlightHistoryActivity.this);
                             flightOrderHistoryList.setAdapter(flightHistroyAdapter);
                         }

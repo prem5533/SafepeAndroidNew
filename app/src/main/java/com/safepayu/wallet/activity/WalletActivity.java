@@ -91,7 +91,9 @@ public class WalletActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.activity_wallet;
+
+      //  return R.layout.activity_wallet;
+        return R.layout.activity_wallet_demo;
     }
 
     @Override

@@ -9,7 +9,9 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -34,28 +36,43 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class OtpVerification extends BaseActivity implements View.OnClickListener {
+public class OtpVerification extends BaseActivity implements View.OnClickListener, TextWatcher {
     private TextView otpReadRemainingTime, mobileNo;
     private LinearLayout resendAgainLayout;
     private EditText otp;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private LoadingDialog loadingDialog;
     ApiService apiService;
+    EditText et1 ,et2,et3,et4,et5,et6;
+    String Otp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, true);
 
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+       /* mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
-        });
+        });*/
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
         otp = findViewById(R.id.et_otp);
         mobileNo = findViewById(R.id.tv_mobileNo1);
+        et1 = findViewById(R.id.et1);
+        et2 = findViewById(R.id.et2);
+        et3 = findViewById(R.id.et3);
+        et4 = findViewById(R.id.et4);
+        et5 = findViewById(R.id.et5);
+        et6 = findViewById(R.id.et6);
+
+        et1.addTextChangedListener(this);
+        et2.addTextChangedListener(this);
+        et3.addTextChangedListener(this);
+        et4.addTextChangedListener(this);
+        et5.addTextChangedListener(this);
+        et6.addTextChangedListener(this);
 
         otpReadRemainingTime = findViewById(R.id.tv_otpReadRemainingTime);
         resendAgainLayout = findViewById(R.id.layout_resendAgainLayout);
@@ -94,7 +111,8 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
 
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.activity_otp_verification;
+       // return R.layout.activity_otp_verification;
+        return R.layout.otp_demo;
     }
 
     @Override
@@ -113,7 +131,10 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                 if (TextUtils.isEmpty(otp.getText().toString().trim())){
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.otpLayout),"Please Enter OTP",false);
                 }else {
-                    verifyOtp(otp.getText().toString().trim());
+                    Otp = (et1.getText().toString().trim()+(et2.getText().toString().trim()+et3.getText().toString().trim()+et4.getText().toString().trim()+
+                            et5.getText().toString().trim()+(et6.getText().toString().trim())));
+
+                    verifyOtp(Otp);
                 }
                 break;
             case R.id.btn_resendOtp:
@@ -231,5 +252,47 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.otpLayout), true, e);
                     }
                 }));
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        String text = s.toString();
+        if(text.length()==1){
+            if (et1.length()==1){
+                et2.requestFocus();
+            }
+            if(et2.length()==1){
+                et3.requestFocus(); }
+
+            if(et3.length()==1){
+                et4.requestFocus(); }
+
+            if(et4.length()==1){
+                et5.requestFocus(); }
+
+            if(et5.length()==1){
+                et6.requestFocus(); } }
+
+        else if (text.length()==0){
+            if(et6.length()==0){
+                et5.requestFocus(); }
+            if(et5.length()==0){
+                et4.requestFocus(); }
+            if(et4.length()==0){
+                et3.requestFocus(); }
+            if(et3.length()==0){
+                et2.requestFocus(); }
+            if(et2.length()==0){
+                et1.requestFocus(); } }
     }
 }

@@ -64,6 +64,7 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
     @Override
     public WalletHistoryAdapter.PackagesListingViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewtype) {
         return new WalletHistoryAdapter.PackagesListingViewHolder(inflater.inflate(R.layout.wallet_history_adapter, viewGroup, false));
+       // return new WalletHistoryAdapter.PackagesListingViewHolder(inflater.inflate(R.layout.wallethistory_adapter_demo, viewGroup, false));
     }
 
     @Override
@@ -105,18 +106,18 @@ public class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHistoryAdap
             String status="failed";
             try{
                 if (mItem.get(position).getStatus()==1){
-                    status="success";
+                    status="Success";
                     imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_success));
                 }else if (mItem.get(position).getStatus()==2){
                     imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_pending));
-                    status="pending";
+                    status="Pending";
                 }else {
                     imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_fail));
-                    status="failed";
+                    status="Failed";
                 }
             }catch (Exception e){
                 imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_fail));
-                status="failed";
+                status="Failed";
                 e.printStackTrace();
             }
 
