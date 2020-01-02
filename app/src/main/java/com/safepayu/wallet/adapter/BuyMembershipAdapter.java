@@ -95,6 +95,9 @@ public class BuyMembershipAdapter extends RecyclerView.Adapter<BuyMembershipAdap
             if (position==row_index){
                 liBank.setVisibility(View.VISIBLE);
             }
+            else {
+                liBank.setVisibility(View.GONE);
+            }
 
 
             checkBox.setOnClickListener(new View.OnClickListener() {
