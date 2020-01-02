@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f7f8f8"
+    android:background="#f4f5ff"
     android:orientation="vertical"
     android:id="@+id/postpaidBillLayout">
 
@@ -16,12 +16,11 @@
 
         <Button
             android:id="@+id/postpaid_back_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
+            android:background="@drawable/ic_next_new" />
 
         <TextView
             android:layout_width="match_parent"
@@ -35,14 +34,13 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_below="@id/l1_send"
         android:layout_height="match_parent"
         tools:context="com.xwallet.wallet.Fragments.PostpaidRechrge">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -76,7 +74,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/ic_smartphone" />
+                android:src="@drawable/ic_mobile_new" />
             <EditText
                 android:id="@+id/mobilePostpaid"
                 android:layout_width="match_parent"
@@ -129,11 +127,12 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_height="18dp"
                         android:layout_marginLeft="5dp"
-                        android:src="@drawable/ic_receipt" />
+                        android:src="@drawable/ic_list_new" />
                     <TextView
                         android:id="@+id/tv_select_mobile_operator"
                         android:layout_width="match_parent"
@@ -225,7 +224,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/ic_rupee_indian" />
+                android:src="@drawable/ic_new_rupee" />
             <EditText
                 android:id="@+id/amountPostpaid"
                 android:layout_width="match_parent"
@@ -390,14 +389,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/amount"
                 android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/rounded_buttons"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/blue_green_round_btn"
                 android:padding="10dp"
                 android:text="Pay Bill"
                 android:textColor="#fff"
-                android:layout_marginBottom="30dp"
                 android:textSize="15sp"
                 android:fontFamily="@font/roboto_regular" />
             <Button
@@ -406,15 +405,15 @@
                 android:layout_height="40dp"
                 android:layout_below="@+id/amount"
                 android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/rounded_buttons"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/blue_green_round_btn"
                 android:padding="10dp"
                 android:text="Check Bill"
                 android:textColor="#fff"
                 android:visibility="gone"
-                android:layout_marginBottom="30dp"
                 android:textSize="15sp"
                 android:fontFamily="@font/roboto_regular" />
         </LinearLayout>

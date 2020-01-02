@@ -164,7 +164,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:padding="5dp"
-            android:src="@drawable/ic_rupee_new" />
+            android:src="@drawable/ic_grouprs" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

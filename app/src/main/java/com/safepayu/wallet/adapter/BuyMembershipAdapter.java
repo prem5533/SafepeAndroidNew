@@ -63,7 +63,7 @@ public class BuyMembershipAdapter extends RecyclerView.Adapter<BuyMembershipAdap
     public class BankViewHolder   extends RecyclerView.ViewHolder implements View.OnClickListener {
        private TextView  tvAccountName,tvBankName,tvAccountNum,tvIfsccode;
        private ImageView imageView;
-       private LinearLayout liBank,li_Bank;
+       private LinearLayout liBank,li_Bank,li;
        private CheckBox checkBox;
 
         public BankViewHolder(@NonNull View itemView) {
@@ -77,11 +77,17 @@ public class BuyMembershipAdapter extends RecyclerView.Adapter<BuyMembershipAdap
             tvAccountNum = itemView.findViewById(R.id.tv_account_num);
             tvIfsccode = itemView.findViewById(R.id.tv_ifsccode);
             checkBox = itemView.findViewById(R.id.check_box);
+            li = itemView.findViewById(R.id.li);
 
             itemView.setOnClickListener(this);
         }
 
         public void bindData(final int position) {
+
+            String AcountNumber = mItem.get(position).getBankName();
+            if (AcountNumber.equals("UPI")){
+                li.setVisibility(View.GONE); }
+            else { li.setVisibility(View.VISIBLE); }
 
             tvAccountName.setText(mItem.get(position).getAccountHolderName());
             tvBankName.setText(mItem.get(position).getBankName());

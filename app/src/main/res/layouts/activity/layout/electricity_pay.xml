@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/electricityBillLayout"
-   android:background="#f7f8f8">
+    android:background="#f4f5ff">
 
     <RelativeLayout
         android:id="@+id/headerbar"
@@ -16,11 +16,11 @@
 
         <Button
             android:id="@+id/electricty_back_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
+            android:background="@drawable/ic_next_new" />
 
         <TextView
             android:layout_width="match_parent"
@@ -427,14 +427,13 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/rounded_buttons"
-                android:textAllCaps="false"
-                android:text="Pay Bill"
-                android:textColor="#fff"
-                android:textSize="15sp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/blue_green_round_btn"
                 android:fontFamily="@font/roboto_regular"
-                />
+                android:text="Pay Bill"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="15sp" />
 
 
         </LinearLayout>

@@ -173,11 +173,12 @@
                                         android:layout_marginRight="20dp"
                                         android:layout_weight="1"
                                         android:background="@null"
-                                        android:fontFamily="@font/roboto_regular"
                                         android:hint="******"
                                         android:inputType="textPassword"
                                         android:padding="10dp"
-                                        android:textSize="14sp" />
+                                        android:textSize="14sp"
+                                        style="@style/defaultEditTextStyle"
+                                        android:fontFamily="@font/roboto_regular"/>
 
                                     <ImageView
                                         android:id="@+id/show_hide_password"

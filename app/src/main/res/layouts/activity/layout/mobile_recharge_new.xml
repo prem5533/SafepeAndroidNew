@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#f4f5ff"
+    android:id="@+id/mobileRechargeLayout"
+  >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_height="120dp"
+        android:layout_width="match_parent"
+        android:background="#196cfe"
+        android:orientation="vertical"
+        android:paddingTop="8dp">
+
+
+        <LinearLayout
+            android:layout_height="?actionBarSize"
+            android:layout_width="match_parent"
+            android:id="@+id/head"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/headerbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/red_theme"
+                android:paddingBottom="5dp">
+
+                <Button
+                    android:id="@+id/recharge_back_btn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/ic_next_new" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="Mobile Recharge"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:cardCornerRadius="5dp"
+        android:elevation="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="-40dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:gravity="center">
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="0dp"
+                            android:src="@drawable/ic_mobile_new" />
+                        <EditText
+                            android:id="@+id/mobile_recharge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textView2"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:fontFamily="@font/roboto_medium"
+                            android:hint="Enter Mobile"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:nextFocusForward="@+id/amount"
+                            android:textColor="@color/textcolor"
+                            android:textSize="15sp"
+                            android:padding="10dp" /></LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/graynew"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:padding="10dp">
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp">
+                            <LinearLayout
+                                android:id="@+id/layout_select_mobile_operator"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:src="@drawable/ic_list_new" />
+                                <TextView
+                                    android:id="@+id/tv_select_mobile_operator"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:text="Select Operator"
+                                    android:padding="10dp"
+                                    android:textColor="#373836"
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:padding="10dp"
+                                    android:src="@drawable/ic_down_security"
+                                    android:layout_marginRight="10dp"/>
+                            </LinearLayout>
+                            <Spinner
+                                android:id="@+id/operator"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_below="@+id/textView5"
+                                android:backgroundTint="@color/red_theme"
+                                android:nextFocusForward="@+id/username"
+                                android:visibility="visible"/>
+                        </FrameLayout>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/graynew"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="5dp">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:layout_weight="1"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/ic_new_rupee" />
+                        <EditText
+                            android:id="@+id/amountRecharge"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textView"
+                            android:layout_weight="1"
+                            android:imeOptions="actionDone"
+                            android:hint="Amount"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:nextFocusForward="@+id/amount"
+                            android:textColor="#373836"
+                            android:textSize="15sp"
+                            android:padding="10dp"
+                            android:fontFamily="@font/roboto_regular"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/Offersbtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/yellow_theme"
+                        android:gravity="center"
+                        android:onClick="OffersClick"
+                        android:padding="7dp"
+                        android:text="Browse Plan"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"/>
+                </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/graynew"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="start|center"
+                        android:background="@color/white"
+                        >
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_done"
+                            android:padding="10dp"
+                            android:layout_marginLeft="5dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:text="@string/mobile_payment_time"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="12sp"
+                            android:layout_marginRight="5dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</RelativeLayout>

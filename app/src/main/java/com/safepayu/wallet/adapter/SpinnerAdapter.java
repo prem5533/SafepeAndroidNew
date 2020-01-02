@@ -60,10 +60,10 @@ public class SpinnerAdapter extends BaseAdapter {
             if (!TextUtils.isEmpty(mOperList.get(position).getImage())){
                 Picasso.get().load(ApiClient.ImagePath+mOperList.get(position).getImage()).into(icon);
             }else {
-                icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_wifi));
+                icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_list_new));
             }
         }catch (Exception e){
-            icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_wifi));
+            icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_list_new));
             e.printStackTrace();
         }
 
