@@ -158,8 +158,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:visibility="gone"
-    >
+      >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -168,14 +167,17 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
 
                 <TextView
+                    android:id="@+id/tv_an"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:text="Account Number"
                     android:textSize="14sp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/black"/>
 
@@ -184,22 +186,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="918020100795727"
-                    android:textColor="@color/colorSecondaryDark"
+                    android:textColor="#5e6067"
                     android:textSize="14sp"
-                    android:gravity="right"
                     android:fontFamily="@font/roboto_regular"
                     android:textIsSelectable="true" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/li"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/dottedline"
+                android:layout_margin="2dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp">
 
                 <TextView
+                    android:id="@+id/tv_ifsc"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:text="IFS Code "
+                    android:text=""
                     android:textSize="14sp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/black"/>
 
@@ -207,24 +225,33 @@
                     android:id="@+id/tv_ifsccode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="UTIB0000062 "
+                    android:text="UTIB0000062"
+                    android:textColor="#5e6067"
+                    android:textSize="14sp"
                     android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/colorSecondaryDark"
-
                     android:textIsSelectable="true" />
-            </LinearLayout>
 
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/dottedline"
+                android:layout_margin="2dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
+
 
                 <TextView
+                    android:id="@+id/tv_aname"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:text="Account Name"
+                    android:text=""
                     android:textSize="14sp"
                     android:layout_weight="1"
                     android:textColor="@color/black"
+                    android:visibility="gone"
                     android:fontFamily="@font/roboto_regular"/>
 
                 <TextView
@@ -232,11 +259,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Account Name"
-                    android:textSize="15sp"
-                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="#5e6067"
                     />
-
-
+            </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

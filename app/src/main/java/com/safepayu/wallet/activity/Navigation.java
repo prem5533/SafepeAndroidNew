@@ -107,7 +107,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     ImageView ImageViewNotiDialog, imageDownSecurity, imageUpSecurity,imageDownLogout, imageUpLogout,headerLogo,navLogo;
     private RelativeLayout searchLayout_nav;
     public static String TitleNotiDialogText = "", ContentNotiDialogText = "", tollNumber = "";
-    private ViewPager viewpager;
+    private ViewPager viewpager,viewpagerBooking;
     private String url;
 
     //for nav
@@ -116,11 +116,12 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     private TextView tv_home, tvProfile, tvPackageDetails, tvBuyPackage, tvBusinessWallet, tvMyWallet, tvShopping, tvChangePassword, tvMyOrders, tvHistory, tvGenelogy,
             tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security,tvChangePasswordChild;
     public static Bitmap qrCodeImage;
-    int NUM_PAGES,currentPage = 0;
+    int NUM_PAGES,NumPage,currentPage = 0,CurrentP=0;
     Timer timer;
     private OfferPagerAdapter adapter;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
+    PromotionResponse promotionResponseType3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,8 +198,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     @Override
     protected int getLayoutResourceId()
     {
-        return R.layout.navigation;
-      //  return R.layout.navigation_new;
+       // return R.layout.navigation;
+        return R.layout.navigation_new;
     }
 
     private void setupNavigation() {
@@ -216,6 +217,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        getPrmotionalOffer2();
 
         alertNetwork = new AlertDialog.Builder(Navigation.this);
 
@@ -288,6 +290,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         tvWalletHistory = findViewById(R.id.tv_historyWallet);
         tv_security = findViewById(R.id.tv_security);
         viewpager = findViewById(R.id.viewpager);
+        viewpagerBooking = findViewById(R.id.viewpager_booking);
 
 
         //**********booking & offers ******
@@ -486,6 +489,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             }
         });
 
+
         try {
             PromotionResponse.DataBean dataBean=new PromotionResponse.DataBean();
             List<PromotionResponse.DataBean> data=new ArrayList<>();
@@ -509,9 +513,11 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 loadingDialog.hideDialog();
                 adapter = new OfferPagerAdapter(Navigation.this,promotionResponse1.getData());
                 viewpager.setAdapter(adapter);
+              //  viewpagerBooking.setAdapter(adapter);
                 TabLayout tabLayout = findViewById(R.id.tab_layout);
                 if (promotionResponse1.getData().size()>1){
                     tabLayout.setupWithViewPager(viewpager, true);
+                    //tabLayout.setupWithViewPager(viewpager, true);
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -537,6 +543,10 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             e.printStackTrace();
         }
 
+
+
+
+
         createNotificationChannel();
         getFirebaseToken(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
 
@@ -556,6 +566,25 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             @Override
             public void run() {
                 handler.post(Update);
+            }
+        }, DELAY_MS, PERIOD_MS);
+
+        /*After setting the adapter use the timer type 3 */
+        final Handler hand = new Handler();
+        final Runnable Updt = new Runnable() {
+            public void run() {
+                if (CurrentP == NumPage) {
+                    CurrentP = 0;
+                }
+                viewpagerBooking.setCurrentItem(CurrentP++, true);
+            }
+        };
+
+        timer = new Timer(); // This will create a new Thread
+        timer.schedule(new TimerTask() { // task to be scheduled
+            @Override
+            public void run() {
+                hand.post(Updt);
             }
         }, DELAY_MS, PERIOD_MS);
 
@@ -1848,7 +1877,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
 
 
-    private void getPrmotionalOffer() {
+    private void getPrmotionalOffer2() {
 
         // loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
@@ -1863,12 +1892,18 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     @Override
                     public void onSuccess(PromotionResponse promotionResponse) {
 
-                        NUM_PAGES= promotionResponse.getData().size();
+
                         loadingDialog.hideDialog();
                         if (promotionResponse.isStatus()) {
-
+                            promotionResponseType3 = promotionResponse;
                             adapter = new OfferPagerAdapter(Navigation.this,promotionResponse.getData());
-                            viewpager.setAdapter(adapter);
+                            viewpagerBooking.setAdapter(adapter);
+                            NumPage= promotionResponseType3.getData().size();
+                            TabLayout tabLayoutt = findViewById(R.id.tab_layout_booking);
+                            if (promotionResponseType3.getData().size()>1){
+                                tabLayoutt.setupWithViewPager(viewpagerBooking, true);
+
+                            }
                         }
                     }
 

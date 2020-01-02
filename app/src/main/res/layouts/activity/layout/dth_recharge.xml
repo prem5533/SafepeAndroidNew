@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f7f8f8"
+    android:background="#f4f5ff"
     android:id="@+id/dthRechargeLayout"
     android:orientation="vertical">
 
@@ -15,11 +15,11 @@
 
         <Button
             android:id="@+id/dth_back_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
+            android:background="@drawable/ic_next_new" />
 
         <TextView
             android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginLeft="5dp"
-                    android:src="@drawable/ic_user"/>
+                    android:src="@drawable/ic_user_new"/>
 
                 <EditText
                     android:id="@+id/customerid"
@@ -343,10 +343,11 @@
                 android:layout_height="40dp"
                 android:layout_below="@+id/amount"
                 android:layout_gravity="center"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="40dp"
-                android:background="@drawable/rounded_buttons"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/blue_green_round_btn"
                 android:padding="10dp"
                 android:text="Pay Now"
                 android:textColor="#fff"

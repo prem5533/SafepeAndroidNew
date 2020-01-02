@@ -141,12 +141,13 @@
     <color name="blue_grey_800">#37474F</color>
     <color name="blue_grey_900">#263238</color>
 
-    <color name="red_theme">#6f3358</color>
-    <color name="yellow_theme">#b74368</color>
+    <color name="red_theme">#196cfe</color>
+    <color name="yellow_theme">#46c58e</color>
     <color name="yellow">#fdb632</color>
 
 
     <color name="graynew">#6a6a6c</color>
+    <color name="textcolor">#5e6067</color>
 
 
     <color name="background">#e7ebf5</color>
