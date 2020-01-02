@@ -14,7 +14,7 @@
         android:paddingBottom="5dp">
 
         <Button
-            android:id="@+id/recharge_back_btn"
+            android:id="@+id/bus_seat_back_btn"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
@@ -56,7 +56,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-
             android:layout_below="@id/headerbar">
 
             <com.google.android.material.tabs.TabLayout

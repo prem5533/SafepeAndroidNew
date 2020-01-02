@@ -2,11 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/busSingleItem">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_margin="2dp"
+        app:contentPadding="5dp"
+        android:elevation="5dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,16 +23,16 @@
                     android:id="@+id/travelName_buslist_adapter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="InterCity SmartBus-RailYatri"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/roboto_regular"
+                    android:text="Traveller Name"
+                    android:textColor="@color/yellow_theme"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/roboto_bold"
                     android:layout_weight="1"/>
                 <TextView
                     android:id="@+id/price_buslist_adapter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="800"
+                    android:text="00"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:fontFamily="@font/roboto_bold"/>
@@ -52,21 +55,24 @@
                 android:layout_marginTop="5dp">
                 <TextView
                     android:id="@+id/seats_buslist_adapter"
-                    android:layout_width="wrap_content"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:text="10 Seats"
-                    android:textColor="@color/darker_gray"
+                    android:text="0 Seats"
+                    android:textColor="@color/black"
                     android:textSize="12sp"
                     android:fontFamily="@font/roboto_regular"
-                    android:layout_weight="1"/>
+                    android:gravity="left"
+                    android:layout_gravity="left"/>
                 <TextView
                     android:id="@+id/departureTime_buslist_adapter"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="9:30 PM"
+                    android:text="00:00 PM"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:fontFamily="@font/roboto_regular"/>
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="right"
+                    android:layout_gravity="right"/>
             </LinearLayout>
 
             <LinearLayout
@@ -76,71 +82,83 @@
                 android:layout_marginTop="4dp">
                 <TextView
                     android:id="@+id/duration_buslist_adapter"
-                    android:layout_width="wrap_content"
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
-                    android:text="7h 20m"
+                    android:text="0h 0m"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     android:fontFamily="@font/roboto_regular"
-                    android:layout_weight="1"/>
+                    android:gravity="left"
+                    android:layout_gravity="left"/>
                 <TextView
                     android:id="@+id/arrival_buslist_adapter"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="5:35 AM"
+                    android:text="00:00 AM"
                     android:textColor="@color/black"
                     android:textSize="12sp"
-                    android:fontFamily="@font/roboto_regular"/>
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="right"
+                    android:layout_gravity="right"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="start|center"
-                android:layout_marginTop="5dp">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/green_round_bg"
-                    android:gravity="center"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="4.1"
-                        android:padding="5dp"
-                        android:textSize="10sp"
-                        android:textColor="@color/white"/>
-                </LinearLayout>
+                android:layout_marginTop="4dp"
+                android:visibility="gone">
                 <TextView
-                    android:layout_width="wrap_content"
+
+                    android:layout_width="160dp"
                     android:layout_height="wrap_content"
-                    android:text="17 Ratings"
-                    android:textColor="@color/red_theme"
-                    android:textSize="10sp"
+                    android:text="Bording &amp; Drop Point -"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
                     android:fontFamily="@font/roboto_regular"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
-                  />
+                    android:gravity="left"
+                    android:layout_gravity="left"/>
                 <TextView
                     android:id="@+id/boardingLocation_buslist_adapter"
-                    android:layout_width="wrap_content"
+                    android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:text="Bording &amp; Drop Point"
                     android:textColor="@color/red_theme"
                     android:textSize="10sp"
                     android:fontFamily="@font/roboto_regular"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="10dp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:visibility="gone">
+                <TextView
+
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cancellation Policy -"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="left"
+                    android:layout_gravity="left"/>
                 <TextView
                     android:id="@+id/cancellation_buslist_adapter"
-                    android:layout_width="wrap_content"
+                    android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:text="Cancellation Point"
                     android:textColor="@color/red_theme"
+                    android:layout_gravity="right"
                     android:textSize="10sp"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_weight="1"/>
-        </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

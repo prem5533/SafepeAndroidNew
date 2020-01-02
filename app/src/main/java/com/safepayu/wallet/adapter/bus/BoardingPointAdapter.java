@@ -68,7 +68,32 @@ public class BoardingPointAdapter extends RecyclerView.Adapter<BoardingPointAdap
 
         public void bindData(final int position) {
             tvPlace.setText(BoardingTimes.get(position).getLocation());
-            tvTime.setText(BoardingTimes.get(position).getTime());
+
+
+            try {
+                int bTime= Integer.parseInt(BoardingTimes.get(position).getTime().trim());
+                int divisor=bTime/60;
+                int remainder=bTime%60;
+                int journeyDayNo=divisor/24;
+                int hour=0,min=0;
+
+                if (divisor>23){
+                    hour=divisor%24;
+                }else {
+                    hour=divisor;
+                }
+                min=remainder;
+                if (String.valueOf(min).length()==1){
+                    tvTime.setText(hour+":"+min+"0");
+                }else {
+                    tvTime.setText(hour+":"+min);
+                }
+
+
+            }catch (Exception e){
+                tvTime.setText(BoardingTimes.get(position).getTime());
+                e.printStackTrace();
+            }
 
             try {
                 radioButton.setChecked(lastSelectedPosition == position);

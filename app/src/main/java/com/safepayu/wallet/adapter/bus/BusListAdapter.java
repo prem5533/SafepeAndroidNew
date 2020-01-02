@@ -43,10 +43,10 @@ public class BusListAdapter extends RecyclerView.Adapter<BusListAdapter.BusViewH
         holder.BusTypeTv.setText(dataBean.getAvailableTrips().get(position).getBusType());
         holder.DepartureTimeTV.setText(dataBean.getAvailableTrips().get(position).getDepartureTime());
         holder.ArrivalTimeTV.setText(dataBean.getAvailableTrips().get(position).getArrivalTime());
-        holder.AvailableSeatsTV.setText(dataBean.getAvailableTrips().get(position).getAvailableSeats());
-        holder.DurationTV.setText(dataBean.getAvailableTrips().get(position).getDuration());
-        holder.BoardingLocationTV.setText(dataBean.getAvailableTrips().get(position).getBoardingTimes().get(0).getLocation());
-        holder.CancellationPolicyTV.setText(dataBean.getAvailableTrips().get(position).getCancellationPolicy());
+        holder.AvailableSeatsTV.setText("Available Seats - "+dataBean.getAvailableTrips().get(position).getAvailableSeats());
+        holder.DurationTV.setText("Duration - "+dataBean.getAvailableTrips().get(position).getDuration());
+        holder.BoardingLocationTV.setText("Boarding Point\n"+dataBean.getAvailableTrips().get(position).getBoardingTimes().get(0).getLocation());
+        holder.CancellationPolicyTV.setText("Cancellation Policy\n"+dataBean.getAvailableTrips().get(position).getCancellationPolicy());
         holder.PriceTV.setText(context.getResources().getString(R.string.rupees)+" "+dataBean.getAvailableTrips().get(position).getFares());
 
         holder.BusSingleItem.setOnClickListener(new View.OnClickListener() {

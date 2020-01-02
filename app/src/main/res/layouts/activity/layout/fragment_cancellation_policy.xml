@@ -65,28 +65,29 @@
         android:orientation="horizontal"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/cancelPolicy100"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="Between Thu,17 Oct 9:30 PM and Fri, 01 Nov 3:29 PM"
+            android:text="Canceled within 12 hours from the journey departure time "
             android:textSize="12sp"
-            android:textColor="@color/grey_500"
-            android:fontFamily="@font/roboto_regular" />
+            android:textColor="@color/grey_700"
+            android:fontFamily="@font/roboto_bold" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="90%"
+            android:text="0%"
             android:textSize="12sp"
-            android:textColor="@color/grey_500"
-            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/grey_700"
+            android:fontFamily="@font/roboto_bold"
             android:layout_weight="1"
             android:gravity="center"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="566.1"
+            android:text="₹ 0"
             android:textSize="12sp"
-            android:textColor="@color/grey_500"
-            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/grey_700"
+            android:fontFamily="@font/roboto_bold"
             android:layout_weight="1"
             android:gravity="right|center"/>
     </LinearLayout>
@@ -103,28 +104,30 @@
         android:orientation="horizontal"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/cancelPolicy50"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="Between Fri,01 Nov 3:30 PM and Fri, 01 Nov 9:29 PM"
+            android:text="Canceled before 12 hours from the journey departure time  "
             android:textSize="12sp"
-            android:textColor="@color/grey_500"
-            android:fontFamily="@font/roboto_regular" />
+            android:textColor="@color/grey_700"
+            android:fontFamily="@font/roboto_bold" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5%"
+            android:text="50%"
             android:textSize="12sp"
-            android:textColor="@color/grey_500"
-            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/grey_700"
+            android:fontFamily="@font/roboto_bold"
             android:layout_weight="1"
             android:gravity="center"/>
         <TextView
+            android:id="@+id/cancelPolicyAmount50"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="31.45"
+            android:text="0"
             android:textSize="12sp"
-            android:textColor="@color/grey_500"
-            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/grey_700"
+            android:fontFamily="@font/roboto_bold"
             android:layout_weight="1"
             android:gravity="right|center"/>
     </LinearLayout>
@@ -132,7 +135,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/divider"
-        android:layout_marginTop="10dp"></View>
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -159,6 +162,23 @@
         android:fontFamily="@font/roboto_regular"
         android:layout_marginTop="10dp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_policy4"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_policy5"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
 

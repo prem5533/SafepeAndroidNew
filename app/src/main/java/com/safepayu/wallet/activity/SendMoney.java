@@ -462,12 +462,84 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
     @Override
     public void onPasscodeMatch(boolean isPasscodeMatched) {
         if (isPasscodeMatched) {
+
             WithAmountMethod(transferWalletToBankRequestDate);
         } else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Invalid Passcode", false);
         }
 
     }
+
+    /**
+     * For static transaction show
+
+    CountDownTimer countDownTimer = new CountDownTimer(0, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            int seconds = (int) (millisUntilFinished / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+            TImer.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        }
+
+        @Override
+        public void onFinish() {
+
+            Date c = Calendar.getInstance().getTime();
+
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+
+            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+
+            String currentDateandTime = sdf.format(new Date());
+
+            String txnID = sdf2.format(new Date())+generateRandom(6);
+
+
+            String formattedDate = df.format(c);
+
+            String utrId="93"+String.valueOf(generateRandom(10));
+
+
+            final Intent intentStatus = new Intent(SendMoney.this, PaidOrderActivity.class);
+
+//            if (responseData.getStatusCode() == 1) {
+//                intentStatus.putExtra("status", "success");
+//            } else if (responseData.getStatusCode() == 2) {
+//                //Toast.makeText(SendMoney.this, responseData.getMessage(), Toast.LENGTH_SHORT).show();
+//                intentStatus.putExtra("status", "success");
+//                //change status to pending on bank issue resolved
+//            } else {
+//                Toast.makeText(SendMoney.this, responseData.getMessage(), Toast.LENGTH_LONG).show();
+//                intentStatus.putExtra("status", "failed");
+//            }
+            intentStatus.putExtra("status", "success");
+            intentStatus.putExtra("txnid", txnID);
+            intentStatus.putExtra("Amount", AmountED.getText().toString().trim());
+            intentStatus.putExtra("date", currentDateandTime);
+            intentStatus.putExtra("productinfo", "Wallet To Bank Transaction");
+            intentStatus.putExtra("Message", "Transfer completed successfully");
+            intentStatus.putExtra("utr_id", utrId);
+            startActivity(intentStatus);
+            finish();
+            //dialogStatus.dismiss();
+
+        }
+    };
+
+    public static long generateRandom(int length) {
+        Random random = new Random();
+        char[] digits = new char[length];
+        digits[0] = (char) (random.nextInt(9) + '1');
+        for (int i = 1; i < length; i++) {
+            digits[i] = (char) (random.nextInt(10) + '0');
+        }
+        return Long.parseLong(new String(digits));
+    }
+
+    */
 
     private double CalculateAmount(int amount) {
         minusAmount = ((((double) amount) / 100) * 3.56);

@@ -67,9 +67,9 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
      private ArrayList<String> RowList,ColumnList,SeatNoList,ZIndex,SeatCodeSelectedList;
      private List<BusTripDetailsResponse.DataBean.SeatsBean> SeatLists;
      private Button DoneBtn;
-     private double totalFare = 0;
+     private double totalFare = 0,Amount2Pay=0;
      public static BusBlockingRequest busBookingRequest=new BusBlockingRequest();
-     private int ConvenienceFee=0,Amount2Pay=0;
+     private int ConvenienceFee=0;
      private boolean PerPassengerBooking=false;
 
 //     String seats = "UU_AA/"
@@ -244,7 +244,6 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
          tvTotalFareDialog.setText(tvTotal.getText().toString());
          tvOperatorChrgDialog.setText(tvOperatorCharge.getText().toString());
 
-
          recyclerViewBoarding = dialog.findViewById(R.id.boardingPoints_seatSelectionDialog);
          recyclerViewBoarding.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
          recyclerViewBoarding.setNestedScrollingEnabled(false);
@@ -309,7 +308,6 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
              DroppingId=DropId;
          }
      }
-
 
      private double GetGstAmount(int BaseFase){
          double amount = Double.parseDouble(String.valueOf(BaseFase));
@@ -818,8 +816,8 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
 
          // tvSeatNos,tvBaseFare,tvConvenienceFee,tvServiceTax,tvOperatorCharge,tvTotal
 
-         int baseFare=0,test=0,total=0;
-         int serviceTax = 0,operatorCharge=0,conFee=0;
+         double baseFare=0,test=0,total=0;
+         double serviceTax = 0,operatorCharge=0,conFee=0;
          double OC=0;
          String seatss="";
          for (int seatNo=0;seatNo<SeatNoList.size();seatNo++){
@@ -841,11 +839,11 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
                  }else {
                      conFee=ConvenienceFee;
                  }
-                 test=Integer.parseInt(SeatLists.get(Integer.parseInt(SeatNoList.get(seatNo))-1).getFare());
+                 test=Double.parseDouble(SeatLists.get(Integer.parseInt(SeatNoList.get(seatNo))-1).getFare());
                  baseFare=baseFare+test;
-                 serviceTax=serviceTax+Integer.parseInt(SeatLists.get(Integer.parseInt(SeatNoList.get(seatNo))-1).getServicetax());
+                 serviceTax=serviceTax+Double.parseDouble(SeatLists.get(Integer.parseInt(SeatNoList.get(seatNo))-1).getServicetax().trim());
                  OC= Double.parseDouble(SeatLists.get(Integer.parseInt(SeatNoList.get(seatNo))-1).getOperatorServiceCharge());
-                 operatorCharge= operatorCharge+(int) OC;
+                 //operatorCharge= operatorCharge+(int) OC;
              }catch (Exception e){
                  baseFare=0;
                  conFee=0;
@@ -855,15 +853,15 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
              }
          }
 
-         total=baseFare+conFee+serviceTax+operatorCharge;
+         total=baseFare+conFee+serviceTax+OC;
          Amount2Pay=total;
 
          tvSeatNos.setText(seatss);
-         tvBaseFare.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)baseFare);
-         tvConvenienceFee.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)conFee);
-         tvServiceTax.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)serviceTax);
-         tvOperatorCharge.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)operatorCharge);
-         tvTotal.setText(getActivity().getResources().getString(R.string.rupees)+" "+(double)total);
+         tvBaseFare.setText(getActivity().getResources().getString(R.string.rupees)+" "+baseFare);
+         tvConvenienceFee.setText(getActivity().getResources().getString(R.string.rupees)+" "+conFee);
+         tvServiceTax.setText(getActivity().getResources().getString(R.string.rupees)+" "+String.format("%.2f", serviceTax));
+         tvOperatorCharge.setText(getActivity().getResources().getString(R.string.rupees)+" "+operatorCharge);
+         tvTotal.setText(getActivity().getResources().getString(R.string.rupees)+" "+total);
      }
 
      private void getConvenienceFee() {
@@ -931,7 +929,8 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
 
                                      MakeSeat(rootView);
                                  }else {
-                                     BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.busSeatLayout), "No Data Found", false);
+                                     Toast.makeText(getActivity(), "Booking Not Available For This Trip", Toast.LENGTH_LONG).show();
+                                     //BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.busSeatLayout), "No Data Found", false);
                                  }
                                  getConvenienceFee();
                              } catch (Exception e) {

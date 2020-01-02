@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:id="@+id/fareDetailLayout_busSeatLayout"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:background="@drawable/edittext_rounded"
                         android:layout_margin="5dp"
                         android:padding="5dp">

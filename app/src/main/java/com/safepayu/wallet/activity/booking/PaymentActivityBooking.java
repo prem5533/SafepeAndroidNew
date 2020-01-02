@@ -293,7 +293,7 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
                     }
                     HashKeyRequest hashKeyRequest=new HashKeyRequest();
                     hashKeyRequest.setCustomer_firstName(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME));
-                    hashKeyRequest.setMerchant_payment_amount("1");
+                    hashKeyRequest.setMerchant_payment_amount(Amount);
                     hashKeyRequest.setMerchant_productInfo(PaymentFor);
                     hashKeyRequest.setCustomer_email_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
                     hashKeyRequest.setType("0");
@@ -569,7 +569,7 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
             customer_address1=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ADDRESS);
         }
         //merchant_payment_amount = Float.parseFloat(Amount);
-        merchant_payment_amount = Float.parseFloat(String.valueOf(1));
+        merchant_payment_amount = Float.parseFloat(String.valueOf(Amount));
 
 
         hash = hashKeyResponse.getMerchant_key() + "|" + hashKeyResponse.getTransactionId() + "|" + merchant_payment_amount + "|" + hashKeyRequest.getMerchant_productInfo()

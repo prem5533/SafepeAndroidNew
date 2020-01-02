@@ -68,7 +68,33 @@ public class DroppingPointAdapter  extends RecyclerView.Adapter<DroppingPointAda
 
         public void bindData(final int position) {
             tvPlace.setText(DroppingTimes.get(position).getLocation());
-            tvTime.setText(DroppingTimes.get(position).getTime());
+
+
+            try {
+                int bTime= Integer.parseInt(DroppingTimes.get(position).getTime().trim());
+                int divisor=bTime/60;
+                int remainder=bTime%60;
+                int journeyDayNo=divisor/24;
+                int hour=0,min=0;
+
+                if (divisor>23){
+                    hour=divisor%24;
+                }else {
+                    hour=divisor;
+                }
+                min=remainder;
+                if (String.valueOf(min).length()==1){
+                    tvTime.setText(hour+":"+min+"0");
+                }else {
+                    tvTime.setText(hour+":"+min);
+                }
+
+
+
+            }catch (Exception e){
+                tvTime.setText(DroppingTimes.get(position).getTime());
+                e.printStackTrace();
+            }
 
             try {
                 radioButton.setChecked(lastSelectedPosition == position);

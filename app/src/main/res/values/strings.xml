@@ -81,7 +81,9 @@
     <string name="cancel_policy1">* Cancellation fare calculated on seat fare of{seat Fare}</string>
     <string name="cancel_policy2">* Ticket can not be cancelled after scheduled bus departure time from the first boarding point</string>
     <string name="cancel_policy3">* Refundable amount is calculated based on scheduled bus departure time from the first boarding time</string>
-    
+    <string name="cancel_policy4">* Refundable amount is will be credited within 7 days in your registerd wallet account</string>
+    <string name="cancel_policy5">* Refundable amount is calculated on the final booking amount excluding taxes and convenience fees</string>
+
     <string name="refund_flight">A penalty of upto 2925 will be charged by the airline &amp; MMT based on how close to the departure date you cancel </string>
     <string name="zero_cancel">Buy Zero cancellation for 749 and get maximum refund in case of cancellation upto 24 hours before departure</string>
     <string name="reviewdetails">Check below details.</string>

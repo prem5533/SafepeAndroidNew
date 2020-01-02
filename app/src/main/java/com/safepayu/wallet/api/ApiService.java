@@ -1,5 +1,6 @@
 package com.safepayu.wallet.api;
 
+import com.safepayu.wallet.models.VerifyIFSCResponse;
 import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.BuyPackage;
 import com.safepayu.wallet.models.request.ChangePasswordRequest;
@@ -258,6 +259,10 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/secure.safepe/api/getConvieneceFee")
     Single<ConvenienceFeeResponse> getConvieneceFee(@Field("type") String type );
+
+    @FormUrlEncoded
+    @POST("api/secure.safepe/api/ifscUrl")
+    Single<VerifyIFSCResponse> getifscVerify(@Field("ifsc_code") String ifsc_code);
 
     //*************Flight Booking *******************//
     @GET("api/secure.safepe/api/getFlightAirport")

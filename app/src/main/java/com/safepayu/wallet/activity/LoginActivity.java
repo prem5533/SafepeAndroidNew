@@ -152,11 +152,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
-        if (isConnected) {
-            findViewById(R.id.btn_login).setEnabled(true);
-        } else {
-            findViewById(R.id.btn_login).setEnabled(false);
-        }
+
     }
 
     @Override
@@ -314,7 +310,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             }
 
                         } else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.walletHistoryLayout), response.getMessage(), false);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(), false);
                         }
                     }
 
@@ -322,7 +318,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                       //  Log.e(BaseApp.getInstance().toastHelper().getTag(RechargeHistory.class), "onError: " + e.getMessage());
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.walletHistoryLayout), false, e.getCause());
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.layout_mainLayout), false, e.getCause());
                     }
                 }));
     }

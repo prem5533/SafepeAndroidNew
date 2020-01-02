@@ -28,6 +28,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.VerifyIFSCResponse;
 import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.SendOtpRequest;
@@ -56,7 +57,7 @@ public class AddBeneficiary extends BaseActivity {
     private boolean CheckNet = false;
     private ImageView showAccNo, HideAccNo;
     private ApiService apiService;
-    private String Mobile = "";
+    private String Mobile = "",BankName="",BankBranch="",BankAddress="";
     private AddBeneficiaryRequest addBeneficiaryRequest;
     private boolean checkIfsc=false;
     //Otp Dialog
@@ -138,7 +139,8 @@ public class AddBeneficiary extends BaseActivity {
                     if (checkIfsc){
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "IFSC Code Already Verified", false);
                     }else {
-                        new CheckIfscMethod().execute();
+                        //new CheckIfscMethod().execute();
+                        getifscVerify();
                     }
                 }
             }
@@ -417,6 +419,43 @@ public class AddBeneficiary extends BaseActivity {
                 //.setNegativeButton(android.R.string.no, null)
                 .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
                 .show();
+    }
+
+    private void getifscVerify() {
+        //  loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(AddBeneficiary.this).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getifscVerify(IFSCED.getText().toString().trim())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<VerifyIFSCResponse>() {
+                    @Override
+                    public void onSuccess(VerifyIFSCResponse response) {
+                        // loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+                            try {
+                                BankName=response.getData().getBANK();
+                                BankAddress=response.getData().getADDRESS();
+                                BankBranch=response.getData().getBRANCH();
+                                checkIfsc=true;
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), response.getMessage(), false);
+                            } catch (Exception e) {
+                                checkIfsc=false;
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), e.getMessage(), false);
+                                e.printStackTrace();
+                            }
+                        } else {
+                            checkIfsc=false;
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), response.getMessage(), true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.addBeneficiaryLayout), false, e.getCause());
+                    }
+                }));
     }
 
     public class CheckIfscMethod extends AsyncTask<String, String, String> {
