@@ -40,7 +40,8 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+      //  setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_splash_new);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         int phVersion=Build.VERSION.SDK_INT;
         int kitVersion=Build.VERSION_CODES.KITKAT;

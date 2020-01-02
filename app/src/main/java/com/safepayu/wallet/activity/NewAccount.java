@@ -49,7 +49,7 @@ import io.reactivex.schedulers.Schedulers;
 public class NewAccount extends BaseActivity implements View.OnClickListener, SnackBarActionClickListener {
 
     private EditText firstName, lastName, email, mobileNo, password, dob, referralCode;
-    private TextView tvReferUserName,tvForReferralBtn;
+    private TextView tvReferUserName,tvForReferralBtn,backToLoginBtn;
     private LoadingDialog loadingDialog;
     private Button VerifyReffralBtn,verifyAlready;
     CheckEmailMobileRequest checkEmailMobileRequest;
@@ -63,12 +63,12 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         super.onCreate(savedInstanceState);
         setToolbar(false, null, true);
 
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+      /*  mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
-        });
+        });*/
         String imagePath = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LOGO_IMAGE);
         loadingDialog = new LoadingDialog(this);
         firstName = findViewById(R.id.et_firstName);
@@ -85,6 +85,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         tvForReferralBtn=findViewById(R.id.forRefer);
         signup_logo=findViewById(R.id.signup_logo);
         chTermCond=findViewById(R.id.ch_term_cond);
+        backToLoginBtn=findViewById(R.id.backToLoginBtn);
       //  Picasso.get().load(imagePath).into(signup_logo);
 
         ShowHidePasswordBtn.setOnClickListener(this);
@@ -97,6 +98,14 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         mobileNo.setSelection(mobileNo.getText().length());
         checkEmailMobileRequest=new CheckEmailMobileRequest();
 
+        backToLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(NewAccount.this, LoginActivity.class));
+                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                finish();
+            }
+        });
 
         findViewById(R.id.btn_process).setOnClickListener(this);
         dob.setOnClickListener(this);
@@ -219,7 +228,9 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
 
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.activity_new_account;
+
+      //  return R.layout.activity_new_account;
+        return R.layout.activity_new_account_new;
     }
 
     @Override

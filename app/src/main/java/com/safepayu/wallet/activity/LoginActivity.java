@@ -146,8 +146,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.activity_login;
-       // return R.layout.login_demo;
+       // return R.layout.activity_login;
+        return R.layout.login_demo;
     }
 
     @Override
@@ -174,6 +174,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.btn_newAccount:
                 startActivity(new Intent(this, NewAccount.class));
+                finish();
                 break;
             case R.id.show_hide_password:
 

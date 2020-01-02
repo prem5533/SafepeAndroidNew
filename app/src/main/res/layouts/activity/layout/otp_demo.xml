@@ -175,6 +175,7 @@
         android:fontFamily="@font/roboto_regular"
         android:text="@string/don_t_receive_otp" />
     <LinearLayout
+        android:id="@+id/layout.resendAgainLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

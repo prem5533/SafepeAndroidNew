@@ -132,10 +132,11 @@ public class FlightHistory  extends Fragment implements FlightHistroyAdapter.Fli
                 .subscribeWith(new DisposableSingleObserver<FlightHistoryResponse>() {
                     @Override
                     public void onSuccess(FlightHistoryResponse flightHistoryResponse) {
+                        loadingDialog.hideDialog();
                         FHistoryResponse = flightHistoryResponse;
                         if (flightHistoryResponse.isStatus()){
 
-                            loadingDialog.hideDialog(); flightOrderHistoryList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                           flightOrderHistoryList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                             flightHistroyAdapter = new FlightHistroyAdapter(getActivity(),flightHistoryResponse.getData(),FlightHistory.this);
                             flightOrderHistoryList.setAdapter(flightHistroyAdapter);
                         }
@@ -160,6 +161,7 @@ public class FlightHistory  extends Fragment implements FlightHistroyAdapter.Fli
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.activity_flight_book_detail);
+        dialog.setCancelable(false);
 
         statusImage = dialog.findViewById(R.id.statusImage);
         tvBookingStatus = dialog.findViewById(R.id.tv_booking_status);

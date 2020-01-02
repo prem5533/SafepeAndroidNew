@@ -76,7 +76,7 @@
 
                                     <ImageView
                                         android:layout_width="16dp"
-                                        android:layout_height="34dp"
+                                        android:layout_height="30dp"
                                         android:src="@drawable/ic_mobile_login" />
 
                                     <TextView
@@ -216,7 +216,8 @@
                                         android:padding="5dp"
                                         android:text="Remember me"
                                         android:textColor="@color/graynew"
-                                        android:textSize="14sp" />
+                                        android:textSize="14sp"
+                                        android:visibility="gone"/>
 
                                     <TextView
                                         android:id="@+id/btn.forgetPass"

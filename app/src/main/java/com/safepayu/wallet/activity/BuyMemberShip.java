@@ -11,15 +11,19 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.adapter.BuyMembershipAdapter;
 import com.safepayu.wallet.adapter.PackageListAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -42,9 +46,10 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         RadioGroup.OnCheckedChangeListener, PasscodeClickListener {
 
     private LoadingDialog loadingDialog;
-    private RecyclerView packageListView;
+    private RecyclerView packageListView,recycleBankList;
     private RecyclerLayoutManager layoutManager;
     private PackageListAdapter mAdapter;
+    private BuyMembershipAdapter buyMembershipAdapter;
     private PackageListData packageListData;
     private RadioGroup paymentMode;
     private CardView cardView;
@@ -63,12 +68,15 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
 
         cardView = findViewById(R.id.bankdetails);
         packageListView = findViewById(R.id.list_packageListView);
+        recycleBankList = findViewById(R.id.recycle_bank_list);
 
         layoutManager = new RecyclerLayoutManager(2, RecyclerLayoutManager.VERTICAL);
         layoutManager.setScrollEnabled(false);
         packageListView.setLayoutManager(layoutManager);
         mAdapter = new PackageListAdapter(this, this);
         packageListView.setAdapter(mAdapter);
+
+
         getPackages();
 
         paymentMode = findViewById(R.id.rg_paymentMode);
@@ -136,6 +144,10 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
 
+                            recycleBankList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                            buyMembershipAdapter = new BuyMembershipAdapter(getApplicationContext(),response.getBankDetails());
+                            recycleBankList.setAdapter(buyMembershipAdapter);
+
                             try{
                                 packageListData = response;
                                 mAdapter.addItem(response.getPackages());
@@ -145,6 +157,8 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                                 }catch (Exception r){
                                     r.printStackTrace();
                                 }
+
+
                             }catch (Exception e){
                                 e.printStackTrace();
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId),"Something Went Wrong",false);
@@ -329,6 +343,8 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                     radioGroup.clearCheck();
                 }
                 cardView.setVisibility(View.GONE);
+                recycleBankList.setVisibility(View.GONE);
+
                 TransactionType = "1";
                 if (!checkPkg){
                     checkPkg=false;
@@ -340,6 +356,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
 
             case R.id.rb_bank:
                 cardView.setVisibility(VISIBLE);
+                recycleBankList.setVisibility(VISIBLE);
                 TransactionType = "2";
                 checkPkg=true;
                 break;
@@ -407,4 +424,15 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
 
         return minusAmount+amount;
     }
+
+
+
+  /*  @Override
+    public void onBankItemListerne(int position, PackageListData.BankDetails mData, LinearLayout liBank) {
+        Toast.makeText(getApplicationContext(),String.valueOf(position),Toast.LENGTH_SHORT).show();
+       *//* liBank.setVisibility(VISIBLE);
+        buyMembershipAdapter.notifyDataSetChanged();*//*
+    }*/
+
+
 }
