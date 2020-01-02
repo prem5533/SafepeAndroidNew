@@ -874,6 +874,7 @@
 
 
                     <TextView
+                        android:id="@+id/transactionFeeText_sendMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/red"

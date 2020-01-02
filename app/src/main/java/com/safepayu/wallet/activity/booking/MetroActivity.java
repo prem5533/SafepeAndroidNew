@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -41,6 +42,8 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
 
     private Button ProceedBtn,BackBtn;
     private TextView tvRechargeamount,tvWalletCashback,tvTotalAmountpay;
+    private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax;
+    private RelativeLayout ServiceChargeLayout;
     private EditText edCardNo,edAmount;
     private String CardNo="",Amount="",OperatorId="0",OperatorCode="0",OperatorName="";
     private LoadingDialog loadingDialog;
@@ -78,6 +81,10 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
         tvWalletCashback = findViewById(R.id.tv_walletcashback_metroLayout);
         tvTotalAmountpay = findViewById(R.id.tv_total_amountpay_metroLayout);
         cardAmount = findViewById(R.id.cardAmount_metroLayout);
+        ServiceChargeLayout= findViewById(R.id.serviceChargeLayout_metro);
+        tvRechargeAmtTax= findViewById(R.id.tv_rechargeAmount_serviceChargeLayout);
+        tvServiceChargeTax= findViewById(R.id.tv_serviceCharge_serviceChargeLayout);
+        tvAmt2PayTax= findViewById(R.id.tv_totalAmt_serviceChargeLayout);
         
         //Set Listener
         BackBtn.setOnClickListener(this);
@@ -107,8 +114,14 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-
                 String Amount = edAmount.getText().toString().trim();
+                if (!Amount.equals("")) {
+                    CalculateServiceCharge(Amount);
+                    ServiceChargeLayout.setVisibility(View.VISIBLE);
+                }else {
+                    ServiceChargeLayout.setVisibility(View.GONE);
+                }
+
                 if (!Amount.equals("")) {
                     int num = Integer.parseInt(Amount);
                     if (num>99){
@@ -116,7 +129,7 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
                             CalculateAmount(num);
                             String text = edAmount.getText().toString().trim() + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
                             //  AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
-                            cardAmount.setVisibility(View.VISIBLE);
+                            //cardAmount.setVisibility(View.VISIBLE);
                             tvRechargeamount.setText(edAmount.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
                             tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
                             tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));
@@ -129,6 +142,7 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
                             tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));
                         }
                     }
+                    cardAmount.setVisibility(View.GONE);
                 } else {
                     cardAmount.setVisibility(View.GONE);
 
@@ -198,6 +212,21 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
 
+    }
+
+    private void CalculateServiceCharge(String Amt){
+        String Tax=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().SERVICE_CHARGE);
+        try {
+            Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(Double.parseDouble(Amt.trim()), Double.parseDouble(Tax));
+            tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+totalPayableAmount);
+
+        }catch (Exception e){
+            tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+0);
+            e.printStackTrace();
+        }
+
+        tvRechargeAmtTax.setText(getResources().getString(R.string.rupees)+" "+Amt);
+        tvServiceChargeTax.setText(Tax+"%");
     }
 
     private void CheckValidate() {

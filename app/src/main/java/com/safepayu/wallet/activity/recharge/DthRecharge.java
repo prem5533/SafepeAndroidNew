@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -46,7 +47,9 @@ public class DthRecharge extends BaseActivity {
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
     double totalAmount = 0.0f, minusAmount = 0.0f;
-    private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;;
+    private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;
+    private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax;
+    private RelativeLayout ServiceChargeLayout;
     private CardView cardAmount;
     LinearLayout layoutSelectDthOperator;
     List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
@@ -69,6 +72,10 @@ public class DthRecharge extends BaseActivity {
         tvWalletCashback = findViewById(R.id.tv_walletcashback);
         tvTotalAmountpay = findViewById(R.id.tv_total_amountpay);
         layoutSelectDthOperator = findViewById(R.id.layout_select_mobile_operator);
+        ServiceChargeLayout= findViewById(R.id.serviceChargeLayout_dth);
+        tvRechargeAmtTax= findViewById(R.id.tv_rechargeAmount_serviceChargeLayout);
+        tvServiceChargeTax= findViewById(R.id.tv_serviceCharge_serviceChargeLayout);
+        tvAmt2PayTax= findViewById(R.id.tv_totalAmt_serviceChargeLayout);
 
         OperatorNameList=new ArrayList<>();
         IdList=new ArrayList<>();
@@ -163,12 +170,19 @@ public class DthRecharge extends BaseActivity {
 
                 String Amount = AmountED.getText().toString().trim();
                 if (!Amount.equals("")) {
+                    CalculateServiceCharge(Amount);
+                    ServiceChargeLayout.setVisibility(View.VISIBLE);
+                }else {
+                    ServiceChargeLayout.setVisibility(View.GONE);
+                }
+
+                if (!Amount.equals("")) {
                     int num = Integer.parseInt(Amount);
                     if (num <=1000) {
                         CalculateAmount(num);
                         String text = AmountED.getText().toString().trim() + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
                       //  AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
-                        cardAmount.setVisibility(View.VISIBLE);
+                        //cardAmount.setVisibility(View.VISIBLE);
                         tvRechargeamount.setText(AmountED.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
                         tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
                         tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees)); }
@@ -179,13 +193,12 @@ public class DthRecharge extends BaseActivity {
                      //   AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
                         tvRechargeamount.setText(AmountED.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
                         tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
-                        tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees)); }
-
-                    else {
+                        tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));
+                    } else {
                         AmountTotalTV.setText("0.0");
                     }
-                }
-                else {
+                    cardAmount.setVisibility(View.GONE);
+                } else {
                   //  AmountTotalTV.setText(" ");
                     cardAmount.setVisibility(View.GONE);
                 }
@@ -222,6 +235,21 @@ public class DthRecharge extends BaseActivity {
         if (!isConnected){
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.dthRechargeLayout),"Please Check Your Internet Connection",false);
         }
+    }
+
+    private void CalculateServiceCharge(String Amt){
+        String Tax=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().SERVICE_CHARGE);
+        try {
+            Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(Double.parseDouble(Amt.trim()), Double.parseDouble(Tax));
+            tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+totalPayableAmount);
+
+        }catch (Exception e){
+            tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+0);
+            e.printStackTrace();
+        }
+
+        tvRechargeAmtTax.setText(getResources().getString(R.string.rupees)+" "+Amt);
+        tvServiceChargeTax.setText(Tax+"%");
     }
 
     private void CheckValidate(){

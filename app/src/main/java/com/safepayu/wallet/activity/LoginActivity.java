@@ -170,7 +170,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.btn_newAccount:
                 startActivity(new Intent(this, NewAccount.class));
-                finish();
                 break;
             case R.id.show_hide_password:
 

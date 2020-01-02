@@ -252,7 +252,8 @@
                     android:text=" "
                     android:textColor="@color/yellow_theme"
                     android:textSize="14sp"
-                    android:visibility="gone"/>
+                    android:visibility="visible"/>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card_amount"
                     android:layout_width="wrap_content"
@@ -262,89 +263,98 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="5dp"
                     android:visibility="gone">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@color/white">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/white">
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Recharge Amount"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"
-                            android:padding="10dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:layout_weight="1"/>
-                        <TextView
-                            android:id="@+id/tv_rechargeamount"
-                            android:layout_width="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Recharge Amount"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:padding="10dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:id="@+id/tv_rechargeamount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="10"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:padding="10dp"
+                                android:fontFamily="@font/roboto_regular"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="10"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"
-                            android:padding="10dp"
-                            android:fontFamily="@font/roboto_regular"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Wallet Cashback"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:padding="10dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:id="@+id/tv_walletcashback"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="10"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:padding="10dp"
+                                android:fontFamily="@font/roboto_regular"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:background="@color/divider"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Wallet Cashback"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"
-                            android:padding="10dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:layout_weight="1"/>
-                        <TextView
-                            android:id="@+id/tv_walletcashback"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"
-                            android:padding="10dp"
-                            android:fontFamily="@font/roboto_regular"/>
-                    </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height=".5dp"
-                        android:background="@color/divider"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"/>
-                    <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total Amount"
-                        android:textSize="13sp"
-                        android:textColor="@color/black"
-                        android:padding="10dp"
-                        android:fontFamily="@font/roboto_bold"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/tv_total_amountpay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="10"
-                        android:textSize="13sp"
-                        android:textColor="@color/black"
-                        android:padding="10dp"
-                        android:fontFamily="@font/roboto_regular"/>
-                </LinearLayout>
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total Amount"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:padding="10dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:id="@+id/tv_total_amountpay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="10"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:padding="10dp"
+                                android:fontFamily="@font/roboto_regular"/>
+                        </LinearLayout>
 
-                </LinearLayout>
+                    </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/serviceChargeLayout1"
+                    android:visibility="gone">
+
+                    <include layout="@layout/service_charge_layout" />
+                </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -352,15 +362,13 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:gravity="start|center"
-                    android:background="@color/white"
-                   >
+                    android:background="@color/white">
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/ic_bookmark"
                         android:padding="10dp"
-                        android:layout_marginLeft="5dp"
-                       />
+                        android:layout_marginLeft="5dp" />
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -60,7 +60,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
 
     private Button BackBtn,SubmitBtn;
     private TextView DateTv,ChooseImageBtn;
-    private EditText tv_referencenumber,tv_amountpaid,UPIorbankaccount;
+    private EditText tv_referencenumber,tv_amountpaid,UPIorbankaccount,tvBankName;
     private Spinner BankTypeSpinner,TransferTypeSpinner,SpinnerWalletOption;
     private String[] TransferTypeCategories,bankcategories,WalletOptionCategories;
     private  String TransferTypeText="",BankNameText="",PackageID="",TransactionType="",textBase64="", Amount="",WalletOptionText="",PackageName="";
@@ -98,6 +98,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
         SpinnerWalletOption=findViewById(R.id.spinner_walletOption);
         walletOptionLayout=findViewById(R.id.walletOptionLayout);
         banktypeLayout=findViewById(R.id.banktypeLayout);
+        tvBankName=findViewById(R.id.tv_bankName);
 
 
         try{
@@ -105,8 +106,10 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
             PackageID=getIntent().getStringExtra("PackageID");
             Amount=getIntent().getStringExtra("Amount");
             PackageName=getIntent().getStringExtra("PackageName");
-            tv_amountpaid.setText(Amount);
+            BankNameText=getIntent().getStringExtra("BankName");
+            tv_amountpaid.setText(getResources().getString(R.string.rupees)+" "+Amount);
             tv_amountpaid.setEnabled(false);
+            tvBankName.setText(BankNameText);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -132,6 +135,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
             banktypeLayout.setVisibility(View.VISIBLE);
             walletOptionLayout.setVisibility(View.GONE);
         }
+        banktypeLayout.setVisibility(View.GONE);
 
 
     //    bankcategories = new String[]{"Select Bank", "Hixson Technologies AXIS BANK", "Hixson Technologies UNION BANK", "UPI (safepe@upi)"};

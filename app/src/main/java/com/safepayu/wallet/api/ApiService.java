@@ -1,6 +1,5 @@
 package com.safepayu.wallet.api;
 
-import com.safepayu.wallet.models.VerifyIFSCResponse;
 import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.BuyPackage;
 import com.safepayu.wallet.models.request.ChangePasswordRequest;
@@ -60,6 +59,7 @@ import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.SaveCoinResponse;
 import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
 import com.safepayu.wallet.models.response.SendToWalletResponse;
+import com.safepayu.wallet.models.response.ServiceChargeResponse;
 import com.safepayu.wallet.models.response.StateListResponse;
 import com.safepayu.wallet.models.response.TransferWalletToBankResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
@@ -67,6 +67,7 @@ import com.safepayu.wallet.models.response.UpiUserDetailsResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.models.response.UserResponse1;
+import com.safepayu.wallet.models.response.VerifyIFSCResponse;
 import com.safepayu.wallet.models.response.WalletHistoryResponse;
 import com.safepayu.wallet.models.response.WalletLimitResponse;
 import com.safepayu.wallet.models.response.WalletResponse;
@@ -263,6 +264,9 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/secure.safepe/api/ifscUrl")
     Single<VerifyIFSCResponse> getifscVerify(@Field("ifsc_code") String ifsc_code);
+
+    @GET("api/secure.safepe/api/getServicesCharges")
+    Single<ServiceChargeResponse> getServicesCharges();
 
     //*************Flight Booking *******************//
     @GET("api/secure.safepe/api/getFlightAirport")

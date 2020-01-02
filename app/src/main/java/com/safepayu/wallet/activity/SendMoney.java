@@ -59,7 +59,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
 
     Button BackBtn, WithDrawBtn;
     private LinearLayout WithdrawAmountlayout, AddBankBenBtn;
-    private TextView AmountTotalTV, tvWithdrawalAmount, tvTax, tvTotalAmountsendmoney,tvWalletBalance;
+    private TextView AmountTotalTV, tvWithdrawalAmount, tvTax, tvTotalAmountsendmoney,tvWalletBalance,tvTransactionFee;
     private Spinner BankBenSpinner;
     private EditText AmountED;
     private RadioGroup radioGroup;
@@ -107,6 +107,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
         AmountED = findViewById(R.id.withdrawAmount);
         cardAmount = findViewById(R.id.card_amount);
         tvWalletBalance = findViewById(R.id.walletBalance);
+        tvTransactionFee=findViewById(R.id.transactionFeeText_sendMoney);
         BankBenSpinner.setVisibility(View.GONE);
         cardAmount.setVisibility(View.GONE);
 
@@ -125,6 +126,9 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                 finish();
             }
         });
+
+        final String tax=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().TRANSACTION_CHARGE);
+        tvTransactionFee.setText("Transaction fee: "+tax+"% or Minimum ₹ 10 ");
 
         AddBankBenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +187,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                 // TODO Auto-generated method stub
                 if (s.length() > 2) {
                     cardAmount.setVisibility(View.VISIBLE);
-                    double amt = CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()));
+                    double amt = CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()),Double.parseDouble(tax));
                     String text = AmountED.getText().toString().trim() + " - Tax = ";
                     AmountTotalTV.setText(text + String.format("%.2f", amt));
                     tvWithdrawalAmount.setText(AmountED.getText().toString().trim() + " " + getResources().getString(R.string.rupees));
@@ -225,9 +229,11 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
     }
 
     private void CheckValidate() {
-        int Amount = 0;
+        int Amount = 0,limit=0;
+        String Limit=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT);
         try {
             Amount = Integer.parseInt(AmountED.getText().toString().trim());
+            limit = (int)Double.parseDouble(Limit)+1;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -238,7 +244,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
             if (TextUtils.isEmpty(AmountED.getText().toString().trim())) {
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Enter Amount", false);
             } else {
-                if (Amount < 8001 && Amount > 99) {//99
+                if (Amount < limit && Amount > 99) {
 
                     if (TextUtils.isEmpty(BenID)) {
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Select Any Beneficiary", false);
@@ -541,8 +547,8 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
 
     */
 
-    private double CalculateAmount(int amount) {
-        minusAmount = ((((double) amount) / 100) * 3.56);
+    private double CalculateAmount(int amount,double tax) {
+        minusAmount = ((((double) amount) / 100) * tax);
         totalAmount = (double) amount - minusAmount;
         checkAmount = (int) minusAmount;
         if (checkAmount > 9) {

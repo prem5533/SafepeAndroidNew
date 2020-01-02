@@ -8,12 +8,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,7 +22,6 @@ import androidx.cardview.widget.CardView;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.LoginActivity;
 import com.safepayu.wallet.activity.PaymentType;
 import com.safepayu.wallet.adapter.SpinnerAdapter;
 import com.safepayu.wallet.api.ApiClient;
@@ -50,6 +49,8 @@ public class LandlineBillPay  extends BaseActivity {
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
     double totalAmount = 0.0f, minusAmount = 0.0f;
     private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;
+    private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax;
+    private RelativeLayout ServiceChargeLayout;
     private CardView cardAmount;
     private LinearLayout layoutSelectBillOper;
     private List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
@@ -76,6 +77,10 @@ public class LandlineBillPay  extends BaseActivity {
         tvWalletCashback = findViewById(R.id.tv_walletcashback);
         tvTotalAmountpay = findViewById(R.id.tv_total_amountpay);
         STDED = findViewById(R.id.stdCode);
+        ServiceChargeLayout= findViewById(R.id.serviceChargeLayout_postpaid);
+        tvRechargeAmtTax= findViewById(R.id.tv_rechargeAmount_serviceChargeLayout);
+        tvServiceChargeTax= findViewById(R.id.tv_serviceCharge_serviceChargeLayout);
+        tvAmt2PayTax= findViewById(R.id.tv_totalAmt_serviceChargeLayout);
 
 
         OperatorNameList=new ArrayList<>();
@@ -174,12 +179,18 @@ public class LandlineBillPay  extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String Amount = AmountEd.getText().toString().trim();
                 if (!Amount.equals("")) {
+                    CalculateServiceCharge(Amount);
+                    ServiceChargeLayout.setVisibility(View.VISIBLE);
+                }else {
+                    ServiceChargeLayout.setVisibility(View.GONE);
+                }
+                    if (!Amount.equals("")) {
                     int num = Integer.parseInt(Amount);
                     if (num <=1000) {
                         CalculateAmount(num);
                         String text = AmountEd.getText().toString().trim() + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
                         //  AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
-                        cardAmount.setVisibility(View.VISIBLE);
+                        //cardAmount.setVisibility(View.VISIBLE);
                         tvRechargeamount.setText(AmountEd.getText().toString().trim() + " " + getResources().getString(R.string.rupees));
                         tvWalletCashback.setText(" -  " + new DecimalFormat("##.##").format(minusAmount) + " " + getResources().getString(R.string.rupees));
                         tvTotalAmountpay.setText(String.format("%.2f", totalAmount) + " " + getResources().getString(R.string.rupees));
@@ -192,11 +203,10 @@ public class LandlineBillPay  extends BaseActivity {
                         tvRechargeamount.setText(AmountEd.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
                         tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
                         tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));
-                    }
-
-                    else {
+                    } else {
                         AmountTotalTV.setText("0.0");
                     }
+                        cardAmount.setVisibility(View.GONE);
                 }
                 else {
                     cardAmount.setVisibility(View.GONE);
@@ -231,6 +241,21 @@ public class LandlineBillPay  extends BaseActivity {
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
 
+    }
+
+    private void CalculateServiceCharge(String Amt){
+        String Tax=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().SERVICE_CHARGE);
+        try {
+            Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(Double.parseDouble(Amt.trim()), Double.parseDouble(Tax));
+            tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+totalPayableAmount);
+
+        }catch (Exception e){
+            tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+0);
+            e.printStackTrace();
+        }
+
+        tvRechargeAmtTax.setText(getResources().getString(R.string.rupees)+" "+Amt);
+        tvServiceChargeTax.setText(Tax+"%");
     }
 
     private void CheckValidate(){

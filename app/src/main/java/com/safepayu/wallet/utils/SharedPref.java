@@ -31,6 +31,10 @@ public class SharedPref {
     public final String LOGO_IMAGE = "logo_image";
     public final String ADDRESS = "address";
     public final String WALLET_BALANCE = "wallet_balance";
+    public final String GST = "gst";
+    public final String LIMIT = "limit";
+    public final String SERVICE_CHARGE = "Service_charge";
+    public final String TRANSACTION_CHARGE = "Transaction_charge";
 
     //***********FLIGHT*******************
     public final String FLIGHT_DATE = "flight_date";

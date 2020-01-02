@@ -1,4 +1,4 @@
-package com.safepayu.wallet.models;
+package com.safepayu.wallet.models.response;
 
 public class VerifyIFSCResponse {
 

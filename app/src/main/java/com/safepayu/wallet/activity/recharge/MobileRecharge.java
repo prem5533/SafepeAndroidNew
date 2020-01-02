@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -63,10 +64,11 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
 
     private Button RechargeBtn, BackBtn;
     private TextView OffersBtn,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;
+    private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax;
     private Spinner OperatorSpinner;
     public static EditText AmountED;
     private EditText MobileED;
-    String OperatorText,OperatorCode="0",OperatorId,OperatorCodeSelected="";
+    String OperatorText,OperatorCode="0",OperatorId,OperatorCodeSelected="",Amount2Pay="";
     private boolean checkOnce=false;
 
     private LoadingDialog loadingDialog;
@@ -78,6 +80,7 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
     private TextView AmountTotalTV;
     double totalAmount = 0.0f, minusAmount = 0.0f;
     private CardView cardAmount;
+    private RelativeLayout ServiceChargeLayout;
     List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
     LinearLayout layoutSelectMobileOperator;
 
@@ -107,7 +110,11 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         tvWalletCashback = findViewById(R.id.tv_walletcashback);
         tvTotalAmountpay = findViewById(R.id.tv_total_amountpay);
         cardAmount = findViewById(R.id.card_amount);
+        ServiceChargeLayout= findViewById(R.id.serviceChargeLayout1);
         layoutSelectMobileOperator = findViewById(R.id.layout_select_mobile_operator);
+        tvRechargeAmtTax= findViewById(R.id.tv_rechargeAmount_serviceChargeLayout);
+        tvServiceChargeTax= findViewById(R.id.tv_serviceCharge_serviceChargeLayout);
+        tvAmt2PayTax= findViewById(R.id.tv_totalAmt_serviceChargeLayout);
 
 
         OperatorNameList=new ArrayList<>();
@@ -228,18 +235,28 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
 
 
                 String Amount = AmountED.getText().toString().trim();
+
                 if (!Amount.equals("")) {
+                    CalculateServiceCharge(Amount);
+                    ServiceChargeLayout.setVisibility(View.VISIBLE);
+                }else {
+                    ServiceChargeLayout.setVisibility(View.GONE);
+                }
+                if (!Amount.equals("")) {
+
+                    Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(Double.parseDouble(Amount), Double.parseDouble("2"));
                     int num = Integer.parseInt(Amount);
                     if (num <=1000) {
                     CalculateAmount(num);
                         String text = AmountED.getText().toString().trim() + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
                       //  AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
-                        cardAmount.setVisibility(View.VISIBLE);
+                        //cardAmount.setVisibility(View.VISIBLE);
+                        cardAmount.setVisibility(View.GONE);
                     tvRechargeamount.setText(AmountED.getText().toString().trim()+" "+getResources().getString(R.string.rupees));
                     tvWalletCashback.setText( " -  "+new DecimalFormat("##.##").format(minusAmount)+" "+getResources().getString(R.string.rupees));
-                    tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));}
+                    tvTotalAmountpay.setText(String.format("%.2f", totalAmount)+" "+getResources().getString(R.string.rupees));
 
-                    else if (num>1000){
+                    } else if (num>1000){
                         CalculateAmount1Per(num);
                         String text = AmountED.getText().toString().trim()  + " - " +new DecimalFormat("##.##").format(minusAmount) + " = ";
                        // AmountTotalTV.setText(text + String.format("%.2f", totalAmount));
@@ -251,8 +268,8 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                     else {
                       //  AmountTotalTV.setText("0.0");
                     }
-                }
-                else {
+                    cardAmount.setVisibility(View.GONE);
+                } else {
                   //  AmountTotalTV.setText(" ");
                     cardAmount.setVisibility(View.GONE);
                 }
@@ -315,15 +332,32 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         }
     }
 
+    private void CalculateServiceCharge(String Amt){
+        String Tax=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().SERVICE_CHARGE);
+        try {
+            Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(Double.parseDouble(Amt.trim()), Double.parseDouble(Tax));
+            tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+totalPayableAmount);
+            Amount2Pay=String.valueOf(totalPayableAmount);
+        }catch (Exception e){
+            tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+0);
+            Amount2Pay="0";
+            e.printStackTrace();
+        }
+
+        tvRechargeAmtTax.setText(getResources().getString(R.string.rupees)+" "+Amt);
+        tvServiceChargeTax.setText(Tax+"%");
+    }
+
 
     private void CheckValidate() {
         int Amount = 0;
         String Mobile = "";
         try {
             Mobile = MobileED.getText().toString().trim();
-             Amount= Integer.parseInt(AmountED.getText().toString().trim());
+            Amount= Integer.parseInt(AmountED.getText().toString().trim());
 
         } catch (Exception e) {
+            Amount=0;
             e.printStackTrace();
         }
 
@@ -416,8 +450,9 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.mobileRechargeLayout), true, e);
                     }
                 }));
-
     }
+
+
 
     private void getCustomerOperator() {
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);

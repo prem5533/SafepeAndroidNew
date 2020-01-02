@@ -1,12 +1,10 @@
 package com.safepayu.wallet.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.models.response.PackageListData;
@@ -30,7 +27,7 @@ public class BuyMembershipAdapter extends RecyclerView.Adapter<BuyMembershipAdap
      private int row_index = -1;
 
     public interface OnBankItemListener{
-        void onBankItemListerne(int position, PackageListData.BankDetails mData,LinearLayout liBank);
+        void onBankItemListerner(int position, PackageListData.BankDetails mData);
 
     }
 
@@ -40,9 +37,10 @@ public class BuyMembershipAdapter extends RecyclerView.Adapter<BuyMembershipAdap
         this.onBankItemListener = onBankItemListener;
     }*/
 
-    public BuyMembershipAdapter(Context context, List<PackageListData.BankDetails> mItem) {
+    public BuyMembershipAdapter(Context context, List<PackageListData.BankDetails> mItem,OnBankItemListener onBankItemListener) {
         this.context = context;
         this.mItem = mItem;
+        this.onBankItemListener=onBankItemListener;
     }
 
     @NonNull
@@ -62,7 +60,7 @@ public class BuyMembershipAdapter extends RecyclerView.Adapter<BuyMembershipAdap
         return mItem.size();
     }
 
-    public class BankViewHolder   extends RecyclerView.ViewHolder  {
+    public class BankViewHolder   extends RecyclerView.ViewHolder implements View.OnClickListener {
        private TextView  tvAccountName,tvBankName,tvAccountNum,tvIfsccode;
        private ImageView imageView;
        private LinearLayout liBank,li_Bank;
@@ -79,6 +77,8 @@ public class BuyMembershipAdapter extends RecyclerView.Adapter<BuyMembershipAdap
             tvAccountNum = itemView.findViewById(R.id.tv_account_num);
             tvIfsccode = itemView.findViewById(R.id.tv_ifsccode);
             checkBox = itemView.findViewById(R.id.check_box);
+
+            itemView.setOnClickListener(this);
         }
 
         public void bindData(final int position) {
@@ -109,6 +109,10 @@ public class BuyMembershipAdapter extends RecyclerView.Adapter<BuyMembershipAdap
 
                      //XU   row_index = -1;
                     } else {
+                        if (onBankItemListener != null) {
+                            onBankItemListener.onBankItemListerner(getLayoutPosition(),mItem.get(getLayoutPosition()) );
+
+                        }
                         row_index = position;
                         liBank.setVisibility(View.VISIBLE);
                         notifyDataSetChanged();
@@ -146,12 +150,12 @@ public class BuyMembershipAdapter extends RecyclerView.Adapter<BuyMembershipAdap
            }*/
         }
 
-       /* @Override
+        @Override
         public void onClick(View v) {
             if (onBankItemListener != null) {
-                onBankItemListener.onBankItemListerne(getLayoutPosition(),mItem.get(getLayoutPosition()),liBank );
+                onBankItemListener.onBankItemListerner(getLayoutPosition(),mItem.get(getLayoutPosition()) );
 
             }
-        }*/
+        }
     }
 }

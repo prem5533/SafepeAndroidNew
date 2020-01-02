@@ -382,6 +382,15 @@
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/serviceChargeLayout_postpaid"
+                android:visibility="gone">
+
+                <include layout="@layout/service_charge_layout" />
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -104,12 +104,29 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="20dp"
                         android:id="@+id/banktypeLayout"
+                        android:visibility="gone"
                         android:background="@drawable/white_button_grayborder">
                         <Spinner
                             android:id="@+id/spinner_banktype"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"/>
                     </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/tv_bankName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/white_button_grayborder"
+                        android:gravity="center_vertical"
+                        android:hint="Bank Name"
+                        android:focusable="false"
+                        android:enabled="false"
+                        android:padding="10dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="15dp"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"

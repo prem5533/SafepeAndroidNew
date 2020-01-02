@@ -214,17 +214,19 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
             upiBtnLayout.setVisibility(GONE);
             Card_fillLayout.setVisibility(GONE);
 
+            cardViewCardAmount.setVisibility(GONE);
             if (PaymentTypeText.equalsIgnoreCase("Add Money") ||
                     PaymentFor.equalsIgnoreCase("Wallet") ||
                     PaymentFor.equalsIgnoreCase("Buy Package")) {
                 tvPaymentCashBack.setText(getResources().getString(R.string.rupees)+" "+ "0");
                 tvPaymentTotal.setText(getResources().getString(R.string.rupees)+" "+ Amount);
-                cardViewCashbackText.setVisibility(GONE);
+
                 cardViewCardAmount.setVisibility(GONE);
             }else {
                 tvPaymentCashBack.setText(WalletCashback);
                 tvPaymentTotal.setText(TotalDeductAmount);
             }
+
 
             if (RechargeTypeId.equals("1")){
             imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_mobile_login));

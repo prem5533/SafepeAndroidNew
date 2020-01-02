@@ -72,6 +72,7 @@ import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.PromotionResponse;
+import com.safepayu.wallet.models.response.ServiceChargeResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
 
 import java.util.ArrayList;
@@ -454,9 +455,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             @Override
             public void onClick(View v) {
 
-              // startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
-             //  startActivity(new Intent(Navigation.this, FlightBookDetailActivity.class));
-               startActivity(new Intent(Navigation.this, OtpVerification.class));
+                 startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
             }
@@ -1617,7 +1616,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                             } else {
                                 showDialogForAppUpdate(Navigation.this);
                             }
-
+                            getServicesCharges();
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(drawer, response.getMessage(), false);
                         }
@@ -1877,7 +1876,30 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         loadingDialog.hideDialog();
                     }
                 }));
+    }
 
+    private void getServicesCharges() {
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
+        BaseApp.getInstance().getDisposable().add(apiService.getServicesCharges()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ServiceChargeResponse>() {
+                    @Override
+                    public void onSuccess(ServiceChargeResponse response) {
+
+                        if (response.isStatus()) {
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().GST,response.getTax().get(0).getTax_value());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LIMIT,response.getTax().get(1).getTax_value());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().SERVICE_CHARGE,response.getTax().get(2).getTax_value());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().TRANSACTION_CHARGE,response.getTax().get(3).getTax_value());
+
+                        }
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.mobileRechargeLayout), true, e);
+                    }
+                }));
     }
 }

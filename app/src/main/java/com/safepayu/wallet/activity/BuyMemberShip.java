@@ -11,10 +11,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,7 +41,7 @@ import io.reactivex.schedulers.Schedulers;
 import static android.view.View.VISIBLE;
 
 public class BuyMemberShip extends BaseActivity implements PackageListAdapter.OnPackageSelectListener, View.OnClickListener,
-        RadioGroup.OnCheckedChangeListener, PasscodeClickListener {
+        RadioGroup.OnCheckedChangeListener, PasscodeClickListener,BuyMembershipAdapter.OnBankItemListener {
 
     private LoadingDialog loadingDialog;
     private RecyclerView packageListView,recycleBankList;
@@ -54,8 +52,8 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     private RadioGroup paymentMode;
     private CardView cardView;
     private double FinalAmount;
-    private boolean checkPkg=false;
-    String TransactionType="0",PackageID="",PackageName="",PackageAmount;
+    private boolean checkPkg=true;
+    String TransactionType="0",PackageID="",PackageName="",PackageAmount, BankName="";
     public static BuyPackage buyPackageFromDB=new BuyPackage();
 
     @Override
@@ -95,12 +93,13 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     public void showPackageDetails(PackageListData.Packages selectedPackage) {
 
         try {
-            paymentMode.clearCheck();
+            //paymentMode.clearCheck();
             double pkgAmt=selectedPackage.getPackageAmount();
             if (49999>(int)pkgAmt){
                 checkPkg=true;
             }else {
-                checkPkg=false;
+                checkPkg=true;
+                //checkPkg=false;
             }
         }catch (Exception e){
             checkPkg=false;
@@ -115,7 +114,8 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(selectedPackage.getPackageAmount(), Double.parseDouble(packageListData.getTax().getTaxValue()));
         ((TextView) findViewById(R.id.tv_totalAmountPay)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount));
 
-        FinalAmount=CalculateAmount(selectedPackage.getPackageAmount());
+        //FinalAmount=CalculateAmount(selectedPackage.getPackageAmount());
+        FinalAmount=totalPayableAmount;
 
         showDialog(BuyMemberShip.this,selectedPackage);
     }
@@ -145,7 +145,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                         if (response.getStatus()) {
 
                             recycleBankList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-                            buyMembershipAdapter = new BuyMembershipAdapter(getApplicationContext(),response.getBankDetails());
+                            buyMembershipAdapter = new BuyMembershipAdapter(getApplicationContext(),response.getBankDetails(),BuyMemberShip.this);
                             recycleBankList.setAdapter(buyMembershipAdapter);
 
                             try{
@@ -157,7 +157,6 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                                 }catch (Exception r){
                                     r.printStackTrace();
                                 }
-
 
                             }catch (Exception e){
                                 e.printStackTrace();
@@ -191,49 +190,47 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                             showDialogPackage("\nPackage Already Purchased.\nTo Upgrade Your Package Please Contact SafePe Customer Support\n");
                         }else {
                             try {
-                                if (TransactionType.equalsIgnoreCase("1")){
-
-//                                Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
-//                                intent.putExtra("TransactionType",TransactionType);
-//                                intent.putExtra("PackageID",PackageID);
-//                                intent.putExtra("PackageName",PackageName);
-//                                intent.putExtra("Amount",String.valueOf(FinalAmount));
-//                                startActivity(intent);
-
-                                    TransactionType="3";
-                                    BuyPackage buyPackage=new BuyPackage();
-                                    buyPackage.setTransaction_type(TransactionType);
-                                    buyPackage.setPackage_id(PackageID);
-                                    buyPackage.setBuy_date("");
-                                    buyPackage.setPayment_mode("Payment Gateway");
-                                    buyPackage.setRefrence_no("");
-                                    buyPackage.setDocument_attached("");
-                                    buyPackage.setPaid_to_account("By Admin");
-                                    buyPackage.setPaid_from_account("");
-                                    buyPackageFromDB=buyPackage;
-
-                                    Intent intent=new Intent(BuyMemberShip.this,PaymentType.class);
-                                    overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
-                                    intent.putExtra("RechargePaymentId",BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
-                                    intent.putExtra("Amount",String.valueOf(FinalAmount));
-                                    intent.putExtra("PaymentType",PackageName);
-                                    intent.putExtra("PaymentFor","Buy Package");
-                                    intent.putExtra("RechargeTypeId","0");
-                                    intent.putExtra("OperatorCode",PackageID);
-                                    intent.putExtra("CircleCode","0");
-                                    intent.putExtra("OperatorId","");
-                                    startActivity(intent);
-                                    finish();
-                                }else if (TransactionType.equalsIgnoreCase("2")) {
-                                    Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
-                                    intent.putExtra("TransactionType",TransactionType);
-                                    intent.putExtra("PackageID",PackageID);
-                                    intent.putExtra("PackageName",PackageName);
-                                    intent.putExtra("Amount",String.valueOf(FinalAmount));
-                                    startActivity(intent);
-
+                                if (TextUtils.isEmpty(BankName)){
+                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Bank", false);
                                 }else {
-                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Transfer Type", false);
+                                    if (TransactionType.equalsIgnoreCase("1")){
+
+                                        TransactionType="3";
+                                        BuyPackage buyPackage=new BuyPackage();
+                                        buyPackage.setTransaction_type(TransactionType);
+                                        buyPackage.setPackage_id(PackageID);
+                                        buyPackage.setBuy_date("");
+                                        buyPackage.setPayment_mode("Payment Gateway");
+                                        buyPackage.setRefrence_no("");
+                                        buyPackage.setDocument_attached("");
+                                        buyPackage.setPaid_to_account("By Admin");
+                                        buyPackage.setPaid_from_account("");
+                                        buyPackageFromDB=buyPackage;
+
+                                        Intent intent=new Intent(BuyMemberShip.this,PaymentType.class);
+                                        overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                                        intent.putExtra("RechargePaymentId",BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
+                                        intent.putExtra("Amount",String.valueOf(FinalAmount));
+                                        intent.putExtra("PaymentType",PackageName);
+                                        intent.putExtra("PaymentFor","Buy Package");
+                                        intent.putExtra("RechargeTypeId","0");
+                                        intent.putExtra("OperatorCode",PackageID);
+                                        intent.putExtra("CircleCode","0");
+                                        intent.putExtra("OperatorId","");
+                                        startActivity(intent);
+                                        finish();
+                                    }else if (TransactionType.equalsIgnoreCase("2")) {
+                                        Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
+                                        intent.putExtra("TransactionType",TransactionType);
+                                        intent.putExtra("PackageID",PackageID);
+                                        intent.putExtra("BankName",BankName);
+                                        intent.putExtra("PackageName",PackageName);
+                                        intent.putExtra("Amount",String.valueOf(FinalAmount));
+                                        startActivity(intent);
+
+                                    }else {
+                                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Transfer Type", false);
+                                    }
                                 }
                             }catch (Exception e){
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), e.getMessage(), false);
@@ -292,11 +289,10 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         switch (view.getId()) {
             case R.id.btn_proceed:
                 if (mAdapter.getSelectedData() != null) {
-
                     if (checkPkg){
                         checkBuyPackage();
                     }else {
-                        paymentMode.clearCheck();
+                        //paymentMode.clearCheck();
                         showDialogPackage("Package Amount Grater Than Rs 25000 Can Only Be Purchased From Bank\nPlease Select Bank Transfer");
                     }
 
@@ -320,7 +316,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
 
                 // Specifying a listener allows you to take an action before dismissing the dialog.
                 // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Continue with delete operation
                         dialog.dismiss();
@@ -339,16 +335,18 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
             case R.id.rb_walled:
 
                 if (TransactionType.equalsIgnoreCase("2")){
-                    checkPkg=false;
-                    radioGroup.clearCheck();
+                    checkPkg=true;
+                    //checkPkg=true;
+                    //radioGroup.clearCheck();
                 }
                 cardView.setVisibility(View.GONE);
                 recycleBankList.setVisibility(View.GONE);
 
                 TransactionType = "1";
                 if (!checkPkg){
-                    checkPkg=false;
-                    radioGroup.clearCheck();
+                    checkPkg=true;
+                    //checkPkg=false;
+                    //radioGroup.clearCheck();
                     showDialogPackage("Package Amount Greater Than Rs 25000 Can Only Be Purchased From Bank\nPlease Select Bank Transfer");
                 }
 
@@ -425,14 +423,12 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         return minusAmount+amount;
     }
 
-
-
-  /*  @Override
-    public void onBankItemListerne(int position, PackageListData.BankDetails mData, LinearLayout liBank) {
-        Toast.makeText(getApplicationContext(),String.valueOf(position),Toast.LENGTH_SHORT).show();
-       *//* liBank.setVisibility(VISIBLE);
-        buyMembershipAdapter.notifyDataSetChanged();*//*
-    }*/
+    @Override
+    public void onBankItemListerner(int position, PackageListData.BankDetails mData) {
+        if (mData!=null){
+            BankName=mData.getBankName();
+        }
+    }
 
 
 }
