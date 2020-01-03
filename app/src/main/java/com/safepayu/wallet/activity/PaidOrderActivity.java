@@ -45,7 +45,8 @@ public class PaidOrderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_paid_order);
+     //   setContentView(R.layout.activity_paid_order);
+        setContentView(R.layout.paid_order_activity_new);
 
         Intent intentStatus=getIntent();
         try{

@@ -50,11 +50,11 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_buttons"
+            android:background="@drawable/blue_green_round_btn"
             android:padding="10dp"
             android:textSize="15sp"
             android:gravity="center"
-            android:fontFamily="@font/roboto_regular"
+            android:fontFamily="@font/roboto_bold"
             />
 
     </LinearLayout>

@@ -14,12 +14,11 @@
 
         <Button
             android:id="@+id/backBtn_transferCommission"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_next_new"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -133,14 +132,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:background="@drawable/rounded_buttons"
+                android:background="@drawable/blue_green_round_btn"
                 android:clickable="true"
                 android:gravity="center"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:text="withdraw"
                 android:textSize="15sp"
-                android:fontFamily="@font/roboto_regular"
+                android:fontFamily="@font/roboto_bold"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -247,18 +246,19 @@
             android:layout_height="1dp"
             android:background="@color/red_theme"
             android:layout_weight="1"
+            android:layout_marginTop="3dp"
             android:layout_marginRight="-20dp"/>
         <ImageView
             android:layout_width="120dp"
             android:layout_height="60dp"
-            android:src="@drawable/safelogo_transparent">
-
-        </ImageView>
+            android:src="@drawable/logo"
+            android:layout_marginTop="-0dp"></ImageView>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/yellow_theme"
             android:layout_weight="1"
+            android:layout_marginTop="3dp"
             android:layout_marginLeft="-20dp"/>
     </LinearLayout>
 </LinearLayout>
