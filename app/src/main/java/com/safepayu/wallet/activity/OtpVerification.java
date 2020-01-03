@@ -111,17 +111,13 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
 
     @Override
     protected int getLayoutResourceId() {
-       // return R.layout.activity_otp_verification;
+        //return R.layout.activity_otp_verification;
         return R.layout.otp_demo;
     }
 
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
-        if (isConnected) {
-            findViewById(R.id.btn_verify).setEnabled(true);
-        } else {
-            findViewById(R.id.btn_verify).setEnabled(false);
-        }
+
     }
 
     @Override
@@ -131,10 +127,10 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                 if (TextUtils.isEmpty(otp.getText().toString().trim())){
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.otpLayout),"Please Enter OTP",false);
                 }else {
-                    Otp = (et1.getText().toString().trim()+(et2.getText().toString().trim()+et3.getText().toString().trim()+et4.getText().toString().trim()+
-                            et5.getText().toString().trim()+(et6.getText().toString().trim())));
+//                    Otp = (et1.getText().toString().trim()+(et2.getText().toString().trim()+et3.getText().toString().trim()+et4.getText().toString().trim()+
+//                            et5.getText().toString().trim()+(et6.getText().toString().trim())));
 
-                    verifyOtp(Otp);
+                    verifyOtp(otp.getText().toString().trim());
                 }
                 break;
             case R.id.btn_resendOtp:
@@ -281,9 +277,8 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                 et5.requestFocus(); }
 
             if(et5.length()==1){
-                et6.requestFocus(); } }
-
-        else if (text.length()==0){
+                et6.requestFocus(); }
+        } else if (text.length()==0){
             if(et6.length()==0){
                 et5.requestFocus(); }
             if(et5.length()==0){
@@ -293,6 +288,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
             if(et3.length()==0){
                 et2.requestFocus(); }
             if(et2.length()==0){
-                et1.requestFocus(); } }
+                et1.requestFocus(); }
+        }
     }
 }
