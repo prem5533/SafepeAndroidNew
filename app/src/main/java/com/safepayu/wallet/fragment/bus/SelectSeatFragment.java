@@ -1032,7 +1032,7 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
 
                  // A null listener allows the button to dismiss the dialog and take no further action.
                  //.setNegativeButton(android.R.string.no, null)
-                 .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                 .setIcon(getResources().getDrawable(R.drawable.logo))
                  .show();
      }
  }

@@ -26,9 +26,9 @@
     <application
         android:name=".BaseApp"
         android:allowBackup="true"
-        android:icon="@drawable/new_safepe_logo"
+        android:icon="@drawable/appicon_new"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/safelogo_transparent"
+        android:roundIcon="@drawable/appicon_new"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"

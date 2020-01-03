@@ -73,7 +73,7 @@ import static com.safepayu.wallet.fragment.bus.SelectSeatFragment.busBookingRequ
 public class PaymentActivityBooking  extends AppCompatActivity implements PasscodeClickListener {
 
     private TextView tvPayAmount, tvWalletlimit, tvTotalBalanceWallet, tvWalletDeductAmount, tvGatewayDeductAmount;
-    private Button btnBookingPayAmount;
+    private Button btnBookingPayAmount,sendmoneyBackBtn;
     private CheckBox checkBoxWallet, checkBoxGatewayPayment;
     private LoadingDialog loadingDialog;
     WalletLimitResponse WalletResponse;
@@ -119,6 +119,14 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
         btnBookingPayAmount = findViewById(R.id.btn_booking_pay_amount);
         checkBoxWallet = findViewById(R.id.check_box_wallet);
         checkBoxGatewayPayment = findViewById(R.id.check_box_gateway_payment);
+        sendmoneyBackBtn = findViewById(R.id.sendmoney_back_btn);
+
+        sendmoneyBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               finish();
+            }
+        });
 
         try {
             Intent intent = getIntent();

@@ -9,13 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.EventLog;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,7 +21,6 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anupkumarpanwar.scratchview.ScratchView;
@@ -221,7 +214,7 @@ public class ScratchActivity extends AppCompatActivity implements ScratchListAda
 
                             dialog.dismiss();
                             }})
-                    .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                    .setIcon(getResources().getDrawable(R.drawable.logo))
                     .show();
         }
 

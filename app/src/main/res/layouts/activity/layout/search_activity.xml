@@ -19,7 +19,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
+            android:background="@drawable/ic_next_new" />
 
         <TextView
             android:layout_width="match_parent"
@@ -70,12 +70,12 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="20dp"
-        android:background="@drawable/rounded_buttons"
+        android:background="@drawable/blue_green_round_btn"
         android:text="Search"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="17sp"
-        android:fontFamily="@font/roboto_regular"
+        android:fontFamily="@font/roboto_bold"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

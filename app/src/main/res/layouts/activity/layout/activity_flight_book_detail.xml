@@ -21,7 +21,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
+            android:background="@drawable/ic_next_new" />
 
         <TextView
             android:layout_width="match_parent"
@@ -179,7 +179,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="50dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@color/yellow" />
+                    android:background="@color/red_theme" />
 
                     <TextView
                         android:id="@+id/tv_flight_eticket_no"
@@ -300,6 +300,14 @@
                                 android:text="BOM"
                                 android:textColor="@color/black"
                                 android:textSize="22sp" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/list_traveller_details"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="10dp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -586,15 +594,7 @@
                     android:id="@+id/tvView"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/yellow" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/list_traveller_details"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp" />
+                    android:background="@color/yellow_theme" />
 
                 <TextView
                     android:id="@+id/tv_flight_cancel_ticket"

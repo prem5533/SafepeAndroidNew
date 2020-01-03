@@ -3,14 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:padding="10dp"
     android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/ic_list_new"
-        />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_tvnew" />
+
 
     <TextView
         android:id="@+id/textView"
@@ -22,7 +24,6 @@
         android:textColor="@color/textcolor"
         android:textSize="15sp"
         android:layout_marginLeft="5dp"
-        android:padding="10dp"
         android:fontFamily="@font/roboto_regular"/>
 
 </LinearLayout>

@@ -20,9 +20,9 @@
     <color name="clay_yellow">#FFC900</color>
     <color name="nav_bg">#f7f8f8</color>
 
-    <color name="colorPrimary">#6f3358</color>
-    <color name="colorPrimaryDark">#6f3358</color>
-    <color name="colorAccent">#6f3358</color>
+    <color name="colorPrimary">#196cfe</color>
+    <color name="colorPrimaryDark">#196cfe</color>
+    <color name="colorAccent">#196cfe</color>
 
     <color name="title_bar">#0b232d</color>
     <color name="colorPrimaryLight">#ff63a4ff</color>
@@ -108,7 +108,7 @@
     <color name="blue_A200">#448AFF</color>
     <color name="blue_A400">#2979FF</color>
     <color name="bue_A700">#2962FF</color>
-    <color name="bue_A800">#ba275d</color>
+    <color name="bue_A800">#196cfe</color>
 
     <!-- light blue-->
     <color name="light_blue_50">#E1F5FE</color>

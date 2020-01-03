@@ -83,12 +83,13 @@
             android:layout_centerInParent="true"
             app:cardBackgroundColor="@color/white"
             android:layout_margin="1dp"
-            android:visibility="gone">
+          >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_background_gradient_diagonal"
-                android:gravity="center">
+                android:background="@drawable/blue_green_bg"
+                android:gravity="center"
+            >
                 <LinearLayout
                     android:layout_width="180dp"
                     android:layout_height="140dp"
@@ -97,9 +98,10 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp">
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="144dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/safelogo_transparent"/>
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/white_logo_new"/>
 
                     <TextView
                         android:layout_width="wrap_content"
