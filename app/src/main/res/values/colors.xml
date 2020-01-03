@@ -18,7 +18,7 @@
     <color name="darker_gray">#aaa</color>
     <color name="blueextradark">#1F3E7C</color>
     <color name="clay_yellow">#FFC900</color>
-    <color name="nav_bg">#f7f8f8</color>
+    <color name="nav_bg">#f4f5ff</color>
 
     <color name="colorPrimary">#196cfe</color>
     <color name="colorPrimaryDark">#196cfe</color>

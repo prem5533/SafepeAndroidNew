@@ -59,7 +59,7 @@
                     android:id="@+id/li_select_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/yellow"
+                    android:background="@color/yellow_theme"
                     android:gravity="center|end"
                     android:layout_marginLeft="20dp"
                     android:layout_marginBottom="30dp"

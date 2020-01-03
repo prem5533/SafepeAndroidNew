@@ -65,7 +65,7 @@
                     android:elevation="5dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="0dp">
+                    android:layout_marginBottom="1dp">
 
                     <LinearLayout
                         android:layout_below="@id/header"

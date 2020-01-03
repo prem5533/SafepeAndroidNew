@@ -222,10 +222,6 @@
                                 android:textSize="15sp"
                                 android:fontFamily="@font/roboto_regular"/>
                         </LinearLayout>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height=".5dp"
-                            android:background="@color/graynew"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -234,6 +230,7 @@
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
                             android:gravity="start|center"
+                            android:visibility="gone"
                             android:background="@color/white">
                             <ImageView
                                 android:layout_width="40dp"
@@ -368,7 +365,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/serviceChargeLayout1"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <include layout="@layout/service_charge_layout" />
         </RelativeLayout>

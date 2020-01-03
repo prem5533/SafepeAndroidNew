@@ -823,7 +823,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
             case R.id.li_home:
                 tv_home.setTextColor(getResources().getColor(R.color.bue_A800));
-                tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvContact.setTextColor(getResources().getColor(R.color.black));
                 tvProfile.setTextColor(getResources().getColor(R.color.black));
                 tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
@@ -837,7 +837,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvGenelogy.setTextColor(getResources().getColor(R.color.black));
                 tvReferEarn.setTextColor(getResources().getColor(R.color.black));
                 tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
-                tv_home.setTextColor(getResources().getColor(R.color.black));
                 tvLogout.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
