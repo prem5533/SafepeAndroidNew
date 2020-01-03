@@ -238,424 +238,429 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <com.safepayu.wallet.custom_view.CustomTextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:fontCustom="@string/Roboto"
-                    android:textSize="16sp"
-                    android:id="@+id/tv.taxDetails"
-                    android:textStyle="normal"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:textColor="@color/red_700"
-                    android:gravity="left"
-                    android:text="@string/gst_charge_on_package" />
-
-                <com.safepayu.wallet.custom_view.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:fontCustom="@string/Roboto"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:gravity="center"
-                    android:text="@string/select_package" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/list.packageListView"
-                    android:layout_margin="5dp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"/>
-                <com.safepayu.wallet.custom_view.CustomTextView
-                    android:id="@+id/pymnt_option"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:fontCustom="@string/Roboto"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:text="Select Payment Option"/>
-
-                <RadioGroup
-                    android:id="@+id/rg.paymentMode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <RadioButton
-                        android:id="@+id/rb.walled"
+                    android:orientation="vertical"
+                    android:background="#f4f5ff">
+                    <com.safepayu.wallet.custom_view.CustomTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="Wallet Balance"
-                        android:buttonTint="#46c58e"/>
+                        app:fontCustom="@string/Roboto"
+                        android:textSize="16sp"
+                        android:id="@+id/tv.taxDetails"
+                        android:textStyle="normal"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:textColor="@color/red_700"
+                        android:gravity="left"
+                        android:text="@string/gst_charge_on_package" />
 
-                    <RadioButton
-                        android:id="@+id/rb.bank"
+                    <com.safepayu.wallet.custom_view.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:fontCustom="@string/Roboto"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:text="@string/select_package" />
+
+                    <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="Bank Transfer"
-                        android:buttonTint="#46c58e"/>
-                </RadioGroup>
+                        android:id="@+id/list.packageListView"
+                        android:layout_margin="5dp"/>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/bankdetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginRight="1dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"/>
+                    <com.safepayu.wallet.custom_view.CustomTextView
+                        android:id="@+id/pymnt_option"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:background="#f7f6f8">
+                        app:fontCustom="@string/Roboto"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:text="Select Payment Option"/>
+
+                    <RadioGroup
+                        android:id="@+id/rg.paymentMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <RadioButton
+                            android:id="@+id/rb.walled"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="Wallet Balance"
+                            android:buttonTint="#46c58e"/>
+
+                        <RadioButton
+                            android:id="@+id/rb.bank"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="Bank Transfer"
+                            android:buttonTint="#46c58e"/>
+                    </RadioGroup>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/bankdetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:visibility="gone">
 
                         <LinearLayout
-                            android:id="@+id/banknotice"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="10dp">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/bankdetails"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:textColor="@color/red_theme" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/payment"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:textColor="@color/red_theme"/>
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/divider"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"/>
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recycle_bank_list"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="10dp"
-                            android:visibility="gone">
+                            android:background="#f7f6f8">
 
                             <LinearLayout
+                                android:id="@+id/banknotice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:id="@+id/tv_account_name"
-                                        android:layout_width="140dp"
-                                        android:layout_height="wrap_content"
-                                        android:text="Account Name"
-                                        android:textSize="14sp"
-                                        android:textColor="@color/black"
-                                        android:fontFamily="@font/roboto_regular"/>
-
-                                    <TextView
-                                        android:id="@+id/tv_technj"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Hixson Technologies"
-                                        android:textColor="@color/colorSecondaryDark"
-                                        android:fontFamily="@font/roboto_regular"
-                                        android:textSize="14sp"
-                                        android:textIsSelectable="true" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:layout_width="140dp"
-                                        android:layout_height="wrap_content"
-                                        android:text="Account Number"
-                                        android:textSize="14sp"
-                                        android:fontFamily="@font/roboto_regular"
-                                        android:textColor="@color/black"/>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="918020100795727"
-                                        android:textColor="@color/colorSecondaryDark"
-                                        android:textSize="14sp"
-                                        android:fontFamily="@font/roboto_regular"
-                                        android:textIsSelectable="true" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:layout_width="140dp"
-                                        android:layout_height="wrap_content"
-                                        android:text="IFS Code "
-                                        android:textSize="14sp"
-                                        android:fontFamily="@font/roboto_regular"
-                                        android:textColor="@color/black"/>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="UTIB0000062 "
-                                        android:fontFamily="@font/roboto_regular"
-                                        android:textColor="@color/colorSecondaryDark"
-
-                                        android:textIsSelectable="true" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:layout_width="140dp"
-                                        android:layout_height="wrap_content"
-                                        android:text="Bank Name "
-                                        android:textSize="14sp"
-                                        android:textColor="@color/black"
-                                        android:fontFamily="@font/roboto_regular"/>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="AXIS Bank "
-                                        android:textColor="@color/colorSecondaryDark"
-                                        android:textSize="14sp"
-                                        android:fontFamily="@font/roboto_regular"
-                                        android:textIsSelectable="true" />
-                                </LinearLayout>
-                            </LinearLayout>
-
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/axis" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.5dp"
-                            android:background="@color/divider"
-                            android:visibility="gone"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:padding="10dp"
-                            android:visibility="gone">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:layout_width="140dp"
-                                        android:layout_height="wrap_content"
-                                        android:text="Account Name"
-                                        android:textSize="14sp"
-                                        android:textColor="@color/black"
-                                        android:fontFamily="@font/roboto_regular"/>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Hixson Technologies"
-                                        android:textColor="@color/colorSecondaryDark"
-
-                                        android:textIsSelectable="true"
-                                        android:fontFamily="@font/roboto_regular"
-                                        android:textSize="14sp"/>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:layout_width="140dp"
-                                        android:layout_height="wrap_content"
-                                        android:text="Account Number"
-                                        android:textSize="14sp"
-                                        android:textColor="@color/black"
-                                        android:fontFamily="@font/roboto_regular"/>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="5824101010050412"
-                                        android:textColor="@color/colorSecondaryDark"
-
-                                        android:textIsSelectable="true"
-                                        android:fontFamily="@font/roboto_regular"
-                                        android:textSize="14sp"/>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:layout_width="140dp"
-                                        android:layout_height="wrap_content"
-                                        android:text="IFS Code "
-                                        android:textSize="14sp"
-                                        android:textColor="@color/black"
-                                        android:fontFamily="@font/roboto_regular"/>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="UBIN0558249"
-                                        android:textColor="@color/colorSecondaryDark"
-
-                                        android:textIsSelectable="true"
-                                        android:fontFamily="@font/roboto_regular"
-                                        android:textSize="14sp"/>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:layout_width="140dp"
-                                        android:layout_height="wrap_content"
-                                        android:text="Bank Name "
-                                        android:textSize="14sp"
-                                        android:textColor="@color/black"
-                                        android:fontFamily="@font/roboto_regular"/>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="UNION Bank "
-                                        android:textColor="@color/colorSecondaryDark"
-
-                                        android:textIsSelectable="true"
-                                        android:fontFamily="@font/roboto_regular"
-                                        android:textSize="14sp"/>
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/union" />
-
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.5dp"
-                            android:background="@color/divider"
-                            android:visibility="gone"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:gravity="center">
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal"
-                                android:visibility="gone"
-                                >
+                                android:orientation="vertical"
+                                android:padding="10dp">
 
                                 <TextView
-                                    android:layout_width="140dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="UPI Details"
+                                    android:text="@string/bankdetails"
                                     android:textSize="14sp"
-                                    android:textColor="@color/black"
-                                    android:fontFamily="@font/roboto_regular"/>
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:textColor="@color/red_theme" />
 
                                 <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/payment"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:textColor="@color/red_theme"/>
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/divider"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"/>
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycle_bank_list"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="10dp"
+                                android:visibility="gone">
+
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="safepe@icici"
-                                    android:textColor="@color/colorSecondaryDark"
-                                    android:textIsSelectable="true"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:textSize="14sp"/>
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:id="@+id/tv_account_name"
+                                            android:layout_width="140dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="Account Name"
+                                            android:textSize="14sp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="@font/roboto_regular"/>
+
+                                        <TextView
+                                            android:id="@+id/tv_technj"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Hixson Technologies"
+                                            android:textColor="@color/colorSecondaryDark"
+                                            android:fontFamily="@font/roboto_regular"
+                                            android:textSize="14sp"
+                                            android:textIsSelectable="true" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:layout_width="140dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="Account Number"
+                                            android:textSize="14sp"
+                                            android:fontFamily="@font/roboto_regular"
+                                            android:textColor="@color/black"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="918020100795727"
+                                            android:textColor="@color/colorSecondaryDark"
+                                            android:textSize="14sp"
+                                            android:fontFamily="@font/roboto_regular"
+                                            android:textIsSelectable="true" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:layout_width="140dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="IFS Code "
+                                            android:textSize="14sp"
+                                            android:fontFamily="@font/roboto_regular"
+                                            android:textColor="@color/black"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="UTIB0000062 "
+                                            android:fontFamily="@font/roboto_regular"
+                                            android:textColor="@color/colorSecondaryDark"
+
+                                            android:textIsSelectable="true" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:layout_width="140dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="Bank Name "
+                                            android:textSize="14sp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="@font/roboto_regular"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="AXIS Bank "
+                                            android:textColor="@color/colorSecondaryDark"
+                                            android:textSize="14sp"
+                                            android:fontFamily="@font/roboto_regular"
+                                            android:textIsSelectable="true" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/axis" />
+
                             </LinearLayout>
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/upi"
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.5dp"
+                                android:background="@color/divider"
                                 android:visibility="gone"/>
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal"
+                                android:padding="10dp"
+                                android:visibility="gone">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:layout_width="140dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="Account Name"
+                                            android:textSize="14sp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="@font/roboto_regular"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Hixson Technologies"
+                                            android:textColor="@color/colorSecondaryDark"
+
+                                            android:textIsSelectable="true"
+                                            android:fontFamily="@font/roboto_regular"
+                                            android:textSize="14sp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:layout_width="140dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="Account Number"
+                                            android:textSize="14sp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="@font/roboto_regular"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="5824101010050412"
+                                            android:textColor="@color/colorSecondaryDark"
+
+                                            android:textIsSelectable="true"
+                                            android:fontFamily="@font/roboto_regular"
+                                            android:textSize="14sp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:layout_width="140dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="IFS Code "
+                                            android:textSize="14sp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="@font/roboto_regular"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="UBIN0558249"
+                                            android:textColor="@color/colorSecondaryDark"
+
+                                            android:textIsSelectable="true"
+                                            android:fontFamily="@font/roboto_regular"
+                                            android:textSize="14sp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:layout_width="140dp"
+                                            android:layout_height="wrap_content"
+                                            android:text="Bank Name "
+                                            android:textSize="14sp"
+                                            android:textColor="@color/black"
+                                            android:fontFamily="@font/roboto_regular"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="UNION Bank "
+                                            android:textColor="@color/colorSecondaryDark"
+
+                                            android:textIsSelectable="true"
+                                            android:fontFamily="@font/roboto_regular"
+                                            android:textSize="14sp"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/union" />
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.5dp"
+                                android:background="@color/divider"
+                                android:visibility="gone"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:gravity="center">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone"
+                                    >
+
+                                    <TextView
+                                        android:layout_width="140dp"
+                                        android:layout_height="wrap_content"
+                                        android:text="UPI Details"
+                                        android:textSize="14sp"
+                                        android:textColor="@color/black"
+                                        android:fontFamily="@font/roboto_regular"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="safepe@icici"
+                                        android:textColor="@color/colorSecondaryDark"
+                                        android:textIsSelectable="true"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:textSize="14sp"/>
+                                </LinearLayout>
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/upi"
+                                    android:visibility="gone"/>
+
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
-
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/btn.proceed"

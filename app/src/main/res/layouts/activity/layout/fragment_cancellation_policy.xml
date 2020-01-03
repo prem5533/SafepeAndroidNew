@@ -194,5 +194,6 @@
         android:fontFamily="@font/roboto_bold"
         android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:visibility="gone"/>
 </RelativeLayout>

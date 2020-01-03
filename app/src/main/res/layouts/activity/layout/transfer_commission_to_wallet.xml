@@ -214,7 +214,6 @@
                     android:textStyle="bold"
                     android:text="--"
                     android:textColor="@color/black"
-                    android:textAlignment="viewEnd"
                     android:layout_weight="1"/>
             </LinearLayout>
             <Button

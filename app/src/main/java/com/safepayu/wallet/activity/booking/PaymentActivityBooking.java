@@ -744,7 +744,7 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
                         dialog.dismiss();
                     }
                 })
-                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .setIcon(getResources().getDrawable(R.drawable.appicon_new))
                 .show();
     }
 

@@ -361,7 +361,7 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                         finish();
                     }
                 })
-                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .setIcon(getResources().getDrawable(R.drawable.appicon_new))
                 .show();
     }
 

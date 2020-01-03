@@ -55,7 +55,6 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.bus.BusActivity;
 import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
-import com.safepayu.wallet.activity.booking.hotel.HotelActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
 import com.safepayu.wallet.activity.recharge.GasPay;
@@ -784,9 +783,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_hotel:
-                //Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Navigation.this, HotelActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(Navigation.this, HotelActivity.class));
+//                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.layout_donation:
                 Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
@@ -1881,7 +1880,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
 
         final PromotionRequest promotionRequest = new PromotionRequest();
-        promotionRequest.setType("1");
+        promotionRequest.setType("3");
         BaseApp.getInstance().getDisposable().add(apiService.getPromotionOffer(promotionRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

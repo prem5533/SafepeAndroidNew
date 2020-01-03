@@ -108,7 +108,7 @@ public class RechargeHistoryAdapter extends RecyclerView.Adapter<RechargeHistory
                     status="success";
                     imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_success));
                 }else if (mItem.get(position).getStatus()==0){
-                    imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_pending));
+                    imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.pending_new));
                     status="pending";
                 }else {
                     imageViewStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_fail));

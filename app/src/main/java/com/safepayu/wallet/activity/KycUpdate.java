@@ -494,7 +494,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
 
                     }
                 })
-                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .setIcon(getResources().getDrawable(R.drawable.appicon_new))
                 .show();
     }
 

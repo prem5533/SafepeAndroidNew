@@ -174,7 +174,7 @@ public class AvailableHotelAdapter extends RecyclerView.Adapter<AvailableHotelAd
 
                     }
                 })
-                .setIcon(context.getResources().getDrawable(R.drawable.safelogo_transparent))
+                .setIcon(context.getResources().getDrawable(R.drawable.appicon_new))
                 .show();
     }
 }

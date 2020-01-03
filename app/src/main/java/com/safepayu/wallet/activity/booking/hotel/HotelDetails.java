@@ -511,7 +511,7 @@ public class HotelDetails extends AppCompatActivity implements View.OnClickListe
                     }
                 })
 
-                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .setIcon(getResources().getDrawable(R.drawable.appicon_new))
                 .show();
     }
 

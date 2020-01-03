@@ -199,7 +199,7 @@ public class PaidOrderActivity extends AppCompatActivity {
         builder.setMessage(Message);
         // Must call show() prior to fetching text view
 
-        builder  .setIcon(getResources().getDrawable(R.drawable.new_safepe_logo));
+        builder  .setIcon(getResources().getDrawable(R.drawable.appicon_new));
         // Set a positive button for alert dialog
       //  builder.setPositiveButton("Say",null);
         // Specifying a listener allows you to take an action before dismissing the dialog.

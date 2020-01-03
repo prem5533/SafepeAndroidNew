@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         app:tabMode="scrollable"
         app:tabBackground="@color/colorPrimary"
-        app:tabSelectedTextColor="@color/yellow"
+        app:tabSelectedTextColor="@color/yellow_theme"
         app:tabTextColor="@color/white"
-        app:tabIndicatorColor="@color/yellow"
+        app:tabIndicatorColor="@color/yellow_theme"
         app:tabGravity="fill"/>
 
     <com.malinskiy.superrecyclerview.SuperRecyclerView

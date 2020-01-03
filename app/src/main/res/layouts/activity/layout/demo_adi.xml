@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/kycLayout"
+    android:id="@+id/forgetPasscodeId"
     android:background="#f4f5ff">
 
     <LinearLayout
@@ -27,7 +27,7 @@
                 android:paddingBottom="5dp">
 
                 <Button
-                    android:id="@+id/recharge_back_btn"
+                    android:id="@+id/FP_back_btn"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerVertical="true"
@@ -40,7 +40,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="5dp"
                     android:gravity="center"
-                    android:text="Contact Us"
+                    android:text="Forget Passcode"
                     android:fontFamily="@font/roboto_bold"
                     android:textColor="#fff"
                     android:textSize="18sp" />
@@ -67,431 +67,254 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="0dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="SafePe India Pvt. Ltd."
-                        android:gravity="center"
-                        android:textIsSelectable="true"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/roboto_bold"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/red_theme"
-                        android:layout_margin="10dp"/>
-
-                </androidx.cardview.widget.CardView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="In case of any inconvenience regarding the transaction of money OR further query then you can contact us:"
-                        android:layout_gravity="center"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:layout_marginTop="20dp"
-                        android:textColor="@color/red_theme" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.7dp"
-                        android:background="@color/grey_500"
-                        android:layout_marginTop="10dp"/>
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="start|center">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_whatsapp"
-                            android:padding="10dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Whatsapp and Call"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:textColor="@color/black"
-                            android:textIsSelectable="true" />
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical">
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:gravity="right">
+                            android:layout_weight="1">
+
                             <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center"
+                                android:text="Forgot Password?"
+                                android:textColor="#fff"
+                                android:textSize="25dp" />
+
+                            <TextView
+                                android:id="@+id/label"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center"
+                                android:fontFamily="@font/roboto_regular"
+                                android:text="We just need your registered Number to sent\n OTP for Passcode reset"
+                                android:textColor="#000"
+                                android:textSize="15dp" />
+
+                            <RelativeLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/whatsappno"
-                                android:textSize="16sp"
-                                android:textColor="@color/grey_700"
-                                android:layout_gravity="right"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/roboto_bold"
-                                android:textIsSelectable="true"
-                                android:layout_marginRight="10dp"/>
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:id="@+id/layout1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="30dp"
+                                    android:layout_marginTop="30dp"
+                                    android:layout_marginRight="30dp"
+                                    android:orientation="vertical">
+
+                                    <EditText
+                                        android:id="@+id/number_forgot"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="0dp"
+                                        android:layout_marginTop="20dp"
+                                        android:layout_marginRight="0dp"
+                                        android:background="@drawable/white_button_grayborder"
+                                        android:hint="Enter your Number"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:inputType="number"
+                                        android:maxLength="10"
+                                        android:padding="10dp"
+                                        android:textColor="#085272"
+                                        android:textColorHint="#999"
+                                        android:textSize="15dp" />
+
+                                    <Button
+                                        android:id="@+id/request_otp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="20dp"
+                                        android:layout_marginBottom="20dp"
+                                        android:background="@drawable/blue_green_round_btn"
+                                        android:paddingLeft="50dp"
+                                        android:paddingRight="50dp"
+                                        android:text="Request Otp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:textColor="#FFF"
+                                        android:textSize="15dp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/layout2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="30dp"
+                                    android:layout_marginTop="30dp"
+                                    android:layout_marginRight="30dp"
+                                    android:orientation="vertical"
+                                    android:visibility="gone">
+
+                                    <EditText
+                                        android:id="@+id/enter_otp"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="20dp"
+                                        android:background="@drawable/white_button_grayborder"
+                                        android:hint="Enter your Otp"
+                                        android:inputType="number"
+                                        android:maxLength="6"
+                                        android:singleLine="true"
+                                        android:imeOptions="actionDone"
+                                        android:padding="10dp"
+                                        android:textColor="#085272"
+                                        android:textSize="15dp" />
+                                    <TextView
+                                        android:id="@+id/timer"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:visibility="gone"
+                                        android:textSize="15dp"
+                                        android:textColor="@color/red"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_gravity="center"
+                                        android:text="00:00"/>
+
+                                    <Button
+                                        android:id="@+id/continue_otp"
+                                        android:layout_width="250dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginBottom="20dp"
+                                        android:background="@drawable/blue_green_round_btn"
+                                        android:paddingLeft="50dp"
+                                        android:paddingRight="50dp"
+                                        android:text="Continue"
+                                        android:textAllCaps="false"
+                                        android:textColor="@color/white"
+                                        android:textSize="15dp" />
+
+
+                                    <Button
+                                        android:id="@+id/resend_otp"
+                                        style="@style/Base.Widget.AppCompat.Button.Borderless"
+                                        android:layout_width="250dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginBottom="15dp"
+                                        android:background="@drawable/blue_green_round_btn"
+                                        android:padding="10dp"
+                                        android:text="Resend Otp"
+                                        android:textAllCaps="false"
+                                        android:textColor="@color/white"
+                                        android:textSize="15dp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/layout3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="30dp"
+                                    android:layout_marginTop="30dp"
+                                    android:layout_marginRight="30dp"
+                                    android:orientation="vertical"
+                                    android:visibility="gone">
+
+
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <EditText
+                                            android:id="@+id/enter_password"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="20dp"
+                                            android:background="@drawable/white_button_grayborder"
+                                            android:hint="Enter New Passcode"
+                                            android:inputType="numberPassword"
+                                            android:padding="10dp"
+                                            android:textColor="#085272"
+                                            android:textSize="15dp"
+                                            android:maxLength="4"
+                                            android:imeOptions="actionDone"
+                                            android:singleLine="true"/>
+
+                                        <ImageView
+                                            android:layout_width="30dp"
+                                            android:layout_height="30dp"
+                                            android:src="@drawable/show_password48"
+                                            android:id="@+id/show_hide_password_forgetPass"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginTop="25dp"
+                                            android:layout_marginRight="5dp"/>
+                                    </RelativeLayout>
+
+
+                                    <Button
+                                        android:id="@+id/conformPassword"
+                                        android:layout_width="250dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginBottom="20dp"
+                                        android:background="@drawable/rounded_buttons"
+                                        android:padding="5dp"
+                                        android:text="Change Passcode"
+                                        android:textColor="@color/white"
+                                        android:textSize="15dp" />
+                                </LinearLayout>
+
+                                <ProgressBar
+                                    android:id="@+id/progressBar1"
+                                    style="?android:attr/progressBarStyleLarge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:visibility="gone" />
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/back_forgot_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="15dp"
+                                android:gravity="center"
+                                android:text=" Back"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="#999"
+                                android:textSize="12dp" />
+
+
 
                         </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.7dp"
-                        android:background="@color/grey_500"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="start|center">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_customer_cre"
-                            android:padding="10dp"/>
-                        <TextView
-                            android:id="@+id/tollfreeNoText"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="@string/toll_customer"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:textColor="@color/black"
-                            android:textIsSelectable="true" />
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:gravity="right">
-                            <TextView
-                                android:id="@+id/tollfreeNo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text=""
-                                android:textSize="16sp"
-                                android:layout_gravity="right"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/roboto_bold"
-                                android:textColor="@color/grey_700"
-                                android:textIsSelectable="true"
-                                android:layout_marginRight="15dp"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.7dp"
-                        android:background="@color/grey_500"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="start|center">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_whatsapp"
-                            android:padding="10dp"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Address:"
-                                android:gravity="left"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/roboto_bold"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:textColor="@color/black" />
-                            <TextView
-
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="B-096,B Block, Sector 65, Noida, Delhi(NCR) Uttar Pradesh 201301"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:textColor="@color/black"
-                                android:paddingRight="20dp"
-                                android:paddingLeft="20dp"
-                                android:layout_marginLeft="5dp"
-                                android:gravity="right"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.7dp"
-                        android:background="@color/grey_500"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="start|center">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_whatsapp"
-                            android:padding="10dp"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Email:"
-                                android:gravity="left"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/roboto_bold"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:textColor="@color/black" />
-                            <TextView
-                                android:id="@+id/sendmail"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="support@safepeindia.com"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:textColor="@color/black"
-                                android:paddingRight="20dp"
-                                android:paddingLeft="20dp"
-                                android:layout_marginLeft="5dp"
-                                android:gravity="right"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.7dp"
-                        android:background="@color/grey_500"/>
-
-                    <TextView
-                        android:id="@+id/visit_website"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Visit Our Website"
-                        android:layout_gravity="center"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/roboto_bold"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/red_theme" />
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        app:cardCornerRadius="10dp"
-                        android:elevation="5dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_gravity="center">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:paddingLeft="20dp"
-                            android:paddingRight="20dp">
-
+                            android:gravity="bottom"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="150dp"
+                            android:layout_gravity="center">
                             <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:src="@drawable/ic_whatsapp"
-                                android:padding="10dp"/>
-                            <TextView
-                                android:id="@+id/website"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="www.safepeindia.com"
-                                android:textSize="16sp"
-                                android:textColor="@color/black"
+                                android:layout_width="100dp"
+                                android:layout_height="150dp"
+                                android:src="@drawable/logo"
                                 android:layout_gravity="center"
-                                android:textStyle="bold"
-                                android:padding="10dp"
-                                android:fontFamily="@font/roboto_bold"
-                                android:textIsSelectable="true"/>
+                                android:layout_marginTop="-20dp"/>
                         </LinearLayout>
-
-
-                    </androidx.cardview.widget.CardView>
-
-                    <TextView
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="2019 Safepe India Pvt. Ltd.\nAll Rights Reserved "
-                        android:layout_gravity="center"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/roboto_regular"
-                        android:layout_marginTop="20dp"/>
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="150dp"
-                    android:src="@drawable/logo"
-                    android:layout_gravity="center"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="10dp"
-                    android:layout_margin="15dp"
-                    android:visibility="gone">
-
-
-                    <EditText
-                        android:id="@+id/contactus_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="15dp"
-                        android:padding="10dp"
-                        android:textSize="15dp"
-                        android:background="@drawable/login_input_bg"
-                        android:hint="Email"
-                        />
-                    <EditText
-                        android:id="@+id/contactus_subject"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:padding="10dp"
-                        android:textSize="15dp"
-                        android:background="@drawable/login_input_bg"
-                        android:hint="Your Subject"
-                        />
-                    <EditText
-                        android:id="@+id/contactus_message"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:padding="10dp"
-                        android:inputType="textMultiLine"
-                        android:textSize="15dp"
-                        android:background="@drawable/login_input_bg"
-                        android:hint="Message"
-                        />
-                    <Button
-                        android:id="@+id/contactus_submit"
-                        android:layout_width="150dp"
-                        android:layout_height="40dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Submit"
-                        android:layout_gravity="center|right"
-                        android:textColor="#fff"
-                        android:background="@drawable/rounded_buttons"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="+91 8860722217"
-                        android:textSize="14dp"
-                        android:textColor="#34ad38"
-                        android:textIsSelectable="true"
-                        android:background="@null"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/call_button_usa"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="-30dp"
-                        android:text="+1 6808000842"
-                        android:textSize="14dp"
-                        android:textColor="#3454dc"
-                        android:textIsSelectable="true"
-                        android:paddingLeft="0dp"
-                        android:background="@null"
-                        android:textStyle="bold"
-                        android:paddingRight="0dp"
-                        android:layout_marginRight="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginBottom="0dp" />
-
-                    <Button
-                        android:id="@+id/call_button_india"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="-10dp"
-                        android:layout_weight="1"
-                        android:text="+91 8860722217"
-                        android:textSize="14dp"
-                        android:textColor="#34ad38"
-                        android:textIsSelectable="true"
-                        android:background="@null"
-                        android:textStyle="bold"
-                        android:layout_marginRight="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginBottom="0dp"
-                        />
-                </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
-
-
         </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
