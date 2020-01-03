@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#f4f5ff"
     android:orientation="vertical"
     android:id="@+id/profileLayout">
 
@@ -21,7 +22,8 @@
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_next_new"  />
 
         <TextView
 
@@ -40,39 +42,26 @@
         android:layout_below="@id/headerbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="#f4f5ff">
 
         <LinearLayout
-            android:id="@+id/externallayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/white_botton"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-
-
-            <ImageView
-                android:id="@+id/profile_bg"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:visibility="gone"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/white_botton" />
-
-
-
-
+                android:layout_height="40dp"
+                android:background="@color/red_theme"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="4dp"
-                android:elevation="4dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/white">
-
-
+                android:padding="5dp"
+                app:cardCornerRadius="5dp"
+                android:elevation="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="-30dp">
                 <LinearLayout
                     android:id="@+id/main_details"
                     android:layout_width="match_parent"
@@ -111,31 +100,37 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <LinearLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="start"
+                        android:gravity="center"
                         android:padding="10dp">
 
-                        <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:src="@drawable/ic_profile_placeholder"/>
-                        <TextView
-                            android:id="@+id/username1"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_bold"
-                            android:gravity="start"
-                            android:singleLine="true"
-                            android:text="dsds"
-                            android:textColor="@color/bue_A800"
-                            android:textSize="16sp"
-                            android:padding="10dp"
-                            android:textStyle="bold"
-                            android:layout_weight="1"
-                            />
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_weight="1">
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_profile_new"/>
+                            <TextView
+                                android:id="@+id/username1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="start"
+                                android:singleLine="true"
+                                android:text=""
+                                android:textColor="@color/bue_A800"
+                                android:textSize="16sp"
+                                android:padding="10dp"
+                                android:textStyle="bold"
+                                android:layout_weight="1" /></LinearLayout>
+
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -153,109 +148,95 @@
 
                         </LinearLayout>
 
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/divider"
-                        android:layout_marginTop="10dp"/>
-
+                    </FrameLayout>
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp">
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_mobile_new"/>
+
                         <TextView
+                            android:id="@+id/p_mobile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="0dp"
-                            android:text="Phone"
-                            android:textColor="@color/red_theme"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textSize="12sp"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:id="@+id/p_mobile"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="start|center"
-                                android:text=""
-                                android:fontFamily="@font/roboto_regular"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:layout_weight="1" />
-                            <ImageView
-                                android:layout_width="10dp"
-                                android:layout_height="10dp"
-                                android:layout_marginRight="30dp"
-                                android:src="@drawable/ic_correct"/>
-                        </LinearLayout>
-
+                            android:layout_below="@+id/textView2"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:hint="Phone Number"
+                            android:inputType="number"
+                            android:nextFocusForward="@+id/amount"
+                            android:padding="10dp"
+                            android:textColor="@color/textcolor"
+                            android:fontFamily="@font/roboto_medium"
+                            android:gravity="start|center"
+                            android:text=""
+                            android:textSize="14sp"
+                            android:layout_weight="1"/>
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginRight="30dp"
+                            android:src="@drawable/ic_correct"/>
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height=".5dp"
-                        android:background="@color/divider"
-                        android:layout_marginTop="10dp"
+                        android:background="@color/graynew"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="30dp"/>
+                        android:layout_marginRight="10dp"/>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="0dp"
-                            android:text="Email"
-                            android:textColor="@color/red_theme"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textSize="12sp"/>
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_mail_new"/>
 
                         <TextView
                             android:id="@+id/p_mail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:layout_below="@+id/textView2"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:hint="Email"
+                            android:padding="10dp"
+                            android:textColor="@color/textcolor"
+                            android:fontFamily="@font/roboto_medium"
+                            android:gravity="start|center"
                             android:text=""
-                            android:fontFamily="@font/roboto_regular"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp"
+                            android:layout_weight="1"/>
+
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height=".5dp"
-                        android:background="@color/divider"
-                        android:layout_marginTop="10dp"
+                        android:background="@color/graynew"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="30dp"/>
+                        android:layout_marginRight="10dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="0dp"
-                            android:text="Date of birth"
-                            android:textColor="@color/red_theme"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textSize="12sp"/>
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_calendar_new"/>
 
                         <TextView
                             android:id="@+id/p_dob"
@@ -263,195 +244,196 @@
                             android:layout_height="wrap_content"
                             android:clickable="false"
                             android:focusable="false"
-                            android:fontFamily="@font/roboto_regular"
-                            android:gravity="center"
                             android:text=""
-                            android:textColor="@color/black"
+                            android:hint="Date of Birth"
+                            android:padding="10dp"
+                            android:textColor="@color/textcolor"
+                            android:fontFamily="@font/roboto_medium"
+                            android:gravity="start|center"
                             android:textSize="14sp"/>
+
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height=".5dp"
-                        android:background="@color/divider"
-                        android:layout_marginTop="10dp"
+                        android:background="@color/graynew"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="30dp"/>
+                        android:layout_marginRight="10dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Address"
-                            android:textColor="@color/red_theme"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textSize="12sp" />
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_address_new"/>
 
                         <TextView
                             android:id="@+id/p_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="#00FFFFFF"
-                            android:hint=""
+                            android:clickable="false"
+                            android:text=""
                             android:focusable="false"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textColor="@color/black"
+                            android:hint="Address"
+                            android:padding="10dp"
+                            android:textColor="@color/textcolor"
+                            android:fontFamily="@font/roboto_medium"
+                            android:gravity="start|center"
                             android:textSize="14sp"/>
+
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height=".5dp"
-                        android:background="@color/divider"
-                        android:layout_marginTop="10dp"
+                        android:background="@color/graynew"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="30dp"/>
+                        android:layout_marginRight="10dp"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="10dp">
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_location_pin_new"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Pincode"
-                            android:textColor="@color/red_theme"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textSize="12sp"/>
 
                         <TextView
                             android:id="@+id/p_pincode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="#00FFFFFF"
-                            android:hint=""
+                            android:hint="Pincode"
                             android:focusable="false"
-                            android:gravity="center"
-                            android:textColor="@color/black"
+                            android:fontFamily="@font/roboto_medium"
+                            android:gravity="start|center"
+                            android:textColor="@color/textcolor"
                             android:textSize="14sp"
+                            android:padding="10dp"
                             />
+
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height=".5dp"
-                        android:background="@color/divider"
-                        android:layout_marginTop="10dp"
+                        android:background="@color/graynew"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="30dp"
-                     />
+                        android:layout_marginRight="10dp"/>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="10dp">
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_id_card_new"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sponsor ID"
-                            android:textColor="@color/red_theme"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textSize="12sp"/>
 
                         <TextView
                             android:id="@+id/p_sponser_id"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="#00FFFFFF"
-                            android:hint=""
+                            android:hint="Sponsor ID"
                             android:focusable="false"
-                            android:gravity="center"
-                            android:textColor="@color/black"
+                            android:fontFamily="@font/roboto_medium"
+                            android:gravity="start|center"
+                            android:textColor="@color/textcolor"
                             android:textSize="14sp"
+                            android:padding="10dp"
                             />
+
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height=".5dp"
-                        android:background="@color/divider"
-                        android:layout_marginTop="10dp"
+                        android:background="@color/graynew"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="30dp"
-                        />
+                        android:layout_marginRight="10dp"/>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="10dp">
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_user_new"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sponsor Name"
-                            android:textColor="@color/red_theme"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textSize="12sp"/>
 
                         <TextView
                             android:id="@+id/p_sponser_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="#00FFFFFF"
-                            android:hint=""
+                            android:hint="Sponsor Name"
                             android:focusable="false"
-                            android:gravity="center"
-                            android:textColor="@color/black"
+                            android:fontFamily="@font/roboto_medium"
+                            android:gravity="start|center"
+                            android:textColor="@color/textcolor"
                             android:textSize="14sp"
+                            android:padding="10dp"
                             />
+
+
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height=".5dp"
-                        android:background="@color/divider"
-                        android:layout_marginTop="10dp"
+                        android:background="@color/graynew"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="30dp"
-                        />
+                        android:layout_marginRight="10dp"/>
+
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="10dp">
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_mobile_new"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sponsor Contact Number"
-                            android:textColor="@color/red_theme"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textSize="12sp"/>
 
                         <TextView
                             android:id="@+id/p_sponser_contact_number"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="#00FFFFFF"
-                            android:hint=""
+                            android:hint="Sponsor Contact Number"
                             android:focusable="false"
-                            android:gravity="center"
-                            android:textColor="@color/black"
+                            android:fontFamily="@font/roboto_medium"
+                            android:gravity="start|center"
+                            android:textColor="@color/textcolor"
                             android:textSize="14sp"
+                            android:padding="10dp"
                             />
+
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height=".5dp"
-                        android:background="@color/divider"
-                        android:layout_marginTop="10dp"
+                        android:background="@color/graynew"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginBottom="20dp"
-                        />
+                        android:layout_marginRight="10dp"/>
+
+
+
                     <!--
                                 <LinearLayout
                                     android:layout_width="match_parent"

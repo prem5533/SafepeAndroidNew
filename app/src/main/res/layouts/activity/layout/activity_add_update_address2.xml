@@ -2,8 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/addUpdateAddressLayout"
-    android:background="@color/white">
+    android:background="#f4f5ff">
 
 
     <RelativeLayout
@@ -20,7 +21,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
+            android:background="@drawable/ic_next_new"  />
 
         <TextView
             android:layout_width="match_parent"
@@ -28,7 +29,7 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="5dp"
             android:gravity="center"
-            android:text="Address"
+            android:text="Add Your Address"
             android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
             android:textSize="18sp"  />
@@ -41,261 +42,215 @@
         android:layout_below="@id/headerbar">
 
         <LinearLayout
-            android:layout_below="@id/headerbar"
             android:layout_width="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/bue_A800"
-                android:textSize="18sp"
-                android:fontFamily="@font/roboto_bold"
-                android:layout_marginBottom="20dp"
-                android:text="Add your address"/>
-            <View
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/yellow"
-                android:layout_marginTop="5dp"/>
+                android:layout_height="40dp"
+                android:background="@color/red_theme"/>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/red_theme"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="6dp"
-                android:text="Flat/House location"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="13sp"/>
-
-
-            <FrameLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal"
-                >
-
-                <EditText
-                    android:id="@+id/update_location"
+                android:padding="5dp"
+                app:cardCornerRadius="5dp"
+                android:elevation="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="-30dp">
+                <LinearLayout
+                    android:id="@+id/main_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:hint="Street 23, PS Colony"
-                    android:padding="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="left"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:inputType="text"
-                    android:singleLine="true"
-                    android:imeOptions="actionNext"
-                    android:digits="0123456789 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ ,"/>
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:alpha="0.3"
-                    android:src="@drawable/ic_placeholder" />
+                    android:layout_margin="10dp"
+                    android:padding="0dp"
+                    android:orientation="vertical">
 
 
-            </FrameLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_address_new"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/red_theme"
-                android:layout_marginBottom="6dp"
-                android:text="City"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="13sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"/>
+                        <EditText
+                            android:id="@+id/update_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Flat/House, Location"
+                            android:padding="10dp"
+                            android:gravity="start|center"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textSize="14sp"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
+                            android:background="@null"
+                            android:textColor="@color/textcolor"
+                            android:digits="0123456789 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ ,"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/graynew"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_skyline_new"/>
+                        <EditText
+                            android:id="@+id/update_city"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="City"
+                            android:padding="10dp"
+                            android:gravity="start|center"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textSize="14sp"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
+                            android:background="@null"
+                            android:textColor="@color/textcolor"
+                            android:digits="0123456789 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ ,"/>
+                    </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/graynew"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
 
-                <EditText
-                    android:id="@+id/update_city"
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_government_new"/>
+                        <EditText
+                            android:id="@+id/update_state"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="State"
+                            android:padding="10dp"
+                            android:gravity="start|center"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textSize="14sp"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
+                            android:background="@null"
+                            android:textColor="@color/textcolor"
+                            android:digits="0123456789 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ ,"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/graynew"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_location_pin_new"/>
+                        <EditText
+                            android:id="@+id/update_pin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Pincode"
+                            android:padding="10dp"
+                            android:gravity="start|center"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textSize="14sp"
+                            android:background="@null"
+                            android:maxLength="6"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:imeOptions="actionDone"
+                            android:textColor="@color/textcolor"
+                            android:digits="0123456789" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/graynew"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:padding="10dp">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_global_new"/>
+                        <EditText
+                            android:id="@+id/update_country"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start|center"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textSize="14sp"
+                            android:background="@null"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:imeOptions="actionDone"
+                            android:padding="10dp"
+                            android:text="India"
+                            android:textColor="@color/textcolor"
+                            android:maxLength="6"
+                            android:enabled="false"/></LinearLayout>
+                </LinearLayout>
+                <View
                     android:layout_width="match_parent"
-                    android:padding="10dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:hint="Knight Place"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
+                    android:layout_height=".5dp"
+                    android:background="@color/graynew"
+                    android:layout_marginTop="0dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:inputType="text"
-                    android:singleLine="true"
-                    android:imeOptions="actionNext"
-                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:alpha="0.3"
-                    android:src="@drawable/ic_skyline" />
-
-
-            </FrameLayout>
-
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/red_theme"
-                android:layout_marginBottom="6dp"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="13sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:text="State"/>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/update_state"
-                    android:layout_width="match_parent"
-                    android:padding="10dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:layout_height="wrap_content"
-                    android:hint="Kerela"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:inputType="text"
-                    android:singleLine="true"
-                    android:imeOptions="actionNext"
-                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:alpha="0.3"
-                    android:src="@drawable/ic_home" />
-
-
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/red_theme"
-                android:layout_marginBottom="6dp"
-                android:text="Pincode"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="13sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/update_pin"
-                    android:layout_width="match_parent"
-                    android:padding="10dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:layout_height="wrap_content"
-                    android:hint="121320"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:layout_marginLeft="10dp"
-                    android:maxLength="6"
-                    android:layout_marginBottom="6dp"
-                    android:inputType="number"
-                    android:singleLine="true"
-                    android:imeOptions="actionDone"
-                    android:digits="0123456789"/>
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:alpha="0.3"
-                    android:src="@drawable/ic_pincode" />
-
-
-            </FrameLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/red_theme"
-                android:layout_marginBottom="6dp"
-                android:text="Country"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="13sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                />
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/update_country"
-                    android:layout_width="match_parent"
-                    android:padding="10dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:layout_height="wrap_content"
-                    android:text="India"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:layout_marginLeft="10dp"
-                    android:maxLength="6"
-                    android:enabled="false"
-                    android:layout_marginBottom="20dp"/>
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:alpha="0.3"
-                    android:src="@drawable/ic_flag" />
-
-
-            </FrameLayout>
-
+                    android:layout_marginRight="10dp"/>
+            </androidx.cardview.widget.CardView>
 
             <CheckBox
                 android:id="@+id/current_location"
@@ -304,40 +259,46 @@
                 android:textSize="15sp"
                 android:fontFamily="@font/roboto_regular"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/red_theme"
+                android:textColor="@color/textcolor"
                 android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
                 android:text="Use current location"
                 android:checked="false"
-                android:buttonTint="@color/yellow_theme"/>
+                android:buttonTint="@color/textcolor"/>
 
             <Button
                 android:id="@+id/add_address"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/rounded_buttons"
+                android:background="@drawable/blue_green_round_btn"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
                 android:textSize="15sp"
-                android:fontFamily="@font/roboto_regular"
-                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="30dp"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:text="Add new Address"/>
+                android:text="Add New Address"/>
             <Button
                 android:id="@+id/edit_address"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/rounded_buttons"
+                android:background="@drawable/blue_green_round_btn"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
                 android:textSize="15sp"
-                android:fontFamily="@font/roboto_regular"
-                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="30dp"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:text="Update Address"
                 android:visibility="gone"/>
-
-
         </LinearLayout>
+
 
 
     </ScrollView>
