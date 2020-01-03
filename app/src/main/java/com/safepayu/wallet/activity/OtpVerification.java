@@ -131,10 +131,10 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                 if (TextUtils.isEmpty(otp.getText().toString().trim())){
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.otpLayout),"Please Enter OTP",false);
                 }else {
-                    Otp = (et1.getText().toString().trim()+(et2.getText().toString().trim()+et3.getText().toString().trim()+et4.getText().toString().trim()+
-                            et5.getText().toString().trim()+(et6.getText().toString().trim())));
+                   /* Otp = (et1.getText().toString().trim()+(et2.getText().toString().trim()+et3.getText().toString().trim()+et4.getText().toString().trim()+
+                            et5.getText().toString().trim()+(et6.getText().toString().trim())));*/
 
-                    verifyOtp(Otp);
+                    verifyOtp(otp.getText().toString().trim());
                 }
                 break;
             case R.id.btn_resendOtp:

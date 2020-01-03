@@ -456,7 +456,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             @Override
             public void onClick(View v) {
 
-                 startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
+               //  startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
+                 startActivity(new Intent(Navigation.this, OtpVerification.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
             }
