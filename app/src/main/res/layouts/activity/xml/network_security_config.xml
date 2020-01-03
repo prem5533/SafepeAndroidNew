@@ -10,5 +10,6 @@
         <domain includeSubdomains="true">testing.safepeindia.com</domain>
         <domain includeSubdomains="true">www.safepeindia.com</domain>
         <domain includeSubdomains="true">ifsc.razorpay.com</domain>
+        <domain includeSubdomains="true">productiontesting.safepeindia.com</domain>
     </domain-config>
 </network-security-config>

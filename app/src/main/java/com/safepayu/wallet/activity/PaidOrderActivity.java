@@ -68,6 +68,7 @@ public class PaidOrderActivity extends AppCompatActivity {
 
                 startActivity(new Intent(PaidOrderActivity.this, ContactUs.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                finish();
             }
         });
 

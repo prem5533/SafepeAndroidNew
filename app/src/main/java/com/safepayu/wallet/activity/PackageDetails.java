@@ -4,10 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.safepayu.wallet.BaseActivity;
@@ -17,7 +15,6 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.PackageDetailsResponse;
-import com.squareup.picasso.Picasso;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -28,7 +25,7 @@ public class PackageDetails extends BaseActivity {
     Button BackBtn;
     private LoadingDialog loadingDialog;
     private TextView PackageNameTV,PackageAmountTV,BonusAmountTV,BalanceAmountTV,BonusCreditTv,txtPckgStatus;
-    private ImageView image_logo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +40,6 @@ public class PackageDetails extends BaseActivity {
         BonusAmountTV=findViewById(R.id.txtPckgBonusAmnt);
         BalanceAmountTV=findViewById(R.id.txtPckgAmountBalance);
         BonusCreditTv=findViewById(R.id.txtPckgAmountCredit);
-        image_logo=findViewById(R.id.image_logo);
         txtPckgStatus=findViewById(R.id.txtPckgSttus);
       //  Picasso.get().load(imagePath).into(image_logo);
         BackBtn.setOnClickListener(new View.OnClickListener() {
