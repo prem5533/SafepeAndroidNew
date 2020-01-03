@@ -3,7 +3,6 @@ package com.safepayu.wallet.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -133,13 +132,13 @@ public class WalletHistory extends BaseActivity implements WalletHistoryAdapter.
 
         if (statusNo==2){
             StatusTV.setText("Pending");
-            StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.clay_yellow));
+          //  StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.clay_yellow));
         }else  if (statusNo==1){
             StatusTV.setText("Successful");
-            StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.green_500));
+           // StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.green_500));
         }else {
             StatusTV.setText("Failed");
-            StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.red_500));
+           // StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.red_500));
         }
 
         CustNo=selectedPackage.getWallet_no();

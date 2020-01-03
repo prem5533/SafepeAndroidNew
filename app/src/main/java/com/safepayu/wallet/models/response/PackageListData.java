@@ -51,8 +51,14 @@ public class PackageListData extends BaseResponse {
          * description : If it didn't help
          */
 
+
         private String image;
         private String description;
+        /**
+         * package_icon : uploaded/packagesImage/trophy.png
+         */
+
+        private String package_icon;
 
 
         public Packages() {
@@ -111,6 +117,14 @@ public class PackageListData extends BaseResponse {
 
         public void setDescription(String description) {
             this.description = description;
+        }
+
+        public String getPackage_icon() {
+            return package_icon;
+        }
+
+        public void setPackage_icon(String package_icon) {
+            this.package_icon = package_icon;
         }
     }
 

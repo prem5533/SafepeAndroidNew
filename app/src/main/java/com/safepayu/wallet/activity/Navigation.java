@@ -1924,11 +1924,19 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     public void onSuccess(ServiceChargeResponse response) {
 
                         if (response.isStatus()) {
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().GST,response.getTax().get(0).getTax_value());
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LIMIT,response.getTax().get(1).getTax_value());
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().SERVICE_CHARGE,response.getTax().get(2).getTax_value());
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().TRANSACTION_CHARGE,response.getTax().get(3).getTax_value());
-
+                            for (int i=0;i<response.getTax().size();i++){
+                                if (response.getTax().get(i).getId()==1){
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().GST,response.getTax().get(i).getTax_value());
+                                }else if (response.getTax().get(i).getId()==2){
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().SERVICE_CHARGE,response.getTax().get(i).getTax_value());
+                                }else if (response.getTax().get(i).getId()==3){
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LIMIT,response.getTax().get(i).getTax_value());
+                                }else if (response.getTax().get(i).getId()==4){
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().TRANSACTION_CHARGE,response.getTax().get(i).getTax_value());
+                                }else if (response.getTax().get(i).getId()==5){
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LIMIT_MIN,response.getTax().get(i).getTax_value());
+                                }
+                            }
                         }
                     }
                     @Override

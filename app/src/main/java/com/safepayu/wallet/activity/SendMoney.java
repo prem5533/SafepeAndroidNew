@@ -58,13 +58,13 @@ import static android.view.View.VISIBLE;
 public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChangeListener, PasscodeClickListener {
 
     Button BackBtn, WithDrawBtn;
-    private LinearLayout WithdrawAmountlayout, AddBankBenBtn;
+    private LinearLayout WithdrawAmountlayout, AddBankBenBtn,BenLayout;
     private TextView AmountTotalTV, tvWithdrawalAmount, tvTax, tvTotalAmountsendmoney,tvWalletBalance,tvTransactionFee;
+    private TextView tvMaxLimit,tvMinLimit;
     private Spinner BankBenSpinner;
     private EditText AmountED;
     private RadioGroup radioGroup;
-    private String Mode = "", BenID = "", Mobile = "";
-    ;
+    private String Mode = "", BenID = "", Mobile = "",Limit="0",LimitMin="0";
     private LoadingDialog loadingDialog;
     private boolean CheckNet = false;
     Dialog dialogStatus;
@@ -94,6 +94,9 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
         loadingDialog = new LoadingDialog(this);
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
+        Limit=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT);
+        LimitMin=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT_MIN);
+
         AddBankBenBtn = findViewById(R.id.BankBenAddBtn);
         BackBtn = findViewById(R.id.send_back_btn);
         WithdrawAmountlayout = findViewById(R.id.withdrawAmountlayout);
@@ -108,7 +111,15 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
         cardAmount = findViewById(R.id.card_amount);
         tvWalletBalance = findViewById(R.id.walletBalance);
         tvTransactionFee=findViewById(R.id.transactionFeeText_sendMoney);
+        tvMaxLimit=findViewById(R.id.maxLimit_sendMoney);
+        tvMinLimit=findViewById(R.id.minLimit_sendMoney);
+        BenLayout=findViewById(R.id.benLayout_sendMoney);
+
+        tvMaxLimit.setText(getResources().getString(R.string.rupees)+" "+Limit);
+        tvMinLimit.setText(getResources().getString(R.string.rupees)+" "+LimitMin);
+
         BankBenSpinner.setVisibility(View.GONE);
+        BenLayout.setVisibility(View.GONE);
         cardAmount.setVisibility(View.GONE);
 
         NameList = new ArrayList<>();
@@ -229,11 +240,12 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
     }
 
     private void CheckValidate() {
-        int Amount = 0,limit=0;
-        String Limit=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT);
+        int Amount = 0,limit=0,limitMin=0;
+
         try {
             Amount = Integer.parseInt(AmountED.getText().toString().trim());
             limit = (int)Double.parseDouble(Limit)+1;
+            limitMin = (int)Double.parseDouble(LimitMin)-1;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,7 +256,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
             if (TextUtils.isEmpty(AmountED.getText().toString().trim())) {
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Enter Amount", false);
             } else {
-                if (Amount < limit && Amount > 99) {
+                if (Amount < limit && Amount > limitMin) {
 
                     if (TextUtils.isEmpty(BenID)) {
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Select Any Beneficiary", false);
@@ -268,7 +280,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                     }
 
                 } else {
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Enter Amount Between Rs 100 And Rs 8000 ", true);
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Enter Amount Between Rs "+LimitMin+" & Rs "+Limit, true);
                 }
             }
         } else {
@@ -393,6 +405,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                 Mode = "UPI";
                 WithdrawAmountlayout.setVisibility(VISIBLE);
                 BankBenSpinner.setVisibility(View.GONE);
+                BenLayout.setVisibility(View.GONE);
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Coming Soon", false);
                 break;
 
@@ -400,6 +413,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                 Mode = "Bank Transfer";
                 WithdrawAmountlayout.setVisibility(VISIBLE);
                 BankBenSpinner.setVisibility(VISIBLE);
+                BenLayout.setVisibility(VISIBLE);
                 break;
         }
     }

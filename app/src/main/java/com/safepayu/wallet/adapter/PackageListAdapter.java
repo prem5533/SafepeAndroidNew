@@ -1,9 +1,11 @@
 package com.safepayu.wallet.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,7 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.api.ApiClient;
+import com.safepayu.wallet.helper.RecyclerLayoutManager;
 import com.safepayu.wallet.models.response.PackageListData;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +31,7 @@ public class  PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter
     private int selectedPackagePosition = -1;
     private View selectedPackageView = null;
     private OnPackageSelectListener callback;
+    private RecyclerLayoutManager layoutManager1;
 
     public interface OnPackageSelectListener {
         void onPackageSelect(int position, PackageListData.Packages selectedPackage);
@@ -41,7 +47,6 @@ public class  PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter
     public void clearData() {
         this.mItem.clear();
         notifyDataSetChanged();
-
     }
 
     public void addItem(List<PackageListData.Packages> mItem) {
@@ -70,9 +75,7 @@ public class  PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter
     @Override
     public void onBindViewHolder(@NonNull final PackagesListingViewHolder packagesListingViewHolder, int position) {
         packagesListingViewHolder.bindData(position);
-
     }
-
 
     @Override
     public int getItemCount() {
@@ -84,7 +87,7 @@ public class  PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter
 
         private final TextView packageName, packageAmount;
         private LinearLayout linear_buy_package;
-
+        private ImageView packageIcon;
 
         public PackagesListingViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +95,7 @@ public class  PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter
             packageName = itemView.findViewById(R.id.tv_packageName);
             packageAmount = itemView.findViewById(R.id.tv_packageAmount);
             linear_buy_package = itemView.findViewById(R.id.linear_buy_package);
+            packageIcon = itemView.findViewById(R.id.icon_packageAdapter);
 
             itemView.setOnClickListener(this);
         }
@@ -101,6 +105,17 @@ public class  PackageListAdapter extends RecyclerView.Adapter<PackageListAdapter
             packageName.setText(mItem.get(position).getPackageName());
             packageAmount.setText(context.getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(mItem.get(position).getPackageAmount()));
 
+            try {
+                if (TextUtils.isEmpty(mItem.get(position).getPackage_icon())){
+
+                }else {
+                    Picasso.get()
+                            .load(ApiClient.ImagePath+ mItem.get(position).getPackage_icon())
+                            .into(packageIcon);
+                }
+            }catch (Exception er){
+                er.printStackTrace();
+            }
         }
 
         @Override

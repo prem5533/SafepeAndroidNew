@@ -4,478 +4,518 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/newAccountLayout">
+    android:id="@+id/withMoneyLayout"
+    android:background="#f4f5ff">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View
+        <LinearLayout
+            android:layout_height="100dp"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:background="@color/white"
-            android:layout_marginTop="2dp"/>
+            android:background="#196cfe"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/grey_200"
-            android:layout_marginTop="2dp"/>
-    </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/headerbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/red_theme"
+                android:paddingBottom="5dp">
 
+                <Button
+                    android:id="@+id/send_back_btn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/ic_next_new" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="30dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="Send Money"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </LinearLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none">
+            android:layout_marginTop="-30dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <com.safepayu.wallet.custom_view.CustomTextView
-                    style="@style/TextAppearance.AppCompat.Headline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center"
-                    android:text="Register"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/roboto_bold"
-                    app:fontCustom="@string/Roboto" />
-
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:layout_margin="20dp"
-                    app:cardCornerRadius="5dp"
-                    android:elevation="10dp">
+                    app:cardCornerRadius="10dp"
+                    android:elevation="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="10dp"
-                        android:layout_margin="5dp">
+                        android:padding="5dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:gravity="center">
+                            android:paddingBottom="15dp"
+                            android:paddingTop="15dp">
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/user"/>
-
-                            <EditText
-                                android:id="@+id/et.firstName"
-                                style="@style/defaultEditTextStyle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/first_name"
-                                android:inputType="textCapSentences"
-                                android:textSize="16sp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:textColor="@color/black"
-                                android:background="@null"
-                                android:paddingLeft="5dp"/>
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/divider"
-                            android:layout_marginTop="2dp"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/user"/>
-
-                            <EditText
-                                android:id="@+id/et.lastName"
-                                style="@style/defaultEditTextStyle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/last_name"
-                                android:inputType="textCapSentences"
-                                android:textSize="16sp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:textColor="@color/black"
-                                android:background="@null"
-                                android:paddingLeft="5dp"/>
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/divider"
-                            android:layout_marginTop="2dp"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/ic_email_new"/>
-
-                            <EditText
-                                android:id="@+id/et.email"
-                                style="@style/defaultEditTextStyle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/email"
-                                android:inputType="textEmailAddress"
-                                android:textSize="16sp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:textColor="@color/black"
-                                android:background="@null"
-                                android:paddingLeft="5dp"/>
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/divider"
-                            android:layout_marginTop="2dp"/>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/ic_mobile_new"
-                                android:layout_marginTop="8dp"/>
-
-                            <EditText
-                                android:id="@+id/et.mobileNo"
-                                style="@style/defaultEditTextStyle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/enter_mobile"
-                                android:inputType="number"
-                                android:textSize="16sp"
-                                android:maxLength="14"
-                                android:fontFamily="@font/roboto_regular"
-                                android:textColor="@color/black"
-                                android:background="@null"
-                                android:paddingLeft="5dp"/>
-                        </LinearLayout>
-
-                        <com.safepayu.wallet.custom_view.CustomTextView
-                            style="@style/TextAppearance.AppCompat.Headline"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="40dp"
-                            android:layout_marginTop="-5dp"
-                            android:gravity="left"
-                            android:text="W’ll send you a One Time Password"
-                            android:textSize="12sp"
-                            android:textColor="@color/grey_600"
-                            android:fontFamily="@font/roboto_regular"
-                            app:fontCustom="@string/Roboto" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/divider"
-                            android:layout_marginTop="2dp"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/ic_dob_new"/>
-
-                            <EditText
-                                android:id="@+id/et.dob"
-                                style="@style/defaultEditTextStyle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/dob_hint"
-                                android:inputType="text"
-                                android:textSize="16sp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:textColor="@color/black"
-                                android:singleLine="true"
-                                android:imeOptions="actionNext"
-                                android:clickable="true"
-                                android:focusable="false"
-                                android:background="@null"
-                                android:paddingLeft="5dp"/>
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/divider"
-                            android:layout_marginTop="2dp"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/ic_password_new"/>
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <EditText
-                                    android:id="@+id/et_password_password"
-                                    style="@style/defaultEditTextStyle"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="@string/enter_password"
-                                    android:inputType="textPassword"
-                                    android:textSize="16sp"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:textColor="@color/black"
-                                    android:background="@null"
-                                    android:paddingLeft="5dp"/>
-
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/show_password48"
-                                    android:id="@+id/show_hide_password_newAccount"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginTop="10dp"/>
-                            </RelativeLayout>
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/divider"
-                            android:layout_marginTop="2dp"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/ic_referral_new"/>
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp">
-                                <EditText
-                                    android:id="@+id/et.referralCode"
-                                    style="@style/defaultEditTextStyle"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:hint="Sponsor ID*"
-                                    android:inputType="text"
-                                    android:textSize="16sp"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:textColor="@color/black"
-                                    android:background="@null"
-                                    android:paddingLeft="5dp"/>
-
-                                <FrameLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true">
-                                    <Button
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:id="@+id/verify_already"
-                                        android:layout_alignParentRight="true"
-                                        android:background="@null"
-                                        android:text="Verified"
-                                        android:textSize="12sp"
-                                        android:textColor="#00C853"
-                                        android:textAllCaps="false"
-                                        android:visibility="gone"
-                                        android:fontFamily="@font/roboto_regular" />
-
-
-                                    <Button
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:id="@+id/verify_referral"
-                                        android:background="@null"
-                                        android:text="Verify Referral"
-                                        android:textSize="12sp"
-                                        android:textColor="@color/bue_A800"
-                                        android:textAllCaps="false"
-                                        android:fontFamily="@font/roboto_regular" />
-                                </FrameLayout>
-                            </RelativeLayout>
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/divider"
-                            android:layout_marginTop="2dp"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="10dp">
-
-                            <TextView
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                style="@style/TextAppearance.AppCompat.Large"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="Wallet Balance"
                                 android:textSize="14sp"
-                                android:text="Referral Name - "
-                                android:fontFamily="@font/roboto_regular"
-                                android:textColor="@color/black"/>
+                                android:textColor="@color/black"
+                                android:textStyle="normal"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"/>
 
-                            <TextView
-                                android:id="@+id/refer_user_name"
-                                android:layout_width="wrap_content"
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Large"
+                                app:fontCustom="@string/Roboto"
                                 android:textSize="14sp"
+                                android:gravity="end"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/roboto_bold"
+                                android:textColor="@color/grey_500"
+                                android:id="@+id/walletBalance"
                                 android:text=""
-                                android:fontFamily="@font/roboto_bold"
-                                android:textColor="@color/bue_A700"/>
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"/>
                         </LinearLayout>
-
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:layout_marginBottom="20dp"
-                            android:layout_marginTop="10dp">
+                            android:paddingBottom="15dp"
+                            android:paddingTop="15dp">
 
-                            <TextView
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:id="@+id/tv.packageName"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Daily Withdrawal Limit"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:textStyle="normal"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp" />
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="12sp"
-                                android:text="If You Dont't Have Any Referral Code - "
-                                android:fontFamily="@font/roboto_regular"
-                                android:textColor="@color/grey_800"/>
-
-                            <TextView
-                                android:id="@+id/forRefer"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:text="Click Here"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textSize="14sp"
+                                android:textColor="@color/grey_500"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:id="@+id/maxLimit_sendMoney"
+                                android:text="1000"
                                 android:fontFamily="@font/roboto_bold"
-                                android:textColor="@color/black"/>
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"/>
                         </LinearLayout>
-
-                        <CheckBox
-                            android:id="@+id/ch_term_cond"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="11sp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:buttonTint="@color/red_theme"
-                            android:text="Terms &amp; Conditions"
-                            android:textColor="@color/black"
-                            android:checked="true"/>
-
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:background="@color/white"
-                            android:layout_marginTop="2dp"/>
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15dp"
+                            android:paddingTop="15dp">
 
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:textStyle="normal"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:textSize="14sp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:text="Minimum Withdrawal Amount" />
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/minLimit_sendMoney"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textSize="14sp"
+                                android:textColor="@color/red_500"
+                                android:textStyle="normal"
+                                android:gravity="center"
+                                android:text="0%"
+                                android:fontFamily="@font/roboto_bold"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"/>
+                        </LinearLayout>
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
-                <Button
-                    android:id="@+id/btn.process"
-                    style="@style/buttonDefault"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:paddingTop="10dp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/roboto_bold"
-                    android:background="@drawable/blue_green_round_btn"
-                    android:layout_marginTop="-50dp"
-                    android:text="Register"/>
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/red_theme"
+                    android:layout_height="wrap_content"
+                    android:text="Select Beneficiary"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="10dp"/>
+
+                <RadioGroup
+                    android:id="@+id/radioGroupWithdraw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <RadioButton
+                        android:id="@+id/upiradiobtn"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="UPI"/>
+
+
+                    <RadioButton
+                        android:id="@+id/bankradiobtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        android:buttonTint="@color/yellow_theme"
+                        android:text="BANK ACCOUNT"/>
+                </RadioGroup>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/building_new"
+                        android:layout_marginLeft="5dp"/>
+
+                    <Spinner
+                        android:id="@+id/bankBenSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"/>
+
+            <LinearLayout
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/withdrawAmountlayout"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/rupee_new"
+                        android:layout_marginLeft="5dp"/>
+
+                    <EditText
+                        android:id="@+id/withdrawAmount"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="Already have an account?"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="0dp"
+                        android:background="@null"
+                        android:hint="Enter Amount"
+                        android:textColor="#000000"
+                        android:maxLength="4"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"
+                        android:paddingLeft="15sp"
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/grey_800"/>
+                        android:textSize="15sp" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="15dp">
+
 
                     <TextView
-                        android:id="@+id/backToLoginBtn"
+                        android:layout_weight="1"
+                        android:id="@+id/calculatedamount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="Login"
-                        android:fontFamily="@font/roboto_bold"
-                        android:textColor="@color/yellow_theme"
-                        android:layout_marginLeft="5dp"/>
+                        android:text="Enter amount"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/red_theme"
+                        android:paddingLeft="0dp"
+                        android:gravity="right"
+                        android:visibility="gone"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        app:cardCornerRadius="10dp"
+                        android:elevation="5dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@color/white">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Amount reflect in your account"
+                                android:textColor="@color/red_theme"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:padding="10dp"
+                                android:gravity="left" />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height=".5dp"
+                                android:background="@color/yellow"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Withdrawal Amount"
+                                    android:textSize="13sp"
+                                    android:textColor="@color/black"
+                                    android:padding="10dp"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:layout_weight="1"/>
+                                <TextView
+                                    android:id="@+id/tv_withdrawalamount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10"
+                                    android:textSize="13sp"
+                                    android:textColor="@color/black"
+                                    android:padding="10dp"
+                                    android:fontFamily="@font/roboto_regular"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Transaction Fee"
+                                    android:textSize="13sp"
+                                    android:textColor="@color/black"
+                                    android:padding="10dp"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:layout_weight="1"/>
+                                <TextView
+                                    android:id="@+id/tv_sendtax"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10"
+                                    android:textSize="13sp"
+                                    android:textColor="@color/black"
+                                    android:padding="10dp"
+                                    android:fontFamily="@font/roboto_regular"/>
+                            </LinearLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height=".5dp"
+                                android:background="@color/divider"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Total Amount"
+                                    android:textSize="13sp"
+                                    android:textColor="@color/black"
+                                    android:padding="10dp"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:layout_weight="1"/>
+                                <TextView
+                                    android:id="@+id/tv_total_amountsendmoney"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10"
+                                    android:textSize="13sp"
+                                    android:textColor="@color/black"
+                                    android:padding="10dp"
+                                    android:fontFamily="@font/roboto_regular"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
 
+                <Button
+                    android:id="@+id/btnWithdraw"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/amount"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/blue_green_round_btn"
+                    android:fontFamily="@font/roboto_bold"
+                    android:padding="10dp"
+                    android:text="Withdraw Money"
+                    android:textAllCaps="false"
+                    android:textColor="#fff"
+                    android:textSize="17sp"/>
+
+                <TextView
+                    android:id="@+id/transactionFeeText_sendMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:layout_gravity="center"
+                    android:text="Transaction fee: 3.56% or Minimum ₹ 10 "
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="14sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"/>
 
             </LinearLayout>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:elevation="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:id="@+id/BankBenAddBtn">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/plus_new"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"/>
+
+                        <TextView
+                            android:id="@+id/tv_bank_click_here"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add New Bank Account"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/red_theme" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+
         </androidx.core.widget.NestedScrollView>
+
     </LinearLayout>
 
 </RelativeLayout>

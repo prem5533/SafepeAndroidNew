@@ -1,79 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/buy_packageId"
-    tools:context=".activity.LoginActivity">
+    android:background="#f4f5ff">
 
-    <RelativeLayout
-        android:id="@+id/headerbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/red_theme"
-        android:paddingBottom="5dp">
-
-        <Button
-            android:id="@+id/backbtn_from_membership"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
-
-        <TextView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:text="Buy Package"
-            android:fontFamily="@font/roboto_bold"
-            android:textColor="#fff"
-            android:textSize="18sp"  />
-    </RelativeLayout>
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/headerbar">
+        android:orientation="vertical">
 
         <LinearLayout
+            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:background="#196cfe"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <RelativeLayout
+                android:id="@+id/headerbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/red_theme"
+                android:paddingBottom="5dp">
+
+                <Button
+                    android:id="@+id/backbtn_from_membership"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/ic_next_new" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="Buy Package"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="-30dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginRight="1dp"
-                    >
+                    android:padding="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:elevation="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:background="#f7f6f8"
                         android:padding="5dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:paddingBottom="10dp"
-                            android:paddingTop="10dp">
+                            android:paddingBottom="15dp"
+                            android:paddingTop="15dp">
 
                             <com.safepayu.wallet.custom_view.CustomTextView
                                 style="@style/TextAppearance.AppCompat.Large"
@@ -105,182 +110,173 @@
                         </LinearLayout>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="0.5dp"
-                            android:background="@color/divider"/>
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:paddingBottom="15dp"
+                            android:paddingTop="15dp">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:id="@+id/tv.packageName"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingBottom="10dp"
-                                android:paddingTop="10dp"
-                                >
+                                android:layout_weight="1"
+                                android:text="Diamond:"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:textStyle="normal"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="true"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp" />
 
-                                <com.safepayu.wallet.custom_view.CustomTextView
-                                    android:id="@+id/tv.packageName"
-                                    style="@style/TextAppearance.AppCompat.Medium"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="Diamond:"
-                                    android:textSize="14sp"
-                                    android:textColor="@color/black"
-                                    android:textStyle="normal"
-                                    app:fontCustom="@string/Roboto"
-                                    android:textAllCaps="true"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_marginLeft="10dp" />
-
-                                <com.safepayu.wallet.custom_view.CustomTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    style="@style/TextAppearance.AppCompat.Medium"
-                                    app:fontCustom="@string/Roboto"
-                                    android:textSize="14sp"
-                                    android:textColor="@color/grey_500"
-                                    android:textStyle="bold"
-                                    android:gravity="center"
-                                    android:id="@+id/tv.packageAmount"
-                                    android:text="1000"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="10dp"/>
-                            </LinearLayout>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0.5dp"
-                                android:background="@color/divider"/>
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingBottom="10dp"
-                                android:paddingTop="10dp">
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textSize="14sp"
+                                android:textColor="@color/grey_500"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:id="@+id/tv.packageAmount"
+                                android:text="1000"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15dp"
+                            android:paddingTop="15dp">
 
-                                <com.safepayu.wallet.custom_view.CustomTextView
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="wrap_content"
-                                    style="@style/TextAppearance.AppCompat.Medium"
-                                    android:textStyle="normal"
-                                    app:fontCustom="@string/Roboto"
-                                    android:textAllCaps="true"
-                                    android:textSize="14sp"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_marginLeft="10dp"
-                                    android:text="GST:" />
-
-                                <com.safepayu.wallet.custom_view.CustomTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/tv.tax"
-                                    style="@style/TextAppearance.AppCompat.Medium"
-                                    app:fontCustom="@string/Roboto"
-                                    android:textSize="14sp"
-                                    android:textColor="@color/grey_500"
-                                    android:textStyle="normal"
-                                    android:gravity="center"
-                                    android:text="0%"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="10dp"/>
-                            </LinearLayout>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0.5dp"
-                                android:background="@color/divider"/>
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingBottom="10dp"
-                                android:paddingTop="10dp">
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:textStyle="normal"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="true"
+                                android:textSize="14sp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:text="GST:" />
 
-                                <com.safepayu.wallet.custom_view.CustomTextView
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="wrap_content"
-                                    style="@style/TextAppearance.AppCompat.Medium"
-                                    app:fontCustom="@string/Roboto"
-                                    android:textAllCaps="true"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_marginLeft="10dp"
-                                    android:textColor="@color/red"
-                                    android:textStyle="normal"
-                                    android:textSize="14sp"
-                                    android:text="@string/total_amount_to_pay" />
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/tv.tax"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textSize="14sp"
+                                android:textColor="@color/grey_500"
+                                android:textStyle="normal"
+                                android:gravity="center"
+                                android:text="0%"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/grey_700"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15dp"
+                            android:paddingTop="15dp">
 
-                                <com.safepayu.wallet.custom_view.CustomTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    style="@style/TextAppearance.AppCompat.Medium"
-                                    app:fontCustom="@string/Roboto"
-                                    android:textSize="14sp"
-                                    android:textColor="@color/red"
-                                    android:textStyle="bold"
-                                    android:gravity="center"
-                                    android:id="@+id/tv.totalAmountPay"
-                                    android:text="1000"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="10dp"/>
-                            </LinearLayout>
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="true"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/red"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:text="@string/total_amount_to_pay" />
 
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textSize="14sp"
+                                android:textColor="@color/red"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:id="@+id/tv.totalAmountPay"
+                                android:text="1000"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"/>
                         </LinearLayout>
                     </LinearLayout>
+
                 </androidx.cardview.widget.CardView>
 
-
-
                 <com.safepayu.wallet.custom_view.CustomTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Small"
                     app:fontCustom="@string/Roboto"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:id="@+id/tv.taxDetails"
                     android:textStyle="normal"
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="20dp"
-                    android:textColor="@color/yellow"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:textColor="@color/red_700"
+                    android:gravity="left"
                     android:text="@string/gst_charge_on_package" />
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/divider"/>
-
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Medium"
                     app:fontCustom="@string/Roboto"
-                    android:textSize="15sp"
+                    android:textSize="17sp"
                     android:textStyle="bold"
-                    android:textColor="@color/bue_A800"
-                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:gravity="center"
                     android:text="@string/select_package" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/list.packageListView" />
+                    android:id="@+id/list.packageListView"
+                    android:layout_margin="5dp"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/divider"/>
-
+                    android:background="@color/divider"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"/>
                 <com.safepayu.wallet.custom_view.CustomTextView
                     android:id="@+id/pymnt_option"
                     android:layout_width="match_parent"
@@ -311,7 +307,8 @@
                         android:layout_weight="1"
                         android:textSize="14sp"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Wallet Balance" />
+                        android:text="Wallet Balance"
+                        android:buttonTint="#46c58e"/>
 
                     <RadioButton
                         android:id="@+id/rb.bank"
@@ -320,7 +317,8 @@
                         android:layout_weight="1"
                         android:textSize="14sp"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Bank Transfer" />
+                        android:text="Bank Transfer"
+                        android:buttonTint="#46c58e"/>
                 </RadioGroup>
 
                 <androidx.cardview.widget.CardView
@@ -344,8 +342,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="10dp"
-                            >
+                            android:padding="10dp">
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -366,8 +363,10 @@
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="0.5dp"
-                            android:background="@color/divider"/>
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"/>
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycle_bank_list"
                             android:layout_width="match_parent"
@@ -626,24 +625,24 @@
                                 android:layout_weight="1"
                                 android:orientation="horizontal"
                                 android:visibility="gone"
-                             >
+                                >
 
-                            <TextView
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:text="UPI Details"
-                                android:textSize="14sp"
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/roboto_regular"/>
+                                <TextView
+                                    android:layout_width="140dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="UPI Details"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="@font/roboto_regular"/>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="safepe@icici"
-                                android:textColor="@color/colorSecondaryDark"
-                                android:textIsSelectable="true"
-                                android:fontFamily="@font/roboto_regular"
-                                android:textSize="14sp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="safepe@icici"
+                                    android:textColor="@color/colorSecondaryDark"
+                                    android:textIsSelectable="true"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:textSize="14sp"/>
                             </LinearLayout>
                             <ImageView
                                 android:layout_width="50dp"
@@ -656,27 +655,30 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
+
                 <Button
                     android:id="@+id/btn.proceed"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/proceed"
-                    android:textSize="15sp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/amount"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/blue_green_round_btn"
                     android:fontFamily="@font/roboto_regular"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/rounded_buttons"
-                    android:layout_marginBottom="20dp"
-                    style="@style/buttonDefault" />
+                    android:padding="10dp"
+                    android:text="@string/proceed"
+                    android:textColor="#fff"
+                    android:textSize="15sp" />
+
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
 
-            <!--<include layout="@layout/bottom_lines" />-->
+        </androidx.core.widget.NestedScrollView>
 
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 </RelativeLayout>

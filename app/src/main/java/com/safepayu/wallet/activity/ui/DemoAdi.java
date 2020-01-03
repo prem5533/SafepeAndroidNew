@@ -22,6 +22,6 @@ public class DemoAdi extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.navigation_new);
+        setContentView(R.layout.demo_adi);
     }
 }

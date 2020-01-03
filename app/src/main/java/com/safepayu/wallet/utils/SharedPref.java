@@ -33,6 +33,7 @@ public class SharedPref {
     public final String WALLET_BALANCE = "wallet_balance";
     public final String GST = "gst";
     public final String LIMIT = "limit";
+    public final String LIMIT_MIN = "limit_min";
     public final String SERVICE_CHARGE = "Service_charge";
     public final String TRANSACTION_CHARGE = "Transaction_charge";
 

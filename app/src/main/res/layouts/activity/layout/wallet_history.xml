@@ -3,35 +3,44 @@
     android:id="@+id/walletHistoryLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#f4f5ff">
 
-    <RelativeLayout
-        android:id="@+id/headerbar"
+    <LinearLayout
+        android:layout_height="60dp"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/red_theme"
-        android:paddingBottom="5dp">
+        android:background="#196cfe"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:gravity="center">
 
-        <Button
-            android:id="@+id/backbtn_walletHistory"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
-
-        <TextView
-
+        <RelativeLayout
+            android:id="@+id/headerbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:fontFamily="@font/roboto_bold"
-            android:gravity="center"
-            android:text="Wallet History"
-            android:textColor="#fff"
-            android:textSize="18sp" />
-    </RelativeLayout>
+            android:layout_height="?actionBarSize"
+            android:background="@color/red_theme"
+            android:paddingBottom="5dp">
+
+            <Button
+                android:id="@+id/backbtn_walletHistory"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_next_new" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="Wallet History"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_walletHistory"

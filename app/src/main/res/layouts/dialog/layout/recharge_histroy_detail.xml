@@ -1,54 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#f7f8f8">
+    android:orientation="vertical"
+    android:background="#f4f5ff">
 
-    <RelativeLayout
-        android:id="@+id/headerbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="#1dbf78 "
-        android:paddingBottom="5dp">
-
-        <Button
-            android:id="@+id/recharge_back_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp"
-            android:visibility="visible"/>
-
-        <TextView
-            android:id="@+id/tv_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="15dp"
-            android:text="Transaction Succesful"
-            android:fontFamily="@font/roboto_bold"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:layout_toRightOf="@+id/recharge_back_btn"/>
-    </RelativeLayout>
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/headerbar"
-        >
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:background="#196cfe"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <RelativeLayout
+                android:id="@+id/headerbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/red_theme"
+                android:paddingBottom="5dp">
+
+                <Button
+                    android:id="@+id/recharge_back_btn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/ic_next_new" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="Transaction Succesful"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center|bottom">
+            android:gravity="center|bottom"
+            android:layout_marginTop="-30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="5dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -73,7 +86,7 @@
                             android:textSize="15sp"
                             android:padding="5dp"
                             android:layout_weight="1"
-                            android:textColor="@color/bue_A800"/>
+                            android:textColor="@color/red_theme"/>
                         <TextView
                             android:id="@+id/tv_copy_id"
                             android:layout_width="wrap_content"
@@ -87,11 +100,14 @@
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -153,13 +169,12 @@
                         android:gravity="center"
                         android:padding="5dp">
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_height="46dp"
-                            android:layout_width="46dp"
+                        <LinearLayout
+                            android:layout_height="50dp"
+                            android:layout_width="50dp"
                             android:layout_margin="5dp"
-                            app:cardElevation="1dp"
-                            app:cardCornerRadius="23dp"
-                            app:cardBackgroundColor="@color/red_theme">
+                            android:background="@drawable/blue_green_round_btn"
+                            android:layout_gravity="center">
 
                             <ImageView
                                 android:id="@+id/image_restaurant"
@@ -169,8 +184,8 @@
                                 android:scaleType="fitXY"
                                 android:padding="10dp"
                                 android:src="@drawable/ic_send" />
+                        </LinearLayout>
 
-                        </androidx.cardview.widget.CardView>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -231,7 +246,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                app:cardCornerRadius="10dp"
+                android:elevation="5dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -258,7 +275,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_regular"
                             android:text="Contact SafePe Support"
-                            android:textColor="@color/bue_A800"
+                            android:textColor="@color/yellow_theme"
                             android:textSize="14sp"
                             android:padding="5dp"/>
                         <ImageView
@@ -280,57 +297,16 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="100dp"
-
                 android:gravity="center">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/red_theme"
-                    android:layout_weight="1"
-                    android:layout_marginRight="-20dp"/>
                 <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/safelogo_transparent">
+                    android:layout_width="130dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/logo">
 
                 </ImageView>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/yellow_theme"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="-20dp"/>
 
             </LinearLayout>
-
-
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/gobackBtn"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/amount"
-            android:layout_gravity="center"
-            android:background="@drawable/dialog_button"
-            android:padding="10dp"
-            android:text="Go Back"
-            android:textAllCaps="false"
-            android:textColor="#fff"
-            android:textSize="17sp"
-            android:fontFamily="@font/roboto_regular"
-            android:visibility="gone"/>
-
     </LinearLayout>
-
-
 </RelativeLayout>
-

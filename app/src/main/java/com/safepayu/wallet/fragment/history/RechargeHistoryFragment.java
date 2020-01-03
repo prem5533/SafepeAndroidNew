@@ -115,13 +115,13 @@ public class RechargeHistoryFragment extends Fragment implements RechargeHistory
 
         if (statusNo==0){
             StatusTV.setText("Pending");
-            StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.clay_yellow));
+           // StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.clay_yellow));
         }else  if (statusNo==1){
             StatusTV.setText("Successful");
-            StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.green_500));
+            //StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.green_500));
         }else {
             StatusTV.setText("Failed");
-            StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.red_500));
+           // StatusColorBackground.setBackgroundColor(getResources().getColor(R.color.red_500));
         }
 
         if (rechargeTypeNo==1){
@@ -135,7 +135,11 @@ public class RechargeHistoryFragment extends Fragment implements RechargeHistory
         }else if (rechargeTypeNo==5){
             RechargeType="Gas Bill Payment";
         }else if (rechargeTypeNo==6){
-            RechargeType="Postpaid/Landline Bill Payment";
+            RechargeType="Postpaid Bill Payment";
+        }else if (rechargeTypeNo==7){
+            RechargeType="Landline Bill Payment";
+        }else if (rechargeTypeNo==8){
+            RechargeType="Metro Recharge";
         }
         RechargeTypeTV.setText(RechargeType);
 
@@ -146,6 +150,7 @@ public class RechargeHistoryFragment extends Fragment implements RechargeHistory
     public void onPackageSelect(int position, RechargeHistoryResponse.DataBean selectedPackage) {
         SelectedHistory(selectedPackage);
     }
+
     private void getRechargeHistory() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getActivity()).create(ApiService.class);

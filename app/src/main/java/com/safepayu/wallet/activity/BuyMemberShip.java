@@ -44,8 +44,9 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         RadioGroup.OnCheckedChangeListener, PasscodeClickListener,BuyMembershipAdapter.OnBankItemListener {
 
     private LoadingDialog loadingDialog;
-    private RecyclerView packageListView,recycleBankList;
-    private RecyclerLayoutManager layoutManager;
+    private RecyclerView recycleBankList;
+    public static RecyclerView packageListView;
+    public static RecyclerLayoutManager layoutManager;
     private PackageListAdapter mAdapter;
     private BuyMembershipAdapter buyMembershipAdapter;
     private PackageListData packageListData;
@@ -74,7 +75,6 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         mAdapter = new PackageListAdapter(this, this);
         packageListView.setAdapter(mAdapter);
 
-
         getPackages();
 
         paymentMode = findViewById(R.id.rg_paymentMode);
@@ -87,7 +87,6 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
 
         paymentMode.setOnCheckedChangeListener(this);
         findViewById(R.id.backbtn_from_membership).setOnClickListener(this);
-
     }
 
     public void showPackageDetails(PackageListData.Packages selectedPackage) {
@@ -109,10 +108,10 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         PackageName=selectedPackage.getPackageName();
         PackageAmount= String.valueOf(selectedPackage.getPackageAmount());
         ((TextView) findViewById(R.id.tv_packageName)).setText(selectedPackage.getPackageName());
-        ((TextView) findViewById(R.id.tv_packageAmount)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(selectedPackage.getPackageAmount()));
+        ((TextView) findViewById(R.id.tv_packageAmount)).setText(getResources().getString(R.string.currency) +" "+ BaseApp.getInstance().commonUtils().decimalFormat(selectedPackage.getPackageAmount()));
         ((TextView) findViewById(R.id.tv_tax)).setText(packageListData.getTax().getTaxValue() + "%");
         Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(selectedPackage.getPackageAmount(), Double.parseDouble(packageListData.getTax().getTaxValue()));
-        ((TextView) findViewById(R.id.tv_totalAmountPay)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount));
+        ((TextView) findViewById(R.id.tv_totalAmountPay)).setText(getResources().getString(R.string.currency)+" " + BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount));
 
         //FinalAmount=CalculateAmount(selectedPackage.getPackageAmount());
         FinalAmount=totalPayableAmount;
