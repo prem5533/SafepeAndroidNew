@@ -21,7 +21,7 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:id="@+id/imageViewQRcode"
-            android:src="@drawable/safelogo_bg"/>
+            android:src="@drawable/logo"/>
 
     </androidx.cardview.widget.CardView>
 

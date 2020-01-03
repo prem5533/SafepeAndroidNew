@@ -18,12 +18,11 @@
 
         <Button
             android:id="@+id/status_back_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
+            android:background="@drawable/ic_next_new"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -37,7 +36,7 @@
             android:textSize="18sp"  />
     </RelativeLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/headerbar">
@@ -193,7 +192,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
-                        android:text=""
+                        android:text="dfds"
                         android:textColor="@color/green_500"
                         android:fontFamily="@font/roboto_medium"
                         android:layout_marginTop="10dp"
@@ -243,5 +242,5 @@
 
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 </RelativeLayout>

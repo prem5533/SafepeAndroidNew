@@ -15,11 +15,10 @@
 
         <Button
             android:id="@+id/notification_back_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
             android:background="@drawable/ic_next_new" />
 
         <TextView
