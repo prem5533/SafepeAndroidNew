@@ -1,229 +1,266 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
-    android:id="@+id/addBeneficiaryLayout">
+    android:id="@+id/addBeneficiaryLayout"
+    android:background="#f4f5ff">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/red_theme"
-        android:paddingBottom="5dp">
-
-        <Button
-            android:id="@+id/send_back_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="2dp"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:text="Add Bank Account"
-            android:fontFamily="@font/roboto_bold"
-            android:textColor="#fff"
-            android:textSize="18sp"  />
-
-    </RelativeLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:layout_height="100dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:orientation="vertical">
+            android:background="#196cfe"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <RelativeLayout
+                android:id="@+id/headerbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/red_theme"
+                android:paddingBottom="5dp">
+
+                <Button
+                    android:id="@+id/send_back_btn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/ic_next_new" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="Add Bank Account"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-30dp">
 
             <LinearLayout
-                android:visibility="visible"
-                android:id="@+id/addBankBenLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="30dp">
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Account Holder Name"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:textColor="@color/red_theme"/>
-
-                <EditText
-                    android:id="@+id/accountName"
-                    android:layout_marginTop="4dp"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:inputType="text"
-                    android:singleLine="true"
-                    android:imeOptions="actionNext"
-                    android:maxLength="40"
-                    android:padding="16dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:background="@drawable/edittext_rounded"
-                    android:hint="Enter Name"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/red_theme"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:text="Account Number"/>
-
-                <EditText
-                    android:id="@+id/accountNumber"
-                    android:layout_marginTop="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:padding="16dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:background="@drawable/edittext_rounded"
-                    android:layout_marginBottom="20dp"
-                    android:hint="Enter Account Number"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Confirm Account Number"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:textColor="@color/red_theme"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@drawable/edittext_rounded"
-                    android:layout_marginBottom="20dp">
-
-                    <EditText
-                        android:id="@+id/confirmAccountNumber"
-                        android:layout_marginTop="4dp"
-                        android:inputType="numberPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:singleLine="true"
-                        android:imeOptions="actionNext"
-                        android:background="@null"
-                        android:hint="Confirm Account Number"
-                        android:layout_toLeftOf="@+id/password_visible"/>
-
-                    <ImageView
-                        android:id="@+id/password_visible"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_visibility_black_24dp"
-                        android:visibility="visible" />
-
-                    <ImageView
-                        android:id="@+id/password_invisible"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_visibility_off_black_24dp"
-                        android:visibility="gone" />
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/red_theme"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:text="Bank IFSC Code"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/edittext_rounded">
+                    android:padding="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:elevation="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/ifscCode"
-                            android:layout_marginTop="4dp"
-                            android:layout_width="200dp"
+                        <LinearLayout
+                            android:visibility="visible"
+                            android:id="@+id/addBankBenLayout"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:singleLine="true"
-                            android:imeOptions="actionDone"
-                            android:padding="16dp"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:layout_marginBottom="0dp"
-                            android:background="@null"
-                            android:hint="Bank IFSC"/>
+                            android:orientation="vertical"
+                            android:layout_marginTop="30dp">
 
-                        <TextView
-                            android:id="@+id/verifyIfscBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/roboto_italic"
-                            android:gravity="center"
-                            android:text="Verify IFSC"
-                            android:textColor="@color/yellow_theme"
-                            android:textSize="15sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Account Holder Name"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textSize="13sp"
+                                android:textColor="@color/red_theme"/>
+
+                            <EditText
+                                android:id="@+id/accountName"
+                                android:layout_marginTop="4dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                android:inputType="text"
+                                android:singleLine="true"
+                                android:imeOptions="actionNext"
+                                android:maxLength="40"
+                                android:padding="16dp"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:background="@drawable/edittext_rounded"
+                                android:hint="Enter Name"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/red_theme"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textSize="13sp"
+                                android:text="Account Number"/>
+
+                            <EditText
+                                android:id="@+id/accountNumber"
+                                android:layout_marginTop="4dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:padding="16dp"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:background="@drawable/edittext_rounded"
+                                android:layout_marginBottom="20dp"
+                                android:hint="Enter Account Number"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Confirm Account Number"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textSize="13sp"
+                                android:textColor="@color/red_theme"/>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:background="@drawable/edittext_rounded"
+                                android:layout_marginBottom="20dp">
+
+                                <EditText
+                                    android:id="@+id/confirmAccountNumber"
+                                    android:layout_marginTop="4dp"
+                                    android:inputType="numberPassword"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="16dp"
+                                    android:singleLine="true"
+                                    android:imeOptions="actionNext"
+                                    android:background="@null"
+                                    android:hint="Confirm Account Number"
+                                    android:layout_toLeftOf="@+id/password_visible"/>
+
+                                <ImageView
+                                    android:id="@+id/password_visible"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginRight="10dp"
+                                    android:src="@drawable/ic_visibility_black_24dp"
+                                    android:visibility="visible" />
+
+                                <ImageView
+                                    android:id="@+id/password_invisible"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginRight="10dp"
+                                    android:src="@drawable/ic_visibility_off_black_24dp"
+                                    android:visibility="gone" />
+                            </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/red_theme"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textSize="13sp"
+                                android:text="Bank IFSC Code"/>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:background="@drawable/edittext_rounded">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <EditText
+                                        android:id="@+id/ifscCode"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_width="200dp"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="text"
+                                        android:singleLine="true"
+                                        android:imeOptions="actionDone"
+                                        android:padding="16dp"
+                                        android:textColor="@color/black"
+                                        android:textSize="16sp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:layout_marginBottom="0dp"
+                                        android:background="@null"
+                                        android:hint="Bank IFSC"/>
+
+                                    <TextView
+                                        android:id="@+id/verifyIfscBtn"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:fontFamily="@font/roboto_italic"
+                                        android:gravity="center"
+                                        android:text="Verify IFSC"
+                                        android:textColor="@color/red_theme"
+                                        android:textSize="15sp" />
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/ifscres"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:layout_marginRight="20dp"
+                                android:textColor="@color/red_theme"
+                                android:textSize="13sp"
+                                android:text=""/>
+
+
+                            <Button
+                                android:id="@+id/bankAddBtn"
+                                android:layout_marginTop="30dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@drawable/blue_green_round_btn"
+                                android:textColor="@color/white"
+                                android:textSize="15sp"
+                                android:textAllCaps="false"
+                                android:layout_marginBottom="40dp"
+                                android:text="Add Beneficiary"/>
+                        </LinearLayout>
+
                     </LinearLayout>
 
-                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/ifscres"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:layout_marginRight="20dp"
-                    android:textColor="@color/red_theme"
-                    android:textSize="13sp"
-                    android:text=""/>
+                </androidx.cardview.widget.CardView>
 
-
-                <Button
-                    android:id="@+id/bankAddBtn"
-                    android:layout_marginTop="30dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@drawable/rounded_buttons"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textAllCaps="false"
-                    android:layout_marginBottom="40dp"
-                    android:text="Add Beneficiary"/>
             </LinearLayout>
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</RelativeLayout>

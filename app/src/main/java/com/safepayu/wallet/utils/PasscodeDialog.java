@@ -129,14 +129,14 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
                 if (visible.getContentDescription().equals("INVISIBLE")) {
                     //MAKE VISIBLE
                     edtxPassCode.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    visible.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_visibility_off_black_24dp));
+                    visible.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_visibility_black_24dp));
                     visible.setContentDescription("VISIBLE");
                     visible.invalidate();
 
                 } else {
                     //INVISIBLE
                     edtxPassCode.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    visible.setImageDrawable(activity.getResources().getDrawable(R.drawable.ic_visibility_black_24dp));
+                    visible.setImageDrawable(activity.getResources().getDrawable(R.drawable.hide_new));
                     visible.setContentDescription("INVISIBLE");
                     visible.invalidate();
                 }

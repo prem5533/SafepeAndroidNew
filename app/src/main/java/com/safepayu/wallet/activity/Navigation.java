@@ -63,7 +63,6 @@ import com.safepayu.wallet.activity.recharge.LandlineBillPay;
 import com.safepayu.wallet.activity.recharge.MobileRecharge;
 import com.safepayu.wallet.activity.recharge.PostpaidBillpay;
 import com.safepayu.wallet.activity.recharge.WaterBillPay;
-import com.safepayu.wallet.activity.ui.DemoAdi;
 import com.safepayu.wallet.adapter.OfferPagerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -483,8 +482,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         Upi_Pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Navigation.this, DemoAdi.class));
-                //Toast.makeText(Navigation.this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+               // startActivity(new Intent(Navigation.this, DemoAdi.class));
+                Toast.makeText(Navigation.this, "Coming Soon!", Toast.LENGTH_SHORT).show();
             }
         });
 

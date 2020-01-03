@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -154,6 +155,7 @@ public class AddBeneficiary extends BaseActivity {
 
                 if (checkIfsc){
                     checkIfsc=false;
+                    VerifyIfscBtn.setTextColor(getResources().getColor(R.color.red_theme));
                 }
 
             }
@@ -216,7 +218,8 @@ public class AddBeneficiary extends BaseActivity {
 
                             if (checkIfsc){
                                 if (CheckNet) {
-                                    resendOtp();
+
+                                    showDetailDialog();
                                 } else {
                                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Check Your Internet Connection!", false);
                                 }
@@ -422,7 +425,7 @@ public class AddBeneficiary extends BaseActivity {
     }
 
     private void getifscVerify() {
-        //  loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(AddBeneficiary.this).create(ApiService.class);
 
         BaseApp.getInstance().getDisposable().add(apiService.getifscVerify(IFSCED.getText().toString().trim())
@@ -431,13 +434,14 @@ public class AddBeneficiary extends BaseActivity {
                 .subscribeWith(new DisposableSingleObserver<VerifyIFSCResponse>() {
                     @Override
                     public void onSuccess(VerifyIFSCResponse response) {
-                        // loadingDialog.hideDialog();
+                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
                             try {
                                 BankName=response.getData().getBANK();
                                 BankAddress=response.getData().getADDRESS();
                                 BankBranch=response.getData().getBRANCH();
                                 checkIfsc=true;
+                                VerifyIfscBtn.setTextColor(getResources().getColor(R.color.yellow_theme));
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), response.getMessage(), false);
                             } catch (Exception e) {
                                 checkIfsc=false;
@@ -452,10 +456,61 @@ public class AddBeneficiary extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        //loadingDialog.hideDialog();
+                        loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.addBeneficiaryLayout), false, e.getCause());
                     }
                 }));
+    }
+
+    private void showDetailDialog() {
+
+        final Dialog dialog = new Dialog(AddBeneficiary.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.ifsc_detail_dialog);
+
+
+        TextView tvAccName,tvAccNumber,tvBank,tvBranch,tvAddress;
+        Button CancelBtn,ProceedBtn;
+
+        CancelBtn = dialog.findViewById(R.id.cancelBtn_dialogBen);
+        ProceedBtn = dialog.findViewById(R.id.bankAddBtn_dialogBen);
+        tvAccName = dialog.findViewById(R.id.accountName);
+        tvBank = dialog.findViewById(R.id.accountBank);
+        tvAccNumber = dialog.findViewById(R.id.accountNumber);
+        tvBranch = dialog.findViewById(R.id.accountBranch);
+        tvAddress = dialog.findViewById(R.id.accountBankAddress);
+
+        tvAccName.setText(addBeneficiaryRequest.getName());
+        tvBank.setText(BankName);
+        tvAccNumber.setText(addBeneficiaryRequest.getBank_account());
+        tvBranch.setText(BankBranch);
+        tvAddress.setText(BankAddress);
+
+        CancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        ProceedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resendOtp();
+                dialog.dismiss();
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+        dialog.show();
+
     }
 
     public class CheckIfscMethod extends AsyncTask<String, String, String> {

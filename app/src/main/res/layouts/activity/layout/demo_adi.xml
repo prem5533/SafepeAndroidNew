@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/withMoneyLayout"
+    android:id="@+id/kycLayout"
     android:background="#f4f5ff">
 
     <LinearLayout
@@ -27,7 +27,7 @@
                 android:paddingBottom="5dp">
 
                 <Button
-                    android:id="@+id/send_back_btn"
+                    android:id="@+id/recharge_back_btn"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerVertical="true"
@@ -40,7 +40,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="5dp"
                     android:gravity="center"
-                    android:text="Send Money"
+                    android:text="Contact Us"
                     android:fontFamily="@font/roboto_bold"
                     android:textColor="#fff"
                     android:textSize="18sp" />
@@ -67,449 +67,427 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="0dp">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="5dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:paddingBottom="15dp"
-                            android:paddingTop="15dp">
-
-                            <com.safepayu.wallet.custom_view.CustomTextView
-                                style="@style/TextAppearance.AppCompat.Large"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Wallet Balance"
-                                android:textSize="14sp"
-                                android:textColor="@color/black"
-                                android:textStyle="normal"
-                                app:fontCustom="@string/Roboto"
-                                android:textAllCaps="false"
-                                android:layout_alignParentLeft="true"
-                                android:layout_marginLeft="10dp"/>
-
-                            <com.safepayu.wallet.custom_view.CustomTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                style="@style/TextAppearance.AppCompat.Large"
-                                app:fontCustom="@string/Roboto"
-                                android:textSize="14sp"
-                                android:gravity="end"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/roboto_bold"
-                                android:textColor="@color/grey_500"
-                                android:id="@+id/walletBalance"
-                                android:text=""
-                                android:layout_alignParentRight="true"
-                                android:layout_marginRight="10dp"/>
-                        </LinearLayout>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/divider"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:paddingBottom="15dp"
-                            android:paddingTop="15dp">
-
-                            <com.safepayu.wallet.custom_view.CustomTextView
-                                android:id="@+id/tv.packageName"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Daily Withdrawal Limit"
-                                android:textSize="14sp"
-                                android:textColor="@color/black"
-                                android:textStyle="normal"
-                                app:fontCustom="@string/Roboto"
-                                android:textAllCaps="false"
-                                android:layout_alignParentLeft="true"
-                                android:layout_marginLeft="10dp" />
-
-                            <com.safepayu.wallet.custom_view.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                app:fontCustom="@string/Roboto"
-                                android:textSize="14sp"
-                                android:textColor="@color/grey_500"
-                                android:textStyle="bold"
-                                android:gravity="center"
-                                android:id="@+id/maxLimit_sendMoney"
-                                android:text="1000"
-                                android:fontFamily="@font/roboto_bold"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginRight="10dp"/>
-                        </LinearLayout>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/divider"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:paddingBottom="15dp"
-                            android:paddingTop="15dp">
-
-                            <com.safepayu.wallet.custom_view.CustomTextView
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:textStyle="normal"
-                                app:fontCustom="@string/Roboto"
-                                android:textAllCaps="false"
-                                android:textSize="14sp"
-                                android:layout_alignParentLeft="true"
-                                android:layout_marginLeft="10dp"
-                                android:text="Minimum Withdrawal Amount" />
-
-                            <com.safepayu.wallet.custom_view.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/minLimit_sendMoney"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                app:fontCustom="@string/Roboto"
-                                android:textSize="14sp"
-                                android:textColor="@color/red_500"
-                                android:textStyle="normal"
-                                android:gravity="center"
-                                android:text="0%"
-                                android:fontFamily="@font/roboto_bold"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginRight="10dp"/>
-                        </LinearLayout>
-                    </LinearLayout>
+                        android:text="SafePe India Pvt. Ltd."
+                        android:gravity="center"
+                        android:textIsSelectable="true"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/red_theme"
+                        android:layout_margin="10dp"/>
 
                 </androidx.cardview.widget.CardView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:paddingTop="10dp"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:layout_marginLeft="20dp"
-                    android:textColor="@color/red_theme"
-                    android:layout_height="wrap_content"
-                    android:text="Select Beneficiary"
-                    android:layout_gravity="left"
-                    android:layout_marginTop="10dp"/>
-
-                <RadioGroup
-                    android:id="@+id/radioGroupWithdraw"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <RadioButton
-                        android:id="@+id/upiradiobtn"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="onRadioButtonClicked"
-                        android:text="UPI"/>
-
-
-                    <RadioButton
-                        android:id="@+id/bankradiobtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="14sp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/roboto_regular"
-                        android:buttonTint="@color/yellow_theme"
-                        android:text="BANK ACCOUNT"/>
-                </RadioGroup>
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/building_new"
-                        android:layout_marginLeft="5dp"/>
-
-                    <Spinner
-                        android:id="@+id/bankBenSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:layout_marginLeft="5dp"/>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"/>
-
-            <LinearLayout
-                android:visibility="visible"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/withdrawAmountlayout"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/rupee_new"
-                        android:layout_marginLeft="5dp"/>
-
-                    <EditText
-                        android:id="@+id/withdrawAmount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="0dp"
-                        android:background="@null"
-                        android:hint="Enter Amount"
-                        android:textColor="#000000"
-                        android:maxLength="4"
-                        android:inputType="number"
-                        android:singleLine="true"
-                        android:imeOptions="actionDone"
-                        android:paddingLeft="15sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textSize="15sp" />
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divider"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_margin="15dp">
-
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp">
 
                     <TextView
-                        android:layout_weight="1"
-                        android:id="@+id/calculatedamount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Enter amount"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/red_theme"
-                        android:paddingLeft="0dp"
-                        android:gravity="right"
-                        android:visibility="gone"/>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card_amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        app:cardCornerRadius="10dp"
-                        android:elevation="5dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:background="@color/white">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Amount reflect in your account"
-                                android:textColor="@color/red_theme"
-                                android:textSize="15sp"
-                                android:fontFamily="@font/roboto_bold"
-                                android:padding="10dp"
-                                android:gravity="left" />
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height=".5dp"
-                                android:background="@color/yellow"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginRight="5dp"/>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Withdrawal Amount"
-                                    android:textSize="13sp"
-                                    android:textColor="@color/black"
-                                    android:padding="10dp"
-                                    android:fontFamily="@font/roboto_bold"
-                                    android:layout_weight="1"/>
-                                <TextView
-                                    android:id="@+id/tv_withdrawalamount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="10"
-                                    android:textSize="13sp"
-                                    android:textColor="@color/black"
-                                    android:padding="10dp"
-                                    android:fontFamily="@font/roboto_regular"/>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Transaction Fee"
-                                    android:textSize="13sp"
-                                    android:textColor="@color/black"
-                                    android:padding="10dp"
-                                    android:fontFamily="@font/roboto_bold"
-                                    android:layout_weight="1"/>
-                                <TextView
-                                    android:id="@+id/tv_sendtax"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="10"
-                                    android:textSize="13sp"
-                                    android:textColor="@color/black"
-                                    android:padding="10dp"
-                                    android:fontFamily="@font/roboto_regular"/>
-                            </LinearLayout>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height=".5dp"
-                                android:background="@color/divider"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"/>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Total Amount"
-                                    android:textSize="13sp"
-                                    android:textColor="@color/black"
-                                    android:padding="10dp"
-                                    android:fontFamily="@font/roboto_bold"
-                                    android:layout_weight="1"/>
-                                <TextView
-                                    android:id="@+id/tv_total_amountsendmoney"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="10"
-                                    android:textSize="13sp"
-                                    android:textColor="@color/black"
-                                    android:padding="10dp"
-                                    android:fontFamily="@font/roboto_regular"/>
-                            </LinearLayout>
+                        android:text="In case of any inconvenience regarding the transaction of money OR further query then you can contact us:"
+                        android:layout_gravity="center"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginTop="20dp"
+                        android:textColor="@color/red_theme" />
 
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.7dp"
+                        android:background="@color/grey_500"
+                        android:layout_marginTop="10dp"/>
 
-
-                <Button
-                    android:id="@+id/btnWithdraw"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/amount"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/blue_green_round_btn"
-                    android:fontFamily="@font/roboto_bold"
-                    android:padding="10dp"
-                    android:text="Withdraw Money"
-                    android:textAllCaps="false"
-                    android:textColor="#fff"
-                    android:textSize="17sp"/>
-
-                <TextView
-                    android:id="@+id/transactionFeeText_sendMoney"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/red"
-                    android:layout_gravity="center"
-                    android:text="Transaction fee: 3.56% or Minimum ₹ 10 "
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="14sp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"/>
-
-            </LinearLayout>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    app:cardCornerRadius="10dp"
-                    android:elevation="5dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="0dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:id="@+id/BankBenAddBtn">
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="start|center">
 
                         <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/plus_new"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"/>
-
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_whatsapp"
+                            android:padding="10dp"/>
                         <TextView
-                            android:id="@+id/tv_bank_click_here"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Add New Bank Account"
-                            android:textSize="16sp"
+                            android:text="Whatsapp and Call"
+                            android:textSize="14sp"
                             android:fontFamily="@font/roboto_bold"
-                            android:textColor="@color/red_theme" />
+                            android:textColor="@color/black"
+                            android:textIsSelectable="true" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="right">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@string/whatsappno"
+                                android:textSize="16sp"
+                                android:textColor="@color/grey_700"
+                                android:layout_gravity="right"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/roboto_bold"
+                                android:textIsSelectable="true"
+                                android:layout_marginRight="10dp"/>
+
+                        </LinearLayout>
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.7dp"
+                        android:background="@color/grey_500"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="start|center">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_customer_cre"
+                            android:padding="10dp"/>
+                        <TextView
+                            android:id="@+id/tollfreeNoText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/toll_customer"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/black"
+                            android:textIsSelectable="true" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="right">
+                            <TextView
+                                android:id="@+id/tollfreeNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text=""
+                                android:textSize="16sp"
+                                android:layout_gravity="right"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/roboto_bold"
+                                android:textColor="@color/grey_700"
+                                android:textIsSelectable="true"
+                                android:layout_marginRight="15dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.7dp"
+                        android:background="@color/grey_500"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="start|center">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_whatsapp"
+                            android:padding="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Address:"
+                                android:gravity="left"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:textColor="@color/black" />
+                            <TextView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="B-096,B Block, Sector 65, Noida, Delhi(NCR) Uttar Pradesh 201301"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:textColor="@color/black"
+                                android:paddingRight="20dp"
+                                android:paddingLeft="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:gravity="right"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.7dp"
+                        android:background="@color/grey_500"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="start|center">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_whatsapp"
+                            android:padding="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Email:"
+                                android:gravity="left"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:textColor="@color/black" />
+                            <TextView
+                                android:id="@+id/sendmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="support@safepeindia.com"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:textColor="@color/black"
+                                android:paddingRight="20dp"
+                                android:paddingLeft="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:gravity="right"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.7dp"
+                        android:background="@color/grey_500"/>
+
+                    <TextView
+                        android:id="@+id/visit_website"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Visit Our Website"
+                        android:layout_gravity="center"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/red_theme" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        app:cardCornerRadius="10dp"
+                        android:elevation="5dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_whatsapp"
+                                android:padding="10dp"/>
+                            <TextView
+                                android:id="@+id/website"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="www.safepeindia.com"
+                                android:textSize="16sp"
+                                android:textColor="@color/black"
+                                android:layout_gravity="center"
+                                android:textStyle="bold"
+                                android:padding="10dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:textIsSelectable="true"/>
+                        </LinearLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2019 Safepe India Pvt. Ltd.\nAll Rights Reserved "
+                        android:layout_gravity="center"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginTop="20dp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/logo"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:layout_margin="15dp"
+                    android:visibility="gone">
+
+
+                    <EditText
+                        android:id="@+id/contactus_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="15dp"
+                        android:padding="10dp"
+                        android:textSize="15dp"
+                        android:background="@drawable/login_input_bg"
+                        android:hint="Email"
+                        />
+                    <EditText
+                        android:id="@+id/contactus_subject"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        android:textSize="15dp"
+                        android:background="@drawable/login_input_bg"
+                        android:hint="Your Subject"
+                        />
+                    <EditText
+                        android:id="@+id/contactus_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        android:inputType="textMultiLine"
+                        android:textSize="15dp"
+                        android:background="@drawable/login_input_bg"
+                        android:hint="Message"
+                        />
+                    <Button
+                        android:id="@+id/contactus_submit"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Submit"
+                        android:layout_gravity="center|right"
+                        android:textColor="#fff"
+                        android:background="@drawable/rounded_buttons"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="+91 8860722217"
+                        android:textSize="14dp"
+                        android:textColor="#34ad38"
+                        android:textIsSelectable="true"
+                        android:background="@null"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/call_button_usa"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="-30dp"
+                        android:text="+1 6808000842"
+                        android:textSize="14dp"
+                        android:textColor="#3454dc"
+                        android:textIsSelectable="true"
+                        android:paddingLeft="0dp"
+                        android:background="@null"
+                        android:textStyle="bold"
+                        android:paddingRight="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginBottom="0dp" />
+
+                    <Button
+                        android:id="@+id/call_button_india"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="-10dp"
+                        android:layout_weight="1"
+                        android:text="+91 8860722217"
+                        android:textSize="14dp"
+                        android:textColor="#34ad38"
+                        android:textIsSelectable="true"
+                        android:background="@null"
+                        android:textStyle="bold"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginBottom="0dp"
+                        />
+                </LinearLayout>
 
             </LinearLayout>
 

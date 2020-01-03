@@ -35,9 +35,9 @@
                 android:gravity="center"
                 android:layout_marginBottom="-20dp">
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/safelogo_transparent"
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/logo"
                  />
             </LinearLayout>
 

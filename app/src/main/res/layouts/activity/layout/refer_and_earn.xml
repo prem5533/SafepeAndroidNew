@@ -1,181 +1,217 @@
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:id="@+id/referAndEarnLayout">
-    <RelativeLayout
-        android:id="@+id/l1_send"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/red_theme"
-        android:paddingBottom="5dp">
-
-        <Button
-            android:id="@+id/ref_back_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_arrow_back_white_24dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:text="Refer and Earn "
-            android:fontFamily="@font/roboto_bold"
-            android:textColor="#fff"
-            android:textSize="18sp" />
-    </RelativeLayout>
+    android:id="@+id/referAndEarnLayout"
+    android:background="#f4f5ff">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_below="@+id/l1_send">
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Refer To Your Friends"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/yellow_theme"/>
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Earn Cashbacks and Offers"
-            android:textSize="14sp"
-            android:textColor="@color/red_theme"/>
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
-            <ImageView
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/refer_img"/>
-        </androidx.cardview.widget.CardView>
+        android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
+            android:layout_height="100dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:background="#196cfe"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
 
-            >
+            <RelativeLayout
+                android:id="@+id/headerbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/red_theme"
+                android:paddingBottom="5dp">
+
+                <Button
+                    android:id="@+id/ref_back_btn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/ic_next_new" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="Refer and Earn"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/card_bg"
-                android:padding="15dp"
-                android:layout_gravity="center"
-                >
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:text="Your Referral Code"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/black"
-                    android:layout_gravity="center"
-                    android:textAlignment="textStart"
-                    tools:ignore="RtlCompat" />
+                android:orientation="vertical"
+                android:layout_marginTop="-30dp">
+
                 <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    >
+                    android:padding="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:elevation="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="0dp">
+
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center|right"
-                        >
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_below="@+id/l1_send">
                         <TextView
-                            android:id="@+id/tv_referralcode"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_marginTop="20dp"
                             android:layout_width="wrap_content"
-                            android:text="SAFEP00EN0"
+                            android:layout_height="wrap_content"
+                            android:text="Refer To Your Friends"
+                            android:textSize="22sp"
                             android:textStyle="bold"
-                            android:textIsSelectable="true"
-                            android:textColor="@color/red_theme"
-                            android:gravity="center"
+                            android:textColor="@color/yellow_theme"/>
+                        <TextView
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Earn Cashbacks and Offers"
                             android:textSize="14sp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:textAlignment="viewEnd"
-                            tools:ignore="RtlCompat"
-                            android:layout_marginLeft="10dp"/>
+                            android:textColor="@color/red_theme"/>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp">
+                            <ImageView
+                                android:layout_width="250dp"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/refer_img"/>
+                        </androidx.cardview.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/image_copy"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_paper"
-                            android:padding="10dp"
-                            android:layout_marginLeft="10dp"/>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:background="@drawable/card_bg"
+                                android:padding="15dp"
+                                android:layout_gravity="center">
+                                <TextView
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:text="Your Referral Code"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:textColor="@color/black"
+                                    android:layout_gravity="center"
+                                    android:textAlignment="textStart"
+                                    tools:ignore="RtlCompat" />
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:gravity="center|right"
+                                        >
+                                        <TextView
+                                            android:id="@+id/tv_referralcode"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:layout_width="wrap_content"
+                                            android:text="SAFEP00EN0"
+                                            android:textStyle="bold"
+                                            android:textIsSelectable="true"
+                                            android:textColor="@color/red_theme"
+                                            android:gravity="center"
+                                            android:textSize="14sp"
+                                            android:fontFamily="@font/roboto_bold"
+                                            android:textAlignment="viewEnd"
+                                            tools:ignore="RtlCompat"
+                                            android:layout_marginLeft="10dp"/>
+
+                                        <ImageView
+                                            android:id="@+id/image_copy"
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/ic_paper"
+                                            android:padding="10dp"
+                                            android:layout_marginLeft="10dp"/>
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="1dp"
+                            android:layout_marginTop="40dp"
+                            >
+
+                            <LinearLayout
+                                android:id="@+id/li_whtasapp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:background="@drawable/green_round_bg"
+                                android:gravity="center"
+                                android:padding="10dp">
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/whatsapp_icon"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:text="       Share             "
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:layout_marginLeft="20dp"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <Button
+                            android:id="@+id/referralbtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/blue_green_round_btn"
+                            android:paddingLeft="40dp"
+                            android:paddingRight="40dp"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/white"
+                            android:text="Share via Link"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
 
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="1dp"
-            android:layout_marginTop="40dp"
-            >
-
-            <LinearLayout
-                android:id="@+id/li_whtasapp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/green_round_bg"
-                android:gravity="center"
-                android:padding="10dp">
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/whatsapp_icon"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text="       Share             "
-                    android:textSize="16sp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:layout_marginLeft="20dp"/>
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
-
-
-        <Button
-            android:id="@+id/referralbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/rounded_buttons"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:textSize="15sp"
-            android:fontFamily="@font/roboto_regular"
-            android:textColor="@color/white"
-            android:text="Share via Link"/>
     </LinearLayout>
 
 </RelativeLayout>

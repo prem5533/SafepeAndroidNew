@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:cardCornerRadius="10dp"
+        android:elevation="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account Name"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="14sp"
+                    android:textColor="@color/grey_700"
+                    android:layout_gravity="left" />
+
+                <TextView
+                    android:id="@+id/accountName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account Number"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="14sp"
+                    android:textColor="@color/grey_700"
+                    android:layout_gravity="left" />
+
+                <TextView
+                    android:id="@+id/accountNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bank"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="14sp"
+                    android:textColor="@color/grey_700"
+                    android:layout_gravity="left" />
+
+                <TextView
+                    android:id="@+id/accountBank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bank Branch"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="14sp"
+                    android:textColor="@color/grey_700"
+                    android:layout_gravity="left" />
+
+                <TextView
+                    android:id="@+id/accountBranch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bank Address"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="14sp"
+                    android:textColor="@color/grey_700"
+                    android:layout_gravity="left" />
+
+                <TextView
+                    android:id="@+id/accountBankAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="30dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/cancelBtn_dialogBen"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/blue_green_round_btn"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="40dp"
+                    android:text="Cancel"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/bankAddBtn_dialogBen"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/blue_green_round_btn"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="40dp"
+                    android:text="Add Beneficiary"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
