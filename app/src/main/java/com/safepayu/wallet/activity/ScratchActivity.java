@@ -221,7 +221,7 @@ public class ScratchActivity extends AppCompatActivity implements ScratchListAda
 
                             dialog.dismiss();
                             }})
-                    .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                    .setIcon(getResources().getDrawable(R.drawable.logo))
                     .show();
         }
 

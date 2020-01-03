@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#f4f5ff"
     android:id="@+id/dthRechargeLayout"
     android:orientation="vertical">
@@ -33,6 +34,7 @@
             android:textSize="18sp"/>
     </RelativeLayout>
 
+
     <ScrollView
         android:layout_below="@id/headerbar"
         android:layout_width="match_parent"
@@ -42,166 +44,174 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/red_theme"/>
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            app:cardCornerRadius="5dp"
+            android:elevation="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="-30dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_user_new"/>
+
+            <EditText
+                android:id="@+id/customerid"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/operator"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:text="Customer Id "
-                android:textColor="#373836"
-                android:textSize="12sp"
-                android:fontFamily="@font/roboto_regular"/>
+                android:layout_below="@+id/textView2"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:hint="Customer ID"
+                android:inputType="number"
+                android:nextFocusForward="@+id/amount"
+                android:padding="10dp"
+                android:textColor="@color/textcolor"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="15sp" />
+        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"
+                android:background="@color/graynew"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/white_button_grayborder"
                 android:orientation="horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="4dp"
                 android:gravity="start|center"
-                android:layout_marginRight="20dp">
+                android:padding="10dp">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    <LinearLayout
+                        android:id="@+id/layout_select_mobile_operator"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_tvnew" />
+                        <TextView
+                            android:id="@+id/tv_select_mobile_operator"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Select Operator"
+                            android:padding="10dp"
+                            android:textColor="@color/textcolor"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"/>
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_down_security"
+                            android:layout_marginRight="10dp"/>
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/operator"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/textView5"
+                        android:nextFocusForward="@+id/textView"
+                        android:backgroundTint="@color/red_theme"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone"/>
+                </FrameLayout>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"
+                android:background="@color/graynew"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start|center"
+                android:padding="10dp">
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/ic_user_new"/>
-
+                    android:src="@drawable/ic_new_rupee" />
                 <EditText
-                    android:id="@+id/customerid"
+                    android:id="@+id/amountid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView2"
+                    android:inputType="numberDecimal"
+                    android:hint="Amount"
                     android:layout_gravity="center"
                     android:background="@null"
-                    android:hint="Cutomer ID"
-                    android:inputType="number"
                     android:nextFocusForward="@+id/amount"
                     android:padding="10dp"
-                    android:textColor="#373836"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="15sp" />
+                    android:textColor="@color/textcolor"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="15sp"/>
 
             </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:text="Select Operator"
-                android:textColor="#373836"
-                android:textSize="12sp"
-                android:fontFamily="@font/roboto_regular"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/white_button_grayborder"
                 android:orientation="horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="4dp"
-                android:gravity="start|center"
-                android:layout_marginRight="20dp">
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-                <LinearLayout
-                    android:id="@+id/layout_select_mobile_operator"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="5dp"
-                        android:src="@drawable/ic_tv"/>
-                    <TextView
-                        android:id="@+id/tv_select_mobile_operator"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Select Operator"
-                        android:padding="10dp"
-                        android:textColor="#373836"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="1"/>
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_down_security"
-                        android:layout_marginRight="10dp"/>
-                </LinearLayout>
-                <Spinner
-                    android:id="@+id/operator"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/textView5"
-                    android:nextFocusForward="@+id/textView"
-                    android:backgroundTint="@color/red_theme"
-                    android:layout_marginLeft="5dp"
-                    android:visibility="gone"
-                 />
-                </FrameLayout>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/mobile"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:text="Amount"
-                android:textColor="#373836"
-                android:textSize="12sp"
-                android:fontFamily="@font/roboto_regular"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/white_button_grayborder"
-            android:orientation="horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="4dp"
-            android:gravity="start|center"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="20dp">
+                android:layout_marginBottom="10dp"
+                android:gravity="start|center"
+                android:visibility="gone"
+                android:background="@color/white">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_done"
+                    android:padding="10dp" />
 
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/ic_rupee_indian" />
-            <EditText
-                android:id="@+id/amountid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:hint="Enter Amount"
-                android:layout_gravity="center"
-                android:background="@null"
-                android:nextFocusForward="@+id/amount"
-                android:padding="10dp"
-                android:textColor="#373836"
-                android:fontFamily="@font/roboto_regular"
-                android:textSize="15sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#606267"
+                    android:text="@string/dth_payment_time"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="12sp"
+                    android:layout_marginRight="5dp"/>
+            </LinearLayout>
         </LinearLayout>
+        </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
             <TextView
                 android:layout_weight="1"
@@ -217,6 +227,31 @@
                 android:paddingLeft="0dp"
                 android:visibility="gone"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="start|center"
+                android:visibility="gone"
+                android:background="@color/white">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_bookmark"
+                    android:padding="10dp"
+                    android:layout_marginLeft="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@string/dth_payment_time"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="12sp"
+                    android:layout_marginRight="5dp"/>
+            </LinearLayout>
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_amount"
                 android:layout_width="wrap_content"
@@ -317,32 +352,6 @@
 
                 <include layout="@layout/service_charge_layout" />
             </RelativeLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="start|center"
-                android:background="@color/white">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_bookmark"
-                    android:padding="10dp"
-                    android:layout_marginLeft="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="@string/dth_payment_time"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="12sp"
-                    android:layout_marginRight="5dp"/>
-            </LinearLayout>
-
-
             <Button
                 android:id="@+id/dthPaybtn"
                 android:layout_width="match_parent"
@@ -358,29 +367,7 @@
                 android:text="Pay Now"
                 android:textColor="#fff"
                 android:textSize="15sp"
-                android:fontFamily="@font/roboto_regular"/>
-
-
+                android:fontFamily="@font/roboto_bold"/>
         </LinearLayout>
-
-
     </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:visibility="gone"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/yellow_theme"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/red_theme"/>
-    </LinearLayout>
 </RelativeLayout>

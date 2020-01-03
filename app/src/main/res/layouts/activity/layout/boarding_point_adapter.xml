@@ -35,7 +35,7 @@
     <com.safepayu.wallet.custom_view.CustomTextView
         android:id="@+id/place_boardingDroppingAdapter"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         style="@style/TextAppearance.AppCompat.Medium"
         app:fontCustom="@string/Roboto"
         android:layout_marginLeft="20dp"

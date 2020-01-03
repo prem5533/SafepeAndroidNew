@@ -17,9 +17,9 @@
         android:layout_marginRight="10dp"/>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/safelogo_transparent"
+        android:layout_width="144dp"
+        android:layout_height="81dp"
+        android:src="@drawable/white_logo_new"
         android:layout_marginTop="-20dp"/>
 
 
@@ -67,7 +67,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/yellow"
+            android:background="@color/yellow_theme"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"/>
         <TextView
@@ -169,12 +169,12 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="30dp"
-        android:background="@drawable/yellow_round_button"
+        android:background="@drawable/blue_green_round_btn"
         android:padding="10dp"
         android:text="Redeem"
         android:textColor="#fff"
         android:textSize="15sp"
-        android:fontFamily="@font/roboto_regular"/>
+        android:fontFamily="@font/roboto_bold"/>
 
 
 

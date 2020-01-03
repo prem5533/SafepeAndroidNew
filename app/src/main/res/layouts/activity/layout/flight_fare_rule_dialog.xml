@@ -17,7 +17,7 @@
         android:layout_height="25dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/ic_arrow_back_white_24dp" />
+        android:background="@drawable/ic_next_new" />
     </RelativeLayout>
     <TextView
         android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/yellow"
+            android:background="@color/red_theme"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"/>
     </LinearLayout>
@@ -169,7 +169,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/yellow"
+            android:background="@color/red_theme"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"/>
     </LinearLayout>

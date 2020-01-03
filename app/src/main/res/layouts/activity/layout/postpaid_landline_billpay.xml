@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#f4f5ff"
     android:orientation="vertical"
     android:id="@+id/postpaidBillLayout">
@@ -39,209 +40,158 @@
         android:layout_below="@id/l1_send"
         android:layout_height="match_parent"
         tools:context="com.xwallet.wallet.Fragments.PostpaidRechrge">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/red_theme"/>
 
-            <TextView
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            app:cardCornerRadius="5dp"
+            android:elevation="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="-30dp">
 
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_below="@+id/operator"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:text="Enter Mobile"
-                android:textColor="#373836"
-                android:textSize="12sp"
-                android:fontFamily="@font/roboto_regular"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:gravity="center">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/white_button_grayborder"
-            android:orientation="horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="4dp"
-            android:gravity="start|center"
-            android:layout_marginRight="20dp">
+            android:orientation="vertical"
+            android:layout_margin="10dp">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start|center"
+            android:padding="10dp">
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/ic_mobile_new" />
+                android:src="@drawable/ic_mobile_new"/>
+
             <EditText
                 android:id="@+id/mobilePostpaid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView2"
                 android:layout_gravity="center"
+                android:background="@null"
+                android:hint="Enter Mobile"
                 android:inputType="number"
-                android:hint="Mobile"
-                android:maxLength="11"
                 android:nextFocusForward="@+id/amount"
                 android:padding="10dp"
-                android:textColor="#373836"
-                android:textSize="15sp"
-                android:background="@null"
-                android:fontFamily="@font/roboto_regular"/>
+                android:textColor="@color/textcolor"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="15sp" />
         </LinearLayout>
-
-
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:text="Select Operator"
-                android:textColor="#373836"
-                android:textSize="12sp"
-                android:fontFamily="@font/roboto_regular"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height=".5dp"
+            android:background="@color/graynew"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/white_button_grayborder"
                 android:orientation="horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="4dp"
                 android:gravity="start|center"
-                android:layout_marginRight="20dp">
-
+                android:padding="10dp">
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp">
-                <LinearLayout
-                    android:id="@+id/layout_select_mobile_operator"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="18dp"
-                        android:layout_marginLeft="5dp"
-                        android:src="@drawable/ic_list_new" />
-                    <TextView
-                        android:id="@+id/tv_select_mobile_operator"
+                    <LinearLayout
+                        android:id="@+id/layout_select_mobile_operator"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Select Operator"
-                        android:padding="10dp"
-                        android:textColor="#373836"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="1"/>
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_down_security"
-                        android:layout_marginRight="10dp"/>
-                </LinearLayout>
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/operatorPostpaid"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/textView5"
-                    android:layout_marginLeft="5dp"
-                    android:backgroundTint="@color/red_theme"
-                    android:nextFocusForward="@+id/username"
-                    android:visibility="gone"/>
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/ic_list_new" />
+                        <TextView
+                            android:id="@+id/tv_select_mobile_operator"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Select Operator"
+                            android:padding="10dp"
+                            android:textColor="@color/textcolor"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"/>
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_down_security"
+                            android:layout_marginRight="10dp"/>
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/operatorPostpaid"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/textView5"
+                        android:layout_marginLeft="5dp"
+                        android:backgroundTint="@color/red_theme"
+                        android:nextFocusForward="@+id/username"
+                        android:visibility="gone"/>
                 </FrameLayout>
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/mobile"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:text="Enter Amount"
-                android:textColor="#373836"
-                android:textSize="15dp"
-                android:visibility="gone"/>
-
-            <EditText
-                android:id="@+id/amount"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"
+                android:background="@color/graynew"/>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/white_button_grayborder"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:hint="Amount"
-                android:nextFocusForward="@+id/btn"
-                android:padding="10dp"
-                android:textColor="#373836"
-                android:textSize="15dp"
-                android:visibility="gone"/>
+                android:orientation="horizontal"
+                android:gravity="start|center"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/mobile"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:text="Bill Amount"
-                android:textColor="#373836"
-                android:textSize="12sp"
-                android:fontFamily="@font/roboto_regular" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/white_button_grayborder"
-            android:orientation="horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="4dp"
-            android:gravity="start|center"
-            android:layout_marginRight="20dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_new_rupee" />
+                <EditText
+                    android:id="@+id/amountPostpaid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView"
+                    android:layout_gravity="center"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:nextFocusForward="@+id/btn"
+                    android:padding="10dp"
+                    android:hint="Bill Amount"
+                    android:background="@null"
+                    android:textColor="@color/textcolor"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="15sp"/>
 
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/ic_new_rupee" />
-            <EditText
-                android:id="@+id/amountPostpaid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView"
-                android:layout_gravity="center"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:nextFocusForward="@+id/btn"
-                android:padding="10dp"
-                android:hint="Enter Amount"
-                android:textColor="#373836"
-                android:textSize="15sp"
-                android:background="@null"
-                android:fontFamily="@font/roboto_regular" />
+            </LinearLayout>
+
         </LinearLayout>
-
+        </RelativeLayout>
+        </androidx.cardview.widget.CardView>
             <TextView
                 android:layout_weight="1"
                 android:id="@+id/calculatedamount_bill"
@@ -348,15 +298,197 @@
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/serviceChargeLayout_postpaid"
                 android:visibility="gone">
-
                 <include layout="@layout/service_charge_layout" />
             </RelativeLayout>
+            <Button
+                android:id="@+id/Paybtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/amount"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/blue_green_round_btn"
+                android:padding="10dp"
+                android:text="Pay Bill"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_bold" />
+            <Button
+                android:id="@+id/btnCheckBill"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/amount"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/blue_green_round_btn"
+                android:padding="10dp"
+                android:text="Check Bill"
+                android:textColor="#fff"
+                android:visibility="gone"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_bold" />
+        </LinearLayout>
+
+       <!-- <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/operator"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Enter Mobile"
+                android:textColor="#373836"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto_regular"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_button_grayborder"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="4dp"
+            android:gravity="start|center"
+            android:layout_marginRight="20dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_mobile_new" />
+            <EditText
+                android:id="@+id/mobilePostpaid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView2"
+                android:layout_gravity="center"
+                android:inputType="number"
+                android:hint="Mobile"
+                android:maxLength="11"
+                android:nextFocusForward="@+id/amount"
+                android:padding="10dp"
+                android:textColor="#373836"
+                android:textSize="15sp"
+                android:background="@null"
+                android:fontFamily="@font/roboto_regular"/>
+        </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView6"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Select Operator"
+                android:textColor="#373836"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto_regular"/>
+
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mobile"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Enter Amount"
+                android:textColor="#373836"
+                android:textSize="15dp"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/white_button_grayborder"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:hint="Amount"
+                android:nextFocusForward="@+id/btn"
+                android:padding="10dp"
+                android:textColor="#373836"
+                android:textSize="15dp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mobile"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="Bill Amount"
+                android:textColor="#373836"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto_regular" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_button_grayborder"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="4dp"
+            android:gravity="start|center"
+            android:layout_marginRight="20dp">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_new_rupee" />
+            <EditText
+                android:id="@+id/amountPostpaid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
+                android:layout_gravity="center"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:nextFocusForward="@+id/btn"
+                android:padding="10dp"
+                android:hint="Enter Amount"
+                android:textColor="#373836"
+                android:textSize="15sp"
+                android:background="@null"
+                android:fontFamily="@font/roboto_regular" />
+        </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -383,39 +515,7 @@
                     android:textSize="12sp"
                     android:layout_marginRight="5dp"/>
             </LinearLayout>
-            <Button
-                android:id="@+id/Paybtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/amount"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/blue_green_round_btn"
-                android:padding="10dp"
-                android:text="Pay Bill"
-                android:textColor="#fff"
-                android:textSize="15sp"
-                android:fontFamily="@font/roboto_regular" />
-            <Button
-                android:id="@+id/btnCheckBill"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/amount"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/blue_green_round_btn"
-                android:padding="10dp"
-                android:text="Check Bill"
-                android:textColor="#fff"
-                android:visibility="gone"
-                android:textSize="15sp"
-                android:fontFamily="@font/roboto_regular" />
-        </LinearLayout>
+
+        </LinearLayout>-->
     </ScrollView>
 </RelativeLayout>

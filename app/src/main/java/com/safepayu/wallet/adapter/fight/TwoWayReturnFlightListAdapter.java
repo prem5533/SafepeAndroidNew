@@ -25,7 +25,7 @@ public class TwoWayReturnFlightListAdapter extends RecyclerView.Adapter<TwoWayRe
     private Context context;
     private List<AvailableFlightResponse.DataBean.DomesticReturnFlightsBean> mItem;
     private OnFlightItemReturnListener onFlightItemReturnListener;
-
+    int row_index = -1;
 
     public interface OnFlightItemReturnListener{
         void onFlightItemReturnListerne(int position, AvailableFlightResponse.DataBean.DomesticReturnFlightsBean mFlightItemListenre,LinearLayout liReturn);
@@ -60,7 +60,7 @@ public class TwoWayReturnFlightListAdapter extends RecyclerView.Adapter<TwoWayRe
         private FrameLayout frameTwoStopLine,frameOneStop;
         private View non_stop;
         private LinearLayout liReturn;
-        int row_index = -1;
+
 
         public FlightTwoWayViewHodler(@NonNull View itemView) {
             super(itemView);
