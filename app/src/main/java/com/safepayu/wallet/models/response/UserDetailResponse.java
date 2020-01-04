@@ -71,7 +71,10 @@ public class UserDetailResponse {
          * state : Uttar Pradesh
          * country : India
          * pin : 201009
+         *
          */
+
+
 
         private int id;
         private String userid;
@@ -108,6 +111,11 @@ public class UserDetailResponse {
         private int pin;
         private int remember_me;
         private String sponsorname;
+        /**
+         * genealogy : http://productiontesting.safepeindia.com/Genealogy/
+         */
+
+        private String genealogy;
 
         public String getSponsorname() {
             return sponsorname;
@@ -387,6 +395,14 @@ public class UserDetailResponse {
 
         public void setRemember_me(int remember_me) {
             this.remember_me = remember_me;
+        }
+
+        public String getGenealogy() {
+            return genealogy;
+        }
+
+        public void setGenealogy(String genealogy) {
+            this.genealogy = genealogy;
         }
     }
 

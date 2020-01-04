@@ -316,7 +316,7 @@
                 android:background="@drawable/blue_green_round_btn"
                 android:padding="0dp"
                 android:textAllCaps="false"
-                android:text="Process Recharge"
+                android:text="Pay Bill"
                 android:textColor="#fff"
                 android:textSize="15sp"
                 android:fontFamily="@font/roboto_bold" />

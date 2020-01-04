@@ -34,13 +34,13 @@ import io.reactivex.schedulers.Schedulers;
 public class SendMoneyToWallet extends BaseActivity implements View.OnClickListener, PasscodeClickListener {
 
     Button BackBtn,SendMoneyBtn;
-    private EditText MobileED,AmountED;
+    private EditText MobileED,AmountED ;
     private LoadingDialog loadingDialog;
     private TextView tvReferUserName;
     private boolean referralCheck=false;
     private double WalletBalance=0.0f;
     SendToWalletRequest sendToWalletRequest;
-    String Mobile="";
+    String Mobile ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

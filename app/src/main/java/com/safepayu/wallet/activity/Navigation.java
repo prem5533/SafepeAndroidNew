@@ -456,9 +456,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             @Override
             public void onClick(View v) {
 
-               //  startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
-                 startActivity(new Intent(Navigation.this, OtpVerification.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                 startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
+                 //startActivity(new Intent(Navigation.this, OtpVerification.class));
+                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
             }
         });
@@ -1721,6 +1721,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME, response.getUser().getLast_name());
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED, String.valueOf(response.getUser().getBlocked()));
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED, String.valueOf(response.getUser().getPackage_status()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().GENEOLOGY_URL, String.valueOf(response.getUser().getGenealogy()));
                         }
                     }
 
