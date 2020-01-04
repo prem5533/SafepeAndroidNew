@@ -1624,25 +1624,30 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     public void onSuccess(AppVersionResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            int val = Integer.parseInt(response.getVersionData().getVal());
-                            url = response.getVersionData().getLogo();
-                            //BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ApiClient.ImagePath+url);
+                            try {
+                                int val = Integer.parseInt(response.getVersionData().getVal());
+                                url = response.getVersionData().getLogo();
+                                //BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ApiClient.ImagePath+url);
                        /*     Picasso.get().load(ImagePath+url).into(headerLogo);
                             Picasso.get().load(ImagePath+url).into(navLogo);*/
 
-                            try {
-                                tollNumber = response.getVersionData().getTollfree();
-                            } catch (Exception e) {
-                                tollNumber = "";
+                                try {
+                                    tollNumber = response.getVersionData().getTollfree();
+                                } catch (Exception e) {
+                                    tollNumber = "";
+                                    e.printStackTrace();
+                                }
+
+                                if (versionCode == val) {
+
+                                } else {
+                                    showDialogForAppUpdate(Navigation.this);
+                                }
+                                getServicesCharges();
+                            }catch (Exception e){
+                                BaseApp.getInstance().toastHelper().showSnackBar(drawer, e.getMessage(), false);
                                 e.printStackTrace();
                             }
-
-                            if (versionCode == val) {
-
-                            } else {
-                                showDialogForAppUpdate(Navigation.this);
-                            }
-                            getServicesCharges();
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(drawer, response.getMessage(), false);
                         }

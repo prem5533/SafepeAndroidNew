@@ -36,11 +36,11 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
     Button BackBtn,SendMoneyBtn;
     private EditText MobileED,AmountED;
     private LoadingDialog loadingDialog;
-    private TextView tvReferUserName;
+    private TextView tvReferUserName,tvLimitation;
     private boolean referralCheck=false;
     private double WalletBalance=0.0f;
     SendToWalletRequest sendToWalletRequest;
-    String Mobile="";
+    String Mobile="",LimitText="",MinLimit="",MaxLimit="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,13 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
         AmountED=findViewById(R.id.edit_send_money);
         SendMoneyBtn=findViewById(R.id.send_money_button);
         tvReferUserName=findViewById(R.id.user_name_sendToWallet);
+        tvLimitation=findViewById(R.id.maxMiValue);
+
+        MinLimit=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT_MIN);
+        MaxLimit=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT);
+        LimitText="Enter Amount Between Rs "+MinLimit+" And Rs "+MaxLimit;
+
+        tvLimitation.setText(LimitText);
 
         BackBtn.setOnClickListener(this);
         SendMoneyBtn.setOnClickListener(this);
@@ -77,14 +84,18 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
 
                 // TODO Auto-generated method stub
 
-                if (s.length()==10){
-                    getReferralDetails();
-                }else {
-                    if (referralCheck) {
-                        referralCheck=false;
-                        tvReferUserName.setText("");
-                        tvReferUserName.setVisibility(View.GONE);
+                try {
+                    if (s.length()==10){
+                        getReferralDetails();
+                    }else {
+                        if (referralCheck) {
+                            referralCheck=false;
+                            tvReferUserName.setText("");
+                            tvReferUserName.setVisibility(View.GONE);
+                        }
                     }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
 
@@ -158,10 +169,11 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
     }
 
     private void CheckValidate(){
-
+        int AmountInt = 0,limit=0,limitMin=0;
         String Mobile=MobileED.getText().toString().trim();
         String Amount=AmountED.getText().toString().trim();
-        int AmountInt=0;
+        limit = (int)Double.parseDouble(MaxLimit)+1;
+        limitMin = (int)Double.parseDouble(MinLimit)-1;
         try{
             AmountInt= Integer.parseInt(Amount);
         }catch (Exception e){
@@ -179,7 +191,7 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
                     if (Integer.parseInt(Amount)<0 || Integer.parseInt(Amount)==0 ){
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Enter Correct Amount",false);
                     }else {
-                        if (AmountInt<8001 && AmountInt>99){
+                        if (AmountInt < limit && AmountInt > limitMin){
 
                             if (AmountInt==(int)WalletBalance || AmountInt<(int)WalletBalance){
                                 if (referralCheck){
@@ -277,6 +289,7 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
                                 MobileED.requestFocus();
                             }
                         }catch (Exception e){
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), e.getMessage(), true);
                             e.printStackTrace();
                         }
 
