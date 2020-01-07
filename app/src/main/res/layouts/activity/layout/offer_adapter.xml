@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#f4f5ff"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="5dp"
+                    android:layout_margin="5dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/yellow">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/offer_demo"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp">
+                        <TextView
+                            android:id="@+id/tv_actual_rs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="10dp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/white"
+                            android:text="£ 144.00"/>
+
+                        <TextView
+                            android:id="@+id/tv_offer_rs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/white"
+                            android:text="£ 57.6"
+                            android:layout_marginLeft="5dp"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_product_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textColor="@color/white"
+                        android:text="Mixer"
+                        android:layout_marginLeft="10dp"/>
+                    <RatingBar
+                        android:id="@+id/listitemrating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX=".5"
+                        android:scaleY=".5"
+                        android:transformPivotX="0dp"
+                        android:transformPivotY="0dp"
+                        android:isIndicator="true"
+                        android:max="5"
+                        android:numStars="5"
+                        android:stepSize="1"
+                        android:layout_marginLeft="10dp"
+                        android:theme="@style/RatingBar"/>
+                    <TextView
+                        android:id="@+id/tv_product_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textColor="@color/white"
+                        android:text="Russell Hobbs RHM2076B 20L Digital 800w Solo Microwave Black"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="-30dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_margin="10dp">
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:src="@drawable/ic_store_ecom"/>
+                        <TextView
+                            android:id="@+id/tv_product_storenme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/white"
+                            android:text="From Store A  "
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"/>
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:src="@drawable/ic_maps_and_flags_ecom" />
+                        <TextView
+                            android:id="@+id/tv_pstore_km"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/white"
+                            android:text="1.5km"
+                            android:layout_marginLeft="5dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginLeft="-40dp">
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@drawable/green_blue_bg_circle"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="60%"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textColor="@color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="off"
+                        android:textSize="8sp"
+                        android:layout_marginRight="2dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+            </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
+
+
+
+
+

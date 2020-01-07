@@ -33,55 +33,78 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".activity.booking.flight.FlightHistoryActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.PaymentActivityBooking"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.flight.FlightBookDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.flight.BookingPaymentActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.SplashViewPagerActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".ecommerce.activity.SearchProductActivity"></activity>
+        <activity android:name=".ecommerce.activity.EHomeActivity" />
+        <activity
+            android:name=".activity.booking.flight.FlightHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.PaymentActivityBooking"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.flight.FlightBookDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.flight.BookingPaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SplashViewPagerActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.booking.flight.FlightPassengerDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
-        <activity android:name=".activity.booking.flight.FlightDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.flight.TwoWayListActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.flight.FlightListActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.bus.BusSeat_DetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.bus.BusListActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.bus.BusLocationActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.MyOrdersActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.MovieActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.recharge.InsuranceActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.TermsAndCondition"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ScratchActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.TollActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.DonationActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.hotel.HotelActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.hotel.AvailableHotels"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.BellNotifictionActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.flight.TwoWayFlightDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.booking.flight.FlightDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.flight.TwoWayListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.flight.FlightListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.bus.BusSeat_DetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.bus.BusListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.bus.BusLocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyOrdersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.MovieActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.recharge.InsuranceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.TermsAndCondition"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ScratchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.TollActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.DonationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.hotel.HotelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.hotel.AvailableHotels"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BellNotifictionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.flight.TwoWayFlightDetailActivity"
+            android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -93,127 +116,168 @@
         <activity
             android:name=".activity.MapsActivity"
             android:label="@string/title_activity_maps"
-            android:screenOrientation="portrait"/> <!-- <activity android:name=".MapActivity" /> -->
-        <activity android:name=".activity.booking.TrainActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.bus.BusActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.flight.FlightsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.MetroActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.booking.hotel.HotelDetails"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.PaidOrderActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.CreatePassCodeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" /> <!-- <activity android:name=".MapActivity" /> -->
+        <activity
+            android:name=".activity.booking.TrainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.bus.BusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.flight.FlightsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.MetroActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.booking.hotel.HotelDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PaidOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CreatePassCodeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.BuyMemberShip"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BuyMemberShip"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AddUpdateAddress"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.OtpVerification"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.NewAccount"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.OtpVerification"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NewAccount"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="stateVisible|adjustNothing"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity
             android:name=".activity.Navigation"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.WalletActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.SendMoney"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.AddBeneficiary"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.WalletAddMoney"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.PaymentType"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.recharge.MobileRecharge"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.recharge.DthRecharge"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.recharge.PostpaidBillpay"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.recharge.WaterBillPay"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.recharge.ElectricityPay"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.recharge.LandlineBillPay"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.recharge.GasPay"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.Profile"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.Commission"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.TransferCommissionToWallet"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.Geneology"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.PackageDetails"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ContactUs"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ReferAndEarn"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.SearchActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ChangePasscode"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.WalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SendMoney"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddBeneficiary"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.WalletAddMoney"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PaymentType"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.recharge.MobileRecharge"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.recharge.DthRecharge"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.recharge.PostpaidBillpay"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.recharge.WaterBillPay"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.recharge.ElectricityPay"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.recharge.LandlineBillPay"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.recharge.GasPay"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.Profile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.Commission"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.TransferCommissionToWallet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.Geneology"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PackageDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ContactUs"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ReferAndEarn"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangePasscode"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ForgotPasscode"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.MemberBankAddPackages"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.SendMoneyToWallet"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ForgetPassword"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.MemberBankAddPackages"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SendMoneyToWallet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ForgetPassword"
             android:screenOrientation="portrait">
 
-<!--            <intent-filter android:autoVerify="true">-->
-<!--                <data android:scheme="http"-->
-<!--                    android:host="alias.safepeindia.com"/>-->
+            <!-- <intent-filter android:autoVerify="true"> -->
+            <!-- <data android:scheme="http" -->
+            <!-- android:host="alias.safepeindia.com"/> -->
 
-<!--                <action android:name="android.intent.action.VIEW" />-->
 
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--            </intent-filter>-->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
+
+
+            <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".activity.ChangePassword"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.KycUpdate"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.WalletHistory"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.RechargeHistory"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.QrCodeScanner"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ui.DemoAdi"/>
-        <activity android:name=".activity.Splash"
-            android:theme="@style/AppThemeFullScreen"
-            android:screenOrientation="portrait">
-
+        <activity
+            android:name=".activity.ChangePassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.KycUpdate"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.WalletHistory"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RechargeHistory"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.QrCodeScanner"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.ui.DemoAdi" />
+        <activity
+            android:name=".activity.Splash"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.otpActivityDEMO"/>
+        <activity android:name=".activity.otpActivityDEMO" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -244,6 +308,7 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -251,7 +316,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 

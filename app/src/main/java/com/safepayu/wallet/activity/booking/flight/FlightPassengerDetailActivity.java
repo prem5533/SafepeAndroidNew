@@ -3,10 +3,17 @@ package com.safepayu.wallet.activity.booking.flight;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.format.DateFormat;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +80,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
     public  static LoadingDialog loadingDialog;
     private RecyclerView recyclerTravellerInfo;
     private ImageView imageCancel,image_flight_detail_pop_up,image_flight_detail_return;
-    private TextView tv_flightbooking_name_popup,tv_flightbooking_classname_popup,tvFlightBookingSourceName_popup,tvFlightBookingDestiName_popup,
+    private TextView tv_flightbooking_name_popup,tv_flightbooking_classname_popup,tvFlightBookingSourceName_popup,tvFlightBookingDestiName_popup,tvTermCond,
             tvFlightBookingDepDate,tvFlightDetailDestiDate,tvFlightBookingDuration,tv_flight_booking_stop,tv_flight_booking_dep_time,tv_flight_booking_arrival_time,tv_gender,
             tv_flightbooking_name_return,tv_flightbooking_classname_return,tv_flight_booking_source_name_return,tv_flight_detail_desti_name_return,tv_flight_booking_dep_date_return,
             tv_flight_detail_desti_date_return,tv_flight_booking_duration_return,tv_flight_booking_stop_return,tv_flight_booking_dep_time_return,tv_flight_booking_arrival_time_return;
@@ -135,6 +142,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         tvChild = findViewById(R.id.tv_child);
         tvInfant = findViewById(R.id.tv_infant);
         checkboxPassengerTC = findViewById(R.id.checkbox_passenger_tc);
+        tvTermCond = findViewById(R.id.tv_term_cond);
 
 
 
@@ -154,10 +162,26 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
         TripType =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TRIP_TYPE);
         TotalFareReturnOnward =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().TOTALFARE_RETURN_ONWARDS);
 
+        SpannableString ss = new SpannableString("I understand & agree with the all Terms and Conditions of SafePe");
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                startActivity(new Intent(FlightPassengerDetailActivity.this, TermsAndCondition.class));
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(true);
+            }
+        };
+        ss.setSpan(clickableSpan, 34, 54, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-      /*  SpannableString content = new SpannableString("Term and Condition");
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        checkboxPassengerTC.setText(content);*/
+       // TextView textView = (TextView) findViewById(R.id.hello);
+        tvTermCond.setText(ss);
+        tvTermCond.setMovementMethod(LinkMovementMethod.getInstance());
+        tvTermCond.setHighlightColor(Color.TRANSPARENT);
+
+
 
         checkboxPassengerTC.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -392,9 +416,9 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
                // showDialog(FlightPassengerDetailActivity.this);
                 if (validate()) {
 
-                    if (validateChkBox()) {
+                   // if (validateChkBox()) {
                         showDialog(FlightPassengerDetailActivity.this);
-                    }
+                  //  }
                  //   getflightBlockTicket(flightBlockTicketRequest);
 
                 }

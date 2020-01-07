@@ -19,8 +19,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -39,6 +42,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -66,6 +71,7 @@ import com.safepayu.wallet.adapter.OfferPagerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.ecommerce.activity.EHomeActivity;
 import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -85,7 +91,7 @@ import io.reactivex.schedulers.Schedulers;
 import static com.safepayu.wallet.activity.Profile.QRcodeWidth;
 import static com.safepayu.wallet.activity.Splash.promotionResponse1;
 
-public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,BottomNavigationView.OnNavigationItemSelectedListener {
 
     private ImageView nav_icon, notification_icon;
     private DrawerLayout drawer;
@@ -108,6 +114,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     public static String TitleNotiDialogText = "", ContentNotiDialogText = "", tollNumber = "";
     private ViewPager viewpager,viewpagerBooking;
     private String url;
+    BottomNavigationView bottomNavigation;
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
@@ -192,6 +199,23 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
             }
         });
+
+
+         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(this);
+       // bottomNavigation.getMenu().findItem(R.id.action_yoga).setChecked(true);
+
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigation.getChildAt(0);
+        for (int i = 0; i < menuView.getChildCount(); i++) {
+            final View iconView = menuView.getChildAt(i).findViewById(R.id.icon);
+            final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
+            final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            // set your height here
+            layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, displayMetrics);
+            // set your width here
+            layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, displayMetrics);
+            iconView.setLayoutParams(layoutParams);
+        }
     }
 
     @Override
@@ -651,7 +675,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    @Override
+    /*@Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         // Handle navigation view item clicks here.
 //        int id = menuItem.getItemId();
@@ -703,7 +727,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
         return false;
     }
-
+*/
     @Override
     public void onClick(View view) {
 
@@ -1944,4 +1968,38 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     }
                 }));
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // uncheck the other items.
+         int mMenuId;
+        mMenuId = item.getItemId();
+        for (int i = 0; i < bottomNavigation.getMenu().size(); i++) {
+            MenuItem menuItem = bottomNavigation.getMenu().getItem(i);
+            boolean isChecked = menuItem.getItemId() == item.getItemId();
+            menuItem.setChecked(isChecked);
+        }
+
+        switch (item.getItemId()) {
+            case R.id.b_home: {
+                //startActivity(new Intent(Navigation.this, Navigation.class));
+            }
+            break;
+            case R.id.b_profile: {
+                startActivity(new Intent(Navigation.this, Profile.class));
+            }
+            break;
+            case R.id.b_qrcode: {
+                startActivity(new Intent(Navigation.this, QrCodeScanner.class));
+            }
+            break;
+            case R.id.b_mall: {
+               // Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Navigation.this, EHomeActivity.class));
+            }
+            break;
+        }
+        return true;
+    }
+
 }
