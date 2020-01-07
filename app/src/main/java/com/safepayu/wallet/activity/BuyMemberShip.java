@@ -189,36 +189,38 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                             showDialogPackage("\nPackage Already Purchased.\nTo Upgrade Your Package Please Contact SafePe Customer Support\n");
                         }else {
                             try {
-                                if (TextUtils.isEmpty(BankName)){
-                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Bank", false);
-                                }else {
-                                    if (TransactionType.equalsIgnoreCase("1")){
 
-                                        TransactionType="3";
-                                        BuyPackage buyPackage=new BuyPackage();
-                                        buyPackage.setTransaction_type(TransactionType);
-                                        buyPackage.setPackage_id(PackageID);
-                                        buyPackage.setBuy_date("");
-                                        buyPackage.setPayment_mode("Payment Gateway");
-                                        buyPackage.setRefrence_no("");
-                                        buyPackage.setDocument_attached("");
-                                        buyPackage.setPaid_to_account("By Admin");
-                                        buyPackage.setPaid_from_account("");
-                                        buyPackageFromDB=buyPackage;
+                                if (TransactionType.equalsIgnoreCase("1")){
+                                    TransactionType="3";
+                                    BuyPackage buyPackage=new BuyPackage();
+                                    buyPackage.setTransaction_type(TransactionType);
+                                    buyPackage.setPackage_id(PackageID);
+                                    buyPackage.setBuy_date("");
+                                    buyPackage.setPayment_mode("Payment Gateway");
+                                    buyPackage.setRefrence_no("");
+                                    buyPackage.setDocument_attached("");
+                                    buyPackage.setPaid_to_account("By Admin");
+                                    buyPackage.setPaid_from_account("");
+                                    buyPackageFromDB=buyPackage;
 
-                                        Intent intent=new Intent(BuyMemberShip.this,PaymentType.class);
-                                        overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
-                                        intent.putExtra("RechargePaymentId",BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
-                                        intent.putExtra("Amount",String.valueOf(FinalAmount));
-                                        intent.putExtra("PaymentType",PackageName);
-                                        intent.putExtra("PaymentFor","Buy Package");
-                                        intent.putExtra("RechargeTypeId","0");
-                                        intent.putExtra("OperatorCode",PackageID);
-                                        intent.putExtra("CircleCode","0");
-                                        intent.putExtra("OperatorId","");
-                                        startActivity(intent);
-                                        finish();
-                                    }else if (TransactionType.equalsIgnoreCase("2")) {
+                                    Intent intent=new Intent(BuyMemberShip.this,PaymentType.class);
+                                    overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                                    intent.putExtra("RechargePaymentId",BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
+                                    intent.putExtra("Amount",String.valueOf(FinalAmount));
+                                    intent.putExtra("PaymentType",PackageName);
+                                    intent.putExtra("PaymentFor","Buy Package");
+                                    intent.putExtra("RechargeTypeId","0");
+                                    intent.putExtra("OperatorCode",PackageID);
+                                    intent.putExtra("CircleCode","0");
+                                    intent.putExtra("OperatorId","");
+                                    startActivity(intent);
+                                    finish();
+
+                                }else if (TransactionType.equalsIgnoreCase("2")) {
+
+                                    if (TextUtils.isEmpty(BankName)){
+                                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Bank", false);
+                                    }else {
                                         Intent intent=new Intent(BuyMemberShip.this,MemberBankAddPackages.class);
                                         intent.putExtra("TransactionType",TransactionType);
                                         intent.putExtra("PackageID",PackageID);
@@ -226,10 +228,11 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                                         intent.putExtra("PackageName",PackageName);
                                         intent.putExtra("Amount",String.valueOf(FinalAmount));
                                         startActivity(intent);
-
-                                    }else {
-                                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Transfer Type", false);
+                                        finish();
                                     }
+
+                                }else {
+                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), "Please Select Transfer Type", false);
                                 }
                             }catch (Exception e){
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId), e.getMessage(), false);

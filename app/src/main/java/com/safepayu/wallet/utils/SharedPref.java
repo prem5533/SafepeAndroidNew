@@ -37,6 +37,7 @@ public class SharedPref {
     public final String LIMIT_MIN = "limit_min";
     public final String SERVICE_CHARGE = "Service_charge";
     public final String TRANSACTION_CHARGE = "Transaction_charge";
+    public final String COMMISSION_CHARGE = "Commission_charge";
 
     //***********FLIGHT*******************
     public final String FLIGHT_DATE = "flight_date";
@@ -79,10 +80,12 @@ public class SharedPref {
     public final String FLIGHT_RETURN_IMAGE = "flight_return_image";
     public final String FLIGHT_ONWARD_IMAGE = "flight_onward_image";
     public final String FLIGHT_START_JOURNEY_RETURN = "flight_journey_return";
+    public final String S_KEY = "key";
 
 
     public SharedPref(Context context) {
         this.context = context;
+        SaveKey();
     }
 
     private static SharedPreferences getUserSharedPreferences(Context context) {
@@ -152,5 +155,8 @@ public class SharedPref {
             setString(FB_TOKEN_ID, fcmToken);
         }
 
+    }
+    private void SaveKey(){
+        SharedPref.this.setString(S_KEY,"*9@8#7$6%5&4*");
     }
 }

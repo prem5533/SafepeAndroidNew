@@ -45,10 +45,16 @@ public class OperatorResponse {
          * operator_code : 12
          */
 
+
         private int id;
         private String operator_name;
         private String operator_code;
         private String image;
+        /**
+         * govcharge : 22
+         */
+
+        private String govcharge;
 
         public int getId() {
             return id;
@@ -80,6 +86,14 @@ public class OperatorResponse {
 
         public void setImage(String image) {
             this.image = image;
+        }
+
+        public String getGovcharge() {
+            return govcharge;
+        }
+
+        public void setGovcharge(String govcharge) {
+            this.govcharge = govcharge;
         }
     }
 }

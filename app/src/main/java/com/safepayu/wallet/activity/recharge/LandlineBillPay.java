@@ -43,7 +43,7 @@ public class LandlineBillPay  extends BaseActivity {
     private Button PayBtn,BackBtn,BillCheckBtn ;
     private TextView textView;
     private Spinner OperatorSpinner;
-    private EditText MobileED ,AmountEd, STDED;
+    private EditText MobileED ,AmountEd, STDED,edOptionValue2;
     private String OperatorText="",OperatorCode="",OperatorId="";
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
@@ -52,9 +52,10 @@ public class LandlineBillPay  extends BaseActivity {
     private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax;
     private RelativeLayout ServiceChargeLayout;
     private CardView cardAmount;
-    private LinearLayout layoutSelectBillOper;
+    private LinearLayout layoutSelectBillOper,OptionValue2Layout;
     private List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
-    public static String StdCode="";
+    public static String StdCode="",OptionValue2="";
+    private boolean checkAirtel=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +82,10 @@ public class LandlineBillPay  extends BaseActivity {
         tvRechargeAmtTax= findViewById(R.id.tv_rechargeAmount_serviceChargeLayout);
         tvServiceChargeTax= findViewById(R.id.tv_serviceCharge_serviceChargeLayout);
         tvAmt2PayTax= findViewById(R.id.tv_totalAmt_serviceChargeLayout);
+        edOptionValue2=findViewById(R.id.optionValue2);
+        OptionValue2Layout=findViewById(R.id.optionValue2Layout);
 
-
+        OptionValue2Layout.setVisibility(View.GONE);
         OperatorNameList=new ArrayList<>();
         IdList=new ArrayList<>();
         OperatorCodeList=new ArrayList<>();
@@ -101,6 +104,26 @@ public class LandlineBillPay  extends BaseActivity {
                 OperatorText=mOperList.get(i).getOperator_name();
                 OperatorCode= mOperList.get(i).getOperator_code();
                 OperatorId= String.valueOf(mOperList.get(i).getId());
+
+                try {
+                    if (mOperList.get(i).getOperator_code().equalsIgnoreCase("45")){
+                        OptionValue2Layout.setVisibility(View.VISIBLE);
+                    }else {
+                        OptionValue2Layout.setVisibility(View.GONE);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                try {
+                    if (mOperList.get(i).getOperator_code().equalsIgnoreCase("44")){
+                        checkAirtel=true;
+                    }else {
+                        checkAirtel=false;
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -286,7 +309,18 @@ public class LandlineBillPay  extends BaseActivity {
 
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Select Operator",false);
                             }else {
-                                StdCode=STDED.getText().toString().trim();
+                                if (checkAirtel){
+                                    StdCode="0"+STDED.getText().toString().trim();
+                                }else {
+                                    StdCode=STDED.getText().toString().trim();
+                                }
+
+                                if (OptionValue2Layout.getVisibility()==View.VISIBLE){
+                                    OptionValue2=edOptionValue2.getText().toString().trim();
+                                }else {
+                                    OptionValue2="";
+                                }
+
                                 Intent intent=new Intent(LandlineBillPay.this, PaymentType.class);
                                 overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                                 intent.putExtra("RechargePaymentId",Mobile);

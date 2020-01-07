@@ -339,7 +339,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 return false;
             } else if (password.getText().toString().trim().length() == 0|| password.getText().toString().trim().length()<4) {
                 mobileNo.requestFocus();
-                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter password, password must be 4 digit", true);
+                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter password, password must be grater than 4 digit", true);
                 return false;
             } else if (referralCode.getText().toString().trim().length() == 0) {
                 referralCode.requestFocus();

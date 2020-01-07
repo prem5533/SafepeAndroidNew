@@ -280,12 +280,15 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                     buyPackage.setDocument_attached("");
                     buyPackage.setPaid_to_account(BankNameText);
                     buyPackage.setPaid_from_account("");
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                        startActivity(new Intent(MemberBankAddPackages.this, CreatePassCodeActivity.class));
-                    } else {
-                        PasscodeDialog passcodeDialog = new PasscodeDialog(MemberBankAddPackages.this, MemberBankAddPackages.this, "");
-                        passcodeDialog.show();
-                    }
+//                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+//                        startActivity(new Intent(MemberBankAddPackages.this, CreatePassCodeActivity.class));
+//                    } else {
+//                        PasscodeDialog passcodeDialog = new PasscodeDialog(MemberBankAddPackages.this, MemberBankAddPackages.this, "");
+//                        passcodeDialog.show();
+//                    }
+
+                    PasscodeDialog passcodeDialog = new PasscodeDialog(MemberBankAddPackages.this, MemberBankAddPackages.this, "");
+                    passcodeDialog.show();
                 }else {
                     TransactionType="3";
                     buyPackage.setTransaction_type(TransactionType);

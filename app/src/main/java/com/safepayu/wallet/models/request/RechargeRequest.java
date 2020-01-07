@@ -28,9 +28,15 @@ public class RechargeRequest {
     private String description;
     /**
      * stdCode : 22
+     *
      */
-
+    /**
+     * opvalue2 :
+     * opvalue3 :
+     */
     private String stdCode;
+    private String opvalue2;
+    private String opvalue3;
 
 
     public String getTransaction_id() {
@@ -119,5 +125,21 @@ public class RechargeRequest {
 
     public void setStdCode(String stdCode) {
         this.stdCode = stdCode;
+    }
+
+    public String getOpvalue2() {
+        return opvalue2;
+    }
+
+    public void setOpvalue2(String opvalue2) {
+        this.opvalue2 = opvalue2;
+    }
+
+    public String getOpvalue3() {
+        return opvalue3;
+    }
+
+    public void setOpvalue3(String opvalue3) {
+        this.opvalue3 = opvalue3;
     }
 }

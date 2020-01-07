@@ -200,12 +200,14 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
                                     sendToWalletRequest.setMobile(Mobile);
                                     sendToWalletRequest.setUser_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
 
-                                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                                        startActivity(new Intent(SendMoneyToWallet.this,CreatePassCodeActivity.class));
-                                    } else {
-                                        PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoneyToWallet.this, SendMoneyToWallet.this, "");
-                                        passcodeDialog.show();
-                                    }
+//                                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+//                                        startActivity(new Intent(SendMoneyToWallet.this,CreatePassCodeActivity.class));
+//                                    } else {
+//                                        PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoneyToWallet.this, SendMoneyToWallet.this, "");
+//                                        passcodeDialog.show();
+//                                    }
+                                    PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoneyToWallet.this, SendMoneyToWallet.this, "");
+                                    passcodeDialog.show();
                                 }else {
                                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Transaction User Not Registered Or Blocked",true);
                                 }

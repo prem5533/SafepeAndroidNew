@@ -278,12 +278,14 @@ public class PaymentActivityBooking  extends AppCompatActivity implements Passco
 
                     if (checkWalletBal){
                         if (checkWalletLimit){
-                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                                startActivity(new Intent(PaymentActivityBooking.this, CreatePassCodeActivity.class));
-                            } else {
-                                PasscodeDialog passcodeDialog = new PasscodeDialog(PaymentActivityBooking.this, PaymentActivityBooking.this, "");
-                                passcodeDialog.show();
-                            }
+//                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+//                                startActivity(new Intent(PaymentActivityBooking.this, CreatePassCodeActivity.class));
+//                            } else {
+//                                PasscodeDialog passcodeDialog = new PasscodeDialog(PaymentActivityBooking.this, PaymentActivityBooking.this, "");
+//                                passcodeDialog.show();
+//                            }
+                            PasscodeDialog passcodeDialog = new PasscodeDialog(PaymentActivityBooking.this, PaymentActivityBooking.this, "");
+                            passcodeDialog.show();
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),"Wallet Limit Is Exceeded",true);
                         }

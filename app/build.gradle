@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Naga Raj\\Desktop\\SafepeKey\\safepekey.jks')
+            storePassword 'safepayu'
+            keyPassword 'safepayu'
+            keyAlias 'mysafepekey'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     useLibrary 'org.apache.http.legacy'
@@ -8,16 +16,18 @@ android {
         applicationId "com.safepayu.wallet"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 52
-        versionName "1.9.4"
+        versionCode 55
+        versionName "1.9.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
     buildTypes {
         release {
 
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            debuggable true
+            signingConfig signingConfigs.release
         }
     }
     sourceSets {
@@ -36,6 +46,7 @@ android {
         }
     }
     dexOptions {
+        incremental true
         javaMaxHeapSize "4g"
     }
     packagingOptions {
@@ -93,7 +104,7 @@ dependencies {
 
     implementation(name: 'peb-lib', ext: 'aar')
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.android.support:multidex:1.0.1'
+    implementation 'com.android.support:multidex:1.0.3'
 
     implementation 'com.google.android.gms:play-services:8.4.0'
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
@@ -110,7 +121,6 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
-    implementation 'com.android.support:multidex:1.0.1'
 
 
     implementation 'com.github.Inconnu08:android-ratingreviews:1.0.0'

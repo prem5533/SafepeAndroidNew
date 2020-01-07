@@ -43,17 +43,16 @@ public class WaterBillPay extends BaseActivity {
     Button WaterPaybtn,BackBtn;
     private Spinner OperatorSpinner;
     private EditText AmountED,WaterIdED;
-    String OperatorText="",OperatorCode="",OperatorId="";
+    String OperatorText="",OperatorCode="",OperatorId="",GovCharge="";
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
-    private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;
+    private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay,tvGovCharge;
     private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax;
     private RelativeLayout ServiceChargeLayout;
     double totalAmount = 0.0f, minusAmount = 0.0f;
     private CardView cardAmount;
     LinearLayout layoutSelectWaterOper;
     List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +76,7 @@ public class WaterBillPay extends BaseActivity {
         tvRechargeAmtTax= findViewById(R.id.tv_rechargeAmount_serviceChargeLayout);
         tvServiceChargeTax= findViewById(R.id.tv_serviceCharge_serviceChargeLayout);
         tvAmt2PayTax= findViewById(R.id.tv_totalAmt_serviceChargeLayout);
+        tvGovCharge=findViewById(R.id.govCharge_water);
 
         OperatorNameList=new ArrayList<>();
         IdList=new ArrayList<>();
@@ -120,6 +120,17 @@ public class WaterBillPay extends BaseActivity {
                 OperatorText=mOperList.get(i).getOperator_name();
                 OperatorCode= mOperList.get(i).getOperator_code();
                 OperatorId= String.valueOf(mOperList.get(i).getId());
+
+                try {
+                    if (TextUtils.isEmpty(mOperList.get(i).getGovcharge().trim())){
+                        GovCharge="0";
+                    }else {
+                        GovCharge=mOperList.get(i).getGovcharge().trim();
+                    }
+                    tvGovCharge.setText("Rs "+GovCharge+" will also be included in the amount as Government Charge");
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -134,8 +145,12 @@ public class WaterBillPay extends BaseActivity {
 
                 // TODO Auto-generated method stub
 
-                if (s.length()==10 || s.length()>10){
-                    getCustomerOperator();
+                try {
+                    if (s.length()==10 || s.length()>10){
+                        getCustomerOperator();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
 

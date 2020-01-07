@@ -86,7 +86,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginLeft="5dp"
-                    android:src="@drawable/ic_mobile_new"/>
+                    android:src="@drawable/landline_new"/>
 
                 <EditText
                     android:id="@+id/mobilePostpaid"
@@ -101,7 +101,9 @@
                     android:inputType="number"
                     android:maxLength="11"
                     android:nextFocusForward="@+id/stdCode"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -118,22 +120,55 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginLeft="5dp"
-                    android:src="@drawable/ic_mobile_new"/>
+                    android:src="@drawable/landline_new"/>
 
                 <EditText
                     android:id="@+id/stdCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter STD Code"
+                    android:hint="Enter STD Code/CA Number "
                     android:textColor="@color/textcolor"
                     android:fontFamily="@font/roboto_medium"
                     android:textSize="15sp"
                     android:padding="10dp"
                     android:layout_gravity="center"
                     android:inputType="number"
-                    android:maxLength="6"
+                    android:maxLength="15"
                     android:nextFocusForward="@+id/amount"
-                    android:background="@null" />
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/optionValue2Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start|center"
+                android:padding="10dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/landline_new"/>
+
+                <EditText
+                    android:id="@+id/optionValue2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Account Number "
+                    android:textColor="@color/textcolor"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textSize="15sp"
+                    android:padding="10dp"
+                    android:layout_gravity="center"
+                    android:inputType="number"
+                    android:maxLength="15"
+                    android:nextFocusForward="@+id/amount"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:imeOptions="actionDone"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -222,9 +257,10 @@
                     android:background="@null"
                     android:layout_below="@+id/textView"
                     android:layout_gravity="center"
-                    android:imeOptions="actionDone"
                     android:inputType="number"
-                    android:nextFocusForward="@+id/btn" />
+                    android:nextFocusForward="@+id/btn"
+                    android:singleLine="true"
+                    android:imeOptions="actionDone"/>
             </LinearLayout>
         </LinearLayout>
 

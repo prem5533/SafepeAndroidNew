@@ -18,5 +18,21 @@
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
--dontwarn com.google.android.gms.*
+-renamesourcefileattribute SourceFile
+#-dontwarn com.google.android.gms.*
+#-dontwarn com.google.android.gms.internal.zzhu
+
+-keep class android.support.** { *; }
+-keep interface android.support.** { *; }
+-optimizationpasses 5
+-keepattributes SourceFile,LineNumberTable
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keep class com.safepayu.wallet.models.** { *; }
+-dontwarn okio.**
+-ignorewarnings
+-keep class * {
+    public private *;
+}
+-dontskipnonpubliclibraryclasses
+-forceprocessing

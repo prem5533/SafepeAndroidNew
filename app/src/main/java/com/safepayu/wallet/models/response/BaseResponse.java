@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class BaseResponse {
-    Boolean status;
+    boolean status;
     @SerializedName("status_code")
     int statusCode;
     String message;
@@ -17,11 +17,11 @@ public class BaseResponse {
     private DataBean data;
 
 
-    public Boolean getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

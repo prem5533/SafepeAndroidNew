@@ -69,7 +69,7 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
      private Button DoneBtn;
      private double totalFare = 0,Amount2Pay=0;
      public static BusBlockingRequest busBookingRequest=new BusBlockingRequest();
-     private int ConvenienceFee=0;
+     private double ConvenienceFee=0;
      private boolean PerPassengerBooking=false;
 
 //     String seats = "UU_AA/"
@@ -833,13 +833,14 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
              }
 
              try {
+                 test=Double.parseDouble(SeatLists.get(Integer.parseInt(SeatNoList.get(seatNo))-1).getFare());
 
                  if (PerPassengerBooking){
-                     conFee=conFee+ConvenienceFee;
+                     conFee=conFee+CalculateAmount(test,ConvenienceFee);
                  }else {
-                     conFee=ConvenienceFee;
+                     conFee=CalculateAmount(test,ConvenienceFee);
                  }
-                 test=Double.parseDouble(SeatLists.get(Integer.parseInt(SeatNoList.get(seatNo))-1).getFare());
+
                  baseFare=baseFare+test;
                  serviceTax=serviceTax+Double.parseDouble(SeatLists.get(Integer.parseInt(SeatNoList.get(seatNo))-1).getServicetax().trim());
                  OC= Double.parseDouble(SeatLists.get(Integer.parseInt(SeatNoList.get(seatNo))-1).getOperatorServiceCharge());
@@ -864,6 +865,15 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
          tvTotal.setText(getActivity().getResources().getString(R.string.rupees)+" "+total);
      }
 
+     private double CalculateAmount(double amount,double tax){
+
+         double minusAmount=0;
+
+         minusAmount=((( amount) / 100) * tax);
+
+         return minusAmount;
+     }
+
      private void getConvenienceFee() {
       //  loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getActivity()).create(ApiService.class);
@@ -882,21 +892,21 @@ public class SelectSeatFragment extends Fragment implements View.OnClickListener
                                 }else {
                                     PerPassengerBooking=false;
                                 }
-                                ConvenienceFee=response.getData().getFee();
+                                ConvenienceFee=(double)response.getData().getFee();
 
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         } else {
                             ConvenienceFee=0;
-                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.hotelBookingHistory), response.getMessage(), true);
+                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.busSeatLayout), response.getMessage(), true);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         //loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.hotelBookingHistory), false, e.getCause());
+                        BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.busSeatLayout), false, e.getCause());
                     }
                 }));
     }

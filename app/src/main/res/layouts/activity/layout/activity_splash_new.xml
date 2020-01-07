@@ -16,4 +16,17 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/tv_rechargeAmount_serviceChargeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="© SafePe India Pvt. Ltd."
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"/>
 </RelativeLayout>

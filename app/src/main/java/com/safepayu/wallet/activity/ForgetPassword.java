@@ -83,7 +83,6 @@ public class ForgetPassword extends AppCompatActivity {
         enter_password = (EditText) findViewById(R.id.enter_password);
         confrimPasswordED = findViewById(R.id.confirm_password);
         ShowHidePasswordBtn = findViewById(R.id.show_hide_password_forgetPass);
-        forgotImage = findViewById(R.id.forgot_image);
 
         //  Picasso.get().load(imagePath).into(forgotImage);
         otpToSend = 0;

@@ -189,6 +189,19 @@
         </LinearLayout>
         </RelativeLayout>
         </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/govCharge_electricity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:text="Government Charge"
+                android:textColor="@color/grey_500"
+                android:textSize="13dp"
+                android:fontFamily="@font/roboto_bold"
+                android:visibility="visible" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_amount"
                 android:layout_width="wrap_content"

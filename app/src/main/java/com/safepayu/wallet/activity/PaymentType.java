@@ -51,6 +51,7 @@ import io.reactivex.schedulers.Schedulers;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.safepayu.wallet.activity.BuyMemberShip.buyPackageFromDB;
+import static com.safepayu.wallet.activity.recharge.LandlineBillPay.OptionValue2;
 import static com.safepayu.wallet.activity.recharge.LandlineBillPay.StdCode;
 
 public class PaymentType extends BaseActivity implements PasscodeClickListener {
@@ -183,12 +184,14 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         ProceedWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                    startActivity(new Intent(PaymentType.this,CreatePassCodeActivity.class));
-                } else {
-                    PasscodeDialog passcodeDialog = new PasscodeDialog(PaymentType.this, PaymentType.this, "");
-                    passcodeDialog.show();
-                }
+//                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+//                    startActivity(new Intent(PaymentType.this,CreatePassCodeActivity.class));
+//                } else {
+//                    PasscodeDialog passcodeDialog = new PasscodeDialog(PaymentType.this, PaymentType.this, "");
+//                    passcodeDialog.show();
+//                }
+                PasscodeDialog passcodeDialog = new PasscodeDialog(PaymentType.this, PaymentType.this, "");
+                passcodeDialog.show();
             }
         });
 
@@ -588,8 +591,15 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                     rechargeRequest.setTransaction_id(easepayid);
                     rechargeRequest.setPayment_mode("bank");
                     rechargeRequest.setNumber_type("");
-                    rechargeRequest.setStdCode(StdCode);
                     rechargeRequest.setDescription(PaymentFor+" "+PaymentTypeText);
+
+                    if (RechargeTypeId.equals("7")){
+                        rechargeRequest.setStdCode(StdCode);
+                        rechargeRequest.setOpvalue2(OptionValue2);
+                    }else {
+                        rechargeRequest.setStdCode("");
+                        rechargeRequest.setOpvalue2("");
+                    }
 
                     doRecharge(rechargeRequest);
                 }
@@ -644,8 +654,15 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                 rechargeRequest.setTransaction_id("");
                 rechargeRequest.setPayment_mode("wallet");
                 rechargeRequest.setNumber_type("");
-                rechargeRequest.setStdCode(StdCode);
                 rechargeRequest.setDescription(PaymentFor+" "+PaymentTypeText);
+
+                if (RechargeTypeId.equals("7")){
+                    rechargeRequest.setStdCode(StdCode);
+                    rechargeRequest.setOpvalue2(OptionValue2);
+                }else {
+                    rechargeRequest.setStdCode("");
+                    rechargeRequest.setOpvalue2("");
+                }
 
                 doRecharge(rechargeRequest);
             }

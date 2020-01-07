@@ -87,10 +87,11 @@
                 android:layout_marginTop="10dp">
 
                 <LinearLayout
-                    android:layout_width="220dp"
+                    android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center"
+                    android:layout_gravity="center"
                     android:background="@color/white">
 
                     <EditText
@@ -111,18 +112,26 @@
                         android:textColor="@color/black"
                         android:textSize="25sp"
                         android:layout_weight="1"
-                        android:layout_marginTop="2dp"/>
+                        android:layout_marginTop="2dp"
+                        android:paddingLeft="15dp"/>
 
-                    <ImageView
-                        android:id="@+id/visible"
+                    <RelativeLayout
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_gravity="right"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="INVISIBLE"
-                        android:padding="8dp"
-                        android:src="@drawable/hide_new"
-                        android:background="@color/red_theme"/>
+                        android:gravity="center"
+                        android:background="@color/red_theme">
+
+                        <ImageView
+                            android:id="@+id/visible"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="right"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="INVISIBLE"
+                            android:padding="8dp"
+                            android:src="@drawable/hide_new" />
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -342,7 +351,8 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
-        android:background="#f4f5ff">
+        android:background="#f4f5ff"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="match_parent"

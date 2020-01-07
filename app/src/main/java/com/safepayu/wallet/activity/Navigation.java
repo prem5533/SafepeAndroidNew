@@ -457,7 +457,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             public void onClick(View v) {
 
                  startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
-                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                 //startActivity(new Intent(Navigation.this, OtpVerification.class));
+                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
             }
         });
@@ -1641,7 +1642,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                                 if (versionCode == val) {
 
                                 } else {
-                                    showDialogForAppUpdate(Navigation.this);
+                                  //  showDialogForAppUpdate(Navigation.this);
                                 }
                                 getServicesCharges();
                             }catch (Exception e){
@@ -1719,7 +1720,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
                             //BaseApp.getInstance().toastHelper().log(HomeActivity.class, BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER));
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED, String.valueOf(response.getUser().getEmail_verified()));
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE, String.valueOf(response.getUser().getPasscode()));
+                            //BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE, String.valueOf(response.getUser().getPasscode()));
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_EMAIL, response.getUser().getEmail());
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME, response.getUser().getFirst_name());
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME, response.getUser().getLast_name());
@@ -1928,16 +1929,18 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
                         if (response.isStatus()) {
                             for (int i=0;i<response.getTax().size();i++){
-                                if (response.getTax().get(i).getId()==1){
+                                if (response.getTax().get(i).getTax_id()==1){
                                     BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().GST,response.getTax().get(i).getTax_value());
-                                }else if (response.getTax().get(i).getId()==2){
+                                }else if (response.getTax().get(i).getTax_id()==2){
                                     BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().SERVICE_CHARGE,response.getTax().get(i).getTax_value());
-                                }else if (response.getTax().get(i).getId()==3){
+                                }else if (response.getTax().get(i).getTax_id()==3){
                                     BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LIMIT,response.getTax().get(i).getTax_value());
-                                }else if (response.getTax().get(i).getId()==4){
+                                }else if (response.getTax().get(i).getTax_id()==4){
                                     BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().TRANSACTION_CHARGE,response.getTax().get(i).getTax_value());
-                                }else if (response.getTax().get(i).getId()==5){
+                                }else if (response.getTax().get(i).getTax_id()==5){
                                     BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LIMIT_MIN,response.getTax().get(i).getTax_value());
+                                }else if (response.getTax().get(i).getTax_id()==6){
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().COMMISSION_CHARGE,response.getTax().get(i).getTax_value());
                                 }
                             }
                         }

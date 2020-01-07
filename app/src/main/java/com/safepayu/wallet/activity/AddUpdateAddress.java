@@ -248,7 +248,7 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
 
                             String Msg="Address Updated Successfully. ";
                             Toast.makeText(AddUpdateAddress.this, Msg, Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(AddUpdateAddress.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            startActivity(new Intent(AddUpdateAddress.this, Navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             finish();
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addUpdateAddressLayout),response.getMessage(),false);

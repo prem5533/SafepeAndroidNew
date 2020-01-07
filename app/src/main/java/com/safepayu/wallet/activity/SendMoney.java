@@ -268,12 +268,14 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                             transferWalletToBankRequest.setBeneId(BenID);
                             transferWalletToBankRequestDate = transferWalletToBankRequest;
 
-                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                                startActivity(new Intent(SendMoney.this, CreatePassCodeActivity.class));
-                            } else {
-                                PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoney.this, SendMoney.this, "");
-                                passcodeDialog.show();
-                            }
+//                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+//                                startActivity(new Intent(SendMoney.this, CreatePassCodeActivity.class));
+//                            } else {
+//                                PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoney.this, SendMoney.this, "");
+//                                passcodeDialog.show();
+//                            }
+                            PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoney.this, SendMoney.this, "");
+                            passcodeDialog.show();
                         }else {
                             showDialogFailed("Please Enter Amount Less Than Wallet Balance");
                         }

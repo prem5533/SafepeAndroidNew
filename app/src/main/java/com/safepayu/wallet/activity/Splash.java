@@ -57,17 +57,23 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            getPromotionalOfferType121();
-            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN) != null) {
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                    startActivity(new Intent(Splash.this,CreatePassCodeActivity.class));
-                } else {
+            try {
+                getPromotionalOfferType121();
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN) != null) {
+//                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+//                    startActivity(new Intent(Splash.this,CreatePassCodeActivity.class));
+//                } else {
+//                    PasscodeDialog passcodeDialog = new PasscodeDialog(Splash.this, Splash.this, "");
+//                    passcodeDialog.show();
+//                }
                     PasscodeDialog passcodeDialog = new PasscodeDialog(Splash.this, Splash.this, "");
                     passcodeDialog.show();
+                } else {
+                    startActivity(new Intent(Splash.this, LoginActivity.class));
+                    finish();
                 }
-            } else {
-                startActivity(new Intent(Splash.this, LoginActivity.class));
-                finish();
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
     };
@@ -129,8 +135,6 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
                         promotionResponse1.setStatus(false);
                     }
                 }));
-
-
     }
 
     private void getPromotionalOfferType121() {

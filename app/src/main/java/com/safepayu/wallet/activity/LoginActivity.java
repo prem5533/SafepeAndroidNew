@@ -48,6 +48,8 @@ import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
+import java.util.HashMap;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -306,7 +308,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             if (versionCode == val) {
 
                             } else {
-                                showDialogForAppUpdate(LoginActivity.this);
+                               // showDialogForAppUpdate(LoginActivity.this);
                             }
 
                         } else {
@@ -339,10 +341,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }
         //Login login = new Login(mobileNo.getText().toString().trim(), password.getText().toString(), BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
 
-        Login login=new Login();
-        login.setDeviceid(BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
-        login.setMobile(mobileNo.getText().toString().trim());
-        login.setPassword(password.getText().toString().trim());
+        Login login=new Login(mobileNo.getText().toString().trim(),password.getText().toString().trim(),BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
+        //login.setDeviceid(BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
+        //login.setMobile(mobileNo.getText().toString().trim());
+        //login.setPassword(password.getText().toString().trim());
+      //  HashMap<String,String> requestMap=new HashMap<>();
+        //requestMap.put("mobile",mobileNo.getText().toString());
+        //requestMap.put("password",password.getText().toString());
+        //requestMap.put("deviceid",BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
 
         BaseApp.getInstance().getDisposable().add(apiService.login(login)
                 .subscribeOn(Schedulers.io())

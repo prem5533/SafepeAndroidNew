@@ -198,10 +198,9 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
             tv_done.setVisibility(View.VISIBLE);
             tv_skip.setVisibility(View.GONE);
 
-        }
-        else if (position<NUM_PAGES-1){
+        } else if (position<NUM_PAGES-1){
             tv_done.setVisibility(View.GONE);
-            tv_skip.setVisibility(View.GONE);
+            tv_skip.setVisibility(View.VISIBLE);
         }
 
         llPagerDots.removeAllViews();

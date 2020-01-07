@@ -78,9 +78,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/tax_comWallet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="10% Amount Will Be Charged As Admin Charge"
+            android:text="tax"
             android:textColor="@color/red_500"
             android:textSize="13sp"
             android:textStyle="bold"

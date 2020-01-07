@@ -110,7 +110,7 @@ public class CreatePassCodeActivity extends BaseActivity implements NumberBoard.
                     public void onSuccess(UserDetailResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE,passCodeTextView.getPassCode());
+                            //BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PASSCODE,passCodeTextView.getPassCode());
                             startActivity(new Intent(CreatePassCodeActivity.this, AddUpdateAddress.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             finish();
                         }else {

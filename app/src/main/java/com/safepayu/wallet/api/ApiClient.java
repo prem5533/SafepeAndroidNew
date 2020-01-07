@@ -3,13 +3,19 @@ package com.safepayu.wallet.api;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.activity.LoginActivity;
 
+import org.apache.commons.codec.binary.Base64;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -22,14 +28,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.safepayu.wallet.BaseApp.Code;
 
 public class ApiClient {
-//http://13.232.191.38/safepe-new/public/
-    //http://india.safepayu.com/safepe-testing/public/
-   // http://india.safepayu.com/safepe-new/public/
-//http://15.206.175.119/safepe-testing/public/api/secure/payment/api/login
 
-    public static final String BASE_URL = "http://alias.safepeindia.com/";
+    public static final String BASE_URL = "https://secure.safepeindia.com/";
     public static final String BASE_URL_TEST = "http://productiontesting.safepeindia.com/";
-    public  static String ImagePath = BASE_URL_TEST;
+    public  static String ImagePath = BASE_URL;
     private static Retrofit retrofit = null;
     private static int REQUEST_TIMEOUT = 60;
     private static OkHttpClient okHttpClient;
@@ -41,7 +43,7 @@ public class ApiClient {
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL_TEST)
+                    .baseUrl(BASE_URL)
                     .client(okHttpClient)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
@@ -70,7 +72,13 @@ public class ApiClient {
                         .addHeader("Accept", "application/json")
                         .addHeader("Content-Type", "application/json");
 
-
+//                try {
+//                    String key=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().S_KEY);
+//                    String enKey=encrypt(key,"y/v5O3hIiMJMXcuYsG6COrjXtskJIRpepXHHUXsbEf4=");
+//                    Log.v("enKey",enKey);
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
 
                 // Adding Authorization token (API Key)
                 // Requests will be denied without API key
@@ -92,13 +100,24 @@ public class ApiClient {
                     }
                     return response;
                 }
-
-
                 return response;
             }
         });
 
         okHttpClient = httpClient.build();
+    }
+
+    public static String encrypt(String input, String key){
+        byte[] crypted = null;
+        try{
+            SecretKeySpec skey = new SecretKeySpec(key.getBytes(), "AES");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, skey);
+            crypted = cipher.doFinal(input.getBytes());
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+        return new String(Base64.encodeBase64(crypted));
     }
 }
 

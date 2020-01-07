@@ -48,6 +48,12 @@ public class ServiceChargeResponse {
         private int id;
         private String tax_name;
         private String tax_value;
+        /**
+         * Tax_id : 1
+         */
+
+        private int Tax_id;
+
 
         public int getId() {
             return id;
@@ -71,6 +77,14 @@ public class ServiceChargeResponse {
 
         public void setTax_value(String tax_value) {
             this.tax_value = tax_value;
+        }
+
+        public int getTax_id() {
+            return Tax_id;
+        }
+
+        public void setTax_id(int Tax_id) {
+            this.Tax_id = Tax_id;
         }
     }
 }

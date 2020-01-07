@@ -100,7 +100,7 @@ public class BusListActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onBusItemSelect(int position,BusListAdapter.BusSelectModel busSelectModel1) {
-        Toast.makeText(this, busSelectModel1.getAvailableSeats(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, busSelectModel1.getAvailableSeats(), Toast.LENGTH_SHORT).show();
         //seatListener.seatsAvailable(busSelectModel);
 
         busTripDetailsRequest=new BusTripDetailsRequest();

@@ -113,8 +113,8 @@
                         android:gravity="start|center">
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:src="@drawable/ic_whatsapp"/>
                         <TextView
                             android:layout_width="wrap_content"
@@ -124,7 +124,7 @@
                             android:fontFamily="@font/roboto_bold"
                             android:textColor="@color/black"
                             android:textIsSelectable="true"
-                            android:layout_marginLeft="4dp"/>
+                            android:layout_marginLeft="14dp" />
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -328,14 +328,16 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:gravity="center"
-                            android:paddingLeft="20dp"
-                            android:paddingRight="20dp">
+                            android:paddingLeft="30dp"
+                            android:paddingRight="30dp"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/ic_whatsapp"
-                                android:padding="10dp"/>
+                                android:src="@drawable/website_icon_new"
+                                android:scaleType="fitXY"/>
                             <TextView
                                 android:id="@+id/website"
                                 android:layout_width="wrap_content"

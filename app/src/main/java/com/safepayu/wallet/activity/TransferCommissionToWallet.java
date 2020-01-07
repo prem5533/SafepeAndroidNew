@@ -37,7 +37,8 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
     Button SendToWalletBtn,BackBtn;
     private EditText AmountED;
     private int Amount = 0;
-    private TextView AmountTotalTV;
+    private TextView AmountTotalTV,tvTax;
+    private double tax=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
         BackBtn=findViewById(R.id.backBtn_transferCommission);
         AmountED = findViewById(R.id.withdrawAmount_commWallet);
         AmountTotalTV= findViewById(R.id.calculatedamount);
+        tvTax=findViewById(R.id.tax_comWallet);
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +57,9 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
                 finish();
             }
         });
+
+        tax=Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().COMMISSION_CHARGE));
+        tvTax.setText(tax+"% Of Amount Will Be Charged As Admin Charge");
 
         SendToWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,12 +74,14 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commisionToWallet), "Please Enter Amount", false);
                 } else {
                     if (Amount > 0) {
-                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-                            startActivity(new Intent(TransferCommissionToWallet.this, CreatePassCodeActivity.class));
-                        } else {
-                            PasscodeDialog passcodeDialog = new PasscodeDialog(TransferCommissionToWallet.this, TransferCommissionToWallet.this, "");
-                            passcodeDialog.show();
-                        }
+//                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
+//                            startActivity(new Intent(TransferCommissionToWallet.this, CreatePassCodeActivity.class));
+//                        } else {
+//                            PasscodeDialog passcodeDialog = new PasscodeDialog(TransferCommissionToWallet.this, TransferCommissionToWallet.this, "");
+//                            passcodeDialog.show();
+//                        }
+                        PasscodeDialog passcodeDialog = new PasscodeDialog(TransferCommissionToWallet.this, TransferCommissionToWallet.this, "");
+                        passcodeDialog.show();
                     } else {
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commisionToWallet), "Please Enter Amount", false);
                     }
@@ -87,13 +94,17 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 // TODO Auto-generated method stub
-                if (s.length()>1 || s.length()==1){
-                    double amt=CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()));
-                    String text = getResources().getString(R.string.rupees)+" "+AmountED.getText().toString().trim()+" - Admin Charge = ";
-                    AmountTotalTV.setText(text+getResources().getString(R.string.rupees)+" "+String.format("%.2f", amt));
-                }else {
-                    AmountTotalTV.setText(getResources().getString(R.string.rupees)+" "+"0.0");
-                }
+               try {
+                   if (s.length()>1 || s.length()==1){
+                       double amt=CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()),tax);
+                       String text = getResources().getString(R.string.rupees)+" "+AmountED.getText().toString().trim()+" - Admin Charge = ";
+                       AmountTotalTV.setText(text+getResources().getString(R.string.rupees)+" "+String.format("%.2f", amt));
+                   }else {
+                       AmountTotalTV.setText(getResources().getString(R.string.rupees)+" "+"0.0");
+                   }
+               }catch (Exception e){
+                   e.printStackTrace();
+               }
             }
 
             @Override
@@ -206,12 +217,12 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
 
     }
 
-    private double CalculateAmount(int amount){
+    private double CalculateAmount(int amount,double tax){
 
         double totalAmount=0.0f,minusAmount=0.0f;
         int checkAmount=0;
 
-        minusAmount=((((double) amount) / 100) * 10.00);
+        minusAmount=((((double) amount) / 100) * tax);
         totalAmount=(double)amount- minusAmount;
         checkAmount=(int)minusAmount;
         if (checkAmount>9){
