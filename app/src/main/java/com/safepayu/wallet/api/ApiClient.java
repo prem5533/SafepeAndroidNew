@@ -72,14 +72,6 @@ public class ApiClient {
                         .addHeader("Accept", "application/json")
                         .addHeader("Content-Type", "application/json");
 
-//                try {
-//                    String key=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().S_KEY);
-//                    String enKey=encrypt(key,"y/v5O3hIiMJMXcuYsG6COrjXtskJIRpepXHHUXsbEf4=");
-//                    Log.v("enKey",enKey);
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-
                 // Adding Authorization token (API Key)
                 // Requests will be denied without API key
                 if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN)!=null) {
