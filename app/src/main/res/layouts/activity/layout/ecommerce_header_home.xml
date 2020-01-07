@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#f4f5ff">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/ecomm_bg_home"
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hi John,"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="What would you to like to explore?"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ecommerce_round_bg_white"
+                android:orientation="horizontal"
+                android:gravity="start|center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_search"
+                    android:padding="10dp"
+                    android:layout_marginLeft="5dp"/>
+                <EditText
+                    android:id="@+id/tv_search_ecomm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search for any product or venue"
+                    android:textSize="14sp"
+                    android:textColor="#87898c"
+                    android:background="@null"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_weight="1"/>
+                <LinearLayout
+                    android:id="@+id/li_done"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/blue_green_round_btn">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_e_commdone"
+                        android:padding="10dp" />
+                </LinearLayout></LinearLayout></LinearLayout></LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        android:background="#e39600"
+        android:gravity="center"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_pay_n_go_ecom"
+            android:layout_marginTop="3dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Pay &amp; Go"
+            android:textColor="@color/white"
+            android:padding="5dp" />
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:background="#da466b"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_group_ecom"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Loyalty Card"
+                android:textColor="@color/white"
+                android:padding="5dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:background="#7312aa"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_food_ecom"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Book A Table"
+                android:textColor="@color/white"
+                android:padding="5dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:background="#54a6bc"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_tags_ecom"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Nearby Deals"
+                android:textColor="@color/white"
+                android:padding="5dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager_ecom"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+    </androidx.viewpager.widget.ViewPager>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout_ecom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:tabMaxWidth="15dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="-15dp"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:padding="10dp"
+        android:text="Category"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="-20dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_category_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:padding="10dp"
+        android:text="Top Offers"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_category_offer_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:padding="10dp"
+        android:text="Trending Products"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_trending_product_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:padding="10dp"
+        android:text="Recommended You"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_recommend_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

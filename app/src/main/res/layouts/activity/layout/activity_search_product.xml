@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f4f5ff"
+    tools:context=".ecommerce.activity.SearchProductActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+        android:gravity="center">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/ecomm_bg_home"
+            android:layout_gravity="center">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ecommerce_round_bg_white"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_search"
+                    android:padding="10dp"
+                    android:layout_marginLeft="5dp"/>
+                <EditText
+                    android:id="@+id/tv_search_ecomm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search for any product or venue"
+                    android:textSize="14sp"
+                    android:textColor="#87898c"
+                    android:background="@null"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_weight="1"/>
+                <LinearLayout
+                    android:id="@+id/li_done"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/blue_green_round_btn">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_e_commdone"
+                        android:padding="10dp" />
+                </LinearLayout></LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+         android:layout_alignParentBottom="true">
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:orientation="vertical"
+                android:background="#e39600"
+                android:gravity="center"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_pay_n_go_ecom"
+                    android:layout_marginTop="3dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Pay &amp; Go"
+                    android:textColor="@color/white"
+                    android:padding="5dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:orientation="vertical"
+                android:background="#da466b"
+                android:gravity="center"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_group_ecom"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Loyalty Card"
+                    android:textColor="@color/white"
+                    android:padding="5dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:orientation="vertical"
+                android:background="#7312aa"
+                android:gravity="center"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_food_ecom"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Book A Table"
+                    android:textColor="@color/white"
+                    android:padding="5dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:orientation="vertical"
+                android:background="#54a6bc"
+                android:gravity="center"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_tags_ecom"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Nearby Deals"
+                    android:textColor="@color/white"
+                    android:padding="5dp" />
+            </LinearLayout>
+        </LinearLayout></RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/li_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone"
+                    android:background="@drawable/blue_green_bg">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_boxno"/>
+                        <TextView
+                            android:id="@+id/tv_number_of_product"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="25"
+                            android:textSize="30sp"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/roboto_bold"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Products Found"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:layout_margin="5dp"
+                        android:fontFamily="@font/roboto_regular"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/li_product_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginRight="5dp"
+                    android:background="#ececec">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_box_graye_com"/>
+                        <TextView
+                            android:id="@+id/tv_number_of_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="25"
+                            android:textSize="30sp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/roboto_bold"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Products Found"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:layout_margin="5dp"
+                        android:fontFamily="@font/roboto_regular"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:id="@+id/li_store"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/blue_green_bg">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_store_ecom"/>
+                        <TextView
+                            android:id="@+id/tv_number_of_store"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10"
+                            android:textSize="30sp"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/roboto_bold"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Stores Found"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:layout_margin="5dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/li_store_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="#ececec"
+                    android:visibility="gone">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_storeno"/>
+                        <TextView
+                            android:id="@+id/tv_number_of_store_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10"
+
+                            android:textSize="30sp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/roboto_bold"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Stores Found"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:layout_margin="5dp"/>
+                </LinearLayout>
+            </FrameLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

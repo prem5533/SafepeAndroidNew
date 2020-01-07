@@ -286,8 +286,19 @@
                 android:textSize="14sp"
                 android:padding="10dp"
                 android:layout_margin="10dp"
+                android:visibility="gone"
                 android:buttonTint="@color/red_theme"
                 />
+            <TextView
+                android:id="@+id/tv_term_cond"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="14sp"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:clickable="true" />
         </LinearLayout>
 
     </LinearLayout>
