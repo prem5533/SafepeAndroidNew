@@ -6,11 +6,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#f4f5ff"
-    tools:context=".ecommerce.activity.SearchProductActivity">
+    tools:context=".ecommerce.fragment.SearchProductFragment">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="vertical"
         android:gravity="center">
         <RelativeLayout
@@ -64,100 +69,131 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-         android:layout_alignParentBottom="true">
+                android:layout_alignParentBottom="true">
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:orientation="vertical"
+                    android:background="#e39600"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_pay_n_go_ecom"
+                        android:layout_marginTop="3dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Pay &amp; Go"
+                        android:textColor="@color/white"
+                        android:padding="5dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:orientation="vertical"
+                    android:background="#da466b"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_group_ecom"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Loyalty Card"
+                        android:textColor="@color/white"
+                        android:padding="5dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:orientation="vertical"
+                    android:background="#7312aa"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_food_ecom"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Book A Table"
+                        android:textColor="@color/white"
+                        android:padding="5dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:orientation="vertical"
+                    android:background="#54a6bc"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_tags_ecom"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Nearby Deals"
+                        android:textColor="@color/white"
+                        android:padding="5dp" />
+                </LinearLayout>
+            </LinearLayout></RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ecommerce_round_bg_white"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <Spinner
+                    android:id="@+id/category_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"/>
             <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:orientation="vertical"
-                android:background="#e39600"
-                android:gravity="center"
-                android:layout_weight="1">
+                android:id="@+id/li_spinner"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:background="@drawable/blue_green_round_btn">
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_pay_n_go_ecom"
-                    android:layout_marginTop="3dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="Pay &amp; Go"
-                    android:textColor="@color/white"
-                    android:padding="5dp" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_arrow_drop_down_black_24dp"
+                    android:padding="10dp" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:orientation="vertical"
-                android:background="#da466b"
-                android:gravity="center"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_group_ecom"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="Loyalty Card"
-                    android:textColor="@color/white"
-                    android:padding="5dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:orientation="vertical"
-                android:background="#7312aa"
-                android:gravity="center"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_food_ecom"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="Book A Table"
-                    android:textColor="@color/white"
-                    android:padding="5dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:orientation="vertical"
-                android:background="#54a6bc"
-                android:gravity="center"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_tags_ecom"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="Nearby Deals"
-                    android:textColor="@color/white"
-                    android:padding="5dp" />
-            </LinearLayout>
-        </LinearLayout></RelativeLayout>
+            </FrameLayout>
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="10dp">
-
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
-
                 <LinearLayout
                     android:id="@+id/li_product"
                     android:layout_width="match_parent"
@@ -166,7 +202,7 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/blue_green_bg">
+                    android:background="@drawable/blue_green_round_right">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -206,7 +242,7 @@
                     android:padding="10dp"
                     android:visibility="gone"
                     android:layout_marginRight="5dp"
-                    android:background="#ececec">
+                    android:background="@drawable/gray_round_right">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -252,7 +288,7 @@
                     android:padding="10dp"
                     android:layout_marginLeft="5dp"
                     android:visibility="gone"
-                    android:background="@drawable/blue_green_bg">
+                    android:background="@drawable/blue_green_round_left">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -291,8 +327,8 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:layout_marginLeft="5dp"
-                    android:background="#ececec"
-                  >
+                    android:background="@drawable/gray_round_left">
+                    >
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -309,7 +345,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="10"
-
                             android:textSize="30sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/roboto_bold"/>
@@ -325,8 +360,32 @@
                         android:layout_margin="5dp"/>
                 </LinearLayout>
             </FrameLayout>
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_search_product_matching"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:padding="10dp"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_product_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_store_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

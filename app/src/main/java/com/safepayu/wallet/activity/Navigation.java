@@ -2002,8 +2002,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             }
             break;
             case R.id.b_mall: {
-                Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(Navigation.this, EHomeActivity.class));
+             //   Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Navigation.this, EHomeActivity.class));
             }
             break;
         }

@@ -4,31 +4,33 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ProductViewHolder> {
+public class SerchProductAdapter extends RecyclerView.Adapter<SerchProductAdapter.ProductViewHolder> {
 
 
      private Context context;
-    private OnCategoryItemListener onCategoryItemListener;
-    public interface OnCategoryItemListener{
-        void onCtategory(int position);
+    private OnProductDetailItemListener onProductItemDetailListener;
+
+    public interface OnProductDetailItemListener{
+        void onProductItemDetail(int position);
     }
 
-    public CategoryAdapter(Context context, OnCategoryItemListener onCategoryItemListener) {
+    public SerchProductAdapter(Context context, OnProductDetailItemListener onProductItemDetailListener) {
         this.context = context;
-        this.onCategoryItemListener = onCategoryItemListener;
+        this.onProductItemDetailListener = onProductItemDetailListener;
     }
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.categroy_adaper,parent,false);
-        return new CategoryAdapter.ProductViewHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.search_product_adapter,parent,false);
+        return new SerchProductAdapter.ProductViewHolder(view);
     }
 
     @Override
@@ -48,8 +50,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Produc
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onCategoryItemListener != null) {
-                        onCategoryItemListener.onCtategory(getLayoutPosition());
+                   // Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
+                    if (onProductItemDetailListener != null) {
+                        onProductItemDetailListener.onProductItemDetail(getLayoutPosition());
 
                     }
                 }

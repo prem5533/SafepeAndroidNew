@@ -26,15 +26,15 @@
     <application
         android:name=".BaseApp"
         android:allowBackup="true"
+        android:configChanges="locale|layoutDirection"
         android:icon="@drawable/appicon_new"
         android:label="@string/app_name"
         android:roundIcon="@drawable/appicon_new"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:configChanges="locale|layoutDirection">
-        <activity android:name=".ecommerce.activity.SearchProductActivity"></activity>
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ecommerce.activity.ProductDetailActivity"></activity>
         <activity android:name=".ecommerce.activity.EHomeActivity" />
         <activity
             android:name=".activity.booking.flight.FlightHistoryActivity"
@@ -318,13 +318,11 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
-        </provider>
-
-<!--  Ecommerce      -->
-
-        <activity android:name=".ecommerce.activity.FilterDialog"
-            android:theme="@style/Theme.UserDialog"
-            android:screenOrientation="portrait"/>
+        </provider> <!-- Ecommerce -->
+        <activity
+            android:name=".ecommerce.activity.FilterDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.UserDialog" />
     </application>
 
 </manifest>
