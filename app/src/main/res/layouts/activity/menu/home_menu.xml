@@ -8,7 +8,7 @@
         android:enabled="true"
         android:icon="@drawable/home_nav_new"
         android:title="Home"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/b_qrcode"
         android:enabled="true"

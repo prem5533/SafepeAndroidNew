@@ -83,7 +83,8 @@
                         android:fontFamily="@font/roboto_regular"
                         android:textSize="15dp"
                         android:imeOptions="actionNext"
-                        android:singleLine="true"/>
+                        android:singleLine="true"
+                        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"/>
 
                     <EditText
                         android:id="@+id/tv_amountpaid"
@@ -162,7 +163,8 @@
                         android:fontFamily="@font/roboto_regular"
                         android:textSize="15dp"
                         android:imeOptions="actionDone"
-                        android:singleLine="true"/>
+                        android:singleLine="true"
+                        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"

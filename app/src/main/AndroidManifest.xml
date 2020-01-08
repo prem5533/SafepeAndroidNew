@@ -32,7 +32,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:configChanges="locale|layoutDirection">
         <activity android:name=".ecommerce.activity.SearchProductActivity"></activity>
         <activity android:name=".ecommerce.activity.EHomeActivity" />
         <activity
@@ -318,6 +319,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+<!--  Ecommerce      -->
+
+        <activity android:name=".ecommerce.activity.FilterDialog"
+            android:theme="@style/Theme.UserDialog"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

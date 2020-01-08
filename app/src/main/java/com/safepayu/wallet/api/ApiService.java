@@ -106,252 +106,252 @@ import retrofit2.http.POST;
 public interface ApiService {
 //    @Header("X-Bearer-Token") String authorization
 
-    // Register new user
-    @POST("api/secure.safepe/api/createUser")
+    // Register new user 
+    @POST("api/pefast.safepe.latepe/api/createUser")
     Single<UserResponse1> register(@Body Register registerRequest);
 
     // Login user
-    @POST("api/secure.safepe/api/login")
+    @POST("api/pefast.safepe.latepe/api/login")
     Single<LoginResponse> login(@Body Login loginRequest);
     // Resend OTP
-    @POST("api/secure.safepe/api/resendOTP")
+    @POST("api/pefast.safepe.latepe/api/resendOTP")
     Single<BaseResponse> resendOtp(@Body SendOtpRequest sendOtpRequest);
     // verify OTP
-    @POST("api/secure.safepe/api/verifyOTP")
+    @POST("api/pefast.safepe.latepe/api/verifyOTP")
     Single<UserResponse> verifyOTP(@Body Login loginRequest);
     // Create PassCode
-    @POST("api/secure.safepe/api/savePasscode")
+    @POST("api/pefast.safepe.latepe/api/savePasscode")
     Single<UserDetailResponse> savePassCode(@Body Login loginRequest);
     // All Packages listing
-    @GET("api/secure.safepe/api/getAllPackages")
+    @GET("api/pefast.safepe.latepe/api/getAllPackages")
     Single<PackageListData> getAllPackages();
     // All Packages listing
-    @GET("api/secure.safepe/api/getUser")
+    @GET("api/pefast.safepe.latepe/api/getUser")
     Single<UserDetailResponse> getUserDetails();
 
-    @POST("api/secure.safepe/api/buyPackage")
+    @POST("api/pefast.safepe.latepe/api/buyPackage")
     Single<BuyPackageResponse> buyPackage(@Body BuyPackage buyPackage);
 
-    @POST("api/secure.safepe/api/resetPasscode")
+    @POST("api/pefast.safepe.latepe/api/resetPasscode")
     Single<BaseResponse> resetPasscode(@Body ResetPasscodeModel resetPasscodeModel);
 
-    @POST("api/secure.safepe/api/saveBeneficiary")
+    @POST("api/pefast.safepe.latepe/api/saveBeneficiary")
     Single<AddBeneficiaryResponse> addBeneficiary(@Body AddBeneficiaryRequest addBeneficiaryRequest);
 
-    @POST("api/secure.safepe/api/getBeneficiaryDetails")
+    @POST("api/pefast.safepe.latepe/api/getBeneficiaryDetails")
     Single<GetBeneficiaryResponse> getBeneficiary();;
 
-    @POST("api/secure.safepe/api/transferWalletToBank")
+    @POST("api/pefast.safepe.latepe/api/transferWalletToBank")
     Single<TransferWalletToBankResponse> transferWalletToBank(@Body TransferWalletToBankRequest transferWalletToBankRequest);
 
-    @POST("api/secure.safepe/api/updateUserAddress")
+    @POST("api/pefast.safepe.latepe/api/updateUserAddress")
     Single<UpdateAddressResponse>updateAddress(@Body UpdateAddress updateAddress);
 
-    @POST("api/secure.safepe/api/changePassword")
+    @POST("api/pefast.safepe.latepe/api/changePassword")
     Single<UserResponse>changePwd(@Body ChangePasswordRequest changePassword);
 
-    @POST("api/secure.safepe/api/walletToWallet")
+    @POST("api/pefast.safepe.latepe/api/walletToWallet")
     Single<SendToWalletResponse> transferWalletToWallet(@Body SendToWalletRequest sendToWalletRequest);
 
-    @POST("api/secure.safepe/api/getWalletDetails")
+    @POST("api/pefast.safepe.latepe/api/getWalletDetails")
     Single<WalletResponse> getWalletDetails();
 
-    @POST("api/secure.safepe/api/getLatestUserBuyPackage")
+    @POST("api/pefast.safepe.latepe/api/getLatestUserBuyPackage")
     Single<PackageDetailsResponse> getPackageDetails();
 
-    @POST("api/secure.safepe/api/recharge")
+    @POST("api/pefast.safepe.latepe/api/recharge")
     Single<RechargeResponse> doRecharge(@Body RechargeRequest rechargeRequest);
 
-    @POST("api/secure.safepe/api/hasKey")
+    @POST("api/pefast.safepe.latepe/api/hasKey")
     Single<HashKeyResponse> getHashKey(@Body HashKeyRequest hashKeyRequest);
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/getAllOperators")
+    @POST("api/pefast.safepe.latepe/api/getAllOperators")
     Single<OperatorResponse> getOperators(@Field("operator_type") String operator_type);
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/getCustOperator")
+    @POST("api/pefast.safepe.latepe/api/getCustOperator")
     Single<CustOperatorResponse> getMobileOperator(@Field("number") String number);
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/rechargePlan")
+    @POST("api/pefast.safepe.latepe/api/rechargePlan")
     Single<RechargePlanResponse> getRechargePlan(@Field("mobile") String mobile, @Field("opId") String opId);
 
-    @POST("api/secure.safepe/api/passwordNewCreate")
+    @POST("api/pefast.safepe.latepe/api/passwordNewCreate")
     Single<ForgetPasswordResponse> getForgetPassword(@Body ForgetPasswordRequest forgetPasswordResponse);
 
-    @POST("api/secure.safepe/api/addBankToWallet")
+    @POST("api/pefast.safepe.latepe/api/addBankToWallet")
     Single<SendPaymentGatewayDetailsResponse> addBankToWallet(@Body SendPaymentGatewayDetailsRequest sendPaymentGatewayDetailsRequest);
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/commitionToWallet")
+    @POST("api/pefast.safepe.latepe/api/commitionToWallet")
     Single<CommissionWalletTransferResponse> transferCommWalletToMainWallet(@Field("amount") String amount);
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/findVenificairyName")
+    @POST("api/pefast.safepe.latepe/api/findVenificairyName")
     Single<ReferralCodeResponse> getReferralDetails(@Field("referral_code") String referral_code, @Field("type") String type, @Field("mobile") String mobile);
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/sendVerifyEmailLink")
+    @POST("api/pefast.safepe.latepe/api/sendVerifyEmailLink")
     Single<BaseResponse> verifyEmail(@Field("userid") String userid,@Field("email") String email);
 
-    @GET("api/secure.safepe/api/rechargeHistory")
+    @GET("api/pefast.safepe.latepe/api/rechargeHistory")
     Single<RechargeHistoryResponse> getRechargeHistory();
 
-    @GET("api/secure.safepe/api/wallletHistory")
+    @GET("api/pefast.safepe.latepe/api/wallletHistory")
     Single<WalletHistoryResponse> getWalletHistory();
 
-    @GET("api/secure.safepe/api/getVersion")
+    @GET("api/pefast.safepe.latepe/api/getVersion")
     Single<AppVersionResponse> getAppVersion();
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/refer")
+    @POST("api/pefast.safepe.latepe/api/refer")
     Single<BaseResponse> sendRefer(@Field("mobile") String mobile);
 
-    @POST("api/secure.safepe/api/SaveUserAddress")
+    @POST("api/pefast.safepe.latepe/api/SaveUserAddress")
     Single<SaveAddressResponse> addAddress(@Body SaveAddressRequest saveAddressRequest);
 
-    @POST("api/secure.safepe/api/getCommitionWithBusinessAmount")
+    @POST("api/pefast.safepe.latepe/api/getCommitionWithBusinessAmount")
     Single<CommissionDetailsResponse> getCommissionDetails();
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/getUserDetails")
+    @POST("api/pefast.safepe.latepe/api/getUserDetails")
     Single<UpiUserDetailsResponse> getUserDetailUPI(@Field("userid") String userid);
 
-    @POST("api/secure.safepe/api/checkUserMobile")
+    @POST("api/pefast.safepe.latepe/api/checkUserMobile")
     Single<BaseResponse> checkEmailMobile(@Body CheckEmailMobileRequest checkEmailMobileRequest );
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/getFirebaseTocken")
+    @POST("api/pefast.safepe.latepe/api/getFirebaseTocken")
     Single<BaseResponse> getFirebaseToken(@Field("userid") String userid, @Field("token") String token);
 
-    @GET("api/secure.safepe/api/getNotificationData")
+    @GET("api/pefast.safepe.latepe/api/getNotificationData")
     Single<NotificationResponse> getNotificationData();
 
-    @POST("api/secure.safepe/api/logoutAlldevices")
+    @POST("api/pefast.safepe.latepe/api/logoutAlldevices")
     Single<BaseResponse> getlogoutAlldevices();
 
-    @GET("api/secure.safepe/api/bankPaymentList")
+    @GET("api/pefast.safepe.latepe/api/bankPaymentList")
     Single<MyOrderResponse>getBankPayment();
 
-    @GET("api/secure.safepe/api/checkBuyPackage")
+    @GET("api/pefast.safepe.latepe/api/checkBuyPackage")
     Single<BaseResponse> getcheckBuyPackage();
 
-    @POST("api/secure.safepe/api/promotionalImages")
+    @POST("api/pefast.safepe.latepe/api/promotionalImages")
     Single<PromotionResponse>getPromotionOffer(@Body PromotionRequest promotionRequest);
 
-    @POST("api/secure.safepe/api/registerKyc")
+    @POST("api/pefast.safepe.latepe/api/registerKyc")
     Single<BaseResponse> getKYCDone(@Body KycRequest kycRequest);
 
-    @GET("api/secure.safepe/api/statusKyc")
+    @GET("api/pefast.safepe.latepe/api/statusKyc")
     Single<BaseResponse> getKycCheck();
 
-    @GET("api/secure.safepe/api/countryList")
+    @GET("api/pefast.safepe.latepe/api/countryList")
     Single<CountryListResponse> getCountryList();
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/stateList")
+    @POST("api/pefast.safepe.latepe/api/stateList")
     Single<StateListResponse> getStateList(@Field("country_id") String country_id);
 
-    @GET("api/secure.safepe/api/walletLimitLeft")
+    @GET("api/pefast.safepe.latepe/api/walletLimitLeft")
     Single<WalletLimitResponse>getWalletLimitLeft();
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/verifyPasscode")
+    @POST("api/pefast.safepe.latepe/api/verifyPasscode")
     Single<BaseResponse> getPasscodeVerify(@Field("passcode") String passcode);
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/getConvieneceFee")
+    @POST("api/pefast.safepe.latepe/api/getConvieneceFee")
     Single<ConvenienceFeeResponse> getConvieneceFee(@Field("type") String type );
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/ifscUrl")
+    @POST("api/pefast.safepe.latepe/api/ifscUrl")
     Single<VerifyIFSCResponse> getifscVerify(@Field("ifsc_code") String ifsc_code);
 
-    @GET("api/secure.safepe/api/getServicesCharges")
+    @GET("api/pefast.safepe.latepe/api/getServicesCharges")
     Single<ServiceChargeResponse> getServicesCharges();
 
     //*************Flight Booking *******************//
-    @GET("api/secure.safepe/api/getFlightAirport")
+    @GET("api/pefast.safepe.latepe/api/getFlightAirport")
     Single<AirportLocationResponse> getAirportLocation();
 
-    @POST("api/secure.safepe/api/getFlightAvailable")
+    @POST("api/pefast.safepe.latepe/api/getFlightAvailable")
     Single<AvailableFlightResponse> getAvailableFlight(@Body AvailableFlightRequest availableFlightRequest);
 
-    @POST("api/secure.safepe/api/getFlightBlockTicket ")
+    @POST("api/pefast.safepe.latepe/api/getFlightBlockTicket ")
     Single<FlightBlockTicketResponse> getFlightBlockTicket(@Body FlightBlockTicketRequest flightBlockTicketRequest);
 
-    @POST("api/secure.safepe/api/getFlightBookingDetails")
+    @POST("api/pefast.safepe.latepe/api/getFlightBookingDetails")
     Single<FlightBookingDetailResponse> getFlightBookingDetails(@Body FlightBookingDetailRequest flightBookingDetailRequest);
 
-    @POST("api/secure.safepe/api/getFlightCancelTicket")
+    @POST("api/pefast.safepe.latepe/api/getFlightCancelTicket")
     Single<CancelBookTicketResponse> getFlightCancelTicket(@Body FlightBookingDetailRequest flightBookingDetailRequest);
 
-    @GET("api/secure.safepe/api/getFlightHistory")
+    @GET("api/pefast.safepe.latepe/api/getFlightHistory")
     Single<FlightHistoryResponse> getFlightHistory();
 
-    @POST("api/secure.safepe/api/getFlightPdf")
+    @POST("api/pefast.safepe.latepe/api/getFlightPdf")
     Single<FlighPdfResponse>getFlightPdf(@Body FlightBookingDetailRequest flightBookingDetailRequest);
 
-    @POST("api/secure.safepe/api/getConvieneceFee")
+    @POST("api/pefast.safepe.latepe/api/getConvieneceFee")
     Single<ConvieneceFeeResponse>getConvieneceFee(@Body ConvieneceFeeRequest convieneceFeeRequest);
 
     //*************Bus Booking *******************//
-    @POST("api/secure.safepe/api/postBusLocationList")
+    @POST("api/pefast.safepe.latepe/api/postBusLocationList")
     Single<BusSourcesResponse> getBusSourcres();
 
-    @POST("api/secure.safepe/api/postBusAvailable")
+    @POST("api/pefast.safepe.latepe/api/postBusAvailable")
     Single<BusListResponse> getBusAvailable(@Body BusListRequest busListRequest);
 
-    @POST("api/secure.safepe/api/postBusTripDetails")
+    @POST("api/pefast.safepe.latepe/api/postBusTripDetails")
     Single<BusTripDetailsResponse> getBusTripDetails(@Body BusTripDetailsRequest busTripDetailsRequest);
 
-    @POST("api/secure.safepe/api/postBusBlockTicket")
+    @POST("api/pefast.safepe.latepe/api/postBusBlockTicket")
     Single<BusBlockingResponse> getBusBlocking(@Body BusBlockingRequest busBookingRequest);
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/getFirebaseTocken")
+    @POST("api/pefast.safepe.latepe/api/getFirebaseTocken")
     Single<BusBookingResponse> getBookingBus(@Field("referenceNo") String referenceNo);
 
-    @GET("api/secure.safepe/api/busHistory")
+    @GET("api/pefast.safepe.latepe/api/busHistory")
     Single<BusHistoryResponse> getBusHistory();
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/postBusCancelTicket")
+    @POST("api/pefast.safepe.latepe/api/postBusCancelTicket")
     Single<BusCancelResponse> getBusCancel(@Field("referenceNo") String referenceNo, @Field("seatNos") String seatNos);
 
-    @POST("api/secure.safepe/api/getBusPdf")
+    @POST("api/pefast.safepe.latepe/api/getBusPdf")
     Single<FlighPdfResponse> getBusPdf(@Body FlightBookingDetailRequest flightBookingDetailRequest);
 
 
     //*************Hotel Booking *******************//
-    @POST("api/secure.safepe/api/hotelSources")
+    @POST("api/pefast.safepe.latepe/api/hotelSources")
     Single<HotelSourcesResponse> getHotelSources();
 
-    @POST("api/secure.safepe/api/hotelAvailable")
+    @POST("api/pefast.safepe.latepe/api/hotelAvailable")
     Single<AvailableHotelsResponse> getHotelAvailable(@Body AvailableHotelRequest availableHotelRequest);
 
-    @POST("api/secure.safepe/api/hotelDetails")
+    @POST("api/pefast.safepe.latepe/api/hotelDetails")
     Single<HotelDetailResponse> getHotelDetails(@Body HotelDetailsRequest hotelDetailsRequest);
 
-    @POST("api/secure.safepe/api/hotelBlock")
+    @POST("api/pefast.safepe.latepe/api/hotelBlock")
     Single<HotelBookResponse> getHotelBook(@Body BookHotelRequest bookHotelRequest);
 
-    @GET("api/secure.safepe/api/HotelRoomBookingHistory")
+    @GET("api/pefast.safepe.latepe/api/HotelRoomBookingHistory")
     Single<HotelHistoryResponse> getHotelHistory();
 
     @FormUrlEncoded
-    @POST("api/secure.safepe/api/hotelCancelRoom")
+    @POST("api/pefast.safepe.latepe/api/hotelCancelRoom")
     Single<HotelCancelResponse> getHotelCancelRoom(@Field("referenceNo") String referenceNo);
 
 
     //*************Reward Coin *******************//
-    @GET("api/secure.safepe/api/coinLog")
+    @GET("api/pefast.safepe.latepe/api/coinLog")
     Single<CoinLogResponse> getcoinLog();
 
-    @POST("api/secure.safepe/api/saveCoin")
+    @POST("api/pefast.safepe.latepe/api/saveCoin")
     Single<SaveCoinResponse> getSaveCoin(@Body SaveCoinRequest saveCoinRequest);
 
-    @POST("api/secure.safepe/api/redeemCoin")
+    @POST("api/pefast.safepe.latepe/api/redeemCoin")
     Single<RedeemCoinResponse> getRedeemCoin(@Body RedeemCoinRequest redeemCoinRequest);
 }

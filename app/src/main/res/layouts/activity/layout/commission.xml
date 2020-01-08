@@ -132,7 +132,7 @@
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:text="Withdraw service is only available for active members."
-                                android:textColor="@color/green_100"
+                                android:textColor="@color/red_800"
                                 android:layout_margin="10dp"
                                 android:fontFamily="@font/roboto_regular"
                                 android:textSize="14sp"

@@ -199,7 +199,7 @@
                     android:textSize="15sp"
                     android:textAllCaps="false"
                     android:layout_marginBottom="40dp"
-                    android:text="Add Beneficiary"
+                    android:text="Confirm"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"/>
 

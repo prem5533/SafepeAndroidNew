@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -22,6 +23,8 @@ import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
+
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -50,6 +53,15 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
             BaseApp.getInstance().handler().postDelayed(runnable,3000);
         }else {
             showDialogVersion(this);
+        }
+
+        try {
+            Configuration configuration = getResources().getConfiguration();
+            configuration.locale = new Locale("en");
+            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
     }

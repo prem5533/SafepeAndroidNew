@@ -413,14 +413,27 @@ public class ScratchActivity extends AppCompatActivity implements ScratchListAda
                         loadingDialog.hideDialog();
                         if (saveCoinResponse.isStatus()) {
                             mLogCoin.setStatus(1);
-                            int coin = Integer.parseInt(tvTotalCoins.getText().toString());
-                            int currentCoin =mLogCoin.getAmount();
-                            int totalCoin = coin+currentCoin;
-                            tvTotalCoins.setText(""+(Integer.parseInt(tvTotalCoins.getText().toString())+mLogCoin.getAmount()));
-                            scratchListAdapter.notifyDataSetChanged();
-                            dialog.dismiss();
 
+                            try {
+                                if (tvTotalCoins.getText().toString().equalsIgnoreCase("No Coin")){
+                                    tvTotalCoins.setText(""+mLogCoin.getAmount());
+                                    scratchListAdapter.notifyDataSetChanged();
+                                    dialog.dismiss();
+                                }else {
+                                    int coin = Integer.parseInt(tvTotalCoins.getText().toString());
+                                    int currentCoin =mLogCoin.getAmount();
+                                    int totalCoin = coin+currentCoin;
+                                    tvTotalCoins.setText(""+(Integer.parseInt(tvTotalCoins.getText().toString())+mLogCoin.getAmount()));
+                                    scratchListAdapter.notifyDataSetChanged();
+                                    dialog.dismiss();
+                                }
+
+                            }catch (Exception e){
+                                e.printStackTrace();
                             }
+
+
+                        }
                     }
 
                     @Override

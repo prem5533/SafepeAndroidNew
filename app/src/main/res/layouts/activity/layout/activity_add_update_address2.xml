@@ -164,7 +164,7 @@
                             android:imeOptions="actionNext"
                             android:background="@null"
                             android:textColor="@color/textcolor"
-                            android:digits="0123456789 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ ,"/>
+                            android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
                     </LinearLayout>
 
                     <View

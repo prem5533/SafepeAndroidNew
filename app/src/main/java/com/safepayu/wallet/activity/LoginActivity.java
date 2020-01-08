@@ -308,7 +308,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             if (versionCode == val) {
 
                             } else {
-                               // showDialogForAppUpdate(LoginActivity.this);
+                                showDialogForAppUpdate(LoginActivity.this);
                             }
 
                         } else {
