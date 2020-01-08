@@ -114,13 +114,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     public void onCtategory(int position) {
         SearchProductFragment fragment = new SearchProductFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack
         transaction.replace(R.id.content_frame, fragment);
         transaction.addToBackStack(null);
-
-// Commit the transaction
         transaction.commit();
     }
 }

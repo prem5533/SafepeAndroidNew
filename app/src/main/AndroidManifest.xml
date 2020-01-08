@@ -26,6 +26,7 @@
     <application
         android:name=".BaseApp"
         android:allowBackup="true"
+        android:configChanges="locale|layoutDirection"
         android:icon="@drawable/appicon_new"
         android:label="@string/app_name"
         android:roundIcon="@drawable/appicon_new"
@@ -33,6 +34,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ecommerce.activity.ProductDetailActivity"></activity>
         <activity android:name=".ecommerce.activity.EHomeActivity" />
         <activity
             android:name=".activity.booking.flight.FlightHistoryActivity"
@@ -316,7 +318,11 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
-        </provider>
+        </provider> <!-- Ecommerce -->
+        <activity
+            android:name=".ecommerce.activity.FilterDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.UserDialog" />
     </application>
 
 </manifest>

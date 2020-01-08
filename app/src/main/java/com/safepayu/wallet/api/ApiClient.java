@@ -30,8 +30,7 @@ import static com.safepayu.wallet.BaseApp.Code;
 public class ApiClient {
 
     public static final String BASE_URL = "https://secure.safepeindia.com/";
-    public static final String BASE_URL_TEST = "http://productiontesting.safepeindia.com/";
-    public  static String ImagePath = BASE_URL_TEST;
+    public  static String ImagePath = BASE_URL;
     private static Retrofit retrofit = null;
     private static int REQUEST_TIMEOUT = 60;
     private static OkHttpClient okHttpClient;
@@ -43,7 +42,7 @@ public class ApiClient {
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL_TEST)
+                    .baseUrl(BASE_URL)
                     .client(okHttpClient)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())

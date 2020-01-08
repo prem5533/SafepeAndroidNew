@@ -628,7 +628,7 @@
                             android:layout_margin="10dp"
                             android:background="@drawable/blue_green_round_btn"
                             android:textAllCaps="false"
-                            android:text="Register"
+                            android:text="Update KYC"
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:fontFamily="@font/roboto_regular" />

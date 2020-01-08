@@ -72,6 +72,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.activity.EHomeActivity;
+import com.safepayu.wallet.ecommerce.activity.FilterDialog;
 import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -786,7 +787,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
             case R.id.layout_train_ticket:
                 Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(Navigation.this, TrainActivity.class));
+                //startActivity(new Intent(Navigation.this, FilterDialog.class));
 //                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.credit_layout:
@@ -1666,7 +1667,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                                 if (versionCode == val) {
 
                                 } else {
-                                  //  showDialogForAppUpdate(Navigation.this);
+                                    showDialogForAppUpdate(Navigation.this);
                                 }
                                 getServicesCharges();
                             }catch (Exception e){
@@ -2001,7 +2002,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             }
             break;
             case R.id.b_mall: {
-               // Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Navigation.this, EHomeActivity.class));
             }
             break;

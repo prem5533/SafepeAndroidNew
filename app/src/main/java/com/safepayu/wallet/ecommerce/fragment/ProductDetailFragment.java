@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.adapter.ProductImageAdapter;
+import com.safepayu.wallet.ecommerce.adapter.SerchProductAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,5 +44,6 @@ public class ProductDetailFragment extends Fragment {
         productImageAdapter = new ProductImageAdapter(getActivity());
         productImageList.setAdapter(productImageAdapter);
     }
+
 
 }

@@ -2,6 +2,7 @@ package com.safepayu.wallet.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,8 @@ import com.safepayu.wallet.models.request.SaveAddressRequest;
 import com.safepayu.wallet.models.request.UpdateAddress;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.UpdateAddressResponse;
+
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -44,6 +47,15 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
 
         setToolbar(false, null, false);
         loadingDialog = new LoadingDialog(this);
+
+        try {
+            Configuration configuration = getResources().getConfiguration();
+            configuration.locale = new Locale("en");
+            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         //  findViewById(R.id.add_address).setOnClickListener(this);
         findViewById(R.id.back_btn_address).setOnClickListener(this);

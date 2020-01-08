@@ -1380,10 +1380,11 @@
             app:labelVisibilityMode="labeled"
             app:menu="@menu/home_menu"
             android:layout_gravity="bottom"
-            app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
-            app:itemTextAppearanceInactive="@style/BottomNavigationView"
             app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             />
+
+<!--                    app:itemTextAppearanceActive="@style/ActionBar.nameTextActive"
+            app:itemTextAppearanceInactive="@style/ActionBar.nameText"-->
     </RelativeLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

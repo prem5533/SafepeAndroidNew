@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -45,6 +46,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -71,6 +73,15 @@ public class AddBeneficiary extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, false);
+
+        try {
+            Configuration configuration = getResources().getConfiguration();
+            configuration.locale = new Locale("en");
+            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+            Locale.setDefault(configuration.locale);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         loadingDialog = new LoadingDialog(this);
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);

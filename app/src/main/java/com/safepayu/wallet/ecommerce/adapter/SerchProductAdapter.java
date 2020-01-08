@@ -15,9 +15,15 @@ public class SerchProductAdapter extends RecyclerView.Adapter<SerchProductAdapte
 
 
      private Context context;
+    private OnProductDetailItemListener onProductItemDetailListener;
 
-    public SerchProductAdapter(Context context) {
+    public interface OnProductDetailItemListener{
+        void onProductItemDetail(int position);
+    }
+
+    public SerchProductAdapter(Context context, OnProductDetailItemListener onProductItemDetailListener) {
         this.context = context;
+        this.onProductItemDetailListener = onProductItemDetailListener;
     }
 
     @NonNull
@@ -44,7 +50,11 @@ public class SerchProductAdapter extends RecyclerView.Adapter<SerchProductAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
+                    if (onProductItemDetailListener != null) {
+                        onProductItemDetailListener.onProductItemDetail(getLayoutPosition());
+
+                    }
                 }
             });
         }

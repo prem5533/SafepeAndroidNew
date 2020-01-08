@@ -1,9 +1,11 @@
 package com.safepayu.wallet.ecommerce.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.ecommerce.activity.ProductDetailActivity;
 import com.safepayu.wallet.ecommerce.adapter.EcomSpinnerAdapter;
 import com.safepayu.wallet.ecommerce.adapter.SerchProductAdapter;
 import com.safepayu.wallet.ecommerce.adapter.StoreListAdapter;
@@ -28,7 +31,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchProductFragment extends Fragment implements View.OnClickListener {
+public class SearchProductFragment extends Fragment implements View.OnClickListener, SerchProductAdapter.OnProductDetailItemListener  {
 
     private LinearLayout liProduct ,liProductGray, liStore,liStoreGray;
     private RecyclerView SearchProductList,searchStoreList;
@@ -71,7 +74,7 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
 
         gridLayoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.VERTICAL,false);
         SearchProductList.setLayoutManager(gridLayoutManager);
-        serchProductAdapter = new SerchProductAdapter(getActivity());
+        serchProductAdapter = new SerchProductAdapter(getActivity(),SearchProductFragment.this);
         SearchProductList.setAdapter(serchProductAdapter);
 
         EcomSpinnerAdapter customAdapter=new EcomSpinnerAdapter(getActivity(),mCategoryList);
@@ -106,4 +109,9 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                 SearchProductList.setVisibility(View.VISIBLE);
                 break;} }
 
+    @Override
+    public void onProductItemDetail(int position) {
+
+        startActivity(new Intent(getActivity(), ProductDetailActivity.class));
+    }
 }
