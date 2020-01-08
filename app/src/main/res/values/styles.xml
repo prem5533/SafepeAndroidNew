@@ -109,7 +109,7 @@
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">#F3FF00</item>
+        <item name="colorControlNormal">#ed8a19</item>
         <item name="colorControlActivated">@color/number_color_strike</item>
     </style>
 

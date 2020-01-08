@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f4f5ff"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="5dp"
+                app:cardElevation="1dp"
+                    android:layout_margin="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:background="@color/white">
+                    <ImageView
+                        android:layout_width="123dp"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:layout_gravity="center"
+                        android:src="@drawable/storee_ecom"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:text="Domino`s Pizza"
+                                android:textColor="@color/black"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_bold"/>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="right">
+
+                                <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="10sp"
+                                android:text=" Open"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_medium"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="10sp"
+                                    android:text="9am - 8pm"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="@font/roboto_regular"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="10sp"
+                                android:text="Food &amp; Drinks"
+                                android:textColor="#606060"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/roboto_regular"/>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center"
+                                android:layout_marginTop="5dp">
+                                <ImageView
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:src="@drawable/ic_delivery_van_ecom"/>
+                                <TextView
+                                    android:id="@+id/tv_product_storenme"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="10sp"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:textColor="#606060"
+                                    android:text="Free Home Delivery"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_weight="1"/>
+                                <RatingBar
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:max="5"
+                                    android:numStars="5"
+                                    android:theme="@style/RatingBar"
+                                    android:stepSize="1"
+                                    style="@style/Widget.AppCompat.RatingBar.Small"/>
+                            </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@drawable/dottedline"
+                            android:layout_marginTop="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp">
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:src="@drawable/ic_discount_ecom"/>
+                            <TextView
+                                android:id="@+id/tv_rs"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/black"
+                                android:text="12 Offers"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="1"/>
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:src="@drawable/ic_maps_and_flags_ecom_gray" />
+                            <TextView
+                                android:id="@+id/tv_pstore_km"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/black"
+                                android:text="1.5km"
+                                android:layout_marginLeft="5dp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+                </androidx.cardview.widget.CardView>
+        </LinearLayout></LinearLayout>
+
+
+
+
+

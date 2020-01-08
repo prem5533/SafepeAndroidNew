@@ -31,7 +31,7 @@ public class ApiClient {
 
     public static final String BASE_URL = "https://secure.safepeindia.com/";
     public static final String BASE_URL_TEST = "http://productiontesting.safepeindia.com/";
-    public  static String ImagePath = BASE_URL;
+    public  static String ImagePath = BASE_URL_TEST;
     private static Retrofit retrofit = null;
     private static int REQUEST_TIMEOUT = 60;
     private static OkHttpClient okHttpClient;
@@ -43,7 +43,7 @@ public class ApiClient {
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(BASE_URL_TEST)
                     .client(okHttpClient)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
