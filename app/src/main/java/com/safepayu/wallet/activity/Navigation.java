@@ -313,6 +313,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         tvLogoutAlldevice = findViewById(R.id.tv_logoutAlldevice);
         tvLogoutTextParent=findViewById(R.id.tv_logoutText);
         tvWalletHistory = findViewById(R.id.tv_historyWallet);
+        tvShopping = findViewById(R.id.tv_shopping);
         tv_security = findViewById(R.id.tv_security);
         viewpager = findViewById(R.id.viewpager);
         viewpagerBooking = findViewById(R.id.viewpager_booking);
@@ -371,6 +372,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liBigBazaar.setOnClickListener(this);
         linearSecurityTab.setVisibility(View.GONE);
         linearLogoutTab.setVisibility(View.GONE);
+        liShopping.setOnClickListener(this);
         //  addMoney.setOnClickListener(this);
         //  sendMoney.setOnClickListener(this);
         recharge.setOnClickListener(this);
@@ -1115,6 +1117,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
             case R.id.li_shopping:
                 drawer.closeDrawers();
+                startActivity(new Intent(Navigation.this, EHomeActivity.class));
                 tvShopping.setTextColor(getResources().getColor(R.color.bue_A800));
                 tvProfile.setTextColor(getResources().getColor(R.color.black));
                 tvPackageDetails.setTextColor(getResources().getColor(R.color.black));

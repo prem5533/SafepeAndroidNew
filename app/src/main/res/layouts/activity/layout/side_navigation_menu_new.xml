@@ -170,7 +170,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/li_shopping"
+                android:id="@+id/li_ecommerce"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -181,17 +181,119 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/shopping_cart_nav_new"/>
+                    android:src="@drawable/shopping_cart_nav_new" />
 
                 <TextView
-                    android:id="@+id/tv_shopping"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_ecommerce"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shopping"
+                    android:text="E-Commerce"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/roboto_medium"/>
+                    android:fontFamily="@font/roboto_medium"
+                    android:layout_weight="1"/>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/image_down_arrow_shop"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_down_security"
+                        android:padding="10dp"/>
+                    <ImageView
+                        android:id="@+id/image_up_arrow_shop"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_up_security"
+                        android:padding="10dp"
+                        android:visibility="gone"/>
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_shop_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="20dp">
+                <LinearLayout
+                    android:id="@+id/li_shopping"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/shopping_cart_nav_new"/>
+
+                    <TextView
+                        android:id="@+id/tv_shopping"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Shopping"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/roboto_medium"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_wishList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_like_red"/>
+
+                    <TextView
+                        android:id="@+id/tv_wishList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Favorites"
+                        android:textSize="13sp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/roboto_medium"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_cartList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/shopping_cart_nav_new"/>
+
+                    <TextView
+                        android:id="@+id/tv_cartList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cart"
+                        android:textSize="13sp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/roboto_medium"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
