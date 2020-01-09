@@ -2,36 +2,19 @@ package com.safepayu.wallet.ecommerce.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
-
-
-
-import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.view.View;
+import android.widget.ImageView;
 
-import com.google.android.material.tabs.TabLayout;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.ecommerce.adapter.CategoryAdapter;
-import com.safepayu.wallet.ecommerce.adapter.EcommPagerAdapter;
-import com.safepayu.wallet.ecommerce.adapter.OfferAdapter;
-import com.safepayu.wallet.ecommerce.adapter.RecommendedAdapter;
-import com.safepayu.wallet.ecommerce.adapter.TrendingAdapter;
+import com.safepayu.wallet.ecommerce.fragment.CartFragment;
 import com.safepayu.wallet.ecommerce.fragment.HomeFragment;
-import com.safepayu.wallet.ecommerce.fragment.SearchProductFragment;
-
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.safepayu.wallet.ecommerce.fragment.WishlistFragment;
 
 public class EHomeActivity extends AppCompatActivity  {
 
+    private ImageView CartBtn,NotificationBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +38,22 @@ public class EHomeActivity extends AppCompatActivity  {
     }
 
     private void findId() {
+        CartBtn = findViewById(R.id.cartBtn_main);
+        NotificationBtn = findViewById(R.id.notification_main);
 
+        CartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(new CartFragment());
+            }
+        });
 
+        NotificationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(new WishlistFragment());
+            }
+        });
     }
 
 }

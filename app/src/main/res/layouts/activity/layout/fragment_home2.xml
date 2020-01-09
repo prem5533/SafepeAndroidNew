@@ -7,8 +7,7 @@
     tools:context=".ecommerce.fragment.HomeFragment">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
         <include layout="@layout/ecommerce_header_home"/>
     </androidx.core.widget.NestedScrollView>
 

@@ -14,10 +14,16 @@ import com.safepayu.wallet.R;
 public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.ProductViewHolder> {
 
 
-     private Context context;
+    private Context context;
+    private ShopItemListListener shopItemListListener;
 
-    public StoreListAdapter(Context context) {
+    public StoreListAdapter(Context context,ShopItemListListener shopItemListListener1) {
         this.context = context;
+        this.shopItemListListener=shopItemListListener1;
+    }
+
+    public  interface  ShopItemListListener {
+        void onShopItemClick (int position);
     }
 
     @NonNull
@@ -43,8 +49,12 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.Prod
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
+
+                    if (shopItemListListener!=null){
+                        shopItemListListener.onShopItemClick(getLayoutPosition());
+                    }
                 }
             });
         }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,7 +32,8 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchProductFragment extends Fragment implements View.OnClickListener, SerchProductAdapter.OnProductDetailItemListener  {
+public class SearchProductFragment extends Fragment implements View.OnClickListener, SerchProductAdapter.OnProductDetailItemListener,
+                StoreListAdapter.ShopItemListListener{
 
     private LinearLayout liProduct ,liProductGray, liStore,liStoreGray;
     private RecyclerView SearchProductList,searchStoreList;
@@ -81,7 +83,7 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
         categorySpinner.setAdapter(customAdapter);
 
         searchStoreList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        storeListAdapter = new StoreListAdapter(getActivity());
+        storeListAdapter = new StoreListAdapter(getActivity(),this);
         searchStoreList.setAdapter(storeListAdapter);
 
     }
@@ -113,5 +115,15 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
     public void onProductItemDetail(int position) {
 
         startActivity(new Intent(getActivity(), ProductDetailActivity.class));
+    }
+
+    @Override
+    public void onShopItemClick(int position) {
+        Fragment fragment=new ShopDetailFragment();
+        if (fragment != null) {
+            FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        }
     }
 }

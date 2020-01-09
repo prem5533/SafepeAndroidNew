@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:layout_margin="3dp"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/dayTime_hourAdapter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BOM"
+        android:textSize="15sp"
+        android:textColor="@color/grey_900"
+        android:fontFamily="@font/roboto_bold"/>
+
+    <TextView
+        android:id="@+id/dayName_hourAdapter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BOM"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:gravity="left"
+        android:fontFamily="@font/roboto_regular" />
+
+</LinearLayout>

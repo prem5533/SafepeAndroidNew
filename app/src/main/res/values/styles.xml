@@ -109,8 +109,8 @@
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">#ed8a19</item>
-        <item name="colorControlActivated">@color/number_color_strike</item>
+        <item name="colorControlNormal">@color/grey_600</item>
+        <item name="colorControlActivated">#ffaa00</item>
     </style>
 
     <style name="Theme.UserDialog" parent="android:style/Theme.Dialog">
