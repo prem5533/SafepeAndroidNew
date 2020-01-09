@@ -38,6 +38,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -74,6 +75,7 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.activity.EHomeActivity;
 import com.safepayu.wallet.ecommerce.activity.FilterDialog;
 import com.safepayu.wallet.ecommerce.activity.MyOrderEcomActivity;
+import com.safepayu.wallet.ecommerce.fragment.EcomHomeFragment;
 import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -117,10 +119,11 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     private ViewPager viewpager,viewpagerBooking;
     private String url;
     BottomNavigationView bottomNavigation;
+    private RelativeLayout relativeMain;
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
-            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity,liLogoutParent,liChnangePassword;
+            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity,liLogoutParent,liChnangePassword , liFramemain;
     private TextView tv_home, tvProfile, tvPackageDetails, tvBuyPackage, tvBusinessWallet, tvMyWallet, tvShopping, tvChangePassword, tvMyOrders, tvHistory, tvGenelogy,
             tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security,tvChangePasswordChild;
     public static Bitmap qrCodeImage;
@@ -317,6 +320,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         tv_security = findViewById(R.id.tv_security);
         viewpager = findViewById(R.id.viewpager);
         viewpagerBooking = findViewById(R.id.viewpager_booking);
+        relativeMain = findViewById(R.id.relative_main);
+        liFramemain = findViewById(R.id.linear_frame_main);
 
 
         //**********booking & offers ******
@@ -1116,8 +1121,20 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 break;
 
             case R.id.li_shopping:
-                drawer.closeDrawers();
+
+//                liFramemain.setVisibility(View.VISIBLE);
+//                relativeMain.setVisibility(View.GONE);
+//                Fragment fragment=new EcomHomeFragment();
+//                if (fragment != null) {
+//                    getSupportFragmentManager()
+//                            .beginTransaction()
+//                            .replace(R.id.content_frame2, fragment)
+//                            .commit();
+//                }
+
                 startActivity(new Intent(Navigation.this, EHomeActivity.class));
+                drawer.closeDrawers();
+
                 tvShopping.setTextColor(getResources().getColor(R.color.bue_A800));
                 tvProfile.setTextColor(getResources().getColor(R.color.black));
                 tvPackageDetails.setTextColor(getResources().getColor(R.color.black));

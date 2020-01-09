@@ -1,6 +1,7 @@
 package com.safepayu.wallet.ecommerce.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,11 +44,12 @@ public class OrderItemEcomAdapter extends RecyclerView.Adapter<OrderItemEcomAdap
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{
-        private TextView tvOrderDetail;
+        private TextView tvActualPrice;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-
+        tvActualPrice = itemView.findViewById(R.id.tv_actualprice_myorder);
+            tvActualPrice.setPaintFlags(tvActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

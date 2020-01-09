@@ -84,14 +84,15 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/roboto_regular" /></LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Item in this order"
-                android:textSize="14sp"
+                android:layout_margin="10dp"
                 android:fontFamily="@font/roboto_medium"
+                android:text="Item in this order"
                 android:textColor="@color/black"
-                android:layout_margin="10dp" />
+                android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

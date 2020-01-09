@@ -170,7 +170,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/li_ecommerce"
+                android:id="@+id/li_shopping"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -184,7 +184,7 @@
                     android:src="@drawable/shopping_cart_nav_new" />
 
                 <TextView
-                    android:id="@+id/tv_ecommerce"
+                    android:id="@+id/tv_shopping"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="E-Commerce"
@@ -196,7 +196,8 @@
 
                 <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
                     <ImageView
                         android:id="@+id/image_down_arrow_shop"
                         android:layout_width="30dp"
@@ -211,7 +212,6 @@
                         android:padding="10dp"
                         android:visibility="gone"/>
                 </FrameLayout>
-
             </LinearLayout>
 
             <LinearLayout
@@ -219,9 +219,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="20dp">
+                android:layout_marginLeft="20dp"
+                android:visibility="gone">
                 <LinearLayout
-                    android:id="@+id/li_shopping"
+                    android:id="@+id/li_Ecommerce"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -235,10 +236,10 @@
                         android:src="@drawable/shopping_cart_nav_new"/>
 
                     <TextView
-                        android:id="@+id/tv_shopping"
+                        android:id="@+id/tv_Ecommerce"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Shopping"
+                        android:text="Loox Mart"
                         android:textSize="15sp"
                         android:textColor="@color/black"
                         android:layout_marginLeft="20dp"
