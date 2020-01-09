@@ -32,6 +32,7 @@ public class EHomeActivity extends AppCompatActivity  {
                     .beginTransaction()
                     .replace(R.id.content_frame, fragment)
                     .commit();
+
             return true;
         }
         return false;
