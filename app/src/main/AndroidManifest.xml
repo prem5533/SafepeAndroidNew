@@ -34,7 +34,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ecommerce.activity.ProductDetailActivity"></activity>
+        <activity android:name=".ecommerce.activity.OrderDetailEcomActivity"></activity>
+        <activity android:name=".ecommerce.activity.MyOrderEcomActivity" />
+        <activity android:name=".ecommerce.activity.AddAddressEcomActivity" />
+        <activity android:name=".ecommerce.activity.ProductDetailActivity" />
         <activity android:name=".ecommerce.activity.EHomeActivity" />
         <activity
             android:name=".activity.booking.flight.FlightHistoryActivity"

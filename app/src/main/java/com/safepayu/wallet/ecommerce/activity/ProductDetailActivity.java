@@ -1,21 +1,35 @@
 package com.safepayu.wallet.ecommerce.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.adapter.EcommPagerAdapter;
+import com.safepayu.wallet.ecommerce.adapter.ProductSizeAdapter;
 
-public class ProductDetailActivity extends AppCompatActivity {
+public class ProductDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ViewPager viewpagerProductDetail;
     private EcommPagerAdapter ecommPagerAdapter;
-    int images[] = {R.drawable.girl_jeans, R.drawable.girl_jeans, R.drawable.girl_jeans};
+
+    private ProductSizeAdapter productSizeAdapter;
+    private RecyclerView productSizeList;
+    int images[] = {R.drawable.girl, R.drawable.imge2, R.drawable.image3};
     int NumPage,CurrentP=0 ;
+    private Button backBtnProductDetail;
+    private TextView tvBuyNow,tvAddCart,tvActualPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +40,18 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void findId() {
         viewpagerProductDetail = findViewById(R.id.viewpager__product_detil);
+        productSizeList = findViewById(R.id.product_size_list);
+        backBtnProductDetail = findViewById(R.id.back_btn_product_detail);
+        tvBuyNow = findViewById(R.id.tv_product_detail_buyNow);
+        tvAddCart = findViewById(R.id.tv_product_detail_add_cart);
+        tvActualPrice = findViewById(R.id.tv_product_detail_actualprice);
+
+        backBtnProductDetail.setOnClickListener(this);
+        tvBuyNow.setOnClickListener(this);
+        tvAddCart.setOnClickListener(this);
+
+
+        tvActualPrice.setPaintFlags(tvActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         ecommPagerAdapter = new EcommPagerAdapter(ProductDetailActivity.this,images);
         viewpagerProductDetail.setAdapter(ecommPagerAdapter);
@@ -45,5 +71,25 @@ public class ProductDetailActivity extends AppCompatActivity {
                 viewpagerProductDetail.setCurrentItem(CurrentP++, true);
             }
         };
+
+        productSizeList.setLayoutManager(new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
+        productSizeAdapter = new ProductSizeAdapter(ProductDetailActivity.this);
+        productSizeList.setAdapter(productSizeAdapter);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.back_btn_product_detail:
+                finish();
+                break;
+            case R.id.tv_product_detail_buyNow:
+                startActivity(new Intent(ProductDetailActivity.this, AddAddressEcomActivity.class));
+                Toast.makeText(getApplicationContext(),"Coming Soon Buy Now",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.tv_product_detail_add_cart:
+                Toast.makeText(getApplicationContext(),"Coming Soon Add Cart",Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f5ff"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/red_theme"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/orderdetail_ecom_back_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_next_new" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text="Order Details"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/tv_username_addddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Order No:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_margin="10dp" />
+                <TextView
+                    android:id="@+id/tv_ordernumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="112233661144-7246556"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_margin="10dp"/></LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Placed On:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/roboto_regular" />
+                <TextView
+                    android:id="@+id/tv_placed_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20 Feb 2020"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/roboto_regular" /></LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Item in this order"
+                android:textSize="14sp"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/black"
+                android:layout_margin="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_order_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tv_needhelp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="NEED HELP?"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textSize="14sp"
+                            android:gravity="center"
+                            android:padding="10dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        android:layout_marginTop="5dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Updates sent to"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/textcolor"
+                            android:layout_margin="10dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp">
+                            <ImageView
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:src="@drawable/ic_phone_ecom"
+                                android:layout_gravity="center"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="89765432100"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_marginLeft="10dp"/></LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp">
+                            <ImageView
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:src="@drawable/ic_mail_ecom"
+                                android:layout_gravity="center"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="john.smith@gmail.com"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_marginLeft="10dp"/></LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        android:layout_marginTop="5dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Shipping Address"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/textcolor"
+                            android:layout_margin="10dp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:background="@color/divider"/>
+                        <TextView
+                            android:id="@+id/tv_username_order_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="John Smith"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:layout_weight="1"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"/>
+                        <TextView
+                            android:id="@+id/tvAddress_addaddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Noida Secotr 65 B-96 Near Sectore 62 "
+                            android:textColor="@color/textcolor"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:singleLine="true"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="5dp">
+                            <TextView
+                                android:id="@+id/tvcity_addaddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Noida - "
+                                android:textColor="@color/textcolor"
+                                android:textSize="13sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_marginLeft="10dp"
+                                android:singleLine="true"/>
+                            <TextView
+                                android:id="@+id/tvpincode_addaddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="123456"
+                                android:textColor="@color/textcolor"
+                                android:textSize="13sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_marginLeft="5dp"
+                                android:singleLine="true"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/liaddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvstate_addaddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Uttar Pradesh"
+                                android:textColor="@color/textcolor"
+                                android:textSize="13sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:singleLine="true"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Mobile:"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:layout_marginLeft="10dp"
+                                    android:singleLine="true"/>
+                                <TextView
+                                    android:id="@+id/tvmobile_addaddress"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="9876543321"
+                                    android:textColor="@color/black"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:layout_marginLeft="5dp"
+                                    android:singleLine="true"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        android:layout_marginTop="5dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Price Details"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/textcolor"
+                            android:layout_margin="10dp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:background="@color/divider"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="MRP"
+                                android:textSize="13sp"
+                                android:textColor="@color/textcolor"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹ 899"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_regular" /></LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Selling Price"
+                                android:textSize="13sp"
+                                android:textColor="@color/textcolor"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹ 699"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_regular" /></LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Item Discount"
+                                android:textSize="13sp"
+                                android:textColor="@color/textcolor"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="- ₹ 200"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_regular" /></LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Special Price"
+                                android:textSize="13sp"
+                                android:textColor="@color/textcolor"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹ 499"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_regular" /></LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shipping Fee"
+                                android:textSize="13sp"
+                                android:textColor="@color/textcolor"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹ 49"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_regular" /></LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@drawable/dottedline"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total Amount"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_bold"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹ 548"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_bold" /></LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Payment Mode"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/textcolor"
+                            android:layout_margin="10dp" />
+                        <TextView
+                            android:id="@+id/tvpayment_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cash On Delivery "
+                            android:textColor="@color/textcolor"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:singleLine="true"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
