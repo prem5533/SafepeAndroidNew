@@ -162,7 +162,8 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustNothing" />
+            android:windowSoftInputMode="stateVisible|adjustNothing"
+            />
         <activity
             android:name=".activity.Navigation"
             android:screenOrientation="portrait" />
