@@ -1,26 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#f4f5ff"
     tools:context=".ecommerce.activity.ProductDetailActivity">
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager__product_detil"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="500dp">
-    </androidx.viewpager.widget.ViewPager>
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="60dp">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout_productDetail"
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="430dp">
+
+
+                    <Button
+                android:id="@+id/back_btn_product_detail"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/ic_next_new"
+                />
+
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="right"
+                    android:padding="10dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/ic_like_red" />
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="right"
+                    android:padding="10dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/ic_like_gray" />
+
+
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewpager__product_detil"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp">
+                </androidx.viewpager.widget.ViewPager>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout_productDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabBackground="@drawable/tab_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp"
+                    app:tabMaxWidth="15dp"
+                    android:layout_gravity="bottom|center" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+                <TextView
+                    android:id="@+id/tv_product_detail_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="Women Sea Green &amp; Blue Striped Kurta with Palazzos"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/black"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_product_detail_offprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹ 699"
+                        android:gravity="start"
+                        android:textColor="@color/red"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="15sp"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:id="@+id/tv_product_detail_actualprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹ 899"
+                        android:gravity="start"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/tv_product_detail_earn_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Earn 0 points"
+                        android:gravity="start"
+                        android:textColor="@color/yellow_theme"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="13sp"
+                        android:layout_marginTop="5dp"/>
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="From - "
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/roboto_regular"/>
+                    <TextView
+                        android:id="@+id/tv_product_detail_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lilly Whites"
+                        android:textColor="@color/blue_800"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_marginTop="5dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height=".5dp"
+                    android:background="@color/divider"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Color"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_regular" />
+                    <CheckBox
+                        android:id="@+id/cb_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:checked="true"
+                        android:buttonTint="@color/red"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height=".5dp"
+                    android:background="@color/divider"
+                    android:layout_marginTop="10dp"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select Size"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SIZE CHART"
+                        android:textColor="@color/yellow_theme"
+                        android:textSize="12sp"
+                        android:padding="10dp"
+                        android:fontFamily="@font/roboto_regular" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/product_size_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-10dp"/>
+                <View
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"
+                android:background="@color/divider"
+                android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="Product Details"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/tv_product_detail_"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore aliqua. Ut enim ad minim veniam."
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/textcolor"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"
-        app:tabMaxWidth="15dp"
-        android:layout_gravity="bottom|center"
-        android:layout_marginTop="-15dp"/>
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true">
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/tv_product_detail_buyNow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buy Now"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:background="@drawable/gray_round_bg"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_margin="5dp"/>
+        <TextView
+                android:id="@+id/tv_product_detail_add_cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add To Cart"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:background="@drawable/blue_green_bg"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_margin="5dp"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -73,6 +73,7 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.activity.EHomeActivity;
 import com.safepayu.wallet.ecommerce.activity.FilterDialog;
+import com.safepayu.wallet.ecommerce.activity.MyOrderEcomActivity;
 import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -1246,7 +1247,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
             case R.id.li_myorder:
                 drawer.closeDrawers();
-                startActivity(new Intent(Navigation.this, MyOrdersActivity.class));
+               // startActivity(new Intent(Navigation.this, MyOrdersActivity.class));
+                startActivity(new Intent(Navigation.this, MyOrderEcomActivity.class));
                 //  overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
                 tvMyOrders.setTextColor(getResources().getColor(R.color.bue_A800));

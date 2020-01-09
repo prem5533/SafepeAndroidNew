@@ -17,4 +17,10 @@
     <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">11sp</item>
     </style>
+
+    <style name="MyRatingBar" parent="Widget.AppCompat.RatingBar">
+        <item name="colorControlNormal">#ffaa00</item>
+        <item name="colorControlActivated">#ffaa00</item>
+
+    </style>
 </resources>

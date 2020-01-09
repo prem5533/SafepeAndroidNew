@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.adapter.ProductImageAdapter;
+import com.safepayu.wallet.ecommerce.adapter.ProductSizeAdapter;
 import com.safepayu.wallet.ecommerce.adapter.SerchProductAdapter;
 
 /**
@@ -22,6 +23,7 @@ public class ProductDetailFragment extends Fragment {
 
     private RecyclerView productImageList,productSizeList;
     private ProductImageAdapter  productImageAdapter;
+
 
     public ProductDetailFragment() {
         // Required empty public constructor
@@ -39,10 +41,13 @@ public class ProductDetailFragment extends Fragment {
 
     private void findId(View view) {
         productImageList = view.findViewById(R.id.product_image_list);
+        productSizeList = view.findViewById(R.id.product_size_list);
 
         productImageList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         productImageAdapter = new ProductImageAdapter(getActivity());
         productImageList.setAdapter(productImageAdapter);
+
+
     }
 
 
