@@ -25,7 +25,7 @@ public class MyOrderEcomActivity extends AppCompatActivity implements View.OnCli
     private RecyclerView myorderListEcom;
     private MyOrderEcomAdapter myOrderEcomAdapter;
     private OrderItemEcomAdapter orderItemEcomAdapter;
-    private Button myorderEcomBackBtn;
+    private Button myorderEcomBackBtn,orderdetailEcomBackBtn ;
     private RatingBar ratingBar;
     public   Dialog dialog;
     private RecyclerView orderList;
@@ -58,6 +58,9 @@ public class MyOrderEcomActivity extends AppCompatActivity implements View.OnCli
                 overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
                 finish();
                 break;
+            case R.id.orderdetail_ecom_back_btn:
+               dialog.dismiss();
+                break;
         }
     }
 
@@ -75,6 +78,9 @@ public class MyOrderEcomActivity extends AppCompatActivity implements View.OnCli
         dialog.setContentView(R.layout.order_detail_ecom_dialog);
 
         orderList = dialog.findViewById(R.id.list_order_item);
+        orderdetailEcomBackBtn = dialog.findViewById(R.id.orderdetail_ecom_back_btn);
+        orderdetailEcomBackBtn.setOnClickListener(this);
+
         orderList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         orderItemEcomAdapter = new OrderItemEcomAdapter(getApplicationContext());
         orderList.setAdapter(orderItemEcomAdapter);

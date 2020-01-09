@@ -40,7 +40,7 @@ public class EHomeActivity extends AppCompatActivity  {
 
     private void findId() {
         CartBtn = findViewById(R.id.cartBtn_main);
-        NotificationBtn = findViewById(R.id.notification_main);
+        NotificationBtn = findViewById(R.id.favBtn_main);
 
         CartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
