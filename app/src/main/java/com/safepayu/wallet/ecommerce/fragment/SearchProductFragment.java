@@ -114,17 +114,7 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.li_product:
-                liStoreGray.setVisibility(View.GONE);
-                liProduct.setVisibility(View.GONE);
-                liStore.setVisibility(View.VISIBLE);
-                liProductGray.setVisibility(View.VISIBLE);
-                tvSearchProductMatching.setText("Found 10 stores matching the search keyword, near you");
-                searchStoreList.setVisibility(View.VISIBLE);
-                SearchProductList.setVisibility(View.GONE);
-
-                break;
-            case R.id.li_store:
+            case R.id.li_product_gray:
                 liProductGray.setVisibility(View.GONE);
                 liStore.setVisibility(View.GONE);
                 liProduct.setVisibility(View.VISIBLE);
@@ -132,6 +122,16 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                 tvSearchProductMatching.setText("Found 25 products matching the search keyword, near you");
                 searchStoreList.setVisibility(View.GONE);
                 SearchProductList.setVisibility(View.VISIBLE);
+                break;
+            case R.id.li_store_gray:
+
+                liStoreGray.setVisibility(View.GONE);
+                liProduct.setVisibility(View.GONE);
+                liStore.setVisibility(View.VISIBLE);
+                liProductGray.setVisibility(View.VISIBLE);
+                tvSearchProductMatching.setText("Found 10 stores matching the search keyword, near you");
+                searchStoreList.setVisibility(View.VISIBLE);
+                SearchProductList.setVisibility(View.GONE);
                 break;} }
 
     @Override

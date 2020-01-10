@@ -27,11 +27,16 @@ import com.safepayu.wallet.ecommerce.adapter.EcommPagerAdapter;
 import com.safepayu.wallet.ecommerce.adapter.OfferAdapter;
 import com.safepayu.wallet.ecommerce.adapter.RecommendedAdapter;
 import com.safepayu.wallet.ecommerce.adapter.TrendingAdapter;
+import com.safepayu.wallet.ecommerce.model.CategoryModel;
+
 import android.os.Handler;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -47,7 +52,7 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     private EcommPagerAdapter ecommPagerAdapter;
     GridLayoutManager gridLayoutManager;
     private ViewPager viewpager;
-    int images[] = {R.drawable.ecommvirwpager_banner, R.drawable.banner_image2, R.drawable.banner_image3};
+    int images[] = {R.drawable.banner_image1, R.drawable.banner_image2, R.drawable.banner_image3,R.drawable.banner_image4};
     int NumPage,CurrentP=0 ;
     Timer timer;  final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
@@ -55,6 +60,7 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     private LinearLayout SearchLayout;
     private TextView tvSearch;
 
+    private List<CategoryModel> categoryModelList = new ArrayList<>();
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -65,6 +71,7 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home2, container, false);
+        prepareCategoryData();
         findId(view);
         return  view;
     }
@@ -78,9 +85,9 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         SearchLayout = view.findViewById(R.id.searchLayout_headerHome);
         tvSearch =  view.findViewById(R.id.tv_search_ecomm);
 
-        gridLayoutManager = new GridLayoutManager(getActivity(),3, LinearLayoutManager.HORIZONTAL,false);
+        gridLayoutManager = new GridLayoutManager(getActivity(),3, LinearLayoutManager.VERTICAL,false);
         recyclerCategory.setLayoutManager(gridLayoutManager);
-        categoryAdapter = new CategoryAdapter(getActivity(),HomeFragment.this);
+        categoryAdapter = new CategoryAdapter(getActivity(),categoryModelList,HomeFragment.this);
         recyclerCategory.setAdapter(categoryAdapter);
 
         recycleCategoryOfferList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -138,6 +145,37 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                 startActivityForResult(intent, 1);
             }
         });
+    }
+
+    private void prepareCategoryData() {
+        categoryModelList.clear();
+        CategoryModel catList = new CategoryModel("Food & Drinks");
+        categoryModelList.add(catList);
+
+        catList = new CategoryModel("Beauty");
+        categoryModelList.add(catList);
+        catList = new CategoryModel("Sports");
+        categoryModelList.add(catList);
+        catList = new CategoryModel("Jeans");
+        categoryModelList.add(catList);
+        catList = new CategoryModel("Grocery");
+        categoryModelList.add(catList);
+        catList = new CategoryModel("Fashion");
+        categoryModelList.add(catList);
+        catList = new CategoryModel("Men Grooming");
+        categoryModelList.add(catList);
+        catList = new CategoryModel("Video Games");
+        categoryModelList.add(catList);
+        catList = new CategoryModel("iPads");
+        categoryModelList.add(catList);
+        catList = new CategoryModel("Flower");
+        categoryModelList.add(catList);
+        catList = new CategoryModel("Furniture");
+        categoryModelList.add(catList);
+        catList = new CategoryModel("Jewellery");
+        categoryModelList.add(catList);
+
+        //categoryAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -13,13 +13,18 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -62,11 +67,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class EHomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class EHomeActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private ImageView CartBtn,NotificationBtn,NavIcon,imageDownSecurity, imageUpSecurity,imageDownLogout, imageUpLogout;
     private DrawerLayout drawer;
     private LoadingDialog loadingDialog;
+    BottomNavigationView bottomNavigation;
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
@@ -101,6 +107,21 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         CartBtn = findViewById(R.id.cartBtn_main);
         NotificationBtn = findViewById(R.id.favBtn_main);
         NavIcon = findViewById(R.id.nav_iconEcommerce);
+        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(this);
+
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigation.getChildAt(0);
+        for (int i = 0; i < menuView.getChildCount(); i++) {
+            final View iconView = menuView.getChildAt(i).findViewById(R.id.icon);
+            final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
+            final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            // set your height here
+            layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, displayMetrics);
+            // set your width here
+            layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, displayMetrics);
+            iconView.setLayoutParams(layoutParams);
+        }
+
         loadingDialog = new LoadingDialog(this);
 
         CartBtn.setOnClickListener(new View.OnClickListener() {
@@ -1139,5 +1160,39 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, false, e.getCause());
                     }
                 }));
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // uncheck the other items.
+        int mMenuId;
+        mMenuId = item.getItemId();
+        for (int i = 0; i < bottomNavigation.getMenu().size(); i++) {
+            MenuItem menuItem = bottomNavigation.getMenu().getItem(i);
+            boolean isChecked = menuItem.getItemId() == item.getItemId();
+            menuItem.setChecked(isChecked);
+        }
+
+        switch (item.getItemId()) {
+            case R.id.b_home: {
+             //   startActivity(new Intent(EHomeActivity.this, Navigation.class));
+                finish();
+            }
+            break;
+            case R.id.b_profile: {
+                startActivity(new Intent(EHomeActivity.this, Profile.class));
+            }
+            break;
+            case R.id.b_qrcode: {
+                startActivity(new Intent(EHomeActivity.this, QrCodeScanner.class));
+            }
+            break;
+            case R.id.b_mall: {
+                //   Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+               // startActivity(new Intent(EHomeActivity.this, EHomeActivity.class));
+            }
+            break;
+        }
+        return true;
     }
 }

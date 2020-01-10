@@ -21,14 +21,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hi John,"
+            android:text="Welcome , "
             android:textSize="20sp"
             android:textColor="@color/white"
             android:fontFamily="@font/roboto_bold"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="What would you to like to explore?"
+            android:text="Loox Store"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:fontFamily="@font/roboto_bold"/>
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:fontFamily="@font/roboto_regular"
-            android:text="Pay &amp; Go"
+            android:text="Wallet"
             android:textColor="@color/white"
             android:padding="5dp" />
     </LinearLayout>
@@ -112,30 +112,11 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Loyalty Card"
+                android:text="Rewards"
                 android:textColor="@color/white"
                 android:padding="5dp" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:orientation="vertical"
-            android:background="#7312aa"
-            android:gravity="center"
-            android:layout_weight="1">
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/ic_food_ecom"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:fontFamily="@font/roboto_regular"
-                android:text="Book A Table"
-                android:textColor="@color/white"
-                android:padding="5dp" />
-        </LinearLayout>
+
         <LinearLayout
             android:layout_width="100dp"
             android:layout_height="80dp"
@@ -152,7 +133,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Nearby Deals"
+                android:text="Loox Store"
                 android:textColor="@color/white"
                 android:padding="5dp" />
         </LinearLayout>

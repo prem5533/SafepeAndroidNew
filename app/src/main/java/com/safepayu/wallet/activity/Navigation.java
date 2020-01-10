@@ -38,7 +38,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -1154,7 +1154,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
-                Toast.makeText(this, "Coming Sooon", Toast.LENGTH_SHORT).show();
                 liShopping.setBackgroundColor(getResources().getColor(R.color.white));
                 liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
