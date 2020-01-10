@@ -1,42 +1,43 @@
 package com.safepayu.wallet.ecommerce.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.adapter.ThankYouAdapter;
 
-public class ReviewProductFragment extends Fragment {
+public class ReviewProductFragment extends AppCompatActivity {
 
-    private RecyclerView ProductsRecyclerView;
-
-    public ReviewProductFragment() {
-        // Required empty public constructor
-    }
-
+    private TextView tvSkipBtn;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.review_product_fragment, container, false);
-        findId(view);
-        return  view;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.review_product_fragment);
+        findId();
     }
 
-    private void findId(View view) {
+    private void findId() {
+        tvSkipBtn=findViewById(R.id.skipBtn_reviewProducts);
 
-        ProductsRecyclerView=view.findViewById(R.id.recycleCart);
+        tvSkipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ReviewProductFragment.this,ThankYouFragment.class));
+                finish();
+            }
+        });
 
-        ProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        ThankYouAdapter thankYouAdapter = new ThankYouAdapter(getActivity());
-        ProductsRecyclerView.setAdapter(thankYouAdapter);
     }
 }
 

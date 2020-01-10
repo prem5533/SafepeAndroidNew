@@ -1,5 +1,7 @@
 package com.safepayu.wallet.ecommerce.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,13 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.ecommerce.activity.FilterDialog;
+import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
 import com.safepayu.wallet.ecommerce.adapter.OpeningHoursAdapter;
 import com.safepayu.wallet.ecommerce.adapter.RecommendedAdapter;
 
@@ -25,11 +31,12 @@ public class ShopDetailFragment extends Fragment {
     private RecyclerView HoursRecyclerView,ProductsRecyclerView;
     private LinearLayout HoursLayout;
     private ImageView HoursIV;
-    private TextView tvShopName;
+    private TextView tvShopName,tvSearch;
     private int HoursInt=0;
     private RecommendedAdapter recommendedAdapter;
     private OpeningHoursAdapter openingHoursAdapter;
     private ArrayList<String> HoursList,DaysList;
+    private LinearLayout SearchLayout,FilterLayout;
 
     public ShopDetailFragment() {
         // Required empty public constructor
@@ -51,6 +58,9 @@ public class ShopDetailFragment extends Fragment {
         HoursLayout=view.findViewById(R.id.openingHours_shopDetail);
         HoursIV=view.findViewById(R.id.downArrowHours_shopDetail);
         ProductsRecyclerView=view.findViewById(R.id.recycleProducts_shopDetail);
+        FilterLayout=view.findViewById(R.id.filter_shopDetail);
+        SearchLayout = view.findViewById(R.id.searchLayout_Shop);
+        tvSearch =  view.findViewById(R.id.tv_search_ecomm);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.VERTICAL,false);
         ProductsRecyclerView.setLayoutManager(gridLayoutManager);
@@ -100,6 +110,46 @@ public class ShopDetailFragment extends Fragment {
                 }
             }
         });
+
+        SearchLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SearchEcommerce.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        tvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SearchEcommerce.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        FilterLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), FilterDialog.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (1):
+                if (resultCode == Activity.RESULT_OK) {
+
+                    Toast.makeText(getActivity(), "ok", Toast.LENGTH_SHORT).show();
+
+                    // TODO Update your TextView.
+                }
+                break;
+
+        }
     }
 
 }

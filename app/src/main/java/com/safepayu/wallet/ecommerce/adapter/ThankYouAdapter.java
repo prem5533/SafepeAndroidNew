@@ -40,8 +40,6 @@ public class ThankYouAdapter extends RecyclerView.Adapter<ThankYouAdapter.Flight
         private TextView tvDayName,tvDayHours ;
         public FlightLocationListViewHolder(@NonNull View itemView) {
             super(itemView);
-
-
         }
 
         public void bindData(int position) {

@@ -326,6 +326,14 @@
             android:name=".ecommerce.activity.FilterDialog"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.UserDialog" />
+
+
+
+<!--  Ecommerce      -->
+
+        <activity android:name=".ecommerce.fragment.ReviewProductFragment"/>
+        <activity android:name=".ecommerce.fragment.ThankYouFragment"/>
+        <activity android:name=".ecommerce.activity.SearchEcommerce"/>
     </application>
 
 </manifest>

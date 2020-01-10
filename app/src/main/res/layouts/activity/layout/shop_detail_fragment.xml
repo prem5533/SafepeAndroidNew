@@ -34,7 +34,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="50dp"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:id="@+id/searchLayout_Shop">
 
                     <ImageView
                         android:layout_width="40dp"
@@ -43,7 +44,7 @@
                         android:padding="10dp"
                         android:layout_marginLeft="5dp"/>
 
-                    <EditText
+                    <TextView
                         android:id="@+id/tv_search_ecomm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -231,14 +232,55 @@
                     android:background="@drawable/white_round_border"/>
 
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Products"
-                    android:textSize="18sp"
-                    android:textColor="@color/red_theme"
-                    android:fontFamily="@font/roboto_regular"
-                    android:layout_marginTop="20dp"/>
+                    android:orientation="horizontal"
+                    android:gravity="left">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Products"
+                        android:textSize="16sp"
+                        android:textColor="@color/red_theme"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginTop="20dp"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:id="@+id/filter_shopDetail">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Filter"
+                            android:textSize="16sp"
+                            android:textColor="@color/red_theme"
+                            android:fontFamily="@font/roboto_regular"
+                            android:layout_marginTop="20dp"/>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/filter_icon_new"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="15sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="0.5dp"-->
+<!--                    android:background="@color/grey_500"-->
+<!--                    android:layout_marginTop="2dp"-->
+<!--                    android:layout_marginBottom="2dp"/>-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycleProducts_shopDetail"

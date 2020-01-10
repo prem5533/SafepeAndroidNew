@@ -1,6 +1,8 @@
 package com.safepayu.wallet.ecommerce.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -18,6 +20,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.adapter.EcommPagerAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProductSizeAdapter;
+import com.safepayu.wallet.ecommerce.fragment.CartFragment;
+import com.safepayu.wallet.ecommerce.fragment.SearchProductFragment;
 
 public class ProductDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -88,8 +92,21 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 Toast.makeText(getApplicationContext(),"Coming Soon Buy Now",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_product_detail_add_cart:
-                Toast.makeText(getApplicationContext(),"Coming Soon Add Cart",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Coming Soon Add Cart",Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    private boolean loadFragment(Fragment fragment) {
+        //switching fragment
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.content_frame, fragment)
+                    .commit();
+
+            return true;
+        }
+        return false;
     }
 }

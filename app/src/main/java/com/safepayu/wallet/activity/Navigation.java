@@ -320,8 +320,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         tv_security = findViewById(R.id.tv_security);
         viewpager = findViewById(R.id.viewpager);
         viewpagerBooking = findViewById(R.id.viewpager_booking);
-        relativeMain = findViewById(R.id.relative_main);
-        liFramemain = findViewById(R.id.linear_frame_main);
 
 
         //**********booking & offers ******

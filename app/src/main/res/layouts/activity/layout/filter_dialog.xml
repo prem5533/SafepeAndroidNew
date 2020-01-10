@@ -280,6 +280,26 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:visibility="gone"/>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:background="@color/white"
+                    android:layout_marginTop="10dp"/>
+
+                <Button
+                    android:id="@+id/filterBtn_filterLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/red_theme"
+                    android:text="Apply"
+                    android:textSize="16dp"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:fontFamily="@font/roboto_bold"
+                    android:layout_marginTop="10dp"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

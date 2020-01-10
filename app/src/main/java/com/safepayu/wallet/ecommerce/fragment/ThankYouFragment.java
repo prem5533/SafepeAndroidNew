@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,30 +14,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.adapter.ThankYouAdapter;
 
-public class ThankYouFragment extends Fragment {
+public class ThankYouFragment extends AppCompatActivity {
 
     private RecyclerView ProductsRecyclerView;
 
-    public ThankYouFragment() {
-        // Required empty public constructor
-    }
-
+    private TextView tvSkipBtn;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.thank_you_fragment, container, false);
-        findId(view);
-        return  view;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.thank_you_fragment);
+        findId();
     }
 
-    private void findId(View view) {
+    private void findId() {
 
-        ProductsRecyclerView=view.findViewById(R.id.recycleCart);
+        ProductsRecyclerView=findViewById(R.id.recycleProduct_thankYouLayout);
 
-        ProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        ThankYouAdapter thankYouAdapter = new ThankYouAdapter(getActivity());
+        ProductsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        ThankYouAdapter thankYouAdapter = new ThankYouAdapter(this);
         ProductsRecyclerView.setAdapter(thankYouAdapter);
     }
 }

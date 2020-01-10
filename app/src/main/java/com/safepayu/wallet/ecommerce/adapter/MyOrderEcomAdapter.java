@@ -45,18 +45,29 @@ public class MyOrderEcomAdapter extends RecyclerView.Adapter<MyOrderEcomAdapter.
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{
-        private TextView tvOrderDetail;
+        private TextView tvOrderDetail,tvWriteReview;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             tvOrderDetail = itemView.findViewById(R.id.tv_order_detail);
+            tvWriteReview = itemView.findViewById(R.id.tv_write_review);
 
             tvOrderDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     if (orderEcomListener != null) {
-                        orderEcomListener.orderItem(getLayoutPosition()); }
+                        orderEcomListener.orderItem(getLayoutPosition());
+                    }
+                }
+            });
+
+            tvWriteReview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (orderEcomListener != null) {
+                        orderEcomListener.orderItem(getLayoutPosition());
+                    }
                 }
             });
         }

@@ -190,8 +190,7 @@
             android:orientation="horizontal"
             android:layout_marginBottom="5dp"
             android:gravity="center"
-            android:visibility="gone"
-            >
+            android:visibility="visible">
             <RatingBar
                 android:id="@+id/ratingfill_myorder_ecom"
                 android:layout_width="wrap_content"
@@ -201,16 +200,17 @@
                 android:scaleY=".6"
                 android:layout_marginLeft="-20dp"
                />
+
             <TextView
                 android:id="@+id/tv_write_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Write A Review"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="right"
                 android:padding="10dp"
-                android:textSize="13sp"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="@color/red_theme"/>
+                android:text="Write A Review"
+                android:textColor="@color/red_theme"
+                android:textSize="13sp" />
         </LinearLayout>
 
     </LinearLayout>

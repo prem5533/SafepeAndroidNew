@@ -180,25 +180,25 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         tvShopping = findViewById(R.id.tv_shopping);
         tv_security = findViewById(R.id.tv_security);
 
-        //********************set listener&*****************
-        liHome.setOnClickListener(this);
-        liProfile.setOnClickListener(this);
-        liPackageDetails.setOnClickListener(this);
-        liBuyPackage.setOnClickListener(this);
-        liCommission.setOnClickListener(this);
-        liWallet.setOnClickListener(this);
-        liShopping.setOnClickListener(this);
-        liChnangePasswlrd.setOnClickListener(this);
-        liChnangePassword.setOnClickListener(this);
-        liMyOrders.setOnClickListener(this);
-        liHistory.setOnClickListener(this);
-        liGenelogy.setOnClickListener(this);
-        liReferEarn.setOnClickListener(this);
-        liUpdteKYC.setOnClickListener(this);
-        liContactUs.setOnClickListener(this);
-        liLogout.setOnClickListener(this);
-        liLogoutAllDevices.setOnClickListener(this);
-        liWalletHistory.setOnClickListener(this);
+//        //********************set listener&*****************
+//        liHome.setOnClickListener(this);
+//        liProfile.setOnClickListener(this);
+//        liPackageDetails.setOnClickListener(this);
+//        liBuyPackage.setOnClickListener(this);
+//        liCommission.setOnClickListener(this);
+//        liWallet.setOnClickListener(this);
+//        liShopping.setOnClickListener(this);
+//        liChnangePasswlrd.setOnClickListener(this);
+//        liChnangePassword.setOnClickListener(this);
+//        liMyOrders.setOnClickListener(this);
+//        liHistory.setOnClickListener(this);
+//        liGenelogy.setOnClickListener(this);
+//        liReferEarn.setOnClickListener(this);
+//        liUpdteKYC.setOnClickListener(this);
+//        liContactUs.setOnClickListener(this);
+//        liLogout.setOnClickListener(this);
+//        liLogoutAllDevices.setOnClickListener(this);
+//        liWalletHistory.setOnClickListener(this);
         linearSecurityTab.setVisibility(View.GONE);
         linearLogoutTab.setVisibility(View.GONE);
 

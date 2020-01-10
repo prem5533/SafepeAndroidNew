@@ -1,8 +1,11 @@
 package com.safepayu.wallet.ecommerce.fragment;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -16,12 +19,19 @@ import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.AddUpdateAddress;
+import com.safepayu.wallet.activity.MapsActivity;
+import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
 import com.safepayu.wallet.ecommerce.adapter.CategoryAdapter;
 import com.safepayu.wallet.ecommerce.adapter.EcommPagerAdapter;
 import com.safepayu.wallet.ecommerce.adapter.OfferAdapter;
 import com.safepayu.wallet.ecommerce.adapter.RecommendedAdapter;
 import com.safepayu.wallet.ecommerce.adapter.TrendingAdapter;
 import android.os.Handler;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -42,6 +52,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     Timer timer;  final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
 
+    private LinearLayout SearchLayout;
+    private TextView tvSearch;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -63,6 +75,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         recycleTrendingProductList = view.findViewById(R.id.recycle_trending_product_list);
         recycleRecommendList = view.findViewById(R.id.recycle_recommend_list);
         viewpager = view.findViewById(R.id.viewpager_ecom);
+        SearchLayout = view.findViewById(R.id.searchLayout_headerHome);
+        tvSearch =  view.findViewById(R.id.tv_search_ecomm);
 
         gridLayoutManager = new GridLayoutManager(getActivity(),3, LinearLayoutManager.HORIZONTAL,false);
         recyclerCategory.setLayoutManager(gridLayoutManager);
@@ -108,6 +122,22 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                 hand.post(Updt);
             }
         }, DELAY_MS, PERIOD_MS);
+
+        SearchLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SearchEcommerce.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        tvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SearchEcommerce.class);
+                startActivityForResult(intent, 1);
+            }
+        });
     }
 
     @Override
@@ -118,4 +148,21 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (1):
+                if (resultCode == Activity.RESULT_OK) {
+
+                    Toast.makeText(getActivity(), "ok", Toast.LENGTH_SHORT).show();
+
+                    // TODO Update your TextView.
+                }
+                break;
+
+        }
+    }
+
 }

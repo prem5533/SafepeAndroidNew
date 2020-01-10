@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.activity.ProductDetailActivity;
+import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
 import com.safepayu.wallet.ecommerce.adapter.EcomSpinnerAdapter;
 import com.safepayu.wallet.ecommerce.adapter.SerchProductAdapter;
 import com.safepayu.wallet.ecommerce.adapter.StoreListAdapter;
@@ -44,6 +45,8 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
     private TextView tvSearchProductMatching;
     List<OperatorResponse.OperatorsBean> mCategoryList = new ArrayList<>();
 
+    private LinearLayout SearchLayout;
+    private TextView tvSearch;
 
     public SearchProductFragment() {
         // Required empty public constructor
@@ -60,6 +63,10 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
     }
 
     private void findId(View view) {
+
+        SearchLayout = view.findViewById(R.id.searchLayout_SearchFrag);
+        tvSearch =  view.findViewById(R.id.tv_search_ecomm);
+
         liProduct = view.findViewById(R.id.li_product);
         liProductGray = view.findViewById(R.id.li_product_gray);
         liStore = view.findViewById(R.id.li_store);
@@ -85,6 +92,22 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
         searchStoreList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         storeListAdapter = new StoreListAdapter(getActivity(),this);
         searchStoreList.setAdapter(storeListAdapter);
+
+        SearchLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SearchEcommerce.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        tvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SearchEcommerce.class);
+                startActivityForResult(intent, 1);
+            }
+        });
 
     }
 

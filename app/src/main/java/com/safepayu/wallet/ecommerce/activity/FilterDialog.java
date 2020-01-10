@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -21,7 +22,7 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
     private RecyclerView PriceRecyclerView,CategoryRecyclerView,BrandRecyclerView,DiscountRecyclerView,SizeRecyclerView;
     private ImageView PriceIV,CategoryIV,BrandIV,DiscountIV,SizeIV;
     private int PriceInt=0,CategoryInt=0,BrandInt=0,DiscountInt=0,SizeInt=0;
-
+    private Button FilterBtn;
     private ArrayList<String> BusSourcesList=new ArrayList<>();
 
     @Override
@@ -31,6 +32,8 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.filter_dialog);
         this.setFinishOnTouchOutside(false);
+
+        FilterBtn=findViewById(R.id.filterBtn_filterLayout);
 
         PriceLayout=findViewById(R.id.priceLayout_filterLayout);
         CategoryLayout=findViewById(R.id.categoryLayout_filterLayout);
@@ -214,6 +217,13 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
                 }else {
                     hideLayout();
                 }
+            }
+        });
+
+        FilterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
