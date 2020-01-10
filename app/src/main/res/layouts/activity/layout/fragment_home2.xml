@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ecommerce.fragment.HomeFragment">
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <include layout="@layout/ecommerce_header_home"/>
-    </androidx.core.widget.NestedScrollView>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/ecommerce_header_home"/>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 
-</LinearLayout>
+
+</RelativeLayout>

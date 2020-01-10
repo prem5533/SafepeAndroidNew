@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f5ff"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/headerbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/red_theme"
+        android:paddingBottom="5dp">
+
+        <Button
+            android:id="@+id/cancel_ecom_back_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_next_new" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text="Order Details"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/tv_username_addddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Order No:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_margin="10dp" />
+                <TextView
+                    android:id="@+id/tv_ordernumber_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="112233661144-7246556"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_margin="10dp"/></LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Item in this order"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_order_item_cancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                        android:id="@+id/licancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        android:layout_marginTop="5dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Reason For Cancellation"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/textcolor"
+                            android:layout_margin="10dp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:background="@color/divider"/>
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/textcolor"
+                            android:text="Reason For Cancellation"
+                            android:fontFamily="@font/roboto_regular"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"/>
+                        <EditText
+                            android:inputType="textMultiLine"
+                            android:lines="5"
+                            android:minLines="3"
+                            android:gravity="top|left"
+                            android:maxLines="8"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:scrollbars="vertical"
+                            android:hint="Comment (optional)"
+                            android:textColor="@color/textcolor"
+                            android:textSize="14sp"
+                            android:layout_margin="10dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        android:layout_marginTop="5dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Refund Status"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/textcolor"
+                            android:layout_margin="10dp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:background="@color/divider"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+                        <TextView
+                            android:id="@+id/tv_cancel_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:textColor="@color/black"
+                            android:text="There will be no refund as the order is purchased using Cash-On-Delivery"
+                            android:fontFamily="@font/roboto_regular"
+                            android:layout_margin="10dp" />
+                        </LinearLayout>
+                    <Button
+                        android:id="@+id/btn_submit"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/amount"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="30dp"
+                        android:background="@drawable/blue_green_bg"
+                        android:padding="10dp"
+                        android:text="Submit Request"
+                        android:textColor="#fff"
+                        android:textSize="15sp"
+                        android:visibility="gone"
+                        android:fontFamily="@font/roboto_bold"/>
+                    <Button
+                        android:id="@+id/btn_submit_gray"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/amount"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="30dp"
+                        android:background="@drawable/gray_round_bg"
+                        android:padding="10dp"
+                        android:text="Submit Request"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_bold"/>
+                </LinearLayout>
+                <LinearLayout
+                 android:id="@+id/lireturn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                    android:visibility="gone">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        android:layout_marginTop="5dp"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Reason For Return"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/textcolor"
+                            android:layout_margin="10dp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:background="@color/divider"/>
+                        <Spinner
+                            android:id="@+id/spinner_reason_retunr"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_margin="10dp" />
+                        <EditText
+                            android:inputType="textMultiLine"
+                            android:lines="5"
+                            android:minLines="3"
+                            android:gravity="top|left"
+                            android:maxLines="8"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:scrollbars="vertical"
+                            android:hint="Comment (optional)"
+                            android:textColor="@color/textcolor"
+                            android:textSize="14sp"
+                            android:layout_margin="10dp"/>
+                        <Button
+                            android:id="@+id/btn_continue_retunritem"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_below="@+id/amount"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="@drawable/blue_green_bg"
+                            android:padding="10dp"
+                            android:text="Continue"
+                            android:textColor="#fff"
+                            android:textSize="15sp"
+                            android:visibility="gone"
+                            android:fontFamily="@font/roboto_bold"/>
+                        <Button
+                            android:id="@+id/btn_conitune_gray"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_below="@+id/amount"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="@drawable/gray_round_bg"
+                            android:padding="10dp"
+                            android:text="Continue"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_bold"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+                </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

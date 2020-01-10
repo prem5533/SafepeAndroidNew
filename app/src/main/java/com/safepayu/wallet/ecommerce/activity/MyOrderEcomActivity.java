@@ -25,9 +25,10 @@ public class MyOrderEcomActivity extends AppCompatActivity implements View.OnCli
     private RecyclerView myorderListEcom;
     private MyOrderEcomAdapter myOrderEcomAdapter;
     private OrderItemEcomAdapter orderItemEcomAdapter;
-    private Button myorderEcomBackBtn,orderdetailEcomBackBtn ;
+    private Button myorderEcomBackBtn,orderdetailEcomBackBtn ,btnSubmitGray,btnSubmit,OrderCancelBackBtn;
     private RatingBar ratingBar;
     public   Dialog dialog;
+    private TextView tvCancelReturn,tvCheckstatus;
     private RecyclerView orderList;
 
     @Override
@@ -61,15 +62,17 @@ public class MyOrderEcomActivity extends AppCompatActivity implements View.OnCli
             case R.id.orderdetail_ecom_back_btn:
                dialog.dismiss();
                 break;
+
         }
     }
 
 
 
+
     @Override
     public void orderItem(int position ) {
-       // startActivity(new Intent(MyOrderEcomActivity.this, OrderDetailEcomActivity.class));
-        showDialogOrderDetail(MyOrderEcomActivity.this);
+        startActivity(new Intent(MyOrderEcomActivity.this, OrderDetailEcomActivity.class));
+       // showDialogOrderDetail(MyOrderEcomActivity.this);
     }
 
     private void showDialogOrderDetail(MyOrderEcomActivity myOrderEcomActivity) {
@@ -78,8 +81,10 @@ public class MyOrderEcomActivity extends AppCompatActivity implements View.OnCli
         dialog.setContentView(R.layout.order_detail_ecom_dialog);
 
         orderList = dialog.findViewById(R.id.list_order_item);
+        tvCancelReturn = dialog.findViewById(R.id.tv_cancel_return);
         orderdetailEcomBackBtn = dialog.findViewById(R.id.orderdetail_ecom_back_btn);
         orderdetailEcomBackBtn.setOnClickListener(this);
+        tvCancelReturn.setOnClickListener(this);
 
         orderList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         orderItemEcomAdapter = new OrderItemEcomAdapter(getApplicationContext());
@@ -96,5 +101,50 @@ public class MyOrderEcomActivity extends AppCompatActivity implements View.OnCli
         dialog.show();
     }
 
+  /*  private void showDialogOrderDetCancel(MyOrderEcomActivity myOrderEcomActivity) {
+        dialog = new Dialog(myOrderEcomActivity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.order_cancel_ecom_dialog);
+
+        btnSubmitGray = dialog.findViewById(R.id.btn_submit_gray);
+        btnSubmit = dialog.findViewById(R.id.btn_submit);
+       cancelBackBtn = dialog.findViewById(R.id.cancel_ecom_back_btn);
+        btnSubmitGray.setOnClickListener(this);
+        btnSubmit.setOnClickListener(this);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+        dialog.show();
+
+    }
+    private void showDialogOrderCancelConfirm(MyOrderEcomActivity myOrderEcomActivity) {
+
+        dialog = new Dialog(myOrderEcomActivity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.order_cancel_confirm_ecom_dialog);
+
+        tvCheckstatus = dialog.findViewById(R.id.tv_checkstatus);
+        btnSubmit = dialog.findViewById(R.id.btn_submit);
+        cancelConfrimBackBtn = dialog.findViewById(R.id.ordercancelcomfirm_ecom_back);
+
+        tvCheckstatus.setOnClickListener(this);
+        btnSubmit.setOnClickListener(this);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+        dialog.show();
+    }*/
 
 }
