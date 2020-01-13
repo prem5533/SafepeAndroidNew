@@ -1,11 +1,5 @@
 package com.safepayu.wallet.ecommerce.activity;
 
-import androidx.annotation.Dimension;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -17,8 +11,11 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.ecommerce.adapter.ChangeAddressAdapter;
 import com.safepayu.wallet.ecommerce.adapter.MyOrderEcomAdapter;
 import com.safepayu.wallet.ecommerce.adapter.OrderItemEcomAdapter;
 import com.safepayu.wallet.ecommerce.fragment.ReviewProductFragment;
@@ -71,6 +68,12 @@ public class MyOrderEcomActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void orderItem(int position ) {
        // startActivity(new Intent(MyOrderEcomActivity.this, OrderDetailEcomActivity.class));
+
+        if (position==2 || position==3){
+          startActivity(new Intent(MyOrderEcomActivity.this, ReviewProductFragment.class));
+        }else {
+            startActivity(new Intent(MyOrderEcomActivity.this, OrderDetailEcomActivity.class));
+        }
         showDialogOrderDetail(MyOrderEcomActivity.this);
 //        if (position==2 || position==3){
 //          startActivity(new Intent(MyOrderEcomActivity.this, ReviewProductFragment.class));

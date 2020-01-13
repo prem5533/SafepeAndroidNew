@@ -11,21 +11,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
 
-public class ProductSizeAdapter extends RecyclerView.Adapter<ProductSizeAdapter.ProductViewHolder> {
+import java.util.ArrayList;
+
+public class FiltereListAdapter extends RecyclerView.Adapter<FiltereListAdapter.ProductViewHolder> {
 
 
-     private Context context;
+    private Context context;
+    private ArrayList<String> ProductSizeList=new ArrayList<>();
 
-
-    public ProductSizeAdapter(Context context) {
+    public FiltereListAdapter(Context context, ArrayList<String> productSizeList) {
         this.context = context;
+        ProductSizeList = productSizeList;
     }
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.productsize_adapter,parent,false);
-        return new ProductSizeAdapter.ProductViewHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.filterlistadapter,parent,false);
+        return new FiltereListAdapter.ProductViewHolder(view);
     }
 
     @Override

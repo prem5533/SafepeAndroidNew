@@ -325,8 +325,7 @@
         </provider> <!-- Ecommerce -->
         <activity
             android:name=".ecommerce.activity.FilterDialog"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.UserDialog" />
+            android:screenOrientation="portrait" />
 
 
 

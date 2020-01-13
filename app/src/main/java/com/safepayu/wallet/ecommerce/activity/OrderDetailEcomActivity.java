@@ -1,10 +1,5 @@
 package com.safepayu.wallet.ecommerce.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -15,11 +10,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.adapter.OrderCancelEcomAdapter;
 import com.safepayu.wallet.ecommerce.adapter.OrderItemEcomAdapter;
-import com.safepayu.wallet.ecommerce.fragment.HomeFragment;
-import com.safepayu.wallet.ecommerce.fragment.SearchProductFragment;
 
 public class OrderDetailEcomActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,10 +38,15 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
 
     private void findId() {
         orderList = findViewById(R.id.list_order_item);
-        tvCancelReturn = findViewById(R.id.tv_cancel_return);
+        tvCancelReturn = findViewById(R.id.tvcancel_return);
         orderdetailEcomBackBtn = findViewById(R.id.orderdetail_ecom_back_btn);
         orderdetailEcomBackBtn.setOnClickListener(this);
-        tvCancelReturn.setOnClickListener(this);
+        tvCancelReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogOrderDetCancel(OrderDetailEcomActivity.this);
+            }
+        });
 
         orderList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         orderItemEcomAdapter = new OrderItemEcomAdapter(getApplicationContext());
@@ -56,7 +58,7 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
         switch (v.getId()){
 
             case R.id.tv_cancel_return:
-                showDialogOrderDetCancel(OrderDetailEcomActivity.this);
+             //
 
                 break;
             case R.id.orderdetail_ecom_back_btn:

@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f4f5ff">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#f4f5ff">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="#f4f5ff">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_margin="10dp"
+                                android:background="#f4f5ff">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:layout_weight="1"
+                                        android:gravity="left"
+                                        android:background="#f4f5ff">
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/filter_icon_new"
+                                            android:scaleType="fitXY"
+                                            android:padding="5dp"
+                                            android:background="#f4f5ff" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="10dp"
+                                            android:background="#f4f5ff"
+                                            android:fontFamily="@font/roboto_regular"
+                                            android:text="Filter"
+                                            android:textColor="@color/black"
+                                            android:textSize="15sp" />
+
+                                    </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:background="#f4f5ff">
+
+                                    <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="40dp"
+                                            android:src="@drawable/cross_red_circle_new"
+                                            android:scaleType="fitXY"
+                                            android:padding="5dp"
+                                        android:background="#f4f5ff"
+                                        />
+                                    <TextView
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:layout_gravity="center"
+                                         android:layout_marginLeft="10dp"
+                                         android:fontFamily="@font/roboto_regular"
+                                         android:text="Clear All"
+                                         android:background="#f4f5ff"
+                                         android:textColor="@color/black"
+                                         android:textSize="15sp" />
+                             </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                         android:layout_height="1dp"
+                         android:background="@color/grey_600"
+                        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:background="#f4f5ff"
+        android:id="@+id/ordertype_filterLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Order Type"
+            android:textColor="@color/textcolor"
+            android:textSize="15sp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/downArrowOrderType"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_down_arrow_new"
+            android:scaleType="fitXY"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleOrderType_filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:visibility="gone"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/grey_300"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#f4f5ff"
+        android:layout_marginTop="10dp"
+        android:id="@+id/categoryLayout_filterLayout">
+
+        <TextView
+            android:id="@+id/tv_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Categories"
+            android:background="#f4f5ff"
+            android:textColor="@color/textcolor"
+            android:textSize="15sp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/downArrowCategory"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="10dp"
+            android:layout_marginRight="20dp"
+            android:background="#f4f5ff"
+            android:src="@drawable/ic_down_arrow_new"
+            android:scaleType="fitXY"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleCategory_filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#f4f5ff"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/grey_300"
+        android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#f4f5ff"
+            android:id="@+id/priceLayout_filterLayout">
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Price"
+                android:background="#f4f5ff"
+                android:textColor="@color/textcolor"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/downArrowPrice"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="20dp"
+                android:padding="10dp"
+                android:background="#f4f5ff"
+                android:src="@drawable/ic_down_arrow_new"
+                android:scaleType="fitXY"/>
+        </LinearLayout>
+
+     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclePrice_filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+         android:background="#f4f5ff"
+        android:visibility="gone"/>
+
+        <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/grey_300"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:background="#f4f5ff"
+        android:id="@+id/deliveryLayout_filterLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Delivery Options"
+            android:textColor="@color/textcolor"
+            android:textSize="15sp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/downArrowDelivery"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_down_arrow_new"
+            android:scaleType="fitXY"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleDelivery_filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#f4f5ff"
+        android:visibility="gone"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/grey_300"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#f4f5ff"
+        android:id="@+id/brandLayout_filterLayout">
+
+        <TextView
+            android:id="@+id/tv_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Brand"
+            android:background="#f4f5ff"
+            android:textColor="@color/textcolor"
+            android:textSize="15sp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/downArrowBrand"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="10dp"
+            android:background="#f4f5ff"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_down_arrow_new"
+            android:scaleType="fitXY"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleBrand_filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#f4f5ff"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/grey_300"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#f4f5ff"
+        android:id="@+id/discountLayout_filterLayout">
+
+        <TextView
+            android:id="@+id/tv_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Discount"
+            android:background="#f4f5ff"
+            android:textColor="@color/textcolor"
+            android:textSize="15sp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/downArrowDiscount"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="10dp"
+            android:background="#f4f5ff"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_down_arrow_new"
+            android:scaleType="fitXY"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleDiscount_filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#f4f5ff"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/grey_300"
+        android:layout_marginTop="10dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:background="#f4f5ff"
+        android:id="@+id/distanceLayout_filterLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Distance"
+            android:textColor="@color/textcolor"
+            android:textSize="15sp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/downArrowDistancet"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:padding="5dp"
+            android:src="@drawable/ic_down_arrow_new" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleDistance_filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#f4f5ff"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/grey_300"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:background="#f4f5ff"
+        android:id="@+id/ratingsLayout_filterLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Ratings"
+            android:textColor="@color/textcolor"
+            android:textSize="15sp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/downArrowRatings"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:padding="5dp"
+            android:src="@drawable/ic_down_arrow_new" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleRating_filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#f4f5ff"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/grey_300"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#f4f5ff"
+        android:id="@+id/sizeLayout_filterLayout">
+
+        <TextView
+            android:id="@+id/tv_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Size"
+            android:background="#f4f5ff"
+            android:textColor="@color/textcolor"
+            android:textSize="15sp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/downArrowSize"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="10dp"
+            android:scaleType="fitXY"
+            android:background="#f4f5ff"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_down_arrow_new" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleSize_filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#f4f5ff"
+        android:visibility="gone"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#f4f5ff"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#f4f5ff"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tv_filter_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:background="@drawable/gray_round_bg"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_margin="5dp"/>
+        <TextView
+            android:id="@+id/tv_filter_apply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Apply"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:background="@drawable/blue_green_bg"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_margin="5dp"/>
+    </LinearLayout>
+
+</RelativeLayout>
+

@@ -121,7 +121,7 @@ public class ShopDetailFragment extends Fragment {
                 }else {
                     HoursInt=0;
                     HoursRecyclerView.setVisibility(View.GONE);
-                    HoursIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
+                    HoursIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
                 }
             }
         });
