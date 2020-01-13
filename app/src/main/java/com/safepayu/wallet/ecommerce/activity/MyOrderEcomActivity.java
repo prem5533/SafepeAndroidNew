@@ -78,7 +78,7 @@ public class MyOrderEcomActivity extends AppCompatActivity implements View.OnCli
         if (position==2 || position==3){
           startActivity(new Intent(MyOrderEcomActivity.this, ReviewProductFragment.class));
         }else {
-            showDialogOrderDetail(MyOrderEcomActivity.this);
+            startActivity(new Intent(MyOrderEcomActivity.this, OrderDetailEcomActivity.class));
         }
     }
 

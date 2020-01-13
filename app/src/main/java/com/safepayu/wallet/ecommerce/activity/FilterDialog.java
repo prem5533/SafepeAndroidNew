@@ -1,18 +1,22 @@
 package com.safepayu.wallet.ecommerce.activity;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.adapter.bus.BusSourcesAdapter;
+import com.safepayu.wallet.ecommerce.adapter.FiltereListAdapter;
+import com.safepayu.wallet.ecommerce.adapter.ProductSizeAdapter;
 
 import java.util.ArrayList;
 
@@ -24,22 +28,29 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
     private int PriceInt=0,CategoryInt=0,BrandInt=0,DiscountInt=0,SizeInt=0;
     private Button FilterBtn;
     private ArrayList<String> BusSourcesList=new ArrayList<>();
+    private TextView tvCategory,tvSize,tvPrice,tvBrand,tvDiscount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.filter_dialog);
-        this.setFinishOnTouchOutside(false);
+        setContentView(R.layout.filter_dilalog_);
+//        this.setFinishOnTouchOutside(false);
 
-        FilterBtn=findViewById(R.id.filterBtn_filterLayout);
+     //   FilterBtn=findViewById(R.id.filterBtn_filterLayout);
 
         PriceLayout=findViewById(R.id.priceLayout_filterLayout);
         CategoryLayout=findViewById(R.id.categoryLayout_filterLayout);
         BrandLayout=findViewById(R.id.brandLayout_filterLayout);
         DiscountLayout=findViewById(R.id.discountLayout_filterLayout);
         SizeLayout=findViewById(R.id.sizeLayout_filterLayout);
+
+        tvCategory = findViewById(R.id.tv_category);
+        tvSize = findViewById(R.id.tv_size);
+        tvPrice = findViewById(R.id.tv_price);
+        tvBrand = findViewById(R.id.tv_brand);
+        tvDiscount = findViewById(R.id.tv_discount);
 
         PriceRecyclerView=findViewById(R.id.recyclePrice_filterLayout);
         CategoryRecyclerView=findViewById(R.id.recycleCategory_filterLayout);
@@ -68,16 +79,16 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
         SizeRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         SizeRecyclerView.setNestedScrollingEnabled(false);
 
-        BusSourcesList.add("delhi");
-        BusSourcesList.add("goa");
-        BusSourcesList.add("bihar");
+       /* filtereListAdapter.add("delhi");
+        filtereListAdapter.add("goa");
+        filtereListAdapter.add("bihar");*/
 
-        BusSourcesAdapter busSourcesAdapter = new BusSourcesAdapter(getApplicationContext(),BusSourcesList, FilterDialog.this,"from");
-        PriceRecyclerView.setAdapter(busSourcesAdapter);
-        CategoryRecyclerView.setAdapter(busSourcesAdapter);
-        BrandRecyclerView.setAdapter(busSourcesAdapter);
-        DiscountRecyclerView.setAdapter(busSourcesAdapter);
-        SizeRecyclerView.setAdapter(busSourcesAdapter);
+        FiltereListAdapter filtereListAdapter = new FiltereListAdapter(getApplicationContext(),BusSourcesList);
+        PriceRecyclerView.setAdapter(filtereListAdapter);
+        CategoryRecyclerView.setAdapter(filtereListAdapter);
+        BrandRecyclerView.setAdapter(filtereListAdapter);
+        DiscountRecyclerView.setAdapter(filtereListAdapter);
+        SizeRecyclerView.setAdapter(filtereListAdapter);
 
 
         PriceLayout.setOnClickListener(new View.OnClickListener() {
@@ -96,12 +107,18 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
                     DiscountRecyclerView.setVisibility(View.GONE);
                     SizeRecyclerView.setVisibility(View.GONE);
 
-                    PriceIV.setImageDrawable(getResources().getDrawable(R.drawable.up_arrow_new));
+                    tvDiscount.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvBrand.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvCategory.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvSize.setTextColor(getResources().getColor(R.color.textcolor));
 
-                    SizeIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    DiscountIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    BrandIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    CategoryIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
+                    tvPrice.setTextColor(getResources().getColor(R.color.red_theme));
+                    PriceIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_up_arrow_filter));
+
+                    SizeIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    DiscountIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    BrandIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    CategoryIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
                 }else {
                     hideLayout();
                 }
@@ -124,12 +141,19 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
                     DiscountRecyclerView.setVisibility(View.GONE);
                     SizeRecyclerView.setVisibility(View.GONE);
 
-                    CategoryIV.setImageDrawable(getResources().getDrawable(R.drawable.up_arrow_new));
+                    tvDiscount.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvBrand.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvPrice.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvSize.setTextColor(getResources().getColor(R.color.textcolor));
 
-                    SizeIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    DiscountIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    BrandIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    PriceIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
+                    tvCategory.setTextColor(getResources().getColor(R.color.red_theme));
+                    CategoryIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_up_arrow_filter));
+//                    CategoryLayout.setBackgroundColor(Color.parseColor("#f4f5ff"));
+
+                    SizeIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    DiscountIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    BrandIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    PriceIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
                 }else {
                     hideLayout();
                 }
@@ -152,12 +176,18 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
                     DiscountRecyclerView.setVisibility(View.GONE);
                     SizeRecyclerView.setVisibility(View.GONE);
 
-                    BrandIV.setImageDrawable(getResources().getDrawable(R.drawable.up_arrow_new));
+                    tvDiscount.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvCategory.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvPrice.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvSize.setTextColor(getResources().getColor(R.color.textcolor));
 
-                    SizeIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    DiscountIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    PriceIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    CategoryIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
+                    tvBrand.setTextColor(getResources().getColor(R.color.red_theme));
+                    BrandIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_up_arrow_filter));
+
+                    SizeIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    DiscountIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    PriceIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    CategoryIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
                 }else {
                     hideLayout();
                 }
@@ -180,12 +210,18 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
                     DiscountRecyclerView.setVisibility(View.VISIBLE);
                     SizeRecyclerView.setVisibility(View.GONE);
 
-                    DiscountIV.setImageDrawable(getResources().getDrawable(R.drawable.up_arrow_new));
+                    tvBrand.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvCategory.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvPrice.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvSize.setTextColor(getResources().getColor(R.color.textcolor));
 
-                    SizeIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    BrandIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    PriceIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    CategoryIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
+                    tvDiscount.setTextColor(getResources().getColor(R.color.red_theme));
+                    DiscountIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_up_arrow_filter));
+
+                    SizeIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    BrandIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    PriceIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    CategoryIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
                 }else {
                     hideLayout();
                 }
@@ -208,24 +244,30 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
                     DiscountRecyclerView.setVisibility(View.GONE);
                     SizeRecyclerView.setVisibility(View.VISIBLE);
 
-                    SizeIV.setImageDrawable(getResources().getDrawable(R.drawable.up_arrow_new));
+                    tvBrand.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvCategory.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvPrice.setTextColor(getResources().getColor(R.color.textcolor));
+                    tvDiscount.setTextColor(getResources().getColor(R.color.textcolor));
 
-                    DiscountIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    BrandIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    PriceIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-                    CategoryIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
+                    tvSize.setTextColor(getResources().getColor(R.color.red_theme));
+                    SizeIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_up_arrow_filter));
+
+                    DiscountIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    BrandIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    PriceIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+                    CategoryIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
                 }else {
                     hideLayout();
                 }
             }
         });
 
-        FilterBtn.setOnClickListener(new View.OnClickListener() {
+        /*FilterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
-        });
+        });*/
     }
 
     private void hideLayout(){
@@ -235,11 +277,17 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
         DiscountRecyclerView.setVisibility(View.GONE);
         SizeRecyclerView.setVisibility(View.GONE);
 
-        SizeIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-        DiscountIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-        BrandIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-        PriceIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
-        CategoryIV.setImageDrawable(getResources().getDrawable(R.drawable.down_arrow_new));
+        SizeIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+        DiscountIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+        BrandIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+        PriceIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+        CategoryIV.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_arrow_new));
+
+        tvBrand.setTextColor(getResources().getColor(R.color.textcolor));
+        tvCategory.setTextColor(getResources().getColor(R.color.textcolor));
+        tvPrice.setTextColor(getResources().getColor(R.color.textcolor));
+        tvDiscount.setTextColor(getResources().getColor(R.color.textcolor));
+        tvSize.setTextColor(getResources().getColor(R.color.textcolor));
 
         SizeInt=0;
         DiscountInt=0;

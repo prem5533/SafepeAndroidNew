@@ -217,7 +217,7 @@
                         android:id="@+id/downArrowHours_shopDetail"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/down_arrow_new"
+                        android:src="@drawable/ic_down_arrow_new"
                         android:scaleType="fitXY"
                         android:layout_marginLeft="10dp"/>
 
