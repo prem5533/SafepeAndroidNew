@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,14 +14,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.AddUpdateAddress;
 import com.safepayu.wallet.activity.MapsActivity;
+import com.safepayu.wallet.activity.QrCodeScanner;
+import com.safepayu.wallet.activity.WalletActivity;
+import com.safepayu.wallet.ecommerce.activity.EHomeActivity;
 import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
 import com.safepayu.wallet.ecommerce.adapter.CategoryAdapter;
 import com.safepayu.wallet.ecommerce.adapter.EcommPagerAdapter;
@@ -43,13 +52,14 @@ import java.util.TimerTask;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment implements CategoryAdapter.OnCategoryItemListener {
+public class HomeFragment extends Fragment implements CategoryAdapter.OnCategoryItemListener, BottomNavigationView.OnNavigationItemSelectedListener {
     private RecyclerView recyclerCategory,recycleCategoryOfferList,recycleTrendingProductList,recycleRecommendList;
     private CategoryAdapter categoryAdapter;
     private OfferAdapter offerAdapter;
     private RecommendedAdapter recommendedAdapter;
     private TrendingAdapter trendingAdapter;
     private EcommPagerAdapter ecommPagerAdapter;
+    BottomNavigationView bottomNavigation;
     GridLayoutManager gridLayoutManager;
     private ViewPager viewpager;
     int images[] = {R.drawable.banner_image1, R.drawable.banner_image2, R.drawable.banner_image3,R.drawable.banner_image4};
@@ -80,6 +90,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     }
 
     private void findId(View view) {
+        bottomNavigation = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(this);
         recyclerCategory = view.findViewById(R.id.recycle_category_list);
         recycleCategoryOfferList = view.findViewById(R.id.recycle_category_offer_list);
         recycleTrendingProductList = view.findViewById(R.id.recycle_trending_product_list);
@@ -189,6 +201,18 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
 
         recommendedAdapter = new RecommendedAdapter(getActivity(),RecommendNameList,RecommendImageList);
         recycleRecommendList.setAdapter(recommendedAdapter);
+
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigation.getChildAt(0);
+        for (int i = 0; i < menuView.getChildCount(); i++) {
+            final View iconView = menuView.getChildAt(i).findViewById(R.id.icon);
+            final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
+            final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            // set your height here
+            layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, displayMetrics);
+            // set your width here
+            layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, displayMetrics);
+            iconView.setLayoutParams(layoutParams);
+        }
     }
 
     private void prepareCategoryData() {
@@ -247,4 +271,40 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         }
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // uncheck the other items.
+        int mMenuId;
+        mMenuId = item.getItemId();
+        for (int i = 0; i < bottomNavigation.getMenu().size(); i++) {
+            MenuItem menuItem = bottomNavigation.getMenu().getItem(i);
+            boolean isChecked = menuItem.getItemId() == item.getItemId();
+            menuItem.setChecked(isChecked);
+        }
+
+        switch (item.getItemId()) {
+            case R.id.b_home_ecomm:
+                //   startActivity(new Intent(EHomeActivity.this, Navigation.class));
+               getActivity(). finish();
+
+                break;
+
+            case R.id.b_wallet_ecomm:
+                startActivity(new Intent(getActivity(), WalletActivity.class));
+
+                break;
+
+            case R.id.b_qrcode_ecomm:
+                startActivity(new Intent(getActivity(), QrCodeScanner.class));
+
+                break;
+
+            case R.id.b_mall_ecomm:
+                //   Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                // startActivity(new Intent(EHomeActivity.this, EHomeActivity.class));
+
+                break;
+        }
+        return true;
+    }
 }

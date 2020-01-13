@@ -1,10 +1,13 @@
 package com.safepayu.wallet.ecommerce.fragment;
 
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,12 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.ecommerce.activity.FilterDialog;
 import com.safepayu.wallet.ecommerce.activity.ProductDetailActivity;
 import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
 import com.safepayu.wallet.ecommerce.adapter.EcomSpinnerAdapter;
@@ -37,7 +43,7 @@ import java.util.List;
 public class SearchProductFragment extends Fragment implements View.OnClickListener, SerchProductAdapter.OnProductDetailItemListener,
                 StoreListAdapter.ShopItemListListener{
 
-    private LinearLayout liProduct ,liProductGray, liStore,liStoreGray;
+    private LinearLayout liProduct ,liProductGray, liStore,liStoreGray,liSort,liFilter;
     private RecyclerView SearchProductList,searchStoreList;
     private SerchProductAdapter serchProductAdapter;
     private StoreListAdapter storeListAdapter;
@@ -50,6 +56,7 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
     private TextView tvSearch;
     private ArrayList<String> CategoryList;
     private ArrayList<String> ProductNameList,ProductImageList;
+    public Dialog dialog;
 
     public SearchProductFragment() {
         // Required empty public constructor
@@ -69,6 +76,8 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
 
         SearchLayout = view.findViewById(R.id.searchLayout_SearchFrag);
         tvSearch =  view.findViewById(R.id.tv_search_ecomm);
+        liSort =  view.findViewById(R.id.li_sort);
+        liFilter =  view.findViewById(R.id.li_filter);
 
         liProduct = view.findViewById(R.id.li_product);
         liProductGray = view.findViewById(R.id.li_product_gray);
@@ -86,6 +95,8 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
         liProductGray.setOnClickListener(this);
         liStore.setOnClickListener(this);
         liStoreGray.setOnClickListener(this);
+        liSort.setOnClickListener(this);
+        liFilter.setOnClickListener(this);
 
         gridLayoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.VERTICAL,false);
         SearchProductList.setLayoutManager(gridLayoutManager);
@@ -122,7 +133,7 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
         CategoryList.add("Furniture");
         CategoryList.add("Jewellery");
 
-        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item,CategoryList);
+        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getActivity(),R.layout.spinner_item_ecom_search,CategoryList);
         categorySpinner.setAdapter(arrayAdapter);
 
         ProductNameList=new ArrayList<>();
@@ -163,7 +174,16 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                 tvSearchProductMatching.setText("Found 10 stores matching the search keyword, near you");
                 searchStoreList.setVisibility(View.VISIBLE);
                 SearchProductList.setVisibility(View.GONE);
-                break;} }
+                break;
+            case R.id.li_sort:
+                showSortingDialog(getActivity());
+             break;
+            case R.id.li_filter:
+                Intent intent = new Intent(getActivity(), FilterDialog.class);
+                startActivity(intent);
+                 break;} }
+
+
 
     @Override
     public void onProductItemDetail(int position) {
@@ -179,5 +199,22 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
 
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
+    }
+
+    private void showSortingDialog(FragmentActivity activity) {
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.sort_dialog);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+        dialog.show();
+
     }
 }

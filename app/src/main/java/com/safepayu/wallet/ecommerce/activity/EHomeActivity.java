@@ -67,12 +67,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class EHomeActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class EHomeActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView CartBtn,NotificationBtn,NavIcon,imageDownSecurity, imageUpSecurity,imageDownLogout, imageUpLogout;
     private DrawerLayout drawer;
     private LoadingDialog loadingDialog;
-    BottomNavigationView bottomNavigation;
+
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
@@ -107,20 +107,9 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         CartBtn = findViewById(R.id.cartBtn_main);
         NotificationBtn = findViewById(R.id.favBtn_main);
         NavIcon = findViewById(R.id.nav_iconEcommerce);
-        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(this);
 
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigation.getChildAt(0);
-        for (int i = 0; i < menuView.getChildCount(); i++) {
-            final View iconView = menuView.getChildAt(i).findViewById(R.id.icon);
-            final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
-            final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-            // set your height here
-            layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, displayMetrics);
-            // set your width here
-            layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, displayMetrics);
-            iconView.setLayoutParams(layoutParams);
-        }
+
+
 
         loadingDialog = new LoadingDialog(this);
 
@@ -1162,7 +1151,7 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 }));
     }
 
-    @Override
+   /* @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // uncheck the other items.
         int mMenuId;
@@ -1197,5 +1186,5 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
             break;
         }
         return true;
-    }
+    }*/
 }
