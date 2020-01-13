@@ -33,7 +33,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 1;
     }
 
     public class FlightLocationListViewHolder extends RecyclerView.ViewHolder {

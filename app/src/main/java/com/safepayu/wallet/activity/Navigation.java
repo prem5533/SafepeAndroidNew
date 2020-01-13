@@ -1,6 +1,7 @@
 package com.safepayu.wallet.activity;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.NotificationChannel;
@@ -83,6 +84,7 @@ import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.models.response.ServiceChargeResponse;
 import com.safepayu.wallet.models.response.UserDetailResponse;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -1718,7 +1720,16 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(appUrl)));
-                finish();
+                try {
+                    deleteCache(Navigation.this);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                try {
+                    clearAppData();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -1739,6 +1750,53 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         dialog.show();
 
     }
+
+    private void clearAppData() {
+        try {
+            // clearing app data
+            if (Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT) {
+                ((ActivityManager)getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData(); // note: it has a return value!
+            } else {
+                try {
+                    String packageName = getApplicationContext().getPackageName();
+                    Runtime runtime = Runtime.getRuntime();
+                    runtime.exec("pm clear "+packageName);
+                }catch (Exception rr){
+                    rr.printStackTrace();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {
+
+        }
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
+
 
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
@@ -1819,7 +1877,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton(android.R.string.no, null)
-                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .setIcon(getResources().getDrawable(R.drawable.logo))
                 .show();
     }
 
@@ -2008,19 +2066,19 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         }
 
         switch (item.getItemId()) {
-            case R.id.b_home: {
+            case R.id.b_home_ecomm: {
                 //startActivity(new Intent(Navigation.this, Navigation.class));
             }
             break;
-            case R.id.b_profile: {
-                startActivity(new Intent(Navigation.this, Profile.class));
+            case R.id.b_wallet_ecomm: {
+                startActivity(new Intent(Navigation.this, WalletActivity.class));
             }
             break;
-            case R.id.b_qrcode: {
+            case R.id.b_qrcode_ecomm: {
                 startActivity(new Intent(Navigation.this, QrCodeScanner.class));
             }
             break;
-            case R.id.b_mall: {
+            case R.id.b_mall_ecomm: {
              //   Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Navigation.this, EHomeActivity.class));
             }

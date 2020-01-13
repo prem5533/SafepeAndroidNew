@@ -2,7 +2,9 @@ package com.safepayu.wallet.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -48,6 +50,7 @@ import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.UserResponse;
 
+import java.io.File;
 import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -214,6 +217,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         // BEGIN_INCLUDE(read_phone_state_permission_request)
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.READ_PHONE_STATE)) {
+            loginUser();
             BaseApp.getInstance().toastHelper().showSnackBar(mobileNo, getResources().getString(R.string.permission_read_phone_state), false, getResources().getString(R.string.ok), ButtonActions.SHOW_SETTING, this);
         } else {
 
@@ -361,6 +365,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             loginResponse=response;
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE, mobileNo.getText().toString().trim());
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUserId());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().REMEMBER_ME, response.getRemember_me());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, response.getAccessToken());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN_EXPIRE_IN, response.getTokenExpiresIn());
+
                             CheckStatusCode(response);
 
                         }else {
@@ -505,7 +513,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(appUrl)));
-                finish();
+                try {
+                    deleteCache(LoginActivity.this);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                try {
+                    clearAppData();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -525,6 +542,52 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         dialog.getWindow().setAttributes(lp);
         dialog.show();
 
+    }
+
+    private void clearAppData() {
+        try {
+            // clearing app data
+            if (Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT) {
+                ((ActivityManager)getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData(); // note: it has a return value!
+            } else {
+              try {
+                  String packageName = getApplicationContext().getPackageName();
+                  Runtime runtime = Runtime.getRuntime();
+                  runtime.exec("pm clear "+packageName);
+              }catch (Exception rr){
+                  rr.printStackTrace();
+              }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {
+
+        }
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
     }
 
     public void showDialogForEmail(Activity activity) {

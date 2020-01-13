@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -47,6 +48,8 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
 
     private LinearLayout SearchLayout;
     private TextView tvSearch;
+    private ArrayList<String> CategoryList;
+    private ArrayList<String> ProductNameList,ProductImageList;
 
     public SearchProductFragment() {
         // Required empty public constructor
@@ -73,9 +76,12 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
         liStoreGray = view.findViewById(R.id.li_store_gray);
         SearchProductList = view.findViewById(R.id.search_product_list);
         searchStoreList = view.findViewById(R.id.search_store_list);
-        categorySpinner = view.findViewById(R.id.category_spinner);
+        categorySpinner = view.findViewById(R.id.category_spinner_searchFrag);
         tvSearchProductMatching = view.findViewById(R.id.tv_search_product_matching);
         tvSearchProductMatching.setText("Found 40 products matching the search keyword, near you");
+
+        CategoryList=new ArrayList<>();
+
         liProduct.setOnClickListener(this);
         liProductGray.setOnClickListener(this);
         liStore.setOnClickListener(this);
@@ -83,11 +89,9 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
 
         gridLayoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.VERTICAL,false);
         SearchProductList.setLayoutManager(gridLayoutManager);
-        serchProductAdapter = new SerchProductAdapter(getActivity(),SearchProductFragment.this);
-        SearchProductList.setAdapter(serchProductAdapter);
 
-        EcomSpinnerAdapter customAdapter=new EcomSpinnerAdapter(getActivity(),mCategoryList);
-        categorySpinner.setAdapter(customAdapter);
+//        EcomSpinnerAdapter customAdapter=new EcomSpinnerAdapter(getActivity(),mCategoryList);
+//        categorySpinner.setAdapter(customAdapter);
 
         searchStoreList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         storeListAdapter = new StoreListAdapter(getActivity(),this);
@@ -109,6 +113,33 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
             }
         });
 
+        CategoryList.add("Beauty");
+        CategoryList.add("Sports");
+        CategoryList.add("Jeans");
+        CategoryList.add("Grocery");
+        CategoryList.add("Fashion");
+        CategoryList.add("iPads");
+        CategoryList.add("Furniture");
+        CategoryList.add("Jewellery");
+
+        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item,CategoryList);
+        categorySpinner.setAdapter(arrayAdapter);
+
+        ProductNameList=new ArrayList<>();
+        ProductImageList=new ArrayList<>();
+
+        ProductNameList.add("Women's Trouser");
+        ProductNameList.add("Women's Top");
+        ProductNameList.add("Women's Top");
+        ProductNameList.add("Shoes");
+
+        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/13.png");
+        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/14.png");
+        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/15.png");
+        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/1.png");
+
+        serchProductAdapter = new SerchProductAdapter(getActivity(),ProductNameList,ProductImageList,SearchProductFragment.this);
+        SearchProductList.setAdapter(serchProductAdapter);
     }
 
     @Override

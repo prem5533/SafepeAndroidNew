@@ -54,11 +54,14 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     private ViewPager viewpager;
     int images[] = {R.drawable.banner_image1, R.drawable.banner_image2, R.drawable.banner_image3,R.drawable.banner_image4};
     int NumPage,CurrentP=0 ;
-    Timer timer;  final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
+    Timer timer;  final long DELAY_MS = 2000;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
 
     private LinearLayout SearchLayout;
     private TextView tvSearch;
+    private ArrayList<String> ProductNameList,ProductImageList;
+    private ArrayList<String> TrendingNameList,TrendingImageList;
+    private ArrayList<String> RecommendNameList,RecommendImageList;
 
     private List<CategoryModel> categoryModelList = new ArrayList<>();
     public HomeFragment() {
@@ -91,21 +94,16 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         recyclerCategory.setAdapter(categoryAdapter);
 
         recycleCategoryOfferList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        offerAdapter = new OfferAdapter(getActivity());
-        recycleCategoryOfferList.setAdapter(offerAdapter);
 
         recycleTrendingProductList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        trendingAdapter = new TrendingAdapter(getActivity());
-        recycleTrendingProductList.setAdapter(trendingAdapter);
 
         gridLayoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.VERTICAL,false);
         recycleRecommendList.setLayoutManager(gridLayoutManager);
-        recommendedAdapter = new RecommendedAdapter(getActivity());
-        recycleRecommendList.setAdapter(recommendedAdapter);
 
         ecommPagerAdapter = new EcommPagerAdapter(getActivity(),images);
         viewpager.setAdapter(ecommPagerAdapter);
         NumPage= images.length;
+
         TabLayout tabLayoutt = view.findViewById(R.id.tab_layout_ecom);
         if (NumPage>1){
             tabLayoutt.setupWithViewPager(viewpager, true);
@@ -145,6 +143,52 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                 startActivityForResult(intent, 1);
             }
         });
+
+        ProductNameList=new ArrayList<>();
+        ProductImageList=new ArrayList<>();
+        RecommendNameList=new ArrayList<>();
+        RecommendImageList=new ArrayList<>();
+        TrendingNameList=new ArrayList<>();
+        TrendingImageList=new ArrayList<>();
+
+        ProductNameList.add("Shoes");
+        ProductNameList.add("Shoes");
+        ProductNameList.add("Shoes");
+        ProductNameList.add("Shoes");
+
+        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/4.png");
+        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/3.png");
+        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/2.png");
+        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/1.png");
+
+        offerAdapter = new OfferAdapter(getActivity(),ProductNameList,ProductImageList);
+        recycleCategoryOfferList.setAdapter(offerAdapter);
+
+        TrendingNameList.add("Men's T-Shirt");
+        TrendingNameList.add("Jeans");
+        TrendingNameList.add("Women's Top");
+        TrendingNameList.add("Shoes");
+
+        TrendingImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/8.png");
+        TrendingImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/7.png");
+        TrendingImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/6.png");
+        TrendingImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/5.png");
+
+        trendingAdapter = new TrendingAdapter(getActivity(),TrendingNameList,TrendingImageList);
+        recycleTrendingProductList.setAdapter(trendingAdapter);
+
+        RecommendNameList.add("Women's Fashion");
+        RecommendNameList.add("Men's Casual");
+        RecommendNameList.add("Men's Casual");
+        RecommendNameList.add("Men's T-Shirt");
+
+        RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/12.png");
+        RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/11.png");
+        RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/10.png");
+        RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/9.png");
+
+        recommendedAdapter = new RecommendedAdapter(getActivity(),RecommendNameList,RecommendImageList);
+        recycleRecommendList.setAdapter(recommendedAdapter);
     }
 
     private void prepareCategoryData() {

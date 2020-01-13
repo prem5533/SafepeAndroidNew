@@ -40,7 +40,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.Prod
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 1;
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{

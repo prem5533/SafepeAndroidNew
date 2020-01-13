@@ -41,7 +41,7 @@ public class MyOrderEcomAdapter extends RecyclerView.Adapter<MyOrderEcomAdapter.
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 1;
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{

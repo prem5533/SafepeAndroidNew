@@ -1,6 +1,7 @@
 package com.safepayu.wallet.activity;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import com.safepayu.wallet.models.response.PromotionResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
 
+import java.io.File;
 import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -200,5 +202,46 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
                 .setIcon(getResources().getDrawable(R.drawable.appicon_new))
                 .show();
 
+    }
+
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {
+
+        }
+    }
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
+
+    private void clearAppData() {
+        try {
+            // clearing app data
+            if (Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT) {
+                ((ActivityManager)getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData(); // note: it has a return value!
+            } else {
+                String packageName = getApplicationContext().getPackageName();
+                Runtime runtime = Runtime.getRuntime();
+                runtime.exec("pm clear "+packageName);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

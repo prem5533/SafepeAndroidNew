@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/b_home_ecomm"
+        android:enabled="true"
+        android:icon="@drawable/home_nav_new"
+        android:title="Home"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/b_qrcode_ecomm"
+        android:enabled="true"
+        android:icon="@drawable/ic_qrcode_new"
+        android:title="QR Code"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/b_wallet_ecomm"
+        android:enabled="true"
+        android:icon="@drawable/wallet_nav_new"
+        android:title="Wallet"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/b_mall_ecomm"
+        android:enabled="true"
+        android:icon="@drawable/ic_shopping_new"
+        android:title="Loox Mart"
+        app:showAsAction="ifRoom" />
+
+
+</menu>

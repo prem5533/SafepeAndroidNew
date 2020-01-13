@@ -201,25 +201,25 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         tvShopping = findViewById(R.id.tv_shopping);
         tv_security = findViewById(R.id.tv_security);
 
-//        //********************set listener&*****************
-//        liHome.setOnClickListener(this);
-//        liProfile.setOnClickListener(this);
-//        liPackageDetails.setOnClickListener(this);
-//        liBuyPackage.setOnClickListener(this);
-//        liCommission.setOnClickListener(this);
-//        liWallet.setOnClickListener(this);
-//        liShopping.setOnClickListener(this);
-//        liChnangePasswlrd.setOnClickListener(this);
-//        liChnangePassword.setOnClickListener(this);
-//        liMyOrders.setOnClickListener(this);
-//        liHistory.setOnClickListener(this);
-//        liGenelogy.setOnClickListener(this);
-//        liReferEarn.setOnClickListener(this);
-//        liUpdteKYC.setOnClickListener(this);
-//        liContactUs.setOnClickListener(this);
-//        liLogout.setOnClickListener(this);
-//        liLogoutAllDevices.setOnClickListener(this);
-//        liWalletHistory.setOnClickListener(this);
+        //********************set listener&*****************
+        liHome.setOnClickListener(this);
+        liProfile.setOnClickListener(this);
+        liPackageDetails.setOnClickListener(this);
+        liBuyPackage.setOnClickListener(this);
+        liCommission.setOnClickListener(this);
+        liWallet.setOnClickListener(this);
+        liShopping.setOnClickListener(this);
+        liChnangePasswlrd.setOnClickListener(this);
+        liChnangePassword.setOnClickListener(this);
+        liMyOrders.setOnClickListener(this);
+        liHistory.setOnClickListener(this);
+        liGenelogy.setOnClickListener(this);
+        liReferEarn.setOnClickListener(this);
+        liUpdteKYC.setOnClickListener(this);
+        liContactUs.setOnClickListener(this);
+        liLogout.setOnClickListener(this);
+        liLogoutAllDevices.setOnClickListener(this);
+        liWalletHistory.setOnClickListener(this);
         linearSecurityTab.setVisibility(View.GONE);
         linearLogoutTab.setVisibility(View.GONE);
 
@@ -1126,7 +1126,7 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton(android.R.string.no, null)
-                .setIcon(getResources().getDrawable(R.drawable.safelogo_transparent))
+                .setIcon(getResources().getDrawable(R.drawable.logo))
                 .show();
     }
 
@@ -1174,23 +1174,26 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         }
 
         switch (item.getItemId()) {
-            case R.id.b_home: {
+            case R.id.b_home_ecomm:
              //   startActivity(new Intent(EHomeActivity.this, Navigation.class));
                 finish();
-            }
+
             break;
-            case R.id.b_profile: {
-                startActivity(new Intent(EHomeActivity.this, Profile.class));
-            }
+
+            case R.id.b_wallet_ecomm:
+                startActivity(new Intent(EHomeActivity.this, WalletActivity.class));
+
             break;
-            case R.id.b_qrcode: {
+
+            case R.id.b_qrcode_ecomm:
                 startActivity(new Intent(EHomeActivity.this, QrCodeScanner.class));
-            }
+
             break;
-            case R.id.b_mall: {
+
+            case R.id.b_mall_ecomm:
                 //   Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
                // startActivity(new Intent(EHomeActivity.this, EHomeActivity.class));
-            }
+
             break;
         }
         return true;

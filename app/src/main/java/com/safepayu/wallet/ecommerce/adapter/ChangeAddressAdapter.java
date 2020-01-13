@@ -34,7 +34,7 @@ public class ChangeAddressAdapter extends RecyclerView.Adapter<ChangeAddressAdap
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 1;
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{

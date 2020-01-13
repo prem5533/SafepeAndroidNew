@@ -37,6 +37,7 @@ public class ShopDetailFragment extends Fragment {
     private OpeningHoursAdapter openingHoursAdapter;
     private ArrayList<String> HoursList,DaysList;
     private LinearLayout SearchLayout,FilterLayout;
+    private ArrayList<String> RecommendNameList,RecommendImageList;
 
     public ShopDetailFragment() {
         // Required empty public constructor
@@ -64,7 +65,21 @@ public class ShopDetailFragment extends Fragment {
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.VERTICAL,false);
         ProductsRecyclerView.setLayoutManager(gridLayoutManager);
-        recommendedAdapter = new RecommendedAdapter(getActivity());
+
+        RecommendNameList=new ArrayList<>();
+        RecommendImageList=new ArrayList<>();
+
+        RecommendNameList.add("Women's Fashion");
+        RecommendNameList.add("Men's Casual");
+        RecommendNameList.add("Men's Casual");
+        RecommendNameList.add("Men's T-Shirt");
+
+        RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/12.png");
+        RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/11.png");
+        RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/10.png");
+        RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/9.png");
+
+        recommendedAdapter = new RecommendedAdapter(getActivity(),RecommendNameList,RecommendImageList);
         ProductsRecyclerView.setAdapter(recommendedAdapter);
 
         HoursList=new ArrayList<>();

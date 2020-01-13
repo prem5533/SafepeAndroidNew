@@ -88,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Pay &amp; Go"
+                        android:text="Wallet"
                         android:textColor="@color/white"
                         android:padding="5dp" />
                 </LinearLayout>
@@ -108,30 +108,11 @@
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Loyalty Card"
+                        android:text="Rewards"
                         android:textColor="@color/white"
                         android:padding="5dp" />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="100dp"
-                    android:layout_height="80dp"
-                    android:orientation="vertical"
-                    android:background="#7312aa"
-                    android:gravity="center"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_food_ecom"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="10sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="Book A Table"
-                        android:textColor="@color/white"
-                        android:padding="5dp" />
-                </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="100dp"
                     android:layout_height="80dp"
@@ -148,11 +129,13 @@
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Nearby Deals"
+                        android:text="Loox Store"
                         android:textColor="@color/white"
                         android:padding="5dp" />
                 </LinearLayout>
-            </LinearLayout></RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -165,10 +148,9 @@
             android:layout_marginRight="20dp">
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
                 <Spinner
-                    android:id="@+id/category_spinner"
+                    android:id="@+id/category_spinner_searchFrag"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"/>
             <LinearLayout
@@ -305,7 +287,7 @@
                             android:id="@+id/tv_number_of_store"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10"
+                            android:text="1"
                             android:textSize="30sp"
                             android:textColor="@color/white"
                             android:fontFamily="@font/roboto_bold"/>
@@ -329,7 +311,6 @@
                     android:padding="10dp"
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/gray_round_left">
-                    >
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -345,7 +326,7 @@
                             android:id="@+id/tv_number_of_store_gray"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10"
+                            android:text="1"
                             android:textSize="30sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/roboto_bold"/>

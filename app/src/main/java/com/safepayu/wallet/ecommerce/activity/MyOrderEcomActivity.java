@@ -68,18 +68,15 @@ public class MyOrderEcomActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-
-
-
     @Override
     public void orderItem(int position ) {
        // startActivity(new Intent(MyOrderEcomActivity.this, OrderDetailEcomActivity.class));
-
-        if (position==2 || position==3){
-          startActivity(new Intent(MyOrderEcomActivity.this, ReviewProductFragment.class));
-        }else {
-            showDialogOrderDetail(MyOrderEcomActivity.this);
-        }
+        showDialogOrderDetail(MyOrderEcomActivity.this);
+//        if (position==2 || position==3){
+//          startActivity(new Intent(MyOrderEcomActivity.this, ReviewProductFragment.class));
+//        }else {
+//
+//        }
     }
 
     private void showDialogOrderDetail(MyOrderEcomActivity myOrderEcomActivity) {

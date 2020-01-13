@@ -320,13 +320,15 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:hint="Sponsor ID*"
-                                    android:inputType="text"
+                                    android:inputType="number"
                                     android:textSize="16sp"
                                     android:fontFamily="@font/roboto_regular"
                                     android:textColor="@color/black"
                                     android:background="@null"
                                     android:paddingLeft="5dp"
-                                    android:digits="0123456789"/>
+                                    android:digits="0123456789"
+                                    android:singleLine="true"
+                                    android:imeOptions="actionDone"/>
 
                                 <FrameLayout
                                     android:layout_width="wrap_content"

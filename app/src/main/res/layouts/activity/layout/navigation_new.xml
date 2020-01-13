@@ -1272,7 +1272,7 @@
             app:itemTextColor="@color/black"
             app:itemIconTint="@color/bue_A800"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/home_menu"
+            app:menu="@menu/bottom_menu_ecommerce"
             android:layout_gravity="bottom"
             app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             />
