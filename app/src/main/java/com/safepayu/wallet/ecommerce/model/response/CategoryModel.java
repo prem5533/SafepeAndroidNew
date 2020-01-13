@@ -1,4 +1,4 @@
-package com.safepayu.wallet.ecommerce.model;
+package com.safepayu.wallet.ecommerce.model.response;
 
 public class CategoryModel {
     private String title;

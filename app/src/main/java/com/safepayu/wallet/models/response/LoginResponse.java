@@ -11,6 +11,8 @@ public class LoginResponse extends BaseResponse{
     String userId;
 
     private String remember_me;
+    private String token;
+
 
     public LoginResponse() {
     }
@@ -51,5 +53,13 @@ public class LoginResponse extends BaseResponse{
 
     public void setRemember_me(String remember_me) {
         this.remember_me = remember_me;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

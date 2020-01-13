@@ -14,6 +14,7 @@ public class SharedPref {
     public final String USER = "userData";
     public final String REFERRAL_USER = "referralUser";
     public final String ACCESS_TOKEN = "accessToken";
+    public final String ACCESS_TOKEN_ECOM = "accessTokenEcom";
     public final String ACCESS_TOKEN_EXPIRE_IN = "accessTokenExpiresIn";
     public final String USER_ID = "userId";
     public final String DEP_DAY = "depDay";

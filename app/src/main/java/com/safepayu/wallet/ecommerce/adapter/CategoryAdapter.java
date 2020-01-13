@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.ecommerce.model.CategoryModel;
+import com.safepayu.wallet.ecommerce.model.response.CategoryModel;
 
 import java.util.List;
 
