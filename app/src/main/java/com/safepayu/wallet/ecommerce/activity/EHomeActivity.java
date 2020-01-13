@@ -1,6 +1,15 @@
 package com.safepayu.wallet.ecommerce.activity;
 
-import androidx.annotation.NonNull;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,23 +17,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -36,25 +28,12 @@ import com.safepayu.wallet.activity.ForgotPasscode;
 import com.safepayu.wallet.activity.Geneology;
 import com.safepayu.wallet.activity.KycUpdate;
 import com.safepayu.wallet.activity.LoginActivity;
-import com.safepayu.wallet.activity.Navigation;
 import com.safepayu.wallet.activity.PackageDetails;
 import com.safepayu.wallet.activity.Profile;
-import com.safepayu.wallet.activity.QrCodeScanner;
 import com.safepayu.wallet.activity.RechargeHistory;
 import com.safepayu.wallet.activity.ReferAndEarn;
-import com.safepayu.wallet.activity.ScratchActivity;
 import com.safepayu.wallet.activity.WalletActivity;
 import com.safepayu.wallet.activity.WalletHistory;
-import com.safepayu.wallet.activity.booking.MetroActivity;
-import com.safepayu.wallet.activity.booking.bus.BusActivity;
-import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
-import com.safepayu.wallet.activity.recharge.DthRecharge;
-import com.safepayu.wallet.activity.recharge.ElectricityPay;
-import com.safepayu.wallet.activity.recharge.GasPay;
-import com.safepayu.wallet.activity.recharge.LandlineBillPay;
-import com.safepayu.wallet.activity.recharge.MobileRecharge;
-import com.safepayu.wallet.activity.recharge.PostpaidBillpay;
-import com.safepayu.wallet.activity.recharge.WaterBillPay;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -67,12 +46,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class EHomeActivity extends AppCompatActivity implements View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class EHomeActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView CartBtn,NotificationBtn,NavIcon,imageDownSecurity, imageUpSecurity,imageDownLogout, imageUpLogout;
     private DrawerLayout drawer;
     private LoadingDialog loadingDialog;
-    BottomNavigationView bottomNavigation;
+
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
@@ -107,20 +86,9 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         CartBtn = findViewById(R.id.cartBtn_main);
         NotificationBtn = findViewById(R.id.favBtn_main);
         NavIcon = findViewById(R.id.nav_iconEcommerce);
-        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(this);
 
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigation.getChildAt(0);
-        for (int i = 0; i < menuView.getChildCount(); i++) {
-            final View iconView = menuView.getChildAt(i).findViewById(R.id.icon);
-            final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
-            final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-            // set your height here
-            layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, displayMetrics);
-            // set your width here
-            layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, displayMetrics);
-            iconView.setLayoutParams(layoutParams);
-        }
+
+
 
         loadingDialog = new LoadingDialog(this);
 
@@ -1162,7 +1130,7 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 }));
     }
 
-    @Override
+   /* @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // uncheck the other items.
         int mMenuId;
@@ -1197,5 +1165,5 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
             break;
         }
         return true;
-    }
+    }*/
 }

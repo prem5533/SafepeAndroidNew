@@ -517,14 +517,15 @@
             android:id="@+id/tv_filter_close"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Close"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:background="@drawable/gray_round_bg"
-            android:padding="10dp"
-            android:gravity="center"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:layout_margin="5dp"/>
+            android:background="@drawable/gray_round_bg"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Close"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
         <TextView
             android:id="@+id/tv_filter_apply"
             android:layout_width="match_parent"

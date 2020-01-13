@@ -33,7 +33,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Flight
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 3;
     }
 
     public class FlightLocationListViewHolder extends RecyclerView.ViewHolder {

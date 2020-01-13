@@ -6,16 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.ecommerce.adapter.CartAdapter;
 import com.safepayu.wallet.ecommerce.adapter.WishlistAdapter;
 
 public class WishlistFragment extends Fragment {
 
     private RecyclerView ProductsRecyclerView;
+    GridLayoutManager gridLayoutManager;
+    WishlistAdapter wishlistAdapter;
+
 
     public WishlistFragment() {
         // Required empty public constructor
@@ -34,8 +37,11 @@ public class WishlistFragment extends Fragment {
 
         ProductsRecyclerView=view.findViewById(R.id.recycleWishlist);
 
-        ProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        WishlistAdapter wishlistAdapter = new WishlistAdapter(getActivity());
+
+        gridLayoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.VERTICAL,false);
+        ProductsRecyclerView.setLayoutManager(gridLayoutManager);
+        wishlistAdapter = new WishlistAdapter(getActivity());
         ProductsRecyclerView.setAdapter(wishlistAdapter);
+
     }
 }
