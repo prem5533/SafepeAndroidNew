@@ -44,4 +44,7 @@ public interface ApiServiceEcom {
 
     @GET("api/pefast.safepe.latepe/api/getTotalCarts")
     Single<CartListResonse> getCartList();
+
+    @GET("api/pefast.safepe.latepe/api/getAllParentCategory")
+    Single<CartListResonse> getParentCategroyList();
 }
