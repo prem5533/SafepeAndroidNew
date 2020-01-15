@@ -15,23 +15,22 @@ import com.safepayu.wallet.R;
 
 import java.util.List;
 
-public class ProductSizeAdapter extends RecyclerView.Adapter<ProductSizeAdapter.ProductViewHolder> {
+public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapter.ProductViewHolder> {
 
 
      private Context context;
-     private List<String> sizeitem;
-    private int row_index = -1;
+     private List<String> coloritem;
 
-    public ProductSizeAdapter(Context context, List<String> sizeitem) {
+    public ProductColorAdapter(Context context, List<String> coloritem) {
         this.context = context;
-        this.sizeitem = sizeitem;
+        this.coloritem = coloritem;
     }
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.productsize_adapter,parent,false);
-        return new ProductSizeAdapter.ProductViewHolder(view);
+        return new ProductColorAdapter.ProductViewHolder(view);
     }
 
     @Override
@@ -41,7 +40,7 @@ public class ProductSizeAdapter extends RecyclerView.Adapter<ProductSizeAdapter.
 
     @Override
     public int getItemCount() {
-        return sizeitem.size();
+        return coloritem.size();
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{
@@ -60,27 +59,8 @@ public class ProductSizeAdapter extends RecyclerView.Adapter<ProductSizeAdapter.
             });
         }
 
-        public void bindData(final int position) {
-            tvSize.setText(sizeitem.get(position));
-
-            cbSize.setChecked(position==row_index);
-            cbSize.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (position == row_index) {
-                        cbSize.setChecked(false);
-
-                        //XU   row_index = -1;
-                    } else {
-                        /*if (onBankItemListener != null) {
-                            onBankItemListener.onBankItemListerner(getLayoutPosition(),mItem.get(getLayoutPosition()) );
-
-                        }*/
-                        row_index = position;
-                        notifyDataSetChanged();
-                    }
-                }
-            });
+        public void bindData(int position) {
+            tvSize.setText(coloritem.get(position));
         }
     }
 }

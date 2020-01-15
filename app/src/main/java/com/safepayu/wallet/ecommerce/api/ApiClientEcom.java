@@ -28,8 +28,9 @@ import static com.safepayu.wallet.BaseApp.Code;
 
 public class ApiClientEcom {
 
+   // public static final String BASE_URL = "https://productiontesting.safepeindia.com/";
     public static final String BASE_URL = "https://ecom-admin.safepeindia.com/";
-    public  static String ImagePath = "https://ecom-admin.safepeindia.com/app-assets/images/category/";
+    public  static String ImagePath = BASE_URL;
     private static Retrofit retrofit = null;
     private static int REQUEST_TIMEOUT = 60;
     private static OkHttpClient okHttpClient;

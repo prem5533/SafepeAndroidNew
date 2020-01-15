@@ -279,6 +279,7 @@
                     android:layout_weight="1">
 
                     <ImageView
+                        android:id="@+id/im_minus"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_minus"/>
@@ -295,6 +296,7 @@
                         android:layout_marginRight="15dp"/>
 
                     <ImageView
+                        android:id="@+id/im_plus"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:src="@drawable/ic_plus"/>
