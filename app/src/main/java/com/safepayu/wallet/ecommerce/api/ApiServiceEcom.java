@@ -2,6 +2,7 @@ package com.safepayu.wallet.ecommerce.api;
 
 import com.safepayu.wallet.ecommerce.model.request.AddToCartRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductByModifierRequest;
+import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
 import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.CartListResonse;
 import com.safepayu.wallet.ecommerce.model.response.ProductByModifierResponse;
@@ -31,9 +32,9 @@ public interface ApiServiceEcom {
     @POST("api/pefast.safepe.latepe/api/getProductsByCategoryId")
     Single<ProductsByCategoryIdResponse> getProductsByCategoryId(@Field("search_cat") String CategoryId);
 
-    @FormUrlEncoded
+
     @POST("api/pefast.safepe.latepe/api/productDetails")
-    Single<ProductsDetailsResponse> getProductDetails(@Field("product_id") String product_id);
+    Single<ProductsDetailsResponse> getProductDetails(@Body ProductDetailRequest productDetailRequest);
 
     @POST("api/pefast.safepe.latepe/api/productDetailsByModifier")
     Single<ProductByModifierResponse> getProductDetailsByModifier(@Body ProductByModifierRequest productByModifierRequest);

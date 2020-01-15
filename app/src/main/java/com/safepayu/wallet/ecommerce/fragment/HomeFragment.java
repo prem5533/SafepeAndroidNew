@@ -80,8 +80,11 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         View view =  inflater.inflate(R.layout.fragment_home2, container, false);
         prepareCategoryData();
         findId(view);
+        getVenueDetail();
         return  view;
     }
+
+
 
     private void findId(View view) {
         bottomNavigation = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
@@ -300,5 +303,11 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                 break;
         }
         return true;
+    }
+
+        //******************************************************
+
+    private void getVenueDetail() {
+
     }
 }

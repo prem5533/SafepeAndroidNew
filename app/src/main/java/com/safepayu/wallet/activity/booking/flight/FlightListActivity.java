@@ -78,7 +78,6 @@ public class FlightListActivity extends AppCompatActivity implements View.OnClic
             recyclerViewFlight.setAdapter(flightListAdapter);
 
 
-        Intent intent = getIntent();
         Source =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_SOURCE);
         Destination =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_DESTINATION);
         JourneyDate =  BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_JOURNEY_DATE);

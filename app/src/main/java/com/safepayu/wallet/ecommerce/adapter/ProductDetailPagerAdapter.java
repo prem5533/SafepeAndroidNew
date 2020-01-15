@@ -13,27 +13,35 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
+import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
 import com.safepayu.wallet.models.response.PromotionResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class EcommPagerAdapter extends PagerAdapter {
+public class ProductDetailPagerAdapter extends PagerAdapter {
     // Declare Variables
     private Context context;
-    private List<ProductsDetailsResponse.ProductsBean> simage;
-    int images[];
+    private List<String> simage;
+  //  private List<ProductsDetailsResponse.ProductsBean>simage;
     private LayoutInflater inflater;
 
-    public EcommPagerAdapter(Context context, int[] images) {
+    public ProductDetailPagerAdapter(Context context, List<String> simage) {
         this.context = context;
-        this.images = images;
+        this.simage = simage;
     }
+
+   /* public ProductDetailPagerAdapter(Context context, List<ProductsDetailsResponse.ProductsBean> simage) {
+        this.context = context;
+        this.simage = simage;
+    }
+*/
+
 
     @Override
     public int getCount() {
-        return images.length;
+        return simage.size();
     }
 
     @Override
@@ -50,14 +58,10 @@ public class EcommPagerAdapter extends PagerAdapter {
         View itemView = LayoutInflater.from(context).inflate(R.layout.offer_pager_adapter,container,false);
 
         image_pager= (ImageView) itemView.findViewById(R.id.im);
-
-        image_pager.setImageResource(images[position]);
-
-     /*   Picasso.get()
-                .load(ApiClient.ImagePath+ images.get(position)
-                .getImage())
+        Picasso.get()
+                .load(ApiClientEcom.ImagePath+ simage.get(position))
                 .error(context.getResources().getDrawable(R.drawable.image_not_available))
-                .into(image_pager);*/
+                .into(image_pager);
 
 
         // add viewpager_item.xml to ViewPager
