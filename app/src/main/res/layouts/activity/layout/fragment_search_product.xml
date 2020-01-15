@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#f4f5ff"
+    android:id="@+id/SearchProductLayout"
     tools:context=".ecommerce.fragment.SearchProductFragment">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

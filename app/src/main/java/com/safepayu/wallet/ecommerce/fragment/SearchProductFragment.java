@@ -2,8 +2,11 @@ package com.safepayu.wallet.ecommerce.fragment;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,16 +25,25 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.activity.FilterDialog;
 import com.safepayu.wallet.ecommerce.activity.ProductDetailActivity;
 import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
 import com.safepayu.wallet.ecommerce.adapter.SerchProductAdapter;
 import com.safepayu.wallet.ecommerce.adapter.StoreListAdapter;
+import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
+import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
+import com.safepayu.wallet.ecommerce.model.response.ProductsByCategoryIdResponse;
 import com.safepayu.wallet.models.response.OperatorResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +65,7 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
     private ArrayList<String> CategoryList;
     private ArrayList<String> ProductNameList,ProductImageList;
     public Dialog dialog;
+    private LoadingDialog loadingDialog;
 
     public SearchProductFragment() {
         // Required empty public constructor
@@ -69,6 +82,8 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
     }
 
     private void findId(View view) {
+
+        loadingDialog=new LoadingDialog(getActivity());
 
         SearchLayout = view.findViewById(R.id.searchLayout_SearchFrag);
         tvSearch =  view.findViewById(R.id.tv_search_ecomm);
@@ -132,21 +147,12 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
         ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getActivity(),R.layout.spinner_item_ecom_search,CategoryList);
         categorySpinner.setAdapter(arrayAdapter);
 
-        ProductNameList=new ArrayList<>();
-        ProductImageList=new ArrayList<>();
-
-        ProductNameList.add("Women's Trouser");
-        ProductNameList.add("Women's Top");
-        ProductNameList.add("Women's Top");
-        ProductNameList.add("Shoes");
-
-        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/13.png");
-        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/14.png");
-        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/15.png");
-        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/1.png");
-
-        serchProductAdapter = new SerchProductAdapter(getActivity(),ProductNameList,ProductImageList,SearchProductFragment.this);
-        SearchProductList.setAdapter(serchProductAdapter);
+        if (isNetworkAvailable()){
+            String value = getArguments().getString("CatId");
+            getProductsByCategoryId(value);
+        }else {
+            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),"No Internet Connection!",true);
+        }
     }
 
     @Override
@@ -212,5 +218,59 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
         window.setAttributes(lp);
         dialog.show();
 
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void getProductsByCategoryId(String CatId) {
+        ProductNameList=new ArrayList<>();
+        ProductImageList=new ArrayList<>();
+
+        ProductNameList.clear();
+        ProductImageList.clear();
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiServiceEcom apiService = ApiClientEcom.getClient(getActivity()).create(ApiServiceEcom.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getProductsByCategoryId(CatId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ProductsByCategoryIdResponse>() {
+                    @Override
+                    public void onSuccess(ProductsByCategoryIdResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+
+                            if (response.getProducts().size()>0){
+
+                                for (int i=0;response.getProducts().size()>i;i++){
+                                    ProductNameList.add(response.getProducts().get(i).getProduct_name());
+                                    ProductImageList.add(response.getProducts().get(i).getImages());
+                                }
+
+                                serchProductAdapter = new SerchProductAdapter(getActivity(),ProductNameList,ProductImageList,SearchProductFragment.this);
+                                SearchProductList.setAdapter(serchProductAdapter);
+                            }else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),"No Category Found!",true);
+                            }
+
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),response.getMessage(),true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.SearchProductLayout), true, e);
+                    }
+                }));
     }
 }
