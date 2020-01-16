@@ -168,7 +168,7 @@ public class ProductsByCategoryIdResponse {
         private String opening_time;
         private String closing_time;
         private String distance;
-        private int stars;
+        private double stars;
         private int total_offers;
 
         public String getVenue_id() {
@@ -283,7 +283,7 @@ public class ProductsByCategoryIdResponse {
             this.distance = distance;
         }
 
-        public int getStars() {
+        public double getStars() {
             return stars;
         }
 

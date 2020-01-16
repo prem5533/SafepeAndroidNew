@@ -11,9 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocationListViewHolder> {
 

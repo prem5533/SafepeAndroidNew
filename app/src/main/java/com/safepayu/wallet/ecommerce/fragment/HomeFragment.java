@@ -2,7 +2,10 @@ package com.safepayu.wallet.ecommerce.fragment;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -27,26 +30,39 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.QrCodeScanner;
 import com.safepayu.wallet.activity.WalletActivity;
+import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
 import com.safepayu.wallet.ecommerce.adapter.CategoryAdapter;
 import com.safepayu.wallet.ecommerce.adapter.EcommPagerAdapter;
 import com.safepayu.wallet.ecommerce.adapter.OfferAdapter;
+import com.safepayu.wallet.ecommerce.adapter.ParentCategoryAdapter;
 import com.safepayu.wallet.ecommerce.adapter.RecommendedAdapter;
 import com.safepayu.wallet.ecommerce.adapter.TrendingAdapter;
+import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
+import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
 import com.safepayu.wallet.ecommerce.model.response.CategoryModel;
+import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
+import com.safepayu.wallet.ecommerce.model.response.ParentCategoriesResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment implements CategoryAdapter.OnCategoryItemListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class HomeFragment extends Fragment implements CategoryAdapter.OnCategoryItemListener,
+        BottomNavigationView.OnNavigationItemSelectedListener, ParentCategoryAdapter.OnCategoryItemListener {
+
     private RecyclerView recyclerCategory,recycleCategoryOfferList,recycleTrendingProductList,recycleRecommendList;
     private CategoryAdapter categoryAdapter;
     private OfferAdapter offerAdapter;
@@ -55,19 +71,23 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     private EcommPagerAdapter ecommPagerAdapter;
     BottomNavigationView bottomNavigation;
     GridLayoutManager gridLayoutManager;
+
     private ViewPager viewpager;
     int images[] = {R.drawable.banner_image1, R.drawable.banner_image2, R.drawable.banner_image3,R.drawable.banner_image4};
     int NumPage,CurrentP=0 ;
     Timer timer;  final long DELAY_MS = 2000;//delay in milliseconds before task is to be executed
-    final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
+    final long PERIOD_MS = 5000; // time in milliseconds between successive task executions.
 
     private LinearLayout SearchLayout;
-    private TextView tvSearch;
+    private TextView tvSearch,tvViewAll;
     private ArrayList<String> ProductNameList,ProductImageList;
     private ArrayList<String> TrendingNameList,TrendingImageList;
     private ArrayList<String> RecommendNameList,RecommendImageList;
 
     private List<CategoryModel> categoryModelList = new ArrayList<>();
+    private LoadingDialog loadingDialog;
+    TabLayout tabLayoutt;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -78,15 +98,15 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home2, container, false);
-        prepareCategoryData();
+     //   prepareCategoryData();
         findId(view);
-        getVenueDetail();
         return  view;
     }
 
 
 
     private void findId(View view) {
+        loadingDialog=new LoadingDialog(getActivity());
         bottomNavigation = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(this);
         recyclerCategory = view.findViewById(R.id.recycle_category_list);
@@ -95,12 +115,10 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         recycleRecommendList = view.findViewById(R.id.recycle_recommend_list);
         viewpager = view.findViewById(R.id.viewpager_ecom);
         SearchLayout = view.findViewById(R.id.searchLayout_headerHome);
-        tvSearch =  view.findViewById(R.id.tv_search_ecomm);
-
-        gridLayoutManager = new GridLayoutManager(getActivity(),3, LinearLayoutManager.VERTICAL,false);
-        recyclerCategory.setLayoutManager(gridLayoutManager);
-        categoryAdapter = new CategoryAdapter(getActivity(),categoryModelList,HomeFragment.this);
-        recyclerCategory.setAdapter(categoryAdapter);
+        tvSearch = view.findViewById(R.id.tv_search_ecomm);
+        tvViewAll = view.findViewById(R.id.viewAllCat_home);
+        tabLayoutt = view.findViewById(R.id.tab_layout_ecom);
+        recyclerCategory.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         recycleCategoryOfferList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
@@ -109,14 +127,6 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         gridLayoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.VERTICAL,false);
         recycleRecommendList.setLayoutManager(gridLayoutManager);
 
-        ecommPagerAdapter = new EcommPagerAdapter(getActivity(),images);
-        viewpager.setAdapter(ecommPagerAdapter);
-        NumPage= images.length;
-
-        TabLayout tabLayoutt = view.findViewById(R.id.tab_layout_ecom);
-        if (NumPage>1){
-            tabLayoutt.setupWithViewPager(viewpager, true);
-        }
 
         /*After setting the adapter use the timer type 3 */
         final Handler hand = new Handler();
@@ -153,6 +163,19 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
             }
         });
 
+        tvViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParentCategory fragment = new ParentCategory();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.content_frame, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+
+            }
+        });
+
         ProductNameList=new ArrayList<>();
         ProductImageList=new ArrayList<>();
         RecommendNameList=new ArrayList<>();
@@ -170,8 +193,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/2.png");
         ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/1.png");
 
-        offerAdapter = new OfferAdapter(getActivity(),ProductNameList,ProductImageList);
-        recycleCategoryOfferList.setAdapter(offerAdapter);
+        /*offerAdapter = new OfferAdapter(getActivity(),ProductNameList,ProductImageList);
+        recycleCategoryOfferList.setAdapter(offerAdapter);*/
 
         TrendingNameList.add("Men's T-Shirt");
         TrendingNameList.add("Jeans");
@@ -183,8 +206,7 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         TrendingImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/6.png");
         TrendingImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/5.png");
 
-        trendingAdapter = new TrendingAdapter(getActivity(),TrendingNameList,TrendingImageList);
-        recycleTrendingProductList.setAdapter(trendingAdapter);
+
 
         RecommendNameList.add("Women's Fashion");
         RecommendNameList.add("Men's Casual");
@@ -196,8 +218,6 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/10.png");
         RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/9.png");
 
-        recommendedAdapter = new RecommendedAdapter(getActivity(),RecommendNameList,RecommendImageList);
-        recycleRecommendList.setAdapter(recommendedAdapter);
 
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigation.getChildAt(0);
         for (int i = 0; i < menuView.getChildCount(); i++) {
@@ -209,6 +229,12 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
             // set your width here
             layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, displayMetrics);
             iconView.setLayoutParams(layoutParams);
+        }
+
+        if (isNetworkAvailable()){
+            getHomeCategory();
+        }else {
+            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),"No Internet Connection!",true);
         }
     }
 
@@ -305,9 +331,122 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         return true;
     }
 
-        //******************************************************
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
-    private void getVenueDetail() {
+    /*private void getAllParentCategory() {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
+        ApiServiceEcom apiService = ApiClientEcom.getClient(getActivity()).create(ApiServiceEcom.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getAllParentCategory()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ParentCategoriesResponse>() {
+                    @Override
+                    public void onSuccess(ParentCategoriesResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+
+                            if (response.getCategories().size()>0){
+
+                                ParentCategoryAdapter adapter=new ParentCategoryAdapter(getActivity(),response.getCategories(),HomeFragment.this,"Home");
+                                recyclerCategory.setAdapter(adapter);
+                            }else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),"No Category Found!",true); }
+
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),response.getMessage(),true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.homeEcommLayout), true, e);
+                    }
+                }));
+    }*/
+    /*@Override
+    public void onCategory(int position, ParentCategoriesResponse.CategoriesBean categoriesBean) {
+
+        Toast.makeText(getActivity(), categoriesBean.getCat_name(), Toast.LENGTH_SHORT).show();
+        Bundle args = new Bundle();
+        args.putString("CatId", String.valueOf(categoriesBean.getId()));
+        SearchProductFragment fragment = new SearchProductFragment();
+        fragment.setArguments(args);
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+*/
+
+    private void getHomeCategory() {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiServiceEcom apiService = ApiClientEcom.getClient(getActivity()).create(ApiServiceEcom.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getAllCategoryHome()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<HomeCatResponse>() {
+                    @Override
+                    public void onSuccess(HomeCatResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+
+                            if (response.getData().getCategories().size()>0){
+                                ParentCategoryAdapter adapter=new ParentCategoryAdapter(getActivity(),response.getData().getCategories(),HomeFragment.this,"Home");
+                                recyclerCategory.setAdapter(adapter); }
+                            if (response.getData().getProducts_offer().size()>0){
+                                offerAdapter = new OfferAdapter(getActivity(),response.getData().getProducts_offer());
+                                recycleCategoryOfferList.setAdapter(offerAdapter);
+                            }
+                            if (response.getData().getProducts_trending().size()>0){
+                                trendingAdapter = new TrendingAdapter(getActivity(),response.getData().getProducts_trending());
+                                recycleTrendingProductList.setAdapter(trendingAdapter); }
+                            if (response.getData().getProducts_recommended().size()>0){
+                                recommendedAdapter = new RecommendedAdapter(getActivity(),response.getData().getProducts_recommended());
+                                recycleRecommendList.setAdapter(recommendedAdapter); }
+
+                            ecommPagerAdapter = new EcommPagerAdapter(getActivity(),response.getData().getBanners());
+                            viewpager.setAdapter(ecommPagerAdapter);
+                            NumPage= response.getData().getBanners().size();
+                            if (NumPage>1){
+                                tabLayoutt.setupWithViewPager(viewpager, true);
+                            }
+                            else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),"No Category Found!",true); }
+
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),response.getMessage(),true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.homeEcommLayout), true, e);
+                    }
+                }));
+    }
+
+    @Override
+    public void onCategory(int position, HomeCatResponse.DataBean.CategoriesBean categoriesBean) {
+        Toast.makeText(getActivity(), categoriesBean.getCat_name(), Toast.LENGTH_SHORT).show();
+        Bundle args = new Bundle();
+        args.putString("CatId", String.valueOf(categoriesBean.getId()));
+        SearchProductFragment fragment = new SearchProductFragment();
+        fragment.setArguments(args);
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,19 +14,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.api.ApiClient;
+import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.ProductViewHolder> {
 
-    private ArrayList<String> ProductNameList,ProductImageList;
-     private Context context;
 
-    public RecommendedAdapter(Context context, ArrayList<String> ProductNameList, ArrayList<String>ProductImageList) {
+     private Context context;
+    private List<HomeCatResponse.DataBean.ProductsRecommendedBean> recommedItem;
+
+    public RecommendedAdapter(Context context, List<HomeCatResponse.DataBean.ProductsRecommendedBean> recommedItem) {
         this.context = context;
-        this.ProductNameList = ProductNameList;
-        this.ProductImageList = ProductImageList;
+        this.recommedItem = recommedItem;
     }
 
     @NonNull
@@ -38,11 +42,11 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         try {
-            if (TextUtils.isEmpty(ProductImageList.get(position))){
+            if (TextUtils.isEmpty(ApiClient.ImagePath+recommedItem.get(position).getImages())){
 
             }else {
                 Picasso.get()
-                        .load(ProductImageList.get(position))
+                        .load(ApiClient.ImagePath+recommedItem.get(position).getImages())
                         .error(context.getResources().getDrawable(R.drawable.image_not_available))
                         .into(holder.imageView);
             }
@@ -50,24 +54,36 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
             er.printStackTrace();
         }
 
-        holder.tvProductName.setText(ProductNameList.get(position));
+        holder.tvProductName.setText(recommedItem.get(position).getProduct_name());
+        holder.tvSellingPrice.setText("₹ "+recommedItem.get(position).getFinal_sell_price());
+        holder.listItemRating.setRating(recommedItem.get(position).getStars());
+        holder.tvProductDetail.setText(recommedItem.get(position).getProduct_description());
+        holder.tvProductStorenme.setText(recommedItem.get(position).getVenue_name());
+        holder.tv_pstore_km.setText(recommedItem.get(position).getDistance()+" km");
     }
 
     @Override
     public int getItemCount() {
-        return ProductNameList.size();
+        return recommedItem.size();
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView imageView;
-        private TextView tvProductName;
+        private TextView tvProductName,tvDiscount,tvSellingPrice,tvActualRs,tvProductDetail,tvProductStorenme,tv_pstore_km;
+        private RatingBar listItemRating;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvProductName=itemView.findViewById(R.id.tv_productName_RecommendAdapter);
             imageView=itemView.findViewById(R.id.image_RecommendAdapter);
+            tvSellingPrice=itemView.findViewById(R.id.tv_offer_rs);
+            tvActualRs=itemView.findViewById(R.id.tv_actual_rs);
+            listItemRating=itemView.findViewById(R.id.listitemrating);
+            tvProductDetail=itemView.findViewById(R.id.tv_product_detail);
+            tvProductStorenme=itemView.findViewById(R.id.tv_product_storenme);
+            tv_pstore_km=itemView.findViewById(R.id.tv_pstore_km);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

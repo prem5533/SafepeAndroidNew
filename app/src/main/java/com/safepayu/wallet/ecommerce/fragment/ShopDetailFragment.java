@@ -79,8 +79,7 @@ public class ShopDetailFragment extends Fragment {
         RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/10.png");
         RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/9.png");
 
-        recommendedAdapter = new RecommendedAdapter(getActivity(),RecommendNameList,RecommendImageList);
-        ProductsRecyclerView.setAdapter(recommendedAdapter);
+
 
         HoursList=new ArrayList<>();
         DaysList=new ArrayList<>();

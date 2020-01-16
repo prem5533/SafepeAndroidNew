@@ -2,32 +2,16 @@ package com.safepayu.wallet.ecommerce.fragment;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.booking.flight.FlightListActivity;
-import com.safepayu.wallet.adapter.fight.OneWayFlightListAdapter;
-
-import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.adapter.ProductImageAdapter;
-import com.safepayu.wallet.ecommerce.adapter.ProductSizeAdapter;
-import com.safepayu.wallet.ecommerce.adapter.SerchProductAdapter;
-import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
-import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
-import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
-import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.

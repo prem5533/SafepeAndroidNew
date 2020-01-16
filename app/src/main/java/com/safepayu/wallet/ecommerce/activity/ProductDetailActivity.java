@@ -1,14 +1,5 @@
 package com.safepayu.wallet.ecommerce.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -19,24 +10,24 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.Navigation;
-import com.safepayu.wallet.adapter.OfferPagerAdapter;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.ecommerce.adapter.EcommPagerAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProdouctOfferAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProdouctOfferRelatedAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProductDetailPagerAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProductSizeAdapter;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
-import com.safepayu.wallet.ecommerce.fragment.CartFragment;
-import com.safepayu.wallet.ecommerce.fragment.SearchProductFragment;
 import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
 import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
-import com.safepayu.wallet.models.request.booking.flight.AvailableFlightRequest;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;

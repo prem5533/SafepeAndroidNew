@@ -5,6 +5,9 @@ import com.safepayu.wallet.ecommerce.model.request.ProductByModifierRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
 import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.CartListResonse;
+import com.safepayu.wallet.ecommerce.model.response.CategoriesResponse;
+import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
+import com.safepayu.wallet.ecommerce.model.response.ParentCategoriesResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductByModifierResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsByCategoryIdResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsBySearchResponse;
@@ -45,6 +48,12 @@ public interface ApiServiceEcom {
     @GET("api/pefast.safepe.latepe/api/getTotalCarts")
     Single<CartListResonse> getCartList();
 
+    @GET("api/pefast.safepe.latepe/api/getAllCategories")
+    Single<CategoriesResponse> getAllCategories();
+
     @GET("api/pefast.safepe.latepe/api/getAllParentCategory")
-    Single<CartListResonse> getParentCategroyList();
+    Single<ParentCategoriesResponse> getAllParentCategory();
+
+    @GET("api/pefast.safepe.latepe/api/mainHomePage")
+    Single<HomeCatResponse> getAllCategoryHome();
 }

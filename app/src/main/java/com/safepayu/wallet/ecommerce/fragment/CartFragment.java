@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
 import com.safepayu.wallet.ecommerce.activity.AddAddressEcomActivity;
 import com.safepayu.wallet.ecommerce.adapter.CartAdapter;
 
