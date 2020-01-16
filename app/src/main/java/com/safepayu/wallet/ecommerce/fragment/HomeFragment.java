@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -293,7 +294,17 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
             case (1):
                 if (resultCode == Activity.RESULT_OK) {
 
-                    Toast.makeText(getActivity(), "ok", Toast.LENGTH_SHORT).show();
+                    if (!TextUtils.isEmpty(data.getStringExtra("search"))){
+                        Bundle args = new Bundle();
+                        args.putString("search", data.getStringExtra("search"));
+
+                        SearchProductFragment fragment = new SearchProductFragment();
+                        fragment.setArguments(args);
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.content_frame, fragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
 
                     // TODO Update your TextView.
                 }

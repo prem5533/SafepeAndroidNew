@@ -357,9 +357,9 @@
                 android:padding="10dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_product_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                android:id="@+id/search_product_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/search_store_list"
@@ -367,6 +367,20 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
         </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Offers Nearby You"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:padding="10dp"
+                android:layout_marginTop="15sp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/offer_product_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <LinearLayout

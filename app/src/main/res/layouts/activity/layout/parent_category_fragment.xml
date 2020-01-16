@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/parentCategoryLayout">
+    android:id="@+id/parentCategoryLayout"
+    android:background="#f4f5ff">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleCat_parentCategoryLayout"

@@ -17,9 +17,10 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ProductViewHolder> {
 
 
-     private Context context;
+    private Context context;
     private List<CategoryModel> categoryList;
     private OnCategoryItemListener onCategoryItemListener;
+
     public interface OnCategoryItemListener{
         void onCtategory(int position);
     }
