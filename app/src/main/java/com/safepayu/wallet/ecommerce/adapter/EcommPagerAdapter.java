@@ -14,7 +14,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
-import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

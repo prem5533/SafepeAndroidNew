@@ -1,7 +1,6 @@
 package com.safepayu.wallet.ecommerce.adapter;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ProductViewHolder> {

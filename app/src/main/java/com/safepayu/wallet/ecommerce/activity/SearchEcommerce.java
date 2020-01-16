@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +24,7 @@ public class SearchEcommerce extends AppCompatActivity implements SearchEcommerc
     private ArrayList<String> SearchList;
     private TextView SearchBtn;
     private Button BackBtn;
+    private EditText edSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class SearchEcommerce extends AppCompatActivity implements SearchEcommerc
         TrendingsRecyclerView=findViewById(R.id.recycle_searchEcommerceLayout);
         SearchBtn=findViewById(R.id.searchBtn_searchEcommerceLayout);
         BackBtn=findViewById(R.id.backBtn_searchEcommerceLayout);
+        edSearch=findViewById(R.id.edSearch_searchEcommerceLayout);
 
         SearchList=new ArrayList<>();
 
@@ -55,6 +57,7 @@ public class SearchEcommerce extends AppCompatActivity implements SearchEcommerc
             public void onClick(View view) {
 
                 Intent intent=new Intent(SearchEcommerce.this, HomeFragment.class);
+                intent.putExtra("search",edSearch.getText().toString().trim());
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }
@@ -71,6 +74,7 @@ public class SearchEcommerce extends AppCompatActivity implements SearchEcommerc
     @Override
     public void onSearchItemClick(int position, String Text) {
         Intent intent=new Intent(SearchEcommerce.this, HomeFragment.class);
+        intent.putExtra("search",Text);
         setResult(Activity.RESULT_OK, intent);
         finish();
     }

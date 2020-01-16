@@ -1,6 +1,7 @@
 package com.safepayu.wallet.ecommerce.fragment;
 
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,17 +9,20 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -32,7 +36,7 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.activity.FilterDialog;
 import com.safepayu.wallet.ecommerce.activity.ProductDetailActivity;
 import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
-import com.safepayu.wallet.ecommerce.adapter.SerchProductAdapter;
+import com.safepayu.wallet.ecommerce.adapter.SearchProductAdapter;
 import com.safepayu.wallet.ecommerce.adapter.StoreListAdapter;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
@@ -49,22 +53,21 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchProductFragment extends Fragment implements View.OnClickListener, SerchProductAdapter.OnProductDetailItemListener,
+public class SearchProductFragment extends Fragment implements View.OnClickListener, SearchProductAdapter.OnProductDetailItemListener,
                 StoreListAdapter.ShopItemListListener{
 
     private LinearLayout liProduct ,liProductGray, liStore,liStoreGray,liSort,liFilter;
-    private RecyclerView SearchProductList,searchStoreList;
-    private SerchProductAdapter serchProductAdapter;
+    private RecyclerView SearchProductList,searchStoreList,offerProductList;
+    private SearchProductAdapter serchProductAdapter;
     private StoreListAdapter storeListAdapter;
     private Spinner categorySpinner;
-    GridLayoutManager gridLayoutManager;
+    private GridLayoutManager gridLayoutManager;
     private TextView tvSearchProductMatching;
     List<OperatorResponse.OperatorsBean> mCategoryList = new ArrayList<>();
-
+    private int ShopNumbers=0,ProductNumber=0;
     private LinearLayout SearchLayout;
-    private TextView tvSearch;
-    private ArrayList<String> CategoryList;
-    private ArrayList<String> ProductNameList,ProductImageList;
+    private TextView tvSearch,tvNoOfProduct,tvNoOfProductGrey,tvNoOfShop,tvNoOfShopGrey;
+    private ArrayList<String> CategoryList,CategoryIDList;
     public Dialog dialog;
     private LoadingDialog loadingDialog;
 
@@ -88,6 +91,10 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
 
         SearchLayout = view.findViewById(R.id.searchLayout_SearchFrag);
         tvSearch =  view.findViewById(R.id.tv_search_ecomm);
+        tvNoOfProduct = view.findViewById(R.id.tv_number_of_product);
+        tvNoOfProductGrey =  view.findViewById(R.id.tv_number_of_gray);
+        tvNoOfShop =  view.findViewById(R.id.tv_number_of_store);
+        tvNoOfShopGrey =  view.findViewById(R.id.tv_number_of_store_gray);
         liSort =  view.findViewById(R.id.li_sort);
         liFilter =  view.findViewById(R.id.li_filter);
 
@@ -97,11 +104,11 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
         liStoreGray = view.findViewById(R.id.li_store_gray);
         SearchProductList = view.findViewById(R.id.search_product_list);
         searchStoreList = view.findViewById(R.id.search_store_list);
+        offerProductList = view.findViewById(R.id.offer_product_list);
         categorySpinner = view.findViewById(R.id.category_spinner_searchFrag);
         tvSearchProductMatching = view.findViewById(R.id.tv_search_product_matching);
-        tvSearchProductMatching.setText("Found 40 products matching the search keyword, near you");
 
-        CategoryList=new ArrayList<>();
+
 
         liProduct.setOnClickListener(this);
         liProductGray.setOnClickListener(this);
@@ -116,9 +123,8 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
 //        EcomSpinnerAdapter customAdapter=new EcomSpinnerAdapter(getActivity(),mCategoryList);
 //        categorySpinner.setAdapter(customAdapter);
 
+        offerProductList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         searchStoreList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        storeListAdapter = new StoreListAdapter(getActivity(),this);
-        searchStoreList.setAdapter(storeListAdapter);
 
         SearchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,23 +142,67 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
             }
         });
 
-        CategoryList.add("Beauty");
-        CategoryList.add("Sports");
-        CategoryList.add("Jeans");
-        CategoryList.add("Grocery");
-        CategoryList.add("Fashion");
-        CategoryList.add("iPads");
-        CategoryList.add("Furniture");
-        CategoryList.add("Jewellery");
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
 
-        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getActivity(),R.layout.spinner_item_ecom_search,CategoryList);
-        categorySpinner.setAdapter(arrayAdapter);
+                if (pos!=0){
+                    if (isNetworkAvailable()){
+                        getProductsByCategoryId(CategoryIDList.get(pos));
+                    }else {
+                        BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),"No Internet Connection!",true);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         if (isNetworkAvailable()){
-            String value = getArguments().getString("CatId");
-            getProductsByCategoryId(value);
+
+            String valueSearch="",value="";
+
+            try {
+                value = getArguments().getString("CatId");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            try {
+                valueSearch = getArguments().getString("search");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            if (TextUtils.isEmpty(valueSearch)){
+                getProductsByCategoryId(value);
+            }else {
+                getProductsBySearch(valueSearch);
+            }
+
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),"No Internet Connection!",true);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (1):
+                if (resultCode == Activity.RESULT_OK) {
+
+                    if (!TextUtils.isEmpty(data.getStringExtra("search"))){
+                        getProductsBySearch(data.getStringExtra("search"));
+                    }
+
+                    // TODO Update your TextView.
+                }
+                break;
+
         }
     }
 
@@ -164,7 +214,7 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                 liStore.setVisibility(View.GONE);
                 liProduct.setVisibility(View.VISIBLE);
                 liStoreGray.setVisibility(View.VISIBLE);
-                tvSearchProductMatching.setText("Found 25 products matching the search keyword, near you");
+                tvSearchProductMatching.setText("Found "+ProductNumber+" products matching, near you");
                 searchStoreList.setVisibility(View.GONE);
                 SearchProductList.setVisibility(View.VISIBLE);
                 break;
@@ -174,7 +224,7 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                 liProduct.setVisibility(View.GONE);
                 liStore.setVisibility(View.VISIBLE);
                 liProductGray.setVisibility(View.VISIBLE);
-                tvSearchProductMatching.setText("Found 10 stores matching the search keyword, near you");
+                tvSearchProductMatching.setText("Found "+ShopNumbers+" shops matching, near you");
                 searchStoreList.setVisibility(View.VISIBLE);
                 SearchProductList.setVisibility(View.GONE);
                 break;
@@ -184,13 +234,16 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
             case R.id.li_filter:
                 Intent intent = new Intent(getActivity(), FilterDialog.class);
                 startActivity(intent);
-                 break;} }
+                 break;
+        }
+    }
 
 
 
     @Override
-    public void onProductItemDetail(int position) {
+    public void onProductItemDetail(int position,ProductsByCategoryIdResponse.ProductsBean productsBean) {
 
+        Toast.makeText(getActivity(), productsBean.getProduct_name(), Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getActivity(), ProductDetailActivity.class));
     }
 
@@ -229,11 +282,13 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
     }
 
     private void getProductsByCategoryId(String CatId) {
-        ProductNameList=new ArrayList<>();
-        ProductImageList=new ArrayList<>();
+        CategoryList=new ArrayList<>();
+        CategoryIDList=new ArrayList<>();
+        CategoryList.clear();
+        CategoryIDList.clear();
 
-        ProductNameList.clear();
-        ProductImageList.clear();
+        CategoryList.add("Change Category");
+        CategoryIDList.add("0");
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
@@ -248,18 +303,139 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
 
-                            if (response.getProducts().size()>0){
-
-                                for (int i=0;response.getProducts().size()>i;i++){
-                                    ProductNameList.add(response.getProducts().get(i).getProduct_name());
-                                    ProductImageList.add(response.getProducts().get(i).getImages());
+                            if (response.getCategory().size()>0){
+                                for (int j=0;response.getCategory().size()>j;j++){
+                                    CategoryList.add(response.getCategory().get(j).getCat_name());
+                                    CategoryIDList.add(""+response.getCategory().get(j).getId());
                                 }
 
-                                serchProductAdapter = new SerchProductAdapter(getActivity(),ProductNameList,ProductImageList,SearchProductFragment.this);
+                                ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getActivity(),R.layout.spinner_item_ecom_search,CategoryList);
+                                categorySpinner.setAdapter(arrayAdapter);
+                            }else {
+                                CategoryList.add("NA");
+                                CategoryIDList.add("0");
+
+                                ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getActivity(),R.layout.spinner_item_ecom_search,CategoryList);
+                                categorySpinner.setAdapter(arrayAdapter);
+                            }
+
+                            if (response.getProducts().size()>0){
+                                ProductNumber=response.getProducts().size();
+                                tvSearchProductMatching.setText("Found "+ProductNumber+" products matching, near you");
+                                tvNoOfProduct.setText(" "+response.getProducts().size());
+                                tvNoOfProductGrey.setText(" "+response.getProducts().size());
+
+                                serchProductAdapter = new SearchProductAdapter(getActivity(),response.getProducts(),SearchProductFragment.this);
                                 SearchProductList.setAdapter(serchProductAdapter);
                             }else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),"No Category Found!",true);
+                                tvNoOfProduct.setText("0");
+                                tvNoOfProductGrey.setText("0");
                             }
+
+                            if (response.getVenues().size()>0){
+                                ShopNumbers=response.getVenues().size();
+                                tvNoOfShop.setText(" "+response.getVenues().size());
+                                tvNoOfShopGrey.setText(" "+response.getVenues().size());
+
+                                storeListAdapter = new StoreListAdapter(getActivity(),response.getVenues(),SearchProductFragment.this);
+                                searchStoreList.setAdapter(storeListAdapter);
+                            }else {
+                                tvNoOfShop.setText("0");
+                                tvNoOfShopGrey.setText("0");
+                            }
+
+//                            if (response.getProducts_offers().size()>0){
+//
+//                                OfferAdapter offerAdapter = new OfferAdapter(getActivity(),CategoryList,CategoryList);
+//                                offerProductList.setAdapter(offerAdapter);
+//                            }else {
+//
+//                            }
+
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),response.getMessage(),true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.SearchProductLayout), true, e);
+                    }
+                }));
+    }
+
+    private void getProductsBySearch(String search) {
+        CategoryList=new ArrayList<>();
+        CategoryIDList=new ArrayList<>();
+        CategoryList.clear();
+        CategoryIDList.clear();
+
+        CategoryList.add("Change Category");
+        CategoryIDList.add("0");
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiServiceEcom apiService = ApiClientEcom.getClient(getActivity()).create(ApiServiceEcom.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getProductBySearch(search)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ProductsByCategoryIdResponse>() {
+                    @Override
+                    public void onSuccess(ProductsByCategoryIdResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+
+                            if (response.getCategory().size()>0){
+                                for (int j=0;response.getCategory().size()>j;j++){
+                                    CategoryList.add(response.getCategory().get(j).getCat_name());
+                                    CategoryIDList.add(""+response.getCategory().get(j).getId());
+                                }
+
+                                ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getActivity(),R.layout.spinner_item_ecom_search,CategoryList);
+                                categorySpinner.setAdapter(arrayAdapter);
+                            }else {
+                                CategoryList.add("NA");
+                                CategoryIDList.add("0");
+
+                                ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getActivity(),R.layout.spinner_item_ecom_search,CategoryList);
+                                categorySpinner.setAdapter(arrayAdapter);
+                            }
+
+                            if (response.getProducts().size()>0){
+                                ProductNumber=response.getProducts().size();
+                                tvSearchProductMatching.setText("Found "+ProductNumber+" products matching, near you");
+                                tvNoOfProduct.setText(" "+response.getProducts().size());
+                                tvNoOfProductGrey.setText(" "+response.getProducts().size());
+
+                                serchProductAdapter = new SearchProductAdapter(getActivity(),response.getProducts(),SearchProductFragment.this);
+                                SearchProductList.setAdapter(serchProductAdapter);
+                            }else {
+                                tvNoOfProduct.setText("0");
+                                tvNoOfProductGrey.setText("0");
+                            }
+
+                            if (response.getVenues().size()>0){
+                                ShopNumbers=response.getVenues().size();
+                                tvNoOfShop.setText(" "+response.getVenues().size());
+                                tvNoOfShopGrey.setText(" "+response.getVenues().size());
+
+                                storeListAdapter = new StoreListAdapter(getActivity(),response.getVenues(),SearchProductFragment.this);
+                                searchStoreList.setAdapter(storeListAdapter);
+                            }else {
+                                tvNoOfShop.setText("0");
+                                tvNoOfShopGrey.setText("0");
+                            }
+
+//                            if (response.getProducts_offers().size()>0){
+//
+//                                OfferAdapter offerAdapter = new OfferAdapter(getActivity(),CategoryList,CategoryList);
+//                                offerProductList.setAdapter(offerAdapter);
+//                            }else {
+//
+//                            }
 
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),response.getMessage(),true);

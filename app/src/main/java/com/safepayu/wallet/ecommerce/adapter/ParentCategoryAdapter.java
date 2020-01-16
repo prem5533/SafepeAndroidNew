@@ -1,6 +1,5 @@
 package com.safepayu.wallet.ecommerce.adapter;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
-import com.safepayu.wallet.ecommerce.model.response.ParentCategoriesResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

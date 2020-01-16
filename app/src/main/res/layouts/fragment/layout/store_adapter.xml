@@ -11,17 +11,18 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
                 app:cardElevation="1dp"
-                    android:layout_margin="5dp">
+                android:layout_margin="5dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:background="@color/white">
                     <ImageView
+                        android:id="@+id/storeImage_storeAdapter"
                         android:layout_width="123dp"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
@@ -39,6 +40,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <TextView
+                                android:id="@+id/storeName_storeAdapter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="18sp"
@@ -53,13 +55,14 @@
                                 android:gravity="right">
 
                                 <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="10sp"
-                                android:text=" Open"
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/roboto_medium"/>
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="10sp"
+                                    android:text=" Open"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="@font/roboto_medium"/>
                                 <TextView
+                                    android:id="@+id/storeOpenTime_storeAdapter"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textSize="10sp"
@@ -70,6 +73,7 @@
                         </LinearLayout>
 
                             <TextView
+                                android:id="@+id/storeType_storeAdapter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="10sp"
@@ -90,7 +94,7 @@
                                     android:layout_height="10dp"
                                     android:src="@drawable/ic_delivery_van_ecom"/>
                                 <TextView
-                                    android:id="@+id/tv_product_storenme"
+                                    android:id="@+id/storeFreeDelivery_storeAdapter"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textSize="10sp"
@@ -100,6 +104,7 @@
                                     android:layout_marginLeft="5dp"
                                     android:layout_weight="1"/>
                                 <RatingBar
+                                    android:id="@+id/storeRating_storeAdapter"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:max="5"
@@ -125,7 +130,7 @@
                                 android:layout_height="15dp"
                                 android:src="@drawable/ic_discount_ecom"/>
                             <TextView
-                                android:id="@+id/tv_rs"
+                                android:id="@+id/storeOffer_storeAdapter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="15sp"
@@ -140,7 +145,7 @@
                                 android:layout_height="15dp"
                                 android:src="@drawable/ic_maps_and_flags_ecom_gray" />
                             <TextView
-                                android:id="@+id/tv_pstore_km"
+                                android:id="@+id/storeDistance_storeAdapter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="12sp"

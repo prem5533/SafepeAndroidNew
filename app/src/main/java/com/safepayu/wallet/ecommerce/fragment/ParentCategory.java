@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,7 +22,6 @@ import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
 import com.safepayu.wallet.ecommerce.model.response.CategoriesResponse;
 import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
-import com.safepayu.wallet.ecommerce.model.response.ParentCategoriesResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,7 +67,6 @@ public class ParentCategory extends Fragment implements ParentCategoryAdapter.On
             BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.parentCategoryLayout),"No Internet Connection!",true);
         }
     }
-
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -187,7 +184,6 @@ public class ParentCategory extends Fragment implements ParentCategoryAdapter.On
 
     @Override
     public void onCategory(int position, HomeCatResponse.DataBean.CategoriesBean categoriesBean) {
-        Toast.makeText(getActivity(), categoriesBean.getCat_name(), Toast.LENGTH_SHORT).show();
 
         Bundle args = new Bundle();
         args.putString("CatId", String.valueOf(categoriesBean.getId()));

@@ -3,7 +3,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="#f4f5ff"
-
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout
@@ -45,7 +44,7 @@
                         android:layout_marginRight="5dp"
                         android:layout_marginTop="5dp">
                         <TextView
-                            android:id="@+id/tv_actual_rs"
+                            android:id="@+id/productPrice_SearchProductAdapter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="10dp"
@@ -54,7 +53,7 @@
                             android:text="₹ 144.00"/>
 
                         <TextView
-                            android:id="@+id/tv_offer_rs"
+                            android:id="@+id/productOfferPrice_SearchProductAdapter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="14dp"
@@ -63,6 +62,7 @@
                             android:text="₹ 57.6"
                             android:layout_marginLeft="5dp"/>
                     </LinearLayout>
+
                     <TextView
                         android:id="@+id/tvProductName_SearchProductAdapter"
                         android:layout_width="match_parent"
@@ -71,9 +71,11 @@
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/white"
                         android:text="Mixer"
-                        android:layout_marginLeft="10dp"/>
+                        android:layout_marginLeft="10dp"
+                        android:singleLine="true"
+                        android:ellipsize="end"/>
                     <RatingBar
-                        android:id="@+id/listitemrating"
+                        android:id="@+id/productRating_SearchProductAdapter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleX=".5"
@@ -85,9 +87,9 @@
                         android:numStars="5"
                         android:stepSize="1"
                         android:layout_marginLeft="10dp"
-                        android:theme="@style/RatingBar"/>
+                        android:theme="@style/Widget.AppCompat.RatingBar.Small"/>
                     <TextView
-                        android:id="@+id/tv_product_detail"
+                        android:id="@+id/productDetail_SearchProductAdapter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
@@ -96,7 +98,9 @@
                         android:text="Russell Hobbs RHM2076B 20L Digital 800w Solo Microwave Black"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="-30dp"/>
+                        android:layout_marginTop="-30dp"
+                        android:singleLine="true"
+                        android:ellipsize="end"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -108,7 +112,7 @@
                             android:layout_height="10dp"
                             android:src="@drawable/ic_store_ecom"/>
                         <TextView
-                            android:id="@+id/tv_product_storenme"
+                            android:id="@+id/productStoreName_SearchProductAdapter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
@@ -116,14 +120,16 @@
                             android:textColor="@color/white"
                             android:text="From Store A  "
                             android:layout_marginLeft="5dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:ellipsize="end"/>
 
                         <ImageView
                             android:layout_width="10dp"
                             android:layout_height="10dp"
                             android:src="@drawable/ic_maps_and_flags_ecom" />
                         <TextView
-                            android:id="@+id/tv_pstore_km"
+                            android:id="@+id/productStoreDistance_SearchProductAdapter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
@@ -147,12 +153,12 @@
                     android:layout_height="50dp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:background="@drawable/ic_offer_bg_ecom_red"
-                    >
+                    android:background="@drawable/ic_offer_bg_ecom_red">
                     <TextView
+                        android:id="@+id/productOfferPercent_SearchProductAdapter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="60%"
+                        android:text="0%"
                         android:textSize="10sp"
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/white"/>

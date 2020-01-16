@@ -10,7 +10,6 @@ import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
 import com.safepayu.wallet.ecommerce.model.response.ParentCategoriesResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductByModifierResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsByCategoryIdResponse;
-import com.safepayu.wallet.ecommerce.model.response.ProductsBySearchResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
 import com.safepayu.wallet.ecommerce.model.response.VenueDetailsResponse;
 
@@ -29,7 +28,7 @@ public interface ApiServiceEcom {
 
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/getProductBySearch")
-    Single<ProductsBySearchResponse> getProductBySearch(@Field("search") String search);
+    Single<ProductsByCategoryIdResponse> getProductBySearch(@Field("search") String search);
 
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/getProductsByCategoryId")

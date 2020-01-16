@@ -287,7 +287,7 @@ public class ProductsByCategoryIdResponse {
             return stars;
         }
 
-        public void setStars(int stars) {
+        public void setStars(double stars) {
             this.stars = stars;
         }
 
@@ -354,7 +354,7 @@ public class ProductsByCategoryIdResponse {
         private int collection;
         private String latitude;
         private String longitude;
-        private int stars;
+        private double stars;
         private String distance;
 
         public int getId() {
@@ -549,11 +549,11 @@ public class ProductsByCategoryIdResponse {
             this.longitude = longitude;
         }
 
-        public int getStars() {
+        public double getStars() {
             return stars;
         }
 
-        public void setStars(int stars) {
+        public void setStars(double stars) {
             this.stars = stars;
         }
 
@@ -625,7 +625,7 @@ public class ProductsByCategoryIdResponse {
         private String modifier_images;
         private String venue_name;
         private String distance;
-        private int stars;
+        private double stars;
 
         public int getOffer_id() {
             return offer_id;
@@ -827,11 +827,11 @@ public class ProductsByCategoryIdResponse {
             this.distance = distance;
         }
 
-        public int getStars() {
+        public double getStars() {
             return stars;
         }
 
-        public void setStars(int stars) {
+        public void setStars(double stars) {
             this.stars = stars;
         }
     }
