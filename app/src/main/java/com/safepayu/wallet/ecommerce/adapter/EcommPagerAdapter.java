@@ -12,25 +12,27 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
+import com.safepayu.wallet.api.ApiClient;
+import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class EcommPagerAdapter extends PagerAdapter {
     // Declare Variables
     private Context context;
-    private List<ProductsDetailsResponse.ProductsBean> simage;
-    int images[];
+    private List<HomeCatResponse.DataBean.BannersBean> simage;
+   // int images[];
     private LayoutInflater inflater;
 
-    public EcommPagerAdapter(Context context, int[] images) {
+    public EcommPagerAdapter(Context context, List<HomeCatResponse.DataBean.BannersBean> simage) {
         this.context = context;
-        this.images = images;
+        this.simage = simage;
     }
 
     @Override
     public int getCount() {
-        return images.length;
+        return simage.size();
     }
 
     @Override
@@ -48,18 +50,27 @@ public class EcommPagerAdapter extends PagerAdapter {
 
         image_pager= (ImageView) itemView.findViewById(R.id.im);
 
-        image_pager.setImageResource(images[position]);
+      // image_pager.setImageResource(images[position]);
 
-     /*   Picasso.get()
-                .load(ApiClient.ImagePath+ images.get(position)
-                .getImage())
+        Picasso.get()
+                .load(ApiClient.ImagePath+ simage.get(position)
+                .getApp_banner())
                 .error(context.getResources().getDrawable(R.drawable.image_not_available))
-                .into(image_pager);*/
+                .into(image_pager);
 
 
         // add viewpager_item.xml to ViewPager
         ((ViewPager) container).addView(itemView);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return itemView;
+
+
     }
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
@@ -67,4 +78,5 @@ public class EcommPagerAdapter extends PagerAdapter {
         ((ViewPager) container).removeView((RelativeLayout) object);
 
     }
+
 }

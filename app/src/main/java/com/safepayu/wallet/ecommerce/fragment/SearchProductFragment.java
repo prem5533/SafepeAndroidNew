@@ -36,7 +36,6 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.activity.FilterDialog;
 import com.safepayu.wallet.ecommerce.activity.ProductDetailActivity;
 import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
-import com.safepayu.wallet.ecommerce.adapter.OfferAdapter;
 import com.safepayu.wallet.ecommerce.adapter.SearchProductAdapter;
 import com.safepayu.wallet.ecommerce.adapter.StoreListAdapter;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
@@ -345,13 +344,13 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                                 tvNoOfShopGrey.setText("0");
                             }
 
-                            if (response.getProducts_offers().size()>0){
-
-                                OfferAdapter offerAdapter = new OfferAdapter(getActivity(),CategoryList,CategoryList);
-                                offerProductList.setAdapter(offerAdapter);
-                            }else {
-
-                            }
+//                            if (response.getProducts_offers().size()>0){
+//
+//                                OfferAdapter offerAdapter = new OfferAdapter(getActivity(),CategoryList,CategoryList);
+//                                offerProductList.setAdapter(offerAdapter);
+//                            }else {
+//
+//                            }
 
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),response.getMessage(),true);
@@ -451,4 +450,6 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                     }
                 }));
     }
+
+
 }

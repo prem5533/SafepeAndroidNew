@@ -62,6 +62,7 @@
                             android:text="₹ 57.6"
                             android:layout_marginLeft="5dp"/>
                     </LinearLayout>
+
                     <TextView
                         android:id="@+id/tvProductName_SearchProductAdapter"
                         android:layout_width="match_parent"
@@ -71,7 +72,8 @@
                         android:textColor="@color/white"
                         android:text="Mixer"
                         android:layout_marginLeft="10dp"
-                        android:maxLines="2"/>
+                        android:singleLine="true"
+                        android:ellipsize="end"/>
                     <RatingBar
                         android:id="@+id/productRating_SearchProductAdapter"
                         android:layout_width="wrap_content"

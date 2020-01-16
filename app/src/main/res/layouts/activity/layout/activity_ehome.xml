@@ -61,12 +61,11 @@
 
 
                     <ImageView
-
+                        android:id="@+id/location_ecom"
                         android:layout_height="40dp"
                         android:layout_width="40dp"
-                        android:src="@drawable/ic_like_white"
-                        android:padding="10dp"
-                        android:visibility="gone"/>
+                        android:src="@drawable/ic_pin"
+                        android:padding="10dp" />
                     <ImageView
                         android:id="@+id/favBtn_main"
                         android:layout_height="40dp"

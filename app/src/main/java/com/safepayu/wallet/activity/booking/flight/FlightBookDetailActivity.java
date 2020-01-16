@@ -560,8 +560,7 @@ public class FlightBookDetailActivity extends AppCompatActivity implements View.
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
 
-                            new DownloadTask(FlightBookDetailActivity.this, response.getData());
-                        }
+                            new DownloadTask(FlightBookDetailActivity.this, response.getData()); }
 
                     }
 

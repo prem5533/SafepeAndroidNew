@@ -21,7 +21,7 @@ import com.safepayu.wallet.ecommerce.adapter.ParentCategoryAdapter;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
 import com.safepayu.wallet.ecommerce.model.response.CategoriesResponse;
-import com.safepayu.wallet.ecommerce.model.response.ParentCategoriesResponse;
+import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +58,7 @@ public class ParentCategory extends Fragment implements ParentCategoryAdapter.On
         loadingDialog=new LoadingDialog(getActivity());
         CategoryRecyclerView=view.findViewById(R.id.recycleCat_parentCategoryLayout);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.VERTICAL,false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),3, LinearLayoutManager.VERTICAL,false);
         CategoryRecyclerView.setLayoutManager(gridLayoutManager);
 
         if (isNetworkAvailable()){
@@ -68,54 +68,36 @@ public class ParentCategory extends Fragment implements ParentCategoryAdapter.On
         }
     }
 
-    @Override
-    public void onCategory(int position, ParentCategoriesResponse.CategoriesBean categoriesBean) {
-
-        Bundle args = new Bundle();
-        args.putString("CatId", String.valueOf(categoriesBean.getId()));
-
-        SearchProductFragment fragment = new SearchProductFragment();
-        fragment.setArguments(args);
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content_frame, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-
-    }
-
     private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected(); }
 
     private void getAllParentCategory() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
         ApiServiceEcom apiService = ApiClientEcom.getClient(getActivity()).create(ApiServiceEcom.class);
 
-        BaseApp.getInstance().getDisposable().add(apiService.getAllParentCategory()
+        BaseApp.getInstance().getDisposable().add(apiService.getAllCategoryHome()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<ParentCategoriesResponse>() {
+                .subscribeWith(new DisposableSingleObserver<HomeCatResponse>() {
                     @Override
-                    public void onSuccess(ParentCategoriesResponse response) {
+                    public void onSuccess(HomeCatResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
 
-                            if (response.getCategories().size()>0){
-                                ParentCategoryAdapter adapter=new ParentCategoryAdapter(getActivity(),response.getCategories(),ParentCategory.this,"Cat");
+                            if (response.getData().getCategories().size()>0){
+                               /* ParentCategoryAdapter adapter=new ParentCategoryAdapter(getActivity(),response.getCategories(),ParentCategory.this,"Cat");
+                                CategoryRecyclerView.setAdapter(adapter);*/
+                                ParentCategoryAdapter adapter=new ParentCategoryAdapter(getActivity(),response.getData().getCategories(),ParentCategory.this,"Cat");
                                 CategoryRecyclerView.setAdapter(adapter);
 
-                                getAllCategories();
+                               // getAllCategories();
                             }else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.parentCategoryLayout),"No Category Found!",true);
-                            }
-
+                                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.parentCategoryLayout),"No Category Found!",true); }
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.parentCategoryLayout),response.getMessage(),true);
-                        }
+                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.parentCategoryLayout),response.getMessage(),true); }
                     }
 
                     @Override
@@ -198,5 +180,19 @@ public class ParentCategory extends Fragment implements ParentCategoryAdapter.On
                         BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.parentCategoryLayout), true, e);
                     }
                 }));
+    }
+
+    @Override
+    public void onCategory(int position, HomeCatResponse.DataBean.CategoriesBean categoriesBean) {
+
+        Bundle args = new Bundle();
+        args.putString("CatId", String.valueOf(categoriesBean.getId()));
+
+        SearchProductFragment fragment = new SearchProductFragment();
+        fragment.setArguments(args);
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

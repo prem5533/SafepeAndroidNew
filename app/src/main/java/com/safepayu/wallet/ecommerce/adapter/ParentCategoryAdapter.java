@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
-import com.safepayu.wallet.ecommerce.model.response.ParentCategoriesResponse;
+import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -23,14 +23,14 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
 
     private Context context;
     private String Tag="";
-    private List<ParentCategoriesResponse.CategoriesBean> categories;
+    private List<HomeCatResponse.DataBean.CategoriesBean> categories;
     private ParentCategoryAdapter.OnCategoryItemListener onCategoryItemListener;
 
     public interface OnCategoryItemListener{
-        void onCategory(int position,ParentCategoriesResponse.CategoriesBean categoriesBean);
+        void onCategory(int position,HomeCatResponse.DataBean.CategoriesBean categoriesBean);
     }
 
-    public ParentCategoryAdapter(Context context, List<ParentCategoriesResponse.CategoriesBean> categoryList,
+   public ParentCategoryAdapter(Context context, List<HomeCatResponse.DataBean.CategoriesBean> categoryList,
                                  ParentCategoryAdapter.OnCategoryItemListener onCategoryItemListener,String Tag) {
         this.context = context;
         this.Tag = Tag;
@@ -38,10 +38,17 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
         this.onCategoryItemListener = onCategoryItemListener;
     }
 
+
+
     @NonNull
     @Override
     public ParentCategoryAdapter.ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.parent_category_adaper,parent,false);
+        View view = null;
+       if (Tag.equals("Home")){
+           view = LayoutInflater.from(context).inflate(R.layout.homecategroy_adapter,parent,false);
+       } else {
+            view = LayoutInflater.from(context).inflate(R.layout.parent_category_adaper,parent,false); }
+
         return new ParentCategoryAdapter.ProductViewHolder(view);
     }
 
@@ -55,7 +62,7 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
 
             } else {
                 Picasso.get()
-                        .load(ApiClientEcom.ImagePath + categories.get(position).getImage())
+                        .load(ApiClientEcom.ImagePath+ categories.get(position).getImage())
                         .error(context.getResources().getDrawable(R.drawable.image_not_available))
                         .into(holder.imageCat);
             }
@@ -67,7 +74,7 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
     @Override
     public int getItemCount() {
         if (Tag.equalsIgnoreCase("Home")){
-            return 3;
+            return 6;
         }else {
             return categories.size();
         }
