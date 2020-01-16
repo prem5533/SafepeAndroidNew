@@ -61,7 +61,7 @@ import io.reactivex.schedulers.Schedulers;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment implements CategoryAdapter.OnCategoryItemListener,
-        BottomNavigationView.OnNavigationItemSelectedListener, ParentCategoryAdapter.OnCategoryItemListener {
+        BottomNavigationView.OnNavigationItemSelectedListener, ParentCategoryAdapter.OnCategoryItemListener, EcommPagerAdapter.PagerListener {
 
     private RecyclerView recyclerCategory,recycleCategoryOfferList,recycleTrendingProductList,recycleRecommendList;
     private CategoryAdapter categoryAdapter;
@@ -415,7 +415,7 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                                 recommendedAdapter = new RecommendedAdapter(getActivity(),response.getData().getProducts_recommended());
                                 recycleRecommendList.setAdapter(recommendedAdapter); }
 
-                            ecommPagerAdapter = new EcommPagerAdapter(getActivity(),response.getData().getBanners());
+                            ecommPagerAdapter = new EcommPagerAdapter(getActivity(),response.getData().getBanners(),HomeFragment.this);
                             viewpager.setAdapter(ecommPagerAdapter);
                             NumPage= response.getData().getBanners().size();
                             if (NumPage>1){
@@ -448,5 +448,10 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         transaction.replace(R.id.content_frame, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public void pgerItemListener(int position) {
+        Toast.makeText(getActivity(),String.valueOf(position),Toast.LENGTH_SHORT).show();
     }
 }

@@ -29,6 +29,7 @@
                     android:fontFamily="@font/roboto_regular"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:id="@+id/imCross"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:padding="5dp"

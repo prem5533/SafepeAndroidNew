@@ -23,12 +23,17 @@ public class EcommPagerAdapter extends PagerAdapter {
     // Declare Variables
     private Context context;
     private List<HomeCatResponse.DataBean.BannersBean> simage;
-   // int images[];
-    private LayoutInflater inflater;
+    private PagerListener pagerListener;
 
-    public EcommPagerAdapter(Context context, List<HomeCatResponse.DataBean.BannersBean> simage) {
+
+    public interface PagerListener{
+        void pgerItemListener(int position );
+    }
+
+    public EcommPagerAdapter(Context context, List<HomeCatResponse.DataBean.BannersBean> simage, PagerListener pagerListener) {
         this.context = context;
         this.simage = simage;
+        this.pagerListener = pagerListener;
     }
 
     @Override
@@ -42,7 +47,7 @@ public class EcommPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
 
 
         // Declare Variables
@@ -67,6 +72,10 @@ public class EcommPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View v) {
 
+                if (pagerListener != null) {
+                    pagerListener.pgerItemListener(position);
+
+                }
             }
         });
         return itemView;
