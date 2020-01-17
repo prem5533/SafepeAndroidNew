@@ -83,6 +83,10 @@ public class SharedPref {
     public final String FLIGHT_START_JOURNEY_RETURN = "flight_journey_return";
     public final String S_KEY = "key";
 
+//*******************************E-COMMERCE*****************************************************//
+    public final String PRODUCT_ID = "product_id";
+    public final String OFFER_ID = "offer_id";
+
 
     public SharedPref(Context context) {
         this.context = context;

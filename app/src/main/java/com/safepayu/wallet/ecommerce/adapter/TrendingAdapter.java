@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,10 +24,16 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Produc
 
      private Context context;
      private List<HomeCatResponse.DataBean.ProductsTrendingBean> trendingItem;
+    private OnTrendinItemListener onTrendinItemListener;
 
-    public TrendingAdapter(Context context, List<HomeCatResponse.DataBean.ProductsTrendingBean> trendingItem) {
+    public interface OnTrendinItemListener{
+        void onTrending(int position,HomeCatResponse.DataBean.ProductsTrendingBean productsTrendingBean);
+    }
+
+    public TrendingAdapter(Context context, List<HomeCatResponse.DataBean.ProductsTrendingBean> trendingItem, OnTrendinItemListener onTrendinItemListener) {
         this.context = context;
         this.trendingItem = trendingItem;
+        this.onTrendinItemListener = onTrendinItemListener;
     }
 
     @NonNull
@@ -90,7 +95,8 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Produc
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
+                    if (onTrendinItemListener != null) {
+                        onTrendinItemListener.onTrending(getLayoutPosition(),trendingItem.get(getLayoutPosition())); }
                 }
             });
         }

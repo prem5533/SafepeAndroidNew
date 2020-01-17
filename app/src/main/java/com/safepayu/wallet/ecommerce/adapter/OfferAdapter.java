@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,10 +24,16 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ProductViewH
 
      private Context context;
      private List<HomeCatResponse.DataBean.ProductsOfferBean> offerItem;
+     private OnPOfferItemListener onPOfferItemListener;
 
-    public OfferAdapter(Context context, List<HomeCatResponse.DataBean.ProductsOfferBean> offerItem) {
+    public interface OnPOfferItemListener{
+        void onPOffer(int position,HomeCatResponse.DataBean.ProductsOfferBean productsOfferBean);
+    }
+
+    public OfferAdapter(Context context, List<HomeCatResponse.DataBean.ProductsOfferBean> offerItem, OnPOfferItemListener onPOfferItemListener) {
         this.context = context;
         this.offerItem = offerItem;
+        this.onPOfferItemListener = onPOfferItemListener;
     }
 
     @NonNull
@@ -66,12 +71,11 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ProductViewH
 
         if (offerItem.get(position).getOffer_type().equals("discper")){
 
-            Double b = ((Double.parseDouble(offerItem.get(position).getSelling_price())-(((Double.parseDouble(offerItem.get(position).getSelling_price()))*(Double.parseDouble(offerItem.get(position).getDisc_per())))/100)));
-            holder.tvSellingPrice.setText("₹ "+String.valueOf(b));
-        }
+            Double b = ((Double.parseDouble(offerItem.get(position).getSelling_price())-((Double.parseDouble(offerItem.get(position).getSelling_price()))*(Double.parseDouble(offerItem.get(position).getDisc_per()))/100)));
+            holder.tvSellingPrice.setText("₹ " +String.format("%.3f", b)); }
+
         else if (offerItem.get(position).getOffer_type().equals("discamt")){
-            holder.tvSellingPrice.setText("₹ "+String.valueOf(Double.parseDouble(offerItem.get(position).getSelling_price())- Double.parseDouble(offerItem.get(position).getDisc_amt())));
-        }
+            holder.tvSellingPrice.setText("₹ "+String.format("%.2f",(Double.parseDouble(offerItem.get(position).getSelling_price())- Double.parseDouble(offerItem.get(position).getDisc_amt())))); }
     }
 
     @Override
@@ -101,7 +105,8 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ProductViewH
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
+                    if (onPOfferItemListener != null) {
+                        onPOfferItemListener.onPOffer(getLayoutPosition(),offerItem.get(getLayoutPosition())); }
                 }
             });
         }

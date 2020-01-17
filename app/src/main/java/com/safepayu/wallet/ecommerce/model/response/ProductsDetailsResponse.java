@@ -9,8 +9,8 @@ public class ProductsDetailsResponse {
      * status : true
      * message : Product Details
      * venues : {"id":2,"merchant_id":2,"venue_id":"201911011148462","venue_name":"LillyWhites","venue_images":["1572608926.a-lillywhites-store-in-piccadilly-circus-london-england-uk-C5RJXF.jpg","20191121064555.lillywhites.jpg","20191121064555.lillywhites-sports-shopdepartment-store-londons-west-end-london-engtand-DA53PJ.jpg"],"address_1":"Oaklands Road, Wolverhampton WV3 0DS, England, UK","address_2":null,"city_name":"Wolverhampton","country":"United Kingdom","post_code":"WV3 0DS","phone_number":"5468496484","venue_email":"whiteslilly@dmailpro.net","venue_website":"https://www.lillywhites.com/","home_delivery_mov":"0.30","start_days":1,"end_days":2,"collection_time":20,"preparation_time":30,"free_delivery":"0.30","delivery_charge":"0.30","delivery":1,"collection":1,"opening_time":"06:15","closing_time":"20:30"}
-     * products : {"id":70,"merchant_id":2,"venue_id":"201911011148462","product_name":"Women Sea Green & Blue Striped Kurta with Palazzos","product_description":"<p><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Sea green, blue and red striped kurta with palazzos<\/span><br style=\"box-sizing: inherit; color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\"><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Sea green, blue and red striped straight calf length kurta, has a keyhole neck, short sleeves, straight hem, side slits<\/span><br style=\"box-sizing: inherit; color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\"><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Sea green and red printed palazzos, has partially elasticated waistband, slip-on closure, two pockets<\/span><br><\/p>","measurement_unit_id":2,"category_id":["7","2"],"related_product_ids":["71","72"],"brand_id":8,"tax_id":"5","supplier_id":2,"product_tags":"Kurta","images":["uploaded/products/5632215760571460.jpeg","uploaded/products/3487215760571461.jpeg","uploaded/products/3855815760571462.jpeg"],"modifier_list":{"Color":["Gerua"],"Size":["M","L","XL"]},"modifier_id":135,"modifier_name":"Gerua,M","buy_price":"10.00","selling_price":"21.00","avl_quantity":91,"modifier_images":["uploaded/products/4850015760573040.jpeg","uploaded/products/1411915760573040.jpeg","uploaded/products/9070115760573040.jpeg",""],"productsRating":0}
-     * productOfers : [{"offer_id":1,"offer_type":"discper","disc_per":"10.00","disc_amt":"0.00","offer_title":"10% Off","start_date":"2019-10-31","end_date":"2020-11-15","offer_time_start":"00:05:00","offer_time_end":"23:55:00","type":1,"discount_type":1,"discount_amount":"10.00","product_id":70,"merchant_id":2,"venue_id":"201911011148462","product_name":"Women Sea Green & Blue Striped Kurta with Palazzos","product_description":"<p><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Sea green, blue and red striped kurta with palazzos<\/span><br style=\"box-sizing: inherit; color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\"><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Sea green, blue and red striped straight calf length kurta, has a keyhole neck, short sleeves, straight hem, side slits<\/span><br style=\"box-sizing: inherit; color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\"><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Sea green and red printed palazzos, has partially elasticated waistband, slip-on closure, two pockets<\/span><br><\/p>","product_images":"uploaded/products/5632215760571460.jpeg","modifier_id":135,"buy_price":"10.00","selling_price":"21.00","avl_quantity":91,"modifier_images":"uploaded/products/4850015760573040.jpeg","venue_name":"LillyWhites","distance":"3,634.56","stars":0}]
+     * products : {"id":70,"merchant_id":2,"venue_id":"201911011148462","product_name":"Women Sea Green & Blue Striped Kurta with Palazzos","product_description":"<p><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Sea green, blue and red striped kurta with palazzos<\/span><br style=\"box-sizing: inherit; color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\"><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Sea green, blue and red striped straight calf length kurta, has a keyhole neck, short sleeves, straight hem, side slits<\/span><br style=\"box-sizing: inherit; color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\"><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Sea green and red printed palazzos, has partially elasticated waistband, slip-on closure, two pockets<\/span><br><\/p>","measurement_unit_id":2,"category_id":["7","2"],"related_product_ids":["71","72"],"brand_id":8,"tax_id":"5","supplier_id":2,"product_tags":"Kurta","images":["uploaded/products/5632215760571460.jpeg","uploaded/products/3487215760571461.jpeg","uploaded/products/3855815760571462.jpeg"],"modifier_list":[{"name":"Color","value":["Gerua"]},{"name":"Size","value":["M","L","XL"]}],"modifier_id":135,"modifier_name":"Gerua,M","buy_price":"10.00","selling_price":"21.00","avl_quantity":91,"modifier_images":["uploaded/products/4850015760573040.jpeg","uploaded/products/1411915760573040.jpeg","uploaded/products/9070115760573040.jpeg",""],"productsRating":0}
+     * productOfers : [{"offer_id":1,"offer_type":"discamt","disc_per":"0.00","disc_amt":"10.00","offer_title":"10% Off","start_date":"2019-10-31","end_date":"2020-11-15","offer_time_start":"00:05:00","offer_time_end":"23:55:00","type":1,"discount_type":1,"discount_amount":"10.00","product_id":70,"merchant_id":2,"venue_id":"201911011148462","product_name":"Women Sea Green & Blue Striped Kurta with Palazzos","product_description":"<p><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Sea green, blue and red striped kurta with palazzos<\/span><br style=\"box-sizing: inherit; color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\"><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Sea green, blue and red striped straight calf length kurta, has a keyhole neck, short sleeves, straight hem, side slits<\/span><br style=\"box-sizing: inherit; color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\"><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Sea green and red printed palazzos, has partially elasticated waistband, slip-on closure, two pockets<\/span><br><\/p>","product_images":["uploaded/products/5632215760571460.jpeg","uploaded/products/3487215760571461.jpeg","uploaded/products/3855815760571462.jpeg"],"modifier_id":135,"buy_price":"10.00","selling_price":"21.00","avl_quantity":91,"modifier_images":"uploaded/products/4850015760573040.jpeg","venue_name":"LillyWhites","distance":"3,634.56","stars":0}]
      * relatedproduct : [{"id":71,"product_name":"Women Cream-Coloured & Pink Printed Maxi Shirt Dress","product_description":"<p><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Cream-Coloured and pink printed woven maxi shirt dress, has a shirt collar, three-quarter sleeves, hook and eye closures, flared hem<\/span><br style=\"box-sizing: inherit; color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\"><span style=\"color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;\">Comes with a belt<\/span><br><\/p>","merchant_id":2,"category_id":["2"],"brand_id":8,"images":"uploaded/products/1192015760662200.png","modifier_id":138,"selling_price":"100.00","buy_price":"70.00","avl_quantity":99,"modifier_images":null,"venue_id":"201911011148462","venue_name":"LillyWhites","latitude":"52.5756465","longitude":"-2.1385980000000018","productRating":0,"distance":"3,634.56"}]
      * loyalitypoints : {"loyalty_points_value":0.25,"loyalty_points":0,"total_loyalty_points_value":0}
      * modifiers : [{"id":135,"product_id":70,"modifier_name":"Gerua,M","sku":"02566","weight":"10","buy_price":"10.00","sell_price":"21.00","barcode":"120145632","quantity":91,"moq":1,"modifier_images":"uploaded/products/4850015760573040.jpeg,uploaded/products/1411915760573040.jpeg,uploaded/products/9070115760573040.jpeg,","product_barcode_image":"uploaded/barcodeImage/2102615760571460.png","product_qrcode_image":"uploaded/qrcodeImage/6240415760571460.png","created_at":null,"updated_at":null},{"id":136,"product_id":70,"modifier_name":"Gerua,L","sku":"02566","weight":"10","buy_price":"11.00","sell_price":"22.00","barcode":"120145632","quantity":100,"moq":1,"modifier_images":"uploaded/products/7620815771944890.jpeg,,,","product_barcode_image":"uploaded/barcodeImage/1098015760571460.png","product_qrcode_image":"uploaded/qrcodeImage/9961915760571460.png","created_at":null,"updated_at":null},{"id":137,"product_id":70,"modifier_name":"Gerua,XL","sku":"02566","weight":"10","buy_price":"12.00","sell_price":"23.00","barcode":"120145632","quantity":99,"moq":1,"modifier_images":"uploaded/products/7417515771945230.jpeg,,,","product_barcode_image":"uploaded/barcodeImage/5981915760571460.png","product_qrcode_image":"uploaded/qrcodeImage/1897815760571460.png","created_at":null,"updated_at":null}]
@@ -350,7 +350,7 @@ public class ProductsDetailsResponse {
          * supplier_id : 2
          * product_tags : Kurta
          * images : ["uploaded/products/5632215760571460.jpeg","uploaded/products/3487215760571461.jpeg","uploaded/products/3855815760571462.jpeg"]
-         * modifier_list : {"Color":["Gerua"],"Size":["M","L","XL"]}
+         * modifier_list : [{"name":"Color","value":["Gerua"]},{"name":"Size","value":["M","L","XL"]}]
          * modifier_id : 135
          * modifier_name : Gerua,M
          * buy_price : 10.00
@@ -370,7 +370,6 @@ public class ProductsDetailsResponse {
         private String tax_id;
         private int supplier_id;
         private String product_tags;
-        private ModifierListBean modifier_list;
         private int modifier_id;
         private String modifier_name;
         private String buy_price;
@@ -380,6 +379,7 @@ public class ProductsDetailsResponse {
         private List<String> category_id;
         private List<String> related_product_ids;
         private List<String> images;
+        private List<ModifierListBean> modifier_list;
         private List<String> modifier_images;
 
         public int getId() {
@@ -462,14 +462,6 @@ public class ProductsDetailsResponse {
             this.product_tags = product_tags;
         }
 
-        public ModifierListBean getModifier_list() {
-            return modifier_list;
-        }
-
-        public void setModifier_list(ModifierListBean modifier_list) {
-            this.modifier_list = modifier_list;
-        }
-
         public int getModifier_id() {
             return modifier_id;
         }
@@ -542,6 +534,14 @@ public class ProductsDetailsResponse {
             this.images = images;
         }
 
+        public List<ModifierListBean> getModifier_list() {
+            return modifier_list;
+        }
+
+        public void setModifier_list(List<ModifierListBean> modifier_list) {
+            this.modifier_list = modifier_list;
+        }
+
         public List<String> getModifier_images() {
             return modifier_images;
         }
@@ -551,23 +551,28 @@ public class ProductsDetailsResponse {
         }
 
         public static class ModifierListBean {
-            private List<String> Color;
-            private List<String> Size;
+            /**
+             * name : Color
+             * value : ["Gerua"]
+             */
 
-            public List<String> getColor() {
-                return Color;
+            private String name;
+            private List<String> value;
+
+            public String getName() {
+                return name;
             }
 
-            public void setColor(List<String> Color) {
-                this.Color = Color;
+            public void setName(String name) {
+                this.name = name;
             }
 
-            public List<String> getSize() {
-                return Size;
+            public List<String> getValue() {
+                return value;
             }
 
-            public void setSize(List<String> Size) {
-                this.Size = Size;
+            public void setValue(List<String> value) {
+                this.value = value;
             }
         }
     }
@@ -580,8 +585,8 @@ public class ProductsDetailsResponse {
          */
 
         private double loyalty_points_value;
-        private int loyalty_points;
-        private int total_loyalty_points_value;
+        private double loyalty_points;
+        private double total_loyalty_points_value;
 
         public double getLoyalty_points_value() {
             return loyalty_points_value;
@@ -591,19 +596,19 @@ public class ProductsDetailsResponse {
             this.loyalty_points_value = loyalty_points_value;
         }
 
-        public int getLoyalty_points() {
+        public double getLoyalty_points() {
             return loyalty_points;
         }
 
-        public void setLoyalty_points(int loyalty_points) {
+        public void setLoyalty_points(double loyalty_points) {
             this.loyalty_points = loyalty_points;
         }
 
-        public int getTotal_loyalty_points_value() {
+        public double getTotal_loyalty_points_value() {
             return total_loyalty_points_value;
         }
 
-        public void setTotal_loyalty_points_value(int total_loyalty_points_value) {
+        public void setTotal_loyalty_points_value(double total_loyalty_points_value) {
             this.total_loyalty_points_value = total_loyalty_points_value;
         }
     }
@@ -611,9 +616,9 @@ public class ProductsDetailsResponse {
     public static class ProductOfersBean {
         /**
          * offer_id : 1
-         * offer_type : discper
-         * disc_per : 10.00
-         * disc_amt : 0.00
+         * offer_type : discamt
+         * disc_per : 0.00
+         * disc_amt : 10.00
          * offer_title : 10% Off
          * start_date : 2019-10-31
          * end_date : 2020-11-15
@@ -627,7 +632,7 @@ public class ProductsDetailsResponse {
          * venue_id : 201911011148462
          * product_name : Women Sea Green & Blue Striped Kurta with Palazzos
          * product_description : <p><span style="color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;">Sea green, blue and red striped kurta with palazzos</span><br style="box-sizing: inherit; color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;"><span style="color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;">Sea green, blue and red striped straight calf length kurta, has a keyhole neck, short sleeves, straight hem, side slits</span><br style="box-sizing: inherit; color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;"><span style="color: rgb(40, 44, 63); font-family: Whitney; font-size: 16px;">Sea green and red printed palazzos, has partially elasticated waistband, slip-on closure, two pockets</span><br></p>
-         * product_images : uploaded/products/5632215760571460.jpeg
+         * product_images : ["uploaded/products/5632215760571460.jpeg","uploaded/products/3487215760571461.jpeg","uploaded/products/3855815760571462.jpeg"]
          * modifier_id : 135
          * buy_price : 10.00
          * selling_price : 21.00
@@ -655,7 +660,6 @@ public class ProductsDetailsResponse {
         private String venue_id;
         private String product_name;
         private String product_description;
-        private String product_images;
         private int modifier_id;
         private String buy_price;
         private String selling_price;
@@ -664,6 +668,7 @@ public class ProductsDetailsResponse {
         private String venue_name;
         private String distance;
         private int stars;
+        private List<String> product_images;
 
         public int getOffer_id() {
             return offer_id;
@@ -801,14 +806,6 @@ public class ProductsDetailsResponse {
             this.product_description = product_description;
         }
 
-        public String getProduct_images() {
-            return product_images;
-        }
-
-        public void setProduct_images(String product_images) {
-            this.product_images = product_images;
-        }
-
         public int getModifier_id() {
             return modifier_id;
         }
@@ -871,6 +868,14 @@ public class ProductsDetailsResponse {
 
         public void setStars(int stars) {
             this.stars = stars;
+        }
+
+        public List<String> getProduct_images() {
+            return product_images;
+        }
+
+        public void setProduct_images(List<String> product_images) {
+            this.product_images = product_images;
         }
     }
 

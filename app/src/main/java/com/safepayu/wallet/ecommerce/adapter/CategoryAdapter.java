@@ -25,11 +25,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Produc
         void onCtategory(int position);
     }
 
-   /* public CategoryAdapter(Context context, OnCategoryItemListener onCategoryItemListener) {
-        this.context = context;
-        this.onCategoryItemListener = onCategoryItemListener;
-    }*/
-
     public CategoryAdapter(Context context, List<CategoryModel> categoryList, OnCategoryItemListener onCategoryItemListener) {
         this.context = context;
         this.categoryList = categoryList;

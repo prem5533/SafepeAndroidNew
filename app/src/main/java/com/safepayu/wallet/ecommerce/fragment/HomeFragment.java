@@ -36,6 +36,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.QrCodeScanner;
 import com.safepayu.wallet.activity.WalletActivity;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.ecommerce.activity.ProductDetailActivity;
 import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
 import com.safepayu.wallet.ecommerce.adapter.CategoryAdapter;
 import com.safepayu.wallet.ecommerce.adapter.EcommPagerAdapter;
@@ -61,7 +62,8 @@ import io.reactivex.schedulers.Schedulers;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment implements CategoryAdapter.OnCategoryItemListener,
-        BottomNavigationView.OnNavigationItemSelectedListener, ParentCategoryAdapter.OnCategoryItemListener {
+        BottomNavigationView.OnNavigationItemSelectedListener, ParentCategoryAdapter.OnCategoryItemListener, EcommPagerAdapter.PagerListener ,
+        RecommendedAdapter.OnRecommendedItemListener,TrendingAdapter.OnTrendinItemListener, OfferAdapter.OnPOfferItemListener {
 
     private RecyclerView recyclerCategory,recycleCategoryOfferList,recycleTrendingProductList,recycleRecommendList;
     private CategoryAdapter categoryAdapter;
@@ -120,10 +122,9 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         tvSearch = view.findViewById(R.id.tv_search_ecomm);
         tvViewAll = view.findViewById(R.id.viewAllCat_home);
         tabLayoutt = view.findViewById(R.id.tab_layout_ecom);
+
         recyclerCategory.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-
         recycleCategoryOfferList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-
         recycleTrendingProductList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         gridLayoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.VERTICAL,false);
@@ -429,17 +430,17 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                                 }
                             }
                             if (response.getData().getProducts_offer().size()>0){
-                                offerAdapter = new OfferAdapter(getActivity(),response.getData().getProducts_offer());
+                                offerAdapter = new OfferAdapter(getActivity(),response.getData().getProducts_offer(),HomeFragment.this);
                                 recycleCategoryOfferList.setAdapter(offerAdapter);
                             }
                             if (response.getData().getProducts_trending().size()>0){
-                                trendingAdapter = new TrendingAdapter(getActivity(),response.getData().getProducts_trending());
+                                trendingAdapter = new TrendingAdapter(getActivity(),response.getData().getProducts_trending(),HomeFragment.this);
                                 recycleTrendingProductList.setAdapter(trendingAdapter); }
                             if (response.getData().getProducts_recommended().size()>0){
-                                recommendedAdapter = new RecommendedAdapter(getActivity(),response.getData().getProducts_recommended());
+                                recommendedAdapter = new RecommendedAdapter(getActivity(),response.getData().getProducts_recommended(),HomeFragment.this);
                                 recycleRecommendList.setAdapter(recommendedAdapter); }
 
-                            ecommPagerAdapter = new EcommPagerAdapter(getActivity(),response.getData().getBanners());
+                            ecommPagerAdapter = new EcommPagerAdapter(getActivity(),response.getData().getBanners(),HomeFragment.this);
                             viewpager.setAdapter(ecommPagerAdapter);
                             NumPage= response.getData().getBanners().size();
                             if (NumPage>1){
@@ -472,5 +473,43 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         transaction.replace(R.id.content_frame, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+
+
+    @Override
+    public void pgerItemListener(int position, HomeCatResponse.DataBean.BannersBean mBannerId) {
+        Toast.makeText(getActivity(),String.valueOf(position),Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+        if (mBannerId.getAppCatUrl().equals("")){
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PRODUCT_ID,mBannerId.getAppProductUrl()); }
+        else if (mBannerId.getAppProductUrl().equals("")){
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PRODUCT_ID,mBannerId.getAppCatUrl()); }
+        startActivity(intent); }
+
+
+    @Override
+    public void onRecommended(int position, HomeCatResponse.DataBean.ProductsRecommendedBean productsRecommendedBean) {
+        Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PRODUCT_ID,String.valueOf(productsRecommendedBean.getId()));
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,"");
+        startActivity(intent);
+    }
+
+    @Override
+    public void onTrending(int position, HomeCatResponse.DataBean.ProductsTrendingBean productsTrendingBean) {
+        Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PRODUCT_ID,String.valueOf(productsTrendingBean.getId()));
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,"");
+        startActivity(intent);
+    }
+
+
+    @Override
+    public void onPOffer(int position, HomeCatResponse.DataBean.ProductsOfferBean productsOfferBean) {
+        Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PRODUCT_ID,String.valueOf(productsOfferBean.getProduct_id()));
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,String.valueOf(productsOfferBean.getOffer_id()));
+        startActivity(intent);
     }
 }

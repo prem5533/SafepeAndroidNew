@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +25,7 @@ import com.safepayu.wallet.ecommerce.adapter.ProdouctOfferAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProdouctOfferRelatedAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProductDetailPagerAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProductSizeAdapter;
+import com.safepayu.wallet.ecommerce.adapter.ProductValueAdapter;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
 import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
@@ -34,7 +36,8 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class ProductDetailActivity extends AppCompatActivity implements View.OnClickListener, ProdouctOfferAdapter.OnProductOfferItemListener {
+public class ProductDetailActivity extends AppCompatActivity implements View.OnClickListener, ProdouctOfferAdapter.OnProductOfferItemListener,
+        ProductSizeAdapter.OnProductItem , ProdouctOfferRelatedAdapter.OnProductRelatedItemListener {
 
     private ViewPager viewpagerProductDetail;
     private ProductDetailPagerAdapter productDetailPagerAdapter;
@@ -42,15 +45,19 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     private ProdouctOfferRelatedAdapter prodouctOfferRelated;
     private LoadingDialog loadingDialog;
     ProductDetailRequest productDetailRequest;
+    ProductValueAdapter productValueAdapter;
+    ProductsDetailsResponse productsResponse ;
 
     private ProductSizeAdapter productSizeAdapter;
     private RecyclerView productSizeList,productColorList,recycleProductOffer,recycleProductRelated;
 
     int NumPage,CurrentP=0 ;
     private Button backBtnProductDetail;
-    private TextView tvBuyNow,tvAddCart,tvActualPrice,tvProductDetailName,tvProductDetail,tvEarnPoint,tvOffprice,tvStoreName;
+    private TextView tvBuyNow,tvAddCart,tvActualPrice,tvProductDetailName,tvProductDetail,tvEarnPoint,tvOffprice,tvStoreName,tvPoffer,tvRelated;
     RatingBar ratingBar;
-    String Productid = "70";
+    String Productid = "70",Offerid,SellPrice;
+    private NestedScrollView scroll;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,8 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
 
     private void findId() {
         loadingDialog = new LoadingDialog(this);
+        Productid = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PRODUCT_ID);
+        Offerid = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().OFFER_ID);
         viewpagerProductDetail = findViewById(R.id.viewpager__product_detil);
         productSizeList = findViewById(R.id.product_size_list);
         productColorList = findViewById(R.id.product_color_list);
@@ -79,6 +88,11 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         ratingBar = findViewById(R.id.rating_product_detail);
         recycleProductOffer = findViewById(R.id.recycleProductOffer);
         recycleProductRelated = findViewById(R.id.recycleProductRelated);
+        scroll = findViewById(R.id.scroll);
+        tvRelated = findViewById(R.id.tvRelated);
+        tvPoffer = findViewById(R.id.tvPoffer);
+
+
         backBtnProductDetail.setOnClickListener(this);
         tvBuyNow.setOnClickListener(this);
         tvAddCart.setOnClickListener(this);
@@ -99,8 +113,16 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
             }
         };
 
-        productDetailRequest=new ProductDetailRequest();
-        productDetailRequest.setProduct_id(Productid);
+        if (Offerid.equals("")){
+            productDetailRequest=new ProductDetailRequest();
+            productDetailRequest.setProduct_id(Productid);
+        }
+        else {
+            productDetailRequest=new ProductDetailRequest();
+            productDetailRequest.setProduct_id(Productid);
+            productDetailRequest.setOffer_id(Offerid);
+        }
+
     }
 
     @Override
@@ -115,7 +137,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 break;
             case R.id.tv_product_detail_add_cart:
 
-            /*    Fragment fragment = CartFragment.newInstance();
+            /*    Fragment fragment = CartActivity.newInstance();
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -154,6 +176,7 @@ break;
                         loadingDialog.hideDialog();
                         if (productsDetailsResponse.isStatus()) {
 
+                            productsResponse = productsDetailsResponse;
                             productDetailPagerAdapter = new ProductDetailPagerAdapter(getApplicationContext(),productsDetailsResponse.getProducts().getImages());
                             viewpagerProductDetail.setAdapter(productDetailPagerAdapter);
                             NumPage= productsDetailsResponse.getProducts().getImages().size();
@@ -165,16 +188,34 @@ break;
                             tvProductDetailName.setText(productsDetailsResponse.getProducts().getProduct_name());
                             tvProductDetail.setText(productsDetailsResponse.getProducts().getProduct_description());
                             tvEarnPoint.setText("Earn "+productsDetailsResponse.getLoyalitypoints().getLoyalty_points()+" points");
-                            tvOffprice.setText("₹ "+productsDetailsResponse.getProducts().getSelling_price());
+
                             tvStoreName.setText(productsDetailsResponse.getVenues().getVenue_name());
                             ratingBar.setRating(productsDetailsResponse.getProducts().getProductsRating());
 
-                            productSizeList.setLayoutManager(new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                            productSizeAdapter = new ProductSizeAdapter(ProductDetailActivity.this,productsDetailsResponse.getProducts().getModifier_list().getSize());
-                            productSizeList.setAdapter(productSizeAdapter);
 
-                            productColorList.setLayoutManager(new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                            productSizeAdapter = new ProductSizeAdapter(ProductDetailActivity.this,productsDetailsResponse.getProducts().getModifier_list().getColor());
+
+                            if (!Offerid.equals("")){
+                                tvActualPrice.setText("₹ "+productsDetailsResponse.getProducts().getSelling_price());
+                                tvActualPrice.setVisibility(View.VISIBLE);
+                                if (productsDetailsResponse.getProductOfers().get(0).getOffer_type().equals("discper")){
+                                    Double b = ((Double.parseDouble(productsDetailsResponse.getProductOfers().get(0).getSelling_price())-((Double.parseDouble(productsDetailsResponse.getProductOfers().get(0).getSelling_price()))*(Double.parseDouble(productsDetailsResponse.getProductOfers().get(0).getDisc_per()))/100)));
+                                    tvOffprice.setText("₹ " +String.format("%.3f", b)); }
+
+                                else if (productsDetailsResponse.getProductOfers().get(0).getOffer_type().equals("discamt")){
+                                    tvOffprice.setText("₹ "+String.format("%.2f",(Double.parseDouble(productsDetailsResponse.getProductOfers().get(0).getSelling_price())- Double.parseDouble(productsDetailsResponse.getProductOfers().get(0).getDisc_amt()))));
+                                }
+                            }
+                            else {
+                                tvOffprice.setText("₹ "+productsDetailsResponse.getProducts().getSelling_price());
+                                tvActualPrice.setVisibility(View.GONE);
+                            }
+
+                          /*  productSizeList.setLayoutManager(new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                            productSizeAdapter = new ProductSizeAdapter(ProductDetailActivity.this,productsDetailsResponse.getProducts().getModifier_list());
+                            productSizeList.setAdapter(productSizeAdapter);*/
+
+                            productColorList.setLayoutManager(new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.VERTICAL, false));
+                            productSizeAdapter = new ProductSizeAdapter(ProductDetailActivity.this,productsDetailsResponse.getProducts().getModifier_list(),ProductDetailActivity.this);
                             productColorList.setAdapter(productSizeAdapter);
 
 
@@ -183,8 +224,53 @@ break;
                             recycleProductOffer.setAdapter(prodouctOfferAdapter);
 
                             recycleProductRelated.setLayoutManager(new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                            prodouctOfferRelated = new ProdouctOfferRelatedAdapter(ProductDetailActivity.this,productsDetailsResponse.getRelatedproduct());
+                            prodouctOfferRelated = new ProdouctOfferRelatedAdapter(ProductDetailActivity.this,productsDetailsResponse.getRelatedproduct(),ProductDetailActivity.this);
                             recycleProductRelated.setAdapter(prodouctOfferRelated);
+
+
+                            if (productsDetailsResponse.getProducts().getModifier_list().isEmpty()){
+                                productColorList.setVisibility(View.GONE); }
+                            if (productsDetailsResponse.getProductOfers().isEmpty()){
+                                tvPoffer.setVisibility(View.GONE); }
+                            if (productsDetailsResponse.getRelatedproduct().isEmpty()){
+                                tvRelated.setVisibility(View.GONE); }
+
+                            else if (!productsDetailsResponse.getProductOfers().isEmpty() && !productsDetailsResponse.getRelatedproduct().isEmpty()&&productsDetailsResponse.getProducts().getModifier_list().isEmpty()){
+                                tvRelated.setVisibility(View.VISIBLE);
+                                tvPoffer.setVisibility(View.VISIBLE);
+                                productColorList.setVisibility(View.GONE); }
+
+                            else if (productsDetailsResponse.getProductOfers().isEmpty() && productsDetailsResponse.getRelatedproduct().isEmpty()&&productsDetailsResponse.getProducts().getModifier_list().isEmpty()){
+                                tvRelated.setVisibility(View.GONE);
+                                tvPoffer.setVisibility(View.GONE);
+                                productColorList.setVisibility(View.GONE); }
+
+                            else if (productsDetailsResponse.getProductOfers().isEmpty() && productsDetailsResponse.getRelatedproduct().isEmpty()&&!productsDetailsResponse.getProducts().getModifier_list().isEmpty()){
+                                tvRelated.setVisibility(View.GONE);
+                                tvPoffer.setVisibility(View.GONE);
+                                productColorList.setVisibility(View.VISIBLE); }
+
+                            else if (!productsDetailsResponse.getProductOfers().isEmpty() && !productsDetailsResponse.getRelatedproduct().isEmpty()&&!productsDetailsResponse.getProducts().getModifier_list().isEmpty()){
+                                tvRelated.setVisibility(View.VISIBLE);
+                                tvPoffer.setVisibility(View.VISIBLE);
+                                productColorList.setVisibility(View.VISIBLE); }
+
+                           else if (productsDetailsResponse.getProductOfers().isEmpty() && !productsDetailsResponse.getRelatedproduct().isEmpty()){
+                                tvRelated.setVisibility(View.VISIBLE);
+                                tvPoffer.setVisibility(View.GONE); }
+
+                           else if (!productsDetailsResponse.getProductOfers().isEmpty() && productsDetailsResponse.getRelatedproduct().isEmpty()){
+                                tvRelated.setVisibility(View.GONE);
+                                tvPoffer.setVisibility(View.VISIBLE); }
+
+                            else if (!productsDetailsResponse.getProductOfers().isEmpty() && !productsDetailsResponse.getRelatedproduct().isEmpty()){
+                                tvRelated.setVisibility(View.GONE);
+                                tvPoffer.setVisibility(View.GONE); }
+
+                            else {
+                                productColorList.setVisibility(View.VISIBLE);
+                                tvRelated.setVisibility(View.VISIBLE);
+                                tvPoffer.setVisibility(View.VISIBLE);}
                         }
                     }
 
@@ -196,12 +282,61 @@ break;
                 }));
     }
 
+
+
+
     @Override
-    public void onProductOfferItem(int position) {
+    public void onProductItem(RecyclerView recyclerView, ProductsDetailsResponse.ProductsBean.ModifierListBean modifierListBean) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
+        productValueAdapter = new ProductValueAdapter(ProductDetailActivity.this,modifierListBean.getValue());
+        recyclerView.setAdapter(productValueAdapter);
+    }
+
+    @Override
+    public void onProductOfferItem(int position, ProductsDetailsResponse.ProductOfersBean productOfersBean) {
+
         productDetailRequest=new ProductDetailRequest();
         productDetailRequest.setProduct_id(Productid);
-        productDetailRequest.setOffer_id("1");
+        //productDetailRequest.setOffer_id("1");
+        tvActualPrice.setVisibility(View.VISIBLE);
+        tvActualPrice.setText("₹ "+productOfersBean.getSelling_price());
+
+        productDetailPagerAdapter=null;
+        productDetailPagerAdapter = new ProductDetailPagerAdapter(getApplicationContext(),productOfersBean.getProduct_images());
+        viewpagerProductDetail.setAdapter(productDetailPagerAdapter);
+        productDetailPagerAdapter.notifyDataSetChanged();
+        NumPage= productOfersBean.getProduct_images().size();
+        TabLayout tabLayoutt = findViewById(R.id.tab_layout_productDetail);
+        if (NumPage>1){
+            tabLayoutt.setupWithViewPager(viewpagerProductDetail, true); }
+
+      //  tvOffprice.setText("₹ "+String.valueOf(Float.parseFloat(productsResponse.getProducts().getSelling_price()) - Float.parseFloat(productOfersBean.getDiscount_amount())));
+        if (productsResponse.getProductOfers().get(position).getOffer_type().equals("discper")){
+
+            Double b = ((Double.parseDouble(productsResponse.getProducts().getSelling_price())-((Double.parseDouble(productsResponse.getProducts().getSelling_price()))*(Double.parseDouble(productsResponse.getProductOfers().get(position).getDisc_per()))/100)));
+            tvOffprice.setText("₹ " +String.format("%.3f", b)); }
+
+        else if (productsResponse.getProductOfers().get(position).getOffer_type().equals("discamt")){
+            tvOffprice.setText("₹ "+String.format("%.2f",(Double.parseDouble(productsResponse.getProductOfers().get(position).getSelling_price())- Double.parseDouble(productsResponse.getProductOfers().get(position).getDisc_amt())))); }
+        focusOnView();
+
+    }
+
+    private void focusOnView() {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                scroll.scrollTo(0, viewpagerProductDetail.getTop());
+            }
+        });
+    }
+
+    @Override
+    public void onReltedItem(int position, ProductsDetailsResponse.RelatedproductBean productOfersBean) {
+        Productid = "71";
+        productDetailRequest=new ProductDetailRequest();
+        productDetailRequest.setProduct_id(Productid);
+
         getProductDetail();
-       // Toast.makeText(getApplicationContext(),"click",Toast.LENGTH_SHORT).show();
     }
 }

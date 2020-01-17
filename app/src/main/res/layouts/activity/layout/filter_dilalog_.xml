@@ -229,7 +229,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:min="0"
-                    android:max="1000"
+                    android:max="10000"
                     android:progressTint="@color/red_theme"/>
 
         <View

@@ -55,7 +55,6 @@
                             android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/white"
                             android:text=""
-                            android:maxLength="4"
                             android:layout_marginLeft="5dp"/>
                     </LinearLayout>
                     <TextView

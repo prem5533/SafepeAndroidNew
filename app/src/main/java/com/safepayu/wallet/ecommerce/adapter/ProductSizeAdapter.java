@@ -4,14 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
 
 import java.util.List;
 
@@ -19,12 +18,19 @@ public class ProductSizeAdapter extends RecyclerView.Adapter<ProductSizeAdapter.
 
 
      private Context context;
-     private List<String> sizeitem;
+    // private List<String> sizeitem;
+     private List<ProductsDetailsResponse.ProductsBean.ModifierListBean> sizeitem;
     private int row_index = -1;
+    private OnProductItem productItem;
 
-    public ProductSizeAdapter(Context context, List<String> sizeitem) {
+    public interface OnProductItem{
+        void onProductItem(RecyclerView recyclerView,ProductsDetailsResponse.ProductsBean.ModifierListBean modifierListBean );}
+
+
+    public ProductSizeAdapter(Context context, List<ProductsDetailsResponse.ProductsBean.ModifierListBean> sizeitem, OnProductItem productItem) {
         this.context = context;
         this.sizeitem = sizeitem;
+        this.productItem = productItem;
     }
 
     @NonNull
@@ -45,42 +51,29 @@ public class ProductSizeAdapter extends RecyclerView.Adapter<ProductSizeAdapter.
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{
-        private TextView tvSize;
-        private CheckBox cbSize;
+        private TextView tvname;
+
+        private RecyclerView productValueList;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvSize = itemView.findViewById( R.id.tv_size);
-            cbSize = itemView.findViewById(R.id.cb_prductsize);
+            tvname = itemView.findViewById( R.id.tvname);
+            productValueList = itemView.findViewById( R.id.product_colorvalue_list);
+          /*  cbSize = itemView.findViewById(R.id.cb_prductsize);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         }
 
         public void bindData(final int position) {
-            tvSize.setText(sizeitem.get(position));
+            tvname.setText(sizeitem.get(position).getName());
+            if (productItem != null) {
+                productItem.onProductItem(productValueList,sizeitem.get(position));
+            }
 
-            cbSize.setChecked(position==row_index);
-            cbSize.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (position == row_index) {
-                        cbSize.setChecked(false);
-
-                        //XU   row_index = -1;
-                    } else {
-                        /*if (onBankItemListener != null) {
-                            onBankItemListener.onBankItemListerner(getLayoutPosition(),mItem.get(getLayoutPosition()) );
-
-                        }*/
-                        row_index = position;
-                        notifyDataSetChanged();
-                    }
-                }
-            });
         }
     }
 }

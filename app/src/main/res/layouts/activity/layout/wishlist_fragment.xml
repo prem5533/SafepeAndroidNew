@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f4f5ff">
+    android:background="#f4f5ff"
+    android:id="@+id/relative_wishlist">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleWishlist"

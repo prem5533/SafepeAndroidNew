@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,10 +24,16 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
 
      private Context context;
     private List<HomeCatResponse.DataBean.ProductsRecommendedBean> recommedItem;
+    private OnRecommendedItemListener onRecommendedItemListener;
 
-    public RecommendedAdapter(Context context, List<HomeCatResponse.DataBean.ProductsRecommendedBean> recommedItem) {
+    public interface OnRecommendedItemListener{
+        void onRecommended(int position,HomeCatResponse.DataBean.ProductsRecommendedBean productsRecommendedBean);
+    }
+
+    public RecommendedAdapter(Context context, List<HomeCatResponse.DataBean.ProductsRecommendedBean> recommedItem, OnRecommendedItemListener onRecommendedItemListener) {
         this.context = context;
         this.recommedItem = recommedItem;
+        this.onRecommendedItemListener = onRecommendedItemListener;
     }
 
     @NonNull
@@ -87,7 +92,10 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
+                    if (onRecommendedItemListener != null) {
+                        onRecommendedItemListener.onRecommended(getLayoutPosition(),recommedItem.get(getLayoutPosition()));
+
+                    }
                 }
             });
         }
