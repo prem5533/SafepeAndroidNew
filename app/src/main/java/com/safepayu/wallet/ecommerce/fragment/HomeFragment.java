@@ -69,8 +69,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     private RecommendedAdapter recommendedAdapter;
     private TrendingAdapter trendingAdapter;
     private EcommPagerAdapter ecommPagerAdapter;
-    BottomNavigationView bottomNavigation;
-    GridLayoutManager gridLayoutManager;
+    private BottomNavigationView bottomNavigation;
+    private GridLayoutManager gridLayoutManager;
 
     private ViewPager viewpager;
     int images[] = {R.drawable.banner_image1, R.drawable.banner_image2, R.drawable.banner_image3,R.drawable.banner_image4};
@@ -83,6 +83,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     private ArrayList<String> ProductNameList,ProductImageList;
     private ArrayList<String> TrendingNameList,TrendingImageList;
     private ArrayList<String> RecommendNameList,RecommendImageList;
+    public static ArrayList<String> CatNameList,CatIdList;
+
 
     private List<CategoryModel> categoryModelList = new ArrayList<>();
     private LoadingDialog loadingDialog;
@@ -398,6 +400,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
 */
 
     private void getHomeCategory() {
+        CatNameList=new ArrayList<>();
+        CatIdList=new ArrayList<>();
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
         ApiServiceEcom apiService = ApiClientEcom.getClient(getActivity()).create(ApiServiceEcom.class);
@@ -413,7 +417,17 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
 
                             if (response.getData().getCategories().size()>0){
                                 ParentCategoryAdapter adapter=new ParentCategoryAdapter(getActivity(),response.getData().getCategories(),HomeFragment.this,"Home");
-                                recyclerCategory.setAdapter(adapter); }
+                                recyclerCategory.setAdapter(adapter);
+
+                                try {
+                                    for (int k=0;response.getData().getCategories().size()>k;k++){
+                                        CatNameList.add(response.getData().getCategories().get(k).getCat_name());
+                                        CatIdList.add(""+response.getData().getCategories().get(k).getId());
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
                             if (response.getData().getProducts_offer().size()>0){
                                 offerAdapter = new OfferAdapter(getActivity(),response.getData().getProducts_offer());
                                 recycleCategoryOfferList.setAdapter(offerAdapter);

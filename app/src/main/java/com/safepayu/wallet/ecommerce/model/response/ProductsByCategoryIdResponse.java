@@ -328,6 +328,13 @@ public class ProductsByCategoryIdResponse {
          * longitude : -0.08634430000006432
          * stars : 0
          * distance : 3,559.91
+         *          * modifier_list : {"Color":"Gerua","Size":"M,L,XL"}
+         *          * modifier_value : Gerua-M,L,XL
+         *          * productRatingCount : 0
+         *          * productRating : 0
+         *          * offer_id :
+         *          * discount_amount : 0
+         *          * discount_type : 0
          */
 
         private int id;
@@ -356,6 +363,14 @@ public class ProductsByCategoryIdResponse {
         private String longitude;
         private double stars;
         private String distance;
+
+        private String modifier_list;
+        private String modifier_value;
+        private int productRatingCount;
+        private int productRating;
+        private String offer_id;
+        private int discount_amount;
+        private int discount_type;
 
         public int getId() {
             return id;
@@ -563,6 +578,62 @@ public class ProductsByCategoryIdResponse {
 
         public void setDistance(String distance) {
             this.distance = distance;
+        }
+
+        public String getModifier_list() {
+            return modifier_list;
+        }
+
+        public void setModifier_list(String modifier_list) {
+            this.modifier_list = modifier_list;
+        }
+
+        public String getModifier_value() {
+            return modifier_value;
+        }
+
+        public void setModifier_value(String modifier_value) {
+            this.modifier_value = modifier_value;
+        }
+
+        public int getProductRatingCount() {
+            return productRatingCount;
+        }
+
+        public void setProductRatingCount(int productRatingCount) {
+            this.productRatingCount = productRatingCount;
+        }
+
+        public int getProductRating() {
+            return productRating;
+        }
+
+        public void setProductRating(int productRating) {
+            this.productRating = productRating;
+        }
+
+        public String getOffer_id() {
+            return offer_id;
+        }
+
+        public void setOffer_id(String offer_id) {
+            this.offer_id = offer_id;
+        }
+
+        public int getDiscount_amount() {
+            return discount_amount;
+        }
+
+        public void setDiscount_amount(int discount_amount) {
+            this.discount_amount = discount_amount;
+        }
+
+        public int getDiscount_type() {
+            return discount_type;
+        }
+
+        public void setDiscount_type(int discount_type) {
+            this.discount_type = discount_type;
         }
     }
 

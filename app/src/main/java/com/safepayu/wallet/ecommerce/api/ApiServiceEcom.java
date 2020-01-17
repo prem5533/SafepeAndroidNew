@@ -1,6 +1,7 @@
 package com.safepayu.wallet.ecommerce.api;
 
 import com.safepayu.wallet.ecommerce.model.request.AddToCartRequest;
+import com.safepayu.wallet.ecommerce.model.request.FilterRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductByModifierRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
 import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
@@ -55,4 +56,7 @@ public interface ApiServiceEcom {
 
     @GET("api/pefast.safepe.latepe/api/mainHomePage")
     Single<HomeCatResponse> getAllCategoryHome();
+
+    @POST("api/pefast.safepe.latepe/api/searchProductByRefine")
+    Single<ProductsByCategoryIdResponse> getProductsFilter(@Body FilterRequest filterRequest);
 }

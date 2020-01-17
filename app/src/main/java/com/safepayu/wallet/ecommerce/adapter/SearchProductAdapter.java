@@ -92,11 +92,9 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   // Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
 
                     if (onProductItemDetailListener != null) {
                         onProductItemDetailListener.onProductItemDetail(getLayoutPosition(),products.get(getLayoutPosition()));
-
                     }
                 }
             });

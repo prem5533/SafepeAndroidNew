@@ -1,32 +1,52 @@
 package com.safepayu.wallet.ecommerce.activity;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.adapter.bus.BusSourcesAdapter;
-import com.safepayu.wallet.ecommerce.adapter.FiltereListAdapter;
+import com.safepayu.wallet.ecommerce.adapter.FilterLisCategoryAdapter;
+import com.safepayu.wallet.ecommerce.adapter.FilterListBrandAdapter;
+import com.safepayu.wallet.ecommerce.adapter.FilterListDiscountAdapter;
+import com.safepayu.wallet.ecommerce.adapter.FilterListPriceAdapter;
+import com.safepayu.wallet.ecommerce.adapter.FilterListSizeAdapter;
+import com.safepayu.wallet.ecommerce.fragment.SearchProductFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class FilterDialog  extends Activity implements BusSourcesAdapter.LocationListListener {
+import static com.safepayu.wallet.ecommerce.fragment.HomeFragment.CatIdList;
+import static com.safepayu.wallet.ecommerce.fragment.HomeFragment.CatNameList;
+
+public class FilterDialog  extends Activity implements FilterListPriceAdapter.OnFilterListPriceListener,FilterListSizeAdapter.OnFilterListSizeListener,
+                        FilterListBrandAdapter.OnFilterListBrandListener,FilterLisCategoryAdapter.OnFilterListCategoryListener,
+                        FilterListDiscountAdapter.OnFilterListDiscountListener {
 
     private LinearLayout PriceLayout,CategoryLayout,BrandLayout,DiscountLayout,SizeLayout;
     private RecyclerView PriceRecyclerView,CategoryRecyclerView,BrandRecyclerView,DiscountRecyclerView,SizeRecyclerView;
     private ImageView PriceIV,CategoryIV,BrandIV,DiscountIV,SizeIV;
     private int PriceInt=0,CategoryInt=0,BrandInt=0,DiscountInt=0,SizeInt=0;
     private Button FilterBtn;
-    private ArrayList<String> BusSourcesList=new ArrayList<>();
-    private TextView tvCategory,tvSize,tvPrice,tvBrand,tvDiscount;
+    private ArrayList<String> DiscountList,PriceList,SizeList,BrandList;
+    private TextView tvCategory,tvSize,tvPrice,tvBrand,tvDiscount,ApplyBtn,CloseBtn;
+    private List<String> brand_id,category_id,size,price,discount;
+    private AppCompatSeekBar seekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +58,14 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
 
      //   FilterBtn=findViewById(R.id.filterBtn_filterLayout);
 
+
+        brand_id=new ArrayList<>();
+        category_id=new ArrayList<>();
+        size=new ArrayList<>();
+        price=new ArrayList<>();
+        discount=new ArrayList<>();
+
+        seekBar=findViewById(R.id.seekbarPrice_filterLayout);
         PriceLayout=findViewById(R.id.priceLayout_filterLayout);
         CategoryLayout=findViewById(R.id.categoryLayout_filterLayout);
         BrandLayout=findViewById(R.id.brandLayout_filterLayout);
@@ -49,6 +77,8 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
         tvPrice = findViewById(R.id.tv_price);
         tvBrand = findViewById(R.id.tv_brand);
         tvDiscount = findViewById(R.id.tv_discount);
+        ApplyBtn = findViewById(R.id.tv_filter_apply);
+        CloseBtn = findViewById(R.id.tv_filter_close);
 
         PriceRecyclerView=findViewById(R.id.recyclePrice_filterLayout);
         CategoryRecyclerView=findViewById(R.id.recycleCategory_filterLayout);
@@ -77,17 +107,55 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
         SizeRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         SizeRecyclerView.setNestedScrollingEnabled(false);
 
-       /* filtereListAdapter.add("delhi");
-        filtereListAdapter.add("goa");
-        filtereListAdapter.add("bihar");*/
+        FilterLisCategoryAdapter filterLisCategoryAdapter = new FilterLisCategoryAdapter(getApplicationContext(),CatNameList,CatIdList,FilterDialog.this);
+        CategoryRecyclerView.setAdapter(filterLisCategoryAdapter);
 
-        FiltereListAdapter filtereListAdapter = new FiltereListAdapter(getApplicationContext(),BusSourcesList);
-        PriceRecyclerView.setAdapter(filtereListAdapter);
-        CategoryRecyclerView.setAdapter(filtereListAdapter);
-        BrandRecyclerView.setAdapter(filtereListAdapter);
-        DiscountRecyclerView.setAdapter(filtereListAdapter);
-        SizeRecyclerView.setAdapter(filtereListAdapter);
+        DiscountList=new ArrayList<>();
+        DiscountList.add("0-10");
+        DiscountList.add("11-34");
+        DiscountList.add("35-49");
+        DiscountList.add("50-100");
+        FilterListDiscountAdapter filterListDiscountAdapter = new FilterListDiscountAdapter(getApplicationContext(),DiscountList,FilterDialog.this);
+        DiscountRecyclerView.setAdapter(filterListDiscountAdapter);
 
+        PriceList=new ArrayList<>();
+        PriceList.add("1000");
+
+        View thumbView1 = LayoutInflater.from(FilterDialog.this).inflate(R.layout.layout_seekbar_thumb, null, false);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                seekBar.setThumb(getThumb(progress));
+            }
+        });
+        FilterListPriceAdapter filterListPriceAdapter= new FilterListPriceAdapter(getApplicationContext(),PriceList,FilterDialog.this);
+        PriceRecyclerView.setAdapter(filterListPriceAdapter);
+
+        SizeList=new ArrayList<>();
+        SizeList.add("S");
+        SizeList.add("M");
+        SizeList.add("L");
+        SizeList.add("XL");
+        FilterListSizeAdapter filterListSizeAdapter = new FilterListSizeAdapter(getApplicationContext(),SizeList,FilterDialog.this);
+        SizeRecyclerView.setAdapter(filterListSizeAdapter);
+
+        BrandList=new ArrayList<>();
+        BrandList.add("Lee");
+        BrandList.add("Reebok");
+        FilterListBrandAdapter filterListBrandAdapter = new FilterListBrandAdapter(getApplicationContext(),BrandList,FilterDialog.this);
+        BrandRecyclerView.setAdapter(filterListBrandAdapter);
 
         PriceLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,6 +334,40 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
                 finish();
             }
         });*/
+
+        ApplyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(FilterDialog.this, SearchProductFragment.class);
+                intent.putStringArrayListExtra("brand_id",(ArrayList<String>) brand_id);
+                intent.putStringArrayListExtra("category_id",(ArrayList<String>) category_id);
+                intent.putStringArrayListExtra("size",(ArrayList<String>) size);
+                intent.putStringArrayListExtra("price",(ArrayList<String>) price);
+                intent.putStringArrayListExtra("discount",(ArrayList<String>) brand_id);
+                setResult(2, intent);
+                finish();
+            }
+        });
+
+        CloseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    public Drawable getThumb(int progress) {
+        View thumbView = LayoutInflater.from(FilterDialog.this).inflate(R.layout.layout_seekbar_thumb, null, false);
+        ((TextView) thumbView.findViewById(R.id.tvProgress)).setText(progress + "");
+
+        thumbView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        Bitmap bitmap = Bitmap.createBitmap(thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        thumbView.layout(0, 0, thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight());
+        thumbView.draw(canvas);
+
+        return new BitmapDrawable(getResources(), bitmap);
     }
 
     private void hideLayout(){
@@ -295,12 +397,32 @@ public class FilterDialog  extends Activity implements BusSourcesAdapter.Locatio
     }
 
     @Override
-    public void onLocationClickFrom(int position, ArrayList<String> Buslist) {
-
+    public void onFilterListPrice(ArrayList<String> priceList) {
+        price.clear();
+        price=priceList;
     }
 
     @Override
-    public void onLocationClickTo(int position, ArrayList<String> Buslist) {
+    public void onFilterListSize(ArrayList<String> sizeList) {
+        size.clear();
+        size=sizeList;
+    }
 
+    @Override
+    public void onFilterListBrand(ArrayList<String> brandList) {
+        brand_id.clear();
+        brand_id=brandList;
+    }
+
+    @Override
+    public void onFilterListCategory(ArrayList<String> categoryList) {
+        category_id.clear();
+        category_id=categoryList;
+    }
+
+    @Override
+    public void onFilterListDiscount(ArrayList<String> discountList) {
+        discount.clear();
+        discount=discountList;
     }
 }
