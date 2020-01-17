@@ -22,11 +22,16 @@ public class ProdouctOfferRelatedAdapter extends RecyclerView.Adapter<ProdouctOf
 
     private Context context ;
     private List<ProductsDetailsResponse.RelatedproductBean>relatedItem;
+    private OnProductRelatedItemListener reltedItemListener;
 
+    public interface OnProductRelatedItemListener{
+        void onReltedItem(int position ,ProductsDetailsResponse.RelatedproductBean productOfersBean);
+    }
 
-    public ProdouctOfferRelatedAdapter(Context context, List<ProductsDetailsResponse.RelatedproductBean> relatedItem) {
+    public ProdouctOfferRelatedAdapter(Context context, List<ProductsDetailsResponse.RelatedproductBean> relatedItem, OnProductRelatedItemListener reltedItemListener) {
         this.context = context;
         this.relatedItem = relatedItem;
+        this.reltedItemListener = reltedItemListener;
     }
 
     @NonNull
@@ -56,6 +61,16 @@ public class ProdouctOfferRelatedAdapter extends RecyclerView.Adapter<ProdouctOf
             tvActualPrice = itemView.findViewById(R.id.tv_actualprice_offer);
             tvSaveOffer = itemView.findViewById(R.id.tv_savers_offer);
             offerImage = itemView.findViewById(R.id.im_product_offer);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (reltedItemListener != null) {
+                        reltedItemListener.onReltedItem(getLayoutPosition(),relatedItem.get(getLayoutPosition()));
+
+                    }
+                }
+            });
 
         }
 

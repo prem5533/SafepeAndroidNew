@@ -26,7 +26,7 @@ public class EcommPagerAdapter extends PagerAdapter {
 
 
     public interface PagerListener{
-        void pgerItemListener(int position );
+        void pgerItemListener(int position,HomeCatResponse.DataBean.BannersBean mBannerId);
     }
 
     public EcommPagerAdapter(Context context, List<HomeCatResponse.DataBean.BannersBean> simage, PagerListener pagerListener) {
@@ -72,7 +72,7 @@ public class EcommPagerAdapter extends PagerAdapter {
             public void onClick(View v) {
 
                 if (pagerListener != null) {
-                    pagerListener.pgerItemListener(position);
+                    pagerListener.pgerItemListener(position,simage.get(position));
 
                 }
             }

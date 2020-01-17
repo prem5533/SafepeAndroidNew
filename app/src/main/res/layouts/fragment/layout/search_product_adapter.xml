@@ -74,20 +74,15 @@
                         android:layout_marginLeft="10dp"
                         android:singleLine="true"
                         android:ellipsize="end"/>
-                    <RatingBar
-                        android:id="@+id/productRating_SearchProductAdapter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleX=".5"
-                        android:scaleY=".5"
-                        android:transformPivotX="0dp"
-                        android:transformPivotY="0dp"
-                        android:isIndicator="true"
-                        android:max="5"
-                        android:numStars="5"
-                        android:stepSize="1"
-                        android:layout_marginLeft="10dp"
-                        android:theme="@style/Widget.AppCompat.RatingBar.Small"/>
+                        <RatingBar
+                            android:id="@+id/productRating_SearchProductAdapter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:rating="3"
+                            android:scaleX=".8"
+                            android:scaleY=".8"
+                            android:layout_marginLeft="5dp"
+                            style="@style/Widget.AppCompat.RatingBar.Small" />
                     <TextView
                         android:id="@+id/productDetail_SearchProductAdapter"
                         android:layout_width="wrap_content"
@@ -98,7 +93,7 @@
                         android:text="Russell Hobbs RHM2076B 20L Digital 800w Solo Microwave Black"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="-30dp"
+                        android:layout_marginTop="5dp"
                         android:singleLine="true"
                         android:ellipsize="end"/>
                     <LinearLayout

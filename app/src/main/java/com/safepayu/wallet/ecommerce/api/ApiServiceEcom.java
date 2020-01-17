@@ -11,7 +11,9 @@ import com.safepayu.wallet.ecommerce.model.response.ParentCategoriesResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductByModifierResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsByCategoryIdResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
+import com.safepayu.wallet.ecommerce.model.response.TotalCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.VenueDetailsResponse;
+import com.safepayu.wallet.ecommerce.model.response.WishListResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.Body;
@@ -55,4 +57,10 @@ public interface ApiServiceEcom {
 
     @GET("api/pefast.safepe.latepe/api/mainHomePage")
     Single<HomeCatResponse> getAllCategoryHome();
+
+    @GET("api/pefast.safepe.latepe/api/getTotalCarts")
+    Single<TotalCartResponse> getTotalCarts();
+
+    @GET("api/pefast.safepe.latepe/api/getLikeProducts ")
+    Single<WishListResponse> getLikeProducts ();
 }

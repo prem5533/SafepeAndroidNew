@@ -1,10 +1,10 @@
 package com.safepayu.wallet.ecommerce.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.ecommerce.activity.CartActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,7 +70,7 @@ public class EcomHomeFragment extends Fragment {
         CartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(new CartFragment());
+               startActivity(new Intent(getActivity(), CartActivity.class));
             }
         });
 

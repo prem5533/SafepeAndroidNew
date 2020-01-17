@@ -34,7 +34,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -55,7 +54,6 @@ import com.safepayu.wallet.activity.WalletHistory;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.ecommerce.fragment.CartFragment;
 import com.safepayu.wallet.ecommerce.fragment.HomeFragment;
 import com.safepayu.wallet.ecommerce.fragment.WishlistFragment;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -131,7 +129,7 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         CartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(new CartFragment());
+                startActivity(new Intent(getApplicationContext(), CartActivity.class));
             }
         });
 

@@ -12,35 +12,29 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.ecommerce.activity.ProductDetailActivity;
 import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
 
 import java.util.List;
 
-public class ProductSizeAdapter extends RecyclerView.Adapter<ProductSizeAdapter.ProductViewHolder> {
+public class ProductValueAdapter extends RecyclerView.Adapter<ProductValueAdapter.ProductViewHolder> {
 
 
      private Context context;
-    // private List<String> sizeitem;
-     private List<ProductsDetailsResponse.ProductsBean.ModifierListBean> sizeitem;
+     private List<String> sizeitem;
     private int row_index = -1;
-    private OnProductItem productItem;
-
-    public interface OnProductItem{
-        void onProductItem(RecyclerView recyclerView,ProductsDetailsResponse.ProductsBean.ModifierListBean modifierListBean );}
 
 
-    public ProductSizeAdapter(Context context, List<ProductsDetailsResponse.ProductsBean.ModifierListBean> sizeitem, OnProductItem productItem) {
+    public ProductValueAdapter(Context context, List<String> sizeitem) {
         this.context = context;
-        this.sizeitem = sizeitem;
-        this.productItem = productItem;
-    }
+        this.sizeitem = sizeitem; }
+
+
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.productsize_adapter,parent,false);
-        return new ProductSizeAdapter.ProductViewHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.value_adapter,parent,false);
+        return new ProductValueAdapter.ProductViewHolder(view);
     }
 
     @Override
@@ -54,29 +48,42 @@ public class ProductSizeAdapter extends RecyclerView.Adapter<ProductSizeAdapter.
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder{
-        private TextView tvname;
-
-        private RecyclerView productValueList;
+        private TextView tvSize;
+        private CheckBox cbSize;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvname = itemView.findViewById( R.id.tvname);
-            productValueList = itemView.findViewById( R.id.product_colorvalue_list);
-          /*  cbSize = itemView.findViewById(R.id.cb_prductsize);
+            tvSize = itemView.findViewById( R.id.tv_size);
+            cbSize = itemView.findViewById(R.id.cb_prductsize);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
                 }
-            });*/
+            });
         }
 
         public void bindData(final int position) {
-            tvname.setText(sizeitem.get(position).getName());
-            if (productItem != null) {
-                productItem.onProductItem(productValueList,sizeitem.get(position));
-            }
+            tvSize.setText(sizeitem.get(position));
 
+            cbSize.setChecked(position==row_index);
+            cbSize.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (position == row_index) {
+                        cbSize.setChecked(false);
+
+                        //XU   row_index = -1;
+                    } else {
+                        /*if (onBankItemListener != null) {
+                            onBankItemListener.onBankItemListerner(getLayoutPosition(),mItem.get(getLayoutPosition()) );
+
+                        }*/
+                        row_index = position;
+                        notifyDataSetChanged();
+                    }
+                }
+            });
         }
     }
 }

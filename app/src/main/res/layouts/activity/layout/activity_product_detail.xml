@@ -9,6 +9,7 @@
     android:id="@+id/product_detail"
     tools:context=".ecommerce.activity.ProductDetailActivity">
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -102,36 +103,24 @@
                         android:id="@+id/tv_product_detail_offprice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="₹ "
+                        android:text=" "
                         android:gravity="start"
                         android:textColor="@color/red"
                         android:fontFamily="@font/roboto_regular"
                         android:textSize="15sp"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"/>
+                        android:layout_marginTop="5dp" />
                     <TextView
                         android:id="@+id/tv_product_detail_actualprice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="₹ 899"
+                        android:text=""
                         android:gravity="start"
                         android:textColor="@color/black"
                         android:fontFamily="@font/roboto_regular"
                         android:textSize="15sp"
-                        android:visibility="gone"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/tv_product_detail_earn_point"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Earn 0 points"
-                        android:gravity="start"
-                        android:textColor="@color/yellow_theme"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textSize="13sp"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_marginTop="5dp" />
+
                 </LinearLayout>
 
 
@@ -156,7 +145,17 @@
                         android:textColor="@color/blue_800"
                         android:textSize="13sp"
                         android:fontFamily="@font/roboto_regular"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/tv_product_detail_earn_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Earn 0 points"
+                        android:gravity="start"
+                        android:textColor="@color/yellow_theme"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <RatingBar
@@ -173,33 +172,31 @@
                     android:layout_marginBottom="10dp"
                     />
                 <LinearLayout
+                    android:id="@+id/licolor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Color"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/roboto_regular" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/product_color_list"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
                 <View
+                    android:id="@+id/viewColor"
                     android:layout_width="match_parent"
                     android:layout_height=".5dp"
                     android:background="@color/divider"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     />
                 <LinearLayout
+                    android:id="@+id/liSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -222,12 +219,15 @@
                     android:id="@+id/product_size_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-10dp"/>
+                    android:layout_marginTop="-10dp"
+                    android:visibility="gone"/>
                 <View
+                    android:id="@+id/viewSize"
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"
                 android:background="@color/divider"
                 android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     android:layout_marginBottom="10dp"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -235,7 +235,8 @@
                     android:textSize="16sp"
                     android:text="Product Details"
                     android:fontFamily="@font/roboto_medium"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:layout_marginTop="5dp"/>
                 <TextView
                     android:id="@+id/tv_product_detail_"
                     android:layout_width="match_parent"
@@ -247,6 +248,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"/>
                 <TextView
+                    android:id="@+id/tvPoffer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Product Offer"
@@ -262,6 +264,7 @@
                     android:layout_marginBottom="10dp"/>
 
                 <TextView
+                    android:id="@+id/tvRelated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Related Product"
