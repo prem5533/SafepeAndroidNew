@@ -1,5 +1,7 @@
 package com.safepayu.wallet.ecommerce.model.response;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class ProductsDetailsResponse {
@@ -669,6 +671,16 @@ public class ProductsDetailsResponse {
         private String distance;
         private int stars;
         private List<String> product_images;
+        /**
+         * combo_product_id : [{"product_id":34,"cat_id":"7","name":"Forest Essentials Silkening Shower Wash Soundarya, 200ml (20.00)","price":20,"discount_type":"2","discount":"0","net_price":20,"images":"uploaded/products/2086915730403740.jpeg"},{"product_id":35,"cat_id":"7","name":"Forest Essentials Silken Dusting Powder, Indian Rose Absolute, 100g (20.00)","price":20,"discount_type":"2","discount":"0","net_price":20,"images":"uploaded/products/2381215764960880.jpeg"},{"product_id":36,"cat_id":"7","name":"Forest Essentials Forest Essentials Bhringraj Hair Vitalizer, 100ml Hair Vitalizer, 100ml (25.00)","price":25,"discount_type":"","discount":0,"net_price":25,"images":"uploaded/products/3365715730404010.jpeg"}]
+         * combo_disc_per : 0.00
+         * combo_disc_amt : 0.00
+         */
+
+        private String combo_disc_per;
+        private String combo_disc_amt;
+        private List<ComboProductIdBean> combo_product_id;
+
 
         public int getOffer_id() {
             return offer_id;
@@ -876,6 +888,118 @@ public class ProductsDetailsResponse {
 
         public void setProduct_images(List<String> product_images) {
             this.product_images = product_images;
+        }
+
+        public String getCombo_disc_per() {
+            return combo_disc_per;
+        }
+
+        public void setCombo_disc_per(String combo_disc_per) {
+            this.combo_disc_per = combo_disc_per;
+        }
+
+        public String getCombo_disc_amt() {
+            return combo_disc_amt;
+        }
+
+        public void setCombo_disc_amt(String combo_disc_amt) {
+            this.combo_disc_amt = combo_disc_amt;
+        }
+
+        public List<ComboProductIdBean> getCombo_product_id() {
+            return combo_product_id;
+        }
+
+        public void setCombo_product_id(List<ComboProductIdBean> combo_product_id) {
+            this.combo_product_id = combo_product_id;
+        }
+
+        public static class ComboProductIdBean {
+            /**
+             * product_id : 34
+             * cat_id : 7
+             * name : Forest Essentials Silkening Shower Wash Soundarya, 200ml (20.00)
+             * price : 20
+             * discount_type : 2
+             * discount : 0
+             * net_price : 20
+             * images : uploaded/products/2086915730403740.jpeg
+             */
+
+            @SerializedName("product_id")
+            private int product_idX;
+            private String cat_id;
+            private String name;
+            private int price;
+            @SerializedName("discount_type")
+            private String discount_typeX;
+            private String discount;
+            private int net_price;
+            private String images;
+
+            public int getProduct_idX() {
+                return product_idX;
+            }
+
+            public void setProduct_idX(int product_idX) {
+                this.product_idX = product_idX;
+            }
+
+            public String getCat_id() {
+                return cat_id;
+            }
+
+            public void setCat_id(String cat_id) {
+                this.cat_id = cat_id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public int getPrice() {
+                return price;
+            }
+
+            public void setPrice(int price) {
+                this.price = price;
+            }
+
+            public String getDiscount_typeX() {
+                return discount_typeX;
+            }
+
+            public void setDiscount_typeX(String discount_typeX) {
+                this.discount_typeX = discount_typeX;
+            }
+
+            public String getDiscount() {
+                return discount;
+            }
+
+            public void setDiscount(String discount) {
+                this.discount = discount;
+            }
+
+            public int getNet_price() {
+                return net_price;
+            }
+
+            public void setNet_price(int net_price) {
+                this.net_price = net_price;
+            }
+
+            public String getImages() {
+                return images;
+            }
+
+            public void setImages(String images) {
+                this.images = images;
+            }
         }
     }
 

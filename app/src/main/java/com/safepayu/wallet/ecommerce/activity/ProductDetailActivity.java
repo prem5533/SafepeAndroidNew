@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.ecommerce.adapter.ComboOfferAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProdouctOfferAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProdouctOfferRelatedAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProductDetailPagerAdapter;
@@ -43,13 +44,14 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     private ProductDetailPagerAdapter productDetailPagerAdapter;
     private ProdouctOfferAdapter prodouctOfferAdapter;
     private ProdouctOfferRelatedAdapter prodouctOfferRelated;
+    private ComboOfferAdapter comboOfferAdapter;
     private LoadingDialog loadingDialog;
     ProductDetailRequest productDetailRequest;
     ProductValueAdapter productValueAdapter;
     ProductsDetailsResponse productsResponse ;
 
     private ProductSizeAdapter productSizeAdapter;
-    private RecyclerView productSizeList,productColorList,recycleProductOffer,recycleProductRelated;
+    private RecyclerView productSizeList,productColorList,recycleProductOffer,recycleProductRelated,comboList;
 
     int NumPage,CurrentP=0 ;
     private Button backBtnProductDetail;
@@ -88,6 +90,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         ratingBar = findViewById(R.id.rating_product_detail);
         recycleProductOffer = findViewById(R.id.recycleProductOffer);
         recycleProductRelated = findViewById(R.id.recycleProductRelated);
+        comboList = findViewById(R.id.recycleComboList);
         scroll = findViewById(R.id.scroll);
         tvRelated = findViewById(R.id.tvRelated);
         tvPoffer = findViewById(R.id.tvPoffer);
@@ -226,6 +229,11 @@ break;
                             recycleProductRelated.setLayoutManager(new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
                             prodouctOfferRelated = new ProdouctOfferRelatedAdapter(ProductDetailActivity.this,productsDetailsResponse.getRelatedproduct(),ProductDetailActivity.this);
                             recycleProductRelated.setAdapter(prodouctOfferRelated);
+
+                            comboList.setLayoutManager(new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                            comboOfferAdapter = new ComboOfferAdapter(ProductDetailActivity.this,productsDetailsResponse.getProductOfers().get(0).getCombo_product_id());
+                            comboList.setAdapter(comboOfferAdapter);
+
 
 
                             if (productsDetailsResponse.getProducts().getModifier_list().isEmpty()){
