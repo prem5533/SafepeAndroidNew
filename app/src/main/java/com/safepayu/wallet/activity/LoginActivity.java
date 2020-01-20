@@ -302,16 +302,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onSuccess(AppVersionResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            int val = Integer.parseInt(response.getVersionData().getVal());
+                            if (response.getVersionData().getStatus()==1){
+                                int val = Integer.parseInt(response.getVersionData().getVal());
 
-                             url = response.getVersionData().getLogo();
-                          //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ImagePath+url);
-                           //  Picasso.get().load(ImagePath+url).into(loginImageLogo);
+                                url = response.getVersionData().getLogo();
+                                //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ImagePath+url);
+                                //  Picasso.get().load(ImagePath+url).into(loginImageLogo);
 
-                            if (versionCode == val) {
+                                if (versionCode == val) {
 
-                            } else {
-                                showDialogForAppUpdate(LoginActivity.this);
+                                } else {
+                                    showDialogForAppUpdate(LoginActivity.this);
+                                }
                             }
 
                         } else {

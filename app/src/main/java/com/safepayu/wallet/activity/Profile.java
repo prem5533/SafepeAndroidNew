@@ -22,6 +22,7 @@ import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
+import com.safepayu.wallet.dialogs.DatePicker;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.ChangePasswordRequest;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -37,15 +38,16 @@ import static com.safepayu.wallet.activity.Navigation.qrCodeImage;
 
 public class Profile extends BaseActivity implements View.OnClickListener {
 
-    Button BackBtn,UpdateAddressBtn,btnChangePassSubmit;
-    TextView tvPhoneNumber, tvEmil,tvDOB, tvAddress,tvPincode,tvUsername1,tvSponserId,tvSponserName,tvSponserContactNumber;
+    Button BackBtn,UpdateAddressBtn,btnChangePassSubmit,UpdateProfileBtn;
+    TextView tvPhoneNumber,tvDOB, tvAddress,tvPincode,tvUsername1,tvSponserId,tvSponserName,tvSponserContactNumber;
+    EditText tvEmil;
     LinearLayout ChangePassLayout, ShowMyQRcodeLayout,ChangePassBtn;
     int ChangePassVisibility=0;
     UserDetailResponse uResponse;
     private EditText etOldPassword, etNewPassword, etConfirmPassword;
     private LoadingDialog loadingDialog;
     public final static int QRcodeWidth = 500 ;
-    private ImageView im_cross;
+    private ImageView im_cross,EditEmailBtn,EditDobBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,9 @@ public class Profile extends BaseActivity implements View.OnClickListener {
         tvSponserId = findViewById(R.id.p_sponser_id);
         tvSponserName = findViewById(R.id.p_sponser_name);
         tvSponserContactNumber = findViewById(R.id.p_sponser_contact_number);
+        UpdateProfileBtn = findViewById(R.id.updateProfileBtn);
+        EditEmailBtn=findViewById(R.id.edit_email);
+        EditDobBtn=findViewById(R.id.edit_Dob);
 
         //set Listener
         BackBtn.setOnClickListener(this);
@@ -103,6 +108,59 @@ public class Profile extends BaseActivity implements View.OnClickListener {
         if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equals("0")){
             showDialogForEmail(this);
         }
+
+        tvDOB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePicker datePicker = DatePicker.newInstance(null, tvDOB);
+                datePicker.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
+
+        EditEmailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvEmil.requestFocus();
+                tvEmil.setSelection(tvEmil.getText().toString().trim().length());
+            }
+        });
+
+        EditDobBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePicker datePicker = DatePicker.newInstance(null, tvDOB);
+                datePicker.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
+
+        UpdateProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String DOB="",email="";
+                try {
+                    DOB=tvDOB.getText().toString().trim();
+                    email=tvEmil.getText().toString().trim();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (TextUtils.isEmpty(DOB)){
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.profileLayout),"Please Enter Your Date Of Birth",true);
+                }else {
+                    if (TextUtils.isEmpty(email)){
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.profileLayout),"Please Enter Your Email",true);
+                    }else {
+                        if (BaseApp.getInstance().commonUtils().isValidEmail(email)){
+                            getProfileUpdate(DOB,email);
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.profileLayout),"Please Enter Your Correct Email",true);
+                        }
+                    }
+                }
+
+            }
+        });
     }
 
 
@@ -336,6 +394,34 @@ public class Profile extends BaseActivity implements View.OnClickListener {
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.profileLayout), true, e);
+                    }
+                }));
+    }
+
+    private void getProfileUpdate(String DOB,String email) {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getProfileUpdate(DOB,email)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.getStatus()) {
+                            Toast.makeText(Profile.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                            finish();
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.profileLayout),response.getMessage(),true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.profileLayout), true, e);
                     }
                 }));

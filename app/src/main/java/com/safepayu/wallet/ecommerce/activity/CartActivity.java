@@ -42,7 +42,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         if (isNetworkAvailable()){
             getTotalCart();
         }else {
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.homeEcommLayout),"No Internet Connection!",true);
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.cartEcommLayout),"No Internet Connection!",true);
         }
     }
 

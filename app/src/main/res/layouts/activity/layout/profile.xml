@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="#f4f5ff"
     android:orientation="vertical"
     android:id="@+id/profileLayout">
@@ -128,7 +127,37 @@
                                 android:textSize="16sp"
                                 android:padding="10dp"
                                 android:textStyle="bold"
-                                android:layout_weight="1" /></LinearLayout>
+                                android:layout_weight="1" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="start|center"
+                                android:orientation="horizontal"
+                                android:padding="10dp">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_user_new" />
+
+
+                                <TextView
+                                    android:id="@+id/p_sponser_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="#00FFFFFF"
+                                    android:focusable="false"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:gravity="start|center"
+                                    android:hint="Sponsor Name"
+                                    android:padding="10dp"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="14sp" />
+
+
+                            </LinearLayout>
+                        </LinearLayout>
 
 
                         <LinearLayout
@@ -181,7 +210,6 @@
                         <ImageView
                             android:layout_width="10dp"
                             android:layout_height="10dp"
-                            android:layout_marginRight="30dp"
                             android:src="@drawable/ic_correct"/>
                     </LinearLayout>
                     <View
@@ -203,7 +231,7 @@
                             android:layout_height="20dp"
                             android:src="@drawable/ic_mail_new"/>
 
-                        <TextView
+                        <EditText
                             android:id="@+id/p_mail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -217,8 +245,16 @@
                             android:gravity="start|center"
                             android:text=""
                             android:textSize="14sp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:imeOptions="actionDone"
+                            android:inputType="textEmailAddress"/>
 
+                        <ImageView
+                            android:id="@+id/edit_email"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_edit_new"/>
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -249,8 +285,14 @@
                             android:textColor="@color/textcolor"
                             android:fontFamily="@font/roboto_medium"
                             android:gravity="start|center"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp"
+                            android:layout_weight="1"/>
 
+                        <ImageView
+                            android:id="@+id/edit_Dob"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_edit_new"/>
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -361,34 +403,6 @@
                         android:layout_marginRight="10dp"/>
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="start|center"
-                        android:padding="10dp">
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_user_new"/>
-
-
-                        <TextView
-                            android:id="@+id/p_sponser_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="#00FFFFFF"
-                            android:hint="Sponsor Name"
-                            android:focusable="false"
-                            android:fontFamily="@font/roboto_medium"
-                            android:gravity="start|center"
-                            android:textColor="@color/textcolor"
-                            android:textSize="14sp"
-                            android:padding="10dp"
-                            />
-
-
-                    </LinearLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height=".5dp"
@@ -659,6 +673,24 @@
                         android:textSize="13dp" />
                 </LinearLayout>
             </LinearLayout>
+
+            <Button
+                android:id="@+id/updateProfileBtn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Update Profile"
+                android:textAllCaps="false"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:padding="0dp"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/white"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_gravity="center"
+                android:background="@drawable/green_border"/>
+
             <Button
                 android:id="@+id/addressupdateBtn"
                 android:layout_width="match_parent"

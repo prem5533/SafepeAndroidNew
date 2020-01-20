@@ -58,6 +58,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.safepayu.wallet.ecommerce.activity.EHomeActivity.tvCartBadge;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -416,6 +418,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
 
+                            tvCartBadge.setText(String.valueOf(response.getData().getTotal_carts()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().CART_BADGE,String.valueOf(response.getData().getTotal_carts()));
                             if (response.getData().getCategories().size()>0){
                                 ParentCategoryAdapter adapter=new ParentCategoryAdapter(getActivity(),response.getData().getCategories(),HomeFragment.this,"Home");
                                 recyclerCategory.setAdapter(adapter);

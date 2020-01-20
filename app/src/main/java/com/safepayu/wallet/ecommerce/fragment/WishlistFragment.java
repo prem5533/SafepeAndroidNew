@@ -20,6 +20,7 @@ import com.safepayu.wallet.ecommerce.adapter.WishlistAdapter;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
 import com.safepayu.wallet.ecommerce.model.response.TotalCartResponse;
+import com.safepayu.wallet.ecommerce.model.response.WishListResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -45,7 +46,7 @@ public class WishlistFragment extends Fragment {
         View view =  inflater.inflate(R.layout.wishlist_fragment, container, false);
         findId(view);
         if (isNetworkAvailable()){
-         //   getWishList();
+            getWishList();
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.relative_wishlist),"No Internet Connection!",true);
         }
@@ -58,8 +59,7 @@ public class WishlistFragment extends Fragment {
         gridLayoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.VERTICAL,false);
         ProductsRecyclerView.setLayoutManager(gridLayoutManager);
 
-        wishlistAdapter = new WishlistAdapter(getActivity());
-        ProductsRecyclerView.setAdapter(wishlistAdapter);
+
     }
 
     private boolean isNetworkAvailable() {
@@ -72,25 +72,26 @@ public class WishlistFragment extends Fragment {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
         ApiServiceEcom apiService = ApiClientEcom.getClient(getActivity()).create(ApiServiceEcom.class);
-        BaseApp.getInstance().getDisposable().add(apiService.getTotalCarts()
+        BaseApp.getInstance().getDisposable().add(apiService.getLikeProducts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<TotalCartResponse>() {
+                .subscribeWith(new DisposableSingleObserver<WishListResponse>() {
                     @Override
-                    public void onSuccess(TotalCartResponse response) {
+                    public void onSuccess(WishListResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-
+                            wishlistAdapter = new WishlistAdapter(getActivity(),response.getLikes());
+                            ProductsRecyclerView.setAdapter(wishlistAdapter);
 
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.cartEcommLayout),response.getMessage(),true);
+                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.relative_wishlist),response.getMessage(),true);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.cartEcommLayout), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.relative_wishlist), true, e);
                     }
                 }));
     }

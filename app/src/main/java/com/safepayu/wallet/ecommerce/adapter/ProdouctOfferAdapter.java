@@ -94,6 +94,13 @@ public class ProdouctOfferAdapter extends RecyclerView.Adapter<ProdouctOfferAdap
                 else if (ofersItem.get(position).getOffer_type().equals("discamt")){
                     tvSaveOffer.setText("₹ "+ofersItem.get(position).getDiscount_amount()+" Off");
                     tvOffPrice.setText("₹ "+String.format("%.2f",(Double.parseDouble(ofersItem.get(position).getSelling_price())- Double.parseDouble(ofersItem.get(position).getDisc_amt())))); }
+
+                else if (ofersItem.get(position).getOffer_type().equals("combo")){
+                //    tvActualPrice.setVisibility(View.GONE);
+                    tvActualPrice.setText("");
+                    tvOffPrice.setText("₹ " + ofersItem.get(position).getSelling_price());
+                    tvSaveOffer.setText(ofersItem.get(position).getOffer_title());
+                }
             }
          //   tvOffPrice.setText("₹ "+String.valueOf(Float.parseFloat(ofersItem.get(position).getSelling_price()) - Float.parseFloat(ofersItem.get(position).getDiscount_amount())));
 

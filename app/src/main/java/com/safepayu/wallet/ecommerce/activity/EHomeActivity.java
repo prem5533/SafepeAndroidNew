@@ -71,7 +71,7 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
     private DrawerLayout drawer;
     private LoadingDialog loadingDialog;
     public  Dialog dialog;
-    public  TextView tvLocation , tvSerch;
+    public static TextView tvLocation , tvSerch,tvCartBadge;
     private EditText etSearchEcomm;
     LocationManager locationManager;
     Geocoder geocoder;
@@ -111,6 +111,7 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
 
     private void findId() {
         CartBtn = findViewById(R.id.cartBtn_main);
+        tvCartBadge = findViewById(R.id.cart_badge);
         NotificationBtn = findViewById(R.id.favBtn_main);
         NavIcon = findViewById(R.id.nav_iconEcommerce);
         locationBtn = findViewById(R.id.location_ecom);

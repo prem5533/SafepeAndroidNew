@@ -239,7 +239,6 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                                 e.printStackTrace();
                             }
                         }
-
                     }
 
                     @Override

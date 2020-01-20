@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.ecommerce.adapter.ComboOfferAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProdouctOfferAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProdouctOfferRelatedAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProductDetailPagerAdapter;
@@ -28,7 +29,9 @@ import com.safepayu.wallet.ecommerce.adapter.ProductSizeAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ProductValueAdapter;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
+import com.safepayu.wallet.ecommerce.model.request.AddToCartRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
+import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -43,19 +46,22 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     private ProductDetailPagerAdapter productDetailPagerAdapter;
     private ProdouctOfferAdapter prodouctOfferAdapter;
     private ProdouctOfferRelatedAdapter prodouctOfferRelated;
+    private ComboOfferAdapter comboOfferAdapter;
     private LoadingDialog loadingDialog;
     ProductDetailRequest productDetailRequest;
+    AddToCartRequest addToCartRequest;
     ProductValueAdapter productValueAdapter;
     ProductsDetailsResponse productsResponse ;
 
     private ProductSizeAdapter productSizeAdapter;
-    private RecyclerView productSizeList,productColorList,recycleProductOffer,recycleProductRelated;
+    private RecyclerView productSizeList,productColorList,recycleProductOffer,recycleProductRelated,comboList;
 
     int NumPage,CurrentP=0 ;
     private Button backBtnProductDetail;
-    private TextView tvBuyNow,tvAddCart,tvActualPrice,tvProductDetailName,tvProductDetail,tvEarnPoint,tvOffprice,tvStoreName,tvPoffer,tvRelated;
+    private TextView tvBuyNow,tvAddCart,tvActualPrice,tvProductDetailName,tvProductDetail,tvEarnPoint,tvOffprice,tvStoreName,tvPoffer,tvRelated,
+            tvComboprice,cartBadge;
     RatingBar ratingBar;
-    String Productid = "70",Offerid,SellPrice;
+    String Productid = "70",Offerid,SellPrice,CartBadge;
     private NestedScrollView scroll;
 
 
@@ -73,6 +79,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         loadingDialog = new LoadingDialog(this);
         Productid = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PRODUCT_ID);
         Offerid = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().OFFER_ID);
+        CartBadge= BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().CART_BADGE);
         viewpagerProductDetail = findViewById(R.id.viewpager__product_detil);
         productSizeList = findViewById(R.id.product_size_list);
         productColorList = findViewById(R.id.product_color_list);
@@ -88,6 +95,9 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         ratingBar = findViewById(R.id.rating_product_detail);
         recycleProductOffer = findViewById(R.id.recycleProductOffer);
         recycleProductRelated = findViewById(R.id.recycleProductRelated);
+        comboList = findViewById(R.id.recycleComboList);
+        tvComboprice = findViewById(R.id.tv_comboprice);
+        cartBadge = findViewById(R.id.cart_badge);
         scroll = findViewById(R.id.scroll);
         tvRelated = findViewById(R.id.tvRelated);
         tvPoffer = findViewById(R.id.tvPoffer);
@@ -97,7 +107,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         tvBuyNow.setOnClickListener(this);
         tvAddCart.setOnClickListener(this);
 
-
+        cartBadge.setText(CartBadge);
         tvActualPrice.setPaintFlags(tvActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
 
@@ -136,16 +146,13 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 Toast.makeText(getApplicationContext(),"Coming Soon Buy Now",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_product_detail_add_cart:
-
-            /*    Fragment fragment = CartActivity.newInstance();
-
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                transaction.replace(R.id.content_frame, fragment).commit();*/
+                addProductCart();
                 Toast.makeText(getApplicationContext(),"Product Added to your Cart",Toast.LENGTH_SHORT).show();
-break;
+                break;
         }
     }
+
+
 
     private boolean loadFragment(Fragment fragment) {
         //switching fragment
@@ -228,6 +235,8 @@ break;
                             recycleProductRelated.setAdapter(prodouctOfferRelated);
 
 
+
+
                             if (productsDetailsResponse.getProducts().getModifier_list().isEmpty()){
                                 productColorList.setVisibility(View.GONE); }
                             if (productsDetailsResponse.getProductOfers().isEmpty()){
@@ -271,8 +280,7 @@ break;
                                 productColorList.setVisibility(View.VISIBLE);
                                 tvRelated.setVisibility(View.VISIBLE);
                                 tvPoffer.setVisibility(View.VISIBLE);}
-                        }
-                    }
+                        } }
 
                     @Override
                     public void onError(Throwable e) {
@@ -318,7 +326,13 @@ break;
 
         else if (productsResponse.getProductOfers().get(position).getOffer_type().equals("discamt")){
             tvOffprice.setText("₹ "+String.format("%.2f",(Double.parseDouble(productsResponse.getProductOfers().get(position).getSelling_price())- Double.parseDouble(productsResponse.getProductOfers().get(position).getDisc_amt())))); }
-        focusOnView();
+        else if (productsResponse.getProductOfers().get(position).getOffer_type().equals("combo")) {
+            comboList.setLayoutManager(new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
+            comboOfferAdapter = new ComboOfferAdapter(ProductDetailActivity.this, productOfersBean.getCombo_product_id());
+            comboList.setAdapter(comboOfferAdapter);
+            tvComboprice.setText("₹ "+productOfersBean.getSelling_price());
+        }
+            focusOnView();
 
     }
 
@@ -338,5 +352,38 @@ break;
         productDetailRequest.setProduct_id(Productid);
 
         getProductDetail();
+    }
+
+//********************Add Cart******************************//
+
+    private void addProductCart() {
+        addToCartRequest=new AddToCartRequest();
+        addToCartRequest.setProduct_id(Integer.parseInt(Productid));
+        addToCartRequest.setMerchant_id(productsResponse.getProducts().getMerchant_id());
+        addToCartRequest.setVenue_id(productsResponse.getProducts().getVenue_id());
+        addToCartRequest.setModifier_id(String.valueOf(productsResponse.getProducts().getModifier_id()));
+        addToCartRequest.setQuantities("1");
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiServiceEcom apiServiceEcom = ApiClientEcom.getClient(ProductDetailActivity.this).create(ApiServiceEcom.class);
+        BaseApp.getInstance().getDisposable().add(apiServiceEcom.getAddToCarts(addToCartRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<AddToCartResponse>(){
+                    @Override
+                    public void onSuccess(AddToCartResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+                            cartBadge.setText(response.getTotal_carts());
+                            Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.product_detail), false, e.getCause());
+                    }
+                }));
     }
 }

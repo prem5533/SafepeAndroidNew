@@ -205,6 +205,10 @@ public interface ApiService {
     Single<AppVersionResponse> getAppVersion();
 
     @FormUrlEncoded
+    @POST("api/pefast.safepe.latepe/api/updateProfile")
+    Single<BaseResponse> getProfileUpdate(@Field("dob") String dob, @Field("email") String email);
+
+    @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/refer")
     Single<BaseResponse> sendRefer(@Field("mobile") String mobile);
 
