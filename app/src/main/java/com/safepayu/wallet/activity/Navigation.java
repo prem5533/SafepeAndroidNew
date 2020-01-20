@@ -1672,25 +1672,26 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
                             try {
-                                int val = Integer.parseInt(response.getVersionData().getVal());
-                                url = response.getVersionData().getLogo();
-                                //BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ApiClient.ImagePath+url);
+                                if (response.getVersionData().getStatus()==1){
+                                    int val = Integer.parseInt(response.getVersionData().getVal());
+                                    url = response.getVersionData().getLogo();
+                                    //BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ApiClient.ImagePath+url);
                        /*     Picasso.get().load(ImagePath+url).into(headerLogo);
                             Picasso.get().load(ImagePath+url).into(navLogo);*/
 
-                                try {
-                                    tollNumber = response.getVersionData().getTollfree();
-                                } catch (Exception e) {
-                                    tollNumber = "";
-                                    e.printStackTrace();
-                                }
+                                    try {
+                                        tollNumber = response.getVersionData().getTollfree();
+                                    } catch (Exception e) {
+                                        tollNumber = "";
+                                        e.printStackTrace();
+                                    }
 
-                                if (versionCode == val) {
+                                    if (versionCode == val) {
 
-                                } else {
-                                    showDialogForAppUpdate(Navigation.this);
+                                    } else {
+                                        showDialogForAppUpdate(Navigation.this);
+                                    }
                                 }
-                                getServicesCharges();
                             }catch (Exception e){
                                 BaseApp.getInstance().toastHelper().showSnackBar(drawer, e.getMessage(), false);
                                 e.printStackTrace();

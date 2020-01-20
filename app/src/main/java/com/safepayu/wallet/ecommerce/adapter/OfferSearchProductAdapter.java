@@ -70,10 +70,14 @@ public class OfferSearchProductAdapter extends RecyclerView.Adapter<OfferSearchP
         holder.tvDiscount.setText(percent1);
 
         if (offerItem.get(position).getOffer_type().equals("discper")){
-            Double b = ((Double.parseDouble(offerItem.get(position).getSelling_price())-(((Double.parseDouble(offerItem.get(position).getSelling_price()))*(Double.parseDouble(offerItem.get(position).getDisc_per())))/100)));
-            holder.tvSellingPrice.setText("₹ "+String.valueOf(b));
+          /*  Double b = ((Double.parseDouble(offerItem.get(position).getSelling_price())-(((Double.parseDouble(offerItem.get(position).getSelling_price()))*(Double.parseDouble(offerItem.get(position).getDisc_per())))/100)));
+            holder.tvSellingPrice.setText("₹ "+String.valueOf(b));*/
+            Double b = ((Double.parseDouble(offerItem.get(position).getSelling_price())-((Double.parseDouble(offerItem.get(position).getSelling_price()))*(Double.parseDouble(offerItem.get(position).getDisc_per()))/100)));
+            holder.tvSellingPrice.setText("₹ " +String.format("%.3f", b));
+
         } else if (offerItem.get(position).getOffer_type().equals("discamt")){
-            holder.tvSellingPrice.setText("₹ "+String.valueOf(Double.parseDouble(offerItem.get(position).getSelling_price())- Double.parseDouble(offerItem.get(position).getDisc_amt())));
+           // holder.tvSellingPrice.setText("₹ "+String.valueOf(Double.parseDouble(offerItem.get(position).getSelling_price())- Double.parseDouble(offerItem.get(position).getDisc_amt())));
+            holder.tvSellingPrice.setText("₹ "+String.format("%.2f",(Double.parseDouble(offerItem.get(position).getSelling_price())- Double.parseDouble(offerItem.get(position).getDisc_amt()))));
         }
     }
 

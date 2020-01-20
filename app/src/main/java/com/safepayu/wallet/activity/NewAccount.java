@@ -58,6 +58,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     private String strReferalcode;
     private ImageView signup_logo;
     private CheckBox chTermCond;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,6 +168,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 // TODO Auto-generated method stub
             }
         });
+
         referralCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {

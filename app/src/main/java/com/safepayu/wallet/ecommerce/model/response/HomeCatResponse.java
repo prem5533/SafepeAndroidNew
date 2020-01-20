@@ -40,11 +40,17 @@ public class HomeCatResponse {
     }
 
     public static class DataBean {
+
         private List<CategoriesBean> categories;
         private List<BannersBean> banners;
         private List<ProductsOfferBean> products_offer;
         private List<ProductsTrendingBean> products_trending;
         private List<ProductsRecommendedBean> products_recommended;
+        /**
+         * total_carts : 0
+         */
+
+        private int total_carts;
 
         public List<CategoriesBean> getCategories() {
             return categories;
@@ -84,6 +90,14 @@ public class HomeCatResponse {
 
         public void setProducts_recommended(List<ProductsRecommendedBean> products_recommended) {
             this.products_recommended = products_recommended;
+        }
+
+        public int getTotal_carts() {
+            return total_carts;
+        }
+
+        public void setTotal_carts(int total_carts) {
+            this.total_carts = total_carts;
         }
 
         public static class CategoriesBean {

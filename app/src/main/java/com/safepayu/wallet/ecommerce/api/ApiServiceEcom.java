@@ -7,6 +7,7 @@ import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
 import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.CartListResonse;
 import com.safepayu.wallet.ecommerce.model.response.CategoriesResponse;
+import com.safepayu.wallet.ecommerce.model.response.DeleteCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
 import com.safepayu.wallet.ecommerce.model.response.ParentCategoriesResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductByModifierResponse;
@@ -67,4 +68,7 @@ public interface ApiServiceEcom {
 
     @GET("api/pefast.safepe.latepe/api/getLikeProducts ")
     Single<WishListResponse> getLikeProducts ();
+
+    @POST("api/pefast.safepe.latepe/api/deleteCart")
+    Single<DeleteCartResponse> getDeleteCart(@Field("cart_id") String cart_id);
 }

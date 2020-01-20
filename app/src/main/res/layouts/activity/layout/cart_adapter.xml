@@ -264,7 +264,15 @@
                 android:orientation="horizontal"
                 android:padding="5dp"
                 android:layout_marginTop="7dp">
-
+                <TextView
+                    android:id="@+id/cart_remove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remove "
+                    android:textSize="14sp"
+                    android:textColor="@color/red"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_marginLeft="10dp" />
                 <TextView
                     android:id="@+id/productChanegSize_cartAdapter"
                     android:layout_width="wrap_content"

@@ -55,7 +55,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
     }
 
     public class FlightLocationListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView tvDayName,tvDayHours ,productQuantity,cartAdapter,tvActualprice,ProductName,tvSellingprice,tvBuyQuantity;
+        private TextView tvDayName,tvDayHours ,productQuantity,cartAdapter,tvActualprice,ProductName,tvSellingprice,tvBuyQuantity,cartRemove;
         private ImageView imMinus ,imPlus,ivCartImage;
         public FlightLocationListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,9 +69,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
             tvActualprice = itemView.findViewById(R.id.tv_actualprice_myorder);
             ivCartImage = itemView.findViewById(R.id.iv_cart_image);
             tvBuyQuantity = itemView.findViewById(R.id.tv_quantity);
+            cartRemove = itemView.findViewById(R.id.cart_remove);
             imMinus.setOnClickListener(this);
             imPlus.setOnClickListener(this);
             cartAdapter.setOnClickListener(this);
+            cartRemove.setOnClickListener(this);
             tvActualprice.setPaintFlags(tvActualprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
@@ -118,6 +120,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
                     if (cartSizeListener != null) {
                         cartSizeListener.cartSizeItem(getLayoutPosition()); }
                     break;
+
+                case  R.id.cart_remove:
+
+                    break;
+
             }
         }
         private void display(int quantity) {
