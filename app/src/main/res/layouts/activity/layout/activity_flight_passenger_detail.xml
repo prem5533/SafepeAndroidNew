@@ -234,8 +234,6 @@
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:fontFamily="@font/roboto_bold"
-                    android:clickable="false"
-                    android:enabled="false"
                     android:textSize="14sp"
                     android:textColorHint="@color/red_theme"
                     android:background="@null"

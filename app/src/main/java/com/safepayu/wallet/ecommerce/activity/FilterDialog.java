@@ -39,7 +39,7 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
                         FilterListDiscountAdapter.OnFilterListDiscountListener {
 
     private LinearLayout PriceLayout,CategoryLayout,BrandLayout,DiscountLayout,SizeLayout;
-    private RecyclerView PriceRecyclerView,CategoryRecyclerView,BrandRecyclerView,DiscountRecyclerView,SizeRecyclerView;
+    private RecyclerView CategoryRecyclerView,BrandRecyclerView,DiscountRecyclerView,SizeRecyclerView;
     private ImageView PriceIV,CategoryIV,BrandIV,DiscountIV,SizeIV;
     private int PriceInt=0,CategoryInt=0,BrandInt=0,DiscountInt=0,SizeInt=0;
     private Button FilterBtn;
@@ -80,7 +80,7 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
         ApplyBtn = findViewById(R.id.tv_filter_apply);
         CloseBtn = findViewById(R.id.tv_filter_close);
 
-        PriceRecyclerView=findViewById(R.id.recyclePrice_filterLayout);
+        //PriceRecyclerView=findViewById(R.id.recyclePrice_filterLayout);
         CategoryRecyclerView=findViewById(R.id.recycleCategory_filterLayout);
         BrandRecyclerView=findViewById(R.id.recycleBrand_filterLayout);
         DiscountRecyclerView=findViewById(R.id.recycleDiscount_filterLayout);
@@ -92,8 +92,8 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
         DiscountIV=findViewById(R.id.downArrowDiscount);
         SizeIV=findViewById(R.id.downArrowSize);
 
-        PriceRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        PriceRecyclerView.setNestedScrollingEnabled(false);
+//        PriceRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+//        PriceRecyclerView.setNestedScrollingEnabled(false);
 
         CategoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         CategoryRecyclerView.setNestedScrollingEnabled(false);
@@ -135,13 +135,16 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
             }
 
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 seekBar.setThumb(getThumb(progress));
+                price.clear();
+                price.add("0");
+                price.add(""+progress);
             }
         });
-        FilterListPriceAdapter filterListPriceAdapter= new FilterListPriceAdapter(getApplicationContext(),PriceList,FilterDialog.this);
-        PriceRecyclerView.setAdapter(filterListPriceAdapter);
+
+//        FilterListPriceAdapter filterListPriceAdapter= new FilterListPriceAdapter(getApplicationContext(),PriceList,FilterDialog.this);
+//        PriceRecyclerView.setAdapter(filterListPriceAdapter);
 
         SizeList=new ArrayList<>();
         SizeList.add("S");
@@ -167,7 +170,7 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
                     BrandInt=0;
                     CategoryInt=0;
 
-                    PriceRecyclerView.setVisibility(View.VISIBLE);
+                    seekBar.setVisibility(View.VISIBLE);
                     CategoryRecyclerView.setVisibility(View.GONE);
                     BrandRecyclerView.setVisibility(View.GONE);
                     DiscountRecyclerView.setVisibility(View.GONE);
@@ -201,7 +204,7 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
                     BrandInt=0;
                     PriceInt=0;
 
-                    PriceRecyclerView.setVisibility(View.GONE);
+                    seekBar.setVisibility(View.GONE);
                     CategoryRecyclerView.setVisibility(View.VISIBLE);
                     BrandRecyclerView.setVisibility(View.GONE);
                     DiscountRecyclerView.setVisibility(View.GONE);
@@ -236,7 +239,7 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
                     CategoryInt=0;
                     PriceInt=0;
 
-                    PriceRecyclerView.setVisibility(View.GONE);
+                    seekBar.setVisibility(View.GONE);
                     CategoryRecyclerView.setVisibility(View.GONE);
                     BrandRecyclerView.setVisibility(View.VISIBLE);
                     DiscountRecyclerView.setVisibility(View.GONE);
@@ -270,7 +273,7 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
                     CategoryInt=0;
                     PriceInt=0;
 
-                    PriceRecyclerView.setVisibility(View.GONE);
+                    seekBar.setVisibility(View.GONE);
                     CategoryRecyclerView.setVisibility(View.GONE);
                     BrandRecyclerView.setVisibility(View.GONE);
                     DiscountRecyclerView.setVisibility(View.VISIBLE);
@@ -304,7 +307,7 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
                     CategoryInt=0;
                     PriceInt=0;
 
-                    PriceRecyclerView.setVisibility(View.GONE);
+                    seekBar.setVisibility(View.GONE);
                     CategoryRecyclerView.setVisibility(View.GONE);
                     BrandRecyclerView.setVisibility(View.GONE);
                     DiscountRecyclerView.setVisibility(View.GONE);
@@ -371,7 +374,7 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
     }
 
     private void hideLayout(){
-        PriceRecyclerView.setVisibility(View.GONE);
+        seekBar.setVisibility(View.GONE);
         CategoryRecyclerView.setVisibility(View.GONE);
         BrandRecyclerView.setVisibility(View.GONE);
         DiscountRecyclerView.setVisibility(View.GONE);
