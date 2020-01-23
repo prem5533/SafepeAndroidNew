@@ -11,17 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class OpeningHoursAdapter extends RecyclerView.Adapter<OpeningHoursAdapter.FlightLocationListViewHolder> {
 
     private Context context ;
-    ArrayList<String> Hourslist,DayList;
+    List<String> ClosedHourList,OpenHourList,DayList;
 
-    public OpeningHoursAdapter(Context context, ArrayList<String> DayList1, ArrayList<String> Hourslist1) {
+    public OpeningHoursAdapter(Context context, List<String> OpenHourList1, List<String> ClosedHourList1,List<String> DayList1) {
         this.context = context;
-        this.Hourslist = Hourslist1;
-        this.DayList = DayList1;
+        this.ClosedHourList = ClosedHourList1;
+        this.OpenHourList = OpenHourList1;
+        this.DayList=DayList1;
     }
 
     @NonNull
@@ -38,7 +39,7 @@ public class OpeningHoursAdapter extends RecyclerView.Adapter<OpeningHoursAdapte
 
     @Override
     public int getItemCount() {
-        return Hourslist.size();
+        return ClosedHourList.size();
     }
 
     public class FlightLocationListViewHolder extends RecyclerView.ViewHolder {
@@ -51,8 +52,8 @@ public class OpeningHoursAdapter extends RecyclerView.Adapter<OpeningHoursAdapte
         }
 
         public void bindData(int position) {
-            tvDayName.setText(Hourslist.get(position));
-            tvDayHours.setText(DayList.get(position));
+            tvDayName.setText(DayList.get(position));
+            tvDayHours.setText(OpenHourList.get(position)+" - "+ClosedHourList.get(position));
         }
     }
 }

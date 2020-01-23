@@ -184,9 +184,7 @@
                     android:text="Txn ID: 16367868787"
                     android:textColor="#5e6067"
                     android:fontFamily="@font/roboto_medium"
-                    android:layout_marginTop="5dp"
-
-                    >
+                    android:layout_marginTop="5dp">
                 </TextView>
                 <TextView
                     android:id="@+id/tv_date_time"

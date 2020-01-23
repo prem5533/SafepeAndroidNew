@@ -97,7 +97,7 @@ public class PackageDetails extends BaseActivity {
 
 
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout),response.getMessage(),true);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.packageDetailsLayout),response.getMessage(),true);
                         }
                     }
 
@@ -105,7 +105,7 @@ public class PackageDetails extends BaseActivity {
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.packageDetailsLayout), true, e);
                     }
                 }));
 

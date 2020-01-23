@@ -126,8 +126,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         if (Offerid.equals("")){
             productDetailRequest=new ProductDetailRequest();
             productDetailRequest.setProduct_id(Productid);
-        }
-        else {
+        } else {
             productDetailRequest=new ProductDetailRequest();
             productDetailRequest.setProduct_id(Productid);
             productDetailRequest.setOffer_id(Offerid);

@@ -16,8 +16,8 @@ android {
         applicationId "com.safepayu.wallet"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 57
-        versionName "1.9.9"
+        versionCode 59
+        versionName "2.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }

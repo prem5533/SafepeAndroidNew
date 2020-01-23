@@ -27,10 +27,13 @@ import com.safepayu.wallet.ecommerce.adapter.FilterListDiscountAdapter;
 import com.safepayu.wallet.ecommerce.adapter.FilterListPriceAdapter;
 import com.safepayu.wallet.ecommerce.adapter.FilterListSizeAdapter;
 import com.safepayu.wallet.ecommerce.fragment.SearchProductFragment;
+import com.safepayu.wallet.ecommerce.fragment.ShopDetailFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.safepayu.wallet.ecommerce.fragment.HomeFragment.BrandIdList;
+import static com.safepayu.wallet.ecommerce.fragment.HomeFragment.BrandNameList;
 import static com.safepayu.wallet.ecommerce.fragment.HomeFragment.CatIdList;
 import static com.safepayu.wallet.ecommerce.fragment.HomeFragment.CatNameList;
 
@@ -43,10 +46,11 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
     private ImageView PriceIV,CategoryIV,BrandIV,DiscountIV,SizeIV;
     private int PriceInt=0,CategoryInt=0,BrandInt=0,DiscountInt=0,SizeInt=0;
     private Button FilterBtn;
-    private ArrayList<String> DiscountList,PriceList,SizeList,BrandList;
+    private ArrayList<String> DiscountList,PriceList,SizeList;
     private TextView tvCategory,tvSize,tvPrice,tvBrand,tvDiscount,ApplyBtn,CloseBtn;
     private List<String> brand_id,category_id,size,price,discount;
     private AppCompatSeekBar seekBar;
+    private String Class="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,12 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
         size=new ArrayList<>();
         price=new ArrayList<>();
         discount=new ArrayList<>();
+
+        try {
+            Class=getIntent().getStringExtra("Class");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         seekBar=findViewById(R.id.seekbarPrice_filterLayout);
         PriceLayout=findViewById(R.id.priceLayout_filterLayout);
@@ -121,7 +131,6 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
         PriceList=new ArrayList<>();
         PriceList.add("1000");
 
-        View thumbView1 = LayoutInflater.from(FilterDialog.this).inflate(R.layout.layout_seekbar_thumb, null, false);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -154,10 +163,7 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
         FilterListSizeAdapter filterListSizeAdapter = new FilterListSizeAdapter(getApplicationContext(),SizeList,FilterDialog.this);
         SizeRecyclerView.setAdapter(filterListSizeAdapter);
 
-        BrandList=new ArrayList<>();
-        BrandList.add("Lee");
-        BrandList.add("Reebok");
-        FilterListBrandAdapter filterListBrandAdapter = new FilterListBrandAdapter(getApplicationContext(),BrandList,FilterDialog.this);
+        FilterListBrandAdapter filterListBrandAdapter = new FilterListBrandAdapter(getApplicationContext(),BrandNameList,BrandIdList,FilterDialog.this);
         BrandRecyclerView.setAdapter(filterListBrandAdapter);
 
         PriceLayout.setOnClickListener(new View.OnClickListener() {
@@ -331,17 +337,16 @@ public class FilterDialog  extends Activity implements FilterListPriceAdapter.On
             }
         });
 
-        /*FilterBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });*/
-
         ApplyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(FilterDialog.this, SearchProductFragment.class);
+                Intent intent=null;
+                if (Class.equalsIgnoreCase("Product")){
+                    intent=new Intent(FilterDialog.this, SearchProductFragment.class);
+                }else {
+                    intent=new Intent(FilterDialog.this, ShopDetailFragment.class);
+                }
+
                 intent.putStringArrayListExtra("brand_id",(ArrayList<String>) brand_id);
                 intent.putStringArrayListExtra("category_id",(ArrayList<String>) category_id);
                 intent.putStringArrayListExtra("size",(ArrayList<String>) size);

@@ -1,13 +1,10 @@
 package com.safepayu.wallet.ecommerce.fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +15,7 @@ public class ThankYouFragment extends AppCompatActivity {
 
     private RecyclerView ProductsRecyclerView;
 
-    private TextView tvSkipBtn;
+    private Button BackBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +26,18 @@ public class ThankYouFragment extends AppCompatActivity {
 
     private void findId() {
 
+        BackBtn=findViewById(R.id.backBtn_thankYouLayout);
         ProductsRecyclerView=findViewById(R.id.recycleProduct_thankYouLayout);
 
         ProductsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         ThankYouAdapter thankYouAdapter = new ThankYouAdapter(this);
         ProductsRecyclerView.setAdapter(thankYouAdapter);
+
+        BackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

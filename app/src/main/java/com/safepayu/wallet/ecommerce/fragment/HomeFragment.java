@@ -87,6 +87,7 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     private ArrayList<String> ProductNameList,ProductImageList;
     private ArrayList<String> TrendingNameList,TrendingImageList;
     private ArrayList<String> RecommendNameList,RecommendImageList;
+    public static ArrayList<String> BrandNameList,BrandIdList;
     public static ArrayList<String> CatNameList,CatIdList;
 
 
@@ -187,6 +188,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         RecommendImageList=new ArrayList<>();
         TrendingNameList=new ArrayList<>();
         TrendingImageList=new ArrayList<>();
+        BrandNameList=new ArrayList<>();
+        BrandIdList=new ArrayList<>();
 
         ProductNameList.add("Shoes");
         ProductNameList.add("Shoes");
