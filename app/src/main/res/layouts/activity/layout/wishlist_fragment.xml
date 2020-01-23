@@ -11,6 +11,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp" />
+    <LinearLayout
+        android:id="@+id/liWishEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_empty_bag"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your wishlist have no item."
+            android:textSize="18sp"
+            android:fontFamily="@font/roboto_bold"/>
+
+    </LinearLayout>
 
 </LinearLayout>

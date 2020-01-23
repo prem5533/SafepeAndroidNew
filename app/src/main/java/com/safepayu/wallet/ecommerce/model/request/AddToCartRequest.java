@@ -9,6 +9,7 @@ public class AddToCartRequest {
      * venue_id : 201911011148462
      * modifier_id : 20
      * quantities : 10
+     * offer_id : 12
      */
 
     private int product_id;
@@ -16,6 +17,7 @@ public class AddToCartRequest {
     private String venue_id;
     private String modifier_id;
     private String quantities;
+    private int offer_id;
 
     public int getProduct_id() {
         return product_id;
@@ -55,5 +57,13 @@ public class AddToCartRequest {
 
     public void setQuantities(String quantities) {
         this.quantities = quantities;
+    }
+
+    public int getOffer_id() {
+        return offer_id;
+    }
+
+    public void setOffer_id(int offer_id) {
+        this.offer_id = offer_id;
     }
 }

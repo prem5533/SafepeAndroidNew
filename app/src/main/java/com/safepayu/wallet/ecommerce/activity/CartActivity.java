@@ -1,6 +1,9 @@
 package com.safepayu.wallet.ecommerce.activity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -9,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,17 +27,31 @@ import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.adapter.CartAdapter;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
+import com.safepayu.wallet.ecommerce.model.request.CartQuantityRequest;
+import com.safepayu.wallet.ecommerce.model.response.CartQuantityResponse;
+import com.safepayu.wallet.ecommerce.model.response.DeleteCartResponse;
+import com.safepayu.wallet.ecommerce.model.response.MoveToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.TotalCartResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.safepayu.wallet.ecommerce.activity.EHomeActivity.tvCartBadge;
+
 public class CartActivity extends AppCompatActivity implements View.OnClickListener , CartAdapter.CartSizeListener {
 
     private RecyclerView ProductsRecyclerView;
     private Button btnCheckout;
     private LoadingDialog loadingDialog;
+    TotalCartResponse totalCartResponse;
+    CartQuantityRequest cartQuantityRequest;
+    CartQuantityResponse cartQuantityResponse;
+    CartAdapter cartAdapter;
+    private LinearLayout liCartEmpty,licheckout;
+    private TextView tvTotalRs;
+    int sum = 0, total;
+    int quantity = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +72,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         loadingDialog=new LoadingDialog(CartActivity.this);
         ProductsRecyclerView = findViewById(R.id.recycleCart);
         btnCheckout = findViewById(R.id.btn_checkout);
+        liCartEmpty = findViewById(R.id.CartEmpty);
+        licheckout = findViewById(R.id.licheckout);
+        tvTotalRs = findViewById(R.id.tv_total_rs);
 
         btnCheckout.setOnClickListener(this);
     }
@@ -68,6 +91,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_checkout:
                 startActivity(new Intent(getApplicationContext(), AddAddressEcomActivity.class));
                 break;
+
         }
     }
 
@@ -76,6 +100,42 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
         bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
     }
+
+    @Override
+    public void cartRemoveItem(int position) {
+
+        showDialogRemoveCart(position, CartActivity.this);
+    }
+
+    @Override
+    public void onCartList(int position, TotalCartResponse.CartsBean cartsBean) {
+        Intent intent = new Intent(CartActivity.this, ProductDetailActivity.class);
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PRODUCT_ID,String.valueOf(cartsBean.getProduct_id()));
+       // BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,String.valueOf(cartsBean.getOffer_id()));
+         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,"");
+        startActivity(intent);
+    }
+
+    @Override
+    public void cartMoveItem(int position) {
+        moveCartToWishList(position);
+    }
+
+    @Override
+    public void cartQuantityItem(int position, TextView productQuantity, TotalCartResponse.CartsBean cartsBean, int quantity ) {
+
+       /* if (cartsBean.getAvl_quantity()<quantity)
+        {
+            Toast.makeText(getApplicationContext(),"Can not exceed more item",Toast.LENGTH_SHORT).show();
+        }
+        else {*/
+            getAddCartQuantity(position,productQuantity,cartsBean);
+            //tvBuyQuantity.setText(String.valueOf(response.getCart().getQuantities()));
+      //  }
+
+    }
+
+
 
     public static class BottomSheetFragment extends BottomSheetDialogFragment {
 
@@ -114,10 +174,30 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     public void onSuccess(TotalCartResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
+                             totalCartResponse = response;
 
-                            ProductsRecyclerView.setLayoutManager(new LinearLayoutManager(CartActivity.this, LinearLayoutManager.VERTICAL, false));
-                            CartAdapter cartAdapter = new CartAdapter(CartActivity.this, CartActivity.this,response.getCarts());
-                            ProductsRecyclerView.setAdapter(cartAdapter);
+
+                             for (total = 0 ; total<response.getCarts().size();total++){
+                             //   double price= Double.parseDouble(response.getCarts().get(total).getSelling_price());
+                                 double totalAmount = Double.parseDouble(response.getCarts().get(total).getSelling_price())* Double.parseDouble(""+response.getCarts().get(total).getQuantities());
+                                // tvSellingprice.setText("₹ "+String.valueOf(totalAmount));
+                                sum=sum+(int) totalAmount;
+                                tvTotalRs.setText("₹ "+String.valueOf(sum));
+                            }
+
+                             if (response.getCarts().isEmpty()){
+                                 liCartEmpty.setVisibility(View.VISIBLE);
+                                 ProductsRecyclerView.setVisibility(View.GONE);
+                                 licheckout.setVisibility(View.GONE);
+                             }
+                             else {
+                                 ProductsRecyclerView.setLayoutManager(new LinearLayoutManager(CartActivity.this, LinearLayoutManager.VERTICAL, false));
+                                 cartAdapter = new CartAdapter(CartActivity.this, CartActivity.this,totalCartResponse.getCarts());
+                                 ProductsRecyclerView.setAdapter(cartAdapter);
+                                 liCartEmpty.setVisibility(View.GONE);
+                                 licheckout.setVisibility(View.VISIBLE);
+                             }
+
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.cartEcommLayout),response.getMessage(),true);
                         }
@@ -130,4 +210,163 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }));
     }
+
+//******************************Remove cart************************
+
+    private void showDialogRemoveCart(final int position, Activity activity) {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+
+        dialog.setTitle("LooxMart Alert")
+                .setCancelable(false)
+                .setMessage("\nAre you sure you want to remove this item?\n")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+                        if (isNetworkAvailable()){
+                            getRemoveCart(position);
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Please Check Your Internet Connection",false);
+                        }
+
+                        dialog.dismiss();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(getResources().getDrawable(R.drawable.appicon_new))
+                .show();
+    }
+
+    private void getRemoveCart(final int position) {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiServiceEcom apiService = ApiClientEcom.getClient(CartActivity.this).create(ApiServiceEcom.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getDeleteCart( String.valueOf(totalCartResponse.getCarts().get(position).getId()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<DeleteCartResponse>() {
+                    @Override
+                    public void onSuccess(DeleteCartResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+                            Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
+
+                            totalCartResponse.getCarts().remove(position);
+                            cartAdapter.notifyDataSetChanged();
+                            int  cartNumber = Integer.parseInt(tvCartBadge.getText().toString());
+                            tvCartBadge.setText(""+(cartNumber-1));
+                            if (totalCartResponse.getCarts().isEmpty()){
+                                liCartEmpty.setVisibility(View.VISIBLE);
+                                ProductsRecyclerView.setVisibility(View.GONE);
+                                licheckout.setVisibility(View.GONE);
+                            }
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.cartEcommLayout),response.getMessage(),true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.cartEcommLayout), true, e);
+                    }
+                }));
+    }
+
+
+    //******************************Move cart************************
+    private void moveCartToWishList(final int position) {
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiServiceEcom apiServiceEcom = ApiClientEcom.getClient(CartActivity.this).create(ApiServiceEcom.class);
+        BaseApp.getInstance().getDisposable().add(apiServiceEcom.getMoveToWishList( String.valueOf(totalCartResponse.getCarts().get(position).getId()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<MoveToCartResponse>(){
+                    @Override
+                    public void onSuccess(MoveToCartResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+                            Toast.makeText(CartActivity.this,response.getMessage(), Toast.LENGTH_SHORT).show();
+                            totalCartResponse.getCarts().remove(position);
+                            cartAdapter.notifyDataSetChanged();
+                            int  cartNumber = Integer.parseInt(tvCartBadge.getText().toString());
+                            tvCartBadge.setText(""+(cartNumber-1));
+                            if (totalCartResponse.getCarts().isEmpty()){
+                                liCartEmpty.setVisibility(View.VISIBLE);
+                                ProductsRecyclerView.setVisibility(View.GONE);
+                                licheckout.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.cartEcommLayout), false, e.getCause());
+                    }
+                }));
+    }
+
+    //******************************Quantity cart************************
+    private void getAddCartQuantity(final int position, TextView productQuantity, final TotalCartResponse.CartsBean cartsBean) {
+
+   String  PlusMinus = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PLUS_MINUS);
+
+        cartQuantityRequest = new CartQuantityRequest();
+        cartQuantityRequest.setCart_id(totalCartResponse.getCarts().get(position).getId());
+        if (PlusMinus.equals("plus"))
+        { cartQuantityRequest.setQuantities("1"); }
+
+        else if (PlusMinus.equals("minus"))
+        { cartQuantityRequest.setQuantities("-1"); }
+
+
+
+        ApiServiceEcom apiServiceEcom = ApiClientEcom.getClient(CartActivity.this).create(ApiServiceEcom.class);
+
+        BaseApp.getInstance().getDisposable().add(apiServiceEcom.getCartQuantity(cartQuantityRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CartQuantityResponse>(){
+
+                    @Override
+                    public void onSuccess(CartQuantityResponse response) {
+                        cartQuantityResponse = response;
+                        if (response.isStatus()==true){
+                               // tvBuyQuantity.setText(String.valueOf(response.getCart().getQuantities()));
+                                totalCartResponse.getCarts().get(position).setQuantities(response.getCart().getQuantities());
+                        //    getTotalCart();
+                            }
+                            else if (response.isStatus()==false){
+                                Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_LONG).show();
+                            }
+                          //  totalCartResponse.getCarts().get(position).setQuantities(6);
+                            cartAdapter.notifyDataSetChanged();
+
+                    }
+
+        @Override
+        public void onError(Throwable e) {
+            BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.cartEcommLayout), false, e.getCause());
+        }
+    }));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(CartActivity.this, EHomeActivity.class));
+        finish();
+
+    }
 }
+
+

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
@@ -31,12 +32,16 @@ import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
 import com.safepayu.wallet.ecommerce.model.request.AddToCartRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
+import com.safepayu.wallet.ecommerce.model.request.WishListRequest;
 import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
+import com.safepayu.wallet.ecommerce.model.response.WishListResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.safepayu.wallet.ecommerce.activity.EHomeActivity.tvCartBadge;
 
 
 public class ProductDetailActivity extends AppCompatActivity implements View.OnClickListener, ProdouctOfferAdapter.OnProductOfferItemListener,
@@ -50,6 +55,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     private LoadingDialog loadingDialog;
     ProductDetailRequest productDetailRequest;
     AddToCartRequest addToCartRequest;
+    WishListRequest wishListRequest;
     ProductValueAdapter productValueAdapter;
     ProductsDetailsResponse productsResponse ;
 
@@ -57,11 +63,11 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     private RecyclerView productSizeList,productColorList,recycleProductOffer,recycleProductRelated,comboList;
 
     int NumPage,CurrentP=0 ;
-    private Button backBtnProductDetail;
+    private Button backBtnProductDetail,grayWish,redWish;
     private TextView tvBuyNow,tvAddCart,tvActualPrice,tvProductDetailName,tvProductDetail,tvEarnPoint,tvOffprice,tvStoreName,tvPoffer,tvRelated,
             tvComboprice,cartBadge;
     RatingBar ratingBar;
-    String Productid = "70",Offerid,SellPrice,CartBadge;
+    String Productid ,Offerid,SellPrice,CartBadge;
     private NestedScrollView scroll;
 
 
@@ -71,6 +77,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_product_detail);
         findId();
         getProductDetail();
+      //  getWishListProduct();
     }
 
 
@@ -101,11 +108,15 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         scroll = findViewById(R.id.scroll);
         tvRelated = findViewById(R.id.tvRelated);
         tvPoffer = findViewById(R.id.tvPoffer);
+        grayWish = findViewById(R.id.grayWish);
+        redWish = findViewById(R.id.redWish);
 
 
         backBtnProductDetail.setOnClickListener(this);
         tvBuyNow.setOnClickListener(this);
         tvAddCart.setOnClickListener(this);
+        grayWish.setOnClickListener(this);
+        redWish.setOnClickListener(this);
 
         cartBadge.setText(CartBadge);
         tvActualPrice.setPaintFlags(tvActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -132,6 +143,8 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
             productDetailRequest.setOffer_id(Offerid);
         }
 
+
+        cartBadge.setText(tvCartBadge.getText().toString());
     }
 
     @Override
@@ -148,8 +161,15 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 addProductCart();
                 Toast.makeText(getApplicationContext(),"Product Added to your Cart",Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.grayWish:
+                getWishListProduct();
+                break;
+            case R.id.redWish:
+                getWishListProduct();
+                break;
         }
     }
+
 
 
 
@@ -199,7 +219,6 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                             ratingBar.setRating(productsDetailsResponse.getProducts().getProductsRating());
 
 
-
                             if (!Offerid.equals("")){
                                 tvActualPrice.setText("₹ "+productsDetailsResponse.getProducts().getSelling_price());
                                 tvActualPrice.setVisibility(View.VISIBLE);
@@ -211,9 +230,17 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                                     tvOffprice.setText("₹ "+String.format("%.2f",(Double.parseDouble(productsDetailsResponse.getProductOfers().get(0).getSelling_price())- Double.parseDouble(productsDetailsResponse.getProductOfers().get(0).getDisc_amt()))));
                                 }
                             }
+                            else { tvOffprice.setText("₹ "+productsDetailsResponse.getProducts().getSelling_price());
+                                    tvActualPrice.setVisibility(View.GONE);
+                            }
+
+                            if (productsDetailsResponse.getProducts().isLikes()==true){
+
+                                redWish.setVisibility(View.VISIBLE);
+                                grayWish.setVisibility(View.GONE); }
                             else {
-                                tvOffprice.setText("₹ "+productsDetailsResponse.getProducts().getSelling_price());
-                                tvActualPrice.setVisibility(View.GONE);
+                                redWish.setVisibility(View.GONE);
+                                grayWish.setVisibility(View.VISIBLE);
                             }
 
                           /*  productSizeList.setLayoutManager(new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
@@ -346,7 +373,6 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onReltedItem(int position, ProductsDetailsResponse.RelatedproductBean productOfersBean) {
-        Productid = "71";
         productDetailRequest=new ProductDetailRequest();
         productDetailRequest.setProduct_id(Productid);
 
@@ -362,6 +388,12 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         addToCartRequest.setVenue_id(productsResponse.getProducts().getVenue_id());
         addToCartRequest.setModifier_id(String.valueOf(productsResponse.getProducts().getModifier_id()));
         addToCartRequest.setQuantities("1");
+        if (TextUtils.isEmpty(Offerid) || Offerid==null || Offerid.equalsIgnoreCase("null")){
+            addToCartRequest.setOffer_id(0);
+        }else {
+            addToCartRequest.setOffer_id(Integer.parseInt(Offerid));
+        }
+
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiServiceEcom apiServiceEcom = ApiClientEcom.getClient(ProductDetailActivity.this).create(ApiServiceEcom.class);
@@ -373,8 +405,46 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                     public void onSuccess(AddToCartResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            cartBadge.setText(response.getTotal_carts());
+                            int  cartNumber = Integer.parseInt(tvCartBadge.getText().toString());
+                            tvCartBadge.setText(""+(cartNumber+1));
+                            cartBadge.setText(""+(cartNumber+1));
                             Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.product_detail), false, e.getCause());
+                    }
+                }));
+    }
+
+    private void getWishListProduct() {
+
+        wishListRequest=new WishListRequest();
+        wishListRequest.setProduct_id(Integer.parseInt(Productid));
+        wishListRequest.setMerchant_id(productsResponse.getProducts().getMerchant_id());
+        wishListRequest.setVenue_id(productsResponse.getProducts().getVenue_id());
+        wishListRequest.setModifier_id(productsResponse.getProducts().getModifier_id());
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiServiceEcom apiServiceEcom = ApiClientEcom.getClient(ProductDetailActivity.this).create(ApiServiceEcom.class);
+        BaseApp.getInstance().getDisposable().add(apiServiceEcom.getWishListLikeDislike(wishListRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<WishListResponse>(){
+                    @Override
+                    public void onSuccess(WishListResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+
+                            if (response.isWishlist()==true){
+                                redWish.setVisibility(View.VISIBLE);
+                                grayWish.setVisibility(View.GONE); }
+                            else { redWish.setVisibility(View.GONE);
+                                grayWish.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
 

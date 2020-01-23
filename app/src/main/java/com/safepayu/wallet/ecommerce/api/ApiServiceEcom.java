@@ -2,16 +2,20 @@ package com.safepayu.wallet.ecommerce.api;
 
 import com.safepayu.wallet.ecommerce.model.request.AddToCartRequest;
 import com.safepayu.wallet.ecommerce.model.request.CancelOrderRequest;
+import com.safepayu.wallet.ecommerce.model.request.CartQuantityRequest;
 import com.safepayu.wallet.ecommerce.model.request.FilterRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductByModifierRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
 import com.safepayu.wallet.ecommerce.model.request.ReturnOrderRequest;
 import com.safepayu.wallet.ecommerce.model.request.ReviewRequest;
+import com.safepayu.wallet.ecommerce.model.request.WishListRequest;
 import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.CartListResonse;
+import com.safepayu.wallet.ecommerce.model.response.CartQuantityResponse;
 import com.safepayu.wallet.ecommerce.model.response.CategoriesResponse;
 import com.safepayu.wallet.ecommerce.model.response.DeleteCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
+import com.safepayu.wallet.ecommerce.model.response.MoveToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.MyOrderListResponse;
 import com.safepayu.wallet.ecommerce.model.response.OrderDetailResponse;
 import com.safepayu.wallet.ecommerce.model.response.ParentCategoriesResponse;
@@ -72,11 +76,14 @@ public interface ApiServiceEcom {
     @GET("api/pefast.safepe.latepe/api/getTotalCarts")
     Single<TotalCartResponse> getTotalCarts();
 
-    @GET("api/pefast.safepe.latepe/api/getLikeProducts ")
-    Single<WishListResponse> getLikeProducts ();
-
+    @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/deleteCart")
     Single<DeleteCartResponse> getDeleteCart(@Field("cart_id") String cart_id);
+
+    ///**********WishList********
+
+    @GET("api/pefast.safepe.latepe/api/getLikeProducts ")
+    Single<WishListResponse> getLikeProducts ();
 
     @GET("api/pefast.safepe.latepe/api/fetchEcommOrders")
     Single<MyOrderListResponse> getEcommOrdersList ();
@@ -93,4 +100,17 @@ public interface ApiServiceEcom {
 
     @POST("api/pefast.safepe.latepe/api/returnOrder")
     Single<BaseResponse> getReturnOrder (@Body ReturnOrderRequest returnOrderRequest);
+    @POST("api/pefast.safepe.latepe/api/LikeDislikeProduct ")
+    Single<WishListResponse> getWishListLikeDislike(@Body WishListRequest wishListRequest);
+
+    @FormUrlEncoded
+    @POST("api/pefast.safepe.latepe/api/moveLikeToCart")
+    Single<MoveToCartResponse> getMoveToCart(@Field("like_id") String like_id);
+
+    @FormUrlEncoded
+    @POST("api/pefast.safepe.latepe/api/moveCartToLikes")
+    Single<MoveToCartResponse> getMoveToWishList(@Field("cart_id") String cart_id);
+
+    @POST("api/pefast.safepe.latepe/api/addCartQuantity")
+    Single<CartQuantityResponse> getCartQuantity(@Body CartQuantityRequest cartQuantityRequest);
 }

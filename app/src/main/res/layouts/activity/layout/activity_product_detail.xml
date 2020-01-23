@@ -58,7 +58,7 @@
                     android:background="@drawable/badge_count_background"/>
 
                 <Button
-                    android:id="@+id/wishlist"
+                    android:id="@+id/redWish"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
@@ -67,6 +67,7 @@
                     android:layout_margin="10dp"
                     android:background="@drawable/ic_like_red" />
                 <Button
+                    android:id="@+id/grayWish"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"

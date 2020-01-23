@@ -383,6 +383,12 @@ public class ProductsDetailsResponse {
         private List<String> images;
         private List<ModifierListBean> modifier_list;
         private List<String> modifier_images;
+        /**
+         * likes : false
+         */
+
+        private boolean likes;
+
 
         public int getId() {
             return id;
@@ -550,6 +556,14 @@ public class ProductsDetailsResponse {
 
         public void setModifier_images(List<String> modifier_images) {
             this.modifier_images = modifier_images;
+        }
+
+        public boolean isLikes() {
+            return likes;
+        }
+
+        public void setLikes(boolean likes) {
+            this.likes = likes;
         }
 
         public static class ModifierListBean {

@@ -528,6 +528,12 @@ public class HomeCatResponse {
             private String venue_name;
             private String distance;
             private int stars;
+            /**
+             * likes : true
+             */
+
+            private boolean likes;
+
 
             public int getOffer_id() {
                 return offer_id;
@@ -736,6 +742,14 @@ public class HomeCatResponse {
             public void setStars(int stars) {
                 this.stars = stars;
             }
+
+            public boolean isLikes() {
+                return likes;
+            }
+
+            public void setLikes(boolean likes) {
+                this.likes = likes;
+            }
         }
 
         public static class ProductsTrendingBean {
@@ -825,6 +839,7 @@ public class HomeCatResponse {
             private Object deleted_at;
             private String created_at;
             private String updated_at;
+
             /**
              * stars : 0
              * distance : 5,849.26
@@ -837,6 +852,11 @@ public class HomeCatResponse {
              */
 
             private String venue_name;
+            /**
+             * likes : true
+             */
+
+            private boolean likes;
 
 
             public int getId() {
@@ -1182,6 +1202,14 @@ public class HomeCatResponse {
             public void setVenue_name(String venue_name) {
                 this.venue_name = venue_name;
             }
+
+            public boolean isLikes() {
+                return likes;
+            }
+
+            public void setLikes(boolean likes) {
+                this.likes = likes;
+            }
         }
 
         public static class ProductsRecommendedBean {
@@ -1280,6 +1308,11 @@ public class HomeCatResponse {
             private int stars;
             private String distance;
             private String venue_name;
+            /**
+             * likes : true
+             */
+
+            private boolean likes;
 
 
             public int getId() {
@@ -1624,6 +1657,14 @@ public class HomeCatResponse {
 
             public void setVenue_name(String venue_name) {
                 this.venue_name = venue_name;
+            }
+
+            public boolean isLikes() {
+                return likes;
+            }
+
+            public void setLikes(boolean likes) {
+                this.likes = likes;
             }
         }
     }

@@ -12,7 +12,14 @@ public class WishListResponse {
 
     private boolean status;
     private String message;
+
     private List<LikesBean> likes;
+    /**
+     * wishlist : true
+     */
+
+    private boolean wishlist;
+
 
     public boolean isStatus() {
         return status;
@@ -36,6 +43,14 @@ public class WishListResponse {
 
     public void setLikes(List<LikesBean> likes) {
         this.likes = likes;
+    }
+
+    public boolean isWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(boolean wishlist) {
+        this.wishlist = wishlist;
     }
 
     public static class LikesBean {

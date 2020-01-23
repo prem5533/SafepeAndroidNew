@@ -7,11 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.model.response.TotalCartResponse;
@@ -21,14 +24,21 @@ import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocationListViewHolder> {
 
+
     int quantity = 1 ,avalQuantity;
     private Context context ;
     private CartSizeListener cartSizeListener;
     private List<TotalCartResponse.CartsBean> cartsBeans;
+    String  PlusMinus;
+
 
 
     public interface CartSizeListener{
         void cartSizeItem(int position );
+        void cartRemoveItem(int position );
+        void onCartList(int position, TotalCartResponse.CartsBean cartsBean);
+        void cartMoveItem(int position );
+        void cartQuantityItem(int position ,TextView productQuantity,TotalCartResponse.CartsBean cartsBean ,int quantity);
     }
 
     public CartAdapter(Context context, CartSizeListener cartSizeListener, List<TotalCartResponse.CartsBean> cartsBeans) {
@@ -55,8 +65,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
     }
 
     public class FlightLocationListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView tvDayName,tvDayHours ,productQuantity,cartAdapter,tvActualprice,ProductName,tvSellingprice,tvBuyQuantity,cartRemove;
+        private  TextView tvDayName,tvDayHours ,productQuantity,cartAdapter,tvBuyQuantity, tvVenueName,tvActualprice,ProductName,tvSellingprice,cartRemove,cartMove,tvDiscount;
         private ImageView imMinus ,imPlus,ivCartImage;
+        private LinearLayout liCartProduct;
         public FlightLocationListViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -70,14 +81,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
             ivCartImage = itemView.findViewById(R.id.iv_cart_image);
             tvBuyQuantity = itemView.findViewById(R.id.tv_quantity);
             cartRemove = itemView.findViewById(R.id.cart_remove);
+            cartMove = itemView.findViewById(R.id.cart_move);
+            tvDiscount = itemView.findViewById(R.id.tv_savers_myorder);
+            tvVenueName = itemView.findViewById(R.id.tvVenueName);
+            liCartProduct = itemView.findViewById(R.id.li_cart_product);
+
+
             imMinus.setOnClickListener(this);
             imPlus.setOnClickListener(this);
             cartAdapter.setOnClickListener(this);
             cartRemove.setOnClickListener(this);
+            cartMove.setOnClickListener(this);
             tvActualprice.setPaintFlags(tvActualprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            liCartProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (cartSizeListener != null) {
+                        cartSizeListener.onCartList(getLayoutPosition(),cartsBeans.get(getLayoutPosition())); }
+                }
+            });
         }
 
-        public void bindData(int position) {
+        public void bindData(final int position) {
 
             try {
                 if (TextUtils.isEmpty(ApiClientEcom.ImagePath+cartsBeans.get(position).getProduct_image())){
@@ -90,31 +115,75 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
                 er.printStackTrace(); }
 
             ProductName.setText(cartsBeans.get(position).getProduct_name());
-            tvSellingprice.setText(cartsBeans.get(position).getSelling_price());
+
             tvBuyQuantity.setText(String.valueOf(cartsBeans.get(position).getQuantities()));
-            avalQuantity=     cartsBeans.get(position).getAvl_quantity();
-        /*    if ((quantity == cartsBeans.get(position).getAvl_quantity()) && (quantity < cartsBeans.get(position).getAvl_quantity())){
-                imPlus.setClickable(false);
+            productQuantity.setText(String.valueOf(cartsBeans.get(position).getQuantities()));
+
+            tvVenueName.setText(cartsBeans.get(position).getVenue_name());
+
+
+
+            if (cartsBeans.get(position).getOffer_id()!=0)
+            {
+                tvActualprice.setText("₹ "+cartsBeans.get(position).getSelling_price());
+                String discountPercent = cartsBeans.get(position).getOffer_title();
+                String percent[] = discountPercent.split(" ");
+                String percent1 = percent[0];
+                tvDiscount.setText(percent1 + "Off");
+                if (cartsBeans.get(position).getOffer_type().equals("discper")){
+
+                    Double b = ((Double.parseDouble(cartsBeans.get(position).getSelling_price())-((Double.parseDouble(cartsBeans.get(position).getSelling_price()))*(Double.parseDouble(cartsBeans.get(position).getDisc_per()))/100)));
+                    tvSellingprice.setText("₹ " +String.format("%.3f", b)); }
+                else if (cartsBeans.get(position).getOffer_type().equals("discamt")){
+                    tvSellingprice.setText("₹ "+String.format("%.2f",(Double.parseDouble(cartsBeans.get(position).getSelling_price())- Double.parseDouble(cartsBeans.get(position).getDisc_amt())))); }
             }
             else {
-                imPlus.setClickable(true);
-            }*/
+                Double totalAmount = Double.parseDouble(cartsBeans.get(position).getSelling_price())* Double.parseDouble(productQuantity.getText().toString());
+                tvSellingprice.setText("₹ "+String.valueOf(totalAmount));
+                tvActualprice.setVisibility(View.GONE);
+                tvDiscount.setVisibility(View.GONE);
+
+
+
+
+                imMinus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        PlusMinus = "plus";
+                        avalQuantity= cartsBeans.get(position).getAvl_quantity();
+                        quantity= Integer.parseInt(productQuantity.getText().toString());
+                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PLUS_MINUS,"minus");
+                        quantity = quantity - 1;
+                        display(quantity);
+
+                    }
+                });
+
+                imPlus.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       PlusMinus = "minus";
+                       avalQuantity= cartsBeans.get(position).getAvl_quantity();
+                       quantity= Integer.parseInt(productQuantity.getText().toString());
+                       if (avalQuantity>quantity){
+                           BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PLUS_MINUS,"plus");
+                           quantity = quantity + 1;
+                           display(quantity);
+
+                       } else {
+                           Toast.makeText(context,"Can not exceed more item", Toast.LENGTH_LONG).show();
+                       }
+
+
+                   }
+               });
+            }
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.im_minus:
-
-                    display(quantity);
-                    quantity = quantity - 1;
-
-                    break;
-                case R.id.im_plus:
-
-                    quantity = quantity + 1;
-                    display(quantity);
-                    break;
                 case R.id.productChanegSize_cartAdapter:
 
                     if (cartSizeListener != null) {
@@ -122,23 +191,56 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
                     break;
 
                 case  R.id.cart_remove:
-
+                    if (cartSizeListener != null) {
+                        cartSizeListener.cartRemoveItem(getLayoutPosition()); }
+                    break;
+                case R.id.cart_move:
+                    if (cartSizeListener != null) {
+                        cartSizeListener.cartMoveItem(getLayoutPosition()); }
                     break;
 
             }
         }
-        private void display(int quantity) {
-            productQuantity.setText("" + quantity);
-            if (quantity== avalQuantity){
-                imPlus.setClickable(false); }
+
+          private void display(int quantity) {
+
+            if (quantity==0){
+                productQuantity.setText("" + 1);
+                tvBuyQuantity.setText("" + 1);
+                imMinus.setClickable(false);
+            }
             else {
-                imPlus.setClickable(true); }
-            if (quantity==1){
-                imMinus.setClickable(false); }
-            else {
-                imMinus.setClickable(true); }
-        }
+
+                productQuantity.setText("" + quantity);
+                tvBuyQuantity.setText("" + quantity);
+
+
+               if (PlusMinus.equals("plus")){
+                    if (quantity== avalQuantity){
+                        imPlus.setClickable(false); }
+                    else {
+                        imPlus.setClickable(true);
+                        if (cartSizeListener != null) {
+                            cartSizeListener.cartQuantityItem(getLayoutPosition(),productQuantity,cartsBeans.get(getLayoutPosition()), quantity); }
+                    }
+               }
+
+                else  if (PlusMinus.equals("minus")){
+                    if (quantity==1){
+                        imMinus.setClickable(false); }
+                    else {
+                        imMinus.setClickable(true);
+                        if (cartSizeListener != null) {
+                            cartSizeListener.cartQuantityItem(getLayoutPosition(),productQuantity,cartsBeans.get(getLayoutPosition()), quantity); }
+                    }
+               }
+
+
+             }
+            }
+
+    }
     }
 
 
-}
+
