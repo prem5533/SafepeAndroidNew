@@ -17,12 +17,13 @@ import java.util.ArrayList;
 public class FilterListBrandAdapter extends RecyclerView.Adapter<FilterListBrandAdapter.ProductViewHolder> {
 
     private Context context;
-    private ArrayList<String> ProductSizeList,selectedList;
+    private ArrayList<String> ProductSizeList,selectedList,BrandIdList;
     private OnFilterListBrandListener onFilterListBrandListener;
 
-    public FilterListBrandAdapter(Context context, ArrayList<String> productSizeList, FilterListBrandAdapter.OnFilterListBrandListener onFilterListBrandListener) {
+    public FilterListBrandAdapter(Context context, ArrayList<String> productSizeList,ArrayList<String> BrandIdList1, FilterListBrandAdapter.OnFilterListBrandListener onFilterListBrandListener) {
         this.context = context;
-        ProductSizeList = productSizeList;
+        this.ProductSizeList = productSizeList;
+        this.BrandIdList= BrandIdList1;
         this.onFilterListBrandListener=onFilterListBrandListener;
 
         selectedList=new ArrayList<>();
@@ -59,10 +60,10 @@ public class FilterListBrandAdapter extends RecyclerView.Adapter<FilterListBrand
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (selectedList.contains(ProductSizeList.get(getAdapterPosition()))){
-                        selectedList.remove(ProductSizeList.get(getAdapterPosition()));
+                    if (selectedList.contains(BrandIdList.get(getAdapterPosition()))){
+                        selectedList.remove(BrandIdList.get(getAdapterPosition()));
                     }else {
-                        selectedList.add(ProductSizeList.get(getAdapterPosition()));
+                        selectedList.add(BrandIdList.get(getAdapterPosition()));
                     }
 
                     if (onFilterListBrandListener!=null){

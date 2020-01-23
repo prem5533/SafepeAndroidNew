@@ -1,11 +1,13 @@
 package com.safepayu.wallet.ecommerce.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -58,13 +60,20 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
 
         holder.tvProductName.setText(products.get(position).getProduct_name());
         holder.tvProductPrice.setText(context.getResources().getString(R.string.rupees)+" "+products.get(position).getSelling_price());
+        holder.tvProductPrice.setPaintFlags(holder.tvProductPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tvProductOfferPrice.setText(context.getResources().getString(R.string.rupees)+" "+products.get(position).getBuy_price());
         holder.tvProductDetail.setText(products.get(position).getProduct_description());
         holder.tvProductStoreName.setText(products.get(position).getVenue_name());
-        holder.tvProductStoreDis.setText(products.get(position).getDistance()+" KM");
         //holder.tvProductOfferPer.setText(products.get(position).getSelling_price());
-        holder.productRating.setNumStars((int)products.get(position).getStars());
+        holder.productRating.setRating((float)((int)products.get(position).getStars()));
 
+        if (TextUtils.isEmpty(products.get(position).getDistance())){
+            holder.tvProductStoreDis.setVisibility(View.GONE);
+        }else {
+            holder.tvProductStoreDis.setText(products.get(position).getDistance()+" KM");
+        }
+
+        holder.offerLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -76,6 +85,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
         private ImageView imageView;
         private TextView tvProductName,tvProductPrice,tvProductOfferPrice,tvProductDetail,tvProductStoreName,tvProductStoreDis,tvProductOfferPer;
         private RatingBar productRating;
+        private LinearLayout offerLayout;
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -88,6 +98,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<SearchProductAdap
             tvProductOfferPer=itemView.findViewById(R.id.productOfferPercent_SearchProductAdapter);
             productRating=itemView.findViewById(R.id.productRating_SearchProductAdapter);
             imageView=itemView.findViewById(R.id.image_SearchProductAdapter);
+            offerLayout=itemView.findViewById(R.id.offerLayout_SearchProductAdapter);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

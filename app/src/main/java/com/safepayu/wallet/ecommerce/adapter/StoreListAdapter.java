@@ -33,7 +33,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.Prod
     }
 
     public  interface  ShopItemListListener {
-        void onShopItemClick (int position);
+        void onShopItemClick (int position,String VenueId);
     }
 
     @NonNull
@@ -99,7 +99,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.Prod
                     Toast.makeText(context,"Coming Soon",Toast.LENGTH_SHORT).show();
 
                     if (shopItemListListener!=null){
-                        shopItemListListener.onShopItemClick(getLayoutPosition());
+                        shopItemListListener.onShopItemClick(getLayoutPosition(),venues.get(getLayoutPosition()).getVenue_id());
                     }
                 }
             });

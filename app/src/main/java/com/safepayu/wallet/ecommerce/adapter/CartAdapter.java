@@ -18,7 +18,6 @@ import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.model.response.TotalCartResponse;
-import com.safepayu.wallet.ecommerce.model.response.WishListResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

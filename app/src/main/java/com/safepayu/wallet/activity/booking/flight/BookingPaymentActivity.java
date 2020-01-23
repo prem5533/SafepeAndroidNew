@@ -84,6 +84,7 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
     Gson gson;
     String onwrdpaid = "", returnpaid="";
     int totalPaid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

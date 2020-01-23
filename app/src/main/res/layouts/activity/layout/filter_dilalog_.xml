@@ -215,13 +215,13 @@
                 android:scaleType="fitXY"/>
         </LinearLayout>
 
-         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclePrice_filterLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-             android:background="#f4f5ff"
-            android:visibility="gone"/>
+<!--         <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/recyclePrice_filterLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="10dp"-->
+<!--             android:background="#f4f5ff"-->
+<!--            android:visibility="gone"/>-->
 
                 <androidx.appcompat.widget.AppCompatSeekBar
                     android:id="@+id/seekbarPrice_filterLayout"

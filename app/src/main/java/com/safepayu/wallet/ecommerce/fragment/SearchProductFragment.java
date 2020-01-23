@@ -219,10 +219,10 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
 
                     FilterRequest filterRequest=new FilterRequest();
                     filterRequest.setBrand_id(brand_id);
-                    filterRequest.setBrand_id(category_id);
-                    filterRequest.setBrand_id(size);
-                    filterRequest.setBrand_id(price);
-                    //filterRequest.setBrand_id(discount);
+                    filterRequest.setCategory_id(category_id);
+                    filterRequest.setSize(size);
+                    filterRequest.setPrice(price);
+                    filterRequest.setDiscount(discount);
 
                     getProductByFilter(filterRequest);
 
@@ -262,6 +262,7 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
              break;
             case R.id.li_filter:
                 Intent intent = new Intent(getActivity(), FilterDialog.class);
+                intent.putExtra("Class","Product");
                 startActivityForResult(intent,1);
                 break;
         }
@@ -277,11 +278,13 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onShopItemClick(int position) {
+    public void onShopItemClick(int position,String VenueID) {
         Fragment fragment=new ShopDetailFragment();
         if (fragment != null) {
+            Bundle args = new Bundle();
+            args.putString("VenueID", VenueID);
+            fragment.setArguments(args);
             FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }
     }
@@ -541,22 +544,6 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                             responseSort=response;
 
                             categorySpinner.setVisibility(View.GONE);
-//                            if (response.getCategory().size()>0){
-//                                for (int j=0;response.getCategory().size()>j;j++){
-//                                    CategoryList.add(response.getCategory().get(j).getCat_name());
-//                                    CategoryIDList.add(""+response.getCategory().get(j).getId());
-//                                }
-//
-//                                ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getActivity(),R.layout.spinner_item_ecom_search,CategoryList);
-//                                categorySpinner.setAdapter(arrayAdapter);
-//                            }else {
-//                                CategoryList.add("NA");
-//                                CategoryIDList.add("0");
-//
-//                                ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getActivity(),R.layout.spinner_item_ecom_search,CategoryList);
-//                                categorySpinner.setAdapter(arrayAdapter);
-//                                categorySpinner.setVisibility(View.GONE);
-//                            }
 
                             if (response.getProducts().size()>0){
                                 serchProductAdapter=null;

@@ -25,9 +25,7 @@ import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
 import com.safepayu.wallet.ecommerce.model.request.AddToCartRequest;
 import com.safepayu.wallet.ecommerce.model.request.WishListRequest;
-import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.MoveToCartResponse;
-import com.safepayu.wallet.ecommerce.model.response.TotalCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.WishListResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

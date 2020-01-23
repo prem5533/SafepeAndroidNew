@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
-import com.safepayu.wallet.ecommerce.model.response.TotalCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.WishListResponse;
 import com.squareup.picasso.Picasso;
 

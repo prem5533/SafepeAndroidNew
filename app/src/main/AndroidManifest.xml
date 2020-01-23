@@ -331,7 +331,7 @@
 
 <!--  Ecommerce      -->
 
-        <activity android:name=".ecommerce.fragment.ReviewProductFragment"/>
+        <activity android:name=".ecommerce.activity.ReviewProduct"/>
         <activity android:name=".ecommerce.fragment.ThankYouFragment"/>
         <activity android:name=".ecommerce.activity.SearchEcommerce"/>
         <activity android:name=".ecommerce.activity.CartActivity"

@@ -32,7 +32,6 @@ import com.safepayu.wallet.ecommerce.model.response.CartQuantityResponse;
 import com.safepayu.wallet.ecommerce.model.response.DeleteCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.MoveToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.TotalCartResponse;
-import com.safepayu.wallet.ecommerce.model.response.WishListResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;

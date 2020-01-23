@@ -185,7 +185,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                     @Override
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
-                        if (!response.getStatus()){
+                        if (response.getStatus()){
                             showDialogPackage("\nPackage Already Purchased.\nTo Upgrade Your Package Please Contact SafePe Customer Support\n");
                         }else {
                             try {

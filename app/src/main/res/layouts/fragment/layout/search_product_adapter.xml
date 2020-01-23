@@ -144,6 +144,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="right">
                 <LinearLayout
+                    android:id="@+id/offerLayout_SearchProductAdapter"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:gravity="center"
