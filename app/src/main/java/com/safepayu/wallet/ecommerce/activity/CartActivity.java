@@ -112,8 +112,10 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     public void onCartList(int position, TotalCartResponse.CartsBean cartsBean) {
         Intent intent = new Intent(CartActivity.this, ProductDetailActivity.class);
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PRODUCT_ID,String.valueOf(cartsBean.getProduct_id()));
-       // BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,String.valueOf(cartsBean.getOffer_id()));
-         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,"");
+        if (cartsBean.getOffer_id()!=0)
+        { BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,String.valueOf(cartsBean.getOffer_id())); }
+        else { BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,""); }
+
         startActivity(intent);
     }
 
