@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     private EcommPagerAdapter ecommPagerAdapter;
     private BottomNavigationView bottomNavigation;
     private GridLayoutManager gridLayoutManager;
-
+    public int STATIC_INTEGER_VALUE = 3;
     private ViewPager viewpager;
     int images[] = {R.drawable.banner_image1, R.drawable.banner_image2, R.drawable.banner_image3,R.drawable.banner_image4};
     int NumPage,CurrentP=0 ;
@@ -486,9 +486,11 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         Toast.makeText(getActivity(),String.valueOf(position),Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
         if (mBannerId.getAppCatUrl().equals("")){
-            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PRODUCT_ID,mBannerId.getAppProductUrl()); }
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PRODUCT_ID,mBannerId.getAppProductUrl());
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,"");}
         else if (mBannerId.getAppProductUrl().equals("")){
-            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PRODUCT_ID,mBannerId.getAppCatUrl()); }
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PRODUCT_ID,mBannerId.getAppCatUrl());
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,"");}
         startActivity(intent); }
 
 
@@ -516,4 +518,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,String.valueOf(productsOfferBean.getOffer_id()));
         startActivity(intent);
     }
+
+
 }
+
+

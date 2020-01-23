@@ -31,6 +31,27 @@
             android:textColor="#fff"
             android:textSize="18sp"  />
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/CartEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_empty_cart"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your cart is empty."
+            android:textSize="18sp"
+            android:textColor="@color/textcolor"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_marginTop="5dp"/>
+
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -40,7 +61,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -48,12 +69,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
+        android:id="@+id/licheckout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -79,6 +101,7 @@
                 android:fontFamily="@font/roboto_regular" />
 
             <TextView
+                android:id="@+id/tv_total_rs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rs 1500"

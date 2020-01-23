@@ -21,6 +21,7 @@
             android:orientation="vertical"
             android:padding="7dp">
             <LinearLayout
+                android:id="@+id/li_cart_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -73,10 +74,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=", Qty:"
+                            android:text=" Qty:"
                             android:textColor="@color/textcolor"
                             android:textSize="13sp"
-                            android:layout_marginLeft="10dp"/>
+                            android:layout_marginLeft="0dp"/>
                         <TextView
                             android:id="@+id/tv_quantity"
                             android:layout_width="wrap_content"
@@ -111,7 +112,7 @@
                             android:textSize="13sp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
-                            android:visibility="gone"/>
+                          />
                         <TextView
                             android:id="@+id/tv_savers_myorder"
                             android:layout_width="wrap_content"
@@ -123,8 +124,17 @@
                             android:textSize="13sp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
-                            android:visibility="gone"/>
+                        />
                     </LinearLayout>
+                    <TextView
+                        android:id="@+id/tvVenueName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text=""
+                        android:layout_marginTop="5dp"/>
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -262,7 +272,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="5dp"
+
                 android:layout_marginTop="7dp">
                 <TextView
                     android:id="@+id/cart_remove"
@@ -271,8 +281,19 @@
                     android:text="Remove "
                     android:textSize="14sp"
                     android:textColor="@color/red"
+                    android:padding="7dp"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_marginLeft="10dp" />
+                <TextView
+                    android:id="@+id/cart_move"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Move To WishList"
+                    android:textSize="14sp"
+                    android:textColor="@color/red"
+                    android:padding="7dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_marginLeft="5dp" />
                 <TextView
                     android:id="@+id/productChanegSize_cartAdapter"
                     android:layout_width="wrap_content"

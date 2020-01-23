@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,10 +25,19 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Flight
 
     private Context context ;
     private List<WishListResponse.LikesBean> likesBeans;
+    private WishListAddListener wishListAddListener;
 
-    public WishlistAdapter(Context context, List<WishListResponse.LikesBean> likesBeans) {
+
+    public interface WishListAddListener{
+        void wishlistAddItem(int position );
+        void wishlistRemoveItem(int position );
+        void onWishlistList(int position,WishListResponse.LikesBean likesBean);
+    }
+
+    public WishlistAdapter(Context context, List<WishListResponse.LikesBean> likesBeans, WishListAddListener wishListAddListener) {
         this.context = context;
         this.likesBeans = likesBeans;
+        this.wishListAddListener = wishListAddListener;
     }
 
     @NonNull
@@ -47,9 +57,10 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Flight
         return likesBeans.size();
     }
 
-    public class FlightLocationListViewHolder extends RecyclerView.ViewHolder {
+    public class FlightLocationListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView tvDayName,tvName ,tvActualprice,tvSavers,tvOffprice;
         private ImageView im_wishlist;
+        private Button btnRemove, btnAddCart;
         public FlightLocationListViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -58,8 +69,18 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Flight
             tvActualprice =itemView.findViewById(R.id.tv_actualprice_wishlist);
             tvSavers =itemView.findViewById(R.id.tv_savers_wishlist);
             tvOffprice =itemView.findViewById(R.id.tv_offprice_wishlist);
+            btnRemove =itemView.findViewById(R.id.btnRemove);
+            btnAddCart =itemView.findViewById(R.id.btnAddCart);
+            btnAddCart.setOnClickListener(this);
+            btnRemove.setOnClickListener(this);
 
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (wishListAddListener != null) {
+                        wishListAddListener.onWishlistList(getLayoutPosition(),likesBeans.get(getLayoutPosition())); }
+                }
+            });
         }
 
         public void bindData(int position) {
@@ -76,20 +97,39 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.Flight
             tvActualprice.setText("₹ "+ likesBeans.get(position).getSelling_price());
             tvActualprice.setPaintFlags(tvActualprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-            String discountPercent = likesBeans.get(position).getOffer_title();
-            String percent[] = discountPercent.split(" ");
-            String percent1 = percent[0];
-            tvSavers.setText(percent1+" Off");
+            if (likesBeans.get(position).getOffer_title()!=null && !likesBeans.get(position).getOffer_title().isEmpty()) {
 
-            if (likesBeans.get(position).getOffer_type().equals("discper")){
+                String discountPercent = likesBeans.get(position).getOffer_title();
+                String percent[] = discountPercent.split(" ");
+                String percent1 = percent[0];
+                tvSavers.setText(percent1 + " Off");
 
-                Double b = ((Double.parseDouble(likesBeans.get(position).getSelling_price())-((Double.parseDouble(likesBeans.get(position).getSelling_price()))*(Double.parseDouble(likesBeans.get(position).getDisc_per()))/100)));
-                tvOffprice.setText("₹ " +String.format("%.3f", b)); }
+                if (likesBeans.get(position).getOffer_type().equals("discper")) {
+                    Double b = ((Double.parseDouble(likesBeans.get(position).getSelling_price()) - ((Double.parseDouble(likesBeans.get(position).getSelling_price())) * (Double.parseDouble(likesBeans.get(position).getDisc_per())) / 100)));
+                    tvOffprice.setText("₹ " + String.format("%.3f", b));
+                } else if (likesBeans.get(position).getOffer_type().equals("discamt")) {
+                    tvOffprice.setText("₹ " + String.format("%.2f", (Double.parseDouble(likesBeans.get(position).getSelling_price()) - Double.parseDouble(likesBeans.get(position).getDisc_amt()))));
+                }
+            }
+            else {
+                tvSavers.setText("");
+                tvOffprice.setText("₹ " + String.format("%.3f", Double.parseDouble(likesBeans.get(position).getSelling_price())));
+                tvActualprice.setVisibility(View.GONE);
+            }
 
-            else if (likesBeans.get(position).getOffer_type().equals("discamt")){
-                tvOffprice.setText("₹ "+String.format("%.2f",(Double.parseDouble(likesBeans.get(position).getSelling_price())- Double.parseDouble(likesBeans.get(position).getDisc_amt())))); }
-
-
+    }
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btnAddCart:
+                    if (wishListAddListener != null) {
+                        wishListAddListener.wishlistAddItem(getLayoutPosition()); }
+                    break;
+                case R.id.btnRemove:
+                    if (wishListAddListener != null) {
+                        wishListAddListener.wishlistRemoveItem(getLayoutPosition()); }
+                    break;
+            }
         }
     }
 }
