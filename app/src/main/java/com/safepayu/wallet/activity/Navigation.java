@@ -39,7 +39,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -74,9 +73,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.activity.EHomeActivity;
-import com.safepayu.wallet.ecommerce.activity.FilterDialog;
 import com.safepayu.wallet.ecommerce.activity.MyOrderEcomActivity;
-import com.safepayu.wallet.ecommerce.fragment.EcomHomeFragment;
 import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -99,7 +96,7 @@ import static com.safepayu.wallet.activity.Splash.promotionResponse1;
 
 public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private ImageView nav_icon, notification_icon;
+    private ImageView nav_icon, notification_icon,chatBtn;
     private DrawerLayout drawer;
     private AlertDialog.Builder alertNetwork;
     private boolean doubleBackToExitPressedOnce = false;
@@ -239,6 +236,16 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         notification_icon = findViewById(R.id.notification);
         nav_icon = findViewById(R.id.nav_icon);
         nav_icon.setOnClickListener(nav_iconListner);
+
+        chatBtn = findViewById(R.id.chat_home);
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(Navigation.this, ChatActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+            }
+        });
 
         BadgeCountTV = findViewById(R.id.cart_badge);
 

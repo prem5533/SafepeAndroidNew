@@ -58,8 +58,6 @@
                             />
                     </RelativeLayout>
 
-
-
                     <ImageView
                         android:id="@+id/location_ecom"
                         android:layout_height="40dp"

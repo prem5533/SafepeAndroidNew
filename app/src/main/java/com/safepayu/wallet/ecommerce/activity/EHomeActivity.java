@@ -77,9 +77,6 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
     Geocoder geocoder;
     List<Address> listAddresses;
 
-
-
-
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
             liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity,liLogoutParent,liChnangePassword ,
@@ -115,9 +112,6 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         NotificationBtn = findViewById(R.id.favBtn_main);
         NavIcon = findViewById(R.id.nav_iconEcommerce);
         locationBtn = findViewById(R.id.location_ecom);
-
-
-
 
         loadingDialog = new LoadingDialog(this);
         locationBtn.setOnClickListener(new View.OnClickListener() {

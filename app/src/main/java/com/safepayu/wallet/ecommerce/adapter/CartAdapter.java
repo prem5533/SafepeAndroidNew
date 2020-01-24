@@ -112,7 +112,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
                             .error(context.getResources().getDrawable(R.drawable.image_not_available))
                             .into(ivCartImage); }
             }catch (Exception er){
-                er.printStackTrace(); }
+                er.printStackTrace();
+            }
 
             ProductName.setText(cartsBeans.get(position).getProduct_name());
 
@@ -123,28 +124,23 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
 
 
 
-            if (cartsBeans.get(position).getOffer_id()!=0)
-            {
+            if (cartsBeans.get(position).getOffer_id()!=0) {
                 tvActualprice.setText("₹ "+cartsBeans.get(position).getSelling_price());
                 String discountPercent = cartsBeans.get(position).getOffer_title();
                 String percent[] = discountPercent.split(" ");
                 String percent1 = percent[0];
                 tvDiscount.setText(percent1 + "Off");
                 if (cartsBeans.get(position).getOffer_type().equals("discper")){
-
                     Double b = ((Double.parseDouble(cartsBeans.get(position).getSelling_price())-((Double.parseDouble(cartsBeans.get(position).getSelling_price()))*(Double.parseDouble(cartsBeans.get(position).getDisc_per()))/100)));
                     tvSellingprice.setText("₹ " +String.format("%.3f", b)); }
                 else if (cartsBeans.get(position).getOffer_type().equals("discamt")){
-                    tvSellingprice.setText("₹ "+String.format("%.2f",(Double.parseDouble(cartsBeans.get(position).getSelling_price())- Double.parseDouble(cartsBeans.get(position).getDisc_amt())))); }
-            }
-            else {
+                    tvSellingprice.setText("₹ "+String.format("%.2f",(Double.parseDouble(cartsBeans.get(position).getSelling_price())- Double.parseDouble(cartsBeans.get(position).getDisc_amt()))));
+                }
+            } else {
                 Double totalAmount = Double.parseDouble(cartsBeans.get(position).getSelling_price())* Double.parseDouble(productQuantity.getText().toString());
                 tvSellingprice.setText("₹ "+String.valueOf(totalAmount));
                 tvActualprice.setVisibility(View.GONE);
                 tvDiscount.setVisibility(View.GONE);
-
-
-
 
                 imMinus.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -208,8 +204,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
                 productQuantity.setText("" + 1);
                 tvBuyQuantity.setText("" + 1);
                 imMinus.setClickable(false);
-            }
-            else {
+            } else {
 
                 productQuantity.setText("" + quantity);
                 tvBuyQuantity.setText("" + quantity);
@@ -221,17 +216,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
                     else {
                         imPlus.setClickable(true);
                         if (cartSizeListener != null) {
-                            cartSizeListener.cartQuantityItem(getLayoutPosition(),productQuantity,cartsBeans.get(getLayoutPosition()), quantity); }
+                            cartSizeListener.cartQuantityItem(getLayoutPosition(),productQuantity,cartsBeans.get(getLayoutPosition()), quantity);
+                        }
                     }
-               }
-
-                else  if (PlusMinus.equals("minus")){
+               } else  if (PlusMinus.equals("minus")){
                     if (quantity==1){
                         imMinus.setClickable(false); }
                     else {
                         imMinus.setClickable(true);
                         if (cartSizeListener != null) {
-                            cartSizeListener.cartQuantityItem(getLayoutPosition(),productQuantity,cartsBeans.get(getLayoutPosition()), quantity); }
+                            cartSizeListener.cartQuantityItem(getLayoutPosition(),productQuantity,cartsBeans.get(getLayoutPosition()), quantity);
+                        }
                     }
                }
 

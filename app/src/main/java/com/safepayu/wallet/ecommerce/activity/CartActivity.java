@@ -124,15 +124,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void cartQuantityItem(int position, TextView productQuantity, TotalCartResponse.CartsBean cartsBean, int quantity ) {
 
-       /* if (cartsBean.getAvl_quantity()<quantity)
-        {
-            Toast.makeText(getApplicationContext(),"Can not exceed more item",Toast.LENGTH_SHORT).show();
-        }
-        else {*/
-            getAddCartQuantity(position,productQuantity,cartsBean);
-            //tvBuyQuantity.setText(String.valueOf(response.getCart().getQuantities()));
-      //  }
-
+        getAddCartQuantity(position,productQuantity,cartsBean);
     }
 
 
@@ -318,46 +310,53 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     //******************************Quantity cart************************
     private void getAddCartQuantity(final int position, TextView productQuantity, final TotalCartResponse.CartsBean cartsBean) {
 
-   String  PlusMinus = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PLUS_MINUS);
+            final String PlusMinus = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PLUS_MINUS);
 
-        cartQuantityRequest = new CartQuantityRequest();
-        cartQuantityRequest.setCart_id(totalCartResponse.getCarts().get(position).getId());
-        if (PlusMinus.equals("plus"))
-        { cartQuantityRequest.setQuantities("1"); }
+            cartQuantityRequest = new CartQuantityRequest();
+            cartQuantityRequest.setCart_id(totalCartResponse.getCarts().get(position).getId());
 
-        else if (PlusMinus.equals("minus"))
-        { cartQuantityRequest.setQuantities("-1"); }
+            if (PlusMinus.equals("plus"))
+            { cartQuantityRequest.setQuantities("1"); }
+            else if (PlusMinus.equals("minus"))
+            { cartQuantityRequest.setQuantities("-1"); }
 
+            ApiServiceEcom apiServiceEcom = ApiClientEcom.getClient(CartActivity.this).create(ApiServiceEcom.class);
 
+            BaseApp.getInstance().getDisposable().add(apiServiceEcom.getCartQuantity(cartQuantityRequest)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSingleObserver<CartQuantityResponse>(){
 
-        ApiServiceEcom apiServiceEcom = ApiClientEcom.getClient(CartActivity.this).create(ApiServiceEcom.class);
-
-        BaseApp.getInstance().getDisposable().add(apiServiceEcom.getCartQuantity(cartQuantityRequest)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<CartQuantityResponse>(){
-
-                    @Override
-                    public void onSuccess(CartQuantityResponse response) {
-                        cartQuantityResponse = response;
-                        if (response.isStatus()==true){
-                               // tvBuyQuantity.setText(String.valueOf(response.getCart().getQuantities()));
+                        @Override
+                        public void onSuccess(CartQuantityResponse response) {
+                            cartQuantityResponse = response;
+                            if (response.isStatus()==true){
                                 totalCartResponse.getCarts().get(position).setQuantities(response.getCart().getQuantities());
-                        //    getTotalCart();
+                                try {
+                                    double sellingPrice= Double.parseDouble(totalCartResponse.getCarts().get(position).getSelling_price());
+                                    String totalPriceText=tvTotalRs.getText().toString().trim();
+                                    totalPriceText=totalPriceText.substring(1);
+                                    double totalPrice = Double.parseDouble(totalPriceText);
+                                    if (PlusMinus.equals("plus")){
+                                        tvTotalRs.setText(getResources().getString(R.string.rupees)+(totalPrice + sellingPrice));
+                                    }else {
+                                        tvTotalRs.setText(getResources().getString(R.string.rupees)+(totalPrice - sellingPrice));
+                                    }
+                                }catch (Exception e){
+                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.cartEcommLayout), e.getMessage(),true);
+                                    e.printStackTrace();
+                                }
+                            } else if (response.isStatus()==false){
+                                    Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_LONG).show();
                             }
-                            else if (response.isStatus()==false){
-                                Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_LONG).show();
-                            }
-                          //  totalCartResponse.getCarts().get(position).setQuantities(6);
                             cartAdapter.notifyDataSetChanged();
+                        }
 
-                    }
-
-        @Override
-        public void onError(Throwable e) {
-            BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.cartEcommLayout), false, e.getCause());
-        }
-    }));
+                @Override
+                public void onError(Throwable e) {
+                    BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.cartEcommLayout), false, e.getCause());
+                }
+            }));
     }
 
     @Override
