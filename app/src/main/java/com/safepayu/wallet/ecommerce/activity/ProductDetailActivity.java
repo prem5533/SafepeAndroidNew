@@ -31,11 +31,13 @@ import com.safepayu.wallet.ecommerce.adapter.ProductValueAdapter;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
 import com.safepayu.wallet.ecommerce.model.request.AddToCartRequest;
+import com.safepayu.wallet.ecommerce.model.request.NotifyMeRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
 import com.safepayu.wallet.ecommerce.model.request.WishListRequest;
 import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
 import com.safepayu.wallet.ecommerce.model.response.WishListResponse;
+import com.safepayu.wallet.models.response.BaseResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -158,8 +160,20 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 Toast.makeText(getApplicationContext(),"Coming Soon Buy Now",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_product_detail_add_cart:
-                addProductCart();
-                Toast.makeText(getApplicationContext(),"Product Added to your Cart",Toast.LENGTH_SHORT).show();
+
+                if (tvAddCart.getText().toString().trim().equalsIgnoreCase("Notify Me")){
+
+                    NotifyMeRequest notifyMeRequest=new NotifyMeRequest();
+                    notifyMeRequest.setEmail(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
+                    notifyMeRequest.setProduct_id(""+productsResponse.getProducts().getId());
+                    notifyMeRequest.setModifier_id(""+productsResponse.getProducts().getModifier_id());
+                    notifyMeRequest.setVenue_id(productsResponse.getProducts().getVenue_id());
+                    notifyMeRequest.setMerchant_id(""+productsResponse.getProducts().getMerchant_id());
+                    getNotifyMe(notifyMeRequest);
+                }else {
+                    addProductCart();
+                }
+
                 break;
             case R.id.grayWish:
                 getWishListProduct();
@@ -260,9 +274,6 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                             prodouctOfferRelated = new ProdouctOfferRelatedAdapter(ProductDetailActivity.this,productsDetailsResponse.getRelatedproduct(),ProductDetailActivity.this);
                             recycleProductRelated.setAdapter(prodouctOfferRelated);
 
-
-
-
                             if (productsDetailsResponse.getProducts().getModifier_list().isEmpty()){
                                 productColorList.setVisibility(View.GONE); }
                             if (productsDetailsResponse.getProductOfers().isEmpty()){
@@ -306,7 +317,13 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                                 productColorList.setVisibility(View.VISIBLE);
                                 tvRelated.setVisibility(View.VISIBLE);
                                 tvPoffer.setVisibility(View.VISIBLE);}
-                        } }
+
+                            if (productsDetailsResponse.getProducts().getAvl_quantity()==0){
+                                tvAddCart.setText("Notify Me");
+                                Toast.makeText(ProductDetailActivity.this, "Product Out Of Stock", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
 
                     @Override
                     public void onError(Throwable e) {
@@ -452,6 +469,34 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.product_detail), false, e.getCause());
+                    }
+                }));
+    }
+
+    private void getNotifyMe(NotifyMeRequest notifyMeRequest) {
+
+        loadingDialog.showDialog(getString(R.string.loading_message), false);
+
+        ApiServiceEcom apiService = ApiClientEcom.getClient(this).create(ApiServiceEcom.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getNotifyMe(notifyMeRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.getStatus()) {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.orderDetailLayout),response.getMessage(),true);
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.orderDetailLayout),response.getMessage(),true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.orderDetailLayout), true, e);
                     }
                 }));
     }

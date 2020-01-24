@@ -1,9 +1,5 @@
 package com.safepayu.wallet.ecommerce.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -20,26 +16,24 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.adapter.ChangeAddressAdapter;
-import com.safepayu.wallet.ecommerce.adapter.OfferAdapter;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
 import com.safepayu.wallet.ecommerce.model.request.SaveEcomAddressRequest;
-import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.AddressUserResponse;
 import com.safepayu.wallet.ecommerce.model.response.RemoveEcomAddressResponse;
-import com.safepayu.wallet.ecommerce.model.response.SaveEcomAddressResponse;
-import com.safepayu.wallet.ecommerce.model.response.TotalCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.UpdateEcomAddressResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.safepayu.wallet.ecommerce.activity.EHomeActivity.tvCartBadge;
 
 public class AddAddressEcomActivity extends AppCompatActivity implements View.OnClickListener, ChangeAddressAdapter.onEditAddress {
 

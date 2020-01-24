@@ -332,6 +332,7 @@
         <activity
             android:name=".ecommerce.activity.FilterDialog"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.ChatActivity"/>
 
 
 

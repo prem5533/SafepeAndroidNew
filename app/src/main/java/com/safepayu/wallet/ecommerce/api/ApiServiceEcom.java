@@ -1,10 +1,10 @@
 package com.safepayu.wallet.ecommerce.api;
 
-import com.google.android.gms.identity.intents.model.UserAddress;
 import com.safepayu.wallet.ecommerce.model.request.AddToCartRequest;
 import com.safepayu.wallet.ecommerce.model.request.CancelOrderRequest;
 import com.safepayu.wallet.ecommerce.model.request.CartQuantityRequest;
 import com.safepayu.wallet.ecommerce.model.request.FilterRequest;
+import com.safepayu.wallet.ecommerce.model.request.NotifyMeRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductByModifierRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
 import com.safepayu.wallet.ecommerce.model.request.ReturnOrderRequest;
@@ -13,7 +13,6 @@ import com.safepayu.wallet.ecommerce.model.request.SaveEcomAddressRequest;
 import com.safepayu.wallet.ecommerce.model.request.WishListRequest;
 import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.AddressUserResponse;
-import com.safepayu.wallet.ecommerce.model.response.CartListResonse;
 import com.safepayu.wallet.ecommerce.model.response.CartQuantityResponse;
 import com.safepayu.wallet.ecommerce.model.response.CategoriesResponse;
 import com.safepayu.wallet.ecommerce.model.response.DeleteCartResponse;
@@ -26,7 +25,6 @@ import com.safepayu.wallet.ecommerce.model.response.ProductByModifierResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsByCategoryIdResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
 import com.safepayu.wallet.ecommerce.model.response.RemoveEcomAddressResponse;
-import com.safepayu.wallet.ecommerce.model.response.SaveEcomAddressResponse;
 import com.safepayu.wallet.ecommerce.model.response.TotalCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.UpdateEcomAddressResponse;
 import com.safepayu.wallet.ecommerce.model.response.VenueDetailsResponse;
@@ -106,6 +104,7 @@ public interface ApiServiceEcom {
 
     @POST("api/pefast.safepe.latepe/api/returnOrder")
     Single<BaseResponse> getReturnOrder (@Body ReturnOrderRequest returnOrderRequest);
+
     @POST("api/pefast.safepe.latepe/api/LikeDislikeProduct ")
     Single<WishListResponse> getWishListLikeDislike(@Body WishListRequest wishListRequest);
 
@@ -135,4 +134,7 @@ public interface ApiServiceEcom {
     @POST("api/pefast.safepe.latepe/api/deleteUserAddress")
     Single<RemoveEcomAddressResponse> deleteUserAddress (@Field("address_id") String address_id);
 
+
+    @POST("api/pefast.safepe.latepe/api/outofstock_notify_me")
+    Single<BaseResponse> getNotifyMe (@Body NotifyMeRequest notifyMeRequest);
 }

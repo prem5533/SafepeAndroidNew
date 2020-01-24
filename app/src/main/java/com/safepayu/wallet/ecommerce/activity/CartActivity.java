@@ -128,7 +128,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     public void cartQuantityItem(int position, TextView productQuantity, TotalCartResponse.CartsBean cartsBean, int quantity ) {
 
         getAddCartQuantity(position,productQuantity,cartsBean);
-
     }
 
 

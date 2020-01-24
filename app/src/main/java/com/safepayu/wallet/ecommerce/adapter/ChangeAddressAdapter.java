@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.model.response.AddressUserResponse;
-import com.safepayu.wallet.ecommerce.model.response.WishListResponse;
 
 import java.util.List;
 
