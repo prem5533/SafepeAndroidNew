@@ -55,13 +55,18 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
     SaveEcomAddressRequest saveEcomAddressRequest;
     private String selectedRadioButtonText ,SaveEdit;
     AddressUserResponse addressUserResponse;
+    private RecyclerView recylceItemDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address_ecom);
         findId();
+
+        getCarts();
     }
+
+
 
     private void findId() {
         loadingDialog=new LoadingDialog(AddAddressEcomActivity.this);
@@ -76,6 +81,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
         tvPincode = findViewById(R.id.tvpincode_addaddress);
         tvState = findViewById(R.id.tvstate_addaddress);
         tvMobile = findViewById(R.id.tvmobile_addaddress);
+        recylceItemDetail = findViewById(R.id.recylceItemDetail);
 
 
         //set listener
@@ -147,8 +153,6 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
     }
 
 
-
-
     private boolean validate() {
 
         if (etUserName.getText().toString().trim().length() == 0) {
@@ -193,6 +197,9 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
         return true;
     }
 
+    private void getCarts() {
+
+    }
 
     private void saveNewAddress() {
         saveEcomAddressRequest=new SaveEcomAddressRequest();
