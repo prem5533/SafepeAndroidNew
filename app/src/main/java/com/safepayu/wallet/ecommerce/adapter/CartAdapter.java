@@ -87,8 +87,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
             liCartProduct = itemView.findViewById(R.id.li_cart_product);
 
 
-            imMinus.setOnClickListener(this);
-            imPlus.setOnClickListener(this);
             cartAdapter.setOnClickListener(this);
             cartRemove.setOnClickListener(this);
             cartMove.setOnClickListener(this);
@@ -98,6 +96,38 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
                 public void onClick(View v) {
                     if (cartSizeListener != null) {
                         cartSizeListener.onCartList(getLayoutPosition(),cartsBeans.get(getLayoutPosition())); }
+                }
+            });
+
+            imMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PlusMinus = "plus";
+                    avalQuantity= cartsBeans.get(getLayoutPosition()).getAvl_quantity();
+                    quantity= Integer.parseInt(productQuantity.getText().toString());
+                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PLUS_MINUS,"minus");
+                    quantity = quantity - 1;
+                    display(quantity);
+
+                }
+            });
+
+            imPlus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PlusMinus = "minus";
+                    avalQuantity= cartsBeans.get(getLayoutPosition()).getAvl_quantity();
+                    quantity= Integer.parseInt(productQuantity.getText().toString());
+                    if (avalQuantity>quantity){
+                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PLUS_MINUS,"plus");
+                        quantity = quantity + 1;
+                        display(quantity);
+
+                    } else {
+                        Toast.makeText(context,"Can not exceed more item", Toast.LENGTH_LONG).show();
+                    }
+
+
                 }
             });
         }
@@ -133,9 +163,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
                 if (cartsBeans.get(position).getOffer_type().equals("discper")){
 
                     Double b = ((Double.parseDouble(cartsBeans.get(position).getSelling_price())-((Double.parseDouble(cartsBeans.get(position).getSelling_price()))*(Double.parseDouble(cartsBeans.get(position).getDisc_per()))/100)));
-                    tvSellingprice.setText("₹ " +String.format("%.3f", b)); }
+                    tvSellingprice.setText("₹ " +String.format("%.3f", b* Double.parseDouble(productQuantity.getText().toString()))); }
                 else if (cartsBeans.get(position).getOffer_type().equals("discamt")){
-                    tvSellingprice.setText("₹ "+String.format("%.2f",(Double.parseDouble(cartsBeans.get(position).getSelling_price())- Double.parseDouble(cartsBeans.get(position).getDisc_amt())))); }
+                    double disamt = (Double.parseDouble(cartsBeans.get(position).getSelling_price())- Double.parseDouble(cartsBeans.get(position).getDisc_amt())*Double.parseDouble(productQuantity.getText().toString()));
+                    tvSellingprice.setText("₹ "+String.format("%.2f",(disamt))); }
             }
             else {
                 Double totalAmount = Double.parseDouble(cartsBeans.get(position).getSelling_price())* Double.parseDouble(productQuantity.getText().toString());
@@ -146,38 +177,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
 
 
 
-                imMinus.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
-                        PlusMinus = "plus";
-                        avalQuantity= cartsBeans.get(position).getAvl_quantity();
-                        quantity= Integer.parseInt(productQuantity.getText().toString());
-                        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PLUS_MINUS,"minus");
-                        quantity = quantity - 1;
-                        display(quantity);
-
-                    }
-                });
-
-                imPlus.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       PlusMinus = "minus";
-                       avalQuantity= cartsBeans.get(position).getAvl_quantity();
-                       quantity= Integer.parseInt(productQuantity.getText().toString());
-                       if (avalQuantity>quantity){
-                           BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PLUS_MINUS,"plus");
-                           quantity = quantity + 1;
-                           display(quantity);
-
-                       } else {
-                           Toast.makeText(context,"Can not exceed more item", Toast.LENGTH_LONG).show();
-                       }
-
-
-                   }
-               });
             }
         }
 

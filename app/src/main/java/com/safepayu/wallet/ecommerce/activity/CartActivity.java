@@ -50,7 +50,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     CartAdapter cartAdapter;
     private LinearLayout liCartEmpty,licheckout;
     private TextView tvTotalRs;
-    int sum = 0, total;
+    int  total;
+    double discper =0,discamt = 0,sum = 0;
     int quantity = 1;
 
     @Override
@@ -126,14 +127,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void cartQuantityItem(int position, TextView productQuantity, TotalCartResponse.CartsBean cartsBean, int quantity ) {
 
-       /* if (cartsBean.getAvl_quantity()<quantity)
-        {
-            Toast.makeText(getApplicationContext(),"Can not exceed more item",Toast.LENGTH_SHORT).show();
-        }
-        else {*/
-            getAddCartQuantity(position,productQuantity,cartsBean);
-            //tvBuyQuantity.setText(String.valueOf(response.getCart().getQuantities()));
-      //  }
+        getAddCartQuantity(position,productQuantity,cartsBean);
 
     }
 
@@ -165,52 +159,68 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getTotalCart() {
-        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+            loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
-        ApiServiceEcom apiService = ApiClientEcom.getClient(CartActivity.this).create(ApiServiceEcom.class);
-        BaseApp.getInstance().getDisposable().add(apiService.getTotalCarts()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<TotalCartResponse>() {
-                    @Override
-                    public void onSuccess(TotalCartResponse response) {
-                        loadingDialog.hideDialog();
-                        if (response.isStatus()) {
-                             totalCartResponse = response;
+            ApiServiceEcom apiService = ApiClientEcom.getClient(CartActivity.this).create(ApiServiceEcom.class);
+            BaseApp.getInstance().getDisposable().add(apiService.getTotalCarts()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSingleObserver<TotalCartResponse>() {
+                        @Override
+                        public void onSuccess(TotalCartResponse response) {
+                            loadingDialog.hideDialog();
+                            if (response.isStatus()) {
+                                 totalCartResponse = response;
+
+                                 for (total = 0 ; total<response.getCarts().size();total++){
+
+                                     if (response.getCarts().get(total).getOffer_id()!=0)
+                                     {
+                                         if (response.getCarts().get(total).getOffer_type().equals("discper")){
 
 
-                             for (total = 0 ; total<response.getCarts().size();total++){
-                             //   double price= Double.parseDouble(response.getCarts().get(total).getSelling_price());
-                                 double totalAmount = Double.parseDouble(response.getCarts().get(total).getSelling_price())* Double.parseDouble(""+response.getCarts().get(total).getQuantities());
-                                // tvSellingprice.setText("₹ "+String.valueOf(totalAmount));
-                                sum=sum+(int) totalAmount;
-                                tvTotalRs.setText("₹ "+String.valueOf(sum));
+                                             double b = ((Double.parseDouble(response.getCarts().get(total).getSelling_price())-((Double.parseDouble(response.getCarts().get(total).getSelling_price()))*(Double.parseDouble(response.getCarts().get(total).getDisc_per()))/100)));
+                                            double discperTotal= b *Double.parseDouble(""+response.getCarts().get(total).getQuantities());
+                                              discper=discper+ discperTotal;
+                                             tvTotalRs.setText("₹ " +String.format("%.3f", discper));
+                                         }
+                                         else if (response.getCarts().get(total).getOffer_type().equals("discamt")){
+                                             double c = (Double.parseDouble(response.getCarts().get(total).getSelling_price())- Double.parseDouble(response.getCarts().get(total).getDisc_amt()))*Double.parseDouble(""+response.getCarts().get(total).getQuantities());
+                                             discamt=discamt+ c;
+                                            tvTotalRs.setText("₹ "+String.format("%.2f",(discamt)));
+                                         }
+                                     }
+                                     else {
+                                         double totalAmount = Double.parseDouble(response.getCarts().get(total).getSelling_price())* Double.parseDouble(""+response.getCarts().get(total).getQuantities());
+                                         sum=sum+ totalAmount;
+                                         tvTotalRs.setText("₹ "+String.format("%.2f",(sum)));
+                                     }
+                                }
+
+                                 if (response.getCarts().isEmpty()){
+                                     liCartEmpty.setVisibility(View.VISIBLE);
+                                     ProductsRecyclerView.setVisibility(View.GONE);
+                                     licheckout.setVisibility(View.GONE);
+                                 }
+                                 else {
+                                     ProductsRecyclerView.setLayoutManager(new LinearLayoutManager(CartActivity.this, LinearLayoutManager.VERTICAL, false));
+                                     cartAdapter = new CartAdapter(CartActivity.this, CartActivity.this,totalCartResponse.getCarts());
+                                     ProductsRecyclerView.setAdapter(cartAdapter);
+                                     liCartEmpty.setVisibility(View.GONE);
+                                     licheckout.setVisibility(View.VISIBLE);
+                                 }
+
+                            }else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.cartEcommLayout),response.getMessage(),true);
                             }
-
-                             if (response.getCarts().isEmpty()){
-                                 liCartEmpty.setVisibility(View.VISIBLE);
-                                 ProductsRecyclerView.setVisibility(View.GONE);
-                                 licheckout.setVisibility(View.GONE);
-                             }
-                             else {
-                                 ProductsRecyclerView.setLayoutManager(new LinearLayoutManager(CartActivity.this, LinearLayoutManager.VERTICAL, false));
-                                 cartAdapter = new CartAdapter(CartActivity.this, CartActivity.this,totalCartResponse.getCarts());
-                                 ProductsRecyclerView.setAdapter(cartAdapter);
-                                 liCartEmpty.setVisibility(View.GONE);
-                                 licheckout.setVisibility(View.VISIBLE);
-                             }
-
-                        }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.cartEcommLayout),response.getMessage(),true);
                         }
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.cartEcommLayout), true, e);
-                    }
-                }));
+                        @Override
+                        public void onError(Throwable e) {
+                            loadingDialog.hideDialog();
+                            BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.cartEcommLayout), true, e);
+                        }
+                    }));
     }
 
 //******************************Remove cart************************
@@ -318,49 +328,87 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //******************************Quantity cart************************
-    private void getAddCartQuantity(final int position, TextView productQuantity, final TotalCartResponse.CartsBean cartsBean) {
+        private void getAddCartQuantity(final int position, TextView productQuantity, final TotalCartResponse.CartsBean cartsBean) {
 
-   String  PlusMinus = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PLUS_MINUS);
+      final String  PlusMinus = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PLUS_MINUS);
 
-        cartQuantityRequest = new CartQuantityRequest();
-        cartQuantityRequest.setCart_id(totalCartResponse.getCarts().get(position).getId());
-        if (PlusMinus.equals("plus"))
-        { cartQuantityRequest.setQuantities("1"); }
+            cartQuantityRequest = new CartQuantityRequest();
+            cartQuantityRequest.setCart_id(totalCartResponse.getCarts().get(position).getId());
+            if (PlusMinus.equals("plus"))
+            { cartQuantityRequest.setQuantities("1"); }
 
-        else if (PlusMinus.equals("minus"))
-        { cartQuantityRequest.setQuantities("-1"); }
+            else if (PlusMinus.equals("minus"))
+            { cartQuantityRequest.setQuantities("-1"); }
 
 
 
-        ApiServiceEcom apiServiceEcom = ApiClientEcom.getClient(CartActivity.this).create(ApiServiceEcom.class);
+            ApiServiceEcom apiServiceEcom = ApiClientEcom.getClient(CartActivity.this).create(ApiServiceEcom.class);
 
-        BaseApp.getInstance().getDisposable().add(apiServiceEcom.getCartQuantity(cartQuantityRequest)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<CartQuantityResponse>(){
+            BaseApp.getInstance().getDisposable().add(apiServiceEcom.getCartQuantity(cartQuantityRequest)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSingleObserver<CartQuantityResponse>(){
 
-                    @Override
-                    public void onSuccess(CartQuantityResponse response) {
-                        cartQuantityResponse = response;
-                        if (response.isStatus()==true){
-                               // tvBuyQuantity.setText(String.valueOf(response.getCart().getQuantities()));
-                                totalCartResponse.getCarts().get(position).setQuantities(response.getCart().getQuantities());
-                        //    getTotalCart();
+                        @Override
+                        public void onSuccess(CartQuantityResponse response) {
+                            cartQuantityResponse = response;
+                            if (response.isStatus()==true){
+                                    totalCartResponse.getCarts().get(position).setQuantities(response.getCart().getQuantities());
+                                try {
+                                    if (cartsBean.getOffer_id()!=0)
+                                    {
+                                        if (cartsBean.getOffer_type().equals("discper")){
+                                            double b = ((Double.parseDouble(cartsBean.getSelling_price())-((Double.parseDouble(cartsBean.getSelling_price()))*(Double.parseDouble(cartsBean.getDisc_per()))/100)));
+
+                                            String totalPriceText=tvTotalRs.getText().toString().trim();
+                                            totalPriceText=totalPriceText.substring(1);
+                                            double totalPrice = Double.parseDouble(totalPriceText);
+                                            if (PlusMinus.equals("plus")){
+                                                tvTotalRs.setText("₹ " +String.format("%.3f",(totalPrice + b)));
+                                            }else {
+                                                tvTotalRs.setText("₹ " +String.format("%.3f",(totalPrice - b)));
+                                            }
+                                        }
+                                        else if (cartsBean.getOffer_type().equals("discamt")){
+                                            double c = (Double.parseDouble(cartsBean.getSelling_price())- Double.parseDouble(cartsBean.getDisc_amt()))*Double.parseDouble(""+cartsBean.getQuantities());
+                                            String totalPriceText=tvTotalRs.getText().toString().trim();
+                                            totalPriceText=totalPriceText.substring(1);
+                                            double totalPrice = Double.parseDouble(totalPriceText);
+                                            if (PlusMinus.equals("plus")){
+                                                tvTotalRs.setText("₹ " +String.format("%.3f",(totalPrice + c)));
+                                            }else {
+                                                tvTotalRs.setText("₹ " +String.format("%.3f",(totalPrice - c)));
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        double sellingPrice= Double.parseDouble(totalCartResponse.getCarts().get(position).getSelling_price());
+                                        String totalPriceText=tvTotalRs.getText().toString().trim();
+                                        totalPriceText=totalPriceText.substring(1);
+                                        double totalPrice = Double.parseDouble(totalPriceText);
+                                        if (PlusMinus.equals("plus")){
+                                            tvTotalRs.setText("₹ "+(totalPrice + sellingPrice));
+                                        }else {
+                                            tvTotalRs.setText("₹ "+(totalPrice - sellingPrice));
+                                        }
+                                    }
+                                }catch (Exception e){
+                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.cartEcommLayout), e.getMessage(),true);
+                                    e.printStackTrace();
+                                }
                             }
-                            else if (response.isStatus()==false){
-                                Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_LONG).show();
-                            }
-                          //  totalCartResponse.getCarts().get(position).setQuantities(6);
-                            cartAdapter.notifyDataSetChanged();
+                                else if (response.isStatus()==false){
+                                    Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_LONG).show();
+                                }
+                                cartAdapter.notifyDataSetChanged();
+                        }
 
-                    }
-
-        @Override
-        public void onError(Throwable e) {
-            BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.cartEcommLayout), false, e.getCause());
+            @Override
+            public void onError(Throwable e) {
+                BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.cartEcommLayout), false, e.getCause());
+            }
+        }));
         }
-    }));
-    }
 
     @Override
     public void onBackPressed() {

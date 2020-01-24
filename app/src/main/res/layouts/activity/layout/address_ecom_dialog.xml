@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="#f4f5ff">
+    android:background="#f4f5ff"
+    android:id="@+id/relative_address">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -132,7 +133,7 @@
                         android:layout_marginLeft="0dp"
                         android:src="@drawable/ic_mobile_new" />
                     <EditText
-                        android:id="@+id/mobile_recharge"
+                        android:id="@+id/mobilenumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/textView2"
@@ -289,7 +290,7 @@
                         android:maxLength="6"
                         android:inputType="number"
                         android:singleLine="true"
-                        android:imeOptions="actionDone"
+                        android:imeOptions="actionNext"
                         android:textColor="@color/textcolor"
                         android:digits="0123456789" />
                 </LinearLayout>
@@ -322,14 +323,46 @@
                         android:fontFamily="@font/roboto_medium"
                         android:textSize="14sp"
                         android:background="@null"
-                        android:inputType="number"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
+                        android:padding="10dp"
+                        android:hint="Landmark "
+                        android:textColor="@color/textcolor" />
+                </LinearLayout>
+                <View
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"
+                android:background="@color/graynew"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="start|center"
+                    android:padding="10dp">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_global_new"/>
+                    <EditText
+                        android:id="@+id/dialog_country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_medium"
+                        android:textSize="14sp"
+                        android:background="@null"
+                        android:inputType="text"
                         android:singleLine="true"
                         android:imeOptions="actionDone"
                         android:padding="10dp"
-                        android:hint="Landmark "
-                        android:textColor="@color/textcolor"
-                        android:maxLength="6" />
-                </LinearLayout>
+                        android:text="India"
+                        android:textColor="@color/textcolor" /></LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height=".5dp"
@@ -352,7 +385,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:textColor="@color/black"/>
             <RadioGroup
-                android:id="@+id/radio_gender"
+                android:id="@+id/radio_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -381,23 +414,47 @@
                     android:textColor="@color/black"
                     android:scaleX="0.8"
                     android:scaleY="0.8" />
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_other"
+                    android:text="Other"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:buttonTint="@color/red_theme"
+                    android:checked="false"
+                    android:textColor="@color/black"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8" />
             </RadioGroup>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
     <TextView
-            android:id="@+id/tv_save_address_addaddress"
+            android:id="@+id/tv_add_address_addaddress"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Save Address"
+            android:text="Add Address"
             android:textSize="15sp"
             android:layout_alignParentBottom="true"
             android:textColor="@color/white"
             android:background="@drawable/blue_green_bg"
             android:fontFamily="@font/roboto_bold"
             android:padding="10dp"
-            android:gravity="center"
-            android:layout_weight="1" />
+            android:gravity="center" />
+    <TextView
+        android:id="@+id/tv_save_address_addaddress"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Save Address"
+        android:textSize="15sp"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
+        android:background="@drawable/blue_green_bg"
+        android:fontFamily="@font/roboto_bold"
+        android:padding="10dp"
+        android:gravity="center"
+        android:visibility="gone"/>
 
 </RelativeLayout>

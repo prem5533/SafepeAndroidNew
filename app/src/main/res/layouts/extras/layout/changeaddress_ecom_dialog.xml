@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="#f4f5ff">
+    android:background="#f4f5ff"
+    android:id="@+id/lichangeAddress">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -33,7 +34,7 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="5dp"
             android:gravity="center"
-            android:text="Chnage Address"
+            android:text="Change Address"
             android:fontFamily="@font/roboto_bold"
             android:textColor="#fff"
             android:textSize="18sp"  />
