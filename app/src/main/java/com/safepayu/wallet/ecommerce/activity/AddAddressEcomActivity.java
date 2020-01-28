@@ -2,6 +2,7 @@ package com.safepayu.wallet.ecommerce.activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -23,13 +25,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.ecommerce.adapter.CartItemQuantityAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ChangeAddressAdapter;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
+import com.safepayu.wallet.ecommerce.model.request.OrderSaveRequest;
 import com.safepayu.wallet.ecommerce.model.request.SaveEcomAddressRequest;
 import com.safepayu.wallet.ecommerce.model.response.AddressUserResponse;
+import com.safepayu.wallet.ecommerce.model.response.CartsQuantityResponse;
 import com.safepayu.wallet.ecommerce.model.response.RemoveEcomAddressResponse;
 import com.safepayu.wallet.ecommerce.model.response.UpdateEcomAddressResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -38,24 +46,42 @@ import io.reactivex.schedulers.Schedulers;
 public class AddAddressEcomActivity extends AppCompatActivity implements View.OnClickListener, ChangeAddressAdapter.onEditAddress {
 
     private TextView tvAddNewAddress, tvChangeAddress, tvContinue, tvSaveAddress, tvConfirmAddress,saveBtnAddress,tvUsername,tvType,tvAddress,tvCity,
-            tvPincode,tvState,tvMobile;
+            tvPincode,tvState,tvMobile,tvOrderRs,tvDeliveryCharge,tvTotalRs,viewDetail,price_detail,tvProductActualprice,tvTaxCharge;
     private EditText etUserName,etMobile,etLocation,etCity,etState,etPincode,etLandmark,etCountry;
     public Dialog dialog;
     private Button backBtnDialog, backBtnChangeAddress, backBtnAddress;
     private RecyclerView addressList;
     private ChangeAddressAdapter changeAddressAdapter;
+    private CartItemQuantityAdapter cartItemQuantityAdapter;
     private LoadingDialog loadingDialog;
     private RadioGroup radioType;
     SaveEcomAddressRequest saveEcomAddressRequest;
     private String selectedRadioButtonText ,SaveEdit;
     AddressUserResponse addressUserResponse;
+    private RecyclerView recylceItemDetail;
+    int  total;
+    double discper =0,discamt = 0,sum = 0,deliverySum= 0,deliveryTax=0,onlyDiscount,discountSum=0;
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
+    CartsQuantityResponse cartsQuantityResponse;
+    public  static OrderSaveRequest orderSaveRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address_ecom);
         findId();
+
+        getCarts();
+
+        if (isNetworkAvailable()) {
+            getUserAddress();
+        } else {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.cartEcommLayout), "No Internet Connection!", true);
+        }
+
     }
+
+
 
     private void findId() {
         loadingDialog=new LoadingDialog(AddAddressEcomActivity.this);
@@ -70,6 +96,14 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
         tvPincode = findViewById(R.id.tvpincode_addaddress);
         tvState = findViewById(R.id.tvstate_addaddress);
         tvMobile = findViewById(R.id.tvmobile_addaddress);
+        recylceItemDetail = findViewById(R.id.recylceItemDetail);
+        tvOrderRs = findViewById(R.id.tv_order_rs);
+        tvDeliveryCharge = findViewById(R.id.tv_delivery_charge);
+        tvTotalRs = findViewById(R.id.tv_total_rs);
+        viewDetail = findViewById(R.id.view_detail);
+        price_detail = findViewById(R.id.price_detail);
+        tvProductActualprice = findViewById(R.id.tv_product_detail_actualprice);
+        tvTaxCharge = findViewById(R.id.tv_tax_charge);
 
 
         //set listener
@@ -77,6 +111,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
         tvChangeAddress.setOnClickListener(this);
         tvContinue.setOnClickListener(this);
         backBtnAddress.setOnClickListener(this);
+        viewDetail.setOnClickListener(this);
 
     }
 
@@ -102,7 +137,16 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                 dialog.dismiss();
                 break;
             case R.id.tv_continue_addaddress:
-                Toast.makeText(getApplicationContext(), "Payment Coming Soon", Toast.LENGTH_SHORT).show();
+
+                getData();
+                Intent intent = new Intent(AddAddressEcomActivity.this, EcomPaymentActivity.class);
+                intent.putExtra("paid_amount", tvProductActualprice.getText().toString().trim().substring(1));
+                intent.putExtra("total_items",String.valueOf(cartsQuantityResponse.getCarts().size()));
+                intent.putExtra("total_tax",tvTaxCharge.getText().toString().trim().substring(1));
+                intent.putExtra("total_deliveryCharge",tvDeliveryCharge.getText().toString().trim().substring(1));
+                intent.putExtra("total_discount",String.valueOf(discountSum));
+                startActivity(intent);
+
                 break;
             case R.id.tv_add_address_addaddress:
                 if (validate()) {
@@ -122,25 +166,44 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                     }
                 }
 
-         /*   case R.id.tv_confirm_addaddress:
-
-
-              *//*  tvUsername.setText(addressUserResponse.getAddressess().get(po)getName());
-                tvType.setText(response.getAddress().getType());
-                tvAddress.setText(response.getAddress().getArea());
-                tvCity.setText(response.getAddress().getCity());
-                tvPincode.setText(response.getAddress().getPincode());
-                tvState.setText(response.getAddress().getState());
-                tvMobile.setText(response.getAddress().getMobile());*//*
-                break;*/
             case R.id.back_btn_address:
                 overridePendingTransition(R.anim.right_to_left, R.anim.slide_in);
                 finish();
                 break;
+
+
+            case  R.id.view_detail:
+                price_detail.startAnimation(AnimationUtils.loadAnimation(this,R.anim.shake));
+                break;
         }
     }
 
+    void getData(){
+         orderSaveRequest = new OrderSaveRequest();
+        List<OrderSaveRequest.ProductsBean> productsBeanList=new ArrayList<>();
+        for (int i=0;cartsQuantityResponse.getCarts().size()>i;i++){
+            OrderSaveRequest.ProductsBean productsBean=new OrderSaveRequest.ProductsBean();
+            productsBean.setProduct_id(cartsQuantityResponse.getCarts().get(i).getProduct_id());
+            productsBean.setProduct_qty(cartsQuantityResponse.getCarts().get(i).getQuantities());
+            productsBean.setModifier_id(String.valueOf(cartsQuantityResponse.getCarts().get(i).getModifier_id()));
+            productsBean.setDelivery_type("Click & Collect");
+            productsBean.setDelivery_address("27a Oaklands Road, Wolverhampton, England- WV3 0DS");
+            productsBean.setBilling_address("27a Oaklands Road, Wolverhampton, England- WV3 0DS");
+            productsBean.setMerchant_id(cartsQuantityResponse.getCarts().get(i).getMerchant_id());
+            productsBean.setVenue_id(cartsQuantityResponse.getCarts().get(i).getVenue_id());
+            productsBean.setAttributes("");
+            productsBean.setCost(Double.parseDouble(cartsQuantityResponse.getCarts().get(i).getSelling_price()));
+            productsBean.setDiscount_applied(0);
+            productsBean.setOffer_id(cartsQuantityResponse.getCarts().get(i).getOffer_id());
+            productsBean.setTax_applied(Integer.parseInt(cartsQuantityResponse.getCarts().get(i).getTax_amount()));
+            productsBean.setTax_id(Integer.parseInt(cartsQuantityResponse.getCarts().get(i).getTax_id()));
+            productsBean.setNet_amount(String.valueOf(Double.parseDouble(cartsQuantityResponse.getCarts().get(i).getSelling_price())-Double.parseDouble(cartsQuantityResponse.getCarts().get(i).getSelling_price())));
+            productsBeanList.add(productsBean);
 
+        }
+
+        orderSaveRequest.setProducts(productsBeanList);
+    }
 
 
     private boolean validate() {
@@ -187,6 +250,81 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
         return true;
     }
 
+    private void getCarts() {
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiServiceEcom apiService = ApiClientEcom.getClient(AddAddressEcomActivity.this).create(ApiServiceEcom.class);
+        BaseApp.getInstance().getDisposable().add(apiService.getCartsQuantityItem()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CartsQuantityResponse>() {
+                    @Override
+                    public void onSuccess(CartsQuantityResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+                            cartsQuantityResponse = response;
+                            recylceItemDetail.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                            cartItemQuantityAdapter = new CartItemQuantityAdapter(getApplicationContext(),response.getCarts());
+                            recylceItemDetail.setAdapter(cartItemQuantityAdapter);
+
+                            for (total = 0 ; total<response.getCarts().size();total++){
+
+                                if (response.getCarts().get(total).getOffer_id()!=0)
+                                {
+                                    if (response.getCarts().get(total).getOffer_type().equals("discper")){
+
+
+                                        double b = ((Double.parseDouble(response.getCarts().get(total).getSelling_price())-((Double.parseDouble(response.getCarts().get(total).getSelling_price()))*(Double.parseDouble(response.getCarts().get(total).getDisc_per()))/100)));
+                                        double discperTotal= b *Double.parseDouble(""+response.getCarts().get(total).getQuantities());
+                                        sum=sum+ discperTotal;
+                                        tvOrderRs.setText("₹ " +String.format("%.3f", sum));
+
+                                        onlyDiscount = ((Double.parseDouble(response.getCarts().get(total).getSelling_price()))*(Double.parseDouble(response.getCarts().get(total).getDisc_per()))/100);
+                                        double discoutperTotal= onlyDiscount *Double.parseDouble(""+response.getCarts().get(total).getQuantities());
+                                        discountSum = discountSum + discoutperTotal;
+
+
+                                    } else if (response.getCarts().get(total).getOffer_type().equals("discamt")){
+                                        double c = (Double.parseDouble(response.getCarts().get(total).getSelling_price())- Double.parseDouble(response.getCarts().get(total).getDisc_amt()))*Double.parseDouble(""+response.getCarts().get(total).getQuantities());
+                                        sum=sum+ c;
+                                        tvOrderRs.setText("₹ "+String.format("%.2f",(sum)));
+
+                                      double  onlyDiscount = (Double.parseDouble(response.getCarts().get(total).getDisc_amt()))*Double.parseDouble(""+response.getCarts().get(total).getQuantities());
+                                        discountSum = discountSum + onlyDiscount;
+                                    }
+                                } else {
+                                    double totalAmount = Double.parseDouble(response.getCarts().get(total).getSelling_price())* Double.parseDouble(""+response.getCarts().get(total).getQuantities());
+                                    sum=sum+ totalAmount;
+                                    tvOrderRs.setText("₹ "+String.format("%.2f",(sum)));
+                                    discountSum = 0;
+
+                                }
+
+                                double deliveryTotal = response.getCarts().get(total).getDelivery();
+                                deliverySum = deliverySum + deliveryTotal;
+                                tvDeliveryCharge.setText("₹ "+String.format("%.2f",(deliverySum)));
+
+                                double taxTotal =Double.parseDouble(response.getCarts().get(total).getTax_amount())* Double.parseDouble(""+response.getCarts().get(total).getQuantities());
+                                deliveryTax = deliveryTax + taxTotal;
+                                tvTaxCharge.setText("₹ "+String.format("%.2f",(deliveryTax)));
+
+                                tvTotalRs.setText("₹ "+String.format("%.2f",(deliveryTax+deliverySum+sum)));
+                                tvProductActualprice.setText("₹ "+String.format("%.2f",(deliveryTax+deliverySum+sum)));
+
+                            }
+
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.lichangeAddress), response.getMessage(), true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.lichangeAddress), true, e);
+                    }
+                }));
+    }
 
     private void saveNewAddress() {
         saveEcomAddressRequest=new SaveEcomAddressRequest();
@@ -323,14 +461,10 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
         tvConfirmAddress = dialog.findViewById(R.id.tv_confirm_addaddress);
         addressList = dialog.findViewById(R.id.address_list);
         backBtnChangeAddress.setOnClickListener(this);
-       // tvConfirmAddress.setOnClickListener(this);
 
-        if (isNetworkAvailable()) {
-            getUserAddress(addAddressEcomActivity);
-        } else {
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.cartEcommLayout), "No Internet Connection!", true);
-        }
-
+        addressList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        changeAddressAdapter = new ChangeAddressAdapter(getApplicationContext(),addressUserResponse.getAddressess(),AddAddressEcomActivity.this);
+        addressList.setAdapter(changeAddressAdapter);
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         Window window = dialog.getWindow();
@@ -343,31 +477,34 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
         dialog.show();
     }
 
-    private void getUserAddress(AddAddressEcomActivity addAddressEcomActivity) {
-        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-        ApiServiceEcom apiService = ApiClientEcom.getClient(addAddressEcomActivity).create(ApiServiceEcom.class);
+    private void getUserAddress() {
+        ApiServiceEcom apiService = ApiClientEcom.getClient(getApplicationContext()).create(ApiServiceEcom.class);
         BaseApp.getInstance().getDisposable().add(apiService.getUserAddress()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<AddressUserResponse>() {
                     @Override
                     public void onSuccess(AddressUserResponse response) {
-                        loadingDialog.hideDialog();
                         if (response.isStatus()) {
                             addressUserResponse = response;
-                            addressList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-                            changeAddressAdapter = new ChangeAddressAdapter(getApplicationContext(),response.getAddressess(),AddAddressEcomActivity.this);
-                            addressList.setAdapter(changeAddressAdapter);
+                            int size = response.getAddressess().size();
+                            tvUsername.setText(response.getAddressess().get(size-1).getName());
+                            tvAddress.setText(response.getAddressess().get(size-1).getArea());
+                            tvCity.setText(response.getAddressess().get(size-1).getCity());
+                            tvPincode.setText("-"+response.getAddressess().get(size-1).getPincode());
+                            tvState.setText(response.getAddressess().get(size-1).getState());
+                            tvMobile.setText(response.getAddressess().get(size-1).getMobile());
+                            tvType.setText(response.getAddressess().get(size-1).getType());
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ADDRESS_POS,String.valueOf(size-1));
 
                         } else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.lichangeAddress), response.getMessage(), true);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.rl_address), response.getMessage(), true);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.lichangeAddress), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.rl_address), true, e);
                     }
                 }));
     }
@@ -427,7 +564,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onCheckedAddressItem(final int position, final AddressUserResponse.AddressessBean addressessBean) {
-        Toast.makeText(getApplicationContext(),String.valueOf(position),Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(),String.valueOf(position),Toast.LENGTH_SHORT).show();
 
         tvConfirmAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -441,6 +578,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                 tvPincode.setText(addressessBean.getPincode());
                 tvState.setText(addressessBean.getState());
                 tvMobile.setText(addressessBean.getMobile());
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ADDRESS_POS,String.valueOf(position));
             }
         });
     }

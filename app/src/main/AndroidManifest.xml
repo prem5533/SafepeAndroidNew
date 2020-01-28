@@ -34,17 +34,23 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ecommerce.activity.OrderDetailEcomActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".ecommerce.activity.MyOrderEcomActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ecommerce.activity.AddAddressEcomActivity"
+        <activity android:name=".ecommerce.activity.EcomPaymentActivity"></activity>
+        <activity
+            android:name=".ecommerce.activity.OrderDetailEcomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ecommerce.activity.MyOrderEcomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ecommerce.activity.AddAddressEcomActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustNothing"/>
-        <activity android:name=".ecommerce.activity.ProductDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ecommerce.activity.EHomeActivity"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="stateVisible|adjustNothing" />
+        <activity
+            android:name=".ecommerce.activity.ProductDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ecommerce.activity.EHomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.booking.flight.FlightHistoryActivity"
             android:screenOrientation="portrait" />
@@ -168,8 +174,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustNothing"
-            />
+            android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity
             android:name=".activity.Navigation"
             android:screenOrientation="portrait" />

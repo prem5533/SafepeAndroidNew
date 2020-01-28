@@ -90,6 +90,7 @@ public class SharedPref {
     public final String OFFER_ID = "offer_id";
     public final String CART_BADGE = "cart_badge";
     public final String PLUS_MINUS = "plusminus";
+    public final String ADDRESS_POS = "address_pos";
 
 
     public SharedPref(Context context) {

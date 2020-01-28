@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.ecommerce.model.response.AddressUserResponse;
 
@@ -24,6 +25,8 @@ public class ChangeAddressAdapter extends RecyclerView.Adapter<ChangeAddressAdap
     private List<AddressUserResponse.AddressessBean> addressessBeans;
     private onEditAddress editAddressItem;
     private int row_index = -1;
+    String AddressPOS ;
+
 
     public interface onEditAddress{
         void onEditAddressItem(int position,AddressUserResponse.AddressessBean addressessBean);
@@ -42,6 +45,7 @@ public class ChangeAddressAdapter extends RecyclerView.Adapter<ChangeAddressAdap
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.chnge_address_adapter,parent,false);
+        AddressPOS =   BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ADDRESS_POS);
         return new ChangeAddressAdapter.ProductViewHolder(view);
     }
 
@@ -86,6 +90,7 @@ public class ChangeAddressAdapter extends RecyclerView.Adapter<ChangeAddressAdap
             tvEditBtn.setOnClickListener(this);
             tvRemoveBtn.setOnClickListener(this);
 
+
         }
 
         public void bindData(final int position) {
@@ -99,13 +104,11 @@ public class ChangeAddressAdapter extends RecyclerView.Adapter<ChangeAddressAdap
             tvstate.setText(addressessBeans.get(position).getState());
 
 
-
-
-
             cbAddressChange.setChecked(position==row_index);
 
             if (position==row_index){
                 litab.setVisibility(View.VISIBLE);
+
             }
             else {
                 litab.setVisibility(View.GONE);
@@ -118,6 +121,7 @@ public class ChangeAddressAdapter extends RecyclerView.Adapter<ChangeAddressAdap
                         litab.setVisibility(View.GONE);
                         cbAddressChange.setChecked(false);
 
+
                         //XU   row_index = -1;
                     } else {
                         if (editAddressItem != null) {
@@ -125,10 +129,16 @@ public class ChangeAddressAdapter extends RecyclerView.Adapter<ChangeAddressAdap
                         }
                         row_index = position;
                         litab.setVisibility(View.VISIBLE);
-                        notifyDataSetChanged();
+                       notifyDataSetChanged();
                     }
                 }
             });
+
+            if (String.valueOf(position).equals(AddressPOS)){
+                cbAddressChange.setChecked(true);
+                litab.setVisibility(View.VISIBLE);
+            }
+            AddressPOS =" ";
 
         }
 
