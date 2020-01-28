@@ -5,6 +5,7 @@ import com.safepayu.wallet.ecommerce.model.request.CancelOrderRequest;
 import com.safepayu.wallet.ecommerce.model.request.CartQuantityRequest;
 import com.safepayu.wallet.ecommerce.model.request.FilterRequest;
 import com.safepayu.wallet.ecommerce.model.request.NotifyMeRequest;
+import com.safepayu.wallet.ecommerce.model.request.OrderSaveRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductByModifierRequest;
 import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
 import com.safepayu.wallet.ecommerce.model.request.ReturnOrderRequest;
@@ -14,12 +15,14 @@ import com.safepayu.wallet.ecommerce.model.request.WishListRequest;
 import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.AddressUserResponse;
 import com.safepayu.wallet.ecommerce.model.response.CartQuantityResponse;
+import com.safepayu.wallet.ecommerce.model.response.CartsQuantityResponse;
 import com.safepayu.wallet.ecommerce.model.response.CategoriesResponse;
 import com.safepayu.wallet.ecommerce.model.response.DeleteCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
 import com.safepayu.wallet.ecommerce.model.response.MoveToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.MyOrderListResponse;
 import com.safepayu.wallet.ecommerce.model.response.OrderDetailResponse;
+import com.safepayu.wallet.ecommerce.model.response.OrderSaveResponse;
 import com.safepayu.wallet.ecommerce.model.response.ParentCategoriesResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductByModifierResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsByCategoryIdResponse;
@@ -137,4 +140,10 @@ public interface ApiServiceEcom {
 
     @POST("api/pefast.safepe.latepe/api/outofstock_notify_me")
     Single<BaseResponse> getNotifyMe (@Body NotifyMeRequest notifyMeRequest);
+
+    @GET("api/pefast.safepe.latepe/api/getCarts")
+    Single<CartsQuantityResponse> getCartsQuantityItem ();
+
+    @POST("api/pefast.safepe.latepe/api/customerOrderSave")
+    Single<OrderSaveResponse>getCustomerOrderSave(@Body OrderSaveRequest orderSaveRequest);
 }

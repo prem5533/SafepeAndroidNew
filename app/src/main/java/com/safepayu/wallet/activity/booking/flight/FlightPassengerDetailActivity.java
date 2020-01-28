@@ -710,7 +710,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             String mod = sept[1];
             String dd = sept[2];
 
-            String dateZone= dd+"/"+mod+"/"+yd;
+            String dateZone= mod+"/"+dd+"/"+yd;
             Date  date = new Date(dateZone);
             s  = DateFormat.format("dd-MMM-yyyy", date.getTime());
             String daymonthYear = (String) s;
@@ -993,7 +993,7 @@ public class FlightPassengerDetailActivity extends AppCompatActivity implements 
             String mod = sept[1];
             String dd = sept[2];
 
-            String dateZone= dd+"/"+mod+"/"+yd;
+            String dateZone= mod+"/"+dd+"/"+yd;
             Date  date = new Date(dateZone);
             s  = DateFormat.format("dd-MMM-yyyy", date.getTime());
             String daymonthYear = (String) s;
