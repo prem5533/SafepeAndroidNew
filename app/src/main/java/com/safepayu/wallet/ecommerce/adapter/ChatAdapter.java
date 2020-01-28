@@ -114,14 +114,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatListViewHo
                 }
 
                 try{
-                    if (tvChatTitle.getText().toString().equalsIgnoreCase(data.get(position).getTitle())){
+                    if (data.get(position).getTitle().equalsIgnoreCase(data.get(position+1).getTitle())){
                         tvChatTitle.setVisibility(View.GONE);
                     }else {
                         tvChatTitle.setText(data.get(position).getTitle());
                         tvChatTitle.setVisibility(View.VISIBLE);
                     }
                 }catch (Exception e){
-
+                    e.printStackTrace();
                 }
             }catch (Exception e){
                 e.printStackTrace();

@@ -39,6 +39,8 @@ public class SharedPref {
     public final String SERVICE_CHARGE = "Service_charge";
     public final String TRANSACTION_CHARGE = "Transaction_charge";
     public final String COMMISSION_CHARGE = "Commission_charge";
+    public final String ECOMM_LAT = "ecommLat";
+    public final String ECOMM_LONG = "ecommLong";
 
     //***********FLIGHT*******************
     public final String FLIGHT_DATE = "flight_date";

@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -60,6 +62,7 @@ import static com.safepayu.wallet.ecommerce.adapter.ChatAdapter.statusWaitingIma
 public class ChatActivity extends AppCompatActivity {
 
     private Button BackBtn;
+    private TextView NewIssueBtn;
     private RecyclerView chatRecyclerView;
     private ImageView SendBtn,AttachBtn;
     private EditText edMessage;
@@ -86,15 +89,19 @@ public class ChatActivity extends AppCompatActivity {
         TitleList=new ArrayList<>();
 
         BackBtn=findViewById(R.id.backBtn_chat);
+        NewIssueBtn=findViewById(R.id.newIssue_chat);
         AttachBtn=findViewById(R.id.sendAttachmentBtn_chat);
         SendBtn=findViewById(R.id.sendMessageBtn_chat);
         edMessage=findViewById(R.id.message_chat);
         titleSpinner=findViewById(R.id.titleSpinner_chat);
         chatRecyclerView = findViewById(R.id.recycleChatList_chat);
-        chatRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        linearLayoutManager.setStackFromEnd(true);
+        chatRecyclerView.setLayoutManager(linearLayoutManager);
 
         if (isNetworkAvailable()){
-            getChatList();
+            getChatList(0);
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.chatLayout),"No Internet Connection!",true);
         }
@@ -106,11 +113,18 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        NewIssueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                titleSpinner.setVisibility(View.VISIBLE);
+                Title="";
+            }
+        });
+
         SendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Message = edMessage.getText().toString().trim();
-
 
                 if (TextUtils.isEmpty(Title)){
                     titleSpinner.setVisibility(View.VISIBLE);
@@ -152,6 +166,18 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
+
+        final Handler handler = new Handler();
+        handler.postDelayed( new Runnable() {
+
+            @Override
+            public void run() {
+                if (isNetworkAvailable()){
+                    getChatList(1);
+                }
+                handler.postDelayed( this, 30 * 1000 );
+            }
+        }, 60 * 1000 );
 
     }
 
@@ -276,10 +302,14 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
-    private void getChatList() {
+    private void getChatList(final int type) {
+        TitleList.clear();
+        chatListResponse=null;
 
         TitleList.add("Choose Title");
-        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        if (type==0){
+            loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        }
 
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
         BaseApp.getInstance().getDisposable().add(apiService.getChatList()
@@ -288,13 +318,22 @@ public class ChatActivity extends AppCompatActivity {
                 .subscribeWith(new DisposableSingleObserver<ChatListResponse>() {
                     @Override
                     public void onSuccess(ChatListResponse response) {
-                        loadingDialog.hideDialog();
+                        if (type==0){
+                            loadingDialog.hideDialog();
+                        }
+
                         if (response.isStatus()) {
                             try {
-                                chatListResponse=response;
-                                chatAdapter=new ChatAdapter(ChatActivity.this,chatListResponse.getData());
-                                chatRecyclerView.setAdapter(chatAdapter);
-                                chatRecyclerView.smoothScrollToPosition(chatListResponse.getData().size());
+
+                                if (chatListResponse.getData()==null){
+
+                                }else {
+                                    chatListResponse=response;
+                                    chatAdapter=new ChatAdapter(ChatActivity.this,chatListResponse.getData());
+                                    chatRecyclerView.setAdapter(chatAdapter);
+                                    chatAdapter.notifyDataSetChanged();
+                                    //chatRecyclerView.smoothScrollToPosition(chatListResponse.getData().size());
+                                }
 
                                 if (chatListResponse.getTitle().size()>0){
                                     for (int i=0;chatListResponse.getTitle().size()>i;i++){
@@ -306,6 +345,7 @@ public class ChatActivity extends AppCompatActivity {
                                 }else {
                                     titleSpinner.setVisibility(View.GONE);
                                 }
+
                             }catch (Exception e){
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.chatLayout),e.getMessage(),true);
                                 e.printStackTrace();
@@ -317,17 +357,22 @@ public class ChatActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.hideDialog();
+                        if (type==0){
+                            loadingDialog.hideDialog();
+                        }
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.chatLayout), true, e);
                     }
                 })
         );
     }
 
-    private void sendMessageApi(final String Title, final String Message) {
+    private void sendMessageApi(final String Titles, final String Message) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         ChatListResponse.DataBean dataBean=new ChatListResponse.DataBean();
+        ChatListResponse chatListResponse1=new ChatListResponse();
+        List<ChatListResponse.DataBean> dataBeanList=new ArrayList<>();
+
 
         dataBean.setId(0);
         dataBean.setUserid(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
@@ -344,10 +389,26 @@ public class ChatActivity extends AppCompatActivity {
             dataBean.setMessage(Message);
         }
 
-        chatListResponse.getData().add(dataBean);
-        chatAdapter.notifyDataSetChanged();
-        chatRecyclerView.setAdapter(chatAdapter);
-        chatRecyclerView.smoothScrollToPosition(chatListResponse.getData().size());
+
+
+        try {
+            chatListResponse.getData().add(dataBean);
+            chatRecyclerView.setAdapter(chatAdapter);
+        }catch (Exception e){
+            dataBeanList.add(dataBean);
+            chatListResponse1.setData(dataBeanList);
+            chatListResponse=chatListResponse1;
+            chatAdapter=new ChatAdapter(ChatActivity.this,chatListResponse.getData());
+            chatRecyclerView.setAdapter(chatAdapter);
+            e.printStackTrace();
+        }
+
+        try {
+            chatAdapter.notifyDataSetChanged();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //chatRecyclerView.scrollToPosition(chatListResponse.getData().size());
 
         ChatSendRequest chatSendRequest=new ChatSendRequest();
         chatSendRequest.setTitle(Title);
