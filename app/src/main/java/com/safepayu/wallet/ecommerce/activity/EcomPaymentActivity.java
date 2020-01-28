@@ -422,7 +422,7 @@ public class EcomPaymentActivity extends AppCompatActivity {
         orderSaveRequest1.setMerchant_id("2");
         orderSaveRequest1.setVenue_id("201911011148462");
         orderSaveRequest1.setSource_type("app");
-        orderSaveRequest1.setPayment_mode("bank");
+
 
         orderSaveRequest1.setOrder_date(t1);
      //   orderSaveRequest.setOrder_status();
@@ -442,14 +442,17 @@ public class EcomPaymentActivity extends AppCompatActivity {
         if (amount>walletBal){
             orderSaveRequest1.setPayment_wallet(String.valueOf(walletBal));
             orderSaveRequest1.setPayment_bank(String.format("%.2f",(Double.parseDouble(paidAmount)-walletBal)));
+            orderSaveRequest1.setPayment_mode("bankwallet");
         } else {
             if (b){
                 debitCardPercentAmount = (Double.parseDouble(paidAmount)*Double.parseDouble(WalletResponse.getData().getPerBank()))/100;
                 orderSaveRequest1.setPayment_wallet(String.format("%.2f",(Double.parseDouble(paidAmount)-debitCardPercentAmount)));
                 orderSaveRequest1.setPayment_bank(String.format("%.2f",(debitCardPercentAmount)));
+                orderSaveRequest1.setPayment_mode("bankwallet");
             }else {
                 orderSaveRequest1.setPayment_wallet("0");
                 orderSaveRequest1.setPayment_bank(paidAmount);
+                orderSaveRequest1.setPayment_mode("bank");
             }
         }
 
