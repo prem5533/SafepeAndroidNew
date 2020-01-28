@@ -76,9 +76,12 @@ public class ParentCategory extends Fragment implements ParentCategoryAdapter.On
     private void getAllParentCategory() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
+        String Lat=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ECOMM_LAT);
+        String Long=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ECOMM_LONG);
+
         ApiServiceEcom apiService = ApiClientEcom.getClient(getActivity()).create(ApiServiceEcom.class);
 
-        BaseApp.getInstance().getDisposable().add(apiService.getAllCategoryHome()
+        BaseApp.getInstance().getDisposable().add(apiService.getAllCategoryHome(Lat,Long)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<HomeCatResponse>() {

@@ -337,19 +337,22 @@
         <activity
             android:name=".ecommerce.activity.FilterDialog"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ChatActivity" /> <!-- Ecommerce -->
-        <activity
-            android:name=".ecommerce.activity.ReviewProduct"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ecommerce.fragment.ThankYouFragment"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ecommerce.activity.SearchEcommerce"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ecommerce.activity.CartActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".activity.ChatActivity"/>
+        <activity android:name=".ecommerce.activity.ChatIssueList"/>
+        <activity android:name=".ecommerce.activity.VendorChatActivity"/>
+
+
+
+<!--  Ecommerce      -->
+
+        <activity android:name=".ecommerce.activity.ReviewProduct"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ecommerce.fragment.ThankYouFragment"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ecommerce.activity.SearchEcommerce"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ecommerce.activity.CartActivity"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -1,9 +1,19 @@
 package com.safepayu.wallet.ecommerce.fragment;
 
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -15,12 +25,17 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -36,6 +51,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.QrCodeScanner;
 import com.safepayu.wallet.activity.WalletActivity;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.ecommerce.activity.EHomeActivity;
 import com.safepayu.wallet.ecommerce.activity.ProductDetailActivity;
 import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
 import com.safepayu.wallet.ecommerce.adapter.CategoryAdapter;
@@ -48,9 +64,11 @@ import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
 import com.safepayu.wallet.ecommerce.model.response.CategoryModel;
 import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
+import com.safepayu.wallet.ecommerce.model.response.LatLongResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -65,7 +83,8 @@ import static com.safepayu.wallet.ecommerce.activity.EHomeActivity.tvCartBadge;
  */
 public class HomeFragment extends Fragment implements CategoryAdapter.OnCategoryItemListener,
         BottomNavigationView.OnNavigationItemSelectedListener, ParentCategoryAdapter.OnCategoryItemListener, EcommPagerAdapter.PagerListener ,
-        RecommendedAdapter.OnRecommendedItemListener,TrendingAdapter.OnTrendinItemListener, OfferAdapter.OnPOfferItemListener {
+        RecommendedAdapter.OnRecommendedItemListener,TrendingAdapter.OnTrendinItemListener, OfferAdapter.OnPOfferItemListener,
+        LocationListener {
 
     private RecyclerView recyclerCategory,recycleCategoryOfferList,recycleTrendingProductList,recycleRecommendList;
     private CategoryAdapter categoryAdapter;
@@ -82,11 +101,10 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     Timer timer;  final long DELAY_MS = 2000;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 5000; // time in milliseconds between successive task executions.
 
-    private LinearLayout SearchLayout;
+    private String Latitude="",Longitude="";
+    private LinearLayout SearchLayout,OfferLayout;
     private TextView tvSearch,tvViewAll;
-    private ArrayList<String> ProductNameList,ProductImageList;
-    private ArrayList<String> TrendingNameList,TrendingImageList;
-    private ArrayList<String> RecommendNameList,RecommendImageList;
+    private EditText etSearchEcomm;
     public static ArrayList<String> BrandNameList,BrandIdList;
     public static ArrayList<String> CatNameList,CatIdList;
 
@@ -123,6 +141,7 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         viewpager = view.findViewById(R.id.viewpager_ecom);
         SearchLayout = view.findViewById(R.id.searchLayout_headerHome);
         tvSearch = view.findViewById(R.id.tv_search_ecomm);
+        OfferLayout =view.findViewById(R.id.offerLayoutHome);
         tvViewAll = view.findViewById(R.id.viewAllCat_home);
         tabLayoutt = view.findViewById(R.id.tab_layout_ecom);
 
@@ -182,50 +201,15 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
             }
         });
 
-        ProductNameList=new ArrayList<>();
-        ProductImageList=new ArrayList<>();
-        RecommendNameList=new ArrayList<>();
-        RecommendImageList=new ArrayList<>();
-        TrendingNameList=new ArrayList<>();
-        TrendingImageList=new ArrayList<>();
+        EHomeActivity.locationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPinDialog();
+            }
+        });
+
         BrandNameList=new ArrayList<>();
         BrandIdList=new ArrayList<>();
-
-        ProductNameList.add("Shoes");
-        ProductNameList.add("Shoes");
-        ProductNameList.add("Shoes");
-        ProductNameList.add("Shoes");
-
-        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/4.png");
-        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/3.png");
-        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/2.png");
-        ProductImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/1.png");
-
-        /*offerAdapter = new OfferAdapter(getActivity(),ProductNameList,ProductImageList);
-        recycleCategoryOfferList.setAdapter(offerAdapter);*/
-
-        TrendingNameList.add("Men's T-Shirt");
-        TrendingNameList.add("Jeans");
-        TrendingNameList.add("Women's Top");
-        TrendingNameList.add("Shoes");
-
-        TrendingImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/8.png");
-        TrendingImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/7.png");
-        TrendingImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/6.png");
-        TrendingImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/5.png");
-
-
-
-        RecommendNameList.add("Women's Fashion");
-        RecommendNameList.add("Men's Casual");
-        RecommendNameList.add("Men's Casual");
-        RecommendNameList.add("Men's T-Shirt");
-
-        RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/12.png");
-        RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/11.png");
-        RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/10.png");
-        RecommendImageList.add("https://secure.safepeindia.com//uploaded/ecomImages/9.png");
-
 
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigation.getChildAt(0);
         for (int i = 0; i < menuView.getChildCount(); i++) {
@@ -239,42 +223,15 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
             iconView.setLayoutParams(layoutParams);
         }
 
-        if (isNetworkAvailable()){
-            getHomeCategory();
+        if (TextUtils.isEmpty(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ECOMM_LAT))){
+            showPinDialog();
         }else {
-            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),"No Internet Connection!",true);
+            if (isNetworkAvailable()){
+                getHomeCategory();
+            }else {
+                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),"No Internet Connection!",true);
+            }
         }
-    }
-
-    private void prepareCategoryData() {
-        categoryModelList.clear();
-        CategoryModel catList = new CategoryModel("Food & Drinks");
-        categoryModelList.add(catList);
-
-        catList = new CategoryModel("Beauty");
-        categoryModelList.add(catList);
-        catList = new CategoryModel("Sports");
-        categoryModelList.add(catList);
-        catList = new CategoryModel("Jeans");
-        categoryModelList.add(catList);
-        catList = new CategoryModel("Grocery");
-        categoryModelList.add(catList);
-        catList = new CategoryModel("Fashion");
-        categoryModelList.add(catList);
-        catList = new CategoryModel("Men Grooming");
-        categoryModelList.add(catList);
-        catList = new CategoryModel("Video Games");
-        categoryModelList.add(catList);
-        catList = new CategoryModel("iPads");
-        categoryModelList.add(catList);
-        catList = new CategoryModel("Flower");
-        categoryModelList.add(catList);
-        catList = new CategoryModel("Furniture");
-        categoryModelList.add(catList);
-        catList = new CategoryModel("Jewellery");
-        categoryModelList.add(catList);
-
-        //categoryAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -408,11 +365,15 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     private void getHomeCategory() {
         CatNameList=new ArrayList<>();
         CatIdList=new ArrayList<>();
+
+        String Lat=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ECOMM_LAT);
+        String Long=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ECOMM_LONG);
+
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
         ApiServiceEcom apiService = ApiClientEcom.getClient(getActivity()).create(ApiServiceEcom.class);
 
-        BaseApp.getInstance().getDisposable().add(apiService.getAllCategoryHome()
+        BaseApp.getInstance().getDisposable().add(apiService.getAllCategoryHome(Lat,Long)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<HomeCatResponse>() {
@@ -437,12 +398,18 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                                 }
                             }
                             if (response.getData().getProducts_offer().size()>0){
+                                OfferLayout.setVisibility(View.VISIBLE);
                                 offerAdapter = new OfferAdapter(getActivity(),response.getData().getProducts_offer(),HomeFragment.this);
                                 recycleCategoryOfferList.setAdapter(offerAdapter);
+                            }else {
+                                OfferLayout.setVisibility(View.GONE);
                             }
+
                             if (response.getData().getProducts_trending().size()>0){
                                 trendingAdapter = new TrendingAdapter(getActivity(),response.getData().getProducts_trending(),HomeFragment.this);
-                                recycleTrendingProductList.setAdapter(trendingAdapter); }
+                                recycleTrendingProductList.setAdapter(trendingAdapter);
+                            }
+
                             if (response.getData().getProducts_recommended().size()>0){
                                 recommendedAdapter = new RecommendedAdapter(getActivity(),response.getData().getProducts_recommended(),HomeFragment.this);
                                 recycleRecommendList.setAdapter(recommendedAdapter); }
@@ -454,7 +421,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                                 tabLayoutt.setupWithViewPager(viewpager, true);
                             }
                             else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),"No Category Found!",true); }
+                                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),"No Category Found!",true);
+                            }
 
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),response.getMessage(),true);
@@ -465,6 +433,45 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.homeEcommLayout), true, e);
+                    }
+                }));
+    }
+
+    private void getLangLong(String pincode) {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiServiceEcom apiServiceEcom = ApiClientEcom.getClient(getActivity()).create(ApiServiceEcom.class);
+
+        BaseApp.getInstance().getDisposable().add(apiServiceEcom.getLangLong(pincode)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<LatLongResponse>(){
+                    @Override
+                    public void onSuccess(LatLongResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()){
+                            Longitude=response.getData().getLongt();
+                            Latitude=response.getData().getLatt();
+
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ECOMM_LAT,Latitude);
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ECOMM_LONG,Longitude);
+
+                            if (isNetworkAvailable()){
+                                getHomeCategory();
+                            }else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),"No Internet Connection!",true);
+                            }
+                        }else {
+                            showPinDialog();
+                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),response.getMessage(),true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        showPinDialog();
+                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(getActivity().findViewById(R.id.homeEcommLayout), false, e.getCause());
                     }
                 }));
     }
@@ -481,8 +488,6 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
-
 
     @Override
     public void pgerItemListener(int position, HomeCatResponse.DataBean.BannersBean mBannerId) {
@@ -522,7 +527,162 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         startActivity(intent);
     }
 
+    private void showPinDialog() {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.show_dialog_pin);
+        dialog.setCancelable(false);
 
+        TextView tvLocation , tvSerch;
+        ImageView imCross;
+        imCross = dialog.findViewById(R.id.imCross);
+        tvLocation = dialog.findViewById(R.id.tv_getLocation);
+        tvSerch = dialog.findViewById(R.id.tv_search_pin);
+        etSearchEcomm = dialog.findViewById(R.id.tv_search_ecomm);
+
+        imCross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (TextUtils.isEmpty(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ECOMM_LAT))){
+                    Toast.makeText(getActivity(), "Please Enter Your Area Code", Toast.LENGTH_SHORT).show();
+                }else {
+                    dialog.dismiss();
+                }
+
+            }
+        });
+
+        tvLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getCurrentLocation();
+
+            }
+        });
+
+        tvSerch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(etSearchEcomm.getText().toString().trim())){
+                    Toast.makeText(getActivity(), "Please Enter Area Pincode", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (isNetworkAvailable()){
+                        getLangLong(etSearchEcomm.getText().toString().trim());
+                        dialog.dismiss();
+                    }else {
+                        Toast.makeText(getActivity(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+        dialog.show();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        // The absolute width of the available display size in pixels.
+        int displayWidth = displayMetrics.widthPixels;
+        // The absolute height of the available display size in pixels.
+        int displayHeight = displayMetrics.heightPixels;
+
+        // Initialize a new window manager layout parameters
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+
+        // Copy the alert dialog window attributes to new layout parameter instance
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+
+        // Set the alert dialog window width and height
+        // Set alert dialog width equal to screen width 90%
+        // int dialogWindowWidth = (int) (displayWidth * 0.9f);
+        // Set alert dialog height equal to screen height 90%
+        // int dialogWindowHeight = (int) (displayHeight * 0.9f);
+
+        // Set alert dialog width equal to screen width 70%
+        int dialogWindowWidth = (int) (displayWidth * 0.9f);
+        // Set alert dialog height equal to screen height 70%
+        int dialogWindowHeight = (int) (displayHeight * 0.7f);
+
+        // Set the width and height for the layout parameters
+        // This will bet the width and height of alert dialog
+        layoutParams.width = dialogWindowWidth;
+        layoutParams.height = dialogWindowHeight;
+
+        // Apply the newly created layout parameters to the alert dialog window
+        dialog.getWindow().setAttributes(layoutParams);
+    }
+
+    private void getCurrentLocation() {
+        LocationManager locationManager;
+        try {
+            loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, this);
+        }
+        catch(SecurityException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        String provider = locationManager.getBestProvider(new Criteria(), true);
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Location locations = locationManager.getLastKnownLocation(provider);
+        List<String> providerList = locationManager.getAllProviders();
+        if (null != location && null != providerList && providerList.size() > 0) {
+            double longitude = location.getLongitude();
+            double latitude = location.getLatitude();
+
+
+            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+            try {
+                List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
+                if (null != listAddresses && listAddresses.size() > 0) {
+                    String address = listAddresses.get(0).getAddressLine(0);
+                    String postalCode = listAddresses.get(0).getPostalCode();
+                    etSearchEcomm.setText(address);
+                    loadingDialog.hideDialog();
+
+                }
+            } catch (Exception e) {
+                loadingDialog.hideDialog();
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
+    }
 }
 
 

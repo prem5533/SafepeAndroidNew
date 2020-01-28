@@ -67,7 +67,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class EHomeActivity extends AppCompatActivity implements View.OnClickListener , LocationListener {
 
-    private ImageView CartBtn,NotificationBtn,NavIcon,imageDownSecurity, imageUpSecurity,imageDownLogout, imageUpLogout,locationBtn,imCross;
+    private ImageView CartBtn,NotificationBtn,NavIcon,imageDownSecurity, imageUpSecurity,imageDownLogout, imageUpLogout;
+    private ImageView chatEcomBtn,imCross;
+    public static ImageView locationBtn;
     private DrawerLayout drawer;
     private LoadingDialog loadingDialog;
     public  Dialog dialog;
@@ -76,6 +78,7 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
     LocationManager locationManager;
     Geocoder geocoder;
     List<Address> listAddresses;
+    private LocationListenerOn locationListner;
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
@@ -112,19 +115,21 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         NotificationBtn = findViewById(R.id.favBtn_main);
         NavIcon = findViewById(R.id.nav_iconEcommerce);
         locationBtn = findViewById(R.id.location_ecom);
+        chatEcomBtn = findViewById(R.id.chat_ecom);
 
         loadingDialog = new LoadingDialog(this);
-        locationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPinDialog(EHomeActivity.this);
-            }
-        });
 
         CartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), CartActivity.class));
+            }
+        });
+
+        chatEcomBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ChatIssueList.class));
             }
         });
 
@@ -302,6 +307,7 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         dialog = new Dialog(eHomeActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.show_dialog_pin);
+        dialog.setCancelable(false);
 
         imCross = dialog.findViewById(R.id.imCross);
         tvLocation = dialog.findViewById(R.id.tv_getLocation);

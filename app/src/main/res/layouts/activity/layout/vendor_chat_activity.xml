@@ -39,28 +39,60 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_marginLeft="40dp"
                     android:gravity="center"
                     android:text="Chat"
                     android:fontFamily="@font/roboto_bold"
                     android:textColor="#fff"
                     android:textSize="18sp"
-                    android:layout_weight="1"/>
-
-                <TextView
-                    android:id="@+id/newIssue_chat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="5dp"
-                    android:gravity="center"
-                    android:text="+ New Issue"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="#fff"
-                    android:textSize="18sp"
-                    android:layout_marginRight="5dp"/>
+                    android:layout_weight="1"
+                    android:layout_marginRight="20dp"/>
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/venueName_vendorChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="left"
+            android:text="Chat"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/venueContact_vendorChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="left"
+            android:text="Chat"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/grey_800"
+            android:textSize="14sp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/venueAddress_vendorChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="left"
+            android:text="Chat"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/grey_800"
+            android:textSize="14sp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/grey_500"
+            android:layout_margin="5dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleChatList_chat"
@@ -79,15 +111,6 @@
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:background="@drawable/blue_border">
-
-        <Spinner
-            android:id="@+id/titleSpinner_chat"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/white_round_border"
-            android:layout_margin="5dp"
-            android:padding="6dp"
-            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,13 +131,6 @@
                 android:maxLines="4"
                 android:imeOptions="actionDone"
                 android:layout_weight="1"
-                android:layout_marginRight="10dp"/>
-
-            <ImageView
-                android:id="@+id/sendAttachmentBtn_chat"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/chat_attach_new"
                 android:layout_marginRight="10dp"/>
 
             <ImageView

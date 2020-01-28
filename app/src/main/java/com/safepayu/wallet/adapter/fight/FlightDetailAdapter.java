@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.safepayu.wallet.BaseApp;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
 import com.squareup.picasso.Picasso;
@@ -16,9 +18,6 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class FlightDetailAdapter extends RecyclerView.Adapter<FlightDetailAdapter.FlightDetailViewHolder> {
 

@@ -120,8 +120,6 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
         tvSearchProductMatching = view.findViewById(R.id.tv_search_product_matching);
         tvNearByText = view.findViewById(R.id.offerNearbyText);
 
-
-
         liProduct.setOnClickListener(this);
         liProductGray.setOnClickListener(this);
         liStore.setOnClickListener(this);
@@ -353,9 +351,12 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
+        String Lat=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ECOMM_LAT);
+        String Long=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ECOMM_LONG);
+
         ApiServiceEcom apiService = ApiClientEcom.getClient(getActivity()).create(ApiServiceEcom.class);
 
-        BaseApp.getInstance().getDisposable().add(apiService.getProductsByCategoryId(CatId)
+        BaseApp.getInstance().getDisposable().add(apiService.getProductsByCategoryId(CatId,Lat,Long)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<ProductsByCategoryIdResponse>() {
@@ -380,46 +381,51 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                                 categorySpinner.setAdapter(arrayAdapter);
                             }
 
-                            if (response.getProducts().size()>0){
-                                serchProductAdapter=null;
-                                ProductNumber=response.getProducts().size();
-                                tvSearchProductMatching.setText("Found "+ProductNumber+" products matching, near you");
-                                tvNoOfProduct.setText(" "+response.getProducts().size());
-                                tvNoOfProductGrey.setText(" "+response.getProducts().size());
+                                if (response.getProducts().size()>0){
+                                    serchProductAdapter=null;
+                                    ProductNumber=response.getProducts().size();
+                                    tvSearchProductMatching.setText("Found "+ProductNumber+" products matching, near you");
+                                    tvNoOfProduct.setText(" "+response.getProducts().size());
+                                    tvNoOfProductGrey.setText(" "+response.getProducts().size());
 
-                                serchProductAdapter = new SearchProductAdapter(getActivity(),responseSort.getProducts(),SearchProductFragment.this);
-                                SearchProductList.setAdapter(serchProductAdapter);
-                                serchProductAdapter.notifyDataSetChanged();
+                                    serchProductAdapter = new SearchProductAdapter(getActivity(),responseSort.getProducts(),SearchProductFragment.this);
+                                    SearchProductList.setAdapter(serchProductAdapter);
+                                    serchProductAdapter.notifyDataSetChanged();
+                                }else {
+                                    tvNoOfProduct.setText("0");
+                                    tvNoOfProductGrey.setText("0");
+                                    ProductNumber=0;
+                                    tvSearchProductMatching.setText("Found "+ProductNumber+" products matching, near you");
+                                    BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),"No Product Found",true);
+                                }
+
+                                if (response.getVenues().size()>0){
+                                    ShopNumbers=response.getVenues().size();
+                                    tvNoOfShop.setText(" "+response.getVenues().size());
+                                    tvNoOfShopGrey.setText(" "+response.getVenues().size());
+
+                                    storeListAdapter = new StoreListAdapter(getActivity(),responseSort.getVenues(),SearchProductFragment.this);
+                                    searchStoreList.setAdapter(storeListAdapter);
+                                }else {
+                                    ShopNumbers=0;
+                                    tvNoOfShop.setText("0");
+                                    tvNoOfShopGrey.setText("0");
+                                }
+
+                                if (response.getProducts_offers().size()>0){
+                                    offerAdapter=null;
+                                    offerAdapter = new OfferSearchProductAdapter(getActivity(),responseSort.getProducts_offers(),SearchProductFragment.this);
+                                    offerProductList.setAdapter(offerAdapter);
+                                    offerAdapter.notifyDataSetChanged();
+                                }else {
+                                    offerProductList.setVisibility(View.GONE);
+                                    tvNearByText.setVisibility(View.GONE);
+                                }
                             }else {
-                                tvNoOfProduct.setText("0");
-                                tvNoOfProductGrey.setText("0");
+                                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),"No Product Found",true);
                             }
 
-                            if (response.getVenues().size()>0){
-                                ShopNumbers=response.getVenues().size();
-                                tvNoOfShop.setText(" "+response.getVenues().size());
-                                tvNoOfShopGrey.setText(" "+response.getVenues().size());
 
-                                storeListAdapter = new StoreListAdapter(getActivity(),responseSort.getVenues(),SearchProductFragment.this);
-                                searchStoreList.setAdapter(storeListAdapter);
-                            }else {
-                                tvNoOfShop.setText("0");
-                                tvNoOfShopGrey.setText("0");
-                            }
-
-                            if (response.getProducts_offers().size()>0){
-                                offerAdapter=null;
-                                offerAdapter = new OfferSearchProductAdapter(getActivity(),responseSort.getProducts_offers(),SearchProductFragment.this);
-                                offerProductList.setAdapter(offerAdapter);
-                                offerAdapter.notifyDataSetChanged();
-                            }else {
-                                offerProductList.setVisibility(View.GONE);
-                                tvNearByText.setVisibility(View.GONE);
-                            }
-
-                        }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),response.getMessage(),true);
-                        }
                     }
 
                     @Override
@@ -442,9 +448,12 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
+        String Lat=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ECOMM_LAT);
+        String Long=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ECOMM_LONG);
+
         ApiServiceEcom apiService = ApiClientEcom.getClient(getActivity()).create(ApiServiceEcom.class);
 
-        BaseApp.getInstance().getDisposable().add(apiService.getProductBySearch(search)
+        BaseApp.getInstance().getDisposable().add(apiService.getProductBySearch(search,Lat,Long)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<ProductsByCategoryIdResponse>() {
@@ -482,6 +491,9 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                             }else {
                                 tvNoOfProduct.setText("0");
                                 tvNoOfProductGrey.setText("0");
+                                ProductNumber=0;
+                                tvSearchProductMatching.setText("Found "+ProductNumber+" products matching, near you");
+                                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),"No Product Found",true);
                             }
 
                             if (response.getVenues().size()>0){
@@ -492,6 +504,7 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                                 storeListAdapter = new StoreListAdapter(getActivity(),responseSort.getVenues(),SearchProductFragment.this);
                                 searchStoreList.setAdapter(storeListAdapter);
                             }else {
+                                ShopNumbers=0;
                                 tvNoOfShop.setText("0");
                                 tvNoOfShopGrey.setText("0");
                             }
@@ -507,7 +520,7 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                             }
 
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),response.getMessage(),true);
+                            BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.SearchProductLayout),"No Product Found",true);
                         }
                     }
 

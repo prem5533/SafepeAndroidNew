@@ -53,12 +53,14 @@
                 android:id="@+id/tv_search_ecomm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Search for any product or venue"
+                android:hint="Enter Pincode Of Your Area"
                 android:textSize="14sp"
-                android:textColor="#87898c"
+                android:textColor="@color/black"
                 android:background="@null"
-                android:inputType="text"
+                android:inputType="number"
+                android:maxLength="6"
                 android:singleLine="true"
+                android:imeOptions="actionDone"
                 android:padding="15dp"
                 android:fontFamily="@font/roboto_regular" />
         </LinearLayout>

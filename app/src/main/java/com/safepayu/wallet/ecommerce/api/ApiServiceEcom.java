@@ -11,6 +11,7 @@ import com.safepayu.wallet.ecommerce.model.request.ProductDetailRequest;
 import com.safepayu.wallet.ecommerce.model.request.ReturnOrderRequest;
 import com.safepayu.wallet.ecommerce.model.request.ReviewRequest;
 import com.safepayu.wallet.ecommerce.model.request.SaveEcomAddressRequest;
+import com.safepayu.wallet.ecommerce.model.request.SendMessageToVendorRequest;
 import com.safepayu.wallet.ecommerce.model.request.WishListRequest;
 import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.AddressUserResponse;
@@ -19,6 +20,8 @@ import com.safepayu.wallet.ecommerce.model.response.CartsQuantityResponse;
 import com.safepayu.wallet.ecommerce.model.response.CategoriesResponse;
 import com.safepayu.wallet.ecommerce.model.response.DeleteCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.HomeCatResponse;
+import com.safepayu.wallet.ecommerce.model.response.IssueListResponse;
+import com.safepayu.wallet.ecommerce.model.response.LatLongResponse;
 import com.safepayu.wallet.ecommerce.model.response.MoveToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.MyOrderListResponse;
 import com.safepayu.wallet.ecommerce.model.response.OrderDetailResponse;
@@ -28,8 +31,10 @@ import com.safepayu.wallet.ecommerce.model.response.ProductByModifierResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsByCategoryIdResponse;
 import com.safepayu.wallet.ecommerce.model.response.ProductsDetailsResponse;
 import com.safepayu.wallet.ecommerce.model.response.RemoveEcomAddressResponse;
+import com.safepayu.wallet.ecommerce.model.response.SendChatToVendorResponse;
 import com.safepayu.wallet.ecommerce.model.response.TotalCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.UpdateEcomAddressResponse;
+import com.safepayu.wallet.ecommerce.model.response.VendorChatResponse;
 import com.safepayu.wallet.ecommerce.model.response.VenueDetailsResponse;
 import com.safepayu.wallet.ecommerce.model.response.WishListResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -49,11 +54,11 @@ public interface ApiServiceEcom {
 
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/getProductBySearch")
-    Single<ProductsByCategoryIdResponse>  getProductBySearch(@Field("search") String search);
+    Single<ProductsByCategoryIdResponse>  getProductBySearch(@Field("search") String search, @Field("latitude") String latitude, @Field("longitude") String longitude);
 
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/getProductsByCategoryId")
-    Single<ProductsByCategoryIdResponse> getProductsByCategoryId(@Field("search_cat") String CategoryId);
+    Single<ProductsByCategoryIdResponse> getProductsByCategoryId(@Field("search_cat") String CategoryId, @Field("latitude") String latitude, @Field("longitude") String longitude);
 
 
     @POST("api/pefast.safepe.latepe/api/productDetails")
@@ -74,8 +79,9 @@ public interface ApiServiceEcom {
     @GET("api/pefast.safepe.latepe/api/getAllParentCategory")
     Single<ParentCategoriesResponse> getAllParentCategory();
 
-    @GET("api/pefast.safepe.latepe/api/mainHomePage")
-    Single<HomeCatResponse> getAllCategoryHome();
+    @FormUrlEncoded
+    @POST("api/pefast.safepe.latepe/api/mainHomePage")
+    Single<HomeCatResponse> getAllCategoryHome(@Field("latitude") String latitude, @Field("longitude") String longitude);
 
     @POST("api/pefast.safepe.latepe/api/searchProductByRefine")
     Single<ProductsByCategoryIdResponse> getProductsFilter(@Body FilterRequest filterRequest);
@@ -146,4 +152,18 @@ public interface ApiServiceEcom {
 
     @POST("api/pefast.safepe.latepe/api/customerOrderSave")
     Single<OrderSaveResponse>getCustomerOrderSave(@Body OrderSaveRequest orderSaveRequest);
+
+    @GET("api/pefast.safepe.latepe/api/getallMessageEcomm")
+    Single<IssueListResponse> getMessageEcomm ();
+
+    @FormUrlEncoded
+    @POST("api/pefast.safepe.latepe/api/messageDetails")
+    Single<VendorChatResponse> getMessageDetails (@Field("venueid") String venueid, @Field("orderid") String orderid);
+
+    @POST("api/pefast.safepe.latepe/api/sendMessage")
+    Single<SendChatToVendorResponse> sendMessageToVendor (@Body SendMessageToVendorRequest sendMessageToVendorRequest);
+
+    @FormUrlEncoded
+    @POST("api/pefast.safepe.latepe/api/getLangLong")
+    Single<LatLongResponse> getLangLong (@Field("pincode") String pincode);
 }

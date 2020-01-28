@@ -3,7 +3,6 @@ package com.safepayu.wallet.ecommerce.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -23,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -39,8 +37,6 @@ import com.safepayu.wallet.ecommerce.model.response.RemoveEcomAddressResponse;
 import com.safepayu.wallet.ecommerce.model.response.UpdateEcomAddressResponse;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
