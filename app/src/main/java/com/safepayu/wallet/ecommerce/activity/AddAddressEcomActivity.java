@@ -7,12 +7,16 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -24,6 +28,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.ScratchActivity;
+import com.safepayu.wallet.dialogs.DatePicker;
+import com.safepayu.wallet.dialogs.DatePickerEcom;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.adapter.CartItemQuantityAdapter;
 import com.safepayu.wallet.ecommerce.adapter.ChangeAddressAdapter;
@@ -37,26 +44,29 @@ import com.safepayu.wallet.ecommerce.model.response.RemoveEcomAddressResponse;
 import com.safepayu.wallet.ecommerce.model.response.UpdateEcomAddressResponse;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.EventListener;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class AddAddressEcomActivity extends AppCompatActivity implements View.OnClickListener, ChangeAddressAdapter.onEditAddress {
+public class AddAddressEcomActivity extends AppCompatActivity implements View.OnClickListener, ChangeAddressAdapter.onEditAddress, CompoundButton.OnCheckedChangeListener {
 
     private TextView tvAddNewAddress, tvChangeAddress, tvContinue, tvSaveAddress, tvConfirmAddress,saveBtnAddress,tvUsername,tvType,tvAddress,tvCity,
-            tvPincode,tvState,tvMobile,tvOrderRs,tvDeliveryCharge,tvTotalRs,viewDetail,price_detail,tvProductActualprice,tvTaxCharge;
+            tvPincode,tvState,tvMobile,tvOrderRs,tvDeliveryCharge,tvTotalRs,viewDetail,price_detail,tvProductActualprice,tvTaxCharge,tvSelectDate,tvEstimateTime;
     private EditText etUserName,etMobile,etLocation,etCity,etState,etPincode,etLandmark,etCountry;
     public Dialog dialog;
-    private Button backBtnDialog, backBtnChangeAddress, backBtnAddress;
+    private Button backBtnDialog, backBtnChangeAddress, backBtnAddress,btnSubmit;
     private RecyclerView addressList;
     private ChangeAddressAdapter changeAddressAdapter;
     private CartItemQuantityAdapter cartItemQuantityAdapter;
     private LoadingDialog loadingDialog;
     private RadioGroup radioType;
     SaveEcomAddressRequest saveEcomAddressRequest;
-    private String selectedRadioButtonText ,SaveEdit;
+    private String selectedRadioButtonText ,SaveEdit,selectedRadioDeliveryType;
     AddressUserResponse addressUserResponse;
     private RecyclerView recylceItemDetail;
     int  total;
@@ -64,6 +74,10 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     CartsQuantityResponse cartsQuantityResponse;
     public  static OrderSaveRequest orderSaveRequest;
+    private ImageView cross;
+    private RadioGroup radioGroup;
+    private RadioButton rbClick,rbDelivery;
+    private LinearLayout liClick,liDelivery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,14 +152,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.tv_continue_addaddress:
 
-                getData();
-                Intent intent = new Intent(AddAddressEcomActivity.this, EcomPaymentActivity.class);
-                intent.putExtra("paid_amount", tvProductActualprice.getText().toString().trim().substring(1));
-                intent.putExtra("total_items",String.valueOf(cartsQuantityResponse.getCarts().size()));
-                intent.putExtra("total_tax",tvTaxCharge.getText().toString().trim().substring(1));
-                intent.putExtra("total_deliveryCharge",tvDeliveryCharge.getText().toString().trim().substring(1));
-                intent.putExtra("total_discount",String.valueOf(discountSum));
-                startActivity(intent);
+                showDeliveryTypeDialog(AddAddressEcomActivity.this);
 
                 break;
             case R.id.tv_add_address_addaddress:
@@ -182,22 +189,25 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
          orderSaveRequest = new OrderSaveRequest();
         List<OrderSaveRequest.ProductsBean> productsBeanList=new ArrayList<>();
         for (int i=0;cartsQuantityResponse.getCarts().size()>i;i++){
+
+            double netAmount = Double.parseDouble(cartsQuantityResponse.getCarts().get(i).getSelling_price())*cartsQuantityResponse.getCarts().get(i).getQuantities();
+            String address = tvAddress.getText().toString()+", "+tvCity.getText().toString()+", "+tvPincode.getText().toString()+", "+tvState.getText().toString();
             OrderSaveRequest.ProductsBean productsBean=new OrderSaveRequest.ProductsBean();
             productsBean.setProduct_id(cartsQuantityResponse.getCarts().get(i).getProduct_id());
             productsBean.setProduct_qty(cartsQuantityResponse.getCarts().get(i).getQuantities());
             productsBean.setModifier_id(String.valueOf(cartsQuantityResponse.getCarts().get(i).getModifier_id()));
-            productsBean.setDelivery_type("Click & Collect");
-            productsBean.setDelivery_address("27a Oaklands Road, Wolverhampton, England- WV3 0DS");
-            productsBean.setBilling_address("27a Oaklands Road, Wolverhampton, England- WV3 0DS");
+            productsBean.setDelivery_type(selectedRadioDeliveryType);
+            productsBean.setDelivery_address(address);
+            productsBean.setBilling_address(address);
             productsBean.setMerchant_id(cartsQuantityResponse.getCarts().get(i).getMerchant_id());
             productsBean.setVenue_id(cartsQuantityResponse.getCarts().get(i).getVenue_id());
             productsBean.setAttributes("");
             productsBean.setCost(Double.parseDouble(cartsQuantityResponse.getCarts().get(i).getSelling_price()));
             productsBean.setDiscount_applied(0);
             productsBean.setOffer_id(cartsQuantityResponse.getCarts().get(i).getOffer_id());
-            productsBean.setTax_applied(Integer.parseInt(cartsQuantityResponse.getCarts().get(i).getTax_amount()));
+            productsBean.setTax_applied(Double.parseDouble(cartsQuantityResponse.getCarts().get(i).getTax_amount()));
             productsBean.setTax_id(Integer.parseInt(cartsQuantityResponse.getCarts().get(i).getTax_id()));
-            productsBean.setNet_amount(String.valueOf(Double.parseDouble(cartsQuantityResponse.getCarts().get(i).getSelling_price())-Double.parseDouble(cartsQuantityResponse.getCarts().get(i).getSelling_price())));
+            productsBean.setNet_amount(String.valueOf(String.format("%.2f",(netAmount))));
             productsBeanList.add(productsBean);
 
         }
@@ -300,7 +310,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
 
                                 }
 
-                                double deliveryTotal = response.getCarts().get(total).getDelivery();
+                                double deliveryTotal = Double.parseDouble(response.getCarts().get(total).getDelivery_charge());
                                 deliverySum = deliverySum + deliveryTotal;
                                 tvDeliveryCharge.setText("₹ "+String.format("%.2f",(deliverySum)));
 
@@ -610,5 +620,164 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.lichangeAddress), false, e.getCause());
                     }
                 }));
+    }
+
+
+    private void showDeliveryTypeDialog(AddAddressEcomActivity addAddressEcomActivity) {
+        dialog = new Dialog(addAddressEcomActivity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.delivery_type_dialog);
+
+
+        cross = dialog.findViewById(R.id.cross);
+        radioGroup = dialog.findViewById(R.id.rg_delivery);
+        rbDelivery = dialog.findViewById(R.id.radio_delivery);
+        rbClick = dialog.findViewById(R.id.radio_click);
+        btnSubmit = dialog.findViewById(R.id.btn_submit);
+        liClick = dialog.findViewById(R.id.liclick);
+        liDelivery = dialog.findViewById(R.id.lidelivery);
+        tvSelectDate = dialog.findViewById(R.id.tv_selectDate);
+        tvEstimateTime = dialog.findViewById(R.id.tv_estimateTime);
+
+        rbDelivery.setOnCheckedChangeListener(this);
+        rbClick.setOnCheckedChangeListener(this);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, +10);
+        Date newDate = calendar.getTime();
+        String Time[] = String.valueOf(newDate).split(" ");
+        String t1 = Time[0];
+        String t2 = Time[1];
+        String t3 = Time[2];
+        String t4 = Time[3];
+        String t5 = Time[4];
+        String t6 = Time[5];
+
+        tvEstimateTime.setText(t1+", "+ t2+" " +t3+" "+t6);
+
+
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectedRadioButtonID = radioGroup.getCheckedRadioButtonId();
+                // If nothing is selected from Radio Group, then it return -1
+                if (selectedRadioButtonID != -1) {
+                    RadioButton selectedRadioButton = radioGroup.findViewById(selectedRadioButtonID);
+                     selectedRadioDeliveryType = selectedRadioButton.getText().toString();
+                    Toast.makeText(getApplicationContext(), selectedRadioDeliveryType, Toast.LENGTH_SHORT).show();
+
+                        if (selectedRadioDeliveryType.equals("Click & Collect")) {
+                            if (tvSelectDate.getText().toString().trim().length() == 0) {
+                                tvSelectDate.requestFocus();
+                                BaseApp.getInstance().toastHelper().showSnackBar(tvSelectDate, "Please Enter Date", true);
+                            } else {
+                                getData();
+                                Intent intent = new Intent(AddAddressEcomActivity.this, EcomPaymentActivity.class);
+                                intent.putExtra("paid_amount", tvProductActualprice.getText().toString().trim().substring(1));
+                                intent.putExtra("total_items",String.valueOf(cartsQuantityResponse.getCarts().size()));
+                                intent.putExtra("total_tax",tvTaxCharge.getText().toString().trim().substring(1));
+                                intent.putExtra("total_deliveryCharge",tvDeliveryCharge.getText().toString().trim().substring(1));
+                                intent.putExtra("total_discount",String.valueOf(discountSum));
+                                intent.putExtra("delivery_type",selectedRadioDeliveryType);
+                                intent.putExtra("delivery_time",tvSelectDate.getText().toString());
+                                startActivity(intent);
+                            }
+                        }
+                        else if (selectedRadioDeliveryType.equals("Delivery")){
+
+                                getData();
+                                Intent intent = new Intent(AddAddressEcomActivity.this, EcomPaymentActivity.class);
+                                intent.putExtra("paid_amount", tvProductActualprice.getText().toString().trim().substring(1));
+                                intent.putExtra("total_items",String.valueOf(cartsQuantityResponse.getCarts().size()));
+                                intent.putExtra("total_tax",tvTaxCharge.getText().toString().trim().substring(1));
+                                intent.putExtra("total_deliveryCharge",tvDeliveryCharge.getText().toString().trim().substring(1));
+                                intent.putExtra("total_discount",String.valueOf(discountSum));
+                                intent.putExtra("delivery_type",selectedRadioDeliveryType);
+                                intent.putExtra("delivery_time",tvEstimateTime.getText().toString());
+                                startActivity(intent);
+                        }
+                } else{
+                    Toast.makeText(getApplicationContext(), "Nothing selected from Radio Group.", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+
+        liClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DatePickerEcom datePicker = DatePickerEcom.newInstance(null, tvSelectDate);
+                datePicker.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+        dialog.show();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        // The absolute width of the available display size in pixels.
+        int displayWidth = displayMetrics.widthPixels;
+        // The absolute height of the available display size in pixels.
+        int displayHeight = displayMetrics.heightPixels;
+
+        // Initialize a new window manager layout parameters
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+
+        // Copy the alert dialog window attributes to new layout parameter instance
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+
+        // Set the alert dialog window width and height
+        // Set alert dialog width equal to screen width 90%
+        // int dialogWindowWidth = (int) (displayWidth * 0.9f);
+        // Set alert dialog height equal to screen height 90%
+        // int dialogWindowHeight = (int) (displayHeight * 0.9f);
+
+        // Set alert dialog width equal to screen width 70%
+        int dialogWindowWidth = (int) (displayWidth * 0.9f);
+        // Set alert dialog height equal to screen height 70%
+        int dialogWindowHeight = (int) (displayHeight * 0.7f);
+
+        // Set the width and height for the layout parameters
+        // This will bet the width and height of alert dialog
+        layoutParams.width = dialogWindowWidth;
+        layoutParams.height = dialogWindowHeight;
+
+        // Apply the newly created layout parameters to the alert dialog window
+        dialog.getWindow().setAttributes(layoutParams);
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked){
+            if (buttonView.getId() == R.id.radio_delivery) {
+                rbDelivery.setChecked(true);
+                rbClick.setChecked(false);
+                liDelivery.setVisibility(View.VISIBLE);
+                liClick.setVisibility(View.GONE);
+            }
+            if (buttonView.getId() == R.id.radio_click) {
+                rbClick.setChecked(true);
+                rbDelivery.setChecked(false);
+                liDelivery.setVisibility(View.GONE);
+                liClick.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

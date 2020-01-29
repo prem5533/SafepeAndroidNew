@@ -181,7 +181,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                              double b = ((Double.parseDouble(response.getCarts().get(total).getSelling_price())-((Double.parseDouble(response.getCarts().get(total).getSelling_price()))*(Double.parseDouble(response.getCarts().get(total).getDisc_per()))/100)));
                                             double discperTotal= b *Double.parseDouble(""+response.getCarts().get(total).getQuantities());
                                               discper=discper+ discperTotal;
-                                             tvTotalRs.setText("₹ " +String.format("%.3f", discper));
+                                             tvTotalRs.setText("₹ " +String.format("%.2f", discper));
                                          }
                                          else if (response.getCarts().get(total).getOffer_type().equals("discamt")){
                                              double c = (Double.parseDouble(response.getCarts().get(total).getSelling_price())- Double.parseDouble(response.getCarts().get(total).getDisc_amt()))*Double.parseDouble(""+response.getCarts().get(total).getQuantities());
@@ -363,9 +363,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                             totalPriceText=totalPriceText.substring(1);
                                             double totalPrice = Double.parseDouble(totalPriceText);
                                             if (PlusMinus.equals("plus")){
-                                                tvTotalRs.setText("₹ " +String.format("%.3f",(totalPrice + b)));
+                                                tvTotalRs.setText("₹ " +String.format("%.2f",(totalPrice + b)));
                                             }else {
-                                                tvTotalRs.setText("₹ " +String.format("%.3f",(totalPrice - b)));
+                                                tvTotalRs.setText("₹ " +String.format("%.2f",(totalPrice - b)));
                                             }
                                         }
                                         else if (cartsBean.getOffer_type().equals("discamt")){
@@ -374,9 +374,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                             totalPriceText=totalPriceText.substring(1);
                                             double totalPrice = Double.parseDouble(totalPriceText);
                                             if (PlusMinus.equals("plus")){
-                                                tvTotalRs.setText("₹ " +String.format("%.3f",(totalPrice + c)));
+                                                tvTotalRs.setText("₹ " +String.format("%.2f",(totalPrice + c)));
                                             }else {
-                                                tvTotalRs.setText("₹ " +String.format("%.3f",(totalPrice - c)));
+                                                tvTotalRs.setText("₹ " +String.format("%.2f",(totalPrice - c)));
                                             }
                                         }
                                     }
@@ -386,9 +386,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                         totalPriceText=totalPriceText.substring(1);
                                         double totalPrice = Double.parseDouble(totalPriceText);
                                         if (PlusMinus.equals("plus")){
-                                            tvTotalRs.setText("₹ "+(totalPrice + sellingPrice));
+                                            tvTotalRs.setText("₹ " +String.format("%.2f",(totalPrice + sellingPrice)));
                                         }else {
-                                            tvTotalRs.setText("₹ "+(totalPrice - sellingPrice));
+                                            tvTotalRs.setText("₹ " +String.format("%.2f",(totalPrice - sellingPrice)));
                                         }
                                     }
                                 }catch (Exception e){

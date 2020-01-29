@@ -46,7 +46,7 @@ public class OrderSaveRequest {
     private String order_status;
     private String user_addr_id;
     private int total_items;
-    private double amt_without_tax_discount;
+
     private double total_discount;
     private double total_tax;
     private double net_amount;
@@ -57,6 +57,11 @@ public class OrderSaveRequest {
     private String delivery_type;
     private String delivery_time;
     private List<ProductsBean> products;
+    /**
+     * amt_without_tax_discount : 0.6
+     */
+
+    private double amt_without_tax_discount;
 
     public String getMerchant_id() {
         return merchant_id;
@@ -170,13 +175,7 @@ public class OrderSaveRequest {
         this.total_items = total_items;
     }
 
-    public double getAmt_without_tax_discount() {
-        return amt_without_tax_discount;
-    }
 
-    public void setAmt_without_tax_discount(double amt_without_tax_discount) {
-        this.amt_without_tax_discount = amt_without_tax_discount;
-    }
 
     public double getTotal_discount() {
         return total_discount;
@@ -258,6 +257,14 @@ public class OrderSaveRequest {
         this.products = products;
     }
 
+    public double getAmt_without_tax_discount() {
+        return amt_without_tax_discount;
+    }
+
+    public void setAmt_without_tax_discount(double amt_without_tax_discount) {
+        this.amt_without_tax_discount = amt_without_tax_discount;
+    }
+
     public static class ProductsBean {
         /**
          * product_qty : 1
@@ -292,7 +299,7 @@ public class OrderSaveRequest {
         private double buy_price;
         private int discount_applied;
         private int offer_id;
-        private int tax_applied;
+        private double tax_applied;
         private int tax_id;
         private String net_amount;
         private String item_status;
@@ -401,11 +408,11 @@ public class OrderSaveRequest {
             this.offer_id = offer_id;
         }
 
-        public int getTax_applied() {
+        public double getTax_applied() {
             return tax_applied;
         }
 
-        public void setTax_applied(int tax_applied) {
+        public void setTax_applied(double tax_applied) {
             this.tax_applied = tax_applied;
         }
 

@@ -162,14 +162,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
                 tvDiscount.setText(percent1 + "Off");
                 if (cartsBeans.get(position).getOffer_type().equals("discper")){
                     Double b = ((Double.parseDouble(cartsBeans.get(position).getSelling_price())-((Double.parseDouble(cartsBeans.get(position).getSelling_price()))*(Double.parseDouble(cartsBeans.get(position).getDisc_per()))/100)));
-                    tvSellingprice.setText("₹ " +String.format("%.3f", b* Double.parseDouble(productQuantity.getText().toString()))); }
+                    tvSellingprice.setText("₹ " +String.format("%.2f", b* Double.parseDouble(productQuantity.getText().toString()))); }
                 else if (cartsBeans.get(position).getOffer_type().equals("discamt")){
                     double disamt = (Double.parseDouble(cartsBeans.get(position).getSelling_price())- Double.parseDouble(cartsBeans.get(position).getDisc_amt())*Double.parseDouble(productQuantity.getText().toString()));
                     tvSellingprice.setText("₹ "+String.format("%.2f",(disamt))); }
             }
             else {
                 Double totalAmount = Double.parseDouble(cartsBeans.get(position).getSelling_price())* Double.parseDouble(productQuantity.getText().toString());
-                tvSellingprice.setText("₹ "+String.valueOf(totalAmount));
+                tvSellingprice.setText("₹ "+String.format("%.2f",(totalAmount)));
                 tvActualprice.setVisibility(View.GONE);
                 tvDiscount.setVisibility(View.GONE);
 

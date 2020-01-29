@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="@drawable/button_background_gradient_diagonal"
+        >
+        <ImageView
+            android:id="@+id/cross"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_dialog_close_dark"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <ImageView
+            android:layout_width="144dp"
+            android:layout_height="81dp"
+            android:src="@drawable/white_logo_new"
+            android:layout_marginTop="-20dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Delivery Type"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_margin="10dp"/>
+            <RadioGroup
+                android:id="@+id/rg_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp">
+
+                <RadioButton
+                    android:id="@+id/radio_delivery"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/white"
+                    android:checked="true"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Delivery"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+                        <LinearLayout
+                            android:id="@+id/lidelivery"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:orientation="horizontal"
+                             android:layout_marginLeft="10dp"
+                             android:layout_marginRight="10dp"
+                             android:padding="10dp">
+                             <TextView
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:text="Estimete Delivery:"
+                                 android:textColor="@color/black"
+                                 android:textSize="13sp"
+                                 android:fontFamily="@font/roboto_regular"/>
+                             <TextView
+                                 android:id="@+id/tv_estimateTime"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:text=" "
+                                 android:textColor="@color/white"
+                                 android:textSize="13sp"
+                                 android:fontFamily="@font/roboto_regular"
+                                 android:layout_marginLeft="5dp"/>
+
+                         </LinearLayout>
+
+
+                <RadioButton
+                    android:id="@+id/radio_click"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Click &amp; Collect"
+                    android:textSize="13sp"
+                    android:buttonTint="@color/white"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_marginTop="5dp"
+                    android:checked="false"/>
+
+
+                <LinearLayout
+                    android:id="@+id/liclick"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        android:gravity="center">
+                            <TextView
+                                android:id="@+id/tv_selectDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hint="Select Date"
+                                android:textColor="@color/black"
+                                android:textSize="13sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_weight="1"/>
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_calendar_white"/>
+
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height=".5dp"
+                        android:background="@color/white"/>
+                </LinearLayout>
+
+            </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/amount"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/white_round_border"
+            android:padding="10dp"
+            android:text="Submit"
+            android:textColor="@color/textcolor"
+            android:textSize="15sp"
+            android:fontFamily="@font/roboto_bold"/>
+
+        </LinearLayout>
+    </LinearLayout>

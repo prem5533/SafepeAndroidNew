@@ -2,10 +2,11 @@ package com.safepayu.wallet.ecommerce.model.response;
 
 public class OrderSaveResponse {
 
+
     /**
      * status : true
      * message : Order Created Successfully.
-     * order : {"unique_code":"202001280554244","merchant_id":"2","venue_id":"201911011148462","till_id":0,"staff_id":0,"cust_id":4,"payment_mode":"Card","source_type":"app","order_date":"2020-01-28 05:54:24","delivery_type":"Click & Collect","order_status":null,"user_addr_id":"30","total_items":1,"amt_without_tax_discount":120,"total_discount":80,"total_tax":0,"net_amount":120.2,"delivery_charge":15,"stamp_reward_consumed_id":0,"claim_stamp_reward_id":0,"claim_stamp_reward_amt":0,"loyalty_point_value":0.25,"loyalty_point":80,"loyelty_used_amount":20,"pos_order_id":0,"loyelty_consumed":10,"reorder_status":0,"stripe_capture_id":null,"status":0,"is_gift":"1","name":"Arpan Pundir","email":"arpan.pundir20@gmail.com","mobile":"8375890846","updated_at":"2020-01-28 05:54:24","created_at":"2020-01-28 05:54:24","id":565}
+     * order : {"unique_code":"2020012911534711","merchant_id":"2","venue_id":"201911011148462","till_id":0,"staff_id":0,"cust_id":11,"payment_mode":"bankwallet","source_type":"app","order_date":"2020-01-29 11:53:47","delivery_type":"Delivery","order_status":null,"user_addr_id":null,"total_items":1,"amt_without_tax_discount":1,"total_discount":0.03,"total_tax":0.03,"net_amount":0.63,"delivery_charge":0.3,"stamp_reward_consumed_id":0,"claim_stamp_reward_id":0,"claim_stamp_reward_amt":0,"loyalty_point_value":0.25,"loyalty_point":0,"loyelty_used_amount":0,"pos_order_id":0,"loyelty_consumed":0,"reorder_status":0,"stripe_capture_id":null,"status":0,"is_gift":0,"name":"Sandeep Kumar","email":"kietsandeepkumar@gmail.com","mobile":"9454756926","updated_at":"2020-01-29 11:53:47","created_at":"2020-01-29 11:53:47","id":599}
      */
 
     private boolean status;
@@ -38,42 +39,42 @@ public class OrderSaveResponse {
 
     public static class OrderBean {
         /**
-         * unique_code : 202001280554244
+         * unique_code : 2020012911534711
          * merchant_id : 2
          * venue_id : 201911011148462
          * till_id : 0
          * staff_id : 0
-         * cust_id : 4
-         * payment_mode : Card
+         * cust_id : 11
+         * payment_mode : bankwallet
          * source_type : app
-         * order_date : 2020-01-28 05:54:24
-         * delivery_type : Click & Collect
+         * order_date : 2020-01-29 11:53:47
+         * delivery_type : Delivery
          * order_status : null
-         * user_addr_id : 30
+         * user_addr_id : null
          * total_items : 1
-         * amt_without_tax_discount : 120
-         * total_discount : 80
-         * total_tax : 0
-         * net_amount : 120.2
-         * delivery_charge : 15
+         * amt_without_tax_discount : 1
+         * total_discount : 0.03
+         * total_tax : 0.03
+         * net_amount : 0.63
+         * delivery_charge : 0.3
          * stamp_reward_consumed_id : 0
          * claim_stamp_reward_id : 0
          * claim_stamp_reward_amt : 0
          * loyalty_point_value : 0.25
-         * loyalty_point : 80
-         * loyelty_used_amount : 20
+         * loyalty_point : 0
+         * loyelty_used_amount : 0
          * pos_order_id : 0
-         * loyelty_consumed : 10
+         * loyelty_consumed : 0
          * reorder_status : 0
          * stripe_capture_id : null
          * status : 0
-         * is_gift : 1
-         * name : Arpan Pundir
-         * email : arpan.pundir20@gmail.com
-         * mobile : 8375890846
-         * updated_at : 2020-01-28 05:54:24
-         * created_at : 2020-01-28 05:54:24
-         * id : 565
+         * is_gift : 0
+         * name : Sandeep Kumar
+         * email : kietsandeepkumar@gmail.com
+         * mobile : 9454756926
+         * updated_at : 2020-01-29 11:53:47
+         * created_at : 2020-01-29 11:53:47
+         * id : 599
          */
 
         private String unique_code;
@@ -87,13 +88,13 @@ public class OrderSaveResponse {
         private String order_date;
         private String delivery_type;
         private Object order_status;
-        private String user_addr_id;
+        private Object user_addr_id;
         private int total_items;
-        private int amt_without_tax_discount;
-        private int total_discount;
-        private int total_tax;
+        private double amt_without_tax_discount;
+        private double total_discount;
+        private double total_tax;
         private double net_amount;
-        private int delivery_charge;
+        private double delivery_charge;
         private int stamp_reward_consumed_id;
         private int claim_stamp_reward_id;
         private int claim_stamp_reward_amt;
@@ -105,7 +106,7 @@ public class OrderSaveResponse {
         private int reorder_status;
         private Object stripe_capture_id;
         private int status;
-        private String is_gift;
+        private int is_gift;
         private String name;
         private String email;
         private String mobile;
@@ -201,11 +202,11 @@ public class OrderSaveResponse {
             this.order_status = order_status;
         }
 
-        public String getUser_addr_id() {
+        public Object getUser_addr_id() {
             return user_addr_id;
         }
 
-        public void setUser_addr_id(String user_addr_id) {
+        public void setUser_addr_id(Object user_addr_id) {
             this.user_addr_id = user_addr_id;
         }
 
@@ -217,27 +218,27 @@ public class OrderSaveResponse {
             this.total_items = total_items;
         }
 
-        public int getAmt_without_tax_discount() {
+        public double getAmt_without_tax_discount() {
             return amt_without_tax_discount;
         }
 
-        public void setAmt_without_tax_discount(int amt_without_tax_discount) {
+        public void setAmt_without_tax_discount(double amt_without_tax_discount) {
             this.amt_without_tax_discount = amt_without_tax_discount;
         }
 
-        public int getTotal_discount() {
+        public double getTotal_discount() {
             return total_discount;
         }
 
-        public void setTotal_discount(int total_discount) {
+        public void setTotal_discount(double total_discount) {
             this.total_discount = total_discount;
         }
 
-        public int getTotal_tax() {
+        public double getTotal_tax() {
             return total_tax;
         }
 
-        public void setTotal_tax(int total_tax) {
+        public void setTotal_tax(double total_tax) {
             this.total_tax = total_tax;
         }
 
@@ -249,11 +250,11 @@ public class OrderSaveResponse {
             this.net_amount = net_amount;
         }
 
-        public int getDelivery_charge() {
+        public double getDelivery_charge() {
             return delivery_charge;
         }
 
-        public void setDelivery_charge(int delivery_charge) {
+        public void setDelivery_charge(double delivery_charge) {
             this.delivery_charge = delivery_charge;
         }
 
@@ -345,11 +346,11 @@ public class OrderSaveResponse {
             this.status = status;
         }
 
-        public String getIs_gift() {
+        public int getIs_gift() {
             return is_gift;
         }
 
-        public void setIs_gift(String is_gift) {
+        public void setIs_gift(int is_gift) {
             this.is_gift = is_gift;
         }
 
