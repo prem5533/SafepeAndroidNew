@@ -65,7 +65,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
     }
 
     public class FlightLocationListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private  TextView tvDayName,tvDayHours ,productQuantity,cartAdapter,tvBuyQuantity, tvVenueName,tvActualprice,ProductName,tvSellingprice,cartRemove,cartMove,tvDiscount;
+        private  TextView tvDayName,tvDayHours ,productQuantity,cartAdapter,tvBuyQuantity, tvVenueName,tvActualprice,ProductName,tvSellingpriceCart,cartRemove,cartMove,tvDiscount;
         private ImageView imMinus ,imPlus,ivCartImage;
         private LinearLayout liCartProduct;
         public FlightLocationListViewHolder(@NonNull View itemView) {
@@ -74,7 +74,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
             imMinus = itemView.findViewById(R.id.im_minus);
             imPlus = itemView.findViewById(R.id.im_plus);
             productQuantity = itemView.findViewById(R.id.productQuantity_cartAdapter);
-            tvSellingprice = itemView.findViewById(R.id.tv_offprice_myorder);
+            tvSellingpriceCart = itemView.findViewById(R.id.tv_offprice_myorder);
             ProductName = itemView.findViewById(R.id.tv_product_name_myorder);
             cartAdapter = itemView.findViewById(R.id.productChanegSize_cartAdapter);
             tvActualprice = itemView.findViewById(R.id.tv_actualprice_myorder);
@@ -162,14 +162,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.FlightLocation
                 tvDiscount.setText(percent1 + "Off");
                 if (cartsBeans.get(position).getOffer_type().equals("discper")){
                     Double b = ((Double.parseDouble(cartsBeans.get(position).getSelling_price())-((Double.parseDouble(cartsBeans.get(position).getSelling_price()))*(Double.parseDouble(cartsBeans.get(position).getDisc_per()))/100)));
-                    tvSellingprice.setText("₹ " +String.format("%.2f", b* Double.parseDouble(productQuantity.getText().toString()))); }
+                    tvSellingpriceCart.setText("₹ " +String.format("%.2f", b* Double.parseDouble(productQuantity.getText().toString()))); }
                 else if (cartsBeans.get(position).getOffer_type().equals("discamt")){
                     double disamt = (Double.parseDouble(cartsBeans.get(position).getSelling_price())- Double.parseDouble(cartsBeans.get(position).getDisc_amt())*Double.parseDouble(productQuantity.getText().toString()));
-                    tvSellingprice.setText("₹ "+String.format("%.2f",(disamt))); }
+                    tvSellingpriceCart.setText("₹ "+String.format("%.2f",(disamt))); }
             }
             else {
                 Double totalAmount = Double.parseDouble(cartsBeans.get(position).getSelling_price())* Double.parseDouble(productQuantity.getText().toString());
-                tvSellingprice.setText("₹ "+String.format("%.2f",(totalAmount)));
+                tvSellingpriceCart.setText("₹ "+String.format("%.2f",(totalAmount)));
                 tvActualprice.setVisibility(View.GONE);
                 tvDiscount.setVisibility(View.GONE);
 

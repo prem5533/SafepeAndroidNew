@@ -273,6 +273,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                             cartAdapter.notifyDataSetChanged();
                             int  cartNumber = Integer.parseInt(tvCartBadge.getText().toString());
                             tvCartBadge.setText(""+(cartNumber-1));
+                        //    tvTotalRs.setText("₹ " +String.format("%.2f",(totalPrice - sellingPrice)));
+
+
                             if (totalCartResponse.getCarts().isEmpty()){
                                 liCartEmpty.setVisibility(View.VISIBLE);
                                 ProductsRecyclerView.setVisibility(View.GONE);

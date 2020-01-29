@@ -468,17 +468,17 @@
             if (amount>walletBal){
                 orderSaveRequest1.setPayment_wallet(String.valueOf(walletBal));
                 orderSaveRequest1.setPayment_bank(String.format("%.2f",(Double.parseDouble(paidAmount)-walletBal)));
-                orderSaveRequest1.setPayment_mode("bankwallet");
+                orderSaveRequest1.setPayment_mode("Card & Wallet");
             } else {
                 if (checkBoxWallet.isChecked()&& checkBoxGatewayPayment.isChecked()){
                     debitCardPercentAmount = (Double.parseDouble(paidAmount)*Double.parseDouble(WalletResponse.getData().getPerBank()))/100;
                     orderSaveRequest1.setPayment_wallet(String.format("%.2f",(Double.parseDouble(paidAmount)-debitCardPercentAmount)));
                     orderSaveRequest1.setPayment_bank(String.format("%.2f",(debitCardPercentAmount)));
-                    orderSaveRequest1.setPayment_mode("bankwallet");
+                    orderSaveRequest1.setPayment_mode("Card & Wallet");
                 }else if (checkBoxGatewayPayment.isChecked()){
                     orderSaveRequest1.setPayment_wallet("0");
                     orderSaveRequest1.setPayment_bank(paidAmount);
-                    orderSaveRequest1.setPayment_mode("bank");
+                    orderSaveRequest1.setPayment_mode("Card");
                 }
             }
 
@@ -522,7 +522,7 @@
             tvKeepShopping = dialog.findViewById(R.id.tv_keep_shopping);
             confirmback = dialog.findViewById(R.id.ordercomfirm_ecom_back);
             tvordernumber = dialog.findViewById(R.id.tvordernumber);
-            tvordernumber.setText("Order Number: "+orderSaveResponse.getOrder().getUnique_code());
+            tvordernumber.setText("Order Number : "+orderSaveResponse.getOrder().getUnique_code());
 
             tvCheckstatus.setOnClickListener(this);
             confirmback.setOnClickListener(this);
