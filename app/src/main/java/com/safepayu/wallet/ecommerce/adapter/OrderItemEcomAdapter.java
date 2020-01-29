@@ -71,14 +71,19 @@ public class OrderItemEcomAdapter extends RecyclerView.Adapter<OrderItemEcomAdap
             holder.cancelBtn.setText("Return");
         }else if (getProducts.get(position).getStatus()==5){
             holder.tvProductStatus.setText("Refund");
+            holder.cancelBtn.setVisibility(View.GONE);
         }else if (getProducts.get(position).getStatus()==6){
             holder.tvProductStatus.setText("Exchange");
+            holder.cancelBtn.setVisibility(View.GONE);
         }else if (getProducts.get(position).getStatus()==7){
             holder.tvProductStatus.setText("Refund_Exchange");
+            holder.cancelBtn.setVisibility(View.GONE);
         }else if (getProducts.get(position).getStatus()==8){
             holder.tvProductStatus.setText("Pre Rejected");
+            holder.cancelBtn.setVisibility(View.GONE);
         }else if (getProducts.get(position).getStatus()==9){
             holder.tvProductStatus.setText("Pre Refund");
+            holder.cancelBtn.setVisibility(View.GONE);
         }
 
         holder.tvProductName.setText(getProducts.get(position).getProduct_name());

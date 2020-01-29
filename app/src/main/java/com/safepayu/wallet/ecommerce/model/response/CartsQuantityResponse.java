@@ -144,7 +144,7 @@ public class CartsQuantityResponse {
         private String latitude;
         private String longitude;
         private String address_1;
-        private int loyalty_point;
+        private double loyalty_point;
         private String loyalty_point_value;
         private String distance;
         private Object offer_title;
@@ -522,11 +522,11 @@ public class CartsQuantityResponse {
             this.address_1 = address_1;
         }
 
-        public int getLoyalty_point() {
+        public double getLoyalty_point() {
             return loyalty_point;
         }
 
-        public void setLoyalty_point(int loyalty_point) {
+        public void setLoyalty_point(double loyalty_point) {
             this.loyalty_point = loyalty_point;
         }
 

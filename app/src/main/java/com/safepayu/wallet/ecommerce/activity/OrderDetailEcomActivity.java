@@ -48,8 +48,10 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
     private OrderItemEcomAdapter orderItemEcomAdapter;
     private OrderCancelEcomAdapter orderCancelEcomAdapter;
     private String orderId="";
+    private int CancelReturnPos=0;
     public Dialog dialog;
     private LoadingDialog loadingDialog;
+    private List<OrderDetailResponse.OrderListBean.ProductsBean> getProducts=new ArrayList<>();
 
     private TextView tvOrderNo,tvOrderDate,tvMobile,tvEmail,tvName,tvAddress,tvModeOfPayment;
     private TextView tvMrp,tvBuyPrice,tvDiscount,tvShippingFee,tvTax,tvTotalAmout;
@@ -123,7 +125,7 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
                 break;
             case R.id.btn_submit:
                 dialog.dismiss();
-                showDialogOrderCancelConfirm(OrderDetailEcomActivity.this);
+                showDialogOrderCancelConfirm();
                 break;
             case R.id.btn_submit_gray:
                 btnSubmit.setVisibility(View.VISIBLE);
@@ -176,8 +178,8 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
         window.setAttributes(lp);
         dialog.show();
     }
-    private void showDialogOrderCancelConfirm(OrderDetailEcomActivity orderDetailEcomActivity) {
-        dialog = new Dialog(orderDetailEcomActivity);
+    private void showDialogOrderCancelConfirm() {
+        dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.order_cancel_confirm_ecom_dialog);
 
@@ -185,9 +187,13 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
         tvKeepShopping = dialog.findViewById(R.id.tv_keep_shopping);
         cancelComfirmback = dialog.findViewById(R.id.ordercancelcomfirm_ecom_back);
 
+        TextView orderNo=dialog.findViewById(R.id.orderNo_ordercancel);
+
         tvCheckstatus.setOnClickListener(this);
         cancelComfirmback.setOnClickListener(this);
         tvKeepShopping.setOnClickListener(this);
+
+        orderNo.setText("Order Number : "+tvOrderNo.getText().toString().trim());
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         Window window = dialog.getWindow();
@@ -210,6 +216,7 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
     private void getOrderDetailsById() {
 
         loadingDialog.showDialog(getString(R.string.loading_message), false);
+        getProducts.clear();
 
         ApiServiceEcom apiService = ApiClientEcom.getClient(this).create(ApiServiceEcom.class);
 
@@ -242,7 +249,8 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
                                 e.printStackTrace();
                             }
 
-                            orderItemEcomAdapter = new OrderItemEcomAdapter(getApplicationContext(),response.getOrderList().getProducts(),OrderDetailEcomActivity.this);
+                            getProducts=response.getOrderList().getProducts();
+                            orderItemEcomAdapter = new OrderItemEcomAdapter(getApplicationContext(),getProducts,OrderDetailEcomActivity.this);
                             orderList.setAdapter(orderItemEcomAdapter);
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.orderDetailLayout),"No Product Found",true);
@@ -260,13 +268,11 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
     @Override
     public void cancelOrderAgainItem(int position, String Module, OrderDetailResponse.OrderListBean.ProductsBean productsBean) {
         if (Module.equalsIgnoreCase("Cancel")){
-            Toast.makeText(this, productsBean.getProduct_name()+" Cancel", Toast.LENGTH_SHORT).show();
-
+            CancelReturnPos=position;
             showMessage("Cancel Order","Are You Sure You Want To Cancel "+productsBean.getProduct_name(), productsBean,Module);
 
         }else if (Module.equalsIgnoreCase("Return")){
-            Toast.makeText(this, productsBean.getProduct_name()+" Return", Toast.LENGTH_SHORT).show();
-
+            CancelReturnPos=position;
             showMessage("Return Order","Are You Sure You Want To Return "+productsBean.getProduct_name(),productsBean, Module);
 
         }else {
@@ -288,7 +294,9 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.orderDetailLayout),response.getMessage(),true);
+                            getProducts.get(CancelReturnPos).setStatus(9);
+                            orderItemEcomAdapter.notifyDataSetChanged();
+                            showDialogOrderCancelConfirm();
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.orderDetailLayout),response.getMessage(),true);
                         }
@@ -316,6 +324,8 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
+                            getProducts.get(CancelReturnPos).setStatus(5);
+                            orderItemEcomAdapter.notifyDataSetChanged();
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.orderDetailLayout),response.getMessage(),true);
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.orderDetailLayout),response.getMessage(),true);

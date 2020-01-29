@@ -483,7 +483,7 @@ public class OrderDetailResponse {
                 private String type;
                 private int return_qty;
                 private double discount;
-                private int tax;
+                private double tax;
                 private int status;
                 private String created_at;
 
@@ -519,11 +519,11 @@ public class OrderDetailResponse {
                     this.discount = discount;
                 }
 
-                public int getTax() {
+                public double getTax() {
                     return tax;
                 }
 
-                public void setTax(int tax) {
+                public void setTax(double tax) {
                     this.tax = tax;
                 }
 

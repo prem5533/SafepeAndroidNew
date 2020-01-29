@@ -28,8 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.ScratchActivity;
-import com.safepayu.wallet.dialogs.DatePicker;
 import com.safepayu.wallet.dialogs.DatePickerEcom;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.adapter.CartItemQuantityAdapter;
@@ -46,7 +44,6 @@ import com.safepayu.wallet.ecommerce.model.response.UpdateEcomAddressResponse;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.EventListener;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -324,14 +321,14 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                             }
 
                         } else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.lichangeAddress), response.getMessage(), true);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_address), response.getMessage(), true);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.lichangeAddress), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.relative_address), true, e);
                     }
                 }));
     }
@@ -671,15 +668,15 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                 if (selectedRadioButtonID != -1) {
                     RadioButton selectedRadioButton = radioGroup.findViewById(selectedRadioButtonID);
                      selectedRadioDeliveryType = selectedRadioButton.getText().toString();
-                    Toast.makeText(getApplicationContext(), selectedRadioDeliveryType, Toast.LENGTH_SHORT).show();
+
+                    getData();
+                    Intent intent = new Intent(AddAddressEcomActivity.this, EcomPaymentActivity.class);
 
                         if (selectedRadioDeliveryType.equals("Click & Collect")) {
                             if (tvSelectDate.getText().toString().trim().length() == 0) {
                                 tvSelectDate.requestFocus();
                                 BaseApp.getInstance().toastHelper().showSnackBar(tvSelectDate, "Please Enter Date", true);
                             } else {
-                                getData();
-                                Intent intent = new Intent(AddAddressEcomActivity.this, EcomPaymentActivity.class);
                                 intent.putExtra("paid_amount", tvProductActualprice.getText().toString().trim().substring(1));
                                 intent.putExtra("total_items",String.valueOf(cartsQuantityResponse.getCarts().size()));
                                 intent.putExtra("total_tax",tvTaxCharge.getText().toString().trim().substring(1));
@@ -688,12 +685,10 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                                 intent.putExtra("delivery_type",selectedRadioDeliveryType);
                                 intent.putExtra("delivery_time",tvSelectDate.getText().toString());
                                 startActivity(intent);
+                                finish();
                             }
-                        }
-                        else if (selectedRadioDeliveryType.equals("Delivery")){
+                        } else if (selectedRadioDeliveryType.equals("Delivery")){
 
-                                getData();
-                                Intent intent = new Intent(AddAddressEcomActivity.this, EcomPaymentActivity.class);
                                 intent.putExtra("paid_amount", tvProductActualprice.getText().toString().trim().substring(1));
                                 intent.putExtra("total_items",String.valueOf(cartsQuantityResponse.getCarts().size()));
                                 intent.putExtra("total_tax",tvTaxCharge.getText().toString().trim().substring(1));
@@ -702,6 +697,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                                 intent.putExtra("delivery_type",selectedRadioDeliveryType);
                                 intent.putExtra("delivery_time",tvEstimateTime.getText().toString());
                                 startActivity(intent);
+                                finish();
                         }
                 } else{
                     Toast.makeText(getApplicationContext(), "Nothing selected from Radio Group.", Toast.LENGTH_SHORT).show();

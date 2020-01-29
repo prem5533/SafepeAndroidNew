@@ -19,7 +19,6 @@
     import androidx.appcompat.app.AppCompatActivity;
 
     import com.easebuzz.payment.kit.PWECouponsActivity;
-    import com.google.gson.Gson;
     import com.safepayu.wallet.BaseApp;
     import com.safepayu.wallet.R;
     import com.safepayu.wallet.api.ApiClient;
@@ -551,6 +550,7 @@
                 case R.id.tv_checkMyOrder:
                     startActivity(new Intent(EcomPaymentActivity.this, MyOrderEcomActivity.class));
                     dialog.dismiss();
+                    finish();
                     break;
                 case R.id.ordercomfirm_ecom_back:
                     startActivity(new Intent(EcomPaymentActivity.this, MyOrderEcomActivity.class));

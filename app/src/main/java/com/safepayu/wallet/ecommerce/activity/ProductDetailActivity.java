@@ -487,16 +487,16 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.orderDetailLayout),response.getMessage(),true);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.product_detail),response.getMessage(),true);
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.orderDetailLayout),response.getMessage(),true);
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.product_detail),response.getMessage(),true);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.orderDetailLayout), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.product_detail), true, e);
                     }
                 }));
     }

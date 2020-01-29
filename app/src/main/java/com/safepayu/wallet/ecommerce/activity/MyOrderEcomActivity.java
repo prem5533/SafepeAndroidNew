@@ -13,7 +13,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -89,8 +88,6 @@ public class MyOrderEcomActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void orderItem(int position,String Order_id) {
-
-        Toast.makeText(this, Order_id, Toast.LENGTH_SHORT).show();
 
         Intent intent=new Intent(MyOrderEcomActivity.this,OrderDetailEcomActivity.class);
         intent.putExtra("orderId",Order_id);
