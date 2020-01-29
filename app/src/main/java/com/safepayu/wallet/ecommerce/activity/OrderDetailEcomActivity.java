@@ -439,6 +439,7 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
 
                         if (returnOrderRequest.getReturn_qty().size()>0){
                             if (isNetworkAvailable()){
+                                //cancel
                                 getReturnOrder(returnOrderRequest);
                             }else {
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.orderDetailLayout),"No Internet Connection!",true);
