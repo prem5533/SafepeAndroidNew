@@ -415,7 +415,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(CartActivity.this, EHomeActivity.class));
         finish();
 
     }
