@@ -54,6 +54,7 @@ public class OrderDetailResponse {
          * mobile :
          * delivery_address : 1 Oaklands Road, Wolverhampton, England- WV3 0DS
          * mrp : 0.47
+         * confirmation_code :
          * products : [{"order_details_id":947,"product_qty":1,"order_id":536,"product_id":"94","attributes":null,"delivery_type":"Home Delivery","modifier_id":162,"net_amount":"0.22","item_status":"Pre Rejected","status":8,"return_day":1,"product_name":"Asparagus Tips","product_image":"uploaded/products/9938715764972390.jpeg","modifier_images":null,"brand_name":"Starx","rattings":"2","review":"Awe Awe","acknowledgement":[{"id":478,"type":"1","return_qty":1,"discount":0.02,"tax":0,"status":8,"created_at":"2020-01-22 11:18:07"},{"id":479,"type":"1","return_qty":1,"discount":0.02,"tax":0,"status":8,"created_at":"2020-01-22 11:28:51"},{"id":480,"type":"1","return_qty":1,"discount":0.02,"tax":0,"status":8,"created_at":"2020-01-22 11:31:01"},{"id":481,"type":"1","return_qty":1,"discount":0.02,"tax":0,"status":8,"created_at":"2020-01-22 11:32:32"},{"id":482,"type":"2","return_qty":1,"discount":0.02,"tax":0,"status":9,"created_at":"2020-01-22 11:36:12"},{"id":483,"type":"2","return_qty":1,"discount":0.02,"tax":0,"status":9,"created_at":"2020-01-22 11:37:05"},{"id":484,"type":"2","return_qty":1,"discount":0.02,"tax":0,"status":9,"created_at":"2020-01-22 11:38:31"}]},{"order_details_id":948,"product_qty":1,"order_id":536,"product_id":"95","attributes":null,"delivery_type":"Home Delivery","modifier_id":163,"net_amount":"0.21","item_status":null,"status":0,"return_day":1,"product_name":"Trimmed Mangetout","product_image":"uploaded/products/2560815764973990.jpeg","modifier_images":null,"brand_name":"Starx","rattings":"0.0","review":null,"acknowledgement":[]}]
          */
 
@@ -81,6 +82,7 @@ public class OrderDetailResponse {
         private String mobile;
         private String delivery_address;
         private String mrp;
+        private String confirmation_code;
         private List<ProductsBean> products;
 
         public int getId() {
@@ -281,6 +283,14 @@ public class OrderDetailResponse {
 
         public void setProducts(List<ProductsBean> products) {
             this.products = products;
+        }
+
+        public String getConfirmation_code() {
+            return confirmation_code;
+        }
+
+        public void setConfirmation_code(String confirmation_code) {
+            this.confirmation_code = confirmation_code;
         }
 
         public static class ProductsBean {

@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Order No:"
-                    android:textColor="@color/textcolor"
+                    android:textColor="@color/grey_700"
                     android:textSize="14sp"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_margin="10dp" />
@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Placed On:"
-                    android:textColor="@color/textcolor"
+                    android:textColor="@color/grey_700"
                     android:textSize="14sp"
                     android:layout_marginLeft="10dp"
                     android:fontFamily="@font/roboto_regular" />
@@ -83,7 +83,49 @@
                     android:textSize="14sp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/roboto_regular" /></LinearLayout>
+                    android:fontFamily="@font/roboto_regular" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Verification Code:"
+                        android:textColor="@color/grey_700"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/roboto_regular" />
+                    <TextView
+                        android:id="@+id/verificationCode_orderDetailLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/roboto_regular" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Please show this verification code at the time of delivery"
+                    android:textColor="@color/grey_500"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

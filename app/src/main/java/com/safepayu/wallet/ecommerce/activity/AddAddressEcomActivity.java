@@ -703,6 +703,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                     Toast.makeText(getApplicationContext(), "Nothing selected from Radio Group.", Toast.LENGTH_SHORT).show();
 
                 }
+                dialog.dismiss();
             }
         });
 
