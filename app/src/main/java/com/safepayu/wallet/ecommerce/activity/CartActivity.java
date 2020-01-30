@@ -42,7 +42,7 @@ import static com.safepayu.wallet.ecommerce.activity.EHomeActivity.tvCartBadge;
 public class CartActivity extends AppCompatActivity implements View.OnClickListener , CartAdapter.CartSizeListener {
 
     private RecyclerView ProductsRecyclerView;
-    private Button btnCheckout;
+    private Button btnCheckout,BackBtn;
     private LoadingDialog loadingDialog;
     TotalCartResponse totalCartResponse;
     CartQuantityRequest cartQuantityRequest;
@@ -76,8 +76,16 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         liCartEmpty = findViewById(R.id.CartEmpty);
         licheckout = findViewById(R.id.licheckout);
         tvTotalRs = findViewById(R.id.tv_total_rs);
+        BackBtn = findViewById(R.id.back_btn_cart);
 
         btnCheckout.setOnClickListener(this);
+
+        BackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private boolean isNetworkAvailable() {
@@ -269,12 +277,23 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                         if (response.isStatus()) {
                             Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
 
+                            try {
+                                String totalPriceText=tvTotalRs.getText().toString().trim();
+                                totalPriceText=totalPriceText.substring(1);
+
+                                double singlePrice= Double.parseDouble(totalCartResponse.getCarts().get(position).getSelling_price())*totalCartResponse.getCarts().get(position).getQuantities();
+
+                                double finalPrice= Double.parseDouble(totalPriceText)-singlePrice;
+
+                                //tvTotalRs.setText(getResources().getString(R.string.rupees)+" "+finalPrice);
+                                tvTotalRs.setText("₹ "+String.format("%.2f",(finalPrice)));
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                             totalCartResponse.getCarts().remove(position);
                             cartAdapter.notifyDataSetChanged();
                             int  cartNumber = Integer.parseInt(tvCartBadge.getText().toString());
                             tvCartBadge.setText(""+(cartNumber-1));
-                        //    tvTotalRs.setText("₹ " +String.format("%.2f",(totalPrice - sellingPrice)));
-
 
                             if (totalCartResponse.getCarts().isEmpty()){
                                 liCartEmpty.setVisibility(View.VISIBLE);

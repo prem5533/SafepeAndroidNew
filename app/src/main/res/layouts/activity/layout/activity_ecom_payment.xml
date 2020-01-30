@@ -218,6 +218,49 @@
                     android:layout_marginLeft="20dp"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:padding="10dp"
+                android:layout_marginTop="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="5dp">
+
+                    <CheckBox
+                        android:id="@+id/check_box_COD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cash On Delivery(COD)"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:buttonTint="@color/red_theme"/>
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/cod_new"/>
+
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_COD_deduct_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="15sp"
+                    android:gravity="right"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_bold"
+                    android:layout_marginLeft="20dp"/>
+            </LinearLayout>
+
+
             <Button
                 android:id="@+id/btn_order_pay_amount"
                 android:layout_width="match_parent"

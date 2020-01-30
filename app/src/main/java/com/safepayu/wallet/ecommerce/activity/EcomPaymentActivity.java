@@ -60,7 +60,7 @@
         WalletLimitResponse WalletResponse;
         double amount=0,walletBal=0,walletLimit=0,debitCardPercentAmount;
         boolean checkWalletBal=false,checkWalletLimit=false;
-        private CheckBox checkBoxWallet, checkBoxGatewayPayment;
+        private CheckBox checkBoxWallet, checkBoxGatewayPayment, checkBoxCOD;
         private Button btnOrderPayAmount,confirmback;
         private String customer_address1="",customer_address2="",customer_city="",customer_state="",customer_country="",customer_zipcode="",customer_phone="";
         private String merchant_udf1="",merchant_udf2="",merchant_udf3="",merchant_udf4="",merchant_udf5="";
@@ -86,7 +86,6 @@
             }
         }
 
-
         private void findId() {
 
             loadingDialog = new LoadingDialog(this);
@@ -104,6 +103,7 @@
             tvTotalBalanceWallet = findViewById(R.id.tv_total_balance_wallet);
             checkBoxWallet = findViewById(R.id.check_box_wallet);
             checkBoxGatewayPayment = findViewById(R.id.check_box_gateway_payment);
+            checkBoxCOD  = findViewById(R.id.check_box_COD);
             tvWalletDeductAmount = findViewById(R.id.tv_wallet_deduct_amount);
             tvGatewayDeductAmount = findViewById(R.id.tv_gateway_deduct_amount);
             btnOrderPayAmount = findViewById(R.id.btn_order_pay_amount);
@@ -117,6 +117,22 @@
             mProductData = gson.fromJson(json, CartsQuantityResponse.CartsBean.class);
             productList.add(mProductData);*/
 
+            checkBoxCOD.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                    if (checked){
+                        checkBoxCOD.setChecked(true);
+                        checkBoxWallet.setChecked(false);
+                        checkBoxGatewayPayment.setChecked(false);
+                        btnOrderPayAmount.setText("COD");
+                    }else {
+                        checkBoxCOD.setChecked(false);
+                        checkBoxWallet.setChecked(false);
+                        checkBoxGatewayPayment.setChecked(true);
+                        btnOrderPayAmount.setText("PAY");
+                    }
+                }
+            });
 
 
             checkBoxWallet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -445,10 +461,9 @@
             OrderSaveRequest orderSaveRequest1 = new OrderSaveRequest();
             orderSaveRequest1=AddAddressEcomActivity.orderSaveRequest ;
 
-            orderSaveRequest1.setMerchant_id("2");
-            orderSaveRequest1.setVenue_id("201911011148462");
+            orderSaveRequest1.setMerchant_id("");
+            orderSaveRequest1.setVenue_id("");
             orderSaveRequest1.setSource_type("app");
-
 
             orderSaveRequest1.setOrder_date(t1);
          //   orderSaveRequest.setOrder_status();
@@ -465,20 +480,28 @@
             orderSaveRequest1.setDelivery_type(deliveryType);
             orderSaveRequest1.setDelivery_time(deliveryTime);
 
-            if (amount>walletBal){
-                orderSaveRequest1.setPayment_wallet(String.valueOf(walletBal));
-                orderSaveRequest1.setPayment_bank(String.format("%.2f",(Double.parseDouble(paidAmount)-walletBal)));
-                orderSaveRequest1.setPayment_mode("Card & Wallet");
-            } else {
-                if (checkBoxWallet.isChecked()&& checkBoxGatewayPayment.isChecked()){
-                    debitCardPercentAmount = (Double.parseDouble(paidAmount)*Double.parseDouble(WalletResponse.getData().getPerBank()))/100;
-                    orderSaveRequest1.setPayment_wallet(String.format("%.2f",(Double.parseDouble(paidAmount)-debitCardPercentAmount)));
-                    orderSaveRequest1.setPayment_bank(String.format("%.2f",(debitCardPercentAmount)));
+
+
+            if (checkBoxCOD.isChecked()){
+                orderSaveRequest1.setPayment_wallet("0");
+                orderSaveRequest1.setPayment_bank("0");
+                orderSaveRequest1.setPayment_mode("Cash");
+            }else {
+                if (amount>walletBal){
+                    orderSaveRequest1.setPayment_wallet(String.valueOf(walletBal));
+                    orderSaveRequest1.setPayment_bank(String.format("%.2f",(Double.parseDouble(paidAmount)-walletBal)));
                     orderSaveRequest1.setPayment_mode("Card & Wallet");
-                }else if (checkBoxGatewayPayment.isChecked()){
-                    orderSaveRequest1.setPayment_wallet("0");
-                    orderSaveRequest1.setPayment_bank(paidAmount);
-                    orderSaveRequest1.setPayment_mode("Card");
+                } else {
+                    if (checkBoxWallet.isChecked()&& checkBoxGatewayPayment.isChecked()){
+                        debitCardPercentAmount = (Double.parseDouble(paidAmount)*Double.parseDouble(WalletResponse.getData().getPerBank()))/100;
+                        orderSaveRequest1.setPayment_wallet(String.format("%.2f",(Double.parseDouble(paidAmount)-debitCardPercentAmount)));
+                        orderSaveRequest1.setPayment_bank(String.format("%.2f",(debitCardPercentAmount)));
+                        orderSaveRequest1.setPayment_mode("Card & Wallet");
+                    }else if (checkBoxGatewayPayment.isChecked()){
+                        orderSaveRequest1.setPayment_wallet("0");
+                        orderSaveRequest1.setPayment_bank(paidAmount);
+                        orderSaveRequest1.setPayment_mode("Card");
+                    }
                 }
             }
 

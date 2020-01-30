@@ -28,8 +28,10 @@ import com.safepayu.wallet.ecommerce.adapter.OrderCancelEcomAdapter;
 import com.safepayu.wallet.ecommerce.adapter.OrderItemEcomAdapter;
 import com.safepayu.wallet.ecommerce.api.ApiClientEcom;
 import com.safepayu.wallet.ecommerce.api.ApiServiceEcom;
+import com.safepayu.wallet.ecommerce.model.request.AddToCartRequest;
 import com.safepayu.wallet.ecommerce.model.request.CancelOrderRequest;
 import com.safepayu.wallet.ecommerce.model.request.ReturnOrderRequest;
+import com.safepayu.wallet.ecommerce.model.response.AddToCartResponse;
 import com.safepayu.wallet.ecommerce.model.response.OrderDetailResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
 
@@ -39,6 +41,8 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.safepayu.wallet.ecommerce.activity.EHomeActivity.tvCartBadge;
 
 public class OrderDetailEcomActivity extends AppCompatActivity implements View.OnClickListener, OrderItemEcomAdapter.CancelOrderAgainListener{
 
@@ -52,8 +56,8 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
     public Dialog dialog;
     private LoadingDialog loadingDialog;
     private List<OrderDetailResponse.OrderListBean.ProductsBean> getProducts=new ArrayList<>();
-
-    private TextView tvOrderNo,tvOrderDate,tvMobile,tvEmail,tvName,tvAddress,tvModeOfPayment;
+    private OrderDetailResponse.OrderListBean orderDetailResponse =new OrderDetailResponse.OrderListBean();
+    private TextView tvOrderNo,tvOrderDate,tvMobile,tvEmail,tvName,tvAddress,tvModeOfPayment,tvVerificationCode;
     private TextView tvMrp,tvBuyPrice,tvDiscount,tvShippingFee,tvTax,tvTotalAmout;
 
     @Override
@@ -78,6 +82,7 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
         tvShippingFee = findViewById(R.id.shippingFee_orderDetailLayout);
         tvTax = findViewById(R.id.tax_orderDetailLayout);
         tvTotalAmout = findViewById(R.id.totalAmount_orderDetailLayout);
+        tvVerificationCode = findViewById(R.id.verificationCode_orderDetailLayout);
 
         tvOrderNo = findViewById(R.id.orderNumber_orderDetailLayout);
         tvOrderDate = findViewById(R.id.date_orderDetailLayout);
@@ -229,6 +234,7 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
 
+                            orderDetailResponse=response.getOrderList();
                             try {
                                 tvOrderNo.setText(response.getOrderList().getUnique_code());
                                 tvOrderDate.setText(response.getOrderList().getOrder_date());
@@ -244,6 +250,7 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
                                 tvDiscount.setText(getResources().getString(R.string.rupees)+" "+response.getOrderList().getTotal_discount());
                                 tvShippingFee.setText(getResources().getString(R.string.rupees)+" "+response.getOrderList().getDelivery_charge());
                                 tvTotalAmout.setText(getResources().getString(R.string.rupees)+" "+response.getOrderList().getNet_amount());
+                                tvVerificationCode.setText(response.getOrderList().getConfirmation_code());
 
                             }catch (Exception e){
                                 e.printStackTrace();
@@ -277,7 +284,43 @@ public class OrderDetailEcomActivity extends AppCompatActivity implements View.O
 
         }else {
             Toast.makeText(this, productsBean.getProduct_name()+" Order Again", Toast.LENGTH_SHORT).show();
+            addProductCart(productsBean);
         }
+    }
+
+    private void addProductCart(OrderDetailResponse.OrderListBean.ProductsBean productsBean) {
+        AddToCartRequest addToCartRequest=new AddToCartRequest();
+        addToCartRequest.setProduct_id(Integer.parseInt(productsBean.getProduct_id()));
+        addToCartRequest.setMerchant_id(orderDetailResponse.getMerchant_id());
+        addToCartRequest.setVenue_id(orderDetailResponse.getVenue_id());
+        addToCartRequest.setModifier_id(String.valueOf(productsBean.getModifier_id()));
+        addToCartRequest.setQuantities("1");
+        addToCartRequest.setOffer_id(0);
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiServiceEcom apiServiceEcom = ApiClientEcom.getClient(this).create(ApiServiceEcom.class);
+        BaseApp.getInstance().getDisposable().add(apiServiceEcom.getAddToCarts(addToCartRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<AddToCartResponse>(){
+                    @Override
+                    public void onSuccess(AddToCartResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+                            int  cartNumber = Integer.parseInt(tvCartBadge.getText().toString());
+                            tvCartBadge.setText(""+(cartNumber+1));
+                            Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
+                        }else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.orderDetailLayout),response.getMessage(),true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.orderDetailLayout), false, e.getCause());
+                    }
+                }));
     }
 
     private void getCancelOrder(CancelOrderRequest cancelOrderRequest) {
