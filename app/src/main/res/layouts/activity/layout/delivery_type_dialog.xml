@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_gravity="center"
@@ -81,6 +81,82 @@
                                  android:layout_marginLeft="5dp"/>
 
                          </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/litime1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RadioGroup
+                        android:id="@+id/rg_time_schedule"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp">
+                        <RadioButton
+                            android:id="@+id/radio8"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/black"
+                            android:checked="true"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="8:00 AM - 10:00AM"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+                        <RadioButton
+                            android:id="@+id/radio10"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/black"
+                            android:checked="false"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="10:00 AM - 12:00PM"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+                        <RadioButton
+                            android:id="@+id/radio12"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/black"
+                            android:checked="false"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="12:00 PM - 2:00PM"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+                        <RadioButton
+                            android:id="@+id/radio2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/black"
+                            android:checked="false"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="2:00 PM - 4:00PM"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+                        <RadioButton
+                            android:id="@+id/radio4"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/black"
+                            android:checked="false"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="4:00 PM - 6:00PM"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+
+                        <RadioButton
+                            android:id="@+id/radio6"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/black"
+                            android:checked="false"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="6:00 PM - 8:00PM"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
 
 
                 <RadioButton
@@ -132,6 +208,86 @@
                         android:layout_height=".5dp"
                         android:background="@color/white"/>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/litime2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginTop="5dp">
+                    <RadioGroup
+                        android:id="@+id/rg_timeSchedule"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp">
+                        <RadioButton
+                            android:id="@+id/radio8c"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/black"
+                            android:checked="true"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="8:00 AM - 10:00AM"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+                        <RadioButton
+                            android:id="@+id/radio10c"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/black"
+                            android:checked="false"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="10:00 AM - 12:00PM"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+                        <RadioButton
+                            android:id="@+id/radio12c"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/black"
+                            android:checked="false"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="12:00 PM - 2:00PM"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+                        <RadioButton
+                            android:id="@+id/radio2c"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/black"
+                            android:checked="false"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="2:00 PM - 4:00PM"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+                        <RadioButton
+                            android:id="@+id/radio4c"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/black"
+                            android:checked="false"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="4:00 PM - 6:00PM"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+
+                        <RadioButton
+                            android:id="@+id/radio6c"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/black"
+                            android:checked="false"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="6:00 PM - 8:00PM"
+                            android:textColor="@color/black"
+                            android:textSize="13sp" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
 
             </RadioGroup>
 
