@@ -115,12 +115,18 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
 
 
         backBtnProductDetail.setOnClickListener(this);
+        cartBadge.setOnClickListener(this);
         tvBuyNow.setOnClickListener(this);
         tvAddCart.setOnClickListener(this);
         grayWish.setOnClickListener(this);
         redWish.setOnClickListener(this);
+        if (CartBadge.equals("0")) {
+            cartBadge.setVisibility(View.GONE);
+        } else {
+            cartBadge.setText(CartBadge);
+            cartBadge.setVisibility(View.VISIBLE);
+        }
 
-        cartBadge.setText(CartBadge);
         tvActualPrice.setPaintFlags(tvActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
 
@@ -180,6 +186,9 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 break;
             case R.id.redWish:
                 getWishListProduct();
+                break;
+            case R.id.cart_badge:
+                startActivity(new Intent(ProductDetailActivity.this, CartActivity.class));
                 break;
         }
     }
@@ -425,6 +434,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                             int  cartNumber = Integer.parseInt(tvCartBadge.getText().toString());
                             tvCartBadge.setText(""+(cartNumber+1));
                             cartBadge.setText(""+(cartNumber+1));
+                            cartBadge.setVisibility(View.VISIBLE);
                             Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -63,7 +63,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
     private LoadingDialog loadingDialog;
     private RadioGroup radioType;
     SaveEcomAddressRequest saveEcomAddressRequest;
-    private String selectedRadioButtonText ,SaveEdit,selectedRadioDeliveryType;
+    private String selectedRadioButtonText ,SaveEdit,selectedRadioDeliveryType,selectedRadioButtonClick,selectedRadioButtonDelivery;
     AddressUserResponse addressUserResponse;
     private RecyclerView recylceItemDetail;
     int  total;
@@ -72,9 +72,9 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
     CartsQuantityResponse cartsQuantityResponse;
     public  static OrderSaveRequest orderSaveRequest;
     private ImageView cross;
-    private RadioGroup radioGroup;
+    private RadioGroup radioGroup,radioTimeDelivery,radioTimeClick;
     private RadioButton rbClick,rbDelivery;
-    private LinearLayout liClick,liDelivery;
+    private LinearLayout liClick,liDelivery,litime2,litime1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -628,6 +628,9 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
 
         cross = dialog.findViewById(R.id.cross);
         radioGroup = dialog.findViewById(R.id.rg_delivery);
+        radioTimeDelivery= dialog.findViewById(R.id.rg_time_schedule);
+        radioTimeClick= dialog.findViewById(R.id.rg_timeSchedule);
+
         rbDelivery = dialog.findViewById(R.id.radio_delivery);
         rbClick = dialog.findViewById(R.id.radio_click);
         btnSubmit = dialog.findViewById(R.id.btn_submit);
@@ -635,9 +638,12 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
         liDelivery = dialog.findViewById(R.id.lidelivery);
         tvSelectDate = dialog.findViewById(R.id.tv_selectDate);
         tvEstimateTime = dialog.findViewById(R.id.tv_estimateTime);
+        litime2 = dialog.findViewById(R.id.litime2);
+        litime1 = dialog.findViewById(R.id.litime1);
 
         rbDelivery.setOnCheckedChangeListener(this);
         rbClick.setOnCheckedChangeListener(this);
+
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, +10);
@@ -663,6 +669,26 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                int selectedRadioDelivertTime = radioTimeClick.getCheckedRadioButtonId();
+
+                if (selectedRadioDelivertTime != -1) {
+                    RadioButton selectedRadioButton = radioTimeClick.findViewById(selectedRadioDelivertTime);
+                     selectedRadioButtonClick = selectedRadioButton.getText().toString();
+                    Toast.makeText(getApplicationContext(), selectedRadioButtonClick, Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(getApplicationContext(), "Nothing selected from Radio Group.", Toast.LENGTH_SHORT).show();
+
+                }
+                int selectedRadioClickTime = radioTimeDelivery.getCheckedRadioButtonId();
+                if (selectedRadioClickTime != -1) {
+                    RadioButton selectedRadioButton = radioTimeDelivery.findViewById(selectedRadioClickTime);
+                     selectedRadioButtonDelivery = selectedRadioButton.getText().toString();
+                    Toast.makeText(getApplicationContext(), selectedRadioButtonDelivery, Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(getApplicationContext(), "Nothing selected from Radio Group.", Toast.LENGTH_SHORT).show();
+
+                }
                 int selectedRadioButtonID = radioGroup.getCheckedRadioButtonId();
                 // If nothing is selected from Radio Group, then it return -1
                 if (selectedRadioButtonID != -1) {
@@ -683,7 +709,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                                 intent.putExtra("total_deliveryCharge",tvDeliveryCharge.getText().toString().trim().substring(1));
                                 intent.putExtra("total_discount",String.valueOf(discountSum));
                                 intent.putExtra("delivery_type",selectedRadioDeliveryType);
-                                intent.putExtra("delivery_time",tvSelectDate.getText().toString());
+                                intent.putExtra("delivery_time",tvSelectDate.getText().toString()+" "+selectedRadioButtonClick);
                                 startActivity(intent);
                                 finish();
                             }
@@ -695,7 +721,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                                 intent.putExtra("total_deliveryCharge",tvDeliveryCharge.getText().toString().trim().substring(1));
                                 intent.putExtra("total_discount",String.valueOf(discountSum));
                                 intent.putExtra("delivery_type",selectedRadioDeliveryType);
-                                intent.putExtra("delivery_time",tvEstimateTime.getText().toString());
+                                intent.putExtra("delivery_time",tvEstimateTime.getText().toString()+" "+selectedRadioButtonDelivery);
                                 startActivity(intent);
                                 finish();
                         }
@@ -747,7 +773,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
         // Set alert dialog width equal to screen width 70%
         int dialogWindowWidth = (int) (displayWidth * 0.9f);
         // Set alert dialog height equal to screen height 70%
-        int dialogWindowHeight = (int) (displayHeight * 0.7f);
+        int dialogWindowHeight = (int) (displayHeight * 0.9f);
 
         // Set the width and height for the layout parameters
         // This will bet the width and height of alert dialog
@@ -767,12 +793,16 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                 rbClick.setChecked(false);
                 liDelivery.setVisibility(View.VISIBLE);
                 liClick.setVisibility(View.GONE);
+                litime2.setVisibility(View.GONE);
+                litime1.setVisibility(View.VISIBLE);
             }
             if (buttonView.getId() == R.id.radio_click) {
                 rbClick.setChecked(true);
                 rbDelivery.setChecked(false);
                 liDelivery.setVisibility(View.GONE);
                 liClick.setVisibility(View.VISIBLE);
+                litime2.setVisibility(View.VISIBLE);
+                litime1.setVisibility(View.GONE);
             }
         }
     }

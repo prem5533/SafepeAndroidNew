@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -79,6 +80,7 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
     Geocoder geocoder;
     List<Address> listAddresses;
     private LocationListenerOn locationListner;
+    private FrameLayout frameCartBtn;
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
@@ -111,6 +113,7 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
 
     private void findId() {
         CartBtn = findViewById(R.id.cartBtn_main);
+        frameCartBtn = findViewById(R.id.frame_cart);
         tvCartBadge = findViewById(R.id.cart_badge);
         NotificationBtn = findViewById(R.id.favBtn_main);
         NavIcon = findViewById(R.id.nav_iconEcommerce);
@@ -119,7 +122,7 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
 
         loadingDialog = new LoadingDialog(this);
 
-        CartBtn.setOnClickListener(new View.OnClickListener() {
+        frameCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), CartActivity.class));
