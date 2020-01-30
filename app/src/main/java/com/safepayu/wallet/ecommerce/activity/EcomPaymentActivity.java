@@ -86,7 +86,6 @@
             }
         }
 
-
         private void findId() {
 
             loadingDialog = new LoadingDialog(this);
