@@ -670,25 +670,8 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
             @Override
             public void onClick(View v) {
 
-                int selectedRadioDelivertTime = radioTimeClick.getCheckedRadioButtonId();
 
-                if (selectedRadioDelivertTime != -1) {
-                    RadioButton selectedRadioButton = radioTimeClick.findViewById(selectedRadioDelivertTime);
-                     selectedRadioButtonClick = selectedRadioButton.getText().toString();
-                    Toast.makeText(getApplicationContext(), selectedRadioButtonClick, Toast.LENGTH_SHORT).show();
-                } else{
-                    Toast.makeText(getApplicationContext(), "Nothing selected from Radio Group.", Toast.LENGTH_SHORT).show();
 
-                }
-                int selectedRadioClickTime = radioTimeDelivery.getCheckedRadioButtonId();
-                if (selectedRadioClickTime != -1) {
-                    RadioButton selectedRadioButton = radioTimeDelivery.findViewById(selectedRadioClickTime);
-                     selectedRadioButtonDelivery = selectedRadioButton.getText().toString();
-                    Toast.makeText(getApplicationContext(), selectedRadioButtonDelivery, Toast.LENGTH_SHORT).show();
-                } else{
-                    Toast.makeText(getApplicationContext(), "Nothing selected from Radio Group.", Toast.LENGTH_SHORT).show();
-
-                }
                 int selectedRadioButtonID = radioGroup.getCheckedRadioButtonId();
                 // If nothing is selected from Radio Group, then it return -1
                 if (selectedRadioButtonID != -1) {
@@ -703,18 +686,35 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                                 tvSelectDate.requestFocus();
                                 BaseApp.getInstance().toastHelper().showSnackBar(tvSelectDate, "Please Enter Date", true);
                             } else {
+                                int selectedRadioClickTime = radioTimeClick.getCheckedRadioButtonId();
+
+                                if (selectedRadioClickTime != -1) {
+                                    RadioButton selectedRadioClick = radioTimeClick.findViewById(selectedRadioClickTime);
+                                    selectedRadioButtonClick = selectedRadioClick.getText().toString();
+                                    Toast.makeText(getApplicationContext(), selectedRadioButtonClick, Toast.LENGTH_SHORT).show();
+                                } else{
+                                    Toast.makeText(getApplicationContext(), "Nothing selected from Radio Group.", Toast.LENGTH_SHORT).show();
+                                }
                                 intent.putExtra("paid_amount", tvProductActualprice.getText().toString().trim().substring(1));
                                 intent.putExtra("total_items",String.valueOf(cartsQuantityResponse.getCarts().size()));
                                 intent.putExtra("total_tax",tvTaxCharge.getText().toString().trim().substring(1));
                                 intent.putExtra("total_deliveryCharge",tvDeliveryCharge.getText().toString().trim().substring(1));
                                 intent.putExtra("total_discount",String.valueOf(discountSum));
                                 intent.putExtra("delivery_type",selectedRadioDeliveryType);
-                                intent.putExtra("delivery_time",tvSelectDate.getText().toString()+" "+selectedRadioButtonClick);
+                                intent.putExtra("delivery_time",tvSelectDate.getText().toString()+selectedRadioButtonClick);
                                 startActivity(intent);
                                 finish();
                             }
                         } else if (selectedRadioDeliveryType.equals("Delivery")){
 
+                            int selectedRadioDelivertTime = radioTimeDelivery.getCheckedRadioButtonId();
+                            if (selectedRadioDelivertTime != -1) {
+                                RadioButton selectedRadioBtnDelivery = radioTimeDelivery.findViewById(selectedRadioDelivertTime);
+                                selectedRadioButtonDelivery = selectedRadioBtnDelivery.getText().toString();
+                                Toast.makeText(getApplicationContext(), selectedRadioButtonDelivery, Toast.LENGTH_SHORT).show();
+                            } else{
+                                Toast.makeText(getApplicationContext(), "Nothing selected from Radio Group.", Toast.LENGTH_SHORT).show();
+                            }
                                 intent.putExtra("paid_amount", tvProductActualprice.getText().toString().trim().substring(1));
                                 intent.putExtra("total_items",String.valueOf(cartsQuantityResponse.getCarts().size()));
                                 intent.putExtra("total_tax",tvTaxCharge.getText().toString().trim().substring(1));
@@ -727,9 +727,7 @@ public class AddAddressEcomActivity extends AppCompatActivity implements View.On
                         }
                 } else{
                     Toast.makeText(getApplicationContext(), "Nothing selected from Radio Group.", Toast.LENGTH_SHORT).show();
-
                 }
-                dialog.dismiss();
             }
         });
 

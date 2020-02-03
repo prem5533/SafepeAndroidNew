@@ -13,7 +13,7 @@
         android:paddingBottom="5dp">
 
         <Button
-            android:id="@+id/sendmoney_back_btn"
+            android:id="@+id/paymoney_back_btn"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"

@@ -71,6 +71,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     RatingBar ratingBar;
     String Productid ,Offerid,SellPrice,CartBadge;
     private NestedScrollView scroll;
+    String type ;
 
 
     @Override
@@ -162,8 +163,9 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 finish();
                 break;
             case R.id.tv_product_detail_buyNow:
-                startActivity(new Intent(ProductDetailActivity.this, AddAddressEcomActivity.class));
-                Toast.makeText(getApplicationContext(),"Coming Soon Buy Now",Toast.LENGTH_SHORT).show();
+                type = "BuyNow";
+                addProductCart();
+
                 break;
             case R.id.tv_product_detail_add_cart:
 
@@ -177,6 +179,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                     notifyMeRequest.setMerchant_id(""+productsResponse.getProducts().getMerchant_id());
                     getNotifyMe(notifyMeRequest);
                 }else {
+                    type = "AddToCart";
                     addProductCart();
                 }
 
@@ -189,6 +192,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 break;
             case R.id.cart_badge:
                 startActivity(new Intent(ProductDetailActivity.this, CartActivity.class));
+                finish();
                 break;
         }
     }
@@ -431,11 +435,18 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                     public void onSuccess(AddToCartResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            int  cartNumber = Integer.parseInt(tvCartBadge.getText().toString());
-                            tvCartBadge.setText(""+(cartNumber+1));
-                            cartBadge.setText(""+(cartNumber+1));
-                            cartBadge.setVisibility(View.VISIBLE);
-                            Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
+                            if (type.equals("AddToCart")){
+                                int  cartNumber = Integer.parseInt(tvCartBadge.getText().toString());
+                                tvCartBadge.setText(""+(cartNumber+1));
+                                cartBadge.setText(""+(cartNumber+1));
+                                cartBadge.setVisibility(View.VISIBLE);
+                                Toast.makeText(getApplicationContext(),response.getMessage(),Toast.LENGTH_SHORT).show();
+                            }
+                            else if (type.equals("BuyNow")){
+                                startActivity(new Intent(ProductDetailActivity.this, CartActivity.class));
+                            }
+
+
                         }
                     }
 

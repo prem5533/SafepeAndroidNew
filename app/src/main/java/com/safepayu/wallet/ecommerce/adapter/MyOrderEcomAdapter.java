@@ -153,6 +153,7 @@ public class MyOrderEcomAdapter extends RecyclerView.Adapter<MyOrderEcomAdapter.
                     intent.putExtra("Rating",String.valueOf(productList.get(getLayoutPosition()).getRattings()));
                     intent.putExtra("Product_name",String.valueOf(productList.get(getLayoutPosition()).getProduct_name()));
                     intent.putExtra("Product_image",String.valueOf(productList.get(getLayoutPosition()).getProduct_image()));
+                    intent.putExtra("Product_review",String.valueOf(productList.get(getLayoutPosition()).getReview()));
                     context.startActivity(intent);
                 }
             });

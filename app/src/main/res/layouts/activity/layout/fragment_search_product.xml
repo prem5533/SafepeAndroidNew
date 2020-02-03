@@ -70,6 +70,7 @@
                 android:orientation="horizontal"
                 android:layout_alignParentBottom="true">
                 <LinearLayout
+                    android:id="@+id/liwalletStore"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:orientation="vertical"
@@ -91,6 +92,7 @@
                         android:padding="5dp" />
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/liRewardStore"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:orientation="vertical"
@@ -112,6 +114,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/liLoxxStore"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:orientation="vertical"

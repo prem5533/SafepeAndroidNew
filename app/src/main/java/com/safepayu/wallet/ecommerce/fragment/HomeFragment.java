@@ -49,9 +49,12 @@ import com.google.android.material.tabs.TabLayout;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.QrCodeScanner;
+import com.safepayu.wallet.activity.ScratchActivity;
 import com.safepayu.wallet.activity.WalletActivity;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.activity.EHomeActivity;
+import com.safepayu.wallet.ecommerce.activity.EcomPaymentActivity;
+import com.safepayu.wallet.ecommerce.activity.MyOrderEcomActivity;
 import com.safepayu.wallet.ecommerce.activity.ProductDetailActivity;
 import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
 import com.safepayu.wallet.ecommerce.adapter.CategoryAdapter;
@@ -102,7 +105,7 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     final long PERIOD_MS = 5000; // time in milliseconds between successive task executions.
 
     private String Latitude="",Longitude="";
-    private LinearLayout SearchLayout,OfferLayout;
+    private LinearLayout SearchLayout,OfferLayout , liLooxStore,liWallet,liReward;
     private TextView tvSearch,tvViewAll;
     private EditText etSearchEcomm;
     public static ArrayList<String> BrandNameList,BrandIdList;
@@ -144,6 +147,9 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         OfferLayout =view.findViewById(R.id.offerLayoutHome);
         tvViewAll = view.findViewById(R.id.viewAllCat_home);
         tabLayoutt = view.findViewById(R.id.tab_layout_ecom);
+        liLooxStore = view.findViewById(R.id.liLooxStoreHome);
+        liWallet = view.findViewById(R.id.liWalletHome);
+        liReward = view.findViewById(R.id.liRewardHome);
 
         recyclerCategory.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         recycleCategoryOfferList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -172,6 +178,19 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
             }
         }, DELAY_MS, PERIOD_MS);
 
+
+        liWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), WalletActivity.class));
+            }
+        });
+        liReward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ScratchActivity.class));
+            }
+        });
         SearchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

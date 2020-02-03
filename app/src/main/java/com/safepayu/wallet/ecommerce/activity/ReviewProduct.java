@@ -35,7 +35,7 @@ public class ReviewProduct extends AppCompatActivity {
     private RatingBar ratingBar;
     private ImageView imageViewProduct;
     private EditText edReview;
-    private String Order_details_id="",Order_id="",Rating="",Product_name="",Product_image="";
+    private String Order_details_id="",Order_id="",Rating="",Product_name="",Product_image="",Product_reviewe="";
     private LoadingDialog loadingDialog;
 
     @Override
@@ -61,8 +61,14 @@ public class ReviewProduct extends AppCompatActivity {
             Rating=getIntent().getStringExtra("Rating");
             Product_name=getIntent().getStringExtra("Product_name");
             Product_image=getIntent().getStringExtra("Product_image");
+            Product_reviewe=getIntent().getStringExtra("Product_review");
 
             tvProductName.setText(Product_name);
+
+          /*  if (Product_reviewe.equals("")){
+                edReview.setText("");
+            } else {*/
+              //  edReview.setText(Product_reviewe);
             ratingBar.setRating(Float.parseFloat(Rating));
 
             try {
@@ -93,7 +99,7 @@ public class ReviewProduct extends AppCompatActivity {
                         reviewRequest.setOrder_detail_id(Order_details_id);
                         reviewRequest.setOrder_id(Order_id);
                         reviewRequest.setRating(Rating);
-                        reviewRequest.setReview(edReview.getText().toString().trim());
+                        reviewRequest.setReview(edReview.getText().toString());
                         getSaveReviewRat(reviewRequest);
                     }
                 }else {
