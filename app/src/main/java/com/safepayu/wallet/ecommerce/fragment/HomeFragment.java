@@ -53,8 +53,6 @@ import com.safepayu.wallet.activity.ScratchActivity;
 import com.safepayu.wallet.activity.WalletActivity;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.activity.EHomeActivity;
-import com.safepayu.wallet.ecommerce.activity.EcomPaymentActivity;
-import com.safepayu.wallet.ecommerce.activity.MyOrderEcomActivity;
 import com.safepayu.wallet.ecommerce.activity.ProductDetailActivity;
 import com.safepayu.wallet.ecommerce.activity.SearchEcommerce;
 import com.safepayu.wallet.ecommerce.adapter.CategoryAdapter;
@@ -439,7 +437,7 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                             if (NumPage>1){
                                 tabLayoutt.setupWithViewPager(viewpager, true);
                             } else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),"No Category Found!",true);
+                               // BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),"No Category Found!",true);
                             }
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),response.getMessage(),true);
