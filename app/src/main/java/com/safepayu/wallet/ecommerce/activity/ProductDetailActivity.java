@@ -166,8 +166,6 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 type = "BuyNow";
                 addProductCart();
 
-
-                Toast.makeText(getApplicationContext(),"Coming Soon Buy Now",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_product_detail_add_cart:
 
@@ -194,6 +192,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 break;
             case R.id.cart_badge:
                 startActivity(new Intent(ProductDetailActivity.this, CartActivity.class));
+                finish();
                 break;
         }
     }

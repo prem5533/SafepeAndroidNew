@@ -32,6 +32,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.ScratchActivity;
+import com.safepayu.wallet.activity.WalletActivity;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.activity.FilterDialog;
 import com.safepayu.wallet.ecommerce.activity.ProductDetailActivity;
@@ -59,7 +61,7 @@ import io.reactivex.schedulers.Schedulers;
 public class SearchProductFragment extends Fragment implements View.OnClickListener, SearchProductAdapter.OnProductDetailItemListener,
                 StoreListAdapter.ShopItemListListener,OfferSearchProductAdapter.OnProductDetailItemListener{
 
-    private LinearLayout liProduct ,liProductGray, liStore,liStoreGray,liSort,liFilter;
+    private LinearLayout liProduct ,liProductGray, liStore,liStoreGray,liSort,liFilter,liwalletStore,liRewardStore,liLoxxStore;
     private RecyclerView SearchProductList,searchStoreList,offerProductList;
     private SearchProductAdapter serchProductAdapter;
     private OfferSearchProductAdapter offerAdapter;
@@ -108,6 +110,9 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
         tvNoOfShopGrey =  view.findViewById(R.id.tv_number_of_store_gray);
         liSort =  view.findViewById(R.id.li_sort);
         liFilter =  view.findViewById(R.id.li_filter);
+        liwalletStore =  view.findViewById(R.id.liwalletStore);
+        liRewardStore =  view.findViewById(R.id.liRewardStore);
+        liLoxxStore =  view.findViewById(R.id.liLoxxStore);
 
         liProduct = view.findViewById(R.id.li_product);
         liProductGray = view.findViewById(R.id.li_product_gray);
@@ -126,6 +131,9 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
         liStoreGray.setOnClickListener(this);
         liSort.setOnClickListener(this);
         liFilter.setOnClickListener(this);
+        liwalletStore.setOnClickListener(this);
+        liRewardStore.setOnClickListener(this);
+        liLoxxStore.setOnClickListener(this);
 
         gridLayoutManager = new GridLayoutManager(getActivity(),2, LinearLayoutManager.VERTICAL,false);
         SearchProductList.setLayoutManager(gridLayoutManager);
@@ -262,6 +270,13 @@ public class SearchProductFragment extends Fragment implements View.OnClickListe
                 Intent intent = new Intent(getActivity(), FilterDialog.class);
                 intent.putExtra("Class","Product");
                 startActivityForResult(intent,1);
+                break;
+
+            case R.id.liwalletStore:
+                startActivity(new Intent(getActivity(), WalletActivity.class));
+                break;
+            case R.id.liRewardStore:
+                startActivity(new Intent(getActivity(), ScratchActivity.class));
                 break;
         }
     }

@@ -222,4 +222,11 @@ public class MyOrderEcomActivity extends AppCompatActivity implements View.OnCli
                     }
                 }));
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+
+    }
 }

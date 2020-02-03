@@ -52,7 +52,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvTotalRs;
     int  total;
     double discper =0,discamt = 0,sum = 0;
-    int quantity = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +98,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.btn_checkout:
                 startActivity(new Intent(getApplicationContext(), AddAddressEcomActivity.class));
+                finish();
                 break;
 
         }
@@ -125,6 +125,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         else { BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().OFFER_ID,""); }
 
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -294,6 +295,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                             cartAdapter.notifyDataSetChanged();
                             int  cartNumber = Integer.parseInt(tvCartBadge.getText().toString());
                             tvCartBadge.setText(""+(cartNumber-1));
+                            tvCartBadge.setVisibility(View.VISIBLE);
 
                             if (totalCartResponse.getCarts().isEmpty()){
                                 liCartEmpty.setVisibility(View.VISIBLE);
@@ -332,6 +334,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                             cartAdapter.notifyDataSetChanged();
                             int  cartNumber = Integer.parseInt(tvCartBadge.getText().toString());
                             tvCartBadge.setText(""+(cartNumber-1));
+                            tvCartBadge.setVisibility(View.VISIBLE);
                             if (totalCartResponse.getCarts().isEmpty()){
                                 liCartEmpty.setVisibility(View.VISIBLE);
                                 ProductsRecyclerView.setVisibility(View.GONE);

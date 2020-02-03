@@ -55,19 +55,17 @@
     public class EcomPaymentActivity extends AppCompatActivity implements View.OnClickListener {
 
         String paidAmount,totalCartItem,totalTax,totalDeliveryCharge,totalDiscount,  MerchantAmount,deliveryType,deliveryTime;
-        private TextView tvEcomPayAmount,tvWalletLimit,tvTotalBalanceWallet,tvWalletDeductAmount, tvGatewayDeductAmount,tvCheckstatus,tvKeepShopping,tvordernumber;
+        private TextView tvEcomPayAmount,tv_COD_deduct_amount,tvWalletLimit,tvTotalBalanceWallet,tvWalletDeductAmount, tvGatewayDeductAmount,tvCheckstatus,tvKeepShopping,tvordernumber;
         private LoadingDialog loadingDialog;
         WalletLimitResponse WalletResponse;
         double amount=0,walletBal=0,walletLimit=0,debitCardPercentAmount;
         boolean checkWalletBal=false,checkWalletLimit=false;
         private CheckBox checkBoxWallet, checkBoxGatewayPayment, checkBoxCOD;
-        private Button btnOrderPayAmount,confirmback;
+        private Button btnOrderPayAmount,confirmback,paymoneyBackBtn;
         private String customer_address1="",customer_address2="",customer_city="",customer_state="",customer_country="",customer_zipcode="",customer_phone="";
         private String merchant_udf1="",merchant_udf2="",merchant_udf3="",merchant_udf4="",merchant_udf5="";
         private String hash="",payment_mode="",AddressPOS;
         private float merchant_payment_amount= (float) 1.0;
-        List<CartsQuantityResponse.CartsBean> productList = new ArrayList<>();
-        public static CartsQuantityResponse.CartsBean mProductData;
         public Dialog dialog;
         OrderSaveResponse orderSaveResponse;
 
@@ -107,16 +105,20 @@
             tvWalletDeductAmount = findViewById(R.id.tv_wallet_deduct_amount);
             tvGatewayDeductAmount = findViewById(R.id.tv_gateway_deduct_amount);
             btnOrderPayAmount = findViewById(R.id.btn_order_pay_amount);
+            paymoneyBackBtn = findViewById(R.id.paymoney_back_btn);
+            tv_COD_deduct_amount = findViewById(R.id.tv_COD_deduct_amount);
 
             tvEcomPayAmount.setText("₹"+paidAmount);
             AddressPOS =   BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ADDRESS_POS);
 
-       /*     SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-            gson = new Gson();
-            json = prefs.getString("MyEcomProduct", "");
-            mProductData = gson.fromJson(json, CartsQuantityResponse.CartsBean.class);
-            productList.add(mProductData);*/
 
+            paymoneyBackBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    overridePendingTransition(R.anim.right_to_left, R.anim.slide_in);
+                    finish();
+                }
+            });
             checkBoxCOD.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
@@ -125,9 +127,10 @@
                         checkBoxWallet.setChecked(false);
                         checkBoxGatewayPayment.setChecked(false);
                         btnOrderPayAmount.setText("COD");
+                        tv_COD_deduct_amount.setText(getResources().getString(R.string.rupees) + " " +String.format("%.2f",(Double.parseDouble(paidAmount))));
                     }else {
-                        checkBoxCOD.setChecked(false);
-                        checkBoxWallet.setChecked(false);
+                      //  checkBoxCOD.setChecked(false);
+                       // checkBoxWallet.setChecked(false);
                         checkBoxGatewayPayment.setChecked(true);
                         btnOrderPayAmount.setText("PAY");
                     }
@@ -141,6 +144,7 @@
                     if (isChecked){
                         checkBoxWallet.setChecked(true);
                         checkBoxGatewayPayment.setChecked(true);
+                        checkBoxCOD.setChecked(false);
                         tvWalletDeductAmount.setVisibility(View.VISIBLE);
                         tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                  /*       debitCardPercentAmount = (Double.parseDouble(paidAmount)*Double.parseDouble(WalletResponse.getData().getPerBank()))/100;
@@ -171,10 +175,10 @@
             btnOrderPayAmount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                      customerOrderSave();
+                  //    customerOrderSave();
                     //*************hash key ****************
 
-                /*    MerchantAmount = tvGatewayDeductAmount.getText().toString().trim().substring(1);
+                    MerchantAmount = tvGatewayDeductAmount.getText().toString().trim().substring(1);
 
                     HashKeyRequest hashKeyRequest=new HashKeyRequest();
                     hashKeyRequest.setCustomer_firstName(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME));
@@ -186,7 +190,7 @@
                         getHashKey(hashKeyRequest);
                     }else {
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Please Check Your Internet Connection",false);
-                    }*/
+                    }
 
                 }
             });
@@ -416,6 +420,7 @@
                 sendPaymentGatewayDetailsRequest.setStatus(status);
                 sendPaymentGatewayDetailsRequest.setEasy_pay_id(easepayid);
                 sendPaymentGatewayDetailsRequest.setType("bank");
+                sendPaymentGatewayDetailsRequest.setEcom("ecommerce");
 
     //            sendPaymentGatewayDetailsRequest.setPackage_amount("");
     //            sendPaymentGatewayDetailsRequest.setPackage_id("");
@@ -540,6 +545,7 @@
             dialog = new Dialog(ecomPaymentActivity);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.order_confirm_dialog);
+            dialog.setCancelable(false);
 
             tvCheckstatus = dialog.findViewById(R.id.tv_checkMyOrder);
             tvKeepShopping = dialog.findViewById(R.id.tv_keep_shopping);
@@ -566,7 +572,7 @@
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.tv_keep_shopping:
-                    startActivity(new Intent(EcomPaymentActivity.this, EHomeActivity.class));
+
                     dialog.dismiss();
                     finish();
                     break;
@@ -576,7 +582,7 @@
                     finish();
                     break;
                 case R.id.ordercomfirm_ecom_back:
-                    startActivity(new Intent(EcomPaymentActivity.this, MyOrderEcomActivity.class));
+                 //   startActivity(new Intent(EcomPaymentActivity.this, EHomeActivity.class));
                     overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
                     finish();
                     break;

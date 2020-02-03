@@ -58,7 +58,7 @@ public class CartItemQuantityAdapter  extends  RecyclerView.Adapter<CartItemQuan
         public void bindData(int position) {
 
             tvProductName.setText(cartsBeans.get(position).getProduct_name());
-            tvquantity.setText(", "+String.valueOf(cartsBeans.get(position).getQuantities()));
+            tvquantity.setText(" "+String.valueOf(cartsBeans.get(position).getQuantities()));
 
             try {
                 if (TextUtils.isEmpty(ApiClientEcom.ImagePath+cartsBeans.get(position).getProduct_image())){

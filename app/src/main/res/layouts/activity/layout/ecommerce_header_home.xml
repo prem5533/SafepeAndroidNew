@@ -79,6 +79,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <LinearLayout
+            android:id="@+id/liWalletHome"
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:orientation="vertical"
@@ -100,6 +101,7 @@
             android:padding="5dp" />
     </LinearLayout>
         <LinearLayout
+            android:id="@+id/liRewardHome"
             android:layout_width="100dp"
             android:layout_height="80dp"
             android:orientation="vertical"
@@ -121,6 +123,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/liLooxStoreHome"
             android:layout_width="100dp"
             android:layout_height="80dp"
             android:orientation="vertical"
