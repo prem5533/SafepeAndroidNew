@@ -60,7 +60,7 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
 
         holder.tvProductName.setText(recommedItem.get(position).getProduct_name());
         holder.tvSellingPrice.setText("₹ "+recommedItem.get(position).getFinal_sell_price());
-        holder.listItemRating.setRating(recommedItem.get(position).getStars());
+        holder.listItemRating.setRating((int)recommedItem.get(position).getStars());
         holder.tvProductDetail.setText(recommedItem.get(position).getProduct_description());
         holder.tvProductStorenme.setText(recommedItem.get(position).getVenue_name());
         holder.tv_pstore_km.setText(recommedItem.get(position).getDistance()+" km");

@@ -419,11 +419,9 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
                             NumPage= response.getData().getBanners().size();
                             if (NumPage>1){
                                 tabLayoutt.setupWithViewPager(viewpager, true);
-                            }
-                            else {
+                            } else {
                                 BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),"No Category Found!",true);
                             }
-
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(getActivity().findViewById(R.id.homeEcommLayout),response.getMessage(),true);
                         }

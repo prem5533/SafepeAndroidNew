@@ -845,7 +845,7 @@ public class HomeCatResponse {
              * distance : 5,849.26
              */
 
-            private int stars;
+            private double stars;
             private String distance;
             /**
              * venue_name : LillyWhites
@@ -1179,11 +1179,11 @@ public class HomeCatResponse {
                 this.updated_at = updated_at;
             }
 
-            public int getStars() {
+            public double getStars() {
                 return stars;
             }
 
-            public void setStars(int stars) {
+            public void setStars(double stars) {
                 this.stars = stars;
             }
 
@@ -1305,7 +1305,7 @@ public class HomeCatResponse {
              * venue_name : LillyWhites
              */
 
-            private int stars;
+            private double stars;
             private String distance;
             private String venue_name;
             /**
@@ -1635,11 +1635,11 @@ public class HomeCatResponse {
                 this.updated_at = updated_at;
             }
 
-            public int getStars() {
+            public double getStars() {
                 return stars;
             }
 
-            public void setStars(int stars) {
+            public void setStars(double stars) {
                 this.stars = stars;
             }
 

@@ -60,7 +60,7 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.Produc
 
         holder.tvProductName.setText(trendingItem.get(position).getProduct_name());
         holder.tvSellingPrice.setText("₹ "+trendingItem.get(position).getFinal_sell_price());
-        holder.listItemRating.setRating(trendingItem.get(position).getStars());
+        holder.listItemRating.setRating((int)trendingItem.get(position).getStars());
         holder.tvProductDetail.setText(trendingItem.get(position).getProduct_description());
         holder.tvProductStorenme.setText(trendingItem.get(position).getVenue_name());
         holder.tv_pstore_km.setText(trendingItem.get(position).getDistance()+" km");
