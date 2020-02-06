@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f4f5ff"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/orderDetailLayout">
     <RelativeLayout
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
@@ -44,16 +45,15 @@
                 android:background="@color/white"
                 android:layout_marginTop="10dp">
                 <TextView
-                    android:id="@+id/tv_username_addddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Order No:"
-                    android:textColor="@color/textcolor"
+                    android:textColor="@color/grey_700"
                     android:textSize="14sp"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_margin="10dp" />
                 <TextView
-                    android:id="@+id/tv_ordernumber"
+                    android:id="@+id/orderNumber_orderDetailLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="112233661144-7246556"
@@ -70,12 +70,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Placed On:"
-                    android:textColor="@color/textcolor"
+                    android:textColor="@color/grey_700"
                     android:textSize="14sp"
                     android:layout_marginLeft="10dp"
                     android:fontFamily="@font/roboto_regular" />
                 <TextView
-                    android:id="@+id/tv_placed_date"
+                    android:id="@+id/date_orderDetailLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20 Feb 2020"
@@ -83,7 +83,49 @@
                     android:textSize="14sp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/roboto_regular" /></LinearLayout>
+                    android:fontFamily="@font/roboto_regular" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Verification Code:"
+                        android:textColor="@color/grey_700"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/roboto_regular" />
+                    <TextView
+                        android:id="@+id/verificationCode_orderDetailLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/roboto_regular" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Please show this verification code at the time of delivery"
+                    android:textColor="@color/grey_500"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -105,7 +147,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
                     <TextView
                         android:id="@+id/tvcancel_return"
                         android:layout_width="wrap_content"
@@ -155,9 +198,9 @@
                             android:layout_width="10dp"
                             android:layout_height="10dp"
                             android:src="@drawable/ic_phone_ecom"
-                            android:layout_gravity="center"
-                            />
+                            android:layout_gravity="center" />
                         <TextView
+                            android:id="@+id/mobile_orderDetailLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="89765432100"
@@ -179,6 +222,7 @@
                             android:layout_gravity="center"
                             />
                         <TextView
+                            android:id="@+id/email_orderDetailLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="john.smith@gmail.com"
@@ -206,7 +250,7 @@
                         android:layout_height=".5dp"
                         android:background="@color/divider"/>
                     <TextView
-                        android:id="@+id/tv_username_order_detail"
+                        android:id="@+id/userName_orderDetailLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="John Smith"
@@ -217,7 +261,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"/>
                     <TextView
-                        android:id="@+id/tvAddress_addaddress"
+                        android:id="@+id/address_orderDetailLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Noida Secotr 65 B-96 Near Sectore 62 "
@@ -231,7 +275,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="5dp">
+                        android:layout_marginTop="5dp"
+                        android:visibility="gone">
                         <TextView
                             android:id="@+id/tvcity_addaddress"
                             android:layout_width="wrap_content"
@@ -258,7 +303,8 @@
                         android:id="@+id/liaddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/tvstate_addaddress"
@@ -335,6 +381,7 @@
                             android:fontFamily="@font/roboto_regular"
                             android:layout_weight="1"/>
                         <TextView
+                            android:id="@+id/priceMrp_orderDetailLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="₹ 899"
@@ -357,6 +404,7 @@
                             android:fontFamily="@font/roboto_regular"
                             android:layout_weight="1"/>
                         <TextView
+                            android:id="@+id/priceBuy_orderDetailLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="₹ 699"
@@ -379,6 +427,7 @@
                             android:fontFamily="@font/roboto_regular"
                             android:layout_weight="1"/>
                         <TextView
+                            android:id="@+id/discount_orderDetailLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="- ₹ 200"
@@ -395,18 +444,20 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Special Price"
+                            android:text="Tax"
                             android:textSize="13sp"
                             android:textColor="@color/textcolor"
                             android:fontFamily="@font/roboto_regular"
                             android:layout_weight="1"/>
                         <TextView
+                            android:id="@+id/tax_orderDetailLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="₹ 499"
                             android:textSize="13sp"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_regular" /></LinearLayout>
+                            android:fontFamily="@font/roboto_regular" />
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -423,6 +474,7 @@
                             android:fontFamily="@font/roboto_regular"
                             android:layout_weight="1"/>
                         <TextView
+                            android:id="@+id/shippingFee_orderDetailLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="₹ 49"
@@ -451,6 +503,7 @@
                             android:fontFamily="@font/roboto_bold"
                             android:layout_weight="1"/>
                         <TextView
+                            android:id="@+id/totalAmount_orderDetailLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="₹ 548"
@@ -474,7 +527,7 @@
                         android:textColor="@color/textcolor"
                         android:layout_margin="10dp" />
                     <TextView
-                        android:id="@+id/tvpayment_type"
+                        android:id="@+id/modeOfPayment_orderDetailLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Cash On Delivery "

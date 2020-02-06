@@ -174,8 +174,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustNothing"
-            />
+            android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity
             android:name=".activity.Navigation"
             android:screenOrientation="portrait" />
@@ -338,14 +337,22 @@
         <activity
             android:name=".ecommerce.activity.FilterDialog"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.ChatActivity"/>
+        <activity android:name=".ecommerce.activity.ChatIssueList"/>
+        <activity android:name=".ecommerce.activity.VendorChatActivity"/>
 
 
 
 <!--  Ecommerce      -->
 
-        <activity android:name=".ecommerce.fragment.ReviewProductFragment"/>
-        <activity android:name=".ecommerce.fragment.ThankYouFragment"/>
-        <activity android:name=".ecommerce.activity.SearchEcommerce"/>
+        <activity android:name=".ecommerce.activity.ReviewProduct"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ecommerce.fragment.ThankYouFragment"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ecommerce.activity.SearchEcommerce"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ecommerce.activity.CartActivity"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>

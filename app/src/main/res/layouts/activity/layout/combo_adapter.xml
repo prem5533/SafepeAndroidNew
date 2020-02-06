@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+        <androidx.cardview.widget.CardView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp">
+        <ImageView
+            android:id="@+id/comboImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/girl"
+            android:scaleType="fitXY"/>
+        </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/tvplus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="+"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:padding="5dp"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"/>
+        </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tvComboName"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Food &amp; Drinks"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:layout_marginLeft="-10dp"/>
+        </LinearLayout>
+</LinearLayout>

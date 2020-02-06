@@ -25,6 +25,7 @@
             android:background="@color/white">
 
             <ImageView
+                android:id="@+id/im_wishlist"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
@@ -32,7 +33,7 @@
                 android:src="@drawable/girl" />
 
             <TextView
-                android:id="@+id/tv_product_name_myorder"
+                android:id="@+id/tv_product_name_wishlist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
@@ -40,6 +41,8 @@
                 android:textColor="@color/black"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="Women Gold Shoulder Bag"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +51,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
                 <TextView
-                    android:id="@+id/tv_offprice_myorder"
+                    android:id="@+id/tv_offprice_wishlist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="₹ 699"
@@ -58,10 +61,10 @@
                     android:textSize="10sp"
                     android:layout_marginTop="5dp"/>
                 <TextView
-                    android:id="@+id/tv_actualprice_myorder"
+                    android:id="@+id/tv_actualprice_wishlist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="₹ 899"
+                    android:text=""
                     android:gravity="start"
                     android:textColor="@color/black"
                     android:fontFamily="@font/roboto_regular"
@@ -69,7 +72,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp" />
                 <TextView
-                    android:id="@+id/tv_savers_myorder"
+                    android:id="@+id/tv_savers_wishlist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="(5% OFF)"
@@ -90,6 +93,7 @@
                 android:layout_marginLeft="10dp">
 
                 <Button
+                    android:id="@+id/btnRemove"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -108,10 +112,11 @@
                     android:text="|"
                     android:layout_weight="1"/>
                 <Button
+                    android:id="@+id/btnAddCart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:text="Add To Cart"
+                    android:text="Move To Cart"
                     android:textAllCaps="false"
                     android:textSize="12sp"
                     android:gravity="right|center"

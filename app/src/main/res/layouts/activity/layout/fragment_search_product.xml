@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#f4f5ff"
+    android:id="@+id/SearchProductLayout"
     tools:context=".ecommerce.fragment.SearchProductFragment">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -69,6 +70,7 @@
                 android:orientation="horizontal"
                 android:layout_alignParentBottom="true">
                 <LinearLayout
+                    android:id="@+id/liwalletStore"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:orientation="vertical"
@@ -90,6 +92,7 @@
                         android:padding="5dp" />
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/liRewardStore"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:orientation="vertical"
@@ -111,6 +114,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/liLoxxStore"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:orientation="vertical"
@@ -356,9 +360,9 @@
                 android:padding="10dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_product_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                android:id="@+id/search_product_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/search_store_list"
@@ -366,6 +370,21 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
         </LinearLayout>
+
+            <TextView
+                android:id="@+id/offerNearbyText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Offers Nearby You"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:padding="10dp"
+                android:layout_marginTop="15sp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/offer_product_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <LinearLayout

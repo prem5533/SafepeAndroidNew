@@ -36,6 +36,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="15sp"/>
             <TextView
+                android:id="@+id/priceDiscountSort"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Discount"
@@ -44,6 +45,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="15sp"/>
             <TextView
+                android:id="@+id/priceLowToHigh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Price - low to high"
@@ -52,6 +54,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="15sp"/>
             <TextView
+                android:id="@+id/priceHighToLow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Price - high to low"

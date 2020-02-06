@@ -9,13 +9,6 @@
         android:id="@+id/cb_prductsize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:buttonTint="#9f9f9f"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Item"
-        android:textSize="15sp"
-        android:padding="5dp"
-        android:fontFamily="@font/roboto_regular"
-        android:textColor="@color/textcolor"/>
+        android:buttonTint="#9f9f9f"
+        android:text="sbdaaa"/>
 </LinearLayout>

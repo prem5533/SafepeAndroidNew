@@ -2,135 +2,180 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="5dp"
+    android:id="@+id/orderDetailAdapter">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="100dp"
-            android:scaleType="fitXY"
-            android:layout_gravity="center"
-            android:src="@drawable/girl"
-            android:layout_marginLeft="10dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-            <TextView
-                android:id="@+id/tv_product_name_myorder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-                android:text="Women Gold Shoulder Bag"/>
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:layout_marginTop="10dp">
+            <ImageView
+                android:id="@+id/productImage_orderDetailAdapter"
+                android:layout_width="80dp"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                android:layout_gravity="center"
+                android:src="@drawable/girl"
+                android:layout_marginLeft="10dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/productName_orderDetailAdapter"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Size:"
-                    android:textColor="@color/textcolor"
-                    android:textSize="13sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="M"
-                    android:textColor="@color/textcolor"
-                    android:textSize="13sp"
-                    android:layout_marginLeft="5dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=", Qty:"
-                    android:textColor="@color/textcolor"
-                    android:textSize="13sp"
-                    android:layout_marginLeft="10dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    android:textColor="@color/textcolor"
-                    android:textSize="13sp"
-                    android:layout_marginLeft="5dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/tv_offprice_myorder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="₹ 699"
-                    android:gravity="start"
-                    android:textColor="@color/red"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:layout_marginTop="5dp"/>
-                <TextView
-                    android:id="@+id/tv_actualprice_myorder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="₹ 899"
-                    android:gravity="start"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="15sp"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp" />
-                <TextView
-                    android:id="@+id/tv_savers_myorder"
-                    android:layout_width="wrap_content"
+                    android:text="Women Gold Shoulder Bag"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Saved ₹ 200 "
-                    android:gravity="start"
-                    android:textColor="@color/yellow_theme"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="13sp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp">
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Size:"
+                        android:textColor="@color/textcolor"
+                        android:textSize="13sp"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="M"
+                        android:textColor="@color/textcolor"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Qty:"
+                        android:textColor="@color/textcolor"
+                        android:textSize="13sp"
+                        android:layout_marginTop="4dp"/>
+                    <TextView
+                        android:id="@+id/productQuantity_orderDetailAdapter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/textcolor"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp">
+                    <TextView
+                        android:id="@+id/productPrice_orderDetailAdapter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹ 699"
+                        android:gravity="start"
+                        android:textColor="@color/red"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="13sp"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:id="@+id/productActualPrice_orderDetailAdapter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₹ 899"
+                        android:gravity="start"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/productSave_orderDetailAdapter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Saved ₹ 200 "
+                        android:gravity="start"
+                        android:textColor="@color/yellow_theme"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:visibility="gone"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
 
-                <TextView
-                    android:layout_width="5dp"
-                    android:layout_height="5dp"
-                    android:textSize="14sp"
-                    android:layout_gravity="center"
-                    android:background="@color/green_A700"
-                    android:fontFamily="@font/roboto_medium" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textColor="@color/textcolor"
-                    android:fontFamily="@font/roboto_medium"
-                    android:layout_marginLeft="5dp"
-                    android:text="Delivered  on Wed, Jan 7th 2020"/>
+                    <TextView
+                        android:layout_width="5dp"
+                        android:layout_height="5dp"
+                        android:textSize="14sp"
+                        android:layout_gravity="center"
+                        android:background="@color/green_A700"
+                        android:fontFamily="@font/roboto_medium" />
+                    <TextView
+                        android:id="@+id/productStatus_orderDetailAdapter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="@color/textcolor"
+                        android:fontFamily="@font/roboto_medium"
+                        android:layout_marginLeft="5dp"
+                        android:text="Delivered  on Wed, Jan 7th 2020"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/background"
+            android:layout_margin="5dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/cancelReturn_orderDetailAdapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/orderAgain_orderDetailAdapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order Again"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:textAllCaps="false"/>
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

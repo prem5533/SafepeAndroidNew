@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="Select Size"
+        android:textColor="@color/black"
+        android:fontFamily="@font/roboto_medium"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"/>
+    <TextView
+        android:id="@+id/tv_done_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:background="@drawable/blue_green_bg"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_margin="5dp"/>
+</LinearLayout>

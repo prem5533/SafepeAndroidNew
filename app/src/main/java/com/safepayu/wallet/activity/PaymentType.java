@@ -670,7 +670,6 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
         }else {
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.paymentLayout),"Invalid Passcode",false);
         }
-
     }
 
     private void BuyPackageMethod(final String txnid,final String easepayid){

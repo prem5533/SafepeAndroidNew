@@ -96,7 +96,7 @@ import static com.safepayu.wallet.activity.Splash.promotionResponse1;
 
 public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private ImageView nav_icon, notification_icon;
+    private ImageView nav_icon, notification_icon,chatBtn;
     private DrawerLayout drawer;
     private AlertDialog.Builder alertNetwork;
     private boolean doubleBackToExitPressedOnce = false;
@@ -236,6 +236,16 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         notification_icon = findViewById(R.id.notification);
         nav_icon = findViewById(R.id.nav_icon);
         nav_icon.setOnClickListener(nav_iconListner);
+
+        chatBtn = findViewById(R.id.chat_home);
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(Navigation.this, ChatActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+            }
+        });
 
         BadgeCountTV = findViewById(R.id.cart_badge);
 

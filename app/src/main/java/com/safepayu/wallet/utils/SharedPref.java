@@ -39,6 +39,8 @@ public class SharedPref {
     public final String SERVICE_CHARGE = "Service_charge";
     public final String TRANSACTION_CHARGE = "Transaction_charge";
     public final String COMMISSION_CHARGE = "Commission_charge";
+    public final String ECOMM_LAT = "ecommLat";
+    public final String ECOMM_LONG = "ecommLong";
 
     //***********FLIGHT*******************
     public final String FLIGHT_DATE = "flight_date";
@@ -82,6 +84,13 @@ public class SharedPref {
     public final String FLIGHT_ONWARD_IMAGE = "flight_onward_image";
     public final String FLIGHT_START_JOURNEY_RETURN = "flight_journey_return";
     public final String S_KEY = "key";
+
+//*******************************E-COMMERCE*****************************************************//
+    public final String PRODUCT_ID = "product_id";
+    public final String OFFER_ID = "offer_id";
+    public final String CART_BADGE = "cart_badge";
+    public final String PLUS_MINUS = "plusminus";
+    public final String ADDRESS_POS = "address_pos";
 
 
     public SharedPref(Context context) {

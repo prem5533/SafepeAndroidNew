@@ -84,13 +84,18 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
     Gson gson;
     String onwrdpaid = "", returnpaid="";
     int totalPaid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_payment);
         findId();
 
-        walletLimitLeft();
+        if (isNetworkAvailable()){
+            walletLimitLeft();
+        }else {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),"No Internet Connection",true);
+        }
     }
 
 
@@ -333,8 +338,6 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
                                 tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+tFare));
                                 tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+tFare));
                                 btnBookingPayAmount.setText("Pay " + getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(totalPaid+tFare));
-
-
                             }
                         //    tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(walletLimitResponse.getData().getLimit())));
                           //  tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format(Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().FLIGHT_TOTAL_FARE))));
@@ -592,9 +595,11 @@ public class BookingPaymentActivity extends AppCompatActivity implements View.On
             if (b){
                 flightBlockTicketRequest.setPayment_wallet(String.valueOf(0));
                 flightBlockTicketRequest.setPayment_bank(String.valueOf(totalPaid+tFare));
+            } else {
+                flightBlockTicketRequest.setPayment_wallet(String.valueOf(totalPaid+tFare));
+                flightBlockTicketRequest.setPayment_bank(String.valueOf(0));
             }
-            flightBlockTicketRequest.setPayment_wallet(String.valueOf(totalPaid+tFare));
-            flightBlockTicketRequest.setPayment_bank(String.valueOf(0));
+
         }
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);

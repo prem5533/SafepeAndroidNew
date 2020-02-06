@@ -1,5 +1,7 @@
 package com.safepayu.wallet.api;
 
+import com.safepayu.wallet.ecommerce.model.request.ChatSendRequest;
+import com.safepayu.wallet.ecommerce.model.response.ChatListResponse;
 import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.BuyPackage;
 import com.safepayu.wallet.models.request.ChangePasswordRequest;
@@ -271,6 +273,12 @@ public interface ApiService {
 
     @GET("api/pefast.safepe.latepe/api/getServicesCharges")
     Single<ServiceChargeResponse> getServicesCharges();
+
+    @GET("api/pefast.safepe.latepe/api/getCustomerQuery")
+    Single<ChatListResponse> getChatList();
+
+    @POST("api/pefast.safepe.latepe/api/saveCustomerQueries")
+    Single<BaseResponse> saveCustomerQueries (@Body ChatSendRequest chatSendRequest);
 
     //*************Flight Booking *******************//
     @GET("api/pefast.safepe.latepe/api/getFlightAirport")

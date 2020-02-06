@@ -210,7 +210,6 @@
                         <ImageView
                             android:layout_width="10dp"
                             android:layout_height="10dp"
-                            android:layout_marginRight="30dp"
                             android:src="@drawable/ic_correct"/>
                     </LinearLayout>
                     <View
@@ -255,7 +254,7 @@
                             android:id="@+id/edit_email"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/edit_new"/>
+                            android:src="@drawable/ic_edit_new"/>
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -293,7 +292,7 @@
                             android:id="@+id/edit_Dob"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/edit_new"/>
+                            android:src="@drawable/ic_edit_new"/>
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"

@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.safepayu.wallet.BaseApp;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.models.response.booking.flight.AvailableFlightResponse;
 import com.squareup.picasso.Picasso;
@@ -16,9 +18,6 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class FlightDetailAdapter extends RecyclerView.Adapter<FlightDetailAdapter.FlightDetailViewHolder> {
 
@@ -100,9 +99,9 @@ public class FlightDetailAdapter extends RecyclerView.Adapter<FlightDetailAdapte
             String mod = sept[1];
             String dd = sept[2];
 
-            String dateZone= dd+"/"+mod+"/"+yd;
-            date = new Date(dateZone);
-            s  = DateFormat.format("dd-MMM-yyyy", date.getTime());
+            String dateZone= mod+"/"+dd+"/"+yd;
+            Date    datee = new Date(dateZone);
+            s  = DateFormat.format("dd-MMM-yyyy", datee.getTime());
             String daymonthYear = (String) s;
             String[] sep = daymonthYear.split("-");
             String d = sep[0];
@@ -110,7 +109,7 @@ public class FlightDetailAdapter extends RecyclerView.Adapter<FlightDetailAdapte
             String y = sep[2];
 
             SimpleDateFormat simpledateformat = new SimpleDateFormat("EEE");
-            String dayOfWeek = simpledateformat.format(date);
+            String dayOfWeek = simpledateformat.format(datee);
             tvFlightDetailDepDate.setText(dayOfWeek+", "+d+mo+" "+y);
 
 
