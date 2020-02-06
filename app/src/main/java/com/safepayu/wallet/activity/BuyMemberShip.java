@@ -14,11 +14,11 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.adapter.BuyMembershipAdapter;
@@ -40,7 +40,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static android.view.View.VISIBLE;
 
-public class BuyMemberShip extends BaseActivity implements PackageListAdapter.OnPackageSelectListener, View.OnClickListener,
+public class BuyMemberShip extends AppCompatActivity implements PackageListAdapter.OnPackageSelectListener, View.OnClickListener,
         RadioGroup.OnCheckedChangeListener, PasscodeClickListener,BuyMembershipAdapter.OnBankItemListener {
 
     private LoadingDialog loadingDialog;
@@ -60,10 +60,9 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_buy_member_ship);
 
         loadingDialog = new LoadingDialog(this);
-
-        setToolbar(false, "Buy Member Ship", false);
 
         cardView = findViewById(R.id.bankdetails);
         packageListView = findViewById(R.id.list_packageListView);
@@ -119,16 +118,6 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
         showDialog(BuyMemberShip.this,selectedPackage);
     }
 
-    @Override
-    protected int getLayoutResourceId() {
-        return R.layout.activity_buy_member_ship;
-    }
-
-    @Override
-    protected void connectivityStatusChanged(Boolean isConnected, String message) {
-
-    }
-
     private void getPackages() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
@@ -143,23 +132,28 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
 
-                            recycleBankList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-                            buyMembershipAdapter = new BuyMembershipAdapter(getApplicationContext(),response.getBankDetails(),BuyMemberShip.this);
-                            recycleBankList.setAdapter(buyMembershipAdapter);
-
-                            try{
-                                packageListData = response;
-                                mAdapter.addItem(response.getPackages());
+                            try {
+                                recycleBankList.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                                buyMembershipAdapter = new BuyMembershipAdapter(getApplicationContext(),response.getBankDetails(),BuyMemberShip.this);
+                                recycleBankList.setAdapter(buyMembershipAdapter);
 
                                 try{
-                                    ((TextView) findViewById(R.id.tv_taxDetails)).setText("Additional " + response.getTax().getTaxValue() + "% GST will be charged from the total amount");
-                                }catch (Exception r){
-                                    r.printStackTrace();
-                                }
+                                    packageListData = response;
+                                    mAdapter.addItem(response.getPackages());
 
+                                    try{
+                                        ((TextView) findViewById(R.id.tv_taxDetails)).setText("Additional " + response.getTax().getTaxValue() + "% GST will be charged from the total amount");
+                                    }catch (Exception r){
+                                        r.printStackTrace();
+                                    }
+
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId),"Something Went Wrong",false);
+                                }
                             }catch (Exception e){
-                                e.printStackTrace();
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.buy_packageId),"Something Went Wrong",false);
+                                e.printStackTrace();
                             }
                         }
                     }
@@ -185,7 +179,7 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                     @Override
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
-                        if (response.getStatus()){
+                        if (!response.getStatus()){
                             showDialogPackage("\nPackage Already Purchased.\nTo Upgrade Your Package Please Contact SafePe Customer Support\n");
                         }else {
                             try {
@@ -239,7 +233,6 @@ public class BuyMemberShip extends BaseActivity implements PackageListAdapter.On
                                 e.printStackTrace();
                             }
                         }
-
                     }
 
                     @Override

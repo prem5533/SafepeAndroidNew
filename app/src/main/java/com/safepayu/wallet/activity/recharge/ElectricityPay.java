@@ -109,10 +109,15 @@ public class ElectricityPay extends BaseActivity {
         ElectrictyPaybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
+                try {
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),"Please Buy Membership To Enjoy App's Features",false);
+                    }else {
+                        CheckValidate();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),"Please Buy Membership To Enjoy App's Features",false);
-                }else {
-                    CheckValidate();
                 }
             }
         });

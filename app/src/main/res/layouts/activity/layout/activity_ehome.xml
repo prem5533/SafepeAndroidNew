@@ -41,24 +41,27 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"/>
 
-                    <RelativeLayout
-                        android:layout_height="wrap_content"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:id="@+id/searchLayout_nav"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="10dp">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="start|center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1">
                         <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/app_logo" />
+                        <TextView
+                            android:id="@+id/tv_toolbar_name"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_width="100dp"
-                            android:src="@drawable/white_logo_new"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            />
-                    </RelativeLayout>
-
-
+                            android:text="SafePe"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/roboto_bold"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="18sp" />
+                    </LinearLayout>
 
                     <ImageView
 

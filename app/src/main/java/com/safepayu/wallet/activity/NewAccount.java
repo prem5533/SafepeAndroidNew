@@ -1,6 +1,7 @@
 package com.safepayu.wallet.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -58,6 +59,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     private String strReferalcode;
     private ImageView signup_logo;
     private CheckBox chTermCond;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,10 +148,20 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 // TODO Auto-generated method stub
 
                 if (s.length() == 14) {
-                    checkEmailMobileRequest.setEmail("");
-                    checkEmailMobileRequest.setType("1");
-                    checkEmailMobileRequest.setMobile(mobileNo.getText().toString().split(" ")[1]);
-                    checkMobile(checkEmailMobileRequest);
+                    try {
+                        checkEmailMobileRequest.setEmail("");
+                        checkEmailMobileRequest.setType("1");
+                        checkEmailMobileRequest.setMobile(mobileNo.getText().toString().split(" ")[1]);
+                        checkMobile(checkEmailMobileRequest);
+                    }catch (Exception e){
+                        e.printStackTrace();
+
+                        int index=mobileNo.getText().toString().indexOf(" ");
+                        checkEmailMobileRequest.setEmail("");
+                        checkEmailMobileRequest.setType("1");
+                        checkEmailMobileRequest.setMobile(mobileNo.getText().toString().substring(index));
+                        checkMobile(checkEmailMobileRequest);
+                    }
                 } else {
 
                 }
@@ -167,6 +179,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 // TODO Auto-generated method stub
             }
         });
+
         referralCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -407,13 +420,12 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void register() {
+        @SuppressLint("HardwareIds")String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
-        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        Register register = new Register(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString(), mobileNo.getText().toString().split(" ")[1], BaseApp.getInstance().dateUtil().parseStringDate(dob.getText().toString(), BaseApp.getInstance().dateUtil().dd_MM_yyyy, BaseApp.getInstance().dateUtil().yyyy_MM_dd), referralCode.getText().toString(), "Android", BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
+        Register register = new Register(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString(), mobileNo.getText().toString().split(" ")[1], BaseApp.getInstance().dateUtil().parseStringDate(dob.getText().toString(), BaseApp.getInstance().dateUtil().dd_MM_yyyy, BaseApp.getInstance().dateUtil().yyyy_MM_dd), referralCode.getText().toString(), "Android", android_id);
 
         BaseApp.getInstance().getDisposable().add(apiService.register(register)
                 .subscribeOn(Schedulers.io())

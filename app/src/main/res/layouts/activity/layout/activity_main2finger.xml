@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_fingerprint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_50">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/headerLayout"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/fingerprint_new"
+            android:id="@+id/icon"
+            android:paddingTop="2dp"
+            android:layout_marginBottom="30dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:text="@string/title_fingerprint"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:id="@+id/desc"
+            android:text="@string/desc_fingerprint"
+            android:layout_margin="16dp"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="OR"
+            android:layout_margin="5dp"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"/>
+
+        <Button
+            android:id="@+id/openPasscodeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="Open with Passcode"
+            android:textAllCaps="false"
+            android:layout_margin="5dp"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:background="@drawable/green_rounded"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:id="@+id/errorText"
+            android:paddingEnd="30dp"
+            android:paddingStart="30dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:padding="7dp"/>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:text="@string/note"
+        android:layout_marginLeft="16dp"
+        android:textAlignment="center"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="26dp"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

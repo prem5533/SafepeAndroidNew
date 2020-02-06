@@ -189,10 +189,15 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                 overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                 finish();*/
 
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+                try {
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Buy Membership To Enjoy App's Features", false);
+                    } else {
+                        CheckValidate();
+                    }
+                }catch (Exception e){
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Buy Membership To Enjoy App's Features", false);
-                } else {
-                    CheckValidate();
+                    e.printStackTrace();
                 }
             }
         });

@@ -40,16 +40,16 @@ public class AppVersionResponse {
         /**
          * version_name : 1.0
          * val : 1
+         * tollfree : 0090909
+         * status : 0
          */
+
 
         private String version_name;
         private String val;
-        /**
-         * tollfree : 0090909
-         */
-
         private String tollfree;
         private String logo;
+        private int status;
 
 
         public String getVersion_name() {
@@ -82,6 +82,14 @@ public class AppVersionResponse {
 
         public void setLogo(String logo) {
             this.logo = logo;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
         }
     }
 }

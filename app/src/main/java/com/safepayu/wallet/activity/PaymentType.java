@@ -698,9 +698,15 @@ public class PaymentType extends BaseActivity implements PasscodeClickListener {
                         }
                         intentStatus.putExtra("txnid",txnid);
                         intentStatus.putExtra("Amount",Amount);
-                        intentStatus.putExtra("date",currentDate);
                         intentStatus.putExtra("Message",response.getMessage());
                         intentStatus.putExtra("productinfo",PaymentFor+" "+PaymentTypeText);
+
+                        intentStatus.putExtra("toAccount",response.getData().getPaid_to_account());
+                        intentStatus.putExtra("fromAccount",response.getData().getPaid_from_account());
+                        intentStatus.putExtra("RefNo",response.getData().getRefrence_no());
+                        intentStatus.putExtra("date",response.getData().getCreated_at());
+                        intentStatus.putExtra("PayMode",response.getData().getPayment_mode());
+                        intentStatus.putExtra("Note",response.getData().getFootnote());
                         startActivity(intentStatus);
                         finish();
                     }

@@ -3,7 +3,6 @@ package com.safepayu.wallet.api;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.safepayu.wallet.BaseApp;
@@ -29,7 +28,7 @@ import static com.safepayu.wallet.BaseApp.Code;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "https://productiontesting.safepeindia.com/";
+    public static final String BASE_URL = "https://secure.safepeindia.com/";
     public  static String ImagePath = BASE_URL;
     private static Retrofit retrofit = null;
     private static int REQUEST_TIMEOUT = 60;

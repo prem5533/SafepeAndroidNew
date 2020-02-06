@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,8 +32,11 @@ import static android.view.Gravity.CENTER_VERTICAL;
 
 public class PaidOrderActivity extends AppCompatActivity {
     private TextView tvNeedHelp,StatusTV,DateTV,TxnIdTV,AmountTV,ProductInfoTV,ServiceInfoTV,tvSafepeUtrId;
+    private TextView tvRefNo,tvPaidTo,tvPaidFrom,tvPayMode,tvFootNote;
+    private LinearLayout linearLayoutPackage;
     private GifImageView gifImageView;
     private String status="",txnid="",Amount="",date="",productinfo="",Message="",UTR="";
+    private String fromAccount="",toAccount="",RefNo="",PayMode="",Note="";
     private Button BackBtn;
     private Dialog dialog;
 
@@ -57,6 +61,16 @@ public class PaidOrderActivity extends AppCompatActivity {
             txnid=intentStatus.getStringExtra("txnid");
             Message=intentStatus.getStringExtra("Message");
             UTR=intentStatus.getStringExtra("utr_id");
+
+            try{
+                toAccount=intentStatus.getStringExtra("toAccount");
+                fromAccount=intentStatus.getStringExtra("fromAccount");
+                RefNo=intentStatus.getStringExtra("RefNo");
+                PayMode=intentStatus.getStringExtra("PayMode");
+                Note=intentStatus.getStringExtra("Note");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -92,6 +106,13 @@ public class PaidOrderActivity extends AppCompatActivity {
         ServiceInfoTV=findViewById(R.id.serviceInfo);
         tvSafepeUtrId=findViewById(R.id.tv_safepe_utr_id);
 
+        tvRefNo=findViewById(R.id.refNo_paid);
+        tvPaidTo=findViewById(R.id.paidTo_paid);
+        tvPaidFrom=findViewById(R.id.paidFrom_paid);
+        tvPayMode=findViewById(R.id.payMode_paid);
+        tvFootNote=findViewById(R.id.footNote_paid);
+        linearLayoutPackage=findViewById(R.id.packageDetailsLayout_paid);
+
         try {
             if (Message==null || TextUtils.isEmpty(Message)){
                 Message="";
@@ -115,8 +136,22 @@ public class PaidOrderActivity extends AppCompatActivity {
         try{
             if (productinfo.contains("Package") || productinfo.contains("package")){
                 if (status.equalsIgnoreCase("success")){
-                    showPkgDialog();
+
                 }
+                tvRefNo.setText(RefNo);
+                tvPaidTo.setText(toAccount);
+                tvPaidFrom.setText(fromAccount);
+                tvPayMode.setText(PayMode);
+                tvFootNote.setText("\n"+Note+"\n");
+                linearLayoutPackage.setVisibility(View.VISIBLE);
+                tvSafepeUtrId.setVisibility(View.GONE);
+                TxnIdTV.setVisibility(View.GONE);
+                ServiceInfoTV.setVisibility(View.GONE);
+            }else {
+                linearLayoutPackage.setVisibility(View.GONE);
+                tvSafepeUtrId.setVisibility(View.VISIBLE);
+                TxnIdTV.setVisibility(View.VISIBLE);
+                ServiceInfoTV.setVisibility(View.VISIBLE);
             }
 
         }catch (Exception e){

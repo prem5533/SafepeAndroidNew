@@ -93,12 +93,9 @@ import com.safepayu.wallet.models.response.booking.hotel.HotelDetailResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelHistoryResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelSourcesResponse;
 
-import java.util.Map;
-
 import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -168,6 +165,10 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/getAllOperators")
     Single<OperatorResponse> getOperators(@Field("operator_type") String operator_type);
+
+    @FormUrlEncoded
+    @POST("api/pefast.safepe.latepe/api/updateProfile")
+    Single<BaseResponse> getProfileUpdate(@Field("dob") String dob, @Field("email") String email);
 
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/getCustOperator")

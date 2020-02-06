@@ -2,11 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#fff"
     android:gravity="center"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/username_QR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"/>
+
+    <TextView
+        android:id="@+id/userMobile_QR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:layout_marginTop="-10dp"/>
 
 
     <androidx.cardview.widget.CardView
@@ -15,7 +44,9 @@
         android:elevation="1dp"
         android:layout_gravity="center"
         app:cardCornerRadius="4dp"
-        android:layout_margin="10dp">
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <ImageView
             android:layout_width="300dp"
@@ -25,6 +56,12 @@
 
     </androidx.cardview.widget.CardView>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/grey_600"
+        android:layout_marginTop="20dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,6 +69,7 @@
         android:text="Your personal SafePe ID QR "
         android:textColor="@color/black"
         android:gravity="center"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:layout_marginTop="5dp"/>
 
 </LinearLayout>

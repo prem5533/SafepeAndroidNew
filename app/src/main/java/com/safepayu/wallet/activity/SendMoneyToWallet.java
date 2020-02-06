@@ -15,7 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.safepayu.wallet.BaseActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
@@ -31,7 +32,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class SendMoneyToWallet extends BaseActivity implements View.OnClickListener, PasscodeClickListener {
+public class SendMoneyToWallet extends AppCompatActivity implements View.OnClickListener, PasscodeClickListener {
 
     Button BackBtn,SendMoneyBtn;
     private EditText MobileED,AmountED;
@@ -45,7 +46,8 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setToolbar(false, null, false);
+        setContentView(R.layout.send_money_to_wallet);
+
         loadingDialog = new LoadingDialog(this);
 
         BackBtn=findViewById(R.id.sendmoney_back_btn);
@@ -119,16 +121,6 @@ public class SendMoneyToWallet extends BaseActivity implements View.OnClickListe
             WalletBalance=0.0f;
             e.printStackTrace();
         }
-
-    }
-
-    @Override
-    protected int getLayoutResourceId() {
-        return R.layout.send_money_to_wallet;
-    }
-
-    @Override
-    protected void connectivityStatusChanged(Boolean isConnected, String message) {
 
     }
 

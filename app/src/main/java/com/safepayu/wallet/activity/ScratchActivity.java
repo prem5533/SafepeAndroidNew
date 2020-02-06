@@ -103,12 +103,19 @@ public class ScratchActivity extends AppCompatActivity implements ScratchListAda
                 break;
             case  R.id.tv_redeem_reward:
 
-                if ((Integer.parseInt(tvTotalCoins.getText().toString())>100)||(Integer.parseInt(tvTotalCoins.getText().toString())==100))
-                {
-                    showDialogRedeem(ScratchActivity.this);
-                }
-                else {
+                try {
+                    if (tvTotalCoins.getText().toString().equalsIgnoreCase("No Coin")){
+                        showDialogRedeemNotify();
+                    }else {
+                        if ((Integer.parseInt(tvTotalCoins.getText().toString())>100)||(Integer.parseInt(tvTotalCoins.getText().toString())==100)) {
+                            showDialogRedeem(ScratchActivity.this);
+                        } else {
+                            showDialogRedeemNotify();
+                        }
+                    }
+                }catch (Exception e){
                     showDialogRedeemNotify();
+                    e.printStackTrace();
                 }
                 break;
         }

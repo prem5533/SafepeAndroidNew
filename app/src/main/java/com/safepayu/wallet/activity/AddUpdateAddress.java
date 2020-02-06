@@ -74,11 +74,17 @@ public class AddUpdateAddress extends BaseActivity implements View.OnClickListen
 
         try {
             //*******************get data *****************
-            Location = getIntent().getStringExtra("location");
             City = getIntent().getStringExtra("city");
             State = getIntent().getStringExtra("state");
             Country = getIntent().getStringExtra("country");
             Pincode = getIntent().getStringExtra("pincode");
+
+            try {
+                Location = getIntent().getStringExtra("location");
+            }catch (Exception e){
+                Location="";
+                e.printStackTrace();
+            }
 
             //***************set text*********************
 

@@ -1,15 +1,14 @@
 package com.safepayu.wallet.activity;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.util.DisplayMetrics;
@@ -362,22 +361,12 @@ public class ForgetPassword extends AppCompatActivity {
     private void verifyOtp(String otp) {
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    Activity#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                return;
-            }
-        }
+        @SuppressLint("HardwareIds")String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(edit_number.getText().toString().trim(), null);
-        request.setDeviceid(BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
+        request.setDeviceid(android_id);
         request.setOtp(otp);
         BaseApp.getInstance().getDisposable().add(apiService.verifyOTP(request)
                 .subscribeOn(Schedulers.io())

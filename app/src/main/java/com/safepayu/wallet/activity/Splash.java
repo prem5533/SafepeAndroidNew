@@ -3,9 +3,11 @@ package com.safepayu.wallet.activity;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.hardware.fingerprint.FingerprintManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -35,6 +37,10 @@ import io.reactivex.schedulers.Schedulers;
 public class Splash extends AppCompatActivity implements PasscodeClickListener {
 
     public static PromotionResponse promotionResponse1=new PromotionResponse();
+    private FingerprintManager.CryptoObject cryptoObject;
+    private FingerprintManager fingerprintManager;
+    private KeyguardManager keyguardManager;
+    private boolean HardwareDetected=false;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -66,6 +72,37 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
             e.printStackTrace();
         }
 
+        try {
+            // If you’ve set your app’s minSdkVersion to anything lower than 23, then you’ll need to verify that the device is running Marshmallow
+            // or higher before executing any fingerprint-related code
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                //Get an instance of KeyguardManager and FingerprintManager//
+                keyguardManager =
+                        (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+                fingerprintManager =
+                        (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+
+                //Check whether the device has a fingerprint sensor//
+                try {
+                    if (!fingerprintManager.isHardwareDetected()) {
+                        // If a fingerprint sensor isn’t available, then inform the user that they’ll be unable to use your app’s fingerprint functionality//
+                       // Toast.makeText(this, "Your device doesn't support fingerprint authentication", Toast.LENGTH_SHORT).show();
+                        HardwareDetected=false;
+                    }else {
+                        HardwareDetected=true;
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    HardwareDetected=false;
+                    //Toast.makeText(this, "Your device doesn't support fingerprint authentication", Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     Runnable runnable = new Runnable() {
@@ -74,14 +111,15 @@ public class Splash extends AppCompatActivity implements PasscodeClickListener {
             try {
                 getPromotionalOfferType121();
                 if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN) != null) {
-//                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE) == null || BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PASSCODE).equals("")) {
-//                    startActivity(new Intent(Splash.this,CreatePassCodeActivity.class));
-//                } else {
-//                    PasscodeDialog passcodeDialog = new PasscodeDialog(Splash.this, Splash.this, "");
-//                    passcodeDialog.show();
-//                }
-                    PasscodeDialog passcodeDialog = new PasscodeDialog(Splash.this, Splash.this, "");
-                    passcodeDialog.show();
+
+                    if (HardwareDetected){
+                        startActivity(new Intent(Splash.this, FingerprintActivity2.class));
+                        finish();
+                    }else {
+                        PasscodeDialog passcodeDialog = new PasscodeDialog(Splash.this, Splash.this, "");
+                        passcodeDialog.show();
+                    }
+
                 } else {
                     startActivity(new Intent(Splash.this, LoginActivity.class));
                     finish();

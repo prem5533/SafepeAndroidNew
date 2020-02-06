@@ -147,10 +147,16 @@ public class PostpaidBillpay extends BaseActivity {
         PayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",false);
-                }else {
-                    CheckValidate();
+
+                try {
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",false);
+                    }else {
+                        CheckValidate();
+                    }
+                }catch (Exception e){
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout), "Please Buy Membership To Enjoy App's Features", false);
+                    e.printStackTrace();
                 }
             }
         });

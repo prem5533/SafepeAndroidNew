@@ -160,8 +160,7 @@
                                 android:fontFamily="@font/roboto_regular"
                                 android:textColor="@color/black"
                                 android:background="@null"
-                                android:paddingLeft="5dp"
-                                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ @ ."/>
+                                android:paddingLeft="5dp"/>
                         </LinearLayout>
 
                         <View

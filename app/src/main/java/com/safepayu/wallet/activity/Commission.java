@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -74,39 +73,50 @@ public class Commission extends BaseActivity {
             }
         });
 
-        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
-            GetMemberShipBtn.setVisibility(View.VISIBLE);
-            liSendTowallet.setVisibility(View.GONE);
-            WarningTextTv.setVisibility(View.VISIBLE);
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Goto Your Profile and Verify Your Email First",true);
-        }else {
-            getCommissionDetails();
-            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
+        try {
+            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
                 GetMemberShipBtn.setVisibility(View.VISIBLE);
                 liSendTowallet.setVisibility(View.GONE);
                 WarningTextTv.setVisibility(View.VISIBLE);
-             //   BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",true);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            //    alertDialogBuilder.setTitle("Commission");
-                alertDialogBuilder.setTitle( Html.fromHtml("<font color='#3db7c2'>Commission</font>"));
-                alertDialogBuilder
-                        .setMessage("Please Buy Membership To Enjoy App's Features")
-                        .setCancelable(false)
-                        .setPositiveButton("OK",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                dialog.cancel();
-                            }
-                        });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
-                alertDialog.show();
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Goto Your Profile and Verify Your Email First",true);
             }else {
-                GetMemberShipBtn.setVisibility(View.GONE);
-                liSendTowallet.setVisibility(View.VISIBLE);
+                getCommissionDetails();
+                try {
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
+                        GetMemberShipBtn.setVisibility(View.VISIBLE);
+                        liSendTowallet.setVisibility(View.GONE);
+                        WarningTextTv.setVisibility(View.VISIBLE);
+                        //   BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",true);
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                        //    alertDialogBuilder.setTitle("Commission");
+                        alertDialogBuilder.setTitle( Html.fromHtml("<font color='#3db7c2'>Commission</font>"));
+                        alertDialogBuilder
+                                .setMessage("Please Buy Membership To Enjoy App's Features")
+                                .setCancelable(false)
+                                .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        dialog.cancel();
+                                    }
+                                });
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+                        // show it
+                        alertDialog.show();
+                    }else {
+                        GetMemberShipBtn.setVisibility(View.GONE);
+                        liSendTowallet.setVisibility(View.VISIBLE);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    GetMemberShipBtn.setVisibility(View.GONE);
+                    liSendTowallet.setVisibility(View.VISIBLE);
+                }
             }
+        }catch (Exception e) {
+            e.printStackTrace();
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Goto Your Profile and Verify Your Email First",true);
         }
     }
 

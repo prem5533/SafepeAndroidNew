@@ -39,7 +39,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -74,9 +73,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.ecommerce.activity.EHomeActivity;
-import com.safepayu.wallet.ecommerce.activity.FilterDialog;
 import com.safepayu.wallet.ecommerce.activity.MyOrderEcomActivity;
-import com.safepayu.wallet.ecommerce.fragment.EcomHomeFragment;
 import com.safepayu.wallet.models.request.PromotionRequest;
 import com.safepayu.wallet.models.response.AppVersionResponse;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -1672,25 +1669,26 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
                             try {
-                                int val = Integer.parseInt(response.getVersionData().getVal());
-                                url = response.getVersionData().getLogo();
-                                //BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ApiClient.ImagePath+url);
+                                if (response.getVersionData().getStatus()==1){
+                                    int val = Integer.parseInt(response.getVersionData().getVal());
+                                    url = response.getVersionData().getLogo();
+                                    //BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ApiClient.ImagePath+url);
                        /*     Picasso.get().load(ImagePath+url).into(headerLogo);
                             Picasso.get().load(ImagePath+url).into(navLogo);*/
 
-                                try {
-                                    tollNumber = response.getVersionData().getTollfree();
-                                } catch (Exception e) {
-                                    tollNumber = "";
-                                    e.printStackTrace();
-                                }
+                                    try {
+                                        tollNumber = response.getVersionData().getTollfree();
+                                    } catch (Exception e) {
+                                        tollNumber = "";
+                                        e.printStackTrace();
+                                    }
 
-                                if (versionCode == val) {
+                                    if (versionCode == val) {
 
-                                } else {
-                                    showDialogForAppUpdate(Navigation.this);
+                                    } else {
+                                        showDialogForAppUpdate(Navigation.this);
+                                    }
                                 }
-                                getServicesCharges();
                             }catch (Exception e){
                                 BaseApp.getInstance().toastHelper().showSnackBar(drawer, e.getMessage(), false);
                                 e.printStackTrace();
@@ -1698,6 +1696,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(drawer, response.getMessage(), false);
                         }
+                        getServicesCharges();
                     }
 
                     @Override
@@ -1939,7 +1938,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             for (int x = 0; x < bitMatrixWidth; x++) {
 
                 pixels[offset + x] = bitMatrix.get(x, y) ?
-                        getResources().getColor(R.color.bue_A800) : getResources().getColor(R.color.white);
+                        getResources().getColor(R.color.black) : getResources().getColor(R.color.white);
             }
         }
         Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444);

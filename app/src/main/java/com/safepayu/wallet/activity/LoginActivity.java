@@ -1,6 +1,7 @@
 package com.safepayu.wallet.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
@@ -302,16 +303,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     public void onSuccess(AppVersionResponse response) {
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
-                            int val = Integer.parseInt(response.getVersionData().getVal());
+                            if (response.getVersionData().getStatus()==1){
+                                int val = Integer.parseInt(response.getVersionData().getVal());
 
-                             url = response.getVersionData().getLogo();
-                          //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ImagePath+url);
-                           //  Picasso.get().load(ImagePath+url).into(loginImageLogo);
+                                url = response.getVersionData().getLogo();
+                                //  BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ImagePath+url);
+                                //  Picasso.get().load(ImagePath+url).into(loginImageLogo);
 
-                            if (versionCode == val) {
+                                if (versionCode == val) {
 
-                            } else {
-                                showDialogForAppUpdate(LoginActivity.this);
+                                } else {
+                                    showDialogForAppUpdate(LoginActivity.this);
+                                }
                             }
 
                         } else {
@@ -330,28 +333,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private void loginUser() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    Activity#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                return;
-            }
-        }
-        //Login login = new Login(mobileNo.getText().toString().trim(), password.getText().toString(), BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
 
-        Login login=new Login(mobileNo.getText().toString().trim(),password.getText().toString().trim(),BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
-        //login.setDeviceid(BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
-        //login.setMobile(mobileNo.getText().toString().trim());
-        //login.setPassword(password.getText().toString().trim());
-      //  HashMap<String,String> requestMap=new HashMap<>();
-        //requestMap.put("mobile",mobileNo.getText().toString());
-        //requestMap.put("password",password.getText().toString());
-        //requestMap.put("deviceid",BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
+        @SuppressLint("HardwareIds")String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        Login login=new Login(mobileNo.getText().toString().trim(),password.getText().toString().trim(),android_id);
 
         BaseApp.getInstance().getDisposable().add(apiService.login(login)
                 .subscribeOn(Schedulers.io())
@@ -695,23 +679,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     };
 
     private void verifyOtp(String otp) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    Activity#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                return;
-            }
-        }
 
+        @SuppressLint("HardwareIds")String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(mobileNo.getText().toString().trim(), null);
-        request.setDeviceid(BaseApp.getInstance().commonUtils().getTelephonyManager().getDeviceId());
+        request.setDeviceid(android_id);
         request.setOtp(otp);
         BaseApp.getInstance().getDisposable().add(apiService.verifyOTP(request)
                 .subscribeOn(Schedulers.io())
