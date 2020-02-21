@@ -498,7 +498,6 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
                 .show();
     }
 
-
     /**
      * Uploading the file to server
      * */
