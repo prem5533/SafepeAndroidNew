@@ -66,11 +66,15 @@ public class FingerprintHandler2 extends FingerprintManager.AuthenticationCallba
 
         Toast.makeText(context, "Authentication error\n" + errString, Toast.LENGTH_LONG).show();
 
-        AttemptAuthentication=AttemptAuthentication+1;
+        try {
+            AttemptAuthentication=AttemptAuthentication+1;
 
-        if (AttemptAuthentication==3 || AttemptAuthentication>3){
-            PasscodeDialog passcodeDialog = new PasscodeDialog(((Activity)context), FingerprintHandler2.this, "");
-            passcodeDialog.show();
+            if (AttemptAuthentication==3 || AttemptAuthentication>3){
+                PasscodeDialog passcodeDialog = new PasscodeDialog(((Activity)context), FingerprintHandler2.this, "");
+                passcodeDialog.show();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -81,11 +85,15 @@ public class FingerprintHandler2 extends FingerprintManager.AuthenticationCallba
     public void onAuthenticationFailed() {
         Toast.makeText(context, "Authentication failed", Toast.LENGTH_LONG).show();
 
-        AttemptAuthentication=AttemptAuthentication+1;
+        try {
+            AttemptAuthentication=AttemptAuthentication+1;
 
-        if (AttemptAuthentication==3 || AttemptAuthentication>3){
-            PasscodeDialog passcodeDialog = new PasscodeDialog(((Activity)context), FingerprintHandler2.this, "");
-            passcodeDialog.show();
+            if (AttemptAuthentication==3 || AttemptAuthentication>3){
+                PasscodeDialog passcodeDialog = new PasscodeDialog(((Activity)context), FingerprintHandler2.this, "");
+                passcodeDialog.show();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

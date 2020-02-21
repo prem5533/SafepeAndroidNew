@@ -37,306 +37,360 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/headerbar"
-        tools:context="com.xwallet.wallet.Fragments.PostpaidRechrge">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerbar">
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/red_theme"/>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            app:cardCornerRadius="5dp"
-            android:elevation="5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="-30dp">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                android:gravity="center">
+            tools:context="com.xwallet.wallet.Fragments.PostpaidRechrge">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="start|center"
-                android:padding="10dp">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="0dp"
-                    android:src="@drawable/ic_user_new" />
-                <EditText
-                    android:id="@+id/gasID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView2"
-                    android:layout_gravity="center"
-                    android:background="@null"
-                    android:inputType="number"
-                    android:nextFocusForward="@+id/amount"
-                    android:padding="10dp"
-                    android:textColor="#373836"
-                    android:textSize="15sp"
-                    android:hint="Customer ID"
-                    android:fontFamily="@font/roboto_regular" />
-            </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height=".5dp"
-                    android:background="@color/graynew"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/red_theme"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="start|center"
-                    android:padding="10dp">
-                    <FrameLayout
+                    android:padding="5dp"
+                    app:cardCornerRadius="5dp"
+                    android:elevation="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="-30dp">
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="3dp"
+                        android:padding="5dp"
+                        android:gravity="center">
                         <LinearLayout
-                            android:id="@+id/layout_select_mobile_operator"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_marginLeft="5dp"
-                                android:src="@drawable/ic_gasnew" />
-                            <TextView
-                                android:id="@+id/tv_select_mobile_operator"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_margin="10dp">
+
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Select Operator"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="start|center"
+                                android:padding="10dp">
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_marginLeft="0dp"
+                                    android:src="@drawable/ic_user_new" />
+                                <EditText
+                                    android:id="@+id/gasID"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/textView2"
+                                    android:layout_gravity="center"
+                                    android:background="@null"
+                                    android:inputType="number"
+                                    android:nextFocusForward="@+id/amount"
+                                    android:padding="10dp"
+                                    android:textColor="#373836"
+                                    android:textSize="15sp"
+                                    android:hint="Customer ID"
+                                    android:fontFamily="@font/roboto_regular" />
+                            </LinearLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height=".5dp"
+                                android:background="@color/graynew"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="start|center"
+                                android:padding="10dp">
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp">
+                                    <LinearLayout
+                                        android:id="@+id/layout_select_mobile_operator"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:orientation="horizontal">
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginLeft="5dp"
+                                            android:src="@drawable/ic_gasnew" />
+                                        <TextView
+                                            android:id="@+id/tv_select_mobile_operator"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:text="Select Operator"
+                                            android:padding="10dp"
+                                            android:textColor="@color/textcolor"
+                                            android:textSize="15sp"
+                                            android:fontFamily="@font/roboto_regular"
+                                            android:layout_marginLeft="5dp"
+                                            android:layout_weight="1"/>
+                                        <ImageView
+                                            android:layout_width="30dp"
+                                            android:layout_height="30dp"
+                                            android:padding="10dp"
+                                            android:src="@drawable/ic_down_security"
+                                            android:layout_marginRight="10dp"/>
+                                    </LinearLayout>
+
+                                    <Spinner
+                                        android:id="@+id/operatorsGas"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="40dp"
+                                        android:layout_below="@+id/textView5"
+                                        android:nextFocusForward="@+id/textView"
+                                        android:backgroundTint="@color/red_theme"
+                                        android:layout_marginLeft="5dp"
+                                        android:visibility="gone"/>
+                                </FrameLayout>
+                            </LinearLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height=".5dp"
+                                android:background="@color/graynew"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="start|center"
+                                android:padding="10dp">
+
+                                <ImageView
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:src="@drawable/ic_new_rupee" />
+
+                                <EditText
+                                    android:id="@+id/amountGas"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/textView"
+                                    android:layout_gravity="center"
+                                    android:background="@null"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="number"
+                                    android:nextFocusForward="@+id/btn"
+                                    android:padding="10dp"
+                                    android:textColor="#373836"
+                                    android:textSize="15sp"
+                                    android:hint="Amount"
+                                    android:maxLength="4"
+                                    android:fontFamily="@font/roboto_regular"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/govCharge_gas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:text="Government Charge"
+                    android:textColor="@color/grey_500"
+                    android:textSize="13dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/calculatedamount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text=" "
+                    android:textSize="14sp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/yellow_theme"
+                    android:paddingLeft="0dp"
+                    android:visibility="gone"
+                    />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="gone">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/white">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Recharge Amount"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
                                 android:padding="10dp"
-                                android:textColor="@color/textcolor"
-                                android:textSize="15sp"
-                                android:fontFamily="@font/roboto_regular"
-                                android:layout_marginLeft="5dp"
+                                android:fontFamily="@font/roboto_bold"
                                 android:layout_weight="1"/>
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                            <TextView
+                                android:id="@+id/tv_rechargeamount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="10"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
                                 android:padding="10dp"
-                                android:src="@drawable/ic_down_security"
-                                android:layout_marginRight="10dp"/>
+                                android:fontFamily="@font/roboto_regular"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Wallet Cashback"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:padding="10dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:id="@+id/tv_walletcashback"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="10"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:padding="10dp"
+                                android:fontFamily="@font/roboto_regular"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:background="@color/divider"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total Amount"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:padding="10dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:layout_weight="1"/>
+                            <TextView
+                                android:id="@+id/tv_total_amountpay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="10"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"
+                                android:padding="10dp"
+                                android:fontFamily="@font/roboto_regular"/>
                         </LinearLayout>
 
-                        <Spinner
-                            android:id="@+id/operatorsGas"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_below="@+id/textView5"
-                            android:nextFocusForward="@+id/textView"
-                            android:backgroundTint="@color/red_theme"
-                            android:layout_marginLeft="5dp"
-                            android:visibility="gone"/>
-                    </FrameLayout>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height=".5dp"
-                    android:background="@color/graynew"/>
-                <LinearLayout
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="start|center"
-                    android:padding="10dp">
+                    android:id="@+id/serviceChargeLayout_gas"
+                    android:visibility="gone">
 
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                    <include layout="@layout/service_charge_layout" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/gasPaybtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/amount"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/blue_green_round_btn"
+                    android:fontFamily="@font/roboto_bold"
+                    android:padding="10dp"
+                    android:text="Pay Now"
+                    android:textColor="#fff"
+                    android:textSize="15sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/orderPreviousText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:src="@drawable/ic_new_rupee" />
+                        android:text="Previous Orders: "
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/grey_700"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_alignParentLeft="true"/>
 
-                    <EditText
-                        android:id="@+id/amountGas"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/orderViewAllText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:imeOptions="actionDone"
-                        android:inputType="number"
-                        android:nextFocusForward="@+id/btn"
-                        android:padding="10dp"
-                        android:textColor="#373836"
-                        android:textSize="15sp"
-                        android:hint="Amount"
-                        android:fontFamily="@font/roboto_regular"/>
-                </LinearLayout>
+                        android:layout_marginRight="10dp"
+                        android:text="View All"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/grey_700"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_alignParentRight="true"/>
+                    <TextView
+                        android:id="@+id/orderViewLessText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="View Less"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/grey_700"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_alignParentRight="true"
+                        android:visibility="gone"/>
+                </RelativeLayout>
 
-            </LinearLayout>
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/govCharge_gas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="15dp"
-                android:text="Government Charge"
-                android:textColor="@color/grey_500"
-                android:textSize="13dp"
-                android:fontFamily="@font/roboto_bold"
-                android:visibility="visible" />
-
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/calculatedamount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text=" "
-                android:textSize="14sp"
-                android:fontFamily="@font/roboto_regular"
-                android:textColor="@color/yellow_theme"
-                android:paddingLeft="0dp"
-                android:visibility="gone"
-                />
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="5dp"
-                android:visibility="gone">
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listGas_rechargeHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@color/white">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Recharge Amount"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"
-                            android:padding="10dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:layout_weight="1"/>
-                        <TextView
-                            android:id="@+id/tv_rechargeamount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"
-                            android:padding="10dp"
-                            android:fontFamily="@font/roboto_regular"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Wallet Cashback"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"
-                            android:padding="10dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:layout_weight="1"/>
-                        <TextView
-                            android:id="@+id/tv_walletcashback"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"
-                            android:padding="10dp"
-                            android:fontFamily="@font/roboto_regular"/>
-                    </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height=".5dp"
-                        android:background="@color/divider"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Total Amount"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"
-                            android:padding="10dp"
-                            android:fontFamily="@font/roboto_bold"
-                            android:layout_weight="1"/>
-                        <TextView
-                            android:id="@+id/tv_total_amountpay"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"
-                            android:padding="10dp"
-                            android:fontFamily="@font/roboto_regular"/>
-                    </LinearLayout>
+                    android:layout_margin="5dp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/serviceChargeLayout_gas"
-                android:visibility="gone">
-
-                <include layout="@layout/service_charge_layout" />
-            </RelativeLayout>
-            <Button
-                android:id="@+id/gasPaybtn"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/amount"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/blue_green_round_btn"
-                android:fontFamily="@font/roboto_bold"
-                android:padding="10dp"
-                android:text="Pay Now"
-                android:textColor="#fff"
-                android:textSize="15sp" />
-        </LinearLayout>
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>
 
         <!--<LinearLayout

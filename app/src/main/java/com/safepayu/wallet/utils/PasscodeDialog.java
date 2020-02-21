@@ -241,7 +241,11 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
                 .subscribeWith(new DisposableSingleObserver<BaseResponse>() {
                     @Override
                     public void onSuccess(BaseResponse baseResponse) {
-                        loadingDialog.hideDialog();
+                        try {
+                            loadingDialog.hideDialog();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         if (baseResponse.getStatus()){
                             clickListener.onPasscodeMatch(true);
                         }else{
@@ -252,7 +256,11 @@ public class PasscodeDialog extends Dialog implements View.OnClickListener {
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.hideDialog();
+                        try {
+                            loadingDialog.hideDialog();
+                        }catch (Exception e2){
+                            e2.printStackTrace();
+                        }
                         Log.v("error",e.getMessage());
                     }
                 }));

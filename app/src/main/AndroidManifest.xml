@@ -195,6 +195,9 @@
             android:name=".activity.PaymentType"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.PaymentTypeNew"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.recharge.MobileRecharge"
             android:screenOrientation="portrait" />
         <activity
@@ -291,6 +294,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -334,7 +338,18 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
-        </provider> <!-- Ecommerce -->
+        </provider>
+
+        <receiver
+            android:name=".helper.SmsBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVE" />
+            </intent-filter>
+        </receiver>
+
+
+        <!-- Ecommerce -->
         <activity
             android:name=".ecommerce.activity.FilterDialog"
             android:screenOrientation="portrait" />

@@ -197,7 +197,12 @@ public class BuyMemberShip extends AppCompatActivity implements PackageListAdapt
                                     buyPackage.setPaid_from_account("");
                                     buyPackageFromDB=buyPackage;
 
-                                    Intent intent=new Intent(BuyMemberShip.this,PaymentType.class);
+                                    Intent intent;
+                                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN).equals("0")) {
+                                        intent = new Intent(BuyMemberShip.this, PaymentTypeNew.class);
+                                    }else {
+                                        intent = new Intent(BuyMemberShip.this, PaymentType.class);
+                                    }
                                     overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                                     intent.putExtra("RechargePaymentId",BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
                                     intent.putExtra("Amount",String.valueOf(FinalAmount));

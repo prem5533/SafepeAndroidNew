@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -201,7 +200,14 @@ public class WalletAddMoney extends BaseActivity implements PackageAdapterForWal
                     dialog.dismiss();
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addMoneyToWalletLayout),"Please Goto Your Profile and Verify Your Email First",true);
                 }else {
-                    Intent intent = new Intent(WalletAddMoney.this, PaymentType.class);
+                    Intent intent;
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN).equals("0")) {
+
+                        intent = new Intent(WalletAddMoney.this, PaymentTypeNew.class);
+                    }else {
+                        intent = new Intent(WalletAddMoney.this, PaymentType.class);
+                    }
+
                     overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                     intent.putExtra("RechargePaymentId", "");
                     intent.putExtra("Amount", finalAmt);

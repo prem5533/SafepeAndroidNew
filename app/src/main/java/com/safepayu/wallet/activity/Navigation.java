@@ -110,6 +110,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             liBigBazaar, liBrandFactory, liKFC, liDominos, liLogoutAllDevices, linearSecurityTab,linearLogoutTab,linearGiftCoupon;
     public static int BadgeCount = 0;
     public static TextView BadgeCountTV;
+    public static int sizeMobileRecharge=0;
     Dialog dialog;
     TextView TitleNotiDialog, ContentNotiDialog,tvLogoutTextParent;
     ImageView ImageViewNotiDialog, imageDownSecurity, imageUpSecurity,imageDownLogout, imageUpLogout,headerLogo,navLogo;
@@ -403,6 +404,18 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liKFC.setOnClickListener(this);
         liBrandFactory.setOnClickListener(this);
         liBigBazaar.setOnClickListener(this);
+
+        try {
+            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_MENU).equals("1")){
+                liBuyPackage.setVisibility(View.VISIBLE);
+                tvBuyPackage.setVisibility(View.VISIBLE);
+            }else {
+                liBuyPackage.setVisibility(View.GONE);
+                tvBuyPackage.setVisibility(View.GONE);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         imageDownSecurity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1826,8 +1839,21 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME, response.getUser().getFirst_name());
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME, response.getUser().getLast_name());
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED, String.valueOf(response.getUser().getBlocked()));
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED, String.valueOf(response.getUser().getPackage_status()));
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().GENEOLOGY_URL, String.valueOf(response.getUser().getGenealogy()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED, String.valueOf(response.getUser().getPackage_status()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_MENU, String.valueOf(response.getUser().getMenuBuyPackage_status()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN, String.valueOf(response.getUser().getPayment_screen()));
+                            try {
+                                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_MENU).equals("1")){
+                                    liBuyPackage.setVisibility(View.VISIBLE);
+                                    tvBuyPackage.setVisibility(View.VISIBLE);
+                                }else {
+                                    liBuyPackage.setVisibility(View.GONE);
+                                    tvBuyPackage.setVisibility(View.GONE);
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     }
 
@@ -1959,11 +1985,11 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                            Intent intentAlldevice = new Intent(getApplicationContext(), LoginActivity.class);
-                            intentAlldevice.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN, null);
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, null);
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGOUT_ALL, "1");
+                            Intent intentAlldevice = new Intent(getApplicationContext(), LoginActivity.class);
+                            intentAlldevice.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intentAlldevice);
                             finish();
                         } else {
@@ -2042,6 +2068,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                                     BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LIMIT_MIN,response.getTax().get(i).getTax_value());
                                 }else if (response.getTax().get(i).getTax_id()==6){
                                     BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().COMMISSION_CHARGE,response.getTax().get(i).getTax_value());
+                                }else if (response.getTax().get(i).getTax_id()==7){
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MIN_WITHDRAW_CHARGE,response.getTax().get(i).getTax_value());
                                 }
                             }
                         }

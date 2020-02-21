@@ -212,7 +212,6 @@ public class Profile extends BaseActivity implements View.OnClickListener {
 
     }
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -325,12 +324,9 @@ public class Profile extends BaseActivity implements View.OnClickListener {
         ImageView QRcodeImageView=dialog.findViewById(R.id.imageViewQRcode);
         QRcodeImageView.setImageBitmap(bitmap);
 
-
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-
-
 
         dialog.getWindow().setAttributes(lp);
         dialog.show();

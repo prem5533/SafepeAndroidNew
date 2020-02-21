@@ -32,12 +32,16 @@ import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.Navigation;
 import com.safepayu.wallet.activity.PaymentType;
+import com.safepayu.wallet.activity.PaymentTypeNew;
 import com.safepayu.wallet.adapter.OfferAdapter;
+import com.safepayu.wallet.adapter.ServiceHistoryAdapter;
 import com.safepayu.wallet.adapter.SpinnerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.helper.RecyclerLayoutManager;
 import com.safepayu.wallet.models.response.CustOperatorResponse;
 import com.safepayu.wallet.models.response.Offer;
 import com.safepayu.wallet.models.response.OperatorResponse;
@@ -60,29 +64,33 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOfferSelectListener {
+import static com.safepayu.wallet.activity.LoginActivity.finalAmount;
+
+public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOfferSelectListener, ServiceHistoryAdapter.OnSelectListener {
 
     private Button RechargeBtn, BackBtn;
-    private TextView OffersBtn,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;
-    private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax;
+    private TextView OffersBtn,tvRechargeamount,tvWalletCashback,tvTotalAmountpay,tvViewAllBtn,tvViewLessBtn;
+    private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax,tvPreviousOrderText;
     private Spinner OperatorSpinner;
     public static EditText AmountED;
     private EditText MobileED;
-    String OperatorText,OperatorCode="0",OperatorId,OperatorCodeSelected="",Amount2Pay="";
+    private RecyclerView RechargeHistoryListView;
+    private String OperatorText,OperatorCode="0",OperatorId,OperatorCodeSelected="",Amount2Pay="";
     private boolean checkOnce=false;
+    private ServiceHistoryAdapter historyAdapter;
 
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList, IdList, OperatorCodeList,OperatorImage;
-    OfferAdapter adapter;
-    SuperRecyclerView recyclerView;
-    Dialog dialog;
-    ArrayList<Offer> offers;
+    private OfferAdapter adapter;
+    private SuperRecyclerView recyclerView;
+    private Dialog dialog;
+    private ArrayList<Offer> offers;
     private TextView AmountTotalTV;
     double totalAmount = 0.0f, minusAmount = 0.0f;
     private CardView cardAmount;
     private RelativeLayout ServiceChargeLayout;
-    List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
-    LinearLayout layoutSelectMobileOperator;
+    private List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
+    private LinearLayout layoutSelectMobileOperator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +123,14 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
         tvRechargeAmtTax= findViewById(R.id.tv_rechargeAmount_serviceChargeLayout);
         tvServiceChargeTax= findViewById(R.id.tv_serviceCharge_serviceChargeLayout);
         tvAmt2PayTax= findViewById(R.id.tv_totalAmt_serviceChargeLayout);
+        tvPreviousOrderText=findViewById(R.id.orderPreviousText);
+        tvViewAllBtn=findViewById(R.id.orderViewAllText);
+        tvViewLessBtn=findViewById(R.id.orderViewLessText);
+        RechargeHistoryListView = findViewById(R.id.list_rechargeHistory);
+
+        RecyclerLayoutManager layoutManager = new RecyclerLayoutManager(1, RecyclerLayoutManager.VERTICAL);
+        layoutManager.setScrollEnabled(false);
+        RechargeHistoryListView.setLayoutManager(layoutManager);
 
 
         OperatorNameList=new ArrayList<>();
@@ -140,6 +156,35 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
             public void onClick(View v) {
                 layoutSelectMobileOperator.setVisibility(View.GONE);
                 OperatorSpinner.setVisibility(View.VISIBLE);
+            }
+        });
+
+        Navigation.sizeMobileRecharge=0;
+        if (Navigation.sizeMobileRecharge==0){
+            tvViewAllBtn.setVisibility(View.VISIBLE);
+            tvViewLessBtn.setVisibility(View.GONE);
+        }else {
+            tvViewAllBtn.setVisibility(View.GONE);
+            tvViewLessBtn.setVisibility(View.VISIBLE);
+        }
+
+        tvViewAllBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.sizeMobileRecharge=1;
+                tvViewAllBtn.setVisibility(View.GONE);
+                tvViewLessBtn.setVisibility(View.VISIBLE);
+                historyAdapter.notifyDataSetChanged();
+            }
+        });
+
+        tvViewLessBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.sizeMobileRecharge=0;
+                tvViewAllBtn.setVisibility(View.VISIBLE);
+                tvViewLessBtn.setVisibility(View.GONE);
+                historyAdapter.notifyDataSetChanged();
             }
         });
 
@@ -190,11 +235,12 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                 finish();*/
 
                 try {
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Buy Membership To Enjoy App's Features", false);
-                    } else {
-                        CheckValidate();
-                    }
+//                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+//                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Buy Membership To Enjoy App's Features", false);
+//                    } else {
+//                        CheckValidate();
+//                    }
+                    CheckValidate();
                 }catch (Exception e){
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Buy Membership To Enjoy App's Features", false);
                     e.printStackTrace();
@@ -209,9 +255,13 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
 
                 // TODO Auto-generated method stub
 
-                if (s.length() == 10) {
-                    getCustomerOperator();
+                try {
+                    if (s.length() == 10) {
+                        getCustomerOperator();
 
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
 
@@ -343,6 +393,7 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
             Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(Double.parseDouble(Amt.trim()), Double.parseDouble(Tax));
             tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+totalPayableAmount);
             Amount2Pay=String.valueOf(totalPayableAmount);
+            finalAmount=totalPayableAmount;
         }catch (Exception e){
             tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+0);
             Amount2Pay="0";
@@ -381,7 +432,14 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
 
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout), "Please Select Operator", false);
                         } else {
-                            Intent intent = new Intent(MobileRecharge.this, PaymentType.class);
+                            Intent intent;
+                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN).equals("0")) {
+
+                                intent = new Intent(MobileRecharge.this, PaymentTypeNew.class);
+                            }else {
+                                intent = new Intent(MobileRecharge.this, PaymentType.class);
+                            }
+
                             overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                             intent.putExtra("RechargePaymentId", Mobile);
                             intent.putExtra("Amount", String.valueOf(Amount));
@@ -437,9 +495,25 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
 //                                mOperList.add(operatorsBean);
 //                            }
 
-
                                 SpinnerAdapter customAdapter=new SpinnerAdapter(getApplicationContext(),mOperList);
                                 OperatorSpinner.setAdapter(customAdapter);
+
+                                try {
+                                    if (response.getHistory().size()>0){
+                                        tvPreviousOrderText.setVisibility(View.VISIBLE);
+                                        historyAdapter=new ServiceHistoryAdapter(MobileRecharge.this,response.getHistory(),MobileRecharge.this);
+                                        RechargeHistoryListView.setAdapter(historyAdapter);
+                                    }else {
+                                        tvPreviousOrderText.setVisibility(View.GONE);
+                                        tvViewAllBtn.setVisibility(View.GONE);
+                                        tvViewLessBtn.setVisibility(View.GONE);
+                                    }
+                                }catch (Exception e1){
+                                    tvPreviousOrderText.setVisibility(View.GONE);
+                                    tvViewAllBtn.setVisibility(View.GONE);
+                                    tvViewLessBtn.setVisibility(View.GONE);
+                                    e1.printStackTrace();
+                                }
                             }else {
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.mobileRechargeLayout),"No Operator Found", false);
                             }
@@ -457,7 +531,24 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                 }));
     }
 
+    @Override
+    public void onOrderItemSelect(int position, OperatorResponse.HistoryBean selectOrderItem) {
+       // Toast.makeText(this, selectOrderItem.getNumber(), Toast.LENGTH_SHORT).show();
+        OperatorText=selectOrderItem.getOperator_name();
 
+        for (int j=0;j<mOperList.size();j++){
+            if (OperatorText.equalsIgnoreCase(mOperList.get(j).getOperator_name())){
+                OperatorCode= mOperList.get(j).getOperator_code();
+                OperatorCodeSelected=OperatorCode;
+                OperatorSpinner.setSelection(j);
+                AmountED.setText(""+selectOrderItem.getAmount());
+                MobileED.setText(selectOrderItem.getNumber());
+                break;
+            }
+        }
+        MobileED.requestFocus();
+        OperatorId= selectOrderItem.getOperator_id();
+    }
 
     private void getCustomerOperator() {
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);

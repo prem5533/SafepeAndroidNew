@@ -7,6 +7,7 @@ import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -29,9 +30,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.credentials.Credential;
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -42,7 +52,10 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.enums.ButtonActions;
+import com.safepayu.wallet.helper.AppSignatureHashHelper;
 import com.safepayu.wallet.helper.Config;
+import com.safepayu.wallet.helper.OtpReceivedInterface;
+import com.safepayu.wallet.helper.SmsBroadcastReceiver;
 import com.safepayu.wallet.listener.SnackBarActionClickListener;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.SendOtpRequest;
@@ -57,30 +70,47 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener, SnackBarActionClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, SnackBarActionClickListener,
+        GoogleApiClient.ConnectionCallbacks, OtpReceivedInterface, GoogleApiClient.OnConnectionFailedListener{
     private static String TAG = LoginActivity.class.getName();
     private EditText mobileNo, password;
     private CheckBox RememberMeCB;
     private ApiService apiService;
     private LoadingDialog loadingDialog;
     String versionName = "", appUrl = "https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
-    int versionCode = 0;
+    private int versionCode = 0;
     private ImageView im_cross, ShowHidePasswordBtn,loginImageLogo;
     private boolean showPass = false, checkedRemember=false;
     private LoginResponse loginResponse;
-    String url;
+    private String url;
+    public static double finalAmount=0;
 
     //Otp Dialog
-    TextView TimerTV;
-    EditText OtpED;
-    Button continueButton, resendButton;
-     String ImagePath="http://india.safepayu.com/safepe-new/public/";
+    private TextView TimerTV;
+    private EditText OtpED;
+    private Dialog dialogOTP;
+    private Button continueButton, resendButton;
+    private String ImagePath="http://india.safepayu.com/safepe-new/public/";
+
+     //Sms Receiver
+     GoogleApiClient mGoogleApiClient;
+    SmsBroadcastReceiver mSmsBroadcastReceiver;
+    private int RESOLVE_HINT = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
      //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setToolbar(false, null, true);
+
+        // init broadcast receiver
+        mSmsBroadcastReceiver = new SmsBroadcastReceiver();
+        //set google api client for hint request
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.CREDENTIALS_API)
+                .build();
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +120,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         });
         loadingDialog = new LoadingDialog(this);
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        mSmsBroadcastReceiver.setOnOtpListeners(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION);
+        getApplicationContext().registerReceiver(mSmsBroadcastReceiver, intentFilter);
+
+        // This code requires one time to get Hash keys do comment and share key
+        AppSignatureHashHelper appSignatureHashHelper = new AppSignatureHashHelper(this);
+        //Log.v(TAG, "HashKey: " + appSignatureHashHelper.getAppSignatures().get(0));
 
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -145,8 +184,70 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 //        checkPermission();
         getAppVersion();
 
+        //getHintPhoneNumber();
+    }
 
+//    public void getHintPhoneNumber() {
+//        HintRequest hintRequest =
+//                new HintRequest.Builder()
+//                        .setPhoneNumberIdentifierSupported(true)
+//                        .build();
+//        PendingIntent mIntent = Auth.CredentialsApi.getHintPickerIntent(mGoogleApiClient, hintRequest);
+//        try {
+//            startIntentSenderForResult(mIntent.getIntentSender(), RESOLVE_HINT, null, 0, 0, 0);
+//        } catch (IntentSender.SendIntentException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Result if we want hint number
+        if (requestCode == RESOLVE_HINT) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    Credential credential = data.getParcelableExtra(Credential.EXTRA_KEY);
+                    // credential.getId();  <-- will need to process phone number string
+                    mobileNo.setText(credential.getId());
+                }
+            }
+        }
+    }
+
+    public void startSMSListener() {
+        SmsRetrieverClient mClient = SmsRetriever.getClient(this);
+        Task<Void> mTask = mClient.startSmsRetriever();
+        mTask.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override public void onSuccess(Void aVoid) {
+                //Toast.makeText(LoginActivity.this, "SMS Retriever starts", Toast.LENGTH_LONG).show();
+            }
+        });
+        mTask.addOnFailureListener(new OnFailureListener() {
+            @Override public void onFailure(@NonNull Exception e) {
+                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this, "Connection Failure", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onOtpTimeout() {
+        //Toast.makeText(this, "Time out, please resend", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -437,23 +538,30 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     public void showDialog(Activity activity) {
-        final Dialog dialog = new Dialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.otp_dialog);
+        dialogOTP = new Dialog(activity);
+        dialogOTP.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogOTP.setCancelable(false);
+        dialogOTP.setContentView(R.layout.otp_dialog);
 
-        TimerTV = dialog.findViewById(R.id.timerLogin);
-        OtpED = dialog.findViewById(R.id.enter_otpLogin);
-        im_cross = dialog.findViewById(R.id.im_cross);
+        TimerTV = dialogOTP.findViewById(R.id.timerLogin);
+        OtpED = dialogOTP.findViewById(R.id.enter_otpLogin);
+        im_cross = dialogOTP.findViewById(R.id.im_cross);
 
         im_cross.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE, "");
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, "");
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().REMEMBER_ME, "");
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, null);
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN_EXPIRE_IN, "");
+                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN_ECOM, "");
+
+                dialogOTP.dismiss();
             }
         });
 
-        continueButton =  dialog.findViewById(R.id.continue_otpLogin);
+        continueButton =  dialogOTP.findViewById(R.id.continue_otpLogin);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -463,27 +571,39 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     //BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout),"Please Enter Otp",false);
                 } else {
                     verifyOtp(OtpED.getText().toString().trim());
-                    dialog.dismiss();
+                    dialogOTP.dismiss();
                 }
             }
         });
 
-        resendButton = dialog.findViewById(R.id.resend_otpLogin);
+        resendButton = dialogOTP.findViewById(R.id.resend_otpLogin);
         resendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 resendOtp();
-                dialog.dismiss();
+                dialogOTP.dismiss();
             }
         });
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.copyFrom(dialogOTP.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
 
-        dialog.getWindow().setAttributes(lp);
-        dialog.show();
+        dialogOTP.getWindow().setAttributes(lp);
+        dialogOTP.show();
 
+    }
+
+    @Override
+    public void onOtpReceived(String otp) {
+        try {
+            OtpED.setText("");
+            otp=otp.substring(otp.indexOf(':')+2);
+
+            OtpED.setText(otp.trim());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void showDialogForAppUpdate(Activity activity) {
@@ -501,6 +621,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     deleteCache(LoginActivity.this);
                 }catch (Exception e){
                     e.printStackTrace();
+
                 }
                 try {
                     clearAppData();
@@ -648,6 +769,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             TimerTV.setVisibility(View.VISIBLE);
 
                             countDownTimer.start();
+                            startSMSListener();
                         } else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout), response.getMessage(), false);
                         }
@@ -739,5 +861,4 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     }
                 }));
     }
-
 }

@@ -18,15 +18,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.Navigation;
 import com.safepayu.wallet.activity.PaymentType;
+import com.safepayu.wallet.activity.PaymentTypeNew;
+import com.safepayu.wallet.adapter.ServiceHistoryAdapter;
 import com.safepayu.wallet.adapter.SpinnerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.helper.RecyclerLayoutManager;
 import com.safepayu.wallet.models.response.CustOperatorResponse;
 import com.safepayu.wallet.models.response.OperatorResponse;
 
@@ -38,7 +43,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class ElectricityPay extends BaseActivity {
+import static com.safepayu.wallet.activity.LoginActivity.finalAmount;
+
+public class ElectricityPay extends BaseActivity implements ServiceHistoryAdapter.OnSelectListener {
 
     Button ElectrictyPaybtn,BackBtn;
     private Spinner OperatorSpinner;
@@ -47,8 +54,10 @@ public class ElectricityPay extends BaseActivity {
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
     private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay,tvGovCharge;
-    private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax;
+    private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax,tvPreviousOrderText,tvViewAllBtn,tvViewLessBtn;
+    private ServiceHistoryAdapter historyAdapter;
     private RelativeLayout ServiceChargeLayout;
+    private RecyclerView RechargeHistoryListView;
     double totalAmount = 0.0f, minusAmount = 0.0f;
     private CardView cardAmount;
     LinearLayout layoutSelectElectricityOper;
@@ -79,6 +88,14 @@ public class ElectricityPay extends BaseActivity {
         tvServiceChargeTax= findViewById(R.id.tv_serviceCharge_serviceChargeLayout);
         tvAmt2PayTax= findViewById(R.id.tv_totalAmt_serviceChargeLayout);
         tvGovCharge=findViewById(R.id.govCharge_electricity);
+        tvPreviousOrderText=findViewById(R.id.orderPreviousText);
+        tvViewAllBtn=findViewById(R.id.orderViewAllText);
+        tvViewLessBtn=findViewById(R.id.orderViewLessText);
+        RechargeHistoryListView = findViewById(R.id.listElectricity_rechargeHistory);
+
+        RecyclerLayoutManager layoutManager = new RecyclerLayoutManager(1, RecyclerLayoutManager.VERTICAL);
+        layoutManager.setScrollEnabled(false);
+        RechargeHistoryListView.setLayoutManager(layoutManager);
 
         OperatorNameList=new ArrayList<>();
         IdList=new ArrayList<>();
@@ -106,15 +123,45 @@ public class ElectricityPay extends BaseActivity {
             }
         });
 
+        Navigation.sizeMobileRecharge=0;
+        if (Navigation.sizeMobileRecharge==0){
+            tvViewAllBtn.setVisibility(View.VISIBLE);
+            tvViewLessBtn.setVisibility(View.GONE);
+        }else {
+            tvViewAllBtn.setVisibility(View.GONE);
+            tvViewLessBtn.setVisibility(View.VISIBLE);
+        }
+
+        tvViewAllBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.sizeMobileRecharge=1;
+                tvViewAllBtn.setVisibility(View.GONE);
+                tvViewLessBtn.setVisibility(View.VISIBLE);
+                historyAdapter.notifyDataSetChanged();
+            }
+        });
+
+        tvViewLessBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.sizeMobileRecharge=0;
+                tvViewAllBtn.setVisibility(View.VISIBLE);
+                tvViewLessBtn.setVisibility(View.GONE);
+                historyAdapter.notifyDataSetChanged();
+            }
+        });
+
         ElectrictyPaybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),"Please Buy Membership To Enjoy App's Features",false);
-                    }else {
-                        CheckValidate();
-                    }
+//                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
+//                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),"Please Buy Membership To Enjoy App's Features",false);
+//                    }else {
+//                        CheckValidate();
+//                    }
+                    CheckValidate();
                 }catch (Exception e){
                     e.printStackTrace();
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),"Please Buy Membership To Enjoy App's Features",false);
@@ -252,7 +299,7 @@ public class ElectricityPay extends BaseActivity {
         try {
             Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(Double.parseDouble(Amt.trim()), Double.parseDouble(Tax));
             tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+totalPayableAmount);
-
+            finalAmount=totalPayableAmount;
         }catch (Exception e){
             tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+0);
             e.printStackTrace();
@@ -286,7 +333,14 @@ public class ElectricityPay extends BaseActivity {
 
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),"Please Select Operator",false);
                     }else {
-                        Intent intent=new Intent(ElectricityPay.this,PaymentType.class);
+                        Intent intent;
+                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN).equals("0")) {
+
+                            intent = new Intent(ElectricityPay.this, PaymentTypeNew.class);
+                        }else {
+                            intent = new Intent(ElectricityPay.this, PaymentType.class);
+                        }
+
                         overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                         intent.putExtra("RechargePaymentId",ElectricityBillID);
                         intent.putExtra("Amount",String.valueOf(Amount));
@@ -326,6 +380,22 @@ public class ElectricityPay extends BaseActivity {
                                 OperatorSpinner.setAdapter(customAdapter);
                             }
 
+                            try {
+                                if (response.getHistory().size()>0){
+                                    tvPreviousOrderText.setVisibility(View.VISIBLE);
+                                    historyAdapter=new ServiceHistoryAdapter(ElectricityPay.this,response.getHistory(),ElectricityPay.this);
+                                    RechargeHistoryListView.setAdapter(historyAdapter);
+                                }else {
+                                    tvPreviousOrderText.setVisibility(View.GONE);
+                                    tvViewAllBtn.setVisibility(View.GONE);
+                                    tvViewLessBtn.setVisibility(View.GONE);
+                                }
+                            }catch (Exception er){
+                                tvPreviousOrderText.setVisibility(View.GONE);
+                                tvViewAllBtn.setVisibility(View.GONE);
+                                tvViewLessBtn.setVisibility(View.GONE);
+                                er.printStackTrace();
+                            }
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),response.getMessage(),false);
                         }
@@ -339,6 +409,24 @@ public class ElectricityPay extends BaseActivity {
                     }
                 }));
 
+    }
+
+    @Override
+    public void onOrderItemSelect(int position, OperatorResponse.HistoryBean selectOrderItem) {
+        // Toast.makeText(this, selectOrderItem.getNumber(), Toast.LENGTH_SHORT).show();
+        OperatorText=selectOrderItem.getOperator_name();
+
+        for (int j=0;j<mOperList.size();j++){
+            if (OperatorText.equalsIgnoreCase(mOperList.get(j).getOperator_name())){
+                OperatorCode= mOperList.get(j).getOperator_code();
+                OperatorSpinner.setSelection(j);
+                AmountED.setText(""+selectOrderItem.getAmount());
+                ElectricityIdED.setText(selectOrderItem.getNumber());
+                break;
+            }
+        }
+        ElectricityIdED.requestFocus();
+        OperatorId= selectOrderItem.getOperator_id();
     }
 
     private void getCustomerOperator(){

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -22,13 +23,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.helper.OtpReceivedInterface;
+import com.safepayu.wallet.helper.SmsBroadcastReceiver;
 import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.SendOtpRequest;
@@ -51,7 +66,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class AddBeneficiary extends BaseActivity {
+public class AddBeneficiary extends BaseActivity implements GoogleApiClient.ConnectionCallbacks,
+        OtpReceivedInterface, GoogleApiClient.OnConnectionFailedListener{
 
     private Button BackBtn, AddBenBtn;
     private EditText AccountNameED, AccountNumberED, AccountConfirmED, IFSCED;
@@ -67,6 +83,11 @@ public class AddBeneficiary extends BaseActivity {
     EditText OtpED;
     Button continueButton, resendButton;
     private ImageView im_cross;
+    private Dialog dialogOTP;
+    //Sms Receiver
+    GoogleApiClient mGoogleApiClient;
+    SmsBroadcastReceiver mSmsBroadcastReceiver;
+    private int RESOLVE_HINT = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +102,22 @@ public class AddBeneficiary extends BaseActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        // init broadcast receiver
+        mSmsBroadcastReceiver = new SmsBroadcastReceiver();
+        //set google api client for hint request
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.CREDENTIALS_API)
+                .build();
+
+        apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        mSmsBroadcastReceiver.setOnOtpListeners(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION);
+        getApplicationContext().registerReceiver(mSmsBroadcastReceiver, intentFilter);
 
         loadingDialog = new LoadingDialog(this);
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
@@ -288,6 +325,7 @@ public class AddBeneficiary extends BaseActivity {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
                             countDownTimer.start();
+                            startSMSListener();
                             showDialog(AddBeneficiary.this);
 
                         } else {
@@ -352,23 +390,23 @@ public class AddBeneficiary extends BaseActivity {
     };
 
     public void showDialog(Activity activity) {
-        final Dialog dialog = new Dialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.otp_dialog);
+        dialogOTP = new Dialog(activity);
+        dialogOTP.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogOTP.setCancelable(false);
+        dialogOTP.setContentView(R.layout.otp_dialog);
 
-        TimerTV = dialog.findViewById(R.id.timerLogin);
-        OtpED = dialog.findViewById(R.id.enter_otpLogin);
-        im_cross = dialog.findViewById(R.id.im_cross);
+        TimerTV = dialogOTP.findViewById(R.id.timerLogin);
+        OtpED = dialogOTP.findViewById(R.id.enter_otpLogin);
+        im_cross = dialogOTP.findViewById(R.id.im_cross);
 
         im_cross.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                dialogOTP.dismiss();
             }
         });
 
-        continueButton = (Button) dialog.findViewById(R.id.continue_otpLogin);
+        continueButton = (Button) dialogOTP.findViewById(R.id.continue_otpLogin);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -378,27 +416,59 @@ public class AddBeneficiary extends BaseActivity {
                     //BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.layout_mainLayout),"Please Enter Otp",false);
                 } else {
                     verifyOtp(OtpED.getText().toString().trim());
-                    dialog.dismiss();
+                    dialogOTP.dismiss();
                 }
             }
         });
 
-        resendButton = (Button) dialog.findViewById(R.id.resend_otpLogin);
+        resendButton = (Button) dialogOTP.findViewById(R.id.resend_otpLogin);
         resendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 resendOtp();
-                dialog.dismiss();
+                dialogOTP.dismiss();
             }
         });
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.copyFrom(dialogOTP.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
 
-        dialog.getWindow().setAttributes(lp);
-        dialog.show();
+        dialogOTP.getWindow().setAttributes(lp);
+        dialogOTP.show();
 
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this, "Connection Failure", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onOtpReceived(String otp) {
+        try {
+            OtpED.setText("");
+            otp=otp.substring(otp.indexOf(':')+2);
+
+            OtpED.setText(otp.trim());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onOtpTimeout() {
+        //Toast.makeText(this, "Time out, please resend", Toast.LENGTH_LONG).show();
     }
 
     public void showDialogAfterAddBen(Activity activity,String Response) {
@@ -510,6 +580,21 @@ public class AddBeneficiary extends BaseActivity {
         window.setAttributes(lp);
         dialog.show();
 
+    }
+
+    public void startSMSListener() {
+        SmsRetrieverClient mClient = SmsRetriever.getClient(this);
+        Task<Void> mTask = mClient.startSmsRetriever();
+        mTask.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override public void onSuccess(Void aVoid) {
+
+            }
+        });
+        mTask.addOnFailureListener(new OnFailureListener() {
+            @Override public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AddBeneficiary.this, "Error", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public class CheckIfscMethod extends AsyncTask<String, String, String> {

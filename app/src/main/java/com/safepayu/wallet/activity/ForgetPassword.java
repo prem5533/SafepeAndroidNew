@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
@@ -22,14 +23,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.MultiDex;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.helper.OtpReceivedInterface;
+import com.safepayu.wallet.helper.SmsBroadcastReceiver;
 import com.safepayu.wallet.models.request.ForgetPasswordRequest;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.SendOtpRequest;
@@ -45,7 +58,8 @@ import io.reactivex.schedulers.Schedulers;
 
 import static android.view.Gravity.CENTER_VERTICAL;
 
-public class ForgetPassword extends AppCompatActivity {
+public class ForgetPassword extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+        OtpReceivedInterface, GoogleApiClient.OnConnectionFailedListener{
 
     EditText edit_number, enter_otp, enter_password, confrimPasswordED;
     Button btn_request_otp, btn_continue, btn_conform_password, resend_btn;
@@ -61,6 +75,10 @@ public class ForgetPassword extends AppCompatActivity {
     private ImageView ShowHidePasswordBtn, forgotImage;
     boolean showPass = false;
 
+    //Sms Receiver
+    GoogleApiClient mGoogleApiClient;
+    SmsBroadcastReceiver mSmsBroadcastReceiver;
+
     @Override
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(context);
@@ -71,6 +89,22 @@ public class ForgetPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgot_password);
+
+        // init broadcast receiver
+        mSmsBroadcastReceiver = new SmsBroadcastReceiver();
+        //set google api client for hint request
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.CREDENTIALS_API)
+                .build();
+
+        apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        mSmsBroadcastReceiver.setOnOtpListeners(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION);
+        getApplicationContext().registerReceiver(mSmsBroadcastReceiver, intentFilter);
 
         String imagePath = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LOGO_IMAGE);
         loadingDialog = new LoadingDialog(this);
@@ -329,6 +363,7 @@ public class ForgetPassword extends AppCompatActivity {
                             btn_request_otp.setVisibility(View.GONE);
                             resend_btn.setVisibility(View.GONE);
 
+                            startSMSListener();
                             countDownTimer.start();
                         }
                     }
@@ -357,6 +392,53 @@ public class ForgetPassword extends AppCompatActivity {
             timer.setVisibility(View.INVISIBLE);
         }
     };
+
+    public void startSMSListener() {
+        SmsRetrieverClient mClient = SmsRetriever.getClient(this);
+        Task<Void> mTask = mClient.startSmsRetriever();
+        mTask.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override public void onSuccess(Void aVoid) {
+
+            }
+        });
+        mTask.addOnFailureListener(new OnFailureListener() {
+            @Override public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ForgetPassword.this, "Error", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this, "Connection Failure", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onOtpReceived(String otp) {
+        try {
+            enter_otp.setText("");
+            otp=otp.substring(otp.indexOf(':')+2);
+
+            enter_otp.setText(otp.trim());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onOtpTimeout() {
+        //Toast.makeText(this, "Time out, please resend", Toast.LENGTH_LONG).show();
+    }
 
     private void verifyOtp(String otp) {
 
