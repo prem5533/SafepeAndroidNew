@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file('C:\\Users\\Naga Raj\\Desktop\\SafepeKey\\safepekey.jks')
+            storeFile file('/home/pritam/AndroidStudioProject/SafepeAndroidFD/safepekey.jks')
             storePassword 'safepayu'
             keyPassword 'safepayu'
             keyAlias 'mysafepekey'
