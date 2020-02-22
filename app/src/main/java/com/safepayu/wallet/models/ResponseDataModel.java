@@ -1,0 +1,17 @@
+package com.safepayu.wallet.models;
+
+import com.safepayu.wallet.models.response.AllListData;
+
+import java.util.List;
+
+public class ResponseDataModel {
+
+    public String balance_amount;
+    public String investment_interest;
+    public String fb_interest;
+    public String fdbal_amount;
+    public String wallet_amount;
+
+    public List<AllListData> investment;
+
+}

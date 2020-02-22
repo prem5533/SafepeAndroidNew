@@ -55,6 +55,7 @@ import com.safepayu.wallet.models.response.RechargePlanResponse;
 import com.safepayu.wallet.models.response.RechargeResponse;
 import com.safepayu.wallet.models.response.RedeemCoinResponse;
 import com.safepayu.wallet.models.response.ReferralCodeResponse;
+import com.safepayu.wallet.models.response.ResponseModel;
 import com.safepayu.wallet.models.response.SaveAddressResponse;
 import com.safepayu.wallet.models.response.SaveCoinResponse;
 import com.safepayu.wallet.models.response.SendPaymentGatewayDetailsResponse;
@@ -355,4 +356,8 @@ public interface ApiService {
 
     @POST("api/pefast.safepe.latepe/api/redeemCoin")
     Single<RedeemCoinResponse> getRedeemCoin(@Body RedeemCoinRequest redeemCoinRequest);
+
+    //***************Safepe bank investment
+    @GET("api/pefast.safepe.latepe/api/safepeInvestmentAccount")
+    Single<ResponseModel> safepeInvestmentAccount();
 }

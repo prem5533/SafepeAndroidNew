@@ -61,6 +61,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.bus.BusActivity;
 import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
+import com.safepayu.wallet.activity.fixedDiposit.FixedDepositActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
 import com.safepayu.wallet.activity.recharge.GasPay;
@@ -94,7 +95,7 @@ import io.reactivex.schedulers.Schedulers;
 import static com.safepayu.wallet.activity.Profile.QRcodeWidth;
 import static com.safepayu.wallet.activity.Splash.promotionResponse1;
 
-public class Navigation extends BaseActivity  implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,BottomNavigationView.OnNavigationItemSelectedListener {
+public class Navigation extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private ImageView nav_icon, notification_icon;
     private DrawerLayout drawer;
@@ -102,32 +103,32 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     private boolean doubleBackToExitPressedOnce = false;
     private LinearLayout addMoney, sendMoney, recharge, payBill, dth, payShop, sendToBank, Upi_Pay;
     LinearLayout layout_electricity, layout_gas, layout_water, layout_broadband;
-    private LinearLayout payLayout, walletLayout, send;
+    private LinearLayout payLayout, walletLayout, send, loan_layout;
     String versionName = "", FirebaseToken, appUrl = "https://play.google.com/store/apps/details?id=com.safepayu.wallet&hl=en";
     private int versionCode = 0;
     private LoadingDialog loadingDialog;
     private LinearLayout liMetro, liFlight, liBusTicket, liTrainTicket, liHotles, liDonation, liToll, liFlood, liCredit, liInsurance, limovie, liGoogleplay, lihotel,
-            liBigBazaar, liBrandFactory, liKFC, liDominos, liLogoutAllDevices, linearSecurityTab,linearLogoutTab,linearGiftCoupon;
+            liBigBazaar, liBrandFactory, liKFC, liDominos, liLogoutAllDevices, linearSecurityTab, linearLogoutTab, linearGiftCoupon;
     public static int BadgeCount = 0;
     public static TextView BadgeCountTV;
-    public static int sizeMobileRecharge=0;
+    public static int sizeMobileRecharge = 0;
     Dialog dialog;
-    TextView TitleNotiDialog, ContentNotiDialog,tvLogoutTextParent;
-    ImageView ImageViewNotiDialog, imageDownSecurity, imageUpSecurity,imageDownLogout, imageUpLogout,headerLogo,navLogo;
+    TextView TitleNotiDialog, ContentNotiDialog, tvLogoutTextParent;
+    ImageView ImageViewNotiDialog, imageDownSecurity, imageUpSecurity, imageDownLogout, imageUpLogout, headerLogo, navLogo;
     private RelativeLayout searchLayout_nav;
     public static String TitleNotiDialogText = "", ContentNotiDialogText = "", tollNumber = "";
-    private ViewPager viewpager,viewpagerBooking;
+    private ViewPager viewpager, viewpagerBooking;
     private String url;
     BottomNavigationView bottomNavigation;
     private RelativeLayout relativeMain;
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
-            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity,liLogoutParent,liChnangePassword , liFramemain;
+            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity, liLogoutParent, liChnangePassword, liFramemain;
     private TextView tv_home, tvProfile, tvPackageDetails, tvBuyPackage, tvBusinessWallet, tvMyWallet, tvShopping, tvChangePassword, tvMyOrders, tvHistory, tvGenelogy,
-            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security,tvChangePasswordChild;
+            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security, tvChangePasswordChild;
     public static Bitmap qrCodeImage;
-    int NUM_PAGES,NumPage,currentPage = 0,CurrentP=0;
+    int NUM_PAGES, NumPage, currentPage = 0, CurrentP = 0;
     Timer timer;
     private OfferPagerAdapter adapter;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
@@ -206,9 +207,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         });
 
 
-         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(this);
-       // bottomNavigation.getMenu().findItem(R.id.action_yoga).setChecked(true);
+        // bottomNavigation.getMenu().findItem(R.id.action_yoga).setChecked(true);
 
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigation.getChildAt(0);
         for (int i = 0; i < menuView.getChildCount(); i++) {
@@ -224,9 +225,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     }
 
     @Override
-    protected int getLayoutResourceId()
-    {
-       // return R.layout.navigation;
+    protected int getLayoutResourceId() {
+        // return R.layout.navigation;
         return R.layout.navigation_new;
     }
 
@@ -259,6 +259,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         payBill = findViewById(R.id.layout_pay_bill);
         dth = findViewById(R.id.layout_dth);
         send = findViewById(R.id.send);
+        loan_layout = findViewById(R.id.loan_layout);
      /*   payShop = findViewById(R.id.pay_shop);
         sendToBank = findViewById(R.id.layout_send_bank);*/
         payLayout = findViewById(R.id.pay_layout);
@@ -305,7 +306,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         tvMyWallet = findViewById(R.id.tv_my_wallet);
         tvShopping = findViewById(R.id.tv_shopping);
         tvChangePassword = findViewById(R.id.tv_change_password);
-        tvChangePasswordChild= findViewById(R.id.tv_change_passwordChild);
+        tvChangePasswordChild = findViewById(R.id.tv_change_passwordChild);
         tvMyOrders = findViewById(R.id.tv_my_orders);
         tvHistory = findViewById(R.id.tv_history);
         tvGenelogy = findViewById(R.id.tv_genelogy);
@@ -314,7 +315,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         tvContact = findViewById(R.id.tv_contact_us);
         tvLogout = findViewById(R.id.tv_logout);
         tvLogoutAlldevice = findViewById(R.id.tv_logoutAlldevice);
-        tvLogoutTextParent=findViewById(R.id.tv_logoutText);
+        tvLogoutTextParent = findViewById(R.id.tv_logoutText);
         tvWalletHistory = findViewById(R.id.tv_historyWallet);
         tvShopping = findViewById(R.id.tv_shopping);
         tv_security = findViewById(R.id.tv_security);
@@ -340,10 +341,10 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liKFC = findViewById(R.id.layout_kfc);
         liDominos = findViewById(R.id.layout_dominos);
         linearSecurityTab = findViewById(R.id.linear_security_tab);
-        linearLogoutTab= findViewById(R.id.linear_logout_tab);
+        linearLogoutTab = findViewById(R.id.linear_logout_tab);
         liSecurity = findViewById(R.id.li_LogoutParent);
         liLogoutParent = findViewById(R.id.li_security);
-        linearGiftCoupon =findViewById(R.id.layout_giftCoupon);
+        linearGiftCoupon = findViewById(R.id.layout_giftCoupon);
 
 
         //********************set listener&*****************
@@ -391,7 +392,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         layout_electricity.setOnClickListener(this);
         layout_gas.setOnClickListener(this);
         payLayout.setOnClickListener(this);
-
+        loan_layout.setOnClickListener(this);
         liMetro.setOnClickListener(this);
         liFlight.setOnClickListener(this);
         liBusTicket.setOnClickListener(this);
@@ -406,14 +407,14 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liBigBazaar.setOnClickListener(this);
 
         try {
-            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_MENU).equals("1")){
+            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_MENU).equals("1")) {
                 liBuyPackage.setVisibility(View.VISIBLE);
                 tvBuyPackage.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 liBuyPackage.setVisibility(View.GONE);
                 tvBuyPackage.setVisibility(View.GONE);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -499,9 +500,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             @Override
             public void onClick(View v) {
 
-                 startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
-                 //startActivity(new Intent(Navigation.this, OtpVerification.class));
-                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                startActivity(new Intent(Navigation.this, BellNotifictionActivity.class));
+                //startActivity(new Intent(Navigation.this, OtpVerification.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
             }
         });
@@ -525,23 +526,25 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         Upi_Pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // startActivity(new Intent(Navigation.this, DemoAdi.class));
+                // startActivity(new Intent(Navigation.this, DemoAdi.class));
                 Toast.makeText(Navigation.this, "Coming Soon!", Toast.LENGTH_SHORT).show();
             }
         });
-
+        loan_layout.setOnClickListener(view -> {
+            Toast.makeText(Navigation.this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+        });
 
         try {
-            PromotionResponse.DataBean dataBean=new PromotionResponse.DataBean();
-            List<PromotionResponse.DataBean> data=new ArrayList<>();
+            PromotionResponse.DataBean dataBean = new PromotionResponse.DataBean();
+            List<PromotionResponse.DataBean> data = new ArrayList<>();
             try {
-                if (!promotionResponse1.isStatus() || promotionResponse1==null){
+                if (!promotionResponse1.isStatus() || promotionResponse1 == null) {
                     dataBean.setImage("not found");
                     data.add(dataBean);
                     data.add(dataBean);
                     promotionResponse1.setData(data);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 dataBean.setImage("not found");
                 data.add(dataBean);
                 data.add(dataBean);
@@ -550,17 +553,17 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             }
 
             try {
-                NUM_PAGES= promotionResponse1.getData().size();
+                NUM_PAGES = promotionResponse1.getData().size();
                 loadingDialog.hideDialog();
-                adapter = new OfferPagerAdapter(Navigation.this,promotionResponse1.getData());
+                adapter = new OfferPagerAdapter(Navigation.this, promotionResponse1.getData());
                 viewpager.setAdapter(adapter);
-              //  viewpagerBooking.setAdapter(adapter);
+                //  viewpagerBooking.setAdapter(adapter);
                 TabLayout tabLayout = findViewById(R.id.tab_layout);
-                if (promotionResponse1.getData().size()>1){
+                if (promotionResponse1.getData().size() > 1) {
                     tabLayout.setupWithViewPager(viewpager, true);
                     //tabLayout.setupWithViewPager(viewpager, true);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -580,12 +583,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
 
 
         createNotificationChannel();
@@ -792,7 +792,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
             case R.id.layout_flight:
 
-             //  Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(this, "Coming Next Week!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Navigation.this, FlightsActivity.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
@@ -809,7 +809,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 //                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.credit_layout:
-                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Navigation.this, FixedDepositActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
 
             case R.id.layout_insurance:
@@ -857,7 +858,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_giftCoupon:
-             //   Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Navigation.this, ScratchActivity.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
@@ -1276,7 +1277,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
             case R.id.li_myorder:
                 drawer.closeDrawers();
-               // startActivity(new Intent(Navigation.this, MyOrdersActivity.class));
+                // startActivity(new Intent(Navigation.this, MyOrdersActivity.class));
                 startActivity(new Intent(Navigation.this, MyOrderEcomActivity.class));
                 //  overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
 
@@ -1682,7 +1683,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         loadingDialog.hideDialog();
                         if (response.isStatus()) {
                             try {
-                                if (response.getVersionData().getStatus()==1){
+                                if (response.getVersionData().getStatus() == 1) {
                                     int val = Integer.parseInt(response.getVersionData().getVal());
                                     url = response.getVersionData().getLogo();
                                     //BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGO_IMAGE, ApiClient.ImagePath+url);
@@ -1702,7 +1703,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                                         showDialogForAppUpdate(Navigation.this);
                                     }
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 BaseApp.getInstance().toastHelper().showSnackBar(drawer, e.getMessage(), false);
                                 e.printStackTrace();
                             }
@@ -1734,12 +1735,12 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(appUrl)));
                 try {
                     deleteCache(Navigation.this);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 try {
                     clearAppData();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -1767,13 +1768,13 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         try {
             // clearing app data
             if (Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT) {
-                ((ActivityManager)getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData(); // note: it has a return value!
+                ((ActivityManager) getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData(); // note: it has a return value!
             } else {
                 try {
                     String packageName = getApplicationContext().getPackageName();
                     Runtime runtime = Runtime.getRuntime();
-                    runtime.exec("pm clear "+packageName);
-                }catch (Exception rr){
+                    runtime.exec("pm clear " + packageName);
+                } catch (Exception rr) {
                     rr.printStackTrace();
                 }
             }
@@ -1802,7 +1803,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 }
             }
             return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
+        } else if (dir != null && dir.isFile()) {
             return dir.delete();
         } else {
             return false;
@@ -1844,14 +1845,14 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_MENU, String.valueOf(response.getUser().getMenuBuyPackage_status()));
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN, String.valueOf(response.getUser().getPayment_screen()));
                             try {
-                                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_MENU).equals("1")){
+                                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_MENU).equals("1")) {
                                     liBuyPackage.setVisibility(View.VISIBLE);
                                     tvBuyPackage.setVisibility(View.VISIBLE);
-                                }else {
+                                } else {
                                     liBuyPackage.setVisibility(View.GONE);
                                     tvBuyPackage.setVisibility(View.GONE);
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -2006,7 +2007,6 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     }
 
 
-
     private void getPrmotionalOffer2() {
 
         // loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
@@ -2026,11 +2026,11 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                         loadingDialog.hideDialog();
                         if (promotionResponse.isStatus()) {
                             promotionResponseType3 = promotionResponse;
-                            adapter = new OfferPagerAdapter(Navigation.this,promotionResponse.getData());
+                            adapter = new OfferPagerAdapter(Navigation.this, promotionResponse.getData());
                             viewpagerBooking.setAdapter(adapter);
-                            NumPage= promotionResponseType3.getData().size();
+                            NumPage = promotionResponseType3.getData().size();
                             TabLayout tabLayoutt = findViewById(R.id.tab_layout_booking);
-                            if (promotionResponseType3.getData().size()>1){
+                            if (promotionResponseType3.getData().size() > 1) {
                                 tabLayoutt.setupWithViewPager(viewpagerBooking, true);
 
                             }
@@ -2055,25 +2055,26 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     public void onSuccess(ServiceChargeResponse response) {
 
                         if (response.isStatus()) {
-                            for (int i=0;i<response.getTax().size();i++){
-                                if (response.getTax().get(i).getTax_id()==1){
-                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().GST,response.getTax().get(i).getTax_value());
-                                }else if (response.getTax().get(i).getTax_id()==2){
-                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().SERVICE_CHARGE,response.getTax().get(i).getTax_value());
-                                }else if (response.getTax().get(i).getTax_id()==3){
-                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LIMIT,response.getTax().get(i).getTax_value());
-                                }else if (response.getTax().get(i).getTax_id()==4){
-                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().TRANSACTION_CHARGE,response.getTax().get(i).getTax_value());
-                                }else if (response.getTax().get(i).getTax_id()==5){
-                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LIMIT_MIN,response.getTax().get(i).getTax_value());
-                                }else if (response.getTax().get(i).getTax_id()==6){
-                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().COMMISSION_CHARGE,response.getTax().get(i).getTax_value());
-                                }else if (response.getTax().get(i).getTax_id()==7){
-                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MIN_WITHDRAW_CHARGE,response.getTax().get(i).getTax_value());
+                            for (int i = 0; i < response.getTax().size(); i++) {
+                                if (response.getTax().get(i).getTax_id() == 1) {
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().GST, response.getTax().get(i).getTax_value());
+                                } else if (response.getTax().get(i).getTax_id() == 2) {
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().SERVICE_CHARGE, response.getTax().get(i).getTax_value());
+                                } else if (response.getTax().get(i).getTax_id() == 3) {
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LIMIT, response.getTax().get(i).getTax_value());
+                                } else if (response.getTax().get(i).getTax_id() == 4) {
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().TRANSACTION_CHARGE, response.getTax().get(i).getTax_value());
+                                } else if (response.getTax().get(i).getTax_id() == 5) {
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LIMIT_MIN, response.getTax().get(i).getTax_value());
+                                } else if (response.getTax().get(i).getTax_id() == 6) {
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().COMMISSION_CHARGE, response.getTax().get(i).getTax_value());
+                                } else if (response.getTax().get(i).getTax_id() == 7) {
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MIN_WITHDRAW_CHARGE, response.getTax().get(i).getTax_value());
                                 }
                             }
                         }
                     }
+
                     @Override
                     public void onError(Throwable e) {
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.mobileRechargeLayout), true, e);
@@ -2084,7 +2085,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // uncheck the other items.
-         int mMenuId;
+        int mMenuId;
         mMenuId = item.getItemId();
         for (int i = 0; i < bottomNavigation.getMenu().size(); i++) {
             MenuItem menuItem = bottomNavigation.getMenu().getItem(i);
@@ -2106,7 +2107,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             }
             break;
             case R.id.b_mall_ecomm: {
-             //   Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Navigation.this, EHomeActivity.class));
             }
             break;
