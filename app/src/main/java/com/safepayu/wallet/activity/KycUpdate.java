@@ -299,7 +299,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
         try {
             bitmap = (Bitmap) data.getExtras().get("data");
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
+            //bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
 
             destination = new File(Environment.getExternalStorageDirectory() + "/" +
                     getString(R.string.app_name), "IMG_" + System.currentTimeMillis() + ".jpg");

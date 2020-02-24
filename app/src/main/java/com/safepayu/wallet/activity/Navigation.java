@@ -110,6 +110,7 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
             liBigBazaar, liBrandFactory, liKFC, liDominos, liLogoutAllDevices, linearSecurityTab,linearLogoutTab,linearGiftCoupon;
     public static int BadgeCount = 0;
     public static TextView BadgeCountTV;
+    public static int sizeMobileRecharge=0;
     Dialog dialog;
     TextView TitleNotiDialog, ContentNotiDialog,tvLogoutTextParent;
     ImageView ImageViewNotiDialog, imageDownSecurity, imageUpSecurity,imageDownLogout, imageUpLogout,headerLogo,navLogo;
@@ -122,9 +123,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
-            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity,liLogoutParent,liChnangePassword , liFramemain;
+            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity,liLogoutParent,liChnangePassword , liFramemain, liFD,liLoan;
     private TextView tv_home, tvProfile, tvPackageDetails, tvBuyPackage, tvBusinessWallet, tvMyWallet, tvShopping, tvChangePassword, tvMyOrders, tvHistory, tvGenelogy,
-            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security,tvChangePasswordChild;
+            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security,tvChangePasswordChild,tvFixedDeposit,tvLoan;
     public static Bitmap qrCodeImage;
     int NUM_PAGES,NumPage,currentPage = 0,CurrentP=0;
     Timer timer;
@@ -312,6 +313,9 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         tvUpdateKYC = findViewById(R.id.tv_update_kyc);
         tvContact = findViewById(R.id.tv_contact_us);
         tvLogout = findViewById(R.id.tv_logout);
+        tvFixedDeposit = findViewById(R.id.tv_fixed_deposit);
+        tvLoan = findViewById(R.id.tv_loan);
+
         tvLogoutAlldevice = findViewById(R.id.tv_logoutAlldevice);
         tvLogoutTextParent=findViewById(R.id.tv_logoutText);
         tvWalletHistory = findViewById(R.id.tv_historyWallet);
@@ -343,6 +347,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liSecurity = findViewById(R.id.li_LogoutParent);
         liLogoutParent = findViewById(R.id.li_security);
         linearGiftCoupon =findViewById(R.id.layout_giftCoupon);
+        liFD =findViewById(R.id.li_fd);
+        liLoan =findViewById(R.id.li_loan);
 
 
         //********************set listener&*****************
@@ -375,6 +381,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         linearSecurityTab.setVisibility(View.GONE);
         linearLogoutTab.setVisibility(View.GONE);
         liShopping.setOnClickListener(this);
+        liFD.setOnClickListener(this);
+        liLoan.setOnClickListener(this);
         //  addMoney.setOnClickListener(this);
         //  sendMoney.setOnClickListener(this);
         recharge.setOnClickListener(this);
@@ -404,6 +412,18 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
         liBrandFactory.setOnClickListener(this);
         liBigBazaar.setOnClickListener(this);
 
+        try {
+            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_MENU).equals("1")){
+                liBuyPackage.setVisibility(View.VISIBLE);
+                tvBuyPackage.setVisibility(View.VISIBLE);
+            }else {
+                liBuyPackage.setVisibility(View.GONE);
+                tvBuyPackage.setVisibility(View.GONE);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         imageDownSecurity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -428,6 +448,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
 
 
                 tv_home.setTextColor(getResources().getColor(R.color.black));
@@ -448,6 +470,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tv_home.setTextColor(getResources().getColor(R.color.black));
                 tvLogout.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
             }
         });
@@ -869,6 +893,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvLogout.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -889,6 +915,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 drawer.closeDrawers();
                 securityTab();
                 break;
@@ -915,6 +943,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -935,6 +965,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -960,6 +992,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -980,6 +1014,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -1005,6 +1041,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1025,6 +1063,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -1049,6 +1089,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1069,6 +1111,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -1094,6 +1138,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1114,6 +1160,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -1150,6 +1198,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1170,6 +1220,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -1195,6 +1247,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1214,6 +1268,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -1239,6 +1295,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvLogout.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.white));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1258,6 +1316,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -1285,6 +1345,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1305,6 +1367,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -1330,6 +1394,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1350,6 +1416,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -1375,6 +1443,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1395,6 +1465,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -1420,6 +1492,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1440,6 +1514,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
 
                 break;
@@ -1466,6 +1542,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1486,6 +1564,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -1511,6 +1591,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvLogout.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.white));
@@ -1531,6 +1613,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -1556,6 +1640,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1576,6 +1662,103 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+
+                break;
+            case R.id.li_fd:
+                drawer.closeDrawers();
+                startActivity(new Intent(Navigation.this, FixedDepositListActivity.class));
+
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+                tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
+                tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
+                tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+
+                liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.white));
+
+
+                break;
+            case R.id.li_loan:
+                drawer.closeDrawers();
+                tvLoan.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+                tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
+                tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
+                tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
+
+                liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.white));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
 
                 break;
 
@@ -1613,6 +1796,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 tvLogout.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.white));
@@ -1632,6 +1817,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                 liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
 
                 showDialogLogoutAll(Navigation.this);
 
@@ -1826,8 +2013,21 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME, response.getUser().getFirst_name());
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_LAST_NAME, response.getUser().getLast_name());
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().IS_BLOCKED, String.valueOf(response.getUser().getBlocked()));
-                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED, String.valueOf(response.getUser().getPackage_status()));
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().GENEOLOGY_URL, String.valueOf(response.getUser().getGenealogy()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED, String.valueOf(response.getUser().getPackage_status()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_MENU, String.valueOf(response.getUser().getMenuBuyPackage_status()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN, String.valueOf(response.getUser().getPayment_screen()));
+                            try {
+                                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_MENU).equals("1")){
+                                    liBuyPackage.setVisibility(View.VISIBLE);
+                                    tvBuyPackage.setVisibility(View.VISIBLE);
+                                }else {
+                                    liBuyPackage.setVisibility(View.GONE);
+                                    tvBuyPackage.setVisibility(View.GONE);
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     }
 
@@ -1959,11 +2159,11 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                            Intent intentAlldevice = new Intent(getApplicationContext(), LoginActivity.class);
-                            intentAlldevice.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().FIREBASE_TOKEN, null);
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().ACCESS_TOKEN, null);
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LOGOUT_ALL, "1");
+                            Intent intentAlldevice = new Intent(getApplicationContext(), LoginActivity.class);
+                            intentAlldevice.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intentAlldevice);
                             finish();
                         } else {
@@ -2042,6 +2242,8 @@ public class Navigation extends BaseActivity  implements NavigationView.OnNaviga
                                     BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().LIMIT_MIN,response.getTax().get(i).getTax_value());
                                 }else if (response.getTax().get(i).getTax_id()==6){
                                     BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().COMMISSION_CHARGE,response.getTax().get(i).getTax_value());
+                                }else if (response.getTax().get(i).getTax_id()==7){
+                                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MIN_WITHDRAW_CHARGE,response.getTax().get(i).getTax_value());
                                 }
                             }
                         }

@@ -113,9 +113,14 @@ public class UserDetailResponse {
         private String sponsorname;
         /**
          * genealogy : http://productiontesting.safepeindia.com/Genealogy/
+         * menuBuyPackage_status : 0
+         * payment_screen : 0
          */
 
+
         private String genealogy;
+        private int menuBuyPackage_status;
+        private int payment_screen;
 
         public String getSponsorname() {
             return sponsorname;
@@ -403,6 +408,22 @@ public class UserDetailResponse {
 
         public void setGenealogy(String genealogy) {
             this.genealogy = genealogy;
+        }
+
+        public int getMenuBuyPackage_status() {
+            return menuBuyPackage_status;
+        }
+
+        public void setMenuBuyPackage_status(int menuBuyPackage_status) {
+            this.menuBuyPackage_status = menuBuyPackage_status;
+        }
+
+        public int getPayment_screen() {
+            return payment_screen;
+        }
+
+        public void setPayment_screen(int payment_screen) {
+            this.payment_screen = payment_screen;
         }
     }
 

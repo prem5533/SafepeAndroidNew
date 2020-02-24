@@ -20,14 +20,19 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.multidex.MultiDex;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.Navigation;
 import com.safepayu.wallet.activity.PaymentType;
+import com.safepayu.wallet.activity.PaymentTypeNew;
+import com.safepayu.wallet.adapter.ServiceHistoryAdapter;
 import com.safepayu.wallet.adapter.SpinnerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.helper.RecyclerLayoutManager;
 import com.safepayu.wallet.models.response.OperatorResponse;
 
 import java.text.DecimalFormat;
@@ -38,11 +43,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class MetroActivity extends AppCompatActivity implements View.OnClickListener {
+public class MetroActivity extends AppCompatActivity implements View.OnClickListener, ServiceHistoryAdapter.OnSelectListener {
 
     private Button ProceedBtn,BackBtn;
-    private TextView tvRechargeamount,tvWalletCashback,tvTotalAmountpay;
-    private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax;
+    private TextView tvRechargeamount,tvWalletCashback,tvTotalAmountpay,tvViewAllBtn,tvViewLessBtn;
+    private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax,tvPreviousOrderText;
+    private ServiceHistoryAdapter historyAdapter;
     private RelativeLayout ServiceChargeLayout;
     private EditText edCardNo,edAmount;
     private String CardNo="",Amount="",OperatorId="0",OperatorCode="0",OperatorName="";
@@ -52,6 +58,7 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
     private LinearLayout layoutSelectElectricityOper;
     private double totalAmount = 0.0f, minusAmount = 0.0f;
     private CardView cardAmount;
+    private RecyclerView RechargeHistoryListView;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -85,11 +92,48 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
         tvRechargeAmtTax= findViewById(R.id.tv_rechargeAmount_serviceChargeLayout);
         tvServiceChargeTax= findViewById(R.id.tv_serviceCharge_serviceChargeLayout);
         tvAmt2PayTax= findViewById(R.id.tv_totalAmt_serviceChargeLayout);
-        
+        tvPreviousOrderText=findViewById(R.id.orderPreviousText);
+        tvViewAllBtn=findViewById(R.id.orderViewAllText);
+        tvViewLessBtn=findViewById(R.id.orderViewLessText);
+        RechargeHistoryListView = findViewById(R.id.listMetro_rechargeHistory);
+
+        RecyclerLayoutManager layoutManager = new RecyclerLayoutManager(1, RecyclerLayoutManager.VERTICAL);
+        layoutManager.setScrollEnabled(false);
+        RechargeHistoryListView.setLayoutManager(layoutManager);
+
         //Set Listener
         BackBtn.setOnClickListener(this);
         ProceedBtn.setOnClickListener(this);
         layoutSelectElectricityOper.setOnClickListener(this);
+
+        Navigation.sizeMobileRecharge=0;
+        if (Navigation.sizeMobileRecharge==0){
+            tvViewAllBtn.setVisibility(View.VISIBLE);
+            tvViewLessBtn.setVisibility(View.GONE);
+        }else {
+            tvViewAllBtn.setVisibility(View.GONE);
+            tvViewLessBtn.setVisibility(View.VISIBLE);
+        }
+
+        tvViewAllBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.sizeMobileRecharge=1;
+                tvViewAllBtn.setVisibility(View.GONE);
+                tvViewLessBtn.setVisibility(View.VISIBLE);
+                historyAdapter.notifyDataSetChanged();
+            }
+        });
+
+        tvViewLessBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.sizeMobileRecharge=0;
+                tvViewAllBtn.setVisibility(View.VISIBLE);
+                tvViewLessBtn.setVisibility(View.GONE);
+                historyAdapter.notifyDataSetChanged();
+            }
+        });
 
         OperatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -241,7 +285,7 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
         if (TextUtils.isEmpty(CardNo)){
             BaseApp.getInstance().toastHelper().showToast(this,"Please Enter Your Card Number",true);
         }else {
-            if (Integer.parseInt(CardNo)<5){
+            if (CardNo.length()<5){
                 BaseApp.getInstance().toastHelper().showToast(this,"Please Enter Your Correct Card Number",true);
             }else {
                 if (TextUtils.isEmpty(OperatorName)){
@@ -250,10 +294,16 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
                     if (TextUtils.isEmpty(Amount)){
                         BaseApp.getInstance().toastHelper().showToast(this,"Please Enter Amount",true);
                     }else {
-                        if (Integer.parseInt(CardNo)<100){
+                        if (Integer.parseInt(Amount)<100){
                             BaseApp.getInstance().toastHelper().showToast(this,"Minimum Recharge Amount Is Rs.100",true);
                         }else {
-                            Intent intent=new Intent(MetroActivity.this, PaymentType.class);
+                            Intent intent;
+                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN).equals("0")) {
+
+                                intent = new Intent(MetroActivity.this, PaymentTypeNew.class);
+                            }else {
+                                intent = new Intent(MetroActivity.this, PaymentType.class);
+                            }
                             overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                             intent.putExtra("RechargePaymentId",CardNo);
                             intent.putExtra("Amount",Amount);
@@ -291,6 +341,23 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
                             mOperList=response.getOperators();
                             SpinnerAdapter customAdapter=new SpinnerAdapter(getApplicationContext(),mOperList);
                             OperatorSpinner.setAdapter(customAdapter);
+
+                            try {
+                                if (response.getHistory().size()>0){
+                                    tvPreviousOrderText.setVisibility(View.VISIBLE);
+                                    historyAdapter=new ServiceHistoryAdapter(MetroActivity.this,response.getHistory(),MetroActivity.this);
+                                    RechargeHistoryListView.setAdapter(historyAdapter);
+                                }else {
+                                    tvPreviousOrderText.setVisibility(View.GONE);
+                                    tvViewAllBtn.setVisibility(View.GONE);
+                                    tvViewLessBtn.setVisibility(View.GONE);
+                                }
+                            }catch (Exception e){
+                                tvPreviousOrderText.setVisibility(View.GONE);
+                                tvViewAllBtn.setVisibility(View.GONE);
+                                tvViewLessBtn.setVisibility(View.GONE);
+                                e.printStackTrace();
+                            }
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.relative_metro),response.getMessage(),false);
                         }
@@ -304,4 +371,23 @@ public class MetroActivity extends AppCompatActivity implements View.OnClickList
                 }));
 
     }
+
+    @Override
+    public void onOrderItemSelect(int position, OperatorResponse.HistoryBean selectOrderItem) {
+        // Toast.makeText(this, selectOrderItem.getNumber(), Toast.LENGTH_SHORT).show();
+        OperatorName=selectOrderItem.getOperator_name();
+
+        for (int j=0;j<mOperList.size();j++){
+            if (OperatorName.equalsIgnoreCase(mOperList.get(j).getOperator_name())){
+                OperatorCode= mOperList.get(j).getOperator_code();
+                OperatorSpinner.setSelection(j);
+                edAmount.setText(""+selectOrderItem.getAmount());
+                edCardNo.setText(selectOrderItem.getNumber());
+                break;
+            }
+        }
+        edCardNo.requestFocus();
+        OperatorId= selectOrderItem.getOperator_id();
+    }
+
 }

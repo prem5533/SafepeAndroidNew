@@ -16,8 +16,8 @@ android {
         applicationId "com.safepayu.wallet"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 60
-        versionName "2.0.2"
+        versionCode 65
+        versionName "2.0.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -127,6 +127,10 @@ dependencies {
 
     //scratchView
     implementation 'com.github.AnupKumarPanwar:ScratchView:1.2'
+
+    // lib for SMS verification (Phone Auth)
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.android.gms:play-services-auth-api-phone:17.0.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

@@ -16,8 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -741,9 +739,6 @@ public class FlightsActivity extends AppCompatActivity implements View.OnClickLi
                         Toast.makeText(getActivity(), "Nothing selected from Radio Group.", Toast.LENGTH_SHORT).show();
 
                     }
-
-
-
                     dismiss();
                     break;
             }

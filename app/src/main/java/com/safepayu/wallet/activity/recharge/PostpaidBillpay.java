@@ -18,15 +18,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.Navigation;
 import com.safepayu.wallet.activity.PaymentType;
+import com.safepayu.wallet.activity.PaymentTypeNew;
+import com.safepayu.wallet.adapter.ServiceHistoryAdapter;
 import com.safepayu.wallet.adapter.SpinnerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.helper.RecyclerLayoutManager;
 import com.safepayu.wallet.models.response.CustOperatorResponse;
 import com.safepayu.wallet.models.response.OperatorResponse;
 
@@ -38,7 +43,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class PostpaidBillpay extends BaseActivity {
+import static com.safepayu.wallet.activity.LoginActivity.finalAmount;
+
+public class PostpaidBillpay extends BaseActivity implements ServiceHistoryAdapter.OnSelectListener{
 
     Button PayBtn,BackBtn,BillCheckBtn ;
     TextView textView;
@@ -48,12 +55,14 @@ public class PostpaidBillpay extends BaseActivity {
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
     double totalAmount = 0.0f, minusAmount = 0.0f;
-    private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay;
-    private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax;
+    private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay,tvViewAllBtn,tvViewLessBtn;
+    private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax,tvPreviousOrderText;
+    private ServiceHistoryAdapter historyAdapter;
     private RelativeLayout ServiceChargeLayout;
     private CardView cardAmount;
     LinearLayout layoutSelectBillOper;
     List<OperatorResponse.OperatorsBean> mOperList = new ArrayList<>();
+    private RecyclerView RechargeHistoryListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +88,14 @@ public class PostpaidBillpay extends BaseActivity {
         tvRechargeAmtTax= findViewById(R.id.tv_rechargeAmount_serviceChargeLayout);
         tvServiceChargeTax= findViewById(R.id.tv_serviceCharge_serviceChargeLayout);
         tvAmt2PayTax= findViewById(R.id.tv_totalAmt_serviceChargeLayout);
+        tvPreviousOrderText=findViewById(R.id.orderPreviousText);
+        tvViewAllBtn=findViewById(R.id.orderViewAllText);
+        tvViewLessBtn=findViewById(R.id.orderViewLessText);
+        RechargeHistoryListView = findViewById(R.id.listPostpaid_rechargeHistory);
+
+        RecyclerLayoutManager layoutManager = new RecyclerLayoutManager(1, RecyclerLayoutManager.VERTICAL);
+        layoutManager.setScrollEnabled(false);
+        RechargeHistoryListView.setLayoutManager(layoutManager);
 
         OperatorNameList=new ArrayList<>();
         IdList=new ArrayList<>();
@@ -91,6 +108,35 @@ public class PostpaidBillpay extends BaseActivity {
         OperatorNameList.add("Select Operator");
         IdList.add("0");
         OperatorCodeList.add("0");
+
+        Navigation.sizeMobileRecharge=0;
+        if (Navigation.sizeMobileRecharge==0){
+            tvViewAllBtn.setVisibility(View.VISIBLE);
+            tvViewLessBtn.setVisibility(View.GONE);
+        }else {
+            tvViewAllBtn.setVisibility(View.GONE);
+            tvViewLessBtn.setVisibility(View.VISIBLE);
+        }
+
+        tvViewAllBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.sizeMobileRecharge=1;
+                tvViewAllBtn.setVisibility(View.GONE);
+                tvViewLessBtn.setVisibility(View.VISIBLE);
+                historyAdapter.notifyDataSetChanged();
+            }
+        });
+
+        tvViewLessBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.sizeMobileRecharge=0;
+                tvViewAllBtn.setVisibility(View.VISIBLE);
+                tvViewLessBtn.setVisibility(View.GONE);
+                historyAdapter.notifyDataSetChanged();
+            }
+        });
 
         OperatorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -149,11 +195,12 @@ public class PostpaidBillpay extends BaseActivity {
             public void onClick(View view) {
 
                 try {
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",false);
-                    }else {
-                        CheckValidate();
-                    }
+//                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
+//                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout),"Please Buy Membership To Enjoy App's Features",false);
+//                    }else {
+//                        CheckValidate();
+//                    }
+                    CheckValidate();
                 }catch (Exception e){
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.commissionLayout), "Please Buy Membership To Enjoy App's Features", false);
                     e.printStackTrace();
@@ -251,7 +298,7 @@ public class PostpaidBillpay extends BaseActivity {
         try {
             Double totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(Double.parseDouble(Amt.trim()), Double.parseDouble(Tax));
             tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+totalPayableAmount);
-
+            finalAmount=totalPayableAmount;
         }catch (Exception e){
             tvAmt2PayTax.setText(getResources().getString(R.string.rupees)+" "+0);
             e.printStackTrace();
@@ -286,7 +333,14 @@ public class PostpaidBillpay extends BaseActivity {
 
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),"Please Select Operator",false);
                         }else {
-                            Intent intent=new Intent(PostpaidBillpay.this,PaymentType.class);
+                            Intent intent;
+                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN).equals("0")) {
+
+                                intent = new Intent(PostpaidBillpay.this, PaymentTypeNew.class);
+                            }else {
+                                intent = new Intent(PostpaidBillpay.this, PaymentType.class);
+                            }
+
                             overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                             intent.putExtra("RechargePaymentId",Mobile);
                             intent.putExtra("Amount",String.valueOf(Amount));
@@ -326,7 +380,25 @@ public class PostpaidBillpay extends BaseActivity {
                             mOperList=response.getOperators();
                             for (int i = 0; i < response.getOperators().size(); i++) {
                                 SpinnerAdapter customAdapter=new SpinnerAdapter(getApplicationContext(),mOperList);
-                                OperatorSpinner.setAdapter(customAdapter); }
+                                OperatorSpinner.setAdapter(customAdapter);
+                            }
+                            try {
+                                if (response.getHistory().size()>0){
+                                    tvPreviousOrderText.setVisibility(View.VISIBLE);
+                                    historyAdapter=new ServiceHistoryAdapter(PostpaidBillpay.this,response.getHistory(),PostpaidBillpay.this);
+                                    RechargeHistoryListView.setAdapter(historyAdapter);
+                                }else {
+                                    tvPreviousOrderText.setVisibility(View.GONE);
+                                    tvViewAllBtn.setVisibility(View.GONE);
+                                    tvViewLessBtn.setVisibility(View.GONE);
+                                }
+                            }catch (Exception e){
+                                tvPreviousOrderText.setVisibility(View.GONE);
+                                tvViewAllBtn.setVisibility(View.GONE);
+                                tvViewLessBtn.setVisibility(View.GONE);
+                                e.printStackTrace();
+                            }
+
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.postpaidBillLayout),response.getMessage(),false);
                         }
@@ -340,6 +412,24 @@ public class PostpaidBillpay extends BaseActivity {
                     }
                 }));
 
+    }
+
+    @Override
+    public void onOrderItemSelect(int position, OperatorResponse.HistoryBean selectOrderItem) {
+        // Toast.makeText(this, selectOrderItem.getNumber(), Toast.LENGTH_SHORT).show();
+        OperatorText=selectOrderItem.getOperator_name();
+
+        for (int j=0;j<mOperList.size();j++){
+            if (OperatorText.equalsIgnoreCase(mOperList.get(j).getOperator_name())){
+                OperatorCode= mOperList.get(j).getOperator_code();
+                OperatorSpinner.setSelection(j);
+                AmountEd.setText(""+selectOrderItem.getAmount());
+                MobileED.setText(selectOrderItem.getNumber());
+                break;
+            }
+        }
+        MobileED.requestFocus();
+        OperatorId= selectOrderItem.getOperator_id();
     }
 
     private void getCustomerOperator(){

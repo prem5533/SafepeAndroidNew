@@ -15,9 +15,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
@@ -26,6 +37,8 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.helper.Config;
+import com.safepayu.wallet.helper.OtpReceivedInterface;
+import com.safepayu.wallet.helper.SmsBroadcastReceiver;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.SendOtpRequest;
 import com.safepayu.wallet.models.response.BaseResponse;
@@ -35,7 +48,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class OtpVerification extends BaseActivity implements View.OnClickListener, TextWatcher {
+public class OtpVerification extends BaseActivity implements View.OnClickListener, TextWatcher, GoogleApiClient.ConnectionCallbacks,
+        OtpReceivedInterface, GoogleApiClient.OnConnectionFailedListener{
     private TextView otpReadRemainingTime, mobileNo;
     private LinearLayout resendAgainLayout;
     private EditText otp;
@@ -45,17 +59,31 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     EditText et1 ,et2,et3,et4,et5,et6;
     String Otp;
 
+    //Sms Receiver
+    GoogleApiClient mGoogleApiClient;
+    SmsBroadcastReceiver mSmsBroadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbar(false, null, true);
 
-       /* mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });*/
+        // init broadcast receiver
+        mSmsBroadcastReceiver = new SmsBroadcastReceiver();
+        //set google api client for hint request
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.CREDENTIALS_API)
+                .build();
+
+        apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        mSmsBroadcastReceiver.setOnOtpListeners(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION);
+        getApplicationContext().registerReceiver(mSmsBroadcastReceiver, intentFilter);
+
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
         otp = findViewById(R.id.et_otp);
         mobileNo = findViewById(R.id.tv_mobileNo1);
@@ -193,6 +221,7 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
+                            startSMSListener();
                             startTimer();
                         }
                     }
@@ -204,6 +233,54 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.otpLayout), true, e);
                     }
                 }));
+    }
+
+    public void startSMSListener() {
+        SmsRetrieverClient mClient = SmsRetriever.getClient(this);
+        Task<Void> mTask = mClient.startSmsRetriever();
+        mTask.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override public void onSuccess(Void aVoid) {
+
+            }
+        });
+        mTask.addOnFailureListener(new OnFailureListener() {
+            @Override public void onFailure(@NonNull Exception e) {
+                Toast.makeText(OtpVerification.this, "Error", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this, "Connection Failure", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onOtpReceived(String OTP) {
+        try {
+            Toast.makeText(this, OTP, Toast.LENGTH_SHORT).show();
+            otp.setText("");
+            OTP=OTP.substring(OTP.indexOf(':')+2);
+
+            otp.setText(OTP.trim());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onOtpTimeout() {
+        //Toast.makeText(this, "Time out, please resend", Toast.LENGTH_LONG).show();
     }
 
     private void verifyOtp(String otp) {

@@ -169,7 +169,8 @@
                     android:background="@color/white">
 
                     <ImageView
-                     android:id="@+id/image_service" android:layout_width="40dp"
+                     android:id="@+id/image_service"
+                        android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:padding="5dp"/>
 

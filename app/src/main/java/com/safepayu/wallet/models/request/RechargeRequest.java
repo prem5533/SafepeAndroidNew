@@ -14,6 +14,8 @@ public class RechargeRequest {
      * operator_id : 1
      * payment_mode : bank
      * description : recharge
+     * wallet_amount :
+     * bank_amount :
      */
 
     private String transaction_id;
@@ -26,6 +28,8 @@ public class RechargeRequest {
     private String operator_id;
     private String payment_mode;
     private String description;
+    private String wallet_amount;
+    private String bank_amount;
     /**
      * stdCode : 22
      *
@@ -37,7 +41,6 @@ public class RechargeRequest {
     private String stdCode;
     private String opvalue2;
     private String opvalue3;
-
 
     public String getTransaction_id() {
         return transaction_id;
@@ -141,5 +144,21 @@ public class RechargeRequest {
 
     public void setOpvalue3(String opvalue3) {
         this.opvalue3 = opvalue3;
+    }
+
+    public String getWallet_amount() {
+        return wallet_amount;
+    }
+
+    public void setWallet_amount(String wallet_amount) {
+        this.wallet_amount = wallet_amount;
+    }
+
+    public String getBank_amount() {
+        return bank_amount;
+    }
+
+    public void setBank_amount(String bank_amount) {
+        this.bank_amount = bank_amount;
     }
 }

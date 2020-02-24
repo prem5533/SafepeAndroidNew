@@ -301,7 +301,13 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                     buyPackage.setPaid_from_account("");
                     BuyMemberShip.buyPackageFromDB=buyPackage;
 
-                    Intent intent=new Intent(MemberBankAddPackages.this,PaymentType.class);
+                    Intent intent;
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN).equals("0")) {
+
+                        intent = new Intent(MemberBankAddPackages.this, PaymentTypeNew.class);
+                    }else {
+                        intent = new Intent(MemberBankAddPackages.this, PaymentType.class);
+                    }
                     overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                     intent.putExtra("RechargePaymentId",BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
                     intent.putExtra("Amount",tv_amountpaid.getText().toString().trim());

@@ -44,7 +44,6 @@ import com.safepayu.wallet.models.response.UserResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
@@ -138,7 +137,8 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
         });
 
         final String tax=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().TRANSACTION_CHARGE);
-        tvTransactionFee.setText("Transaction fee: "+tax+"% or Minimum ₹ 10 ");
+        final String minCharge=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MIN_WITHDRAW_CHARGE);
+        tvTransactionFee.setText("Transaction fee: "+tax+"% or Minimum ₹ "+minCharge);
 
         AddBankBenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,14 +164,35 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                 if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Goto Your Profile and Verify Your Email First", true);
                 } else {
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
-                    } else {
-                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")) {
+                    try {
+//                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+//                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
+//                        } else {
+//                            try {
+//                                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")) {
+//                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Withdraw Is Closed Today", true);
+//                                } else {
+//                                    CheckValidate();
+//                                }
+//                            }catch (Exception e){
+//                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Withdraw Is Closed Today", true);
+//                                e.printStackTrace();
+//                            }
+//                        }
+
+                        try {
+                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")) {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Withdraw Is Closed Today", true);
+                            } else {
+                                CheckValidate();
+                            }
+                        }catch (Exception e){
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Withdraw Is Closed Today", true);
-                        } else {
-                            CheckValidate();
+                            e.printStackTrace();
                         }
+                    }catch (Exception e){
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
+                        e.printStackTrace();
                     }
                 }
 
@@ -200,9 +221,9 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                     double amt = CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()),Double.parseDouble(tax));
                     String text = AmountED.getText().toString().trim() + " - Tax = ";
                     AmountTotalTV.setText(text + String.format("%.2f", amt));
-                    tvWithdrawalAmount.setText(AmountED.getText().toString().trim() + " " + getResources().getString(R.string.rupees));
-                    tvTax.setText(" -  " + new DecimalFormat("##.##").format(minusAmount) + " " + getResources().getString(R.string.rupees));
-                    tvTotalAmountsendmoney.setText(String.format("%.2f", totalAmount) + " " + getResources().getString(R.string.rupees));
+                    tvWithdrawalAmount.setText(getResources().getString(R.string.rupees)+" "+String.format("%.2f", Double.parseDouble(AmountED.getText().toString().trim())));
+                    tvTax.setText(" -  " +getResources().getString(R.string.rupees)+" "+ String.format("%.2f", minusAmount));
+                    tvTotalAmountsendmoney.setText(getResources().getString(R.string.rupees)+" "+String.format("%.2f", totalAmount));
                 } else {
                     cardAmount.setVisibility(View.GONE);
                 }
@@ -563,15 +584,17 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
     */
 
     private double CalculateAmount(int amount,double tax) {
-        minusAmount = ((((double) amount) / 100) * tax);
-        totalAmount = (double) amount - minusAmount;
-        checkAmount = (int) minusAmount;
-        if (checkAmount > 9) {
 
-        } else {
-            minusAmount = 10;
-            totalAmount = (double) amount - (double) minusAmount;
+
+        if (amount>300){
+            minusAmount = ((((double) amount) / 100) * tax);
+            totalAmount = (double) amount - minusAmount;
+            checkAmount = (int) minusAmount;
+        }else {
+            minusAmount = Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MIN_WITHDRAW_CHARGE));
+            totalAmount = (double) amount - minusAmount;
         }
+
 
         return totalAmount;
     }
