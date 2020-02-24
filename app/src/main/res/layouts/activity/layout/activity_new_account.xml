@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/newAccountLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/newAccountLayout">
+    android:orientation="vertical">
+
     <include layout="@layout/toolbar_transparent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical">
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,6 +25,7 @@
                 android:orientation="vertical"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -40,10 +44,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="@string/create_new_account"
-                        android:textSize="20sp"
-                        android:textColor="@color/red_theme"
                         android:fontFamily="@font/roboto_bold"
+                        android:text="@string/create_new_account"
+                        android:textColor="@color/red_theme"
+                        android:textSize="20sp"
                         app:fontCustom="@string/Roboto" />
 
                 </LinearLayout>
@@ -58,11 +62,11 @@
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
                         android:hint="@string/first_name"
                         android:inputType="textCapSentences"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -75,11 +79,11 @@
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
                         android:hint="@string/last_name"
                         android:inputType="textCapSentences"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -92,11 +96,11 @@
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
                         android:hint="@string/email"
                         android:inputType="textEmailAddress"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -109,12 +113,12 @@
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
                         android:hint="@string/enter_mobile"
                         android:inputType="number"
-                        android:textSize="16sp"
                         android:maxLength="14"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -127,16 +131,16 @@
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/dob_hint"
-                        android:inputType="text"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"
-                        android:singleLine="true"
-                        android:imeOptions="actionNext"
-
                         android:clickable="true"
-                        android:focusable="false"/>
+                        android:focusable="false"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="@string/dob_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:singleLine="true"
+
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <RelativeLayout
@@ -153,20 +157,20 @@
                             style="@style/defaultEditTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
                             android:hint="@string/enter_password"
                             android:inputType="textPassword"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
+                        android:id="@+id/show_hide_password_newAccount"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/show_password48"
-                        android:id="@+id/show_hide_password_newAccount"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/show_password48" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -184,93 +188,95 @@
                             style="@style/defaultEditTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_regular"
                             android:hint="Sponsor ID*"
                             android:inputType="text"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true">
+
                         <Button
+                            android:id="@+id/verify_already"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/verify_already"
                             android:layout_alignParentRight="true"
+                            android:layout_marginTop="10dp"
                             android:background="@null"
-                            android:text="Verified"
-                            android:textSize="12sp"
-                            android:textColor="#00C853"
-                            android:textAllCaps="false"
-                            android:visibility="gone"
                             android:fontFamily="@font/roboto_regular"
-                            android:layout_marginTop="10dp"/>
+                            android:text="Verified"
+                            android:textAllCaps="false"
+                            android:textColor="#00C853"
+                            android:textSize="12sp"
+                            android:visibility="gone" />
 
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/verify_referral"
-                        android:background="@null"
-                        android:text="Verify Referral"
-                        android:textSize="12sp"
-                        android:textColor="@color/bue_A800"
-                        android:textAllCaps="false"
-                        android:fontFamily="@font/roboto_regular"
-                        android:layout_marginTop="10dp"/>
+                        <Button
+                            android:id="@+id/verify_referral"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@null"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="Verify Referral"
+                            android:textAllCaps="false"
+                            android:textColor="@color/bue_A800"
+                            android:textSize="12sp" />
                     </FrameLayout>
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="Referral Name - "
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/bue_A800"/>
+                        android:text="Referral Name - "
+                        android:textColor="@color/bue_A800"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/refer_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text=""
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/bue_A700"/>
+                        android:text=""
+                        android:textColor="@color/bue_A700"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="If You Dont't Have Any Referral Code - "
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/bue_A800"/>
+                        android:text="If You Dont't Have Any Referral Code - "
+                        android:textColor="@color/bue_A800"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/forRefer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="Click Here"
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/bue_A700"/>
+                        android:text="Click Here"
+                        android:textColor="@color/bue_A700"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
 
@@ -278,65 +284,69 @@
                     android:id="@+id/ch_term_cond"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="11sp"
-                    android:fontFamily="@font/roboto_regular"
                     android:buttonTint="@color/red_theme"
+                    android:checked="true"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="Terms &amp; Conditions"
                     android:textColor="@color/red_theme"
-                    android:checked="true"/>
+                    android:textSize="11sp" />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     style="@style/TextAppearance.AppCompat.Large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:fontFamily="@font/roboto_bold"
                     android:text="@string/create_account_text_hint"
-                    android:textStyle="normal"
-                    app:fontCustom="@string/Roboto" android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/roboto_bold" />
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    app:fontCustom="@string/Roboto" />
 
                 <com.safepayu.wallet.custom_view.CustomTextView
                     style="@style/TextAppearance.AppCompat.Caption"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="@string/opt_send_message"
                     android:textColor="@color/red"
-                    android:textStyle="normal"
-                    app:fontCustom="@string/Roboto"
                     android:textSize="12sp"
-                    android:fontFamily="@font/roboto_regular"/>
+                    android:textStyle="normal"
+                    app:fontCustom="@string/Roboto" />
+
                 <Button
                     android:id="@+id/btn.process"
                     style="@style/buttonDefault"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/roboto_regular"
                     android:layout_marginTop="20dp"
+                    android:layout_marginBottom="30dp"
                     android:background="@drawable/rounded_buttons"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="@string/process"
-                    android:layout_marginBottom="30dp"/>
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:visibility="gone">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/yellow_theme"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/red_theme"/>
+            android:background="@color/yellow_theme" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/red_theme" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -41,7 +41,7 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
     private RecyclerView recycleBankList;
     private RadioGroup paymentMode;
     private CardView cardView;
-    private String TransactionType="",BankName="",Amount="50000";
+    private String TransactionType="",BankName="",Amount="";
     private Double totalPayableAmount;
     private BuyMembershipAdapter buyMembershipAdapter;
     public static FDPayRequest fdPayRequest;
@@ -62,62 +62,75 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
 
         paymentMode = findViewById(R.id.rgPaymentMode_fdChoosePaymentLayout);
 
+        try {
+            Amount=getIntent().getStringExtra("AmountDeposit");
+        }catch (Exception e){
+            Amount="0";
+            e.printStackTrace();
+        }
+
         findViewById(R.id.proceedBtn_fdChoosePaymentLayout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (TransactionType.equalsIgnoreCase("1")){
-                    TransactionType="3";
+                if (TextUtils.isEmpty(Amount) || Amount.equalsIgnoreCase("0")){
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.fdChoosePaymentLayout), "Invalid Amount", false);
+                }else {
+                    if (TransactionType.equalsIgnoreCase("1")){
+                        TransactionType="3";
 
-                    String currentDate = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(new Date());
+                        String currentDate = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(new Date());
 
-                    fdPayRequest=new FDPayRequest();
-                    fdPayRequest.setTransaction_type(TransactionType);
-                    fdPayRequest.setBuy_date(currentDate);
-                    fdPayRequest.setPayment_mode("Payment Gateway");
-                    fdPayRequest.setDocument_attached("");
-                    fdPayRequest.setRefrence_no("");
-                    fdPayRequest.setPaid_to_account("By Admin");
-                    fdPayRequest.setPaid_from_account("");
-                    fdPayRequest.setPackage_amount(String.valueOf(totalPayableAmount));
-                    fdPayRequest.setRefer("fd8376097766");
+                        fdPayRequest=new FDPayRequest();
+                        fdPayRequest.setTransaction_type(TransactionType);
+                        fdPayRequest.setBuy_date(currentDate);
+                        fdPayRequest.setPayment_mode("Payment Gateway");
+                        fdPayRequest.setDocument_attached("");
+                        fdPayRequest.setRefrence_no("");
+                        fdPayRequest.setPaid_to_account("By Admin");
+                        fdPayRequest.setPaid_from_account("");
+                        fdPayRequest.setPackage_amount(String.valueOf(totalPayableAmount));
+                        fdPayRequest.setRefer("fd8376097766");
 
-                    Intent intent;
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN).equals("0")) {
-                        intent = new Intent(FDChoosePayment.this, PaymentTypeNew.class);
-                    }else {
-                        intent = new Intent(FDChoosePayment.this, PaymentType.class);
-                    }
-                    overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
-                    intent.putExtra("RechargePaymentId",BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
-                    intent.putExtra("Amount",String.valueOf(totalPayableAmount));
-                    intent.putExtra("PaymentType","Deposit");
-                    intent.putExtra("PaymentFor","Fixed");
-                    intent.putExtra("RechargeTypeId","0");
-                    intent.putExtra("OperatorCode","");
-                    intent.putExtra("CircleCode","0");
-                    intent.putExtra("OperatorId","");
-                    startActivity(intent);
-                    finish();
-                }else if (TransactionType.equalsIgnoreCase("2")) {
-
-                    if (TextUtils.isEmpty(BankName)){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.fdChoosePaymentLayout), "Please Select Bank", false);
-                    }else {
-                        Intent intent=new Intent(FDChoosePayment.this, MemberBankAddPackages.class);
-                        intent.putExtra("TransactionType",TransactionType);
-                        intent.putExtra("PackageID","");
-                        intent.putExtra("BankName",BankName);
-                        intent.putExtra("PackageName","");
+                        Intent intent;
+                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN).equals("0")) {
+                            intent = new Intent(FDChoosePayment.this, PaymentTypeNew.class);
+                        }else {
+                            intent = new Intent(FDChoosePayment.this, PaymentType.class);
+                        }
+                        overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                        intent.putExtra("RechargePaymentId",BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
                         intent.putExtra("Amount",String.valueOf(totalPayableAmount));
-                        intent.putExtra("Activity","FD");
+                        intent.putExtra("PaymentType","Deposit");
+                        intent.putExtra("PaymentFor","Fixed");
+                        intent.putExtra("RechargeTypeId","0");
+                        intent.putExtra("OperatorCode","");
+                        intent.putExtra("CircleCode","0");
+                        intent.putExtra("OperatorId","");
                         startActivity(intent);
                         finish();
-                    }
+                    }else if (TransactionType.equalsIgnoreCase("2")) {
 
-                }else {
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.fdChoosePaymentLayout), "Please Select Payment Option", false);
+                        if (TextUtils.isEmpty(BankName)){
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.fdChoosePaymentLayout), "Please Select Bank", false);
+                        }else {
+                            Intent intent=new Intent(FDChoosePayment.this, MemberBankAddPackages.class);
+                            intent.putExtra("TransactionType",TransactionType);
+                            intent.putExtra("PackageID","");
+                            intent.putExtra("BankName",BankName);
+                            intent.putExtra("PackageName","");
+                            intent.putExtra("Amount",String.valueOf(totalPayableAmount));
+                            intent.putExtra("Activity","FD");
+                            startActivity(intent);
+                            finish();
+                        }
+
+                    }else {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.fdChoosePaymentLayout), "Please Select Payment Option", false);
+                    }
                 }
+
+
             }
         });
 

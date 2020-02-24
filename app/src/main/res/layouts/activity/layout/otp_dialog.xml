@@ -22,10 +22,10 @@
                 android:id="@+id/im_cross"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:padding="10dp"
                 android:layout_gravity="right"
-                android:src="@drawable/ic_clear"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_clear" />
 
             <LinearLayout
                 android:id="@+id/layout2"
@@ -39,27 +39,27 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="OTP Verification"
                     android:textColor="@color/red_theme"
                     android:textSize="16dp"
-                    android:fontFamily="@font/roboto_regular"
                     android:visibility="visible" />
 
                 <EditText
                     android:id="@+id/enter_otpLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/white_button_grayborder"
+                    android:fontFamily="@font/roboto_regular"
                     android:hint="Enter your Otp"
                     android:inputType="number"
                     android:maxLength="6"
                     android:padding="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:textColor="#085272"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/roboto_regular"/>
+                    android:textSize="15sp" />
 
 
                 <TextView
@@ -68,10 +68,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_regular"
                     android:text="00:00"
                     android:textColor="@color/red"
                     android:textSize="15dp"
-                    android:fontFamily="@font/roboto_regular"
                     android:visibility="gone" />
 
 
@@ -106,8 +106,6 @@
                     android:textSize="15dp"
                     android:visibility="gone" />
             </LinearLayout>
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 </LinearLayout>

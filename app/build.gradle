@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file('C:\\Users\\Naga Raj\\Desktop\\SafepeKey\\safepekey.jks')
+            storeFile file('/home/pritam/AndroidStudioProject/SafepeAndroidFD/safepekey.jks')
             storePassword 'safepayu'
             keyPassword 'safepayu'
             keyAlias 'mysafepekey'
@@ -54,6 +54,10 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
     }
 }
 

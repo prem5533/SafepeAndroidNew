@@ -94,6 +94,7 @@
                                 android:fontFamily="@font/roboto_regular"
                                 android:textColor="@color/black"
                                 android:background="@null"
+                                android:imeOptions="actionNext"
                                 android:paddingLeft="5dp"
                                 android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
                         </LinearLayout>
@@ -126,6 +127,7 @@
                                 android:textSize="16sp"
                                 android:fontFamily="@font/roboto_regular"
                                 android:textColor="@color/black"
+                                android:imeOptions="actionNext"
                                 android:background="@null"
                                 android:paddingLeft="5dp"
                                 android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
@@ -159,6 +161,7 @@
                                 android:textSize="16sp"
                                 android:fontFamily="@font/roboto_regular"
                                 android:textColor="@color/black"
+                                android:imeOptions="actionNext"
                                 android:background="@null"
                                 android:paddingLeft="5dp"/>
                         </LinearLayout>
@@ -194,6 +197,7 @@
                                 android:maxLength="14"
                                 android:fontFamily="@font/roboto_regular"
                                 android:textColor="@color/black"
+                                android:imeOptions="actionNext"
                                 android:background="@null"
                                 android:paddingLeft="5dp"/>
                         </LinearLayout>
@@ -278,6 +282,7 @@
                                     android:textSize="16sp"
                                     android:fontFamily="@font/roboto_regular"
                                     android:textColor="@color/black"
+                                    android:imeOptions="actionNext"
                                     android:background="@null"
                                     android:paddingLeft="5dp"/>
 

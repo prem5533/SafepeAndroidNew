@@ -16,7 +16,6 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,11 +49,11 @@ import io.reactivex.schedulers.Schedulers;
 public class NewAccount extends BaseActivity implements View.OnClickListener, SnackBarActionClickListener {
 
     private EditText firstName, lastName, email, mobileNo, password, dob, referralCode;
-    private TextView tvReferUserName,tvForReferralBtn,backToLoginBtn;
+    private TextView tvReferUserName, tvForReferralBtn, backToLoginBtn;
     private LoadingDialog loadingDialog;
-    private Button VerifyReffralBtn,verifyAlready;
+    private Button VerifyReffralBtn, verifyAlready;
     CheckEmailMobileRequest checkEmailMobileRequest;
-    boolean mobileCheck=false,emailCheck=false,showPass=false,referralCheck=false;
+    boolean mobileCheck = false, emailCheck = false, showPass = false, referralCheck = false;
     private ImageView ShowHidePasswordBtn;
     private String strReferalcode;
     private ImageView signup_logo;
@@ -81,31 +80,26 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         referralCode = findViewById(R.id.et_referralCode);
         tvReferUserName = findViewById(R.id.refer_user_name);
         password = findViewById(R.id.et_password_password);
-        ShowHidePasswordBtn= findViewById(R.id.show_hide_password_newAccount);
-        VerifyReffralBtn=findViewById(R.id.verify_referral);
-        verifyAlready=findViewById(R.id.verify_already);
-        tvForReferralBtn=findViewById(R.id.forRefer);
-        signup_logo=findViewById(R.id.signup_logo);
-        chTermCond=findViewById(R.id.ch_term_cond);
-        backToLoginBtn=findViewById(R.id.backToLoginBtn);
-      //  Picasso.get().load(imagePath).into(signup_logo);
+        ShowHidePasswordBtn = findViewById(R.id.show_hide_password_newAccount);
+        VerifyReffralBtn = findViewById(R.id.verify_referral);
+        verifyAlready = findViewById(R.id.verify_already);
+        tvForReferralBtn = findViewById(R.id.forRefer);
+        signup_logo = findViewById(R.id.signup_logo);
+        chTermCond = findViewById(R.id.ch_term_cond);
+        backToLoginBtn = findViewById(R.id.backToLoginBtn);
+        //  Picasso.get().load(imagePath).into(signup_logo);
 
         ShowHidePasswordBtn.setOnClickListener(this);
         VerifyReffralBtn.setOnClickListener(this);
 
 
-        strReferalcode= BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
+        strReferalcode = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
         mobileNo.addTextChangedListener(new MobileEditTextWatcher(mobileNo));
         mobileNo.setText("+91 ");
         mobileNo.setSelection(mobileNo.getText().length());
-        checkEmailMobileRequest=new CheckEmailMobileRequest();
+        checkEmailMobileRequest = new CheckEmailMobileRequest();
 
-        backToLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        backToLoginBtn.setOnClickListener(v -> finish());
 
         findViewById(R.id.btn_process).setOnClickListener(this);
         dob.setOnClickListener(this);
@@ -117,7 +111,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 // TODO Auto-generated method stub
 
                 if (BaseApp.getInstance().commonUtils().isValidEmail(email.getText().toString())) {
-                    if (email.getText().toString().contains(".com")){
+                    if (email.getText().toString().contains(".com")) {
                         checkEmailMobileRequest.setEmail(email.getText().toString());
                         checkEmailMobileRequest.setType("2");
                         checkEmailMobileRequest.setMobile("");
@@ -153,10 +147,10 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                         checkEmailMobileRequest.setType("1");
                         checkEmailMobileRequest.setMobile(mobileNo.getText().toString().split(" ")[1]);
                         checkMobile(checkEmailMobileRequest);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
 
-                        int index=mobileNo.getText().toString().indexOf(" ");
+                        int index = mobileNo.getText().toString().indexOf(" ");
                         checkEmailMobileRequest.setEmail("");
                         checkEmailMobileRequest.setType("1");
                         checkEmailMobileRequest.setMobile(mobileNo.getText().toString().substring(index));
@@ -187,20 +181,20 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                 // TODO Auto-generated method stub
                 try {
                     if (referralCheck) {
-                        referralCheck=false;
+                        referralCheck = false;
                         tvReferUserName.setText("");
                         VerifyReffralBtn.setVisibility(View.VISIBLE);
                         verifyAlready.setVisibility(View.GONE);
-                    }else {
-                        if (s.length()==10){
+                    } else {
+                        if (s.length() == 10) {
                             getReferralDetails();
-                        }else {
-                            referralCheck=false;
+                        } else {
+                            referralCheck = false;
                             VerifyReffralBtn.setVisibility(View.VISIBLE);
                             verifyAlready.setVisibility(View.GONE);
                         }
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -226,21 +220,15 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
 //            referralCode.setText(strReferalcode);
 //        }
 
-        chTermCond.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (chTermCond.isChecked()){
-                    startActivity(new Intent(NewAccount.this,TermsAndCondition.class));
-                }
+        chTermCond.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (chTermCond.isChecked()) {
+                startActivity(new Intent(NewAccount.this, TermsAndCondition.class));
             }
         });
 
-        tvForReferralBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                referralCode.setText("8376097766");
-                referralCode.setSelection(referralCode.getText().toString().length());
-            }
+        tvForReferralBtn.setOnClickListener(view -> {
+            referralCode.setText("8376097766");
+            referralCode.setSelection(referralCode.getText().toString().length());
         });
 
         //getReferralDetails();
@@ -251,7 +239,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     @Override
     protected int getLayoutResourceId() {
 
-      //  return R.layout.activity_new_account;
+        //  return R.layout.activity_new_account;
         return R.layout.activity_new_account_new;
     }
 
@@ -271,18 +259,18 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
             case R.id.btn_process:
                 BaseApp.getInstance().commonUtils().hideKeyboard(this);
                 if (validate()) {
-                    if (mobileCheck){
-                        if (emailCheck){
-                            if (referralCheck){
+                    if (mobileCheck) {
+                        if (emailCheck) {
+                            if (referralCheck) {
                                 register();
-                            }else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout),"PLease Verify Referral Code"  , false);
+                            } else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout), "PLease Verify Referral Code", false);
                             }
-                        }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout),"This Email Is Already Registered"  , false);
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout), "This Email Is Already Registered", false);
                         }
-                    }else {
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout),"This Mobile Is Already Registered"  , false);
+                    } else {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout), "This Mobile Is Already Registered", false);
                     }
 
                 }
@@ -296,23 +284,23 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
 
             case R.id.show_hide_password_newAccount:
 
-                if (showPass){
-                    showPass=false;
+                if (showPass) {
+                    showPass = false;
                     ShowHidePasswordBtn.setImageDrawable(getResources().getDrawable(R.drawable.show_password48));
                     password.setTransformationMethod(new PasswordTransformationMethod());
                     try {
                         password.setSelection(password.getText().toString().length());
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                }else {
-                    showPass=true;
+                } else {
+                    showPass = true;
                     ShowHidePasswordBtn.setImageDrawable(getResources().getDrawable(R.drawable.hide_password48));
                     password.setTransformationMethod(null);
                     try {
                         password.setSelection(password.getText().toString().length());
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -328,50 +316,50 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
 
     private Boolean validate() {
 
-       if (firstName.getText().toString().trim().length() == 0) {
-                firstName.requestFocus();
-                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter first name", true);
-                return false;
-            } else if (lastName.getText().toString().trim().length() == 0) {
-                lastName.requestFocus();
-                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter last name", true);
-                return false;
-            } else if (email.getText().toString().trim().length() == 0) {
-                email.requestFocus();
-                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter email", true);
-                return false;
-            } else if (!BaseApp.getInstance().commonUtils().isValidEmail(email.getText().toString())) {
-                email.requestFocus();
-                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid email", true);
-                return false;
-            } else if (mobileNo.getText().toString().trim().length() == 0) {
-                mobileNo.requestFocus();
-                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid phone number", true);
-                return false;
-            } else if (PhoneNumberUtils.isGlobalPhoneNumber(mobileNo.getText().toString().trim())) {
-                mobileNo.requestFocus();
-                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid phone number", true);
-                return false;
-            } else if (mobileNo.getText().toString().trim().length() < 10 || mobileNo.getText().toString().trim().length() > 14 || mobileNo.getText().toString().trim().matches(BaseApp.getInstance().commonUtils().phoneNumberRegex) == false) {
-                mobileNo.requestFocus();
-                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid phone number", true);
-                return false;
-            } else if (dob.getText().toString().trim().length() == 0) {
-                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter DOB", true);
-                return false;
-            } else if (password.getText().toString().trim().length() == 0|| password.getText().toString().trim().length()<4) {
-                mobileNo.requestFocus();
-                BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter password, password must be grater than 4 digit", true);
-                return false;
-            } else if (referralCode.getText().toString().trim().length() == 0) {
-                referralCode.requestFocus();
-                return false;
-            } else if (!chTermCond.isChecked()){
-                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout),"Please Accept Term & Conditions", true);
-                return false;
-            }
+        if (firstName.getText().toString().trim().length() == 0) {
+            firstName.requestFocus();
+            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter first name", true);
+            return false;
+        } else if (lastName.getText().toString().trim().length() == 0) {
+            lastName.requestFocus();
+            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter last name", true);
+            return false;
+        } else if (email.getText().toString().trim().length() == 0) {
+            email.requestFocus();
+            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter email", true);
+            return false;
+        } else if (!BaseApp.getInstance().commonUtils().isValidEmail(email.getText().toString())) {
+            email.requestFocus();
+            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid email", true);
+            return false;
+        } else if (mobileNo.getText().toString().trim().length() == 0) {
+            mobileNo.requestFocus();
+            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid phone number", true);
+            return false;
+        } else if (PhoneNumberUtils.isGlobalPhoneNumber(mobileNo.getText().toString().trim())) {
+            mobileNo.requestFocus();
+            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid phone number", true);
+            return false;
+        } else if (mobileNo.getText().toString().trim().length() < 10 || mobileNo.getText().toString().trim().length() > 14 || mobileNo.getText().toString().trim().matches(BaseApp.getInstance().commonUtils().phoneNumberRegex) == false) {
+            mobileNo.requestFocus();
+            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter valid phone number", true);
+            return false;
+        } else if (dob.getText().toString().trim().length() == 0) {
+            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter DOB", true);
+            return false;
+        } else if (password.getText().toString().trim().length() == 0 || password.getText().toString().trim().length() < 4) {
+            mobileNo.requestFocus();
+            BaseApp.getInstance().toastHelper().showSnackBar(firstName, "Please enter password, password must be grater than 4 digit", true);
+            return false;
+        } else if (referralCode.getText().toString().trim().length() == 0) {
+            referralCode.requestFocus();
+            return false;
+        } else if (!chTermCond.isChecked()) {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout), "Please Accept Term & Conditions", true);
+            return false;
+        }
 
-            return true;
+        return true;
     }
 
     public Boolean checkPermission() {
@@ -420,7 +408,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void register() {
-        @SuppressLint("HardwareIds")String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        @SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
@@ -440,38 +428,38 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                                 BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().USER_ID, response.getUser().getUserId());
                                 BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().USER, new Gson().toJson(response.getUser()));
                                 BaseApp.getInstance().sharedPref().setObject(BaseApp.getInstance().sharedPref().REFERRAL_USER, new Gson().toJson(response.getReferralUser()));
-                                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE,mobileNo.getText().toString().split(" ")[1]);
+                                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().MOBILE, mobileNo.getText().toString().split(" ")[1]);
                                 startActivity(new Intent(NewAccount.this, OtpVerification.class));
                                 finish();
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        }else {
-                            String message="";
+                        } else {
+                            String message = "";
 
-                           try{
-                               BaseResponse1.DataBean dataBean=response.getData();
-                               if (dataBean!=null){
+                            try {
+                                BaseResponse1.DataBean dataBean = response.getData();
+                                if (dataBean != null) {
 
-                                   if (dataBean.getEmail().size()==1){
-                                       message=dataBean.getEmail().get(0)+"\n";
-                                   }else if (dataBean.getEmail().size()>1){
-                                       message=dataBean.getEmail().get(0)+"\n"+dataBean.getEmail().get(1)+"\n";
-                                   }
+                                    if (dataBean.getEmail().size() == 1) {
+                                        message = dataBean.getEmail().get(0) + "\n";
+                                    } else if (dataBean.getEmail().size() > 1) {
+                                        message = dataBean.getEmail().get(0) + "\n" + dataBean.getEmail().get(1) + "\n";
+                                    }
 
-                                   if (dataBean.getMobile().size()==1){
-                                       message=message+dataBean.getMobile().get(0);
-                                   }else if (dataBean.getEmail().size()>1){
-                                       message=message+dataBean.getMobile().get(0)+"\n"+dataBean.getMobile().get(1)+"\n";
-                                   }
-                               }
-                           }catch (Exception e){
-                               e.printStackTrace();
-                           }
+                                    if (dataBean.getMobile().size() == 1) {
+                                        message = message + dataBean.getMobile().get(0);
+                                    } else if (dataBean.getEmail().size() > 1) {
+                                        message = message + dataBean.getMobile().get(0) + "\n" + dataBean.getMobile().get(1) + "\n";
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             if (TextUtils.isEmpty(message)) {
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout), response.getMessage(), false);
-                            }else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout),  message, false);
+                            } else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout), message, false);
                             }
                         }
                     }
@@ -489,7 +477,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     private void getReferralDetails() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-        BaseApp.getInstance().getDisposable().add(apiService.getReferralDetails(referralCode.getText().toString().trim(),"1","")
+        BaseApp.getInstance().getDisposable().add(apiService.getReferralDetails(referralCode.getText().toString().trim(), "1", "")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<ReferralCodeResponse>() {
@@ -498,20 +486,20 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                         loadingDialog.hideDialog();
                         try {
                             if (response.isStatus()) {
-                                referralCheck=true;
+                                referralCheck = true;
                                 tvReferUserName.setText(response.getPackages());
                                 referralCode.setSelection(referralCode.getText().toString().length());
                                 verifyAlready.setVisibility(View.VISIBLE);
                                 VerifyReffralBtn.setVisibility(View.GONE);
                                 //
                             } else {
-                                referralCheck=false;
+                                referralCheck = false;
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.newAccountLayout), "Wrong Referral Code", true);
                                 referralCode.setText("");
                                 tvReferUserName.setText("");
                                 referralCode.requestFocus();
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -539,9 +527,9 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                            emailCheck=true;
+                            emailCheck = true;
                         } else {
-                            emailCheck=false;
+                            emailCheck = false;
                             email.setError("This Email Is Already Registered");
                         }
                     }
@@ -568,9 +556,9 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
                         if (response.getStatus()) {
-                            mobileCheck=true;
+                            mobileCheck = true;
                         } else {
-                            mobileCheck=false;
+                            mobileCheck = false;
                             mobileNo.setError("This Mobile Is Already Registered");
                         }
                     }

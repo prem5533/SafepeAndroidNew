@@ -35,22 +35,30 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".activity.FingerprintActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.FingerprintActivity2"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".ecommerce.activity.OrderDetailEcomActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ecommerce.activity.MyOrderEcomActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ecommerce.activity.AddAddressEcomActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ecommerce.activity.ProductDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ecommerce.activity.EHomeActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.fixed_deposit.CreateFixedDepositActivity"></activity>
+        <activity android:name=".activity.fixed_deposit.AvailableBalanceActivity" />
+        <activity android:name=".activity.fixed_deposit.FixedDepositActivity" />
+        <activity
+            android:name=".activity.FingerprintActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FingerprintActivity2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ecommerce.activity.OrderDetailEcomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ecommerce.activity.MyOrderEcomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ecommerce.activity.AddAddressEcomActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ecommerce.activity.ProductDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ecommerce.activity.EHomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.booking.flight.FlightHistoryActivity"
             android:screenOrientation="portrait" />
@@ -174,8 +182,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustNothing"
-            />
+            android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity
             android:name=".activity.Navigation"
             android:screenOrientation="portrait" />
@@ -294,7 +301,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -347,17 +353,7 @@
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVE" />
             </intent-filter>
         </receiver>
-
-
         <!-- Ecommerce -->
-        <activity
-            android:name=".ecommerce.activity.FilterDialog"
-            android:screenOrientation="portrait" />
-
-
-
-<!--  Ecommerce      -->
-
         <activity android:name=".ecommerce.fragment.ReviewProductFragment"
             android:screenOrientation="portrait"/>
         <activity android:name=".ecommerce.fragment.ThankYouFragment"
