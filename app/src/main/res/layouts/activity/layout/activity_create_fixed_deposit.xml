@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="100"
+                    android:text="0.00"
                     android:textColor="@color/grey_700"
                     android:textSize="14sp" />
             </LinearLayout>

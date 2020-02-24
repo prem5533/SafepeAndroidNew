@@ -1,6 +1,5 @@
 package com.safepayu.wallet.adapter.deposit;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,30 +13,26 @@ import com.safepayu.wallet.models.response.AllListData;
 
 import java.util.List;
 
-public class DepositInterestRateAdapter extends RecyclerView.Adapter<DepositInterestRateAdapter.ViewHolder> {
+public class InstructionAdapter extends RecyclerView.Adapter<InstructionAdapter.ViewHolder> {
 
     private Context context;
-    private List<AllListData> modelArrayList;
+    private List<String> modelArrayList;
 
-    public DepositInterestRateAdapter(Context context, List<AllListData> modelArrayList) {
+    public InstructionAdapter(Context context, List<String> modelArrayList) {
         this.context = context;
         this.modelArrayList = modelArrayList;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_deposit_interest_rate_table_list, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_instruction_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-
-        holder.tv_period.setText(modelArrayList.get(position).period + " Days");
-        holder.tv_interest_rate.setText("Interest @ " + modelArrayList.get(position).r_rate + " %");
-        holder.tv_amount.setText(modelArrayList.get(position).amount);
-
+        holder.tv_instruction.setText(modelArrayList.get(position));
     }
 
     @Override
@@ -47,14 +42,11 @@ public class DepositInterestRateAdapter extends RecyclerView.Adapter<DepositInte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tv_period, tv_interest_rate, tv_amount;
+        private TextView tv_instruction;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
-            tv_period = itemView.findViewById(R.id.tv_period);
-            tv_interest_rate = itemView.findViewById(R.id.tv_interest_rate);
-            tv_amount = itemView.findViewById(R.id.tv_amount);
+            tv_instruction = itemView.findViewById(R.id.tv_instruction);
         }
     }
 }

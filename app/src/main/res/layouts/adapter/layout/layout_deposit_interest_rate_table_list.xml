@@ -32,6 +32,7 @@
                     android:layout_weight="0.5">
 
                     <TextView
+                        android:id="@+id/tv_period"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_regular"
@@ -63,6 +64,7 @@
                             android:textSize="13dp" />
 
                         <TextView
+                            android:id="@+id/tv_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_regular"
@@ -87,11 +89,12 @@
                     android:layout_weight="0.5">
 
                     <TextView
+                        android:id="@+id/tv_interest_rate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_regular"
                         android:gravity="start|center"
-                        android:text="Interest @ 4.0%"
+                        android:text="Interest @ 4.0 %"
                         android:textColor="@color/textcolor"
                         android:textSize="13dp" />
                 </LinearLayout>

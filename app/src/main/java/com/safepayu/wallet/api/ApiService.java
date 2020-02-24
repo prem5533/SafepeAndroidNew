@@ -111,18 +111,23 @@ public interface ApiService {
     // Login user
     @POST("api/pefast.safepe.latepe/api/login")
     Single<LoginResponse> login(@Body Login loginRequest);
+
     // Resend OTP
     @POST("api/pefast.safepe.latepe/api/resendOTP")
     Single<BaseResponse> resendOtp(@Body SendOtpRequest sendOtpRequest);
+
     // verify OTP
     @POST("api/pefast.safepe.latepe/api/verifyOTP")
     Single<UserResponse> verifyOTP(@Body Login loginRequest);
+
     // Create PassCode
     @POST("api/pefast.safepe.latepe/api/savePasscode")
     Single<UserDetailResponse> savePassCode(@Body Login loginRequest);
+
     // All Packages listing
     @GET("api/pefast.safepe.latepe/api/getAllPackages")
     Single<PackageListData> getAllPackages();
+
     // All Packages listing
     @GET("api/pefast.safepe.latepe/api/getUser")
     Single<UserDetailResponse> getUserDetails();
@@ -137,16 +142,18 @@ public interface ApiService {
     Single<AddBeneficiaryResponse> addBeneficiary(@Body AddBeneficiaryRequest addBeneficiaryRequest);
 
     @POST("api/pefast.safepe.latepe/api/getBeneficiaryDetails")
-    Single<GetBeneficiaryResponse> getBeneficiary();;
+    Single<GetBeneficiaryResponse> getBeneficiary();
+
+    ;
 
     @POST("api/pefast.safepe.latepe/api/transferWalletToBank")
     Single<TransferWalletToBankResponse> transferWalletToBank(@Body TransferWalletToBankRequest transferWalletToBankRequest);
 
     @POST("api/pefast.safepe.latepe/api/updateUserAddress")
-    Single<UpdateAddressResponse>updateAddress(@Body UpdateAddress updateAddress);
+    Single<UpdateAddressResponse> updateAddress(@Body UpdateAddress updateAddress);
 
     @POST("api/pefast.safepe.latepe/api/changePassword")
-    Single<UserResponse>changePwd(@Body ChangePasswordRequest changePassword);
+    Single<UserResponse> changePwd(@Body ChangePasswordRequest changePassword);
 
     @POST("api/pefast.safepe.latepe/api/walletToWallet")
     Single<SendToWalletResponse> transferWalletToWallet(@Body SendToWalletRequest sendToWalletRequest);
@@ -195,7 +202,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/sendVerifyEmailLink")
-    Single<BaseResponse> verifyEmail(@Field("userid") String userid,@Field("email") String email);
+    Single<BaseResponse> verifyEmail(@Field("userid") String userid, @Field("email") String email);
 
     @GET("api/pefast.safepe.latepe/api/rechargeHistory")
     Single<RechargeHistoryResponse> getRechargeHistory();
@@ -221,7 +228,7 @@ public interface ApiService {
     Single<UpiUserDetailsResponse> getUserDetailUPI(@Field("userid") String userid);
 
     @POST("api/pefast.safepe.latepe/api/checkUserMobile")
-    Single<BaseResponse> checkEmailMobile(@Body CheckEmailMobileRequest checkEmailMobileRequest );
+    Single<BaseResponse> checkEmailMobile(@Body CheckEmailMobileRequest checkEmailMobileRequest);
 
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/getFirebaseTocken")
@@ -234,13 +241,13 @@ public interface ApiService {
     Single<BaseResponse> getlogoutAlldevices();
 
     @GET("api/pefast.safepe.latepe/api/bankPaymentList")
-    Single<MyOrderResponse>getBankPayment();
+    Single<MyOrderResponse> getBankPayment();
 
     @GET("api/pefast.safepe.latepe/api/checkBuyPackage")
     Single<BaseResponse> getcheckBuyPackage();
 
     @POST("api/pefast.safepe.latepe/api/promotionalImages")
-    Single<PromotionResponse>getPromotionOffer(@Body PromotionRequest promotionRequest);
+    Single<PromotionResponse> getPromotionOffer(@Body PromotionRequest promotionRequest);
 
     @POST("api/pefast.safepe.latepe/api/registerKyc")
     Single<BaseResponse> getKYCDone(@Body KycRequest kycRequest);
@@ -256,7 +263,7 @@ public interface ApiService {
     Single<StateListResponse> getStateList(@Field("country_id") String country_id);
 
     @GET("api/pefast.safepe.latepe/api/walletLimitLeft")
-    Single<WalletLimitResponse>getWalletLimitLeft();
+    Single<WalletLimitResponse> getWalletLimitLeft();
 
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/verifyPasscode")
@@ -264,7 +271,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/getConvieneceFee")
-    Single<ConvenienceFeeResponse> getConvieneceFee(@Field("type") String type );
+    Single<ConvenienceFeeResponse> getConvieneceFee(@Field("type") String type);
 
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/ifscUrl")
@@ -293,10 +300,10 @@ public interface ApiService {
     Single<FlightHistoryResponse> getFlightHistory();
 
     @POST("api/pefast.safepe.latepe/api/getFlightPdf")
-    Single<FlighPdfResponse>getFlightPdf(@Body FlightBookingDetailRequest flightBookingDetailRequest);
+    Single<FlighPdfResponse> getFlightPdf(@Body FlightBookingDetailRequest flightBookingDetailRequest);
 
     @POST("api/pefast.safepe.latepe/api/getConvieneceFee")
-    Single<ConvieneceFeeResponse>getConvieneceFee(@Body ConvieneceFeeRequest convieneceFeeRequest);
+    Single<ConvieneceFeeResponse> getConvieneceFee(@Body ConvieneceFeeRequest convieneceFeeRequest);
 
     //*************Bus Booking *******************//
     @POST("api/pefast.safepe.latepe/api/postBusLocationList")
@@ -360,4 +367,7 @@ public interface ApiService {
     //***************Safepe bank investment
     @GET("api/pefast.safepe.latepe/api/safepeInvestmentAccount")
     Single<ResponseModel> safepeInvestmentAccount();
+
+    @GET("api/pefast.safepe.latepe/api/getInvestment")
+    Single<ResponseModel> getInvestment();
 }

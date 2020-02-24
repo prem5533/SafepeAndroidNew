@@ -273,14 +273,16 @@
                                 android:layout_width="46dp"
                                 android:layout_height="46dp"
                                 android:layout_margin="5dp"
+                                android:gravity="center"
                                 android:background="@drawable/blue_bg">
 
                                 <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_margin="1dp"
+                                    android:padding="5dp"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/ic_wallet_red" />
+                                    android:src="@drawable/loan" />
                             </LinearLayout>
 
 
@@ -318,7 +320,7 @@
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/viewpager"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"></androidx.viewpager.widget.ViewPager>
+                        android:layout_height="150dp"/>
 
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tab_layout"

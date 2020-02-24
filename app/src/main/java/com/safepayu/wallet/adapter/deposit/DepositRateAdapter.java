@@ -12,19 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.models.response.AllListData;
 
 import java.util.List;
 
 public class DepositRateAdapter extends RecyclerView.Adapter<DepositRateAdapter.ViewHolder> {
 
     private Context context;
-    private Activity activity;
-    //private List<AllProductList> modelArrayList;
+    private List<AllListData> modelArrayList;
 
-    public DepositRateAdapter(Context context) {
+    public DepositRateAdapter(Context context, List<AllListData> modelArrayList) {
         this.context = context;
-        this.activity = activity;
-        //    this.modelArrayList = modelArrayList;
+        this.modelArrayList = modelArrayList;
     }
 
     @Override
@@ -36,17 +35,24 @@ public class DepositRateAdapter extends RecyclerView.Adapter<DepositRateAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+        holder.tv_period.setText(modelArrayList.get(position).period);
+        holder.tv_interest_rate.setText(modelArrayList.get(position).r_rate);
     }
 
     @Override
     public int getItemCount() {
-        return 15;
+        return modelArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView tv_period, tv_interest_rate;
+
         public ViewHolder(View itemView) {
             super(itemView);
+
+            tv_period = itemView.findViewById(R.id.tv_period);
+            tv_interest_rate = itemView.findViewById(R.id.tv_interest_rate);
 
         }
     }

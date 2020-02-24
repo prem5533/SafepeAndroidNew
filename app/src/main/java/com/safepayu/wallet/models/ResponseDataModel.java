@@ -12,6 +12,6 @@ public class ResponseDataModel {
     public String fdbal_amount;
     public String wallet_amount;
 
-    public List<AllListData> investment;
-
+    public List<String> instruction;
+    public String investment_total;
 }

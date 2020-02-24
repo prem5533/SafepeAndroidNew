@@ -25,13 +25,14 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
     public LinearLayout ll_back, ll_fixed_deposit, ll_paytm_wallet;
     private LoadingDialog loadingDialog;
     public TextView tv_total_deposit_amount, tv_fixed_deposit_amount, tv_wallet_amount, tv_fixed_deposit_interest_amount, tv_safepe_wallet_interest_amount;
+    public String depositAmount, fdInterest, balanceAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fixed_deposit);
 
-        loadingDialog = new LoadingDialog(this);
+        loadingDialog = new LoadingDialog(FixedDepositActivity.this);
 
         ll_fixed_deposit = findViewById(R.id.ll_fixed_deposit);
         ll_paytm_wallet = findViewById(R.id.ll_paytm_wallet);
@@ -52,7 +53,9 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_fixed_deposit:
-                startActivity(new Intent(FixedDepositActivity.this, AvailableBalanceActivity.class));
+                startActivity(new Intent(FixedDepositActivity.this, AvailableBalanceActivity.class).
+                        putExtra("depositAmount", depositAmount).
+                        putExtra("fdInterest", fdInterest).putExtra("balanceAmount", balanceAmount));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
 
@@ -81,6 +84,9 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
                         loadingDialog.hideDialog();
                         if (response.status) {
                             try {
+                                depositAmount = response.data.fdbal_amount;
+                                fdInterest = response.data.fb_interest;
+                                balanceAmount = response.data.balance_amount;
                                 tv_total_deposit_amount.setText(response.data.balance_amount);
                                 tv_fixed_deposit_amount.setText(response.data.fdbal_amount);
                                 tv_wallet_amount.setText(response.data.wallet_amount);

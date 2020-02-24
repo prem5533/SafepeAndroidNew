@@ -99,13 +99,20 @@
                                     android:layout_marginLeft="3dp"
                                     android:layout_marginRight="5dp"
                                     android:layout_marginBottom="10dp"
-                                    android:drawableRight="@mipmap/arrow_point_to_right"
                                     android:fontFamily="@font/roboto_bold"
                                     android:text="0"
                                     android:textColor="@color/black"
                                     android:textSize="20dp" />
 
                             </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_regular"
+                                android:text="You are total deposit amount\nin SafePe\n"
+                                android:textColor="@color/grey_700"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
                     </LinearLayout>
