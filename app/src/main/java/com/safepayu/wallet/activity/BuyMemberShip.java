@@ -226,6 +226,7 @@ public class BuyMemberShip extends AppCompatActivity implements PackageListAdapt
                                         intent.putExtra("BankName",BankName);
                                         intent.putExtra("PackageName",PackageName);
                                         intent.putExtra("Amount",String.valueOf(FinalAmount));
+                                        intent.putExtra("Activity","Package");
                                         startActivity(intent);
                                         finish();
                                     }

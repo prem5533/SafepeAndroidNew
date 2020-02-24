@@ -38,6 +38,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.BuyPackage;
+import com.safepayu.wallet.models.request.FDPayRequest;
 import com.safepayu.wallet.models.response.BuyPackageResponse;
 import com.safepayu.wallet.utils.PasscodeClickListener;
 import com.safepayu.wallet.utils.PasscodeDialog;
@@ -63,7 +64,8 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
     private EditText tv_referencenumber,tv_amountpaid,UPIorbankaccount,tvBankName;
     private Spinner BankTypeSpinner,TransferTypeSpinner,SpinnerWalletOption;
     private String[] TransferTypeCategories,bankcategories,WalletOptionCategories;
-    private  String TransferTypeText="",BankNameText="",PackageID="",TransactionType="",textBase64="", Amount="",WalletOptionText="",PackageName="";
+    private  String TransferTypeText="",BankNameText="",PackageID="",TransactionType="",textBase64="", Amount="";
+    private String WalletOptionText="",PackageName="",Activity="";
     private LoadingDialog loadingDialog;
     private boolean CheckNetConnection=false;
     private ImageView imageView;
@@ -107,6 +109,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
             Amount=getIntent().getStringExtra("Amount");
             PackageName=getIntent().getStringExtra("PackageName");
             BankNameText=getIntent().getStringExtra("BankName");
+            Activity=getIntent().getStringExtra("Activity");
             tv_amountpaid.setText(getResources().getString(R.string.rupees)+" "+Amount);
             tv_amountpaid.setEnabled(false);
             tvBankName.setText(BankNameText);
@@ -263,7 +266,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
     private void CheckValidate(){
         String DateText=DateTv.getText().toString().trim();
         String ReferenceNumber=tv_referencenumber.getText().toString().trim();
-        String Amount=tv_amountpaid.getText().toString().trim();
+        String Amount1=tv_amountpaid.getText().toString().trim();
         String UPI=UPIorbankaccount.getText().toString().trim();
 
         if (TransactionType.equalsIgnoreCase("1")){
@@ -329,7 +332,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                 if (TextUtils.isEmpty(ReferenceNumber)){
                     tv_referencenumber.setError("Please Enter Reference Number");
                 }else {
-                    if (TextUtils.isEmpty(Amount)){
+                    if (TextUtils.isEmpty(Amount1)){
                         tv_amountpaid.setError("Please Enter Amount");
                     }else {
                         if (TextUtils.isEmpty(UPI)){
@@ -346,19 +349,39 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                                     if (TextUtils.isEmpty(textBase64)){
                                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages), "Please Choose Image/Screenshot", false);
                                     }else {
-                                        buyPackage.setTransaction_type(TransactionType);
-                                        buyPackage.setPackage_id(PackageID);
-                                        buyPackage.setBuy_date(DateText);
-                                        buyPackage.setPayment_mode(TransferTypeText);
-                                        buyPackage.setRefrence_no(ReferenceNumber);
-                                        buyPackage.setDocument_attached("data:image/png;base64,"+textBase64);
-                                        buyPackage.setPaid_to_account(BankNameText);
-                                        buyPackage.setPaid_from_account(UPI);
-                                        if (CheckNetConnection){
-                                            BuyPackageMethod(buyPackage);
-                                        }else {
-                                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages), "Check Internet Connection", false);
+                                        if (Activity.equalsIgnoreCase("FD")){
 
+                                            FDPayRequest fdPayRequest=new FDPayRequest();
+                                            fdPayRequest.setTransaction_type(TransactionType);
+                                            fdPayRequest.setBuy_date(DateText);
+                                            fdPayRequest.setPayment_mode(TransferTypeText);
+                                            fdPayRequest.setDocument_attached("data:image/png;base64,"+textBase64);
+                                            fdPayRequest.setRefrence_no(ReferenceNumber);
+                                            fdPayRequest.setPaid_to_account(BankNameText);
+                                            fdPayRequest.setPaid_from_account(UPI);
+                                            fdPayRequest.setPackage_amount(Amount);
+                                            fdPayRequest.setRefer("fd8376097766");
+                                            if (CheckNetConnection){
+                                                PayFixedDeposit(fdPayRequest);
+                                            }else {
+                                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages), "Check Internet Connection", false);
+
+                                            }
+                                        }else {
+                                            buyPackage.setTransaction_type(TransactionType);
+                                            buyPackage.setPackage_id(PackageID);
+                                            buyPackage.setBuy_date(DateText);
+                                            buyPackage.setPayment_mode(TransferTypeText);
+                                            buyPackage.setRefrence_no(ReferenceNumber);
+                                            buyPackage.setDocument_attached("data:image/png;base64,"+textBase64);
+                                            buyPackage.setPaid_to_account(BankNameText);
+                                            buyPackage.setPaid_from_account(UPI);
+                                            if (CheckNetConnection){
+                                                BuyPackageMethod(buyPackage);
+                                            }else {
+                                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.memberBankAddPackages), "Check Internet Connection", false);
+
+                                            }
                                         }
                                     }
                                 }
@@ -407,6 +430,53 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
 
                         }
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.memberBankAddPackages), true, e);
+                    }
+                }));
+
+    }
+
+    private void PayFixedDeposit(FDPayRequest fdPayRequest){
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.saveInvestment(fdPayRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BuyPackageResponse>() {
+                    @Override
+                    public void onSuccess(BuyPackageResponse response) {
+                        loadingDialog.hideDialog();
+                        String currentDate = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(new Date());
+                        Intent intentStatus=new Intent(MemberBankAddPackages.this,PaidOrderActivity.class);
+                        if (response.isStatus()) {
+                            intentStatus.putExtra("status","success");
+                        }else {
+                            intentStatus.putExtra("status","failed");
+                            Toast.makeText(MemberBankAddPackages.this, response.getMessage(), Toast.LENGTH_LONG).show();
+
+                        }
+                        intentStatus.putExtra("txnid","");
+                        intentStatus.putExtra("Amount",Amount);
+                        intentStatus.putExtra("Message",response.getMessage());
+                        intentStatus.putExtra("productinfo","Fixed Deposit");
+
+                        intentStatus.putExtra("toAccount",response.getData().getPaid_to_account());
+                        intentStatus.putExtra("fromAccount",response.getData().getPaid_from_account());
+                        intentStatus.putExtra("RefNo",response.getData().getRefrence_no());
+                        intentStatus.putExtra("date",response.getData().getCreated_at());
+                        intentStatus.putExtra("PayMode",response.getData().getPayment_mode());
+                        intentStatus.putExtra("Note",response.getData().getFootnote());
+                        startActivity(intentStatus);
+                        finish();
                     }
 
                     @Override

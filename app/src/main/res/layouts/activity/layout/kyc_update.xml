@@ -564,6 +564,28 @@
                                 android:scaleType="fitXY"/>
                         </LinearLayout>
 
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="35dp"
+                            android:layout_marginBottom="5dp"
+                            android:visibility="gone"
+                            android:layout_centerInParent="true"/>
+                        <TextView
+                            android:id="@+id/progressBarText"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0%"
+                            android:textSize="15sp"
+                            android:padding="10dp"
+                            android:gravity="center"
+                            android:layout_marginBottom="35dp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/black"
+                            android:visibility="gone"/>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

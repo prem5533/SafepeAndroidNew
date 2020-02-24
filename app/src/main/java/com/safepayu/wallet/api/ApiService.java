@@ -4,6 +4,7 @@ import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.BuyPackage;
 import com.safepayu.wallet.models.request.ChangePasswordRequest;
 import com.safepayu.wallet.models.request.CheckEmailMobileRequest;
+import com.safepayu.wallet.models.request.FDPayRequest;
 import com.safepayu.wallet.models.request.ForgetPasswordRequest;
 import com.safepayu.wallet.models.request.HashKeyRequest;
 import com.safepayu.wallet.models.request.KycRequest;
@@ -271,6 +272,9 @@ public interface ApiService {
 
     @GET("api/pefast.safepe.latepe/api/getServicesCharges")
     Single<ServiceChargeResponse> getServicesCharges();
+
+    @POST("api/pefast.safepe.latepe/api/saveInvestment ")
+    Single<BuyPackageResponse> saveInvestment (@Body FDPayRequest fdPayRequest);
 
     //*************Flight Booking *******************//
     @GET("api/pefast.safepe.latepe/api/getFlightAirport")

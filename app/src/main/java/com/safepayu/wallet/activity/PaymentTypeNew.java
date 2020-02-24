@@ -54,6 +54,7 @@ import io.reactivex.schedulers.Schedulers;
 import static android.view.View.GONE;
 import static com.safepayu.wallet.activity.BuyMemberShip.buyPackageFromDB;
 import static com.safepayu.wallet.activity.LoginActivity.finalAmount;
+import static com.safepayu.wallet.activity.fixed_deposit.FDChoosePayment.fdPayRequest;
 import static com.safepayu.wallet.activity.recharge.LandlineBillPay.OptionValue2;
 import static com.safepayu.wallet.activity.recharge.LandlineBillPay.StdCode;
 
@@ -129,7 +130,8 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
             WalletCashback=intent.getStringExtra("walletCashback");
             TotalDeductAmount=intent.getStringExtra("totalAmount");
 
-            if (PaymentFor.equalsIgnoreCase("Wallet") || PaymentFor.equalsIgnoreCase("Buy Package")) {
+            if (PaymentFor.equalsIgnoreCase("Wallet") || PaymentFor.equalsIgnoreCase("Buy Package")
+                                || PaymentFor.equalsIgnoreCase("Fixed")) {
                 checkBoxWallet.setChecked(false);
                 checkBoxWallet.setClickable(false);
                 checkBoxWallet.setEnabled(false);
@@ -166,6 +168,8 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_receipt));
             }else if (RechargeTypeId.equals("8")){
                 imageService.setImageDrawable(getResources().getDrawable(R.drawable.ic_metro));
+            }else {
+                imageService.setVisibility(GONE);
             }
 
             try {
@@ -187,7 +191,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     tvWalletDeductAmount.setVisibility(View.GONE);
                     tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                     tvGatewayText.setVisibility(View.VISIBLE);
-                    if (PaymentFor.equalsIgnoreCase("Buy Package")){
+                    if (PaymentFor.equalsIgnoreCase("Buy Package")  || PaymentFor.equalsIgnoreCase("Fixed")){
                         btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                         tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                     }else {
@@ -195,7 +199,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                         tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " +Float.parseFloat(String.valueOf(finalAmount)));
                     }
                 }else {
-                    if (!PaymentFor.equalsIgnoreCase("Buy Package")){
+                    if (!PaymentFor.equalsIgnoreCase("Buy Package")  || !PaymentFor.equalsIgnoreCase("Fixed")){
                         checkBoxWallet.setChecked(true);
                         checkBoxGatewayPayment.setChecked(false);
                         tvWalletDeductAmount.setVisibility(View.VISIBLE);
@@ -268,10 +272,10 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 if (checkBoxGatewayPayment.isChecked() && checkBoxWallet.isChecked()){
                     HashKeyRequest hashKeyRequest=new HashKeyRequest();
                     hashKeyRequest.setCustomer_firstName(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME));
-                    hashKeyRequest.setMerchant_productInfo(PaymentFor);
+                    hashKeyRequest.setMerchant_productInfo(PaymentFor+""+PaymentTypeText);
                     hashKeyRequest.setCustomer_email_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
                     hashKeyRequest.setType("0");
-                    if (PaymentFor.equalsIgnoreCase("Buy Package")){
+                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
                         hashKeyRequest.setMerchant_payment_amount(Amount);
                     }else {
                         hashKeyRequest.setMerchant_payment_amount(""+Float.parseFloat(String.valueOf(balAmount)));
@@ -297,10 +301,10 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 }else if (checkBoxGatewayPayment.isChecked()){
                     HashKeyRequest hashKeyRequest=new HashKeyRequest();
                     hashKeyRequest.setCustomer_firstName(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME));
-                    hashKeyRequest.setMerchant_productInfo(PaymentFor);
+                    hashKeyRequest.setMerchant_productInfo(PaymentFor+""+PaymentTypeText);
                     hashKeyRequest.setCustomer_email_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
                     hashKeyRequest.setType("0");
-                    if (PaymentFor.equalsIgnoreCase("Buy Package")){
+                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
                         hashKeyRequest.setMerchant_payment_amount(Amount);
                     }else {
                         hashKeyRequest.setMerchant_payment_amount(""+Float.parseFloat(String.valueOf(finalAmount)));
@@ -340,7 +344,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                                 tvTotalBalanceWallet.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format((int) Double.parseDouble(walletLimitResponse.getData().getWallet_balance())));
                                 tvWalletlimit.setText("* Today's Wallet Limit - Rs. " + new DecimalFormat("##.##").format(walletLimitResponse.getData().getLimit()));
 
-                                if (PaymentFor.equalsIgnoreCase("Buy Package")){
+                                if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
                                     if (amount>walletBal){
                                         checkWalletBal=false;
                                         checkBoxWallet.setChecked(false);
@@ -349,7 +353,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                                         tvWalletDeductAmount.setVisibility(View.GONE);
                                         tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                                         tvGatewayText.setVisibility(View.VISIBLE);
-                                        if (PaymentFor.equalsIgnoreCase("Buy Package")){
+                                        if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
                                             btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                             tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                         }else {
@@ -365,7 +369,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                                             tvWalletDeductAmount.setVisibility(View.GONE);
                                             tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                                             tvGatewayText.setVisibility(View.VISIBLE);
-                                            if (PaymentFor.equalsIgnoreCase("Buy Package")){
+                                            if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
                                                 btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                                 tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                             }else {
@@ -429,7 +433,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
     @Override
     public void onPasscodeMatch(boolean isPasscodeMatched) {
         if (isPasscodeMatched){
-            if (PaymentFor.equalsIgnoreCase("Buy Package")){
+            if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
                 //BuyPackageMethod("","");
             }else {
                 RechargeRequest rechargeRequest=new RechargeRequest();
@@ -586,6 +590,54 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
 
     }
 
+    private void PayFixedDeposit(final String txnid, final String easepayid){
+        fdPayRequest.setRefrence_no(easepayid);
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.saveInvestment(fdPayRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BuyPackageResponse>() {
+                    @Override
+                    public void onSuccess(BuyPackageResponse response) {
+                        loadingDialog.hideDialog();
+                        String currentDate = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(new Date());
+                        Intent intentStatus=new Intent(PaymentTypeNew.this,PaidOrderActivity.class);
+                        if (response.isStatus()) {
+                            intentStatus.putExtra("status","success");
+                        }else {
+                            intentStatus.putExtra("status","failed");
+                            Toast.makeText(PaymentTypeNew.this, response.getMessage(), Toast.LENGTH_LONG).show();
+
+                        }
+                        intentStatus.putExtra("txnid",txnid);
+                        intentStatus.putExtra("Amount",Amount);
+                        intentStatus.putExtra("Message",response.getMessage());
+                        intentStatus.putExtra("productinfo",PaymentFor+" "+PaymentTypeText);
+
+                        intentStatus.putExtra("toAccount",response.getData().getPaid_to_account());
+                        intentStatus.putExtra("fromAccount",response.getData().getPaid_from_account());
+                        intentStatus.putExtra("RefNo",response.getData().getRefrence_no());
+                        intentStatus.putExtra("date",response.getData().getCreated_at());
+                        intentStatus.putExtra("PayMode",response.getData().getPayment_mode());
+                        intentStatus.putExtra("Note",response.getData().getFootnote());
+                        startActivity(intentStatus);
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), true, e);
+                    }
+                }));
+
+    }
+
     public void showMessage(String Message) {
         new AlertDialog.Builder(PaymentTypeNew.this)
                 .setTitle("SafePe Alert")
@@ -676,7 +728,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
         }
         //merchant_payment_amount = Float.parseFloat(Amount);
 
-        if (PaymentFor.equalsIgnoreCase("Buy Package")){
+        if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
             merchant_payment_amount = Float.parseFloat(Amount);
         }else {
             if (checkBoxGatewayPayment.isChecked() && checkBoxWallet.isChecked()){
@@ -784,7 +836,10 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
             } else if (PaymentFor.equalsIgnoreCase("Buy Package")){
                 sendPaymentGatewayDetailsRequest.setPackage_amount(Amount);
                 sendPaymentGatewayDetailsRequest.setPackage_id(OperatorCode);
-            } else {
+            }  else if (PaymentFor.equalsIgnoreCase("Fixed")){
+                sendPaymentGatewayDetailsRequest.setPackage_amount("");
+                sendPaymentGatewayDetailsRequest.setPackage_id("");
+            }else {
                 sendPaymentGatewayDetailsRequest.setPackage_amount("");
                 sendPaymentGatewayDetailsRequest.setPackage_id("");
             }
@@ -805,6 +860,8 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
 
                 } else if (PaymentFor.equalsIgnoreCase("Buy Package")){
                     BuyPackageMethod(txnid,easepayid);
+                }else if (PaymentFor.equalsIgnoreCase("Fixed")){
+                    PayFixedDeposit(txnid,easepayid);
                 } else {
 
                     RechargeRequest rechargeRequest = new RechargeRequest();
