@@ -9,8 +9,8 @@ public class ResponseDataModel {
     public String fb_interest;
     public String fdbal_amount;
     public String wallet_amount;
+    public double investment_total;
 
     public List<String> instruction;
-    public String investment_total;
     public String tnc;
 }

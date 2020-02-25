@@ -100,7 +100,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
                         VerifyReffralBtn.setVisibility(View.VISIBLE);
                         verifyAlready.setVisibility(View.GONE);
                     } else {
-                        if (s.length() == 10) {
+                        if (s.length() == 12) {
                             getReferralDetails();
                         } else {
                             referralCheck = false;
@@ -205,19 +205,28 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
                     Toast.makeText(this, "Please Enter Amount", Toast.LENGTH_LONG).show();
                 } else {
 
-                    if (amt == 0) {
+                  if (amt == 0) {
                         Toast.makeText(this, "Please Enter Amount", Toast.LENGTH_LONG).show();
-                    } else {
-                        if (referralCheck) {
-                            Intent intent = new Intent(CreateFixedDepositActivity.this, FDChoosePayment.class);
-                            intent.putExtra("AmountDeposit", ed_amount.getText().toString().trim());
-                            intent.putExtra("ReferId", referralCode.getText().toString().trim());
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(this, "Please Verify Your Referral Id", Toast.LENGTH_LONG).show();
-                        }
-                    }
 
+                  } else {
+
+                      if (amt > 0) {
+                          if (amt>999 && amt<500000+1) {
+                              if (referralCheck) {
+                                  Intent intent = new Intent(CreateFixedDepositActivity.this, FDChoosePayment.class);
+                                  intent.putExtra("AmountDeposit", ed_amount.getText().toString().trim());
+                                  intent.putExtra("ReferId", referralCode.getText().toString().trim());
+                                  startActivity(intent);
+                              } else {
+                                  Toast.makeText(this, "Please Verify Your Referral Id", Toast.LENGTH_LONG).show();
+                              }
+                          }else {
+                              Toast.makeText(this, "Please Enter Amount Between Rs 1000 and Rs 500000", Toast.LENGTH_SHORT).show();
+                              // BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount Between Rs "+minLimit+" and Rs "+maxLimit, true);
+                          }
+                      }
+
+                  }
                 }
                 break;
 
@@ -226,6 +235,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
                 if (TextUtils.isEmpty(referralCode.getText().toString().trim())) {
                     Toast.makeText(this, "Please Enter Referral Code!", Toast.LENGTH_SHORT).show();
                 } else {
+
                     getReferralDetails();
                 }
                 break;
@@ -239,11 +249,12 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.length() > 0) {
+        /*if(Integer.valueOf(String.valueOf(s))<1000){
+            ed_amount.setError("Enter amount grt 1000");
+        }else {*/
+
             ll_interest_table.setVisibility(View.VISIBLE);
-        } else {
-            ll_interest_table.setVisibility(View.GONE);
-        }
+       // }
     }
 
     @Override

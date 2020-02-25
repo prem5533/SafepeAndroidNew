@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.KycUpdate;
 import com.safepayu.wallet.activity.PaidOrderActivity;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -73,11 +74,13 @@ public class TransferInvestmentToWallet extends BaseActivity implements Passcode
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount", false);
                 } else {
                     if (Amount > 0) {
-                        if (Amount>minLimit && Amount<maxLimit) {
+                        if (Amount>minLimit && Amount<maxLimit+1) {
                             PasscodeDialog passcodeDialog = new PasscodeDialog(TransferInvestmentToWallet.this, TransferInvestmentToWallet.this, "");
                             passcodeDialog.show();
                         }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount Between Rs "+minLimit+" and Rs "+maxLimit, true);
+
+                            showMessage("Please Enter Amount Between Rs "+minLimit+" and Rs "+maxLimit);
+                           // BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount Between Rs "+minLimit+" and Rs "+maxLimit, true);
                         }
                     } else {
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount", true);
@@ -197,4 +200,30 @@ public class TransferInvestmentToWallet extends BaseActivity implements Passcode
         }
 
     }
+
+
+    public void showMessage(String Message) {
+        new AlertDialog.Builder(TransferInvestmentToWallet.this)
+                .setTitle("SafePe ")
+                .setMessage(Message)
+                .setCancelable(false)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                //.setPositiveButton(android.R.string.yes, null)
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                        dialog.dismiss();
+
+
+                    }
+                })
+                .setIcon(getResources().getDrawable(R.drawable.appicon_new))
+                .show();
+    }
+
 }

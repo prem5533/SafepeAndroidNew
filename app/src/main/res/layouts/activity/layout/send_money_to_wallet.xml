@@ -67,8 +67,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingBottom="10dp">
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="80dp"
@@ -83,7 +82,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="5dp"
-                            android:layout_marginBottom="30dp"
+                            android:layout_marginBottom="20dp"
                             android:layout_marginLeft="25dp"
                             android:layout_marginRight="25dip"
                             android:gravity="center"
@@ -92,6 +91,29 @@
                             android:fontFamily="@font/roboto_regular"
                             android:textColor="@color/bue_A800"
                             android:textSize="18sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginBottom="10dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Wallet Amount - "
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/roboto_regular"/>
+                            <TextView
+                                android:id="@+id/wallet_amount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:layout_marginLeft="10dp"/>
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
