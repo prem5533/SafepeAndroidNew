@@ -213,6 +213,95 @@
                         android:visibility="gone"/>
                 </FrameLayout>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/li_fd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_fixeddeposit" />
+
+                <TextView
+                    android:id="@+id/tv_fixed_deposit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fixed Deposit"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:layout_weight="1"/>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+                    <ImageView
+                        android:id="@+id/image_down_arrow_fd"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_down_security"
+                        android:padding="10dp"/>
+                    <ImageView
+                        android:id="@+id/image_up_arrow_fd"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_up_security"
+                        android:padding="10dp"
+                        android:visibility="gone"/>
+                </FrameLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/li_loan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="15dp"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_fixed_new" />
+
+                <TextView
+                    android:id="@+id/tv_loan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Investment Wallet"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:layout_weight="1"/>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+                    <ImageView
+                        android:id="@+id/image_down_arrow_loan"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_down_security"
+                        android:padding="10dp"/>
+                    <ImageView
+                        android:id="@+id/image_up_arrow_loan"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_up_security"
+                        android:padding="10dp"
+                        android:visibility="gone"/>
+                </FrameLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linear_shop_tab"

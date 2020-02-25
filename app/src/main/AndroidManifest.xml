@@ -365,6 +365,18 @@
 
         <activity android:name=".activity.fixed_deposit.FDChoosePayment"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.fixed_deposit.FixedDepositListActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.fixed_deposit.InvestmentWallet"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.fixed_deposit.TransferInvestmentToWallet"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.loan.LoanActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

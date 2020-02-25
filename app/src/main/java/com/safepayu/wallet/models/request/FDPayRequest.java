@@ -12,6 +12,7 @@ public class FDPayRequest {
      * paid_from_account : 9807785349
      * package_amount : 1000
      * refer : fd8376097766
+     * amount : 2000
      */
 
     private String transaction_type;
@@ -23,6 +24,7 @@ public class FDPayRequest {
     private String paid_from_account;
     private String package_amount;
     private String refer;
+    private String amount;
 
 
     public String getTransaction_type() {
@@ -95,5 +97,13 @@ public class FDPayRequest {
 
     public void setRefer(String refer) {
         this.refer = refer;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }

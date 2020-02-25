@@ -280,9 +280,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="1dp"
-                                    android:padding="5dp"
+                                    android:padding="8dp"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/loan" />
+                                    android:src="@drawable/ic_fixed" />
                             </LinearLayout>
 
 

@@ -64,8 +64,8 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
     private EditText tv_referencenumber,tv_amountpaid,UPIorbankaccount,tvBankName;
     private Spinner BankTypeSpinner,TransferTypeSpinner,SpinnerWalletOption;
     private String[] TransferTypeCategories,bankcategories,WalletOptionCategories;
-    private  String TransferTypeText="",BankNameText="",PackageID="",TransactionType="",textBase64="", Amount="";
-    private String WalletOptionText="",PackageName="",Activity="";
+    private  String TransferTypeText="",BankNameText="",PackageID="",TransactionType="",textBase64="", Amount="",RealAmount="";
+    private String WalletOptionText="",PackageName="",Activity="",ReferId="";
     private LoadingDialog loadingDialog;
     private boolean CheckNetConnection=false;
     private ImageView imageView;
@@ -109,10 +109,16 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
             Amount=getIntent().getStringExtra("Amount");
             PackageName=getIntent().getStringExtra("PackageName");
             BankNameText=getIntent().getStringExtra("BankName");
-            Activity=getIntent().getStringExtra("Activity");
             tv_amountpaid.setText(getResources().getString(R.string.rupees)+" "+Amount);
             tv_amountpaid.setEnabled(false);
             tvBankName.setText(BankNameText);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            Activity=getIntent().getStringExtra("Activity");
+            RealAmount=getIntent().getStringExtra("RealAmount");
+            ReferId=getIntent().getStringExtra(ReferId);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -360,7 +366,8 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                                             fdPayRequest.setPaid_to_account(BankNameText);
                                             fdPayRequest.setPaid_from_account(UPI);
                                             fdPayRequest.setPackage_amount(Amount);
-                                            fdPayRequest.setRefer("fd8376097766");
+                                            fdPayRequest.setRefer(ReferId);
+                                            fdPayRequest.setAmount(RealAmount);
                                             if (CheckNetConnection){
                                                 PayFixedDeposit(fdPayRequest);
                                             }else {

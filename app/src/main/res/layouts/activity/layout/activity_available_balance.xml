@@ -68,7 +68,8 @@
                     android:fontFamily="@font/roboto_regular"
                     android:text="Interest Table"
                     android:textColor="@color/light_blue_A700"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

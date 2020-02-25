@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FixedDepositActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public LinearLayout ll_back, ll_fixed_deposit, ll_paytm_wallet;
+    public LinearLayout ll_back, ll_fixed_deposit, ll_paytm_wallet,ll_total_amount;
     private LoadingDialog loadingDialog;
     public TextView tv_total_deposit_amount, tv_fixed_deposit_amount, tv_wallet_amount, tv_fixed_deposit_interest_amount, tv_safepe_wallet_interest_amount;
     public String depositAmount, fdInterest, balanceAmount;
@@ -36,6 +36,7 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
 
         ll_fixed_deposit = findViewById(R.id.ll_fixed_deposit);
         ll_paytm_wallet = findViewById(R.id.ll_paytm_wallet);
+        ll_total_amount = findViewById(R.id.ll_total_amount);
         ll_back = findViewById(R.id.ll_back);
         tv_total_deposit_amount = findViewById(R.id.tv_total_deposit_amount);
         tv_fixed_deposit_amount = findViewById(R.id.tv_fixed_deposit_amount);
@@ -45,6 +46,7 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
 
         ll_fixed_deposit.setOnClickListener(this);
         ll_paytm_wallet.setOnClickListener(this);
+        ll_total_amount.setOnClickListener(this);
         ll_back.setOnClickListener(this);
         safepeInvestmentAccount();
     }
@@ -61,6 +63,11 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.ll_paytm_wallet:
                 startActivity(new Intent(FixedDepositActivity.this, WalletActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                break;
+
+            case R.id.ll_total_amount:
+                startActivity(new Intent(FixedDepositActivity.this, FixedDepositListActivity.class));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
 

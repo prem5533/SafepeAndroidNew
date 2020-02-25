@@ -16,6 +16,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -99,7 +100,12 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
         mobileNo.setSelection(mobileNo.getText().length());
         checkEmailMobileRequest = new CheckEmailMobileRequest();
 
-        backToLoginBtn.setOnClickListener(v -> finish());
+        backToLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewAccount.this.finish();
+            }
+        });
 
         findViewById(R.id.btn_process).setOnClickListener(this);
         dob.setOnClickListener(this);
@@ -220,15 +226,21 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
 //            referralCode.setText(strReferalcode);
 //        }
 
-        chTermCond.setOnCheckedChangeListener((compoundButton, b) -> {
-            if (chTermCond.isChecked()) {
-                startActivity(new Intent(NewAccount.this, TermsAndCondition.class));
+        chTermCond.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (chTermCond.isChecked()) {
+                    NewAccount.this.startActivity(new Intent(NewAccount.this, TermsAndCondition.class));
+                }
             }
         });
 
-        tvForReferralBtn.setOnClickListener(view -> {
-            referralCode.setText("8376097766");
-            referralCode.setSelection(referralCode.getText().toString().length());
+        tvForReferralBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                referralCode.setText("8376097766");
+                referralCode.setSelection(referralCode.getText().toString().length());
+            }
         });
 
         //getReferralDetails();

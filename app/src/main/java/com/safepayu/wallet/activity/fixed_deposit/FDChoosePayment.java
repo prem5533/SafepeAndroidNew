@@ -41,7 +41,7 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
     private RecyclerView recycleBankList;
     private RadioGroup paymentMode;
     private CardView cardView;
-    private String TransactionType="",BankName="",Amount="";
+    private String TransactionType="",BankName="",Amount="",ReferId="";
     private Double totalPayableAmount;
     private BuyMembershipAdapter buyMembershipAdapter;
     public static FDPayRequest fdPayRequest;
@@ -64,6 +64,7 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
 
         try {
             Amount=getIntent().getStringExtra("AmountDeposit");
+            ReferId=getIntent().getStringExtra("ReferId");
         }catch (Exception e){
             Amount="0";
             e.printStackTrace();
@@ -90,7 +91,8 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
                         fdPayRequest.setPaid_to_account("By Admin");
                         fdPayRequest.setPaid_from_account("");
                         fdPayRequest.setPackage_amount(String.valueOf(totalPayableAmount));
-                        fdPayRequest.setRefer("fd8376097766");
+                        fdPayRequest.setRefer(ReferId);
+                        fdPayRequest.setAmount(Amount);
 
                         Intent intent;
                         if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN).equals("0")) {
@@ -120,7 +122,9 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
                             intent.putExtra("BankName",BankName);
                             intent.putExtra("PackageName","");
                             intent.putExtra("Amount",String.valueOf(totalPayableAmount));
+                            intent.putExtra("RealAmount",Amount);
                             intent.putExtra("Activity","FD");
+                            intent.putExtra("ReferId",ReferId);
                             startActivity(intent);
                             finish();
                         }

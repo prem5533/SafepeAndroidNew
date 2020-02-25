@@ -94,6 +94,125 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_referral_new"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp">
+                    <EditText
+                        android:id="@+id/et_referralCode2"
+                        style="@style/defaultEditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Refer ID*"
+                        android:inputType="number"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/black"
+                        android:background="@null"
+                        android:paddingLeft="5dp"
+                        android:digits="0123456789"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"/>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true">
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/verify_already"
+                            android:layout_alignParentRight="true"
+                            android:background="@null"
+                            android:text="Verified"
+                            android:textSize="12sp"
+                            android:textColor="#00C853"
+                            android:textAllCaps="false"
+                            android:visibility="gone"
+                            android:fontFamily="@font/roboto_regular" />
+
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/verify_referral"
+                            android:background="@null"
+                            android:text="Verify Referral"
+                            android:textSize="12sp"
+                            android:textColor="@color/bue_A800"
+                            android:textAllCaps="false"
+                            android:fontFamily="@font/roboto_regular" />
+                    </FrameLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_marginTop="2dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text="Referral Name - "
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/refer_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text=""
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/bue_A700"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="If You Dont't Have Any Referral Code - "
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/grey_800"/>
+
+                <TextView
+                    android:id="@+id/forRefer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:text="Click Here"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/grey_50"
                 android:orientation="horizontal"

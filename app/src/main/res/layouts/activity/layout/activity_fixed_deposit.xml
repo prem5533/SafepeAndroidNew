@@ -101,6 +101,7 @@
                                     android:layout_marginBottom="10dp"
                                     android:fontFamily="@font/roboto_bold"
                                     android:text="0"
+                                    android:drawableRight="@mipmap/arrow_point_to_right"
                                     android:textColor="@color/black"
                                     android:textSize="20dp" />
 

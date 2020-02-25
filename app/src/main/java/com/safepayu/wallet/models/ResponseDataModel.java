@@ -12,4 +12,5 @@ public class ResponseDataModel {
 
     public List<String> instruction;
     public String investment_total;
+    public String tnc;
 }

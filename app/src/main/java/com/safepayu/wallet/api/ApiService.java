@@ -44,6 +44,9 @@ import com.safepayu.wallet.models.response.CustOperatorResponse;
 import com.safepayu.wallet.models.response.ForgetPasswordResponse;
 import com.safepayu.wallet.models.response.GetBeneficiaryResponse;
 import com.safepayu.wallet.models.response.HashKeyResponse;
+import com.safepayu.wallet.models.response.InvestmentReferResponse;
+import com.safepayu.wallet.models.response.InvestmentResponse;
+import com.safepayu.wallet.models.response.InvestmentWalletLogResponse;
 import com.safepayu.wallet.models.response.LoginResponse;
 import com.safepayu.wallet.models.response.MyOrderResponse;
 import com.safepayu.wallet.models.response.NotificationResponse;
@@ -284,6 +287,17 @@ public interface ApiService {
     @POST("api/pefast.safepe.latepe/api/saveInvestment ")
     Single<BuyPackageResponse> saveInvestment (@Body FDPayRequest fdPayRequest);
 
+    @FormUrlEncoded
+    @POST("api/pefast.safepe.latepe/api/getInvestmentRefer")
+    Single<InvestmentReferResponse> getInvestmentRefer(@Field("refer") String refer);
+
+    @GET("api/pefast.safepe.latepe/api/getInvestmentLog")
+    Single<InvestmentWalletLogResponse> getInvestmentLog();
+
+    @FormUrlEncoded
+    @POST("api/pefast.safepe.latepe/api/investmentToWallet")
+    Single<CommissionWalletTransferResponse> transferInvestmentToWallet(@Field("amount") String amount);
+
     //*************Flight Booking *******************//
     @GET("api/pefast.safepe.latepe/api/getFlightAirport")
     Single<AirportLocationResponse> getAirportLocation();
@@ -368,7 +382,11 @@ public interface ApiService {
     @POST("api/pefast.safepe.latepe/api/redeemCoin")
     Single<RedeemCoinResponse> getRedeemCoin(@Body RedeemCoinRequest redeemCoinRequest);
 
+
     //***************Safepe bank investment
+    @GET("api/pefast.safepe.latepe/api/getInvestment")
+    Single<InvestmentResponse> getInvestmentlist();
+
     @GET("api/pefast.safepe.latepe/api/safepeInvestmentAccount")
     Single<ResponseModel> safepeInvestmentAccount();
 

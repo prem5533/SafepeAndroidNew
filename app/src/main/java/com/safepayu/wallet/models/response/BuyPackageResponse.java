@@ -60,10 +60,10 @@ public class BuyPackageResponse {
 
         private String package_id;
         private String userid;
-        private int package_amount;
-        private int bonus_amount;
-        private int balance_amount;
-        private int total_amount;
+        private double package_amount;
+        private double bonus_amount;
+        private double balance_amount;
+        private double total_amount;
         private String tax;
         private String buy_date;
         private String payment_mode;
@@ -93,35 +93,35 @@ public class BuyPackageResponse {
             this.userid = userid;
         }
 
-        public int getPackage_amount() {
+        public double getPackage_amount() {
             return package_amount;
         }
 
-        public void setPackage_amount(int package_amount) {
+        public void setPackage_amount(double package_amount) {
             this.package_amount = package_amount;
         }
 
-        public int getBonus_amount() {
+        public double getBonus_amount() {
             return bonus_amount;
         }
 
-        public void setBonus_amount(int bonus_amount) {
+        public void setBonus_amount(double bonus_amount) {
             this.bonus_amount = bonus_amount;
         }
 
-        public int getBalance_amount() {
+        public double getBalance_amount() {
             return balance_amount;
         }
 
-        public void setBalance_amount(int balance_amount) {
+        public void setBalance_amount(double balance_amount) {
             this.balance_amount = balance_amount;
         }
 
-        public int getTotal_amount() {
+        public double getTotal_amount() {
             return total_amount;
         }
 
-        public void setTotal_amount(int total_amount) {
+        public void setTotal_amount(double total_amount) {
             this.total_amount = total_amount;
         }
 

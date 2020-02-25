@@ -40,7 +40,7 @@ public class AvailableBalanceActivity extends AppCompatActivity implements View.
     public RecyclerView rv_interest_table_rate, rv_instruction;
     public RecyclerView.Adapter mInterestTable, mInstruction;
     public List<AllListData> dataList = new ArrayList<>();
-    public String depositAmount, fdInterest, balanceAmount;
+    public String depositAmount, fdInterest, balanceAmount,term_and_conditions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,8 @@ public class AvailableBalanceActivity extends AppCompatActivity implements View.
 
             case R.id.btn_create_deposit:
                 startActivity(new Intent(AvailableBalanceActivity.this, CreateFixedDepositActivity.class).
-                        putExtra("fdInterest", fdInterest).putExtra("balanceAmount", balanceAmount));
+                        putExtra("fdInterest", fdInterest).
+                        putExtra("balanceAmount", balanceAmount).putExtra("term_and_conditions",term_and_conditions));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
         }
@@ -131,6 +132,7 @@ public class AvailableBalanceActivity extends AppCompatActivity implements View.
                         loadingDialog.hideDialog();
                         if (response.status) {
                             try {
+                                term_and_conditions = response.data.tnc;
                                 mInstruction = new InstructionAdapter(AvailableBalanceActivity.this, response.data.instruction);
                                 rv_instruction.setAdapter(mInstruction);
                             } catch (Exception e) {
