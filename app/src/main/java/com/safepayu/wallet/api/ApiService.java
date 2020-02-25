@@ -99,11 +99,14 @@ import com.safepayu.wallet.models.response.booking.hotel.HotelHistoryResponse;
 import com.safepayu.wallet.models.response.booking.hotel.HotelSourcesResponse;
 
 import io.reactivex.Single;
+import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiService {
 //    @Header("X-Bearer-Token") String authorization
@@ -392,4 +395,9 @@ public interface ApiService {
 
     @GET("api/pefast.safepe.latepe/api/getInvestment")
     Single<ResponseModel> getInvestment();
+
+    @Multipart
+    @POST("api/pefast.safepe.latepe/api/registerKyc")
+    Single<ResponseModel> registerKyc(@Part MultipartBody.Part adharCard_img,@Part MultipartBody.Part adharCardBack_img,
+                                    @Part MultipartBody.Part panCard_img,@Part MultipartBody.Part User_img);
 }

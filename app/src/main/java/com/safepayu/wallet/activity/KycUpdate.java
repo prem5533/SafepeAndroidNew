@@ -7,15 +7,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,10 +26,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.multidex.MultiDex;
@@ -38,6 +43,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.DatePickerHidePreviousDate;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.helper.UserImageCamera;
 import com.safepayu.wallet.models.request.KycRequest;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.CountryListResponse;
@@ -48,29 +54,38 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class KycUpdate extends BaseActivity implements View.OnClickListener{
+public class KycUpdate extends BaseActivity implements View.OnClickListener {
 
     private LoadingDialog loadingDialog;
-    private Button BackBtn,RegisterBtn;
-    private EditText edName,edMobile,edEmail,edAddress,edPincode,edPan,edAdhar,edShopName;
-    private TextView tvDob;
+    private Button BackBtn, RegisterBtn;
+    private EditText edName, edMobile, edEmail, edAddress, edPincode, edPan, edAdhar, edShopName;
+    private TextView tvDob, txtPercentage;
     private Spinner StateSpinner;
-    private LinearLayout KycStatusLayout,KycRegisterLayout,PanImageLayout,AadhaarImageLayout,AadhaarImageBackLayout,SelfImageLayout;
-    private ArrayList<String> StateIdList,StateNameList,StateCodeList;
-    private ImageView ivSelf,ivPAN,ivAadhaar,ivAadhaarBack;
+    private LinearLayout KycStatusLayout, KycRegisterLayout, PanImageLayout, AadhaarImageLayout, AadhaarImageBackLayout, SelfImageLayout;
+    private ArrayList<String> StateIdList, StateNameList, StateCodeList;
+    private ImageView ivSelf, ivPAN, ivAadhaar, ivAadhaarBack;
     private static final int PICK_IMAGE_CAMERA = 0;
     private static final int PICK_IMAGE_PAN = 1;
     private static final int PICK_IMAGE_AADHAAR = 2;
     private static final int PICK_IMAGE_AADHAAR_BACK = 3;
+    private static final int PICK_IMAGE_CAMERA_2 = 4;
     private Bitmap bitmap;
+    private Uri uriAdharFrontFile,uriAdharBackFile,uriPanFile,uriUserFile;
+    private long totalSize = 0;
+    private ProgressBar progressBar;
     private File destination = null;
-    private String textBase64Self="",textBase64Pan="",textBase64Aadhaar="",textBase64AadhaarBack="",StateName="",StateId="",StateCode="";
+    public static final int MEDIA_TYPE_IMAGE = 1;
+    private String textBase64Self = "", textBase64Pan = "", textBase64Aadhaar = "", textBase64AadhaarBack = "", StateName = "", StateId = "", StateCode = "";
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -83,6 +98,11 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setToolbar(false, null, false);
 
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         findId();
     }
 
@@ -94,13 +114,14 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
     private void findId() {
 
         loadingDialog = new LoadingDialog(this);
-        StateIdList=new ArrayList<>();
-        StateNameList=new ArrayList<>();
-        StateCodeList=new ArrayList<>();
+        StateIdList = new ArrayList<>();
+        StateNameList = new ArrayList<>();
+        StateCodeList = new ArrayList<>();
 
         BackBtn = findViewById(R.id.backBtn_kycLayout);
         RegisterBtn = findViewById(R.id.register_kycLayout);
-
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        txtPercentage = (TextView) findViewById(R.id.progressBarText);
         edName = findViewById(R.id.name_kycLayout);
         edMobile = findViewById(R.id.mobile_kycLayout);
         edEmail = findViewById(R.id.email_kycLayout);
@@ -110,7 +131,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
         edAdhar = findViewById(R.id.adhar_kycLayout);
         edShopName = findViewById(R.id.shopName_kycLayout);
         tvDob = findViewById(R.id.dob_kycLayout);
-        StateSpinner=findViewById(R.id.stateList_kycLayout);
+        StateSpinner = findViewById(R.id.stateList_kycLayout);
 
         ivSelf = findViewById(R.id.imageSelf_kycLayout);
         ivPAN = findViewById(R.id.imagePan_kycLayout);
@@ -132,12 +153,10 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
         AadhaarImageBackLayout.setOnClickListener(this);
         tvDob.setOnClickListener(this);
 
-        if (isNetworkAvailable()){
-            //getCountryList();
-            //getStateList();
+        if (isNetworkAvailable()) {
             getCheckKyc();
-        }else {
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),"Check Your Internet Connection",false);
+        } else {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout), "Check Your Internet Connection", false);
         }
 
         StateNameList.add("Please Select Your State");
@@ -148,10 +167,10 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
 
-                if (pos!=0){
-                    StateName=StateNameList.get(pos);
-                    StateId=StateIdList.get(pos);
-                    StateCode=StateCodeList.get(pos);
+                if (pos != 0) {
+                    StateName = StateNameList.get(pos);
+                    StateId = StateIdList.get(pos);
+                    StateCode = StateCodeList.get(pos);
                 }
             }
 
@@ -164,10 +183,10 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.backBtn_kycLayout:
-                overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
+                overridePendingTransition(R.anim.right_to_left, R.anim.slide_in);
                 finish();
                 break;
 
@@ -201,11 +220,13 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
                                 kycRequest.setDob(tvDob.getText().toString().trim());
                                 kycRequest.setAadhaar(edAdhar.getText().toString().trim());
 
-                                getKycDone(kycRequest);
+                                //getKycDone(kycRequest);
+                                uploadImageToServer();
                             }
                         }
                     }
                 }
+
 
                 break;
 
@@ -267,73 +288,251 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
             int hasPerm = pm.checkPermission(Manifest.permission.CAMERA, KycUpdate.this.getPackageName());
             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
 
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                try {
+                    if (imageType == PICK_IMAGE_CAMERA) {
+                        int apiLevel=Integer.valueOf(android.os.Build.VERSION.SDK);
+                        if (apiLevel>21){
+                            Intent intent = new Intent(KycUpdate.this, UserImageCamera.class);
+                            startActivityForResult(intent, PICK_IMAGE_CAMERA_2);
+                        }else {
+                            CallCameraIntent(imageType);
+                        }
 
-                if (imageType==PICK_IMAGE_CAMERA){
-                    intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+                    }else {
+                        CallCameraIntent(imageType);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    CallCameraIntent(imageType);
                 }
-                startActivityForResult(intent, imageType);
-
-            } else{
+            } else {
+                Log.v("er1", "Camera Permission error");
                 Toast.makeText(KycUpdate.this, "Camera Permission error", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
+            Log.v("er2", "Camera Permission error");
             Toast.makeText(KycUpdate.this, "Camera Permission error", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
 
-    private String ConvertToBase64(Bitmap bitmap){
+    private void CallCameraIntent(int imageType){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (imageType == PICK_IMAGE_CAMERA) {
+            intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+        }
+
+        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+
+        File output = new File(dir, "IMG_" + System.currentTimeMillis() + ".jpg");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
+        uriAdharFrontFile = Uri.fromFile(output);
+        // start the image capture Intent
+        startActivityForResult(intent, imageType);
+    }
+
+    /**
+     * Creating file uri to store image/video
+     */
+    public Uri getOutputMediaFileUri(int type) {
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    private static File getOutputMediaFile(int type) {
+
+        // External sdcard location
+        File mediaStorageDir = new File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "SafepeWallet");
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d("error", "Oops! Failed create " + "SafepeWallet" + " directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + "IMG_" + timeStamp + ".jpg");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+
+    private String ConvertToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
         return encoded;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        try {
-            bitmap = (Bitmap) data.getExtras().get("data");
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            //bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
-
-            destination = new File(Environment.getExternalStorageDirectory() + "/" +
-                    getString(R.string.app_name), "IMG_" + System.currentTimeMillis() + ".jpg");
-            FileOutputStream fo;
+        if (requestCode == PICK_IMAGE_CAMERA_2) {
             try {
-                destination.createNewFile();
-                fo = new FileOutputStream(destination);
-                fo.write(bytes.toByteArray());
-                fo.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+                String file =data.getStringExtra("usr_img");
+                uriUserFile= Uri.parse(file);
+                ivSelf.setImageURI(uriUserFile);
+                textBase64Self="done";
+            }catch (Exception e){
                 e.printStackTrace();
             }
+        }else {
+            try {
 
-            Drawable d = new BitmapDrawable(getResources(), bitmap);
+                InputStream imageStream = null;
+                try {
+                    imageStream = getContentResolver().openInputStream(uriAdharFrontFile);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 
-            if (requestCode == PICK_IMAGE_CAMERA) {
-                ivSelf.setImageDrawable(d);
-                textBase64Self = ConvertToBase64(bitmap);
-            }else if (requestCode == PICK_IMAGE_PAN) {
-                ivPAN.setImageDrawable(d);
-                textBase64Pan = ConvertToBase64(bitmap);
-            }else if (requestCode == PICK_IMAGE_AADHAAR) {
-                ivAadhaar.setImageDrawable(d);
-                textBase64Aadhaar = ConvertToBase64(bitmap);
-            }else if (requestCode == PICK_IMAGE_AADHAAR_BACK) {
-                ivAadhaarBack.setImageDrawable(d);
-                textBase64AadhaarBack = ConvertToBase64(bitmap);
+                Bitmap bmp = BitmapFactory.decodeStream(imageStream);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                try {
+                    stream.close();
+                    stream = null;
+                    long lengthbmp = byteArray.length;
+                    int i = (int) (long) lengthbmp;
+                    Log.v("size", (i / 1024) + " kb");
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+                }
+
+                Bitmap converetdImage = getResizedBitmap(bmp, 600);
+//                ByteArrayOutputStream streamC = new ByteArrayOutputStream();
+//                converetdImage.compress(Bitmap.CompressFormat.JPEG, 100, streamC);
+//                byte[] byteArraCy = streamC.toByteArray();
+//                long lengthbmp = byteArraCy.length;
+//                int i = (int) (long) lengthbmp;
+//                Log.v("size2", (i / 1024) + " kb");
+
+                try {
+
+                    File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+
+                    File output = new File(dir, "Safepe_" + System.currentTimeMillis() + ".jpg");
+
+                    //File pictureFile = getOutputMediaFile();
+                    Log.d("PAth", output.getPath());
+                    if (output == null) {
+                        Log.d("TAG", "Error creating media file, check storage permissions: ");// e.getMessage());
+                        return;
+                    }
+                    try {
+                        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                            Log.v("TAG", "Permission is granted");
+                            //File write logic here
+                            FileOutputStream fos = new FileOutputStream(output);
+                            converetdImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                            fos.close();
+
+
+                            if (requestCode == PICK_IMAGE_CAMERA) {
+                                uriUserFile = Uri.fromFile(output);
+                            } else if (requestCode == PICK_IMAGE_PAN) {
+                                uriPanFile = Uri.fromFile(output);
+                            } else if (requestCode == PICK_IMAGE_AADHAAR) {
+                                uriAdharFrontFile = Uri.fromFile(output);
+                            } else if (requestCode == PICK_IMAGE_AADHAAR_BACK) {
+                                uriAdharBackFile = Uri.fromFile(output);
+                            }
+                        } else {
+                            Log.v("TAG", "Permission is Revoked");
+                            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                        }
+
+                    } catch (FileNotFoundException e) {
+                        Log.d("TAG", "File not found: " + e.getMessage());
+                    } catch (IOException e) {
+                        Log.d("TAG", "Error accessing file: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (requestCode == PICK_IMAGE_CAMERA) {
+                    ivSelf.setImageBitmap(converetdImage);
+                    textBase64Self = "done";
+                } else if (requestCode == PICK_IMAGE_PAN) {
+                    ivPAN.setImageBitmap(converetdImage);
+                    textBase64Pan = "done";
+                } else if (requestCode == PICK_IMAGE_AADHAAR) {
+                    ivAadhaar.setImageBitmap(converetdImage);
+                    textBase64Aadhaar = "done";
+                } else if (requestCode == PICK_IMAGE_AADHAAR_BACK) {
+                    ivAadhaarBack.setImageBitmap(converetdImage);
+                    textBase64AadhaarBack = "done";
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
+    }
+
+    private File getOutputMediaFile() {
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                + "/Android/data/"
+                + getApplicationContext().getPackageName()
+                + "/Files");
+
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+        File mediaFile;
+        String mImageName = "Safepe_" + timeStamp + ".jpg";
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
+        return mediaFile;
+    }
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float) width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     private boolean isNetworkAvailable() {
@@ -346,10 +545,11 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
-        if (!isConnected){
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),"Check Your Internet Connection",false);
+        if (!isConnected) {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout), "Check Your Internet Connection", false);
         }
     }
+
     private void getCountryList() {
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
@@ -362,10 +562,10 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
                     @Override
                     public void onSuccess(CountryListResponse countryListResponse) {
                         loadingDialog.hideDialog();
-                        if (countryListResponse.isStatus()){
+                        if (countryListResponse.isStatus()) {
 
-                        }else{
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),countryListResponse.getMessage(),true);
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout), countryListResponse.getMessage(), true);
                         }
                     }
 
@@ -390,21 +590,21 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
                     @Override
                     public void onSuccess(StateListResponse stateListResponse) {
                         //loadingDialog.hideDialog();
-                        if (stateListResponse.isStatus()){
+                        if (stateListResponse.isStatus()) {
 
-                            if (stateListResponse.getData().size()>0){
-                                for (int k=0;k<stateListResponse.getData().size();k++){
+                            if (stateListResponse.getData().size() > 0) {
+                                for (int k = 0; k < stateListResponse.getData().size(); k++) {
                                     StateIdList.add(String.valueOf(stateListResponse.getData().get(k).getState_id()));
                                     StateNameList.add(stateListResponse.getData().get(k).getName());
                                     StateCodeList.add(String.valueOf(stateListResponse.getData().get(k).getStateCode()));
                                 }
-                                ArrayAdapter<String> stateList= new ArrayAdapter<>(KycUpdate.this,android.R.layout.simple_spinner_item,StateNameList);
+                                ArrayAdapter<String> stateList = new ArrayAdapter<>(KycUpdate.this, android.R.layout.simple_spinner_item, StateNameList);
                                 stateList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                 StateSpinner.setAdapter(stateList);
                             }
 
-                        }else{
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),stateListResponse.getMessage(),true);
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout), stateListResponse.getMessage(), true);
                         }
                     }
 
@@ -429,11 +629,11 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
                     @Override
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
-                        if (response.getStatus()){
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),response.getMessage(),true);
+                        if (response.getStatus()) {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout), response.getMessage(), true);
 
-                        }else{
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),response.getMessage(),true);
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout), response.getMessage(), true);
                         }
                     }
 
@@ -458,7 +658,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
                     @Override
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
-                        showMessage(response.getMessage(),response.getStatus());
+                        showMessage(response.getMessage(), response.getStatus());
                     }
 
                     @Override
@@ -469,7 +669,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
                 }));
     }
 
-    public void showMessage(String Message,final boolean check) {
+    public void showMessage(String Message, final boolean check) {
         new AlertDialog.Builder(KycUpdate.this)
                 .setTitle("SafePe - KYC Update")
                 .setMessage(Message)
@@ -485,88 +685,62 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener{
                     public void onClick(DialogInterface dialog, int which) {
                         // Continue with delete operation
 
-                        if (check){
+                        if (check) {
                             dialog.dismiss();
                             finish();
-                        }else {
+                        } else {
                             dialog.dismiss();
                         }
-
                     }
                 })
                 .setIcon(getResources().getDrawable(R.drawable.appicon_new))
                 .show();
     }
 
-    /**
-     * Uploading the file to server
-     * */
-    /*
-    private class UploadFileToServer extends AsyncTask<Void, Integer, String> {
-        @Override
-        protected void onPreExecute() {
-            // setting progress bar to zero
-            progressBar.setProgress(0);
-            super.onPreExecute();
-        }
-        @Override
-        protected void onProgressUpdate(Integer... progress) {
-            // Making progress bar visible
-            progressBar.setVisibility(View.VISIBLE);
-            // updating progress bar value
-            progressBar.setProgress(progress[0]);
-            // updating percentage value
-            txtPercentage.setText(String.valueOf(progress[0]) + "%");
-        }
-        @Override
-        protected String doInBackground(Void... params) {
-            return uploadFile();
-        }
-        @SuppressWarnings("deprecation")
-        private String uploadFile() {
-            String responseString = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("api/pefast.safepe.latepe/api/registerKyc");
-            try {
-                AndroidMultiPartEntity entity = new AndroidMultiPartEntity(
-                        new AndroidMultiPartEntity.ProgressListener() {
-                            @Override
-                            public void transferred(long num) {
-                                publishProgress((int) ((num / (float) totalSize) * 100));
-                            }
-                        });
-                File sourceFile = new File(filePath);
-                // Adding file data to http body
-                entity.addPart("image", new FileBody(sourceFile));
-                // Extra parameters if you want to pass to server
-                entity.addPart("website",
-                        new StringBody("www.androidhive.info"));
-                entity.addPart("email", new StringBody("abc@gmail.com"));
-                totalSize = entity.getContentLength();
-                httppost.setEntity(entity);
-                // Making server call
-                HttpResponse response = httpclient.execute(httppost);
-                HttpEntity r_entity = response.getEntity();
-                int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode == 200) {
-                    // Server response
-                    responseString = EntityUtils.toString(r_entity);
-                } else {
-                    responseString = "Error occurred! Http Status Code: "
-                            + statusCode;
-                }
-            } catch (ClientProtocolException e) {
-                responseString = e.toString();
-            } catch (IOException e) {
-                responseString = e.toString();
-            }
-            return responseString;
-        }
-        @Override
-        protected void onPostExecute(String result) {
-            showMessage(result,false);
-            super.onPostExecute(result);
-        }
-    } */
+    public void uploadImageToServer() {
 
+
+        File file1 = new File(uriAdharFrontFile.getPath());
+        File file2 = new File(uriAdharBackFile.getPath());
+        File file3 = new File(uriPanFile.getPath());
+        File file4 = new File(uriUserFile.getPath());
+
+        Log.v("1path",file1.getPath());
+        Log.v("2path",file2.getPath());
+        Log.v("3path",file3.getPath());
+        Log.v("4path",file4.getPath());
+
+//        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+//
+//        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+//
+//        RequestBody requestBodyId = RequestBody.create(MediaType.parse("multipart/form-data"), file1);
+//        MultipartBody.Part body = MultipartBody.Part.createFormData("adharCard_img", file1.getName(), requestBodyId);
+//
+//        RequestBody requestBodyId2 = RequestBody.create(MediaType.parse("multipart/form-data"), file2);
+//        MultipartBody.Part body2 = MultipartBody.Part.createFormData("adharCardBack_img", file2.getName(), requestBodyId2);
+//
+//        RequestBody requestBodyId3 = RequestBody.create(MediaType.parse("multipart/form-data"), file3);
+//        MultipartBody.Part body3 = MultipartBody.Part.createFormData("panCard_img", file3.getName(), requestBodyId3);
+//
+//        RequestBody requestBodyId4 = RequestBody.create(MediaType.parse("multipart/form-data"), file4);
+//        MultipartBody.Part body4 = MultipartBody.Part.createFormData("User_img", file4.getName(), requestBodyId4);
+//
+//        BaseApp.getInstance().getDisposable().add(apiService.registerKyc(body, body2, body3, body4)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeWith(new DisposableSingleObserver<ResponseModel>() {
+//                    @Override
+//                    public void onSuccess(ResponseModel response) {
+//                        loadingDialog.hideDialog();
+//                        showMessage(response.message,response.status);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        loadingDialog.hideDialog();
+//                        BaseApp.getInstance().toastHelper().showApiExpectation(KycUpdate.this.findViewById(R.id.kycLayout), false, e.getCause());
+//                    }
+//                }));
+    }
 }

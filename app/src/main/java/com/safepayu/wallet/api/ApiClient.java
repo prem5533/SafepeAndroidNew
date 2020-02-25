@@ -52,9 +52,9 @@ public class ApiClient {
 
     private static void initOkHttp(final Context context) {
         OkHttpClient.Builder httpClient = new OkHttpClient().newBuilder()
-                .connectTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
-                .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
-                .writeTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS);
+                .connectTimeout(REQUEST_TIMEOUT, TimeUnit.MINUTES)
+                .readTimeout(REQUEST_TIMEOUT, TimeUnit.MINUTES)
+                .writeTimeout(REQUEST_TIMEOUT, TimeUnit.MINUTES);
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
