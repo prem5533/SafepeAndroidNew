@@ -47,6 +47,7 @@ import com.safepayu.wallet.helper.UserImageCamera;
 import com.safepayu.wallet.models.request.KycRequest;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.CountryListResponse;
+import com.safepayu.wallet.models.response.ResponseModel;
 import com.safepayu.wallet.models.response.StateListResponse;
 
 import java.io.ByteArrayOutputStream;
@@ -63,6 +64,9 @@ import java.util.Locale;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class KycUpdate extends BaseActivity implements View.OnClickListener {
 
@@ -710,37 +714,37 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
         Log.v("3path",file3.getPath());
         Log.v("4path",file4.getPath());
 
-//        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-//
-//        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
-//
-//        RequestBody requestBodyId = RequestBody.create(MediaType.parse("multipart/form-data"), file1);
-//        MultipartBody.Part body = MultipartBody.Part.createFormData("adharCard_img", file1.getName(), requestBodyId);
-//
-//        RequestBody requestBodyId2 = RequestBody.create(MediaType.parse("multipart/form-data"), file2);
-//        MultipartBody.Part body2 = MultipartBody.Part.createFormData("adharCardBack_img", file2.getName(), requestBodyId2);
-//
-//        RequestBody requestBodyId3 = RequestBody.create(MediaType.parse("multipart/form-data"), file3);
-//        MultipartBody.Part body3 = MultipartBody.Part.createFormData("panCard_img", file3.getName(), requestBodyId3);
-//
-//        RequestBody requestBodyId4 = RequestBody.create(MediaType.parse("multipart/form-data"), file4);
-//        MultipartBody.Part body4 = MultipartBody.Part.createFormData("User_img", file4.getName(), requestBodyId4);
-//
-//        BaseApp.getInstance().getDisposable().add(apiService.registerKyc(body, body2, body3, body4)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeWith(new DisposableSingleObserver<ResponseModel>() {
-//                    @Override
-//                    public void onSuccess(ResponseModel response) {
-//                        loadingDialog.hideDialog();
-//                        showMessage(response.message,response.status);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        loadingDialog.hideDialog();
-//                        BaseApp.getInstance().toastHelper().showApiExpectation(KycUpdate.this.findViewById(R.id.kycLayout), false, e.getCause());
-//                    }
-//                }));
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+
+        RequestBody requestBodyId = RequestBody.create(MediaType.parse("multipart/form-data"), file1);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("adharCard_img", file1.getName(), requestBodyId);
+
+        RequestBody requestBodyId2 = RequestBody.create(MediaType.parse("multipart/form-data"), file2);
+        MultipartBody.Part body2 = MultipartBody.Part.createFormData("adharCardBack_img", file2.getName(), requestBodyId2);
+
+        RequestBody requestBodyId3 = RequestBody.create(MediaType.parse("multipart/form-data"), file3);
+        MultipartBody.Part body3 = MultipartBody.Part.createFormData("panCard_img", file3.getName(), requestBodyId3);
+
+        RequestBody requestBodyId4 = RequestBody.create(MediaType.parse("multipart/form-data"), file4);
+        MultipartBody.Part body4 = MultipartBody.Part.createFormData("User_img", file4.getName(), requestBodyId4);
+
+        BaseApp.getInstance().getDisposable().add(apiService.registerKyc(body, body2, body3, body4)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ResponseModel>() {
+                    @Override
+                    public void onSuccess(ResponseModel response) {
+                        loadingDialog.hideDialog();
+                        showMessage(response.message,response.status);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(KycUpdate.this.findViewById(R.id.kycLayout), false, e.getCause());
+                    }
+                }));
     }
 }
