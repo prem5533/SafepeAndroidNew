@@ -107,21 +107,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp">
+
                     <EditText
                         android:id="@+id/et_referralCode2"
                         style="@style/defaultEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Refer ID*"
-                        android:inputType="number"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"
                         android:background="@null"
-                        android:paddingLeft="5dp"
                         android:digits="0123456789"
+                        android:fontFamily="@font/roboto_regular"
+                        android:hint="Refer ID*"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:paddingLeft="5dp"
                         android:singleLine="true"
-                        android:imeOptions="actionDone"/>
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
                     <FrameLayout
                         android:layout_width="wrap_content"

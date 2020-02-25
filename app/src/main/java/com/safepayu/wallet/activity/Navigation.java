@@ -2026,6 +2026,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED, String.valueOf(response.getUser().getPackage_status()));
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_MENU, String.valueOf(response.getUser().getMenuBuyPackage_status()));
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN, String.valueOf(response.getUser().getPayment_screen()));
+                            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().WALLET_BALANCE, String.valueOf(response.getUser().getWallet_amount()));
                             try {
                                 if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_MENU).equals("1")) {
                                     liBuyPackage.setVisibility(View.VISIBLE);

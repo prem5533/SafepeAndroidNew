@@ -37,11 +37,11 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
     Button BackBtn,SendMoneyBtn;
     private EditText MobileED,AmountED;
     private LoadingDialog loadingDialog;
-    private TextView tvReferUserName,tvLimitation;
+    private TextView tvReferUserName,tvLimitation,tvWalletAmount;
     private boolean referralCheck=false;
     private double WalletBalance=0.0f;
     SendToWalletRequest sendToWalletRequest;
-    String Mobile="",LimitText="",MinLimit="",MaxLimit="";
+    String Mobile="",LimitText="",MinLimit="",MaxLimit="",walletAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +56,15 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
         SendMoneyBtn=findViewById(R.id.send_money_button);
         tvReferUserName=findViewById(R.id.user_name_sendToWallet);
         tvLimitation=findViewById(R.id.maxMiValue);
+        tvWalletAmount=findViewById(R.id.wallet_amount);
 
         MinLimit=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT_MIN);
         MaxLimit=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT);
+        walletAmount = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().WALLET_BALANCE);
         LimitText="Enter Amount Between Rs "+MinLimit+" And Rs "+MaxLimit;
 
         tvLimitation.setText(LimitText);
+        tvWalletAmount.setText("₹ "+walletAmount);
 
         BackBtn.setOnClickListener(this);
         SendMoneyBtn.setOnClickListener(this);

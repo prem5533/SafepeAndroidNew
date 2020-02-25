@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,15 +29,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class FixedDepositListActivity extends AppCompatActivity implements MyFixedDepositAdapter.OnFDSelectListener {
+public class FixedDepositListActivity extends AppCompatActivity implements MyFixedDepositAdapter.OnFDSelectListener, View.OnClickListener {
 
     private RecyclerView recyclerView;
     private MyFixedDepositAdapter myFixedDepositAdapter;
     private Dialog dialogFDeposit;
     private LoadingDialog loadingDialog;
     private Button send_back_btn_fd,FD_back_btn;
+    private LinearLayout fdEmpty;
 
-    private TextView tvFDid,tvFDAmount,tvtax,tvstatus,tvPaymentMode,operationText,tv_bonus_amount,tv_balance_amount,tv_contct_support;
+    private TextView tvFDid,tvFDAmount,tvtax,tvstatus,tvPaymentMode,operationText,tv_bonus_amount,tv_balance_amount,tv_contct_support,please_invest_fd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +53,13 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
     private void findId() {
         recyclerView = findViewById(R.id.recycle_deposit);
         send_back_btn_fd = findViewById(R.id.send_back_btn_fd);
+        please_invest_fd = findViewById(R.id.please_invest_fd);
+        fdEmpty = findViewById(R.id.fdEmpty);
         loadingDialog = new LoadingDialog(this);
-        send_back_btn_fd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
-                finish();
-            }
-        });
+
+        please_invest_fd.setOnClickListener(this);
+        send_back_btn_fd.setOnClickListener(this);
+
     }
 
 
@@ -75,9 +76,19 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
                     public void onSuccess(InvestmentResponse response) {
                         if (response.isStatus()){
                             loadingDialog.hideDialog();
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-                            myFixedDepositAdapter = new MyFixedDepositAdapter(getApplicationContext(),response.getData().getInvestment(),FixedDepositListActivity.this);
-                            recyclerView.setAdapter(myFixedDepositAdapter);
+
+
+                            if (response.getData().getInvestment().isEmpty()){
+                                fdEmpty.setVisibility(View.VISIBLE);
+                                recyclerView.setVisibility(View.GONE);
+                            }
+                            else {
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                                myFixedDepositAdapter = new MyFixedDepositAdapter(getApplicationContext(),response.getData().getInvestment(),FixedDepositListActivity.this);
+                                recyclerView.setAdapter(myFixedDepositAdapter);
+                                fdEmpty.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                            }
 
                         }
                     }
@@ -158,5 +169,18 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(lp);
         dialogFDeposit.show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.send_back_btn_fd:
+                overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
+                finish();
+                break;
+            case R.id.please_invest_fd:
+                startActivity(new Intent(FixedDepositListActivity.this,CreateFixedDepositActivity.class));
+                break;
+        }
     }
 }

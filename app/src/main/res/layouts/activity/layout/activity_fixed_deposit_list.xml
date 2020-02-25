@@ -76,7 +76,44 @@
             android:id="@+id/recycle_deposit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+         />
+
+        <LinearLayout
+            android:id="@+id/fdEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="100dp"
+            android:visibility="gone"
+            >
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_note"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You have no FD"
+                android:textSize="18sp"
+                android:textColor="@color/textcolor"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:id="@+id/please_invest_fd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please Invest First"
+                android:textSize="14sp"
+                android:textColor="@color/blue"
+                android:fontFamily="@font/roboto_bold"
+                android:padding="5dp"/>
+
+        </LinearLayout>
     </LinearLayout>
     </androidx.cardview.widget.CardView>
     </LinearLayout>

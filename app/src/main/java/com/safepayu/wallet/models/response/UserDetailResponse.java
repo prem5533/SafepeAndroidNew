@@ -121,6 +121,11 @@ public class UserDetailResponse {
         private String genealogy;
         private int menuBuyPackage_status;
         private int payment_screen;
+        /**
+         * wallet_amount : 1600.00
+         */
+
+        private String wallet_amount;
 
         public String getSponsorname() {
             return sponsorname;
@@ -424,6 +429,14 @@ public class UserDetailResponse {
 
         public void setPayment_screen(int payment_screen) {
             this.payment_screen = payment_screen;
+        }
+
+        public String getWallet_amount() {
+            return wallet_amount;
+        }
+
+        public void setWallet_amount(String wallet_amount) {
+            this.wallet_amount = wallet_amount;
         }
     }
 
