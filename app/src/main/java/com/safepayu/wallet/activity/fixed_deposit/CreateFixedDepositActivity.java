@@ -80,7 +80,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
         ed_amount = findViewById(R.id.ed_amount);
         tv_available_balance.setText(balanceAmount);
         ll_back = findViewById(R.id.ll_back);
-        tv_interest_rate.setText("Interest @ " + fdInterest + " % for 1 Day");
+        tv_interest_rate.setText("Interest @ " + fdInterest + " %");
         tv_term_cond.setOnClickListener(this);
         btn_create_deposit.setOnClickListener(this);
         ll_interest_table.setOnClickListener(this);

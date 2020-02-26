@@ -35,7 +35,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.fixed_deposit.CreateFixedDepositActivity"></activity>
+        <activity android:name=".activity.fixed_deposit.FDdetailActivity"></activity>
+        <activity android:name=".activity.fixed_deposit.CreateFixedDepositActivity" />
         <activity android:name=".activity.fixed_deposit.AvailableBalanceActivity" />
         <activity android:name=".activity.fixed_deposit.FixedDepositActivity" />
         <activity
@@ -355,31 +356,31 @@
             <intent-filter>
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVE" />
             </intent-filter>
-        </receiver>
-        <!-- Ecommerce -->
-        <activity android:name=".ecommerce.fragment.ReviewProductFragment"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ecommerce.fragment.ThankYouFragment"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ecommerce.activity.SearchEcommerce"
-            android:screenOrientation="portrait"/>
-
-<!--   Fixed Deposit     -->
-
-        <activity android:name=".activity.fixed_deposit.FDChoosePayment"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.fixed_deposit.FixedDepositListActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.fixed_deposit.InvestmentWallet"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.fixed_deposit.TransferInvestmentToWallet"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.loan.LoanActivity"
-            android:screenOrientation="portrait"/>
+        </receiver> <!-- Ecommerce -->
+        <activity
+            android:name=".ecommerce.fragment.ReviewProductFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ecommerce.fragment.ThankYouFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ecommerce.activity.SearchEcommerce"
+            android:screenOrientation="portrait" /> <!-- Fixed Deposit -->
+        <activity
+            android:name=".activity.fixed_deposit.FDChoosePayment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.fixed_deposit.FixedDepositListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.fixed_deposit.InvestmentWallet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.fixed_deposit.TransferInvestmentToWallet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.loan.LoanActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

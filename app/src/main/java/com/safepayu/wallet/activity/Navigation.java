@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,6 +42,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
@@ -99,7 +101,7 @@ import static com.safepayu.wallet.activity.Splash.promotionResponse1;
 
 public class Navigation extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private ImageView nav_icon, notification_icon;
+    public static ImageView nav_icon, notification_icon;
     private DrawerLayout drawer;
     private AlertDialog.Builder alertNetwork;
     private boolean doubleBackToExitPressedOnce = false;
@@ -113,6 +115,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
             liBigBazaar, liBrandFactory, liKFC, liDominos, liLogoutAllDevices, linearSecurityTab, linearLogoutTab, linearGiftCoupon;
     public static int BadgeCount = 0;
     public static TextView BadgeCountTV;
+
     public static int sizeMobileRecharge = 0;
     Dialog dialog;
     TextView TitleNotiDialog, ContentNotiDialog, tvLogoutTextParent;
@@ -123,6 +126,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
     private String url;
     BottomNavigationView bottomNavigation;
     private RelativeLayout relativeMain;
+    MenuItem menuItem;
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
@@ -136,6 +140,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
     PromotionResponse promotionResponseType3;
+    UserDetailResponse userDetailResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +165,10 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
             e.printStackTrace();
         }
         getAppVersion();
+
+
+
+
         setupNavigation();
 
         FirebaseInstanceId.getInstance().getInstanceId()
@@ -696,11 +705,20 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.walletLayout), "No Internet Connection", false);
         }
 
+
+        try {
+            BadgeCount= Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().BADGE_COUNT));
+        }catch (Exception e){
+            BadgeCount=0;
+            e.printStackTrace();
+        }
+
         if (BadgeCount == 0) {
             BadgeCountTV.setVisibility(View.GONE);
         } else {
             BadgeCountTV.setText("" + BadgeCount);
             BadgeCountTV.setVisibility(View.VISIBLE);
+            notification_icon.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.shake));
         }
 
     }
@@ -2009,7 +2027,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
                 .subscribeWith(new DisposableSingleObserver<UserDetailResponse>() {
                     @Override
                     public void onSuccess(UserDetailResponse response) {
-
+                        userDetailResponse = response;
                         if (response.getUser().getStatus() == 0) {
                             showDialogBlocked(Navigation.this);
                         } else {
@@ -2027,6 +2045,8 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PACKAGE_MENU, String.valueOf(response.getUser().getMenuBuyPackage_status()));
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN, String.valueOf(response.getUser().getPayment_screen()));
                             BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().WALLET_BALANCE, String.valueOf(response.getUser().getWallet_amount()));
+
+                            drawerMenu();
                             try {
                                 if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_MENU).equals("1")) {
                                     liBuyPackage.setVisibility(View.VISIBLE);
@@ -2048,6 +2068,8 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
                     }
                 }));
     }
+
+
 
     public void showDialogBlocked(Activity activity) {
         new AlertDialog.Builder(activity)
@@ -2271,7 +2293,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
         int mMenuId;
         mMenuId = item.getItemId();
         for (int i = 0; i < bottomNavigation.getMenu().size(); i++) {
-            MenuItem menuItem = bottomNavigation.getMenu().getItem(i);
+             menuItem = bottomNavigation.getMenu().getItem(i);
             boolean isChecked = menuItem.getItemId() == item.getItemId();
             menuItem.setChecked(isChecked);
         }
@@ -2289,6 +2311,8 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
                 startActivity(new Intent(Navigation.this, QrCodeScanner.class));
             }
             break;
+
+
             case R.id.b_mall_ecomm: {
                 //   Toast.makeText(getApplicationContext(),"Coming Soon",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Navigation.this, EHomeActivity.class));
@@ -2296,6 +2320,107 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
             break;
         }
         return true;
+    }
+
+    private void drawerMenu() {
+        if (userDetailResponse.getUser().getMenuHome_status()==1){
+            liHome.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuHome_status()==0){
+            liHome.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuProfile_status()==1){
+            liProfile.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuProfile_status()==0){
+            liProfile.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuPackageDetail_status()==1){
+            liPackageDetails.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuPackageDetail_status()==0){
+            liPackageDetails.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuBuyPackage_status()==1){
+            liBuyPackage.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuBuyPackage_status()==0){
+            liBuyPackage.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuBussinessWallet_status()==1){
+            liCommission.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuBussinessWallet_status()==0){
+            liCommission.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuEcommrce_status()==1){
+            liShopping.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuEcommrce_status()==0){
+            liShopping.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuSafepeInvestment_status()==1){
+            liFD.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuSafepeInvestment_status()==0){
+            liFD.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuSafepeInvestmentWallet_status()==1){
+            liLoan.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuSafepeInvestmentWallet_status()==0){
+            liLoan.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuMyOrders_status()==1){
+            liMyOrders.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuMyOrders_status()==0){
+            liMyOrders.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuGenealogy_status()==1){
+            liGenelogy.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuGenealogy_status()==0){
+            liGenelogy.setVisibility(View.GONE);
+        }
+
+        if (userDetailResponse.getUser().getMenuRefer_status()==1){
+            liReferEarn.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuRefer_status()==0){
+            liReferEarn.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuKYC_status()==1){
+            liUpdteKYC.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuKYC_status()==0){
+            liUpdteKYC.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuContactUs_status()==1){
+            liContactUs.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuContactUs_status()==0){
+            liContactUs.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuSecurity_status()==1){
+            liLogoutParent.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuSecurity_status()==0){
+            liLogoutParent.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuChangePasscode_status()==1){
+            liChnangePasswlrd.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuChangePasscode_status()==0){
+            liChnangePasswlrd.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuChangePassword_status()==1){
+            liChnangePassword.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuChangePassword_status()==0){
+            liChnangePassword.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuLogout_status()==1){
+            liSecurity.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuLogout_status()==0){
+            liSecurity.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuLogoutAllDevice_status()==1){
+            liLogoutAllDevices.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuLogoutAllDevice_status()==0){
+            liLogoutAllDevices.setVisibility(View.GONE);
+        }
+        if (userDetailResponse.getUser().getMenuLogoutLogout_status()==1){
+            liLogout.setVisibility(View.VISIBLE);
+        } else if (userDetailResponse.getUser().getMenuLogoutLogout_status()==0){
+            liLogout.setVisibility(View.GONE);
+        }
+
+
     }
 
 }
