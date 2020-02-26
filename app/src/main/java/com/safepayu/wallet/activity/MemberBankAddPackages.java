@@ -367,7 +367,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                                             fdPayRequest.setPaid_to_account(BankNameText);
                                             fdPayRequest.setPaid_from_account(UPI);
                                             fdPayRequest.setPackage_amount(Amount);
-                                            fdPayRequest.setRefer("fd8376097766");
+                                            fdPayRequest.setRefer(ReferId);
                                             fdPayRequest.setAmount(RealAmount);
                                             if (CheckNetConnection){
                                                 PayFixedDeposit(fdPayRequest);

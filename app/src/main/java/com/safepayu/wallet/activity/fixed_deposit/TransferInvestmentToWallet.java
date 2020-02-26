@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.KycUpdate;
 import com.safepayu.wallet.activity.PaidOrderActivity;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -97,7 +96,7 @@ public class TransferInvestmentToWallet extends BaseActivity implements Passcode
         }else {
 
             try {
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+                /* if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
                     SendToWalletBtn.setVisibility(View.GONE);
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                     alertDialogBuilder.setTitle(Html.fromHtml("<font color='#3db7c2'>Commission</font>"));
@@ -116,7 +115,8 @@ public class TransferInvestmentToWallet extends BaseActivity implements Passcode
                 } else {
 
                     SendToWalletBtn.setVisibility(View.VISIBLE);
-                }
+                }*/
+                SendToWalletBtn.setVisibility(View.VISIBLE);
             }catch (Exception e){
                 SendToWalletBtn.setVisibility(View.GONE);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
