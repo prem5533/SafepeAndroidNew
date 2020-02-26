@@ -44,6 +44,7 @@ public class BellNotifictionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bell_notifiction);
         BadgeCount=0;
+        BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().BADGE_COUNT,String.valueOf(BadgeCount));
 
         findId();
         getNotificationData();

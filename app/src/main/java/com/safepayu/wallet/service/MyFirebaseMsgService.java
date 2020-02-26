@@ -8,6 +8,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -21,6 +22,8 @@ import com.safepayu.wallet.activity.LoginActivity;
 
 import static com.safepayu.wallet.activity.Navigation.BadgeCount;
 import static com.safepayu.wallet.activity.Navigation.BadgeCountTV;
+import static com.safepayu.wallet.activity.Navigation.notification_icon;
+
 
 public class MyFirebaseMsgService extends FirebaseMessagingService {
 
@@ -38,6 +41,9 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
                 public void run() {
                     BadgeCountTV.setVisibility(View.VISIBLE);
                     BadgeCountTV.setText(""+BadgeCount);
+                    BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().BADGE_COUNT,String.valueOf(BadgeCount));
+                    notification_icon.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.shake));
+
                 }
             });
         }catch (Exception e){

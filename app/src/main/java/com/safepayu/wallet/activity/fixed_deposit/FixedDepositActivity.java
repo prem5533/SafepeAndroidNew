@@ -24,7 +24,7 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
 
     public LinearLayout ll_back, ll_fixed_deposit, ll_paytm_wallet,ll_total_amount,ll_investment_wallet;
     private LoadingDialog loadingDialog;
-    public TextView tv_total_deposit_amount, tv_fixed_deposit_amount, tv_wallet_amount, tv_fixed_deposit_interest_amount,tv_investment_wallet_amount, tv_safepe_wallet_interest_amount;
+    public TextView tv_total_deposit_amount, tv_fixed_deposit_amount, tv_wallet_amount, tv_fixed_deposit_interest_amount,tv_investment_wallet_amount;
     public String depositAmount, fdInterest, balanceAmount;
 
     @Override
@@ -43,7 +43,7 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
         tv_fixed_deposit_amount = findViewById(R.id.tv_fixed_deposit_amount);
         tv_wallet_amount = findViewById(R.id.tv_wallet_amount);
         tv_fixed_deposit_interest_amount = findViewById(R.id.tv_fixed_deposit_interest_amount);
-        tv_safepe_wallet_interest_amount = findViewById(R.id.tv_safepe_wallet_interest_amount);
+
         tv_investment_wallet_amount = findViewById(R.id.tv_investment_wallet_amount);
 
         ll_fixed_deposit.setOnClickListener(this);

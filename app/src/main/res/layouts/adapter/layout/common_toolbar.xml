@@ -20,10 +20,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.1">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_next_new" />
+            <Button
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_next_new"/>
 
         </LinearLayout>
 
@@ -38,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:gravity="center"
-                android:text="SafePe Bank"
+                android:text="SafePe Investment"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 

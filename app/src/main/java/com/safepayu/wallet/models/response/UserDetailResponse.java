@@ -119,13 +119,54 @@ public class UserDetailResponse {
 
 
         private String genealogy;
-        private int menuBuyPackage_status;
         private int payment_screen;
+
         /**
          * wallet_amount : 1600.00
          */
 
         private String wallet_amount;
+        /**
+         * menuHome_status : 1
+         * menuProfile_status : 1
+         * menuPackageDetail_status : 1
+         * menuBuyPackage_status : 1
+         * menuBussinessWallet_status : 1
+         * menuEcommrce_status : 1
+         * menuSafepeInvestment_status : 1
+         * menuSafepeInvestmentWallet_status : 1
+         * menuMyOrders_status : 1
+         * menuGenealogy_status : 1
+         * menuRefer_status : 1
+         * menuKYC_status : 1
+         * menuContactUs_status : 1
+         * menuSecurity_status : 1
+         * menuChangePasscode_status : 1
+         * menuChangePassword_status : 1
+         * menuLogout_status : 1
+         * menuLogoutAllDevice_status : 1
+         * menuLogoutLogout_status : 1
+         */
+
+        private int menuHome_status;
+        private int menuProfile_status;
+        private int menuPackageDetail_status;
+        private int menuBuyPackage_status;
+        private int menuBussinessWallet_status;
+        private int menuEcommrce_status;
+        private int menuSafepeInvestment_status;
+        private int menuSafepeInvestmentWallet_status;
+        private int menuMyOrders_status;
+        private int menuGenealogy_status;
+        private int menuRefer_status;
+        private int menuKYC_status;
+        private int menuContactUs_status;
+        private int menuSecurity_status;
+        private int menuChangePasscode_status;
+        private int menuChangePassword_status;
+        private int menuLogout_status;
+        private int menuLogoutAllDevice_status;
+        private int menuLogoutLogout_status;
 
         public String getSponsorname() {
             return sponsorname;
@@ -415,13 +456,7 @@ public class UserDetailResponse {
             this.genealogy = genealogy;
         }
 
-        public int getMenuBuyPackage_status() {
-            return menuBuyPackage_status;
-        }
 
-        public void setMenuBuyPackage_status(int menuBuyPackage_status) {
-            this.menuBuyPackage_status = menuBuyPackage_status;
-        }
 
         public int getPayment_screen() {
             return payment_screen;
@@ -437,6 +472,158 @@ public class UserDetailResponse {
 
         public void setWallet_amount(String wallet_amount) {
             this.wallet_amount = wallet_amount;
+        }
+
+        public int getMenuHome_status() {
+            return menuHome_status;
+        }
+
+        public void setMenuHome_status(int menuHome_status) {
+            this.menuHome_status = menuHome_status;
+        }
+
+        public int getMenuProfile_status() {
+            return menuProfile_status;
+        }
+
+        public void setMenuProfile_status(int menuProfile_status) {
+            this.menuProfile_status = menuProfile_status;
+        }
+
+        public int getMenuPackageDetail_status() {
+            return menuPackageDetail_status;
+        }
+
+        public void setMenuPackageDetail_status(int menuPackageDetail_status) {
+            this.menuPackageDetail_status = menuPackageDetail_status;
+        }
+
+        public int getMenuBuyPackage_status() {
+            return menuBuyPackage_status;
+        }
+
+        public void setMenuBuyPackage_status(int menuBuyPackage_status) {
+            this.menuBuyPackage_status = menuBuyPackage_status;
+        }
+
+        public int getMenuBussinessWallet_status() {
+            return menuBussinessWallet_status;
+        }
+
+        public void setMenuBussinessWallet_status(int menuBussinessWallet_status) {
+            this.menuBussinessWallet_status = menuBussinessWallet_status;
+        }
+
+        public int getMenuEcommrce_status() {
+            return menuEcommrce_status;
+        }
+
+        public void setMenuEcommrce_status(int menuEcommrce_status) {
+            this.menuEcommrce_status = menuEcommrce_status;
+        }
+
+        public int getMenuSafepeInvestment_status() {
+            return menuSafepeInvestment_status;
+        }
+
+        public void setMenuSafepeInvestment_status(int menuSafepeInvestment_status) {
+            this.menuSafepeInvestment_status = menuSafepeInvestment_status;
+        }
+
+        public int getMenuSafepeInvestmentWallet_status() {
+            return menuSafepeInvestmentWallet_status;
+        }
+
+        public void setMenuSafepeInvestmentWallet_status(int menuSafepeInvestmentWallet_status) {
+            this.menuSafepeInvestmentWallet_status = menuSafepeInvestmentWallet_status;
+        }
+
+        public int getMenuMyOrders_status() {
+            return menuMyOrders_status;
+        }
+
+        public void setMenuMyOrders_status(int menuMyOrders_status) {
+            this.menuMyOrders_status = menuMyOrders_status;
+        }
+
+        public int getMenuGenealogy_status() {
+            return menuGenealogy_status;
+        }
+
+        public void setMenuGenealogy_status(int menuGenealogy_status) {
+            this.menuGenealogy_status = menuGenealogy_status;
+        }
+
+        public int getMenuRefer_status() {
+            return menuRefer_status;
+        }
+
+        public void setMenuRefer_status(int menuRefer_status) {
+            this.menuRefer_status = menuRefer_status;
+        }
+
+        public int getMenuKYC_status() {
+            return menuKYC_status;
+        }
+
+        public void setMenuKYC_status(int menuKYC_status) {
+            this.menuKYC_status = menuKYC_status;
+        }
+
+        public int getMenuContactUs_status() {
+            return menuContactUs_status;
+        }
+
+        public void setMenuContactUs_status(int menuContactUs_status) {
+            this.menuContactUs_status = menuContactUs_status;
+        }
+
+        public int getMenuSecurity_status() {
+            return menuSecurity_status;
+        }
+
+        public void setMenuSecurity_status(int menuSecurity_status) {
+            this.menuSecurity_status = menuSecurity_status;
+        }
+
+        public int getMenuChangePasscode_status() {
+            return menuChangePasscode_status;
+        }
+
+        public void setMenuChangePasscode_status(int menuChangePasscode_status) {
+            this.menuChangePasscode_status = menuChangePasscode_status;
+        }
+
+        public int getMenuChangePassword_status() {
+            return menuChangePassword_status;
+        }
+
+        public void setMenuChangePassword_status(int menuChangePassword_status) {
+            this.menuChangePassword_status = menuChangePassword_status;
+        }
+
+        public int getMenuLogout_status() {
+            return menuLogout_status;
+        }
+
+        public void setMenuLogout_status(int menuLogout_status) {
+            this.menuLogout_status = menuLogout_status;
+        }
+
+        public int getMenuLogoutAllDevice_status() {
+            return menuLogoutAllDevice_status;
+        }
+
+        public void setMenuLogoutAllDevice_status(int menuLogoutAllDevice_status) {
+            this.menuLogoutAllDevice_status = menuLogoutAllDevice_status;
+        }
+
+        public int getMenuLogoutLogout_status() {
+            return menuLogoutLogout_status;
+        }
+
+        public void setMenuLogoutLogout_status(int menuLogoutLogout_status) {
+            this.menuLogoutLogout_status = menuLogoutLogout_status;
         }
     }
 

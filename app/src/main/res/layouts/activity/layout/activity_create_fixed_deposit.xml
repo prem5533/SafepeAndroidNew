@@ -231,7 +231,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Interest @ 6.65 for 13 months"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
