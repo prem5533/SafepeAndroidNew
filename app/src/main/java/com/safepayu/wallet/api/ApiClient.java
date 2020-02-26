@@ -28,7 +28,7 @@ import static com.safepayu.wallet.BaseApp.Code;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "https://productiontesting.safepeindia.com/";
+    public static final String BASE_URL = "https://secure.safepeindia.com/";
     public  static String ImagePath = BASE_URL;
     private static Retrofit retrofit = null;
     private static int REQUEST_TIMEOUT = 60;
@@ -52,9 +52,9 @@ public class ApiClient {
 
     private static void initOkHttp(final Context context) {
         OkHttpClient.Builder httpClient = new OkHttpClient().newBuilder()
-                .connectTimeout(REQUEST_TIMEOUT, TimeUnit.MINUTES)
-                .readTimeout(REQUEST_TIMEOUT, TimeUnit.MINUTES)
-                .writeTimeout(REQUEST_TIMEOUT, TimeUnit.MINUTES);
+                .connectTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS);
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

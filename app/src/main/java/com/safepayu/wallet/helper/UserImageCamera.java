@@ -1,7 +1,6 @@
 package com.safepayu.wallet.helper;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -200,7 +199,7 @@ public class UserImageCamera extends AppCompatActivity {
             // Orientation
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
-            final File file = new File(Environment.getExternalStorageDirectory() + "/pic.jpg");
+            File file = new File(Environment.getExternalStorageDirectory()+ String.valueOf(System.currentTimeMillis()) + "/pic.jpg");
 //            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 //
 //            final File file = new File(dir, "Safepe_" + System.currentTimeMillis() + ".jpg");
@@ -255,8 +254,8 @@ public class UserImageCamera extends AppCompatActivity {
                         Log.v("pathUri", Uri.fromFile(file).getPath());
                         Intent intent = new Intent(UserImageCamera.this, KycUpdate.class);
                         intent.putExtra("usr_img", file.getPath());
-                        setResult(Activity.RESULT_OK, intent);
-                        finish();
+//                        setResult(Activity.RESULT_OK, intent);
+//                        finish();
                         //createCameraPreview();
                     }
                 };

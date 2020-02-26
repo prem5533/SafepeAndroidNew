@@ -206,7 +206,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/roboto_regular"
-                                    android:text="Earn upto 6.65% interest per annum on your fixed deposits"
+                                    android:text="Earn upto 0.50% interest per day on your fixed deposits"
                                     android:textColor="@color/grey_700"
                                     android:textSize="14sp" />
 
@@ -271,7 +271,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_bold"
-                                android:text="Paytm Wallet"
+                                android:text="SafePe Wallet"
                                 android:textColor="@color/black"
                                 android:textSize="13dp" />
 

@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -118,7 +119,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
         try {
             Activity=getIntent().getStringExtra("Activity");
             RealAmount=getIntent().getStringExtra("RealAmount");
-            ReferId=getIntent().getStringExtra(ReferId);
+            ReferId=getIntent().getStringExtra("ReferId");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -366,7 +367,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                                             fdPayRequest.setPaid_to_account(BankNameText);
                                             fdPayRequest.setPaid_from_account(UPI);
                                             fdPayRequest.setPackage_amount(Amount);
-                                            fdPayRequest.setRefer(ReferId);
+                                            fdPayRequest.setRefer("fd8376097766");
                                             fdPayRequest.setAmount(RealAmount);
                                             if (CheckNetConnection){
                                                 PayFixedDeposit(fdPayRequest);
@@ -488,7 +489,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
 
                     @Override
                     public void onError(Throwable e) {
-                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        Log.v("error", "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.memberBankAddPackages), true, e);
                     }

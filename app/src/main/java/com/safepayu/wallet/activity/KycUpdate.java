@@ -43,7 +43,6 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.DatePickerHidePreviousDate;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.helper.UserImageCamera;
 import com.safepayu.wallet.models.request.KycRequest;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.CountryListResponse;
@@ -84,7 +83,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
     private static final int PICK_IMAGE_AADHAAR_BACK = 3;
     private static final int PICK_IMAGE_CAMERA_2 = 4;
     private Bitmap bitmap;
-    private Uri uriAdharFrontFile,uriAdharBackFile,uriPanFile,uriUserFile;
+    private Uri uriAdharFrontFile,uriAdharBackFile,uriPanFile,uriUserFile,uriAll;
     private long totalSize = 0;
     private ProgressBar progressBar;
     private File destination = null;
@@ -293,18 +292,19 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
 
                 try {
-                    if (imageType == PICK_IMAGE_CAMERA) {
-                        int apiLevel=Integer.valueOf(android.os.Build.VERSION.SDK);
-                        if (apiLevel>21){
-                            Intent intent = new Intent(KycUpdate.this, UserImageCamera.class);
-                            startActivityForResult(intent, PICK_IMAGE_CAMERA_2);
-                        }else {
-                            CallCameraIntent(imageType);
-                        }
-
-                    }else {
-                        CallCameraIntent(imageType);
-                    }
+//                    if (imageType == PICK_IMAGE_CAMERA) {
+//                        int apiLevel=Integer.valueOf(android.os.Build.VERSION.SDK);
+//                        if (apiLevel>21){
+//                            Intent intent = new Intent(KycUpdate.this, UserImageCamera.class);
+//                            startActivityForResult(intent, PICK_IMAGE_CAMERA_2);
+//                        }else {
+//                            CallCameraIntent(imageType);
+//                        }
+//
+//                    }else {
+//                        CallCameraIntent(imageType);
+//                    }
+                    CallCameraIntent(imageType);
                 }catch (Exception e){
                     e.printStackTrace();
                     CallCameraIntent(imageType);
@@ -330,7 +330,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
 
         File output = new File(dir, "IMG_" + System.currentTimeMillis() + ".jpg");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
-        uriAdharFrontFile = Uri.fromFile(output);
+        uriAll = Uri.fromFile(output);
         // start the image capture Intent
         startActivityForResult(intent, imageType);
     }
@@ -398,7 +398,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
 
                 InputStream imageStream = null;
                 try {
-                    imageStream = getContentResolver().openInputStream(uriAdharFrontFile);
+                    imageStream = getContentResolver().openInputStream(uriAll);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -433,7 +433,23 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
 
                     File output = new File(dir, "Safepe_" + System.currentTimeMillis() + ".jpg");
 
-                    //File pictureFile = getOutputMediaFile();
+                    if (requestCode == PICK_IMAGE_CAMERA) {
+                        uriUserFile = Uri.fromFile(output);
+                    } else if (requestCode == PICK_IMAGE_PAN) {
+                        uriPanFile = Uri.fromFile(output);
+                    } else if (requestCode == PICK_IMAGE_AADHAAR) {
+                        uriAdharFrontFile = Uri.fromFile(output);
+                    } else if (requestCode == PICK_IMAGE_AADHAAR_BACK) {
+                        uriAdharBackFile = Uri.fromFile(output);
+                    }
+
+                    if (requestCode == PICK_IMAGE_CAMERA) {
+                        Log.v("1path", uriAdharFrontFile.getPath());
+                        Log.v("2path", uriAdharBackFile.getPath());
+                        Log.v("3path", uriPanFile.getPath());
+                        Log.v("4path", uriUserFile.getPath());
+                    }
+
                     Log.d("PAth", output.getPath());
                     if (output == null) {
                         Log.d("TAG", "Error creating media file, check storage permissions: ");// e.getMessage());
@@ -446,17 +462,6 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                             FileOutputStream fos = new FileOutputStream(output);
                             converetdImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                             fos.close();
-
-
-                            if (requestCode == PICK_IMAGE_CAMERA) {
-                                uriUserFile = Uri.fromFile(output);
-                            } else if (requestCode == PICK_IMAGE_PAN) {
-                                uriPanFile = Uri.fromFile(output);
-                            } else if (requestCode == PICK_IMAGE_AADHAAR) {
-                                uriAdharFrontFile = Uri.fromFile(output);
-                            } else if (requestCode == PICK_IMAGE_AADHAAR_BACK) {
-                                uriAdharBackFile = Uri.fromFile(output);
-                            }
                         } else {
                             Log.v("TAG", "Permission is Revoked");
                             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);

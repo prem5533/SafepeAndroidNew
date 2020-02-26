@@ -100,7 +100,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
                         VerifyReffralBtn.setVisibility(View.VISIBLE);
                         verifyAlready.setVisibility(View.GONE);
                     } else {
-                        if (s.length() == 12) {
+                        if (s.length() == 10) {
                             getReferralDetails();
                         } else {
                             referralCheck = false;
@@ -129,7 +129,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
         tvForReferralBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                referralCode.setText("fd8376097766");
+                referralCode.setText("8376097766");
                 referralCode.setSelection(referralCode.getText().toString().length());
             }
         });
@@ -138,7 +138,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
     private void getReferralDetails() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-        BaseApp.getInstance().getDisposable().add(apiService.getInvestmentRefer(referralCode.getText().toString().trim())
+        BaseApp.getInstance().getDisposable().add(apiService.getInvestmentRefer("fd"+referralCode.getText().toString().trim())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<InvestmentReferResponse>() {

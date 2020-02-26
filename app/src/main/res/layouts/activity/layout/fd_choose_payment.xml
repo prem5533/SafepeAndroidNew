@@ -294,7 +294,7 @@
                             android:layout_weight="1"
                             android:textSize="14sp"
                             android:fontFamily="@font/roboto_regular"
-                            android:text="Wallet Balance"
+                            android:text="Online Payment"
                             android:buttonTint="#46c58e"/>
 
                         <RadioButton

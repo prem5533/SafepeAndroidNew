@@ -105,7 +105,7 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
                                 tv_fixed_deposit_amount.setText(response.data.fdbal_amount);
                                 tv_wallet_amount.setText(response.data.wallet_amount);
                                 tv_investment_wallet_amount.setText(""+ response.data.investment_total);
-                                tv_fixed_deposit_interest_amount.setText("Earn upto " + response.data.fb_interest + "% interest per annum on your fixed deposits");
+                                tv_fixed_deposit_interest_amount.setText("Earn upto " + response.data.fb_interest + "% interest per day on your fixed deposits");
                                 //  tv_safepe_wallet_interest_amount.setText(response.data.investment_interest);
                             } catch (Exception e) {
                                 e.printStackTrace();
