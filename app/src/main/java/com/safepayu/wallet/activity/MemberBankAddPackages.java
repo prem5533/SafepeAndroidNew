@@ -118,7 +118,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
         try {
             Activity=getIntent().getStringExtra("Activity");
             RealAmount=getIntent().getStringExtra("RealAmount");
-            ReferId=getIntent().getStringExtra(ReferId);
+            ReferId=getIntent().getStringExtra("ReferId");
         }catch (Exception e){
             e.printStackTrace();
         }

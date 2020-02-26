@@ -8,4 +8,9 @@ public class Config {
     public static final String OTP_VERIFICATION_STATUS = "otpVerificationStatus";
     public static final String OTP = "otp";
     public static final String MOBILE_NO = "mobileNo";
+
+    public static String IMAGE_PATH_AADAHAR_FRONT;
+    public static String IMAGE_PATH_AADAHAR_BACK;
+    public static String IMAGE_PATH_PAN;
+    public static String IMAGE_PATH_USER;
 }

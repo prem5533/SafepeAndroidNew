@@ -71,6 +71,7 @@ import com.safepayu.wallet.activity.recharge.LandlineBillPay;
 import com.safepayu.wallet.activity.recharge.MobileRecharge;
 import com.safepayu.wallet.activity.recharge.PostpaidBillpay;
 import com.safepayu.wallet.activity.recharge.WaterBillPay;
+import com.safepayu.wallet.activity.ui.KycUpdate2;
 import com.safepayu.wallet.adapter.OfferPagerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
