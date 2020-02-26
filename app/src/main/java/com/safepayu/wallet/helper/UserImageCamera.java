@@ -176,7 +176,7 @@ public class UserImageCamera extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void takePicture() {
         if (null == cameraDevice) {
-            Log.d(TAG, "cameraDevice is null");
+            Log.d (TAG, "cameraDevice is null");
             return;
         }
 
@@ -225,6 +225,12 @@ public class UserImageCamera extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            int rotation = getWindowManager().getDefaultDisplay().getRotation();
+            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
+            File file = new File(Environment.getExternalStorageDirectory()+ String.valueOf(System.currentTimeMillis()) + "/pic.jpg");
+//            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+//
+//            final File file = new File(dir, "Safepe_" + System.currentTimeMillis() + ".jpg");
             ImageReader.OnImageAvailableListener readerListener = null;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 readerListener = new ImageReader.OnImageAvailableListener() {
@@ -279,6 +285,9 @@ public class UserImageCamera extends AppCompatActivity {
                         intent.putExtra("usr_img", myFile.getPath());
                         setResult(Activity.RESULT_OK, intent);
                         finish();
+                        intent.putExtra("usr_img", file.getPath());
+//                        setResult(Activity.RESULT_OK, intent);
+//                        finish();
                         //createCameraPreview();
                     }
                 };
@@ -336,13 +345,13 @@ public class UserImageCamera extends AppCompatActivity {
 
     private void openCamera() {
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-        Log.d(TAG, "is camera open");
+        Log.d (TAG, "is camera open");
         try {
             cameraId = manager.getCameraIdList()[1];
-            Log.d(TAG, " ID " + cameraId);
+            Log.d (TAG," ID " + cameraId);
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
             StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-            Log.d(TAG, " StreamConfigurationMap " + map.toString());
+            Log.d (TAG," StreamConfigurationMap " + map.toString ());
             assert map != null;
             imageDimension = map.getOutputSizes(SurfaceTexture.class)[0];
             // Add permission for camera and let user grant the permission
@@ -359,12 +368,12 @@ public class UserImageCamera extends AppCompatActivity {
 
     protected void updatePreview() {
         if (null == cameraDevice) {
-            Log.d(TAG, "updatePreview error, return");
+            Log.d (TAG, "updatePreview error, return");
         }
         captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
         try {
             cameraCaptureSessions.setRepeatingRequest(captureRequestBuilder.build(), null, mBackgroundHandler);
-            Log.e(TAG, "cameraCaptureSessions" + cameraCaptureSessions.toString());
+            Log.e(TAG, "cameraCaptureSessions" + cameraCaptureSessions.toString ());
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }

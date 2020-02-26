@@ -22,9 +22,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FixedDepositActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public LinearLayout ll_back, ll_fixed_deposit, ll_paytm_wallet,ll_total_amount,ll_investment_wallet;
+    public LinearLayout ll_back, ll_fixed_deposit, ll_paytm_wallet, ll_total_amount, ll_investment_wallet, ll_profile, ll_profile_visibility;
     private LoadingDialog loadingDialog;
-    public TextView tv_total_deposit_amount, tv_fixed_deposit_amount, tv_wallet_amount, tv_fixed_deposit_interest_amount,tv_investment_wallet_amount, tv_safepe_wallet_interest_amount;
+    public TextView tv_total_deposit_amount, tv_fixed_deposit_amount, tv_wallet_amount, tv_fixed_deposit_interest_amount, tv_investment_wallet_amount, tv_safepe_wallet_interest_amount;
     public String depositAmount, fdInterest, balanceAmount;
 
     @Override
@@ -38,6 +38,8 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
         ll_paytm_wallet = findViewById(R.id.ll_paytm_wallet);
         ll_total_amount = findViewById(R.id.ll_total_amount);
         ll_investment_wallet = findViewById(R.id.ll_investment_wallet);
+        ll_profile = findViewById(R.id.ll_profile);
+        ll_profile_visibility = findViewById(R.id.ll_profile_visibility);
         ll_back = findViewById(R.id.ll_back);
         tv_total_deposit_amount = findViewById(R.id.tv_total_deposit_amount);
         tv_fixed_deposit_amount = findViewById(R.id.tv_fixed_deposit_amount);
@@ -51,6 +53,7 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
         ll_total_amount.setOnClickListener(this);
         ll_investment_wallet.setOnClickListener(this);
         ll_back.setOnClickListener(this);
+        ll_profile.setOnClickListener(this);
         safepeInvestmentAccount();
     }
 
@@ -78,6 +81,10 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
 
+            case R.id.ll_profile:
+                startActivity(new Intent(FixedDepositActivity.this, InvestmentProfileActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                break;
             case R.id.ll_back:
                 finish();
                 break;
@@ -98,14 +105,19 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
                         loadingDialog.hideDialog();
                         if (response.status) {
                             try {
+                                if (response.data.showprofile == 0) {
+                                    ll_profile_visibility.setVisibility(View.GONE);
+                                } else {
+                                    ll_profile_visibility.setVisibility(View.VISIBLE);
+                                }
                                 depositAmount = response.data.fdbal_amount;
                                 fdInterest = response.data.fb_interest;
                                 balanceAmount = response.data.balance_amount;
                                 tv_total_deposit_amount.setText(response.data.balance_amount);
                                 tv_fixed_deposit_amount.setText(response.data.fdbal_amount);
                                 tv_wallet_amount.setText(response.data.wallet_amount);
-                                tv_investment_wallet_amount.setText(""+ response.data.investment_total);
-                                tv_fixed_deposit_interest_amount.setText("Earn upto " + response.data.fb_interest + "% interest per annum on your fixed deposits");
+                                tv_investment_wallet_amount.setText("" + response.data.investment_total);
+                                tv_fixed_deposit_interest_amount.setText("Earn upto " + response.data.fb_interest + "% interest per day on your fixed deposits");
                                 //  tv_safepe_wallet_interest_amount.setText(response.data.investment_interest);
                             } catch (Exception e) {
                                 e.printStackTrace();

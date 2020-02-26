@@ -400,4 +400,7 @@ public interface ApiService {
     @POST("api/pefast.safepe.latepe/api/registerKyc")
     Single<ResponseModel> registerKyc(@Part MultipartBody.Part adharCard_img,@Part MultipartBody.Part adharCardBack_img,
                                     @Part MultipartBody.Part panCard_img,@Part MultipartBody.Part User_img);
+
+    @GET("api/pefast.safepe.latepe/api/getInvestmentProfile")
+    Single<ResponseModel> getInvestmentProfile();
 }

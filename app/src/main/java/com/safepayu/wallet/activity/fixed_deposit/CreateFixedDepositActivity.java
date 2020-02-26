@@ -32,6 +32,7 @@ import com.safepayu.wallet.models.response.InvestmentReferResponse;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -100,7 +101,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
                         VerifyReffralBtn.setVisibility(View.VISIBLE);
                         verifyAlready.setVisibility(View.GONE);
                     } else {
-                        if (s.length() == 12) {
+                        if (s.length() == 10) {
                             getReferralDetails();
                         } else {
                             referralCheck = false;
@@ -129,7 +130,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
         tvForReferralBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                referralCode.setText("fd8376097766");
+                referralCode.setText("8376097766");
                 referralCode.setSelection(referralCode.getText().toString().length());
             }
         });
@@ -138,7 +139,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
     private void getReferralDetails() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-        BaseApp.getInstance().getDisposable().add(apiService.getInvestmentRefer(referralCode.getText().toString().trim())
+        BaseApp.getInstance().getDisposable().add(apiService.getInvestmentRefer("fd" + referralCode.getText().toString().trim())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<InvestmentReferResponse>() {
@@ -186,6 +187,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
             case R.id.ll_interest_table:
 
                 loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+                dataList.clear();
                 setInterestData(ed_amount.getText().toString().trim());
                 break;
 
@@ -205,28 +207,28 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
                     Toast.makeText(this, "Please Enter Amount", Toast.LENGTH_LONG).show();
                 } else {
 
-                  if (amt == 0) {
+                    if (amt == 0) {
                         Toast.makeText(this, "Please Enter Amount", Toast.LENGTH_LONG).show();
 
-                  } else {
+                    } else {
 
-                      if (amt > 0) {
-                          if (amt>999 && amt<500000+1) {
-                              if (referralCheck) {
-                                  Intent intent = new Intent(CreateFixedDepositActivity.this, FDChoosePayment.class);
-                                  intent.putExtra("AmountDeposit", ed_amount.getText().toString().trim());
-                                  intent.putExtra("ReferId", referralCode.getText().toString().trim());
-                                  startActivity(intent);
-                              } else {
-                                  Toast.makeText(this, "Please Verify Your Referral Id", Toast.LENGTH_LONG).show();
-                              }
-                          }else {
-                              Toast.makeText(this, "Please Enter Amount Between Rs 1000 and Rs 500000", Toast.LENGTH_SHORT).show();
-                              // BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount Between Rs "+minLimit+" and Rs "+maxLimit, true);
-                          }
-                      }
+                        if (amt > 0) {
+                            if (amt > 999 && amt < 500000 + 1) {
+                                if (referralCheck) {
+                                    Intent intent = new Intent(CreateFixedDepositActivity.this, FDChoosePayment.class);
+                                    intent.putExtra("AmountDeposit", ed_amount.getText().toString().trim());
+                                    intent.putExtra("ReferId", referralCode.getText().toString().trim());
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(this, "Please Verify Your Referral Id", Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Toast.makeText(this, "Please Enter Amount Between Rs 1000 and Rs 500000", Toast.LENGTH_SHORT).show();
+                                // BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount Between Rs "+minLimit+" and Rs "+maxLimit, true);
+                            }
+                        }
 
-                  }
+                    }
                 }
                 break;
 
@@ -249,12 +251,10 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        /*if(Integer.valueOf(String.valueOf(s))<1000){
-            ed_amount.setError("Enter amount grt 1000");
-        }else {*/
-
+        if (Integer.valueOf(String.valueOf(s)) < 1000) {
+        } else {
             ll_interest_table.setVisibility(View.VISIBLE);
-       // }
+        }
     }
 
     @Override
@@ -277,6 +277,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
 
         rv_deposit_interest_table_rate = dialogView.findViewById(R.id.rv_deposit_interest_table_rate);
         rv_deposit_interest_table_rate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        Collections.sort(dataList, AllListData.sortByGrpId);
 
         mDepositInterestTable = new DepositInterestRateAdapter(this, dataList);
         rv_deposit_interest_table_rate.setAdapter(mDepositInterestTable);
@@ -284,6 +285,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
         ll_alertDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ll_interest_table.setVisibility(View.GONE);
                 alertDialog.dismiss();
             }
         });
@@ -307,11 +309,9 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
         } else {
             tv_term_cond.setText(Html.fromHtml(term_and_conditions));
         }
-        ll_alertDismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
+        ll_alertDismiss.setOnClickListener(v -> {
+            ll_interest_table.setVisibility(View.GONE);
+            alertDialog.dismiss();
         });
         alertDialog.show();
     }
@@ -319,34 +319,30 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
     private void setInterestData(String ed_amount) {
 
         // p * r * (t/365) / 100
-
         DecimalFormat df = new DecimalFormat("######.##");
+        int cnt = 0;
         for (int i = 1; i <= 400; i++) {
             switch (i) {
                 case 1:
-                case 7:
-                case 25:
-                case 50:
+                case 15:
+                case 30:
                 case 100:
-                case 125:
-                case 150:
-                case 175:
                 case 200:
-                case 225:
-                case 250:
-                case 275:
                 case 300:
-                case 325:
-                case 350:
-                case 375:
                 case 400:
-                    AllListData allListData = new AllListData();
-                    allListData.period = String.valueOf(i);
-                    allListData.r_rate = fdInterest;
-                    float amount = (Float.valueOf(ed_amount) * Float.valueOf(fdInterest) * (Float.valueOf(df.format(i)) / 365)) / 100;
-                    allListData.amount = df.format(amount);
+                    try {
+                        AllListData allListData = new AllListData();
+                        allListData.id = String.valueOf(cnt++);
+                        allListData.period = String.valueOf(i);
+                        allListData.r_rate = fdInterest;
+                        float amount = (Float.valueOf(ed_amount) * Float.valueOf(fdInterest) * i) / 100;
+                        //   float amount = (Float.valueOf(ed_amount) * Float.valueOf(fdInterest) * (Float.valueOf(df.format(i)) / 365)) / 100;
+                        allListData.amount = df.format(amount);
+                        dataList.add(allListData);
+                    } catch (Exception e) {
 
-                    dataList.add(allListData);
+                    }
+
                     break;
                 default:
             }

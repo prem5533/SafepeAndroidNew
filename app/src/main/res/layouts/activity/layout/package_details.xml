@@ -85,7 +85,7 @@
                             android:textSize="18sp"
                             android:fontFamily="@font/roboto_bold"
                             android:text="Summary"
-                            />
+                            android:gravity="center_horizontal" />
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"

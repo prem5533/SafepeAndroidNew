@@ -16,8 +16,8 @@ android {
         applicationId "com.safepayu.wallet"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 65
-        versionName "xyz"
+        versionCode 67
+        versionName "2.0.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -120,6 +120,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'com.github.Inconnu08:android-ratingreviews:1.0.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
     //scratchView
     implementation 'com.github.AnupKumarPanwar:ScratchView:1.2'
     // lib for SMS verification (Phone Auth)
