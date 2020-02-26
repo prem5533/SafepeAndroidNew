@@ -35,8 +35,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.fixed_deposit.FDdetailActivity"></activity>
+        <activity android:name=".activity.fixed_deposit.InvestmentProfileActivity"></activity>
+        <activity android:name=".activity.ui.KycUpdate2" />
         <activity android:name=".activity.fixed_deposit.CreateFixedDepositActivity" />
+        <activity android:name=".activity.fixed_deposit.FDdetailActivity"></activity>
         <activity android:name=".activity.fixed_deposit.AvailableBalanceActivity" />
         <activity android:name=".activity.fixed_deposit.FixedDepositActivity" />
         <activity

@@ -120,6 +120,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'com.github.Inconnu08:android-ratingreviews:1.0.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
     //scratchView
     implementation 'com.github.AnupKumarPanwar:ScratchView:1.2'
     // lib for SMS verification (Phone Auth)

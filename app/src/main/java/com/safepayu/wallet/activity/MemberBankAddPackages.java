@@ -485,7 +485,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                         intentStatus.putExtra("txnid","");
                         intentStatus.putExtra("Amount",Amount);
                         intentStatus.putExtra("Message",response.getMessage());
-                        intentStatus.putExtra("productinfo","Fixed Deposit");
+                        intentStatus.putExtra("productinfo","SafePe Investment");
 
                         startActivity(intentStatus);
                         finish();

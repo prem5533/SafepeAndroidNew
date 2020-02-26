@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#f4f5ff"
     android:id="@+id/mobileRechargeLayout"
@@ -105,6 +106,10 @@
                             android:hint="Enter Mobile"
                             android:inputType="number"
                             android:maxLength="10"
+                            android:importantForAutofill="no"
+                            tools:targetApi="o"
+                            android:autofillHints="AUTOFILL_HINT_SMS_OTP"
+
                             android:nextFocusForward="@+id/amount"
                             android:textColor="@color/textcolor"
                             android:textSize="15sp"

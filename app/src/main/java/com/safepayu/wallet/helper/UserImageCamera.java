@@ -1,9 +1,12 @@
 package com.safepayu.wallet.helper;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -53,7 +56,7 @@ import java.util.List;
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class UserImageCamera extends AppCompatActivity {
 
-    private static final String TAG = UserImageCamera.class.getSimpleName ();
+    private static final String TAG = UserImageCamera.class.getSimpleName();
     private Button takePictureButton;
     private TextureView textureView;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
@@ -73,7 +76,7 @@ public class UserImageCamera extends AppCompatActivity {
     protected CaptureRequest.Builder captureRequestBuilder;
     private Size imageDimension;
     private ImageReader imageReader;
-    private File file;
+    private File myFile;
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     private boolean mFlashSupported;
     private Handler mBackgroundHandler;
@@ -82,8 +85,8 @@ public class UserImageCamera extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate (savedInstanceState);
-        setContentView (R.layout.user_iamge_camera);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.user_iamge_camera);
 
         textureView = (TextureView) findViewById(R.id.texture);
         assert textureView != null;
@@ -146,7 +149,7 @@ public class UserImageCamera extends AppCompatActivity {
         @Override
         public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
             super.onCaptureCompleted(session, request, result);
-            Toast.makeText(UserImageCamera.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(UserImageCamera.this, "Saved:" + myFile, Toast.LENGTH_SHORT).show();
             createCameraPreview();
         }
     };
@@ -197,6 +200,29 @@ public class UserImageCamera extends AppCompatActivity {
             captureBuilder.addTarget(reader.getSurface());
             captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
             // Orientation
+       //     int rotation = getWindowManager().getDefaultDisplay().getRotation();
+        //    captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
+            //  final File file = new File(Environment.getExternalStorageDirectory() + "safepe" + "_" + System.currentTimeMillis());
+            File extStore = new File(Environment.getExternalStorageDirectory() + File.separator + "SafePe" + File.separator + "User");
+            if (!extStore.exists()) {
+                extStore.mkdirs();
+            }
+            String docFileName = "safepe" + "_" + System.currentTimeMillis();
+            String path = extStore.getAbsolutePath() + "/" + docFileName + ".png";
+            try {
+                myFile = new File(path);
+                myFile.createNewFile();
+                FileOutputStream out = new FileOutputStream(myFile);
+                if (myFile.exists()) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(myFile.getAbsolutePath());
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                }
+                out.flush();
+                out.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
             File file = new File(Environment.getExternalStorageDirectory()+ String.valueOf(System.currentTimeMillis()) + "/pic.jpg");
@@ -229,7 +255,7 @@ public class UserImageCamera extends AppCompatActivity {
                     private void save(byte[] bytes) throws IOException {
                         OutputStream output = null;
                         try {
-                            output = new FileOutputStream(file);
+                            output = new FileOutputStream(myFile);
                             output.write(bytes);
                         } finally {
                             if (null != output) {
@@ -249,10 +275,14 @@ public class UserImageCamera extends AppCompatActivity {
                     @Override
                     public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
                         super.onCaptureCompleted(session, request, result);
-                        Log.v (TAG, "Image Result " + session.getDevice ());
-                        Log.v("pathFile", file.getPath());
-                        Log.v("pathUri", Uri.fromFile(file).getPath());
+                        Log.v(TAG, "Image Result " + session.getDevice());
+                        Log.v("pathFile", myFile.getPath());
+                        Log.v("pathUri", Uri.fromFile(myFile).getPath());
+                        Config.IMAGE_PATH_USER = myFile.getAbsolutePath();
                         Intent intent = new Intent(UserImageCamera.this, KycUpdate.class);
+                        intent.putExtra("usr_img", myFile.getPath());
+                        setResult(Activity.RESULT_OK, intent);
+                        finish();
                         intent.putExtra("usr_img", file.getPath());
 //                        setResult(Activity.RESULT_OK, intent);
 //                        finish();

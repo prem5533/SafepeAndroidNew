@@ -88,7 +88,7 @@
                         android:layout_marginRight="20dp"
                         android:background="@drawable/blue_green_round_btn"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Create Fixed Deposit"
+                        android:text="Create Investment"
                         android:textColor="#fff"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -117,7 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="Fixed Deposit Offering"
+                    android:text="Investment Offering"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
 

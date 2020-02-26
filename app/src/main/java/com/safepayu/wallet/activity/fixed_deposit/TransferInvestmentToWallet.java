@@ -5,10 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +35,8 @@ public class TransferInvestmentToWallet extends BaseActivity implements Passcode
     Button SendToWalletBtn,BackBtn;
     private EditText AmountED;
     private int Amount = 0;
-    private TextView limitText;
+    private TextView limitText,tvWalletBal;
+    private LinearLayout relativeLayoutBal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,16 @@ public class TransferInvestmentToWallet extends BaseActivity implements Passcode
         BackBtn=findViewById(R.id.backBtn_transferCommission);
         AmountED = findViewById(R.id.withdrawAmount_commWallet);
         limitText = findViewById(R.id.limitInvestmentTransfer);
+        tvWalletBal = findViewById(R.id.wallet_amount_investment);
+        relativeLayoutBal = findViewById(R.id.linear_wallet_amount_investment);
+
+        try {
+            tvWalletBal.setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().INVESTMENT_WALLET_BALANCE));
+            relativeLayoutBal.setVisibility(View.VISIBLE);
+        }catch (Exception e){
+            relativeLayoutBal.setVisibility(View.GONE);
+            e.printStackTrace();
+        }
 
         BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,37 +65,41 @@ public class TransferInvestmentToWallet extends BaseActivity implements Passcode
             }
         });
 
-        final int minLimit= (int)Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT_MIN));
-        final int maxLimit= (int)Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT));
+        //final int minLimit= (int)Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT_MIN));
+        //final int maxLimit= (int)Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT));
 
-        limitText.setText("Please Enter Amount Between Rs "+minLimit+" and Rs "+maxLimit);
+        //limitText.setText("Please Enter Amount Between Rs "+minLimit+" and Rs "+maxLimit);
+        limitText.setVisibility(View.GONE);
 
         SendToWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    Amount = Integer.parseInt(AmountED.getText().toString().trim());
-                } catch (Exception e) {
-                    Amount = 0;
-                    e.printStackTrace();
-                }
+//                try {
+//                    Amount = Integer.parseInt(AmountED.getText().toString().trim());
+//                } catch (Exception e) {
+//                    Amount = 0;
+//                    e.printStackTrace();
+//                }
+//
+//                if (TextUtils.isEmpty(AmountED.getText().toString().trim())) {
+//                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount", false);
+//                } else {
+//                    if (Amount > 0) {
+//                        if (Amount>minLimit && Amount<maxLimit+1) {
+//                            PasscodeDialog passcodeDialog = new PasscodeDialog(TransferInvestmentToWallet.this, TransferInvestmentToWallet.this, "");
+//                            passcodeDialog.show();
+//                        }else {
+//
+//                            showMessage("Please Enter Amount Between Rs "+minLimit+" and Rs "+maxLimit);
+//                           // BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount Between Rs "+minLimit+" and Rs "+maxLimit, true);
+//                        }
+//                    } else {
+//                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount", true);
+//                    }
+//                }
 
-                if (TextUtils.isEmpty(AmountED.getText().toString().trim())) {
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount", false);
-                } else {
-                    if (Amount > 0) {
-                        if (Amount>minLimit && Amount<maxLimit+1) {
-                            PasscodeDialog passcodeDialog = new PasscodeDialog(TransferInvestmentToWallet.this, TransferInvestmentToWallet.this, "");
-                            passcodeDialog.show();
-                        }else {
-
-                            showMessage("Please Enter Amount Between Rs "+minLimit+" and Rs "+maxLimit);
-                           // BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount Between Rs "+minLimit+" and Rs "+maxLimit, true);
-                        }
-                    } else {
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentToWallet), "Please Enter Amount", true);
-                    }
-                }
+                PasscodeDialog passcodeDialog = new PasscodeDialog(TransferInvestmentToWallet.this, TransferInvestmentToWallet.this, "");
+                passcodeDialog.show();
             }
         });
 

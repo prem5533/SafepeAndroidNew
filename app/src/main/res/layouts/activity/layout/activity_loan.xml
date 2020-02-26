@@ -19,26 +19,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:layout_marginTop="20dp"
+                android:gravity="start|center">
 
                 <ImageView
                     android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_height="130dp"
                     android:src="@drawable/cheque" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp">
+                android:layout_marginTop="50dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
-                    android:gravity="center"
-                    android:text="Coming soon safePe loan !"
-                    android:textColor="@color/black"
+                    android:text="You will soon be able to request \nfor a safePe loan"
+                    android:textColor="@color/textcolor"
                     android:textSize="20dp" />
             </LinearLayout>
 
@@ -92,5 +92,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>

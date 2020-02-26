@@ -1,18 +1,14 @@
 package com.safepayu.wallet.activity.fixed_deposit;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
@@ -22,7 +18,6 @@ import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.booking.flight.FlighPdfResponse;
 import com.safepayu.wallet.utils.pdf.DownloadTask;
-import com.safepayu.wallet.utils.pdf.MarshMallowPermission;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -108,18 +103,18 @@ public class FDdetailActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.tv_download_pdf:
                 try {
-                    if (ContextCompat.checkSelfPermission(FDdetailActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        MarshMallowPermission.requestStoragePermission(FDdetailActivity.this);
-                        getFixedDepositPdf();
-
-
-                    }
-                    else {
-                        ActivityCompat.requestPermissions(FDdetailActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        }, 100);
-                        getFixedDepositPdf();
-                    }
+//                    if (ContextCompat.checkSelfPermission(FDdetailActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                            != PackageManager.PERMISSION_GRANTED) {
+//                        MarshMallowPermission.requestStoragePermission(FDdetailActivity.this);
+//                        getFixedDepositPdf();
+//
+//
+//                    } else {
+//                        ActivityCompat.requestPermissions(FDdetailActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                        }, 100);
+//                        getFixedDepositPdf();
+//                    }
+                    Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
                 }catch (Exception e){
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(),"Could't downlad the PDF",Toast.LENGTH_LONG).show();

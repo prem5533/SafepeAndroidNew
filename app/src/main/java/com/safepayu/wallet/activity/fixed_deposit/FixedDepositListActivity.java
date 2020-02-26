@@ -1,37 +1,24 @@
 package com.safepayu.wallet.activity.fixed_deposit;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.ContactUs;
-import com.safepayu.wallet.activity.booking.flight.FlightBookDetailActivity;
 import com.safepayu.wallet.adapter.MyFixedDepositAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.response.InvestmentResponse;
-import com.safepayu.wallet.models.response.booking.flight.FlighPdfResponse;
-import com.safepayu.wallet.utils.pdf.DownloadTask;
-import com.safepayu.wallet.utils.pdf.MarshMallowPermission;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -45,7 +32,7 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
     private LoadingDialog loadingDialog;
     private Button send_back_btn_fd;
     private LinearLayout fdEmpty;
-
+    private String depositAmount, fdInterest, balanceAmount;
     private InvestmentResponse investmentResponse;
     private TextView tvFDid,tvFDAmount,tvtax,tvstatus,tvPaymentMode,operationText,tv_bonus_amount,tv_balance_amount,tv_contct_support,please_invest_fd,tv_download_pdf;
 
@@ -68,6 +55,13 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
 
         please_invest_fd.setOnClickListener(this);
         send_back_btn_fd.setOnClickListener(this);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            depositAmount = intent.getStringExtra("depositAmount");
+            fdInterest = intent.getStringExtra("fdInterest");
+            balanceAmount = intent.getStringExtra("balanceAmount");
+        }
 
     }
 
@@ -220,7 +214,9 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
                 finish();
                 break;
             case R.id.please_invest_fd:
-                startActivity(new Intent(FixedDepositListActivity.this,CreateFixedDepositActivity.class));
+                startActivity(new Intent(FixedDepositListActivity.this,CreateFixedDepositActivity.class).
+                        putExtra("depositAmount", depositAmount).
+                        putExtra("fdInterest", fdInterest).putExtra("balanceAmount", balanceAmount));
                 break;
         }
     }

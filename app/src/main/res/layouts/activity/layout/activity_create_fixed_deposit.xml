@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Create Fixed Deposit"
+                android:text="Create SafePe Investment"
                 android:textColor="@color/black"
                 android:textSize="17dp" />
 
@@ -86,6 +86,7 @@
                     android:fontFamily="@font/roboto_bold"
                     android:hint="Amount"
                     android:inputType="number"
+                    android:maxLength="6"
                     android:textColor="@color/black"
                     android:textSize="28dp" />
 
@@ -102,6 +103,16 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_referral_new"/>
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text=" SI - "
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:paddingLeft="2dp"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -305,7 +316,7 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/blue_green_round_btn"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Create Fixed Deposit"
+                    android:text="Create Investment"
                     android:textColor="#fff"
                     android:textSize="15sp" />
             </LinearLayout>
