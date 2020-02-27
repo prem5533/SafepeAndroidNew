@@ -140,7 +140,8 @@
                         android:id="@+id/ll_total_amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="10dp">
 
                         <LinearLayout
                             android:layout_width="0sp"
@@ -230,7 +231,8 @@
                         android:id="@+id/ll_fixed_deposit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="10dp">
 
                         <LinearLayout
                             android:layout_width="0sp"
@@ -256,7 +258,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto_bold"
-                                android:text="Fixed Deposit"
+                                android:text="Create SafePe Investment"
                                 android:textColor="@color/black"
                                 android:textSize="13dp" />
 
@@ -309,6 +311,7 @@
                                     android:fontFamily="@font/roboto_regular"
                                     android:gravity="end"
                                     android:text="Know More"
+                                    android:visibility="gone"
                                     android:textColor="@color/light_blue_A700"
                                     android:textSize="12dp" />
                             </LinearLayout>
@@ -338,7 +341,8 @@
                         android:id="@+id/ll_paytm_wallet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="10dp">
 
                         <LinearLayout
                             android:layout_width="0sp"
@@ -394,32 +398,6 @@
 
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/tv_safepe_wallet_interest_amount"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:text="Includes food &amp; Gifts wallet balance"
-                                    android:textColor="@color/grey_700"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="23dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:gravity="end"
-                                    android:text="Know More"
-                                    android:textColor="@color/light_blue_A700"
-                                    android:textSize="12dp" />
-                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -444,7 +422,8 @@
                         android:id="@+id/ll_investment_wallet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="10dp">
 
                         <LinearLayout
                             android:layout_width="0sp"
@@ -500,32 +479,7 @@
 
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/tv__investment_safepe_wallet_interest_amount"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:text="Includes food &amp; Gifts wallet balance"
-                                    android:textColor="@color/grey_700"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="23dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:fontFamily="@font/roboto_regular"
-                                    android:gravity="end"
-                                    android:text="Know More"
-                                    android:textColor="@color/light_blue_A700"
-                                    android:textSize="12dp" />
-                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

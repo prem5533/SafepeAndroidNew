@@ -42,6 +42,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.KycUpdate;
+import com.safepayu.wallet.activity.ui.KycUpdate2;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,8 +53,6 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static com.safepayu.wallet.helper.Config.IMAGE_PATH_USER;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class UserImageCamera extends AppCompatActivity {
@@ -78,12 +77,11 @@ public class UserImageCamera extends AppCompatActivity {
     protected CaptureRequest.Builder captureRequestBuilder;
     private Size imageDimension;
     private ImageReader imageReader;
-    private File myFile;
+    private File file;
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     private boolean mFlashSupported;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
-    private CameraCaptureSession.CaptureCallback captureListener = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +123,6 @@ public class UserImageCamera extends AppCompatActivity {
         public void onSurfaceTextureUpdated(SurfaceTexture surface) {
         }
     };
-
     private final CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
         @Override
         public void onOpened(CameraDevice camera) {
@@ -146,12 +143,11 @@ public class UserImageCamera extends AppCompatActivity {
             cameraDevice = null;
         }
     };
-
     final CameraCaptureSession.CaptureCallback captureCallbackListener = new CameraCaptureSession.CaptureCallback() {
         @Override
         public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
             super.onCaptureCompleted(session, request, result);
-           // Toast.makeText(UserImageCamera.this, "Saved:" + myFile, Toast.LENGTH_SHORT).show();
+            Toast.makeText(UserImageCamera.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
             createCameraPreview();
         }
     };
@@ -173,10 +169,9 @@ public class UserImageCamera extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     protected void takePicture() {
         if (null == cameraDevice) {
-            Log.d (TAG, "cameraDevice is null");
+            Log.d(TAG, "cameraDevice is null");
             return;
         }
 
@@ -202,112 +197,67 @@ public class UserImageCamera extends AppCompatActivity {
             captureBuilder.addTarget(reader.getSurface());
             captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
             // Orientation
-       //     int rotation = getWindowManager().getDefaultDisplay().getRotation();
-        //    captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
-            //  final File file = new File(Environment.getExternalStorageDirectory() + "safepe" + "_" + System.currentTimeMillis());
-            File extStore = new File(Environment.getExternalStorageDirectory() + File.separator + "SafePe" + File.separator + "User");
-            if (!extStore.exists()) {
-                extStore.mkdirs();
-            }
-            String docFileName = "safepe" + "_" + System.currentTimeMillis();
-            String path = extStore.getAbsolutePath() + "/" + docFileName + ".png";
-            try {
-                myFile = new File(path);
-                myFile.createNewFile();
-                FileOutputStream out = new FileOutputStream(myFile);
-                if (myFile.exists()) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(myFile.getAbsolutePath());
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-                }
-                out.flush();
-                out.close();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
             captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
-            File file = new File(Environment.getExternalStorageDirectory()+ String.valueOf(System.currentTimeMillis()) + "/pic.jpg");
-//            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-//
-//            final File file = new File(dir, "Safepe_" + System.currentTimeMillis() + ".jpg");
-            ImageReader.OnImageAvailableListener readerListener = null;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                readerListener = new ImageReader.OnImageAvailableListener() {
-                    @Override
-                    public void onImageAvailable(ImageReader reader) {
-                        Image image = null;
-                        try {
-                            image = reader.acquireLatestImage();
-                            ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                            byte[] bytes = new byte[buffer.capacity()];
-                            buffer.get(bytes);
-                            save(bytes);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } finally {
-                            if (image != null) {
-                                image.close();
-                            }
+            final File file = new File(Environment.getExternalStorageDirectory() + "/pic.jpg");
+            ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
+                @Override
+                public void onImageAvailable(ImageReader reader) {
+                    Image image = null;
+                    try {
+                        image = reader.acquireLatestImage();
+                        ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+                        byte[] bytes = new byte[buffer.capacity()];
+                        buffer.get(bytes);
+                        save(bytes);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (image != null) {
+                            image.close();
                         }
                     }
+                }
 
-                    private void save(byte[] bytes) throws IOException {
-                        OutputStream output = null;
-                        try {
-                            output = new FileOutputStream(myFile);
-                            output.write(bytes);
-                        } finally {
-                            if (null != output) {
-                                output.close();
-                            }
-                        }
-
-                    }
-                };
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                reader.setOnImageAvailableListener(readerListener, mBackgroundHandler);
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                captureListener = new CameraCaptureSession.CaptureCallback() {
-                    @Override
-                    public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
-                        super.onCaptureCompleted(session, request, result);
-                        Log.v(TAG, "Image Result " + session.getDevice());
-                        Log.v("pathFile", myFile.getPath());
-                        Log.v("pathUri", Uri.fromFile(myFile).getPath());
-                        Config.IMAGE_PATH_USER = myFile.getAbsolutePath();
-                        Intent intent = new Intent(UserImageCamera.this, KycUpdate.class);
-                        intent.putExtra("usr_img", myFile.getPath());
-                        setResult(Activity.RESULT_OK, intent);
-                        finish();
-                        intent.putExtra("usr_img", file.getPath());
-//                        setResult(Activity.RESULT_OK, intent);
-//                        finish();
-                        //createCameraPreview();
-                    }
-                };
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                cameraDevice.createCaptureSession(outputSurfaces, new CameraCaptureSession.StateCallback() {
-                    @Override
-                    public void onConfigured(CameraCaptureSession session) {
-                        try {
-                            session.capture(captureBuilder.build(), captureListener, mBackgroundHandler);
-                        } catch (CameraAccessException e) {
-                            e.printStackTrace();
+                private void save(byte[] bytes) throws IOException {
+                    OutputStream output = null;
+                    try {
+                        output = new FileOutputStream(file);
+                        output.write(bytes);
+                    } finally {
+                        if (null != output) {
+                            output.close();
                         }
                     }
+                }
+            };
+            reader.setOnImageAvailableListener(readerListener, mBackgroundHandler);
+            final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
+                @Override
+                public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
+                    super.onCaptureCompleted(session, request, result);
+                    Log.d(TAG, "Image Result " + session.getDevice());
+                    Toast.makeText(UserImageCamera.this, "Stored in :" + file, Toast.LENGTH_SHORT).show();
+                    createCameraPreview();
+                }
+            };
 
-                    @Override
-                    public void onConfigureFailed(CameraCaptureSession session) {
+            cameraDevice.createCaptureSession(outputSurfaces, new CameraCaptureSession.StateCallback() {
+                @Override
+                public void onConfigured(CameraCaptureSession session) {
+                    try {
+                        session.capture(captureBuilder.build(), captureListener, mBackgroundHandler);
+                    } catch (CameraAccessException e) {
+                        e.printStackTrace();
                     }
-                }, mBackgroundHandler);
-            }
+                }
+
+                @Override
+                public void onConfigureFailed(CameraCaptureSession session) {
+                }
+            }, mBackgroundHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -345,13 +295,13 @@ public class UserImageCamera extends AppCompatActivity {
 
     private void openCamera() {
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-        Log.d (TAG, "is camera open");
+        Log.d(TAG, "is camera open");
         try {
             cameraId = manager.getCameraIdList()[1];
-            Log.d (TAG," ID " + cameraId);
+            Log.d(TAG, " ID " + cameraId);
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
             StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-            Log.d (TAG," StreamConfigurationMap " + map.toString ());
+            Log.d(TAG, " StreamConfigurationMap " + map.toString());
             assert map != null;
             imageDimension = map.getOutputSizes(SurfaceTexture.class)[0];
             // Add permission for camera and let user grant the permission
@@ -368,12 +318,12 @@ public class UserImageCamera extends AppCompatActivity {
 
     protected void updatePreview() {
         if (null == cameraDevice) {
-            Log.d (TAG, "updatePreview error, return");
+            Log.d(TAG, "updatePreview error, return");
         }
         captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
         try {
             cameraCaptureSessions.setRepeatingRequest(captureRequestBuilder.build(), null, mBackgroundHandler);
-            Log.e(TAG, "cameraCaptureSessions" + cameraCaptureSessions.toString ());
+            Log.e(TAG, "cameraCaptureSessions" + cameraCaptureSessions.toString());
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -383,7 +333,6 @@ public class UserImageCamera extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                // close the app
                 Toast.makeText(UserImageCamera.this, "Sorry!!!, you can't use this app without granting permission", Toast.LENGTH_LONG).show();
                 finish();
             }

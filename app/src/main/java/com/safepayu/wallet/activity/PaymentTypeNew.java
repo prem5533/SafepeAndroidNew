@@ -114,6 +114,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
             @Override
             public void onClick(View v) {
                 finish();
+
             }
         });
 

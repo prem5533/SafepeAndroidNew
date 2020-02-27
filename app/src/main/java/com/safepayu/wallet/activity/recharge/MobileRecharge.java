@@ -452,7 +452,7 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                             intent.putExtra("walletCashback", tvWalletCashback.getText().toString());
                             intent.putExtra("totalAmount", tvTotalAmountpay.getText().toString());
                             startActivity(intent);
-                            finish();
+                          //  finish();
                         }
                     }
                 } else {

@@ -91,7 +91,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
         ed_amount = findViewById(R.id.ed_amount);
         tv_available_balance.setText(balanceAmount);
         ll_back = findViewById(R.id.ll_back);
-        tv_interest_rate.setText("Interest @ " + fdInterest + " % for 1 Day");
+        tv_interest_rate.setText("Interest @ " + fdInterest + " %");
         tv_term_cond.setOnClickListener(this);
         btn_create_deposit.setOnClickListener(this);
         ll_interest_table.setOnClickListener(this);
@@ -173,7 +173,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
     private void getReferralDetails() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-        BaseApp.getInstance().getDisposable().add(apiService.getInvestmentRefer("fd" + referralCode.getText().toString().trim())
+        BaseApp.getInstance().getDisposable().add(apiService.getInvestmentRefer( referralCode.getText().toString().trim())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<InvestmentReferResponse>() {
@@ -193,7 +193,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
                                 referralCode.setText("");
                                 tvReferUserName.setText("");
                                 referralCode.requestFocus();
-                                Toast.makeText(CreateFixedDepositActivity.this, "Wrong Referral Code!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CreateFixedDepositActivity.this, response.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -287,9 +287,13 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (Integer.valueOf(String.valueOf(s)) < 1000) {
-        } else {
-            ll_interest_table.setVisibility(View.VISIBLE);
+        try {
+            if (Integer.valueOf(String.valueOf(s)) < 1000) {
+            } else {
+                ll_interest_table.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+
         }
     }
 

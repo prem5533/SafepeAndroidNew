@@ -403,4 +403,8 @@ public interface ApiService {
 
     @GET("api/pefast.safepe.latepe/api/getInvestmentProfile")
     Single<ResponseModel> getInvestmentProfile();
+
+    @FormUrlEncoded
+    @POST("api/pefast.safepe.latepe/api/fetchInvestmentPdf")
+    Single<FlighPdfResponse> getFixedPDF(@Field("id") String id);
 }

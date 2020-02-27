@@ -65,7 +65,7 @@ public class RechargeResponse {
         private int orderId;
         private String status;
         private String mobile;
-        private int amount;
+        private double amount;
         private String operatorId;
         private String error_code;
         private String service;
@@ -99,11 +99,11 @@ public class RechargeResponse {
             this.mobile = mobile;
         }
 
-        public int getAmount() {
+        public double getAmount() {
             return amount;
         }
 
-        public void setAmount(int amount) {
+        public void setAmount(double amount) {
             this.amount = amount;
         }
 

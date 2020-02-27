@@ -2,12 +2,8 @@ package com.safepayu.wallet.activity.fixed_deposit;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.ContactUs;
 import com.safepayu.wallet.adapter.MyFixedDepositAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -35,10 +30,11 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
     private MyFixedDepositAdapter myFixedDepositAdapter;
     private Dialog dialogFDeposit;
     private LoadingDialog loadingDialog;
-    private Button send_back_btn_fd,FD_back_btn;
+    private Button send_back_btn_fd;
     private LinearLayout fdEmpty;
-
-    private TextView tvFDid,tvFDAmount,tvtax,tvstatus,tvPaymentMode,operationText,tv_bonus_amount,tv_balance_amount,tv_contct_support,please_invest_fd;
+    private String depositAmount, fdInterest, balanceAmount;
+    private InvestmentResponse investmentResponse;
+    private TextView tvFDid,tvFDAmount,tvtax,tvstatus,tvPaymentMode,operationText,tv_bonus_amount,tv_balance_amount,tv_contct_support,please_invest_fd,tv_download_pdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +56,13 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
         please_invest_fd.setOnClickListener(this);
         send_back_btn_fd.setOnClickListener(this);
 
+        Intent intent = getIntent();
+        if (intent != null) {
+            depositAmount = intent.getStringExtra("depositAmount");
+            fdInterest = intent.getStringExtra("fdInterest");
+            balanceAmount = intent.getStringExtra("balanceAmount");
+        }
+
     }
 
 
@@ -77,7 +80,7 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
                         if (response.isStatus()){
                             loadingDialog.hideDialog();
 
-
+                            investmentResponse = response;
                             if (response.getData().getInvestment().isEmpty()){
                                 fdEmpty.setVisibility(View.VISIBLE);
                                 recyclerView.setVisibility(View.GONE);
@@ -103,10 +106,21 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
 
     @Override
     public void onFDItemSelect(int position, InvestmentResponse.DataBean.InvestmentBean investmentBean) {
-        dialogFDeposit(FixedDepositListActivity.this, position,  investmentBean);
+      //  dialogFDeposit(FixedDepositListActivity.this, position,  investmentBean);
+        Intent intent = new Intent(FixedDepositListActivity.this,FDdetailActivity.class);
+        intent.putExtra("SafepetransactionId",investmentBean.getSafepetransactionId());
+        intent.putExtra("Total_amount",String.valueOf(investmentBean.getTotal_amount()));
+        intent.putExtra("Bonus_credited",String.valueOf(investmentBean.getBonus_credited()));
+        intent.putExtra("Payment_mode",investmentBean.getPayment_mode());
+        intent.putExtra("Package_amount",String.valueOf(investmentBean.getPackage_amount()));
+        intent.putExtra("Bonus_amount",String.valueOf(investmentBean.getBonus_amount()));
+        intent.putExtra("Balance_amount",String.valueOf(investmentBean.getBalance_amount()));
+        intent.putExtra("status",String.valueOf(investmentBean.getStatus()));
+        intent.putExtra("id",String.valueOf(investmentBean.getId()));
+        startActivity(intent);
     }
 
-    private void dialogFDeposit(FixedDepositListActivity fixedDepositListActivity, int position, InvestmentResponse.DataBean.InvestmentBean investmentBean) {
+  /*  private void dialogFDeposit(FixedDepositListActivity fixedDepositListActivity, int position, InvestmentResponse.DataBean.InvestmentBean investmentBean) {
         dialogFDeposit = new Dialog(fixedDepositListActivity);
         dialogFDeposit.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogFDeposit.setContentView(R.layout.fixed_deposit_detail);
@@ -116,14 +130,15 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
          tvtax = dialogFDeposit.findViewById(R.id.tvtax);
          tvstatus = dialogFDeposit.findViewById(R.id.tvstatus);
          tvPaymentMode = dialogFDeposit.findViewById(R.id.tv_payment_mode);
-        tv_contct_support = dialogFDeposit.findViewById(R.id.tv_contct_support);
+         tv_contct_support = dialogFDeposit.findViewById(R.id.tv_contct_support);
+         tv_download_pdf = dialogFDeposit.findViewById(R.id.tv_download_pdf);
 
          operationText = dialogFDeposit.findViewById(R.id.operationText);
          tv_bonus_amount = dialogFDeposit.findViewById(R.id.tv_bonus_amount);
          tv_balance_amount = dialogFDeposit.findViewById(R.id.tv_balance_amount);
-         FD_back_btn = dialogFDeposit.findViewById(R.id.FD_back_btn);
+        // FD_back_btn = dialogFDeposit.findViewById(R.id.FD_back_btn);
 
-         FD_back_btn.setOnClickListener(new View.OnClickListener() {
+       *//*  FD_back_btn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  dialogFDeposit.dismiss();
@@ -137,8 +152,25 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
                 finish();
             }
         });
+        tv_download_pdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(FixedDepositListActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    MarshMallowPermission.requestStoragePermission(getApplicationContext());
+                    getFixedDepositPdf(investmentBean);
 
-         tvFDid.setText(investmentBean.getSafepetransactionId());
+
+                }
+                else {
+                    ActivityCompat.requestPermissions(FixedDepositListActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }, 100);
+                    getFixedDepositPdf(investmentBean);
+                }
+            }
+        });*//*
+
+    *//*     tvFDid.setText(investmentBean.getSafepetransactionId());
          tvFDAmount.setText("₹ " +investmentBean.getTotal_amount());
          tvtax.setText("Invest Credit: " +investmentBean.getBonus_credited());
          tvPaymentMode.setText("Payment Mode: " +investmentBean.getPayment_mode());
@@ -159,7 +191,7 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
             tvstatus.setTextColor(Color.parseColor("#E32636"));
         }
 
-
+*//*
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         Window window = dialogFDeposit.getWindow();
         dialogFDeposit.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -170,6 +202,9 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
         window.setAttributes(lp);
         dialogFDeposit.show();
     }
+*/
+
+
 
     @Override
     public void onClick(View v) {
@@ -179,8 +214,39 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
                 finish();
                 break;
             case R.id.please_invest_fd:
-                startActivity(new Intent(FixedDepositListActivity.this,CreateFixedDepositActivity.class));
+                startActivity(new Intent(FixedDepositListActivity.this,CreateFixedDepositActivity.class).
+                        putExtra("depositAmount", depositAmount).
+                        putExtra("fdInterest", fdInterest).putExtra("balanceAmount", balanceAmount));
                 break;
         }
     }
+
+  /*  private void getFixedDepositPdf(InvestmentResponse.DataBean.InvestmentBean investmentBean) {
+
+        String id = String.valueOf(investmentBean.getId());
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(FixedDepositListActivity.this).create(ApiService.class);
+        BaseApp.getInstance().getDisposable().add(apiService.getFixedPDF(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<FlighPdfResponse>(){
+                    @Override
+                    public void onSuccess(FlighPdfResponse response) {
+                        loadingDialog.hideDialog();
+                        if (response.isStatus()) {
+
+                            new DownloadTask(FixedDepositListActivity.this, response.getData());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.flight_book_detail), false, e.getCause());
+                    }
+                }));
+    }*/
+
 }

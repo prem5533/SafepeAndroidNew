@@ -1,6 +1,8 @@
 package com.safepayu.wallet.activity.recharge;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -32,8 +34,10 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.helper.RecyclerLayoutManager;
+import com.safepayu.wallet.models.request.RechargeRequest;
 import com.safepayu.wallet.models.response.CustOperatorResponse;
 import com.safepayu.wallet.models.response.OperatorResponse;
+import com.safepayu.wallet.models.response.RechargeResponse;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -47,13 +51,13 @@ import static com.safepayu.wallet.activity.LoginActivity.finalAmount;
 
 public class ElectricityPay extends BaseActivity implements ServiceHistoryAdapter.OnSelectListener {
 
-    Button ElectrictyPaybtn,BackBtn;
+    private Button ElectrictyPaybtn,BackBtn;
     private Spinner OperatorSpinner;
     private EditText AmountED,ElectricityIdED;
-    String OperatorText="",OperatorCode="",OperatorId="",GovCharge="";
+    private String OperatorText="",OperatorCode="",OperatorId="",GovCharge="";
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList,IdList,OperatorCodeList;
-    private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay,tvGovCharge;
+    private TextView AmountTotalTV,tvRechargeamount,tvWalletCashback,tvTotalAmountpay,tvGovCharge,FetchBillBtn;
     private TextView tvRechargeAmtTax,tvServiceChargeTax,tvAmt2PayTax,tvPreviousOrderText,tvViewAllBtn,tvViewLessBtn;
     private ServiceHistoryAdapter historyAdapter;
     private RelativeLayout ServiceChargeLayout;
@@ -91,6 +95,7 @@ public class ElectricityPay extends BaseActivity implements ServiceHistoryAdapte
         tvPreviousOrderText=findViewById(R.id.orderPreviousText);
         tvViewAllBtn=findViewById(R.id.orderViewAllText);
         tvViewLessBtn=findViewById(R.id.orderViewLessText);
+        FetchBillBtn=findViewById(R.id.fetchBillbtn);
         RechargeHistoryListView = findViewById(R.id.listElectricity_rechargeHistory);
 
         RecyclerLayoutManager layoutManager = new RecyclerLayoutManager(1, RecyclerLayoutManager.VERTICAL);
@@ -115,6 +120,7 @@ public class ElectricityPay extends BaseActivity implements ServiceHistoryAdapte
                 finish();
             }
         });
+
         layoutSelectElectricityOper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -275,6 +281,42 @@ public class ElectricityPay extends BaseActivity implements ServiceHistoryAdapte
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),"Check Your Internet Connection",false);
         }
 
+        FetchBillBtn.setOnClickListener(view -> {
+            String ElectricityBillID="";
+            try{
+                ElectricityBillID= ElectricityIdED.getText().toString().trim();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            if (TextUtils.isEmpty(ElectricityIdED.getText().toString().trim())){
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),"Please Enter Electricity Customer Id",false);
+            }else {
+                if (TextUtils.isEmpty(OperatorCode) || OperatorCode.equals("0")){
+
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),"Please Select Operator",false);
+                }else {
+
+                    RechargeRequest rechargeRequest=new RechargeRequest();
+                    rechargeRequest.setAmount(String.valueOf(10));
+                    rechargeRequest.setCircle_code("51");
+                    rechargeRequest.setNumber(ElectricityBillID);
+                    rechargeRequest.setOperator_code(OperatorCode);
+                    rechargeRequest.setRecharge_type("3");
+                    rechargeRequest.setOperator_id("3");
+                    rechargeRequest.setTransaction_id("");
+                    rechargeRequest.setNumber_type("");
+                    rechargeRequest.setDescription("Bill Payment Electricity");
+                    rechargeRequest.setStdCode("");
+                    rechargeRequest.setOpvalue2("");
+                    rechargeRequest.setPayment_mode("wallet");
+                    rechargeRequest.setWallet_amount("");
+                    rechargeRequest.setBank_amount("");
+
+                    doRecharge(rechargeRequest);
+                }
+            }
+        });
     }
 
     private boolean isNetworkAvailable() {
@@ -310,11 +352,11 @@ public class ElectricityPay extends BaseActivity implements ServiceHistoryAdapte
     }
 
     private void CheckValidate(){
-        int Amount=0;
+        double Amount=0;
         String ElectricityBillID="";
         try{
             ElectricityBillID= ElectricityIdED.getText().toString().trim();
-            Amount= Integer.parseInt(AmountED.getText().toString().trim());
+            Amount= Double.parseDouble(AmountED.getText().toString().trim());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -326,7 +368,7 @@ public class ElectricityPay extends BaseActivity implements ServiceHistoryAdapte
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),"Please Enter Amount",false);
             }else {
                 if (Amount==0 || Amount<0){
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),"Please Enter Amount",false);
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),"No Bill Found",false);
                 }else {
 
                     if (TextUtils.isEmpty(OperatorCode) || OperatorCode.equals("0")){
@@ -456,7 +498,7 @@ public class ElectricityPay extends BaseActivity implements ServiceHistoryAdapte
                     @Override
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
-                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.mobileRechargeLayout), true, e);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.electricityBillLayout), true, e);
                     }
                 }));
 
@@ -482,6 +524,78 @@ public class ElectricityPay extends BaseActivity implements ServiceHistoryAdapte
         checkAmount = (int) minusAmount;
 
         return totalAmount;
+    }
+
+    private void doRecharge(final RechargeRequest rechargeRequest){
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.doRecharge(rechargeRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<RechargeResponse>() {
+                    @Override
+                    public void onSuccess(RechargeResponse response) {
+                        loadingDialog.hideDialog();
+
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.electricityBillLayout),response.getMessage(),true);
+                        showMessage(response.getMessage());
+
+//                        if (response.getMessage().equalsIgnoreCase("No bill found")){
+//                            showMessage("Bill Amount - "+getResources().getString(R.string.rupees)+" 22.55");
+//                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.electricityBillLayout), true, e);
+                    }
+                }));
+
+    }
+
+    public void showMessage(String Message1) {
+        new AlertDialog.Builder(ElectricityPay.this)
+                .setTitle("SafePe - KYC Update")
+                .setMessage(Message1)
+                .setCancelable(false)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                //.setPositiveButton(android.R.string.yes, null)
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+//                        if (Message1.equalsIgnoreCase("No bill found")){
+//                            edBillAmount.setText("0");
+//                        }else {
+//                            try {
+//                                String Amt="";
+//                                for (int i=0;i<Message1.length();i++){
+//                                    char c= Message1.charAt(i);
+//                                    if (c=='1' || c=='2' || c=='3' || c=='4' || c=='5' || c=='6' || c=='7' || c=='8' || c=='9' ||
+//                                            c=='0' || c=='.'){
+//                                        Amt=Amt+c;
+//                                    }
+//                                }
+//                                edBillAmount.setText(Amt);
+//                            }catch (Exception e){
+//                                edBillAmount.setText("0");
+//                                e.printStackTrace();
+//                            }
+//                        }
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(getResources().getDrawable(R.drawable.appicon_new))
+                .show();
     }
 }
 

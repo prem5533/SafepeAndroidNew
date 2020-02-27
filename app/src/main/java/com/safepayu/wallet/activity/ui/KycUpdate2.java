@@ -1,10 +1,5 @@
 package com.safepayu.wallet.activity.ui;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,11 +10,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,17 +20,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.KycUpdate;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
-import com.safepayu.wallet.dialogs.DatePickerHidePreviousDate;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.helper.Config;
 import com.safepayu.wallet.helper.UserImageCamera;
-import com.safepayu.wallet.models.request.KycRequest;
 import com.safepayu.wallet.models.response.BaseResponse;
+import com.safepayu.wallet.models.response.ResponseModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -45,7 +41,13 @@ import java.io.FileOutputStream;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
+import static com.safepayu.wallet.helper.Config.IMAGE_PATH_AADAHAR_BACK;
+import static com.safepayu.wallet.helper.Config.IMAGE_PATH_AADAHAR_FRONT;
+import static com.safepayu.wallet.helper.Config.IMAGE_PATH_PAN;
 import static com.safepayu.wallet.helper.Config.IMAGE_PATH_USER;
 
 public class KycUpdate2 extends AppCompatActivity implements View.OnClickListener {
@@ -58,14 +60,14 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
     private static final int AADHAR_BACK = 1;
     private static final int PAN = 2;
     private static final int USER_IMAGE = 3;
-    private static final int USER_IMAGE_2API = 4;
+    private boolean A_FRONT = false, A_BACK = false, Pan = false, User = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kyc_update2);
 
-        loadingDialog = new LoadingDialog(this);
+        loadingDialog = new LoadingDialog(KycUpdate2.this);
 
         BackBtn = findViewById(R.id.backBtn_kycLayout);
         RegisterBtn = findViewById(R.id.register_kycLayout);
@@ -106,7 +108,21 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
                 break;
 
             case R.id.register_kycLayout:
-                //  uploadImageToServer();
+                if (!A_FRONT) {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),
+                            " Please Click Your Aadhar Front Image", false);
+                } else if (!A_BACK) {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),
+                            " Please Click Aadhaar Back Image", false);
+                } else if (!Pan) {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),
+                            " Please Click  Your PAN Image", false);
+                } else if (!User) {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.kycLayout),
+                            " Please Click  Your Image", false);
+                } else {
+                    uploadImageToServer();
+                }
                 break;
 
             case R.id.imageLayoutAdhar:
@@ -163,9 +179,7 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
             PackageManager pm = KycUpdate2.this.getPackageManager();
             int hasPerm = pm.checkPermission(Manifest.permission.CAMERA, KycUpdate2.this.getPackageName());
             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
-
                 try {
-
                     Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
                     if (imageType == AADHAR_FRONT) {
@@ -175,7 +189,7 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
                     } else if (imageType == PAN) {
                         startActivityForResult(intent, PAN);
                     } else if (imageType == USER_IMAGE) {
-                        if (Build.VERSION.SDK_INT > 21) {
+                        if (Build.VERSION.SDK_INT >= 21) {
                             Intent intent2 = new Intent(KycUpdate2.this, UserImageCamera.class);
                             startActivityForResult(intent2, USER_IMAGE);
                         } else {
@@ -200,8 +214,11 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
 
         if (data != null) {
-            Bitmap bitmap;
-            bitmap = (Bitmap) data.getExtras().get("data");
+            Bitmap bitmap = null;
+            if (requestCode == USER_IMAGE) {
+            } else {
+                bitmap = (Bitmap) data.getExtras().get("data");
+            }
             File extStore = new File(Environment.getExternalStorageDirectory() + File.separator + "SafePe" + File.separator + "Image");
             if (!extStore.exists()) {
                 extStore.mkdirs();
@@ -223,26 +240,27 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
             }
             if (requestCode == AADHAR_FRONT) {
                 ivAadhaar.setImageBitmap(bitmap);
-                Config.IMAGE_PATH_AADAHAR_FRONT = path;
-
+                IMAGE_PATH_AADAHAR_FRONT = path;
+                A_FRONT = true;
             } else if (requestCode == AADHAR_BACK) {
                 ivAadhaarBack.setImageBitmap(bitmap);
                 Config.IMAGE_PATH_AADAHAR_BACK = path;
-
+                A_BACK = true;
             } else if (requestCode == PAN) {
                 ivPAN.setImageBitmap(bitmap);
                 Config.IMAGE_PATH_PAN = path;
-
+                Pan = true;
             } else if (requestCode == USER_IMAGE) {
-                //      Config.IMAGE_PATH_USER = path;
+                //Config.IMAGE_PATH_USER = path;
                 File imgFile = new File(IMAGE_PATH_USER);
                 if (imgFile.exists()) {
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    ivSelf.setRotation(270);
                     ivSelf.setImageBitmap(myBitmap);
+                    User = true;
                 }
             }
-        }else {
-
+        } else {
         }
     }
 
@@ -265,7 +283,7 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
                     @Override
                     public void onSuccess(BaseResponse response) {
                         loadingDialog.hideDialog();
-                        // showMessage(response.getMessage(), response.getStatus());
+                        showMessage(response.getMessage(), response.getStatus());
                     }
 
                     @Override
@@ -282,15 +300,7 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
                 .setMessage(Message)
                 .setCancelable(false)
 
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                //.setPositiveButton(android.R.string.yes, null)
-
-                // A null listener allows the button to dismiss the dialog and take no further action.
-                //.setNegativeButton(android.R.string.no, null)
                 .setPositiveButton("OK", (dialog, which) -> {
-                    // Continue with delete operation
-
                     if (check) {
                         dialog.dismiss();
                         finish();
@@ -300,5 +310,52 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
                 })
                 .setIcon(getResources().getDrawable(R.drawable.appicon_new))
                 .show();
+    }
+
+    public void uploadImageToServer() {
+
+        File file1 = new File(IMAGE_PATH_AADAHAR_FRONT);
+        File file2 = new File(IMAGE_PATH_AADAHAR_BACK);
+        File file3 = new File(IMAGE_PATH_PAN);
+        File file4 = new File(IMAGE_PATH_USER);
+
+        Log.v("1path", file1.getPath());
+        Log.v("2path", file2.getPath());
+        Log.v("3path", file3.getPath());
+        Log.v("4path", file4.getPath());
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+
+        RequestBody requestBodyId = RequestBody.create(MediaType.parse("multipart/form-data"), file1);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("adharCard_img", file1.getName(), requestBodyId);
+
+        RequestBody requestBodyId2 = RequestBody.create(MediaType.parse("multipart/form-data"), file2);
+        MultipartBody.Part body2 = MultipartBody.Part.createFormData("adharCardBack_img", file2.getName(), requestBodyId2);
+
+        RequestBody requestBodyId3 = RequestBody.create(MediaType.parse("multipart/form-data"), file3);
+        MultipartBody.Part body3 = MultipartBody.Part.createFormData("panCard_img", file3.getName(), requestBodyId3);
+
+        RequestBody requestBodyId4 = RequestBody.create(MediaType.parse("multipart/form-data"), file4);
+        MultipartBody.Part body4 = MultipartBody.Part.createFormData("User_img", file4.getName(), requestBodyId4);
+
+        BaseApp.getInstance().getDisposable().add(apiService.registerKyc(body, body2, body3, body4)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ResponseModel>() {
+                    @Override
+                    public void onSuccess(ResponseModel response) {
+                        loadingDialog.hideDialog();
+                        showMessage(response.message, response.status);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        Log.v("error", e.getMessage());
+                        BaseApp.getInstance().toastHelper().showApiExpectation(KycUpdate2.this.findViewById(R.id.kycLayout), false, e.getCause());
+                    }
+                }));
     }
 }

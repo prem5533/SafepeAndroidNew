@@ -1,13 +1,10 @@
 package com.safepayu.wallet.activity.fixed_deposit;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -114,6 +111,7 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
             }else {
                 getInvestment();
                 try {
+                    /*
                     if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
                         liSendTowallet.setVisibility(View.GONE);
                         WarningTextTv.setVisibility(View.VISIBLE);
@@ -136,8 +134,9 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
                         // show it
                         alertDialog.show();
                     }else {
-                        liSendTowallet.setVisibility(View.VISIBLE);
-                    }
+
+                    } */
+                    liSendTowallet.setVisibility(View.VISIBLE);
                 }catch (Exception e){
                     e.printStackTrace();
                     liSendTowallet.setVisibility(View.VISIBLE);

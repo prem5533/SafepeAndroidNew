@@ -42,6 +42,8 @@ public class SharedPref {
     public final String MIN_WITHDRAW_CHARGE = "minWithdrawCharge";
     public final String PACKAGE_MENU = "package_menu";
     public final String PAYMENT_SCREEN = "payment_screen";
+    public final String BADGE_COUNT= "badge_count";
+    public final String INVESTMENT_WALLET_BALANCE = "investment_wallet_bal";
 
     //***********FLIGHT*******************
     public final String FLIGHT_DATE = "flight_date";

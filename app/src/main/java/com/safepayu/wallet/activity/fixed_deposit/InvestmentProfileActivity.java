@@ -1,12 +1,11 @@
 package com.safepayu.wallet.activity.fixed_deposit;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.safepayu.wallet.BaseApp;
@@ -77,6 +76,7 @@ public class InvestmentProfileActivity extends AppCompatActivity implements View
                                     Glide.with(InvestmentProfileActivity.this)
                                             .load(BASE_URL + response.data.image.trim())
                                             .into(img_user);
+                                    img_user.setRotation(270);
                                 }
                                 tv_fd_refer_id.setText(response.data.fdReferId);
                                 tv_amount.setText(response.data.amount);

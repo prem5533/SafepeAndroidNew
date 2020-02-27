@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="Create Fixed Deposit"
+                    android:text="Create SafePe Investment"
                     android:textColor="@color/black"
                     android:textSize="17dp" />
 
@@ -107,6 +107,16 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/ic_referral_new" />
+
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:paddingLeft="2dp"
+                        android:text=" SI - "
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -237,7 +247,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_regular"
-                            android:text="Interest @ 6.65 for 13 months"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
@@ -311,13 +321,14 @@
                         android:layout_marginRight="20dp"
                         android:background="@drawable/blue_green_round_btn"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Create Fixed Deposit"
+                        android:text="Create Investment"
                         android:textColor="#fff"
                         android:textSize="15sp" />
                 </LinearLayout>
 
             </LinearLayout>
         </ScrollView>
+
     </LinearLayout>
 
     <include layout="@layout/layout_deposit_interest_table_dialog" />

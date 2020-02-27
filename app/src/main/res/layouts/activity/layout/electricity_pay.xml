@@ -162,20 +162,23 @@
                                 android:layout_width="match_parent"
                                 android:layout_height=".5dp"
                                 android:background="@color/graynew"/>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 android:gravity="start|center"
-                                android:padding="10dp">
+                                android:padding="10dp"
+                                android:layout_marginLeft="5dp"
+                                android:visibility="visible">
 
                                 <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
                                     android:src="@drawable/ic_new_rupee" />
                                 <EditText
                                     android:id="@+id/amount"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/textView2"
                                     android:inputType="numberDecimal"
@@ -184,10 +187,26 @@
                                     android:background="@null"
                                     android:nextFocusForward="@+id/amount"
                                     android:padding="10dp"
+                                    android:layout_weight="1"
                                     android:textColor="@color/textcolor"
                                     android:fontFamily="@font/roboto_medium"
                                     android:textSize="15sp"
                                     android:maxLength="5"/>
+                                <TextView
+                                    android:id="@+id/fetchBillbtn"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="40dp"
+                                    android:background="@color/yellow_theme"
+                                    android:gravity="center"
+                                    android:onClick="OffersClick"
+                                    android:padding="7dp"
+                                    android:text="Get Bill"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:fontFamily="@font/roboto_regular"/>
+
 
                             </LinearLayout>
                         </LinearLayout>

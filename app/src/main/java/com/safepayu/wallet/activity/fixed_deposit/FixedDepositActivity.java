@@ -45,7 +45,7 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
         tv_fixed_deposit_amount = findViewById(R.id.tv_fixed_deposit_amount);
         tv_wallet_amount = findViewById(R.id.tv_wallet_amount);
         tv_fixed_deposit_interest_amount = findViewById(R.id.tv_fixed_deposit_interest_amount);
-        tv_safepe_wallet_interest_amount = findViewById(R.id.tv_safepe_wallet_interest_amount);
+
         tv_investment_wallet_amount = findViewById(R.id.tv_investment_wallet_amount);
 
         ll_fixed_deposit.setOnClickListener(this);
@@ -73,7 +73,9 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.ll_total_amount:
-                startActivity(new Intent(FixedDepositActivity.this, FixedDepositListActivity.class));
+                startActivity(new Intent(FixedDepositActivity.this, FixedDepositListActivity.class).
+                        putExtra("depositAmount", depositAmount).
+                        putExtra("fdInterest", fdInterest).putExtra("balanceAmount", balanceAmount));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.ll_investment_wallet:
@@ -117,8 +119,9 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
                                 tv_fixed_deposit_amount.setText(response.data.fdbal_amount);
                                 tv_wallet_amount.setText(response.data.wallet_amount);
                                 tv_investment_wallet_amount.setText("" + response.data.investment_total);
-                                tv_fixed_deposit_interest_amount.setText("Earn upto " + response.data.fb_interest + "% interest per day on your fixed deposits");
+                                tv_fixed_deposit_interest_amount.setText("Earn upto " + response.data.fb_interest + "% interest per day on your SafePe Investment");
                                 //  tv_safepe_wallet_interest_amount.setText(response.data.investment_interest);
+                                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().INVESTMENT_WALLET_BALANCE, String.valueOf(response.data.investment_total));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

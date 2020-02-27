@@ -367,7 +367,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                                             fdPayRequest.setPaid_to_account(BankNameText);
                                             fdPayRequest.setPaid_from_account(UPI);
                                             fdPayRequest.setPackage_amount(Amount);
-                                            fdPayRequest.setRefer("fd8376097766");
+                                            fdPayRequest.setRefer(ReferId);
                                             fdPayRequest.setAmount(RealAmount);
                                             if (CheckNetConnection){
                                                 PayFixedDeposit(fdPayRequest);
@@ -467,6 +467,16 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                         Intent intentStatus=new Intent(MemberBankAddPackages.this,PaidOrderActivity.class);
                         if (response.isStatus()) {
                             intentStatus.putExtra("status","success");
+                            try {
+                                intentStatus.putExtra("toAccount",response.getData().getPaid_to_account());
+                                intentStatus.putExtra("fromAccount",response.getData().getPaid_from_account());
+                                intentStatus.putExtra("RefNo",response.getData().getRefrence_no());
+                                intentStatus.putExtra("date",response.getData().getCreated_at());
+                                intentStatus.putExtra("PayMode",response.getData().getPayment_mode());
+                                intentStatus.putExtra("Note",response.getData().getFootnote());
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }else {
                             intentStatus.putExtra("status","failed");
                             Toast.makeText(MemberBankAddPackages.this, response.getMessage(), Toast.LENGTH_LONG).show();
@@ -475,14 +485,8 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                         intentStatus.putExtra("txnid","");
                         intentStatus.putExtra("Amount",Amount);
                         intentStatus.putExtra("Message",response.getMessage());
-                        intentStatus.putExtra("productinfo","Fixed Deposit");
+                        intentStatus.putExtra("productinfo","SafePe Investment");
 
-                        intentStatus.putExtra("toAccount",response.getData().getPaid_to_account());
-                        intentStatus.putExtra("fromAccount",response.getData().getPaid_from_account());
-                        intentStatus.putExtra("RefNo",response.getData().getRefrence_no());
-                        intentStatus.putExtra("date",response.getData().getCreated_at());
-                        intentStatus.putExtra("PayMode",response.getData().getPayment_mode());
-                        intentStatus.putExtra("Note",response.getData().getFootnote());
                         startActivity(intentStatus);
                         finish();
                     }
@@ -491,6 +495,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                     public void onError(Throwable e) {
                         Log.v("error", "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        Toast.makeText(MemberBankAddPackages.this, "Please Try After Some Time!", Toast.LENGTH_SHORT).show();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.memberBankAddPackages), true, e);
                     }
                 }));

@@ -748,6 +748,8 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
+                        Log.v("error",e.getMessage());
+
                         BaseApp.getInstance().toastHelper().showApiExpectation(KycUpdate.this.findViewById(R.id.kycLayout), false, e.getCause());
                     }
                 }));
