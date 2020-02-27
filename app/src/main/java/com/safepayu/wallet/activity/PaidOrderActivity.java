@@ -134,7 +134,7 @@ public class PaidOrderActivity extends AppCompatActivity {
         }
 
         try{
-            if (productinfo.contains("Package") || productinfo.contains("package") || productinfo.contains("Fixed")){
+            if (productinfo.contains("Package") || productinfo.contains("package") || productinfo.contains("Investment")){
                 if (status.equalsIgnoreCase("success")){
 
                 }
