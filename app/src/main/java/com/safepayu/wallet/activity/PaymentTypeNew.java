@@ -54,9 +54,9 @@ import io.reactivex.schedulers.Schedulers;
 import static android.view.View.GONE;
 import static com.safepayu.wallet.activity.BuyMemberShip.buyPackageFromDB;
 import static com.safepayu.wallet.activity.LoginActivity.finalAmount;
-import static com.safepayu.wallet.activity.fixed_deposit.FDChoosePayment.fdPayRequest;
 import static com.safepayu.wallet.activity.recharge.LandlineBillPay.OptionValue2;
 import static com.safepayu.wallet.activity.recharge.LandlineBillPay.StdCode;
+import static com.safepayu.wallet.activity.safepe_investment.InvestmentChoosePayment.fdPayRequest;
 
 public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickListener {
 

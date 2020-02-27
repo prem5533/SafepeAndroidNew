@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.fixed_deposit.FixedDepositActivity">
+    tools:context=".activity.safepe_investment.InvestmentDepositActivity">
 
     <include layout="@layout/common_toolbar" />
 

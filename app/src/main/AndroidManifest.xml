@@ -35,12 +35,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.fixed_deposit.InvestmentProfileActivity"></activity>
+        <activity android:name=".activity.safepe_investment.InvestmentProfileActivity"></activity>
         <activity android:name=".activity.ui.KycUpdate2" />
-        <activity android:name=".activity.fixed_deposit.CreateFixedDepositActivity" />
-        <activity android:name=".activity.fixed_deposit.FDdetailActivity"></activity>
-        <activity android:name=".activity.fixed_deposit.AvailableBalanceActivity" />
-        <activity android:name=".activity.fixed_deposit.FixedDepositActivity" />
+        <activity android:name=".activity.safepe_investment.CreateInvestmentDepositActivity" />
+        <activity android:name=".activity.safepe_investment.InvestmentDetailActivity"></activity>
+        <activity android:name=".activity.safepe_investment.AvailableBalanceActivity" />
+        <activity android:name=".activity.safepe_investment.InvestmentDepositActivity" />
         <activity
             android:name=".activity.FingerprintActivity"
             android:screenOrientation="portrait" />
@@ -369,16 +369,16 @@
             android:name=".ecommerce.activity.SearchEcommerce"
             android:screenOrientation="portrait" /> <!-- Fixed Deposit -->
         <activity
-            android:name=".activity.fixed_deposit.FDChoosePayment"
+            android:name=".activity.safepe_investment.InvestmentChoosePayment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.fixed_deposit.FixedDepositListActivity"
+            android:name=".activity.safepe_investment.InvestmentDepositListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.fixed_deposit.InvestmentWallet"
+            android:name=".activity.safepe_investment.InvestmentWallet"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.fixed_deposit.TransferInvestmentToWallet"
+            android:name=".activity.safepe_investment.TransferInvestmentToWallet"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.loan.LoanActivity"
