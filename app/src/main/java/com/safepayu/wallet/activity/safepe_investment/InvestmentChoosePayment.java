@@ -103,8 +103,8 @@ public class InvestmentChoosePayment extends AppCompatActivity implements RadioG
                         overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                         intent.putExtra("RechargePaymentId",BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
                         intent.putExtra("Amount",String.valueOf(totalPayableAmount));
-                        intent.putExtra("PaymentType","Investment");
-                        intent.putExtra("PaymentFor","SafePe");
+                        intent.putExtra("PaymentType","SafePe");
+                        intent.putExtra("PaymentFor","Investment");
                         intent.putExtra("RechargeTypeId","0");
                         intent.putExtra("OperatorCode","");
                         intent.putExtra("CircleCode","0");

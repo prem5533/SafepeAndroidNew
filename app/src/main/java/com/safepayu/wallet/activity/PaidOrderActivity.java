@@ -136,17 +136,22 @@ public class PaidOrderActivity extends AppCompatActivity {
         try{
             if (productinfo.contains("Package") || productinfo.contains("package") || productinfo.contains("Investment")){
                 if (status.equalsIgnoreCase("success")){
-
+                    tvRefNo.setText(RefNo);
+                    tvPaidTo.setText(toAccount);
+                    tvPaidFrom.setText(fromAccount);
+                    tvPayMode.setText(PayMode);
+                    tvFootNote.setText("\n"+Note+"\n");
+                    linearLayoutPackage.setVisibility(View.VISIBLE);
+                    tvSafepeUtrId.setVisibility(View.GONE);
+                    TxnIdTV.setVisibility(View.GONE);
+                    ServiceInfoTV.setVisibility(View.GONE);
+                }else {
+                    linearLayoutPackage.setVisibility(View.GONE);
+                    tvSafepeUtrId.setVisibility(View.VISIBLE);
+                    TxnIdTV.setVisibility(View.VISIBLE);
+                    ServiceInfoTV.setVisibility(View.VISIBLE);
                 }
-                tvRefNo.setText(RefNo);
-                tvPaidTo.setText(toAccount);
-                tvPaidFrom.setText(fromAccount);
-                tvPayMode.setText(PayMode);
-                tvFootNote.setText("\n"+Note+"\n");
-                linearLayoutPackage.setVisibility(View.VISIBLE);
-                tvSafepeUtrId.setVisibility(View.GONE);
-                TxnIdTV.setVisibility(View.GONE);
-                ServiceInfoTV.setVisibility(View.GONE);
+
             }else {
                 linearLayoutPackage.setVisibility(View.GONE);
                 tvSafepeUtrId.setVisibility(View.VISIBLE);

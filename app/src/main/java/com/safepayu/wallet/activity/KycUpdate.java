@@ -82,6 +82,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
     private static final int PICK_IMAGE_AADHAAR = 2;
     private static final int PICK_IMAGE_AADHAAR_BACK = 3;
     private static final int PICK_IMAGE_CAMERA_2 = 4;
+    private static final int CHECK_CAMERA = 5;
     private Bitmap bitmap;
     private Uri uriAdharFrontFile,uriAdharBackFile,uriPanFile,uriUserFile,uriAll;
     private long totalSize = 0;
@@ -89,6 +90,9 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
     private File destination = null;
     public static final int MEDIA_TYPE_IMAGE = 1;
     private String textBase64Self = "", textBase64Pan = "", textBase64Aadhaar = "", textBase64AadhaarBack = "", StateName = "", StateId = "", StateCode = "";
+    private boolean checkFirst=false;
+    private String HindiCheck="SapfePe पहले कैमरा और पिक्चर क्वालिटी चेक करेगा।\n" + "कृपया जाँचने के लिए पहले एक चित्र लें।";
+    private String HindiDone="चेक किया गया है।\n" + "कैमरा क्वालिटी अच्छी है।\n" + "अब आप KYC के लिए अपनी प्रक्रिया शुरू कर सकते हैं।";
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -236,7 +240,12 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
             case R.id.imageLayoutPan:
                 if (ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    selectImage(PICK_IMAGE_PAN);
+
+                    if (checkFirst){
+                        selectImage(PICK_IMAGE_PAN);
+                    }else {
+                        checkCamera();
+                    }
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -247,7 +256,12 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
             case R.id.imageLayoutAdhar:
                 if (ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    selectImage(PICK_IMAGE_AADHAAR);
+
+                    if (checkFirst){
+                        selectImage(PICK_IMAGE_AADHAAR);
+                    }else {
+                        checkCamera();
+                    }
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -258,7 +272,12 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
             case R.id.imageLayoutAdharBack:
                 if (ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    selectImage(PICK_IMAGE_AADHAAR_BACK);
+
+                    if (checkFirst){
+                        selectImage(PICK_IMAGE_AADHAAR_BACK);
+                    }else {
+                        checkCamera();
+                    }
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -269,7 +288,12 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
             case R.id.imageLayoutSelf:
                 if (ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    selectImage(PICK_IMAGE_CAMERA);
+
+                    if (checkFirst){
+                        selectImage(PICK_IMAGE_CAMERA);
+                    }else {
+                        checkCamera();
+                    }
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -488,6 +512,9 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                 } else if (requestCode == PICK_IMAGE_AADHAAR_BACK) {
                     ivAadhaarBack.setImageBitmap(converetdImage);
                     textBase64AadhaarBack = "done";
+                }else if (requestCode == CHECK_CAMERA){
+                    checkFirst=true;
+                    showCheckDone("Checking Done.\nCamera Quality Is Good.\nNow You Can Start Your Process For KYC.\n\n\n"+HindiDone);
                 }
 
             } catch (Exception e) {
@@ -699,7 +726,62 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                             finish();
                         } else {
                             dialog.dismiss();
+                            checkCamera();
                         }
+                    }
+                })
+                .setIcon(getResources().getDrawable(R.drawable.appicon_new))
+                .show();
+    }
+
+    public void checkCamera() {
+        new AlertDialog.Builder(KycUpdate.this)
+                .setTitle("SafePe - KYC Update")
+                .setMessage("SapfePe Will Check Camera And Image Quality First.\nPlease Click An Image First To Check.\n\n\n"+HindiCheck)
+                .setCancelable(false)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                //.setPositiveButton(android.R.string.yes, null)
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+                        dialog.dismiss();
+                        if (ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                                && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                            selectImage(CHECK_CAMERA);
+                        } else {
+                            ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE
+                            }, 100);
+                        }
+                    }
+                })
+                .setIcon(getResources().getDrawable(R.drawable.appicon_new))
+                .show();
+    }
+
+    public void showCheckDone(String Message) {
+        new AlertDialog.Builder(KycUpdate.this)
+                .setTitle("SafePe - KYC Update")
+                .setMessage(Message)
+                .setCancelable(false)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                //.setPositiveButton(android.R.string.yes, null)
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+                        dialog.dismiss();
                     }
                 })
                 .setIcon(getResources().getDrawable(R.drawable.appicon_new))
