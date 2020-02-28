@@ -1737,8 +1737,6 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liFD.setBackgroundColor(getResources().getColor(R.color.white));
-
-
                 break;
             case R.id.li_loan:
                 drawer.closeDrawers();
