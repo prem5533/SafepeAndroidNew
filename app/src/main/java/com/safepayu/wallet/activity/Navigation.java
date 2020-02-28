@@ -62,6 +62,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.bus.BusActivity;
 import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
+import com.safepayu.wallet.activity.deposit_fixed.FixedDepositActivity;
 import com.safepayu.wallet.activity.loan.LoanActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
@@ -1742,7 +1743,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
                 break;
             case R.id.li_loan:
                 drawer.closeDrawers();
-                startActivity(new Intent(Navigation.this, InvestmentWallet.class));
+                startActivity(new Intent(Navigation.this, FixedDepositActivity.class));
                 tvLoan.setTextColor(getResources().getColor(R.color.bue_A800));
                 tvContact.setTextColor(getResources().getColor(R.color.black));
                 tvProfile.setTextColor(getResources().getColor(R.color.black));

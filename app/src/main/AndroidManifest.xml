@@ -35,10 +35,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.safepe_investment.InvestmentProfileActivity"></activity>
+        <activity android:name=".activity.deposit_fixed.FixedDepositActivity"></activity>
+        <activity android:name=".activity.deposit_fixed.FixedDepositListActivity"></activity>
+        <activity android:name=".activity.deposit_fixed.AvailableBalanceFDActivity"></activity>
+        <activity android:name=".activity.deposit_fixed.FDChoosePayment"></activity>
+        <activity android:name=".activity.deposit_fixed.CreateFixedDepositActivity"></activity>
+        <activity android:name=".activity.safepe_investment.InvestmentProfileActivity" />
         <activity android:name=".activity.ui.KycUpdate2" />
         <activity android:name=".activity.safepe_investment.CreateInvestmentDepositActivity" />
-        <activity android:name=".activity.safepe_investment.InvestmentDetailActivity"></activity>
+        <activity android:name=".activity.safepe_investment.InvestmentDetailActivity" />
         <activity android:name=".activity.safepe_investment.AvailableBalanceActivity" />
         <activity android:name=".activity.safepe_investment.InvestmentDepositActivity" />
         <activity

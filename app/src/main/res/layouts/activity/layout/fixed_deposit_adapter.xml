@@ -32,7 +32,7 @@
                         android:layout_margin="1dp"
                         android:scaleType="fitXY"
                         android:padding="12dp"
-                        android:src="@drawable/ic_fixeddepositwhite" />
+                        android:src="@drawable/ic_fixed" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"

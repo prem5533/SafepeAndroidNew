@@ -32,7 +32,7 @@
                         android:layout_margin="1dp"
                         android:scaleType="fitXY"
                         android:padding="12dp"
-                        android:src="@drawable/ic_fixeddepositwhite" />
+                        android:src="@drawable/ic_fixed" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                             android:id="@+id/txnId_investmentWalletAdapter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Deposit Type: Fixed Deposit"
+                            android:text="Deposit Type: SafePe Investment"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             android:fontFamily="@font/roboto_bold"
