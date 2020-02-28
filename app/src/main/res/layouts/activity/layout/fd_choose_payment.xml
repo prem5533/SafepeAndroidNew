@@ -40,7 +40,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="5dp"
                     android:gravity="center"
-                    android:text="Fixed Deposit"
+                    android:text="SafePe Investment"
                     android:fontFamily="@font/roboto_bold"
                     android:textColor="#fff"
                     android:textSize="18sp" />

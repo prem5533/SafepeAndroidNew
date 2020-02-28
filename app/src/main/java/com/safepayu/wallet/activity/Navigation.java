@@ -62,8 +62,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.bus.BusActivity;
 import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
-import com.safepayu.wallet.activity.fixed_deposit.FixedDepositActivity;
-import com.safepayu.wallet.activity.fixed_deposit.InvestmentWallet;
+import com.safepayu.wallet.activity.deposit_fixed.FixedDepositActivity;
 import com.safepayu.wallet.activity.loan.LoanActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
@@ -73,6 +72,8 @@ import com.safepayu.wallet.activity.recharge.MobileRecharge;
 import com.safepayu.wallet.activity.recharge.PostpaidBillpay;
 import com.safepayu.wallet.activity.recharge.WaterBillPay;
 import com.safepayu.wallet.activity.ui.KycUpdate2;
+import com.safepayu.wallet.activity.safepe_investment.InvestmentDepositActivity;
+import com.safepayu.wallet.activity.safepe_investment.InvestmentWallet;
 import com.safepayu.wallet.adapter.OfferPagerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -1692,7 +1693,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
                 break;
             case R.id.li_fd:
                 drawer.closeDrawers();
-                startActivity(new Intent(Navigation.this, FixedDepositActivity.class));
+                startActivity(new Intent(Navigation.this, InvestmentDepositActivity.class));
 
                 tvFixedDeposit.setTextColor(getResources().getColor(R.color.bue_A800));
                 tvContact.setTextColor(getResources().getColor(R.color.black));
@@ -1741,7 +1742,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
                 break;
             case R.id.li_loan:
                 drawer.closeDrawers();
-                startActivity(new Intent(Navigation.this, InvestmentWallet.class));
+                startActivity(new Intent(Navigation.this, FixedDepositActivity.class));
                 tvLoan.setTextColor(getResources().getColor(R.color.bue_A800));
                 tvContact.setTextColor(getResources().getColor(R.color.black));
                 tvProfile.setTextColor(getResources().getColor(R.color.black));

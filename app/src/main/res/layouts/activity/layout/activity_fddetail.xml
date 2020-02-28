@@ -163,7 +163,7 @@
                                 android:layout_margin="1dp"
                                 android:scaleType="fitXY"
                                 android:padding="10dp"
-                                android:src="@drawable/ic_fixeddepositwhite" />
+                                android:src="@drawable/ic_fixed" />
                         </LinearLayout>
 
                         <LinearLayout

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/ll_parant"
-    tools:context=".activity.fixed_deposit.AvailableBalanceActivity">
+    tools:context=".activity.safepe_investment.AvailableBalanceActivity">
 
     <include layout="@layout/common_toolbar" />
 

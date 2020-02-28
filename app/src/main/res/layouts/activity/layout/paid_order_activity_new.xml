@@ -9,7 +9,6 @@
     android:id="@+id/statusorderLayout"
     tools:context=".activity.PaidOrderActivity">
 
-
     <RelativeLayout
         android:id="@+id/headerbar"
         android:layout_width="match_parent"
