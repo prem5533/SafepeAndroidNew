@@ -82,6 +82,9 @@ public class UserImageCamera extends AppCompatActivity {
     private boolean mFlashSupported;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
+    File sdRoot;
+    String dir;
+    String fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +97,7 @@ public class UserImageCamera extends AppCompatActivity {
         takePictureButton = (Button) findViewById(R.id.btn_takepicture);
         assert takePictureButton != null;
 
-        takePictureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takePicture();
-            }
-        });
+        takePictureButton.setOnClickListener(v -> takePicture());
     }
 
     TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
@@ -174,9 +172,7 @@ public class UserImageCamera extends AppCompatActivity {
             Log.d(TAG, "cameraDevice is null");
             return;
         }
-
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-
         try {
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraDevice.getId());
             Size[] jpegSizes = null;
@@ -197,9 +193,16 @@ public class UserImageCamera extends AppCompatActivity {
             captureBuilder.addTarget(reader.getSurface());
             captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
             // Orientation
-            int rotation = getWindowManager().getDefaultDisplay().getRotation();
-            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
-            final File file = new File(Environment.getExternalStorageDirectory() + "/pic.jpg");
+            //   int rotation = getWindowManager().getDefaultDisplay().getRotation();
+            //   captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
+            sdRoot = Environment.getExternalStorageDirectory();
+            dir = "/SafePe/User/";
+            fileName = System.currentTimeMillis() + ".jpg";
+            final File mkdir = new File(sdRoot, dir);
+            if (!mkdir.exists()) {
+                mkdir.mkdirs();
+            }
+            final File file = new File(sdRoot, dir + fileName);
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
@@ -224,11 +227,19 @@ public class UserImageCamera extends AppCompatActivity {
                 private void save(byte[] bytes) throws IOException {
                     OutputStream output = null;
                     try {
+                        file.createNewFile();
                         output = new FileOutputStream(file);
-                        output.write(bytes);
+                        textureView.getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, output);
+                        output.flush();
+                        output.close();
                     } finally {
                         if (null != output) {
                             output.close();
+                            Config.IMAGE_PATH_USER = file.getAbsolutePath();
+                            Intent intent = new Intent(UserImageCamera.this, KycUpdate2.class);
+                            intent.putExtra("data", file.getAbsolutePath());
+                            setResult(Activity.RESULT_OK, intent);
+                            finish();
                         }
                     }
                 }
@@ -239,8 +250,6 @@ public class UserImageCamera extends AppCompatActivity {
                 public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
                     Log.d(TAG, "Image Result " + session.getDevice());
-                    Toast.makeText(UserImageCamera.this, "Stored in :" + file, Toast.LENGTH_SHORT).show();
-                    createCameraPreview();
                 }
             };
 

@@ -130,9 +130,9 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
-            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity, liLogoutParent, liChnangePassword, liFramemain, liFD,liLoan;
+            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity, liLogoutParent, liChnangePassword, liFramemain, liFD, liLoan;
     private TextView tv_home, tvProfile, tvPackageDetails, tvBuyPackage, tvBusinessWallet, tvMyWallet, tvShopping, tvChangePassword, tvMyOrders, tvHistory, tvGenelogy,
-            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security, tvChangePasswordChild,tvFixedDeposit,tvLoan;
+            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security, tvChangePasswordChild, tvFixedDeposit, tvLoan;
     public static Bitmap qrCodeImage;
     int NUM_PAGES, NumPage, currentPage = 0, CurrentP = 0;
     Timer timer;
@@ -165,8 +165,6 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
             e.printStackTrace();
         }
         getAppVersion();
-
-
 
 
         setupNavigation();
@@ -359,8 +357,8 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
         liSecurity = findViewById(R.id.li_LogoutParent);
         liLogoutParent = findViewById(R.id.li_security);
         linearGiftCoupon = findViewById(R.id.layout_giftCoupon);
-        liFD =findViewById(R.id.li_fd);
-        liLoan =findViewById(R.id.li_loan);
+        liFD = findViewById(R.id.li_fd);
+        liLoan = findViewById(R.id.li_loan);
 
 
         //********************set listener&*****************
@@ -707,9 +705,9 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
 
 
         try {
-            BadgeCount= Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().BADGE_COUNT));
-        }catch (Exception e){
-            BadgeCount=0;
+            BadgeCount = Integer.parseInt(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().BADGE_COUNT));
+        } catch (Exception e) {
+            BadgeCount = 0;
             e.printStackTrace();
         }
 
@@ -718,7 +716,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
         } else {
             BadgeCountTV.setText("" + BadgeCount);
             BadgeCountTV.setVisibility(View.VISIBLE);
-            notification_icon.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.shake));
+            notification_icon.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake));
         }
 
     }
@@ -1548,7 +1546,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
 
             case R.id.li_update_kyc:
                 drawer.closeDrawers();
-                startActivity(new Intent(Navigation.this, KycUpdate.class));
+                startActivity(new Intent(Navigation.this, KycUpdate2.class));
 
                 tvUpdateKYC.setTextColor(getResources().getColor(R.color.bue_A800));
                 tvProfile.setTextColor(getResources().getColor(R.color.black));
@@ -2070,7 +2068,6 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
     }
 
 
-
     public void showDialogBlocked(Activity activity) {
         new AlertDialog.Builder(activity)
                 .setTitle("SafePe Alert")
@@ -2293,7 +2290,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
         int mMenuId;
         mMenuId = item.getItemId();
         for (int i = 0; i < bottomNavigation.getMenu().size(); i++) {
-             menuItem = bottomNavigation.getMenu().getItem(i);
+            menuItem = bottomNavigation.getMenu().getItem(i);
             boolean isChecked = menuItem.getItemId() == item.getItemId();
             menuItem.setChecked(isChecked);
         }
@@ -2323,100 +2320,100 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
     }
 
     private void drawerMenu() {
-        if (userDetailResponse.getUser().getMenuHome_status()==1){
+        if (userDetailResponse.getUser().getMenuHome_status() == 1) {
             liHome.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuHome_status()==0){
+        } else if (userDetailResponse.getUser().getMenuHome_status() == 0) {
             liHome.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuProfile_status()==1){
+        if (userDetailResponse.getUser().getMenuProfile_status() == 1) {
             liProfile.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuProfile_status()==0){
+        } else if (userDetailResponse.getUser().getMenuProfile_status() == 0) {
             liProfile.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuPackageDetail_status()==1){
+        if (userDetailResponse.getUser().getMenuPackageDetail_status() == 1) {
             liPackageDetails.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuPackageDetail_status()==0){
+        } else if (userDetailResponse.getUser().getMenuPackageDetail_status() == 0) {
             liPackageDetails.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuBuyPackage_status()==1){
+        if (userDetailResponse.getUser().getMenuBuyPackage_status() == 1) {
             liBuyPackage.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuBuyPackage_status()==0){
+        } else if (userDetailResponse.getUser().getMenuBuyPackage_status() == 0) {
             liBuyPackage.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuBussinessWallet_status()==1){
+        if (userDetailResponse.getUser().getMenuBussinessWallet_status() == 1) {
             liCommission.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuBussinessWallet_status()==0){
+        } else if (userDetailResponse.getUser().getMenuBussinessWallet_status() == 0) {
             liCommission.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuEcommrce_status()==1){
+        if (userDetailResponse.getUser().getMenuEcommrce_status() == 1) {
             liShopping.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuEcommrce_status()==0){
+        } else if (userDetailResponse.getUser().getMenuEcommrce_status() == 0) {
             liShopping.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuSafepeInvestment_status()==1){
+        if (userDetailResponse.getUser().getMenuSafepeInvestment_status() == 1) {
             liFD.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuSafepeInvestment_status()==0){
+        } else if (userDetailResponse.getUser().getMenuSafepeInvestment_status() == 0) {
             liFD.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuSafepeInvestmentWallet_status()==1){
+        if (userDetailResponse.getUser().getMenuSafepeInvestmentWallet_status() == 1) {
             liLoan.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuSafepeInvestmentWallet_status()==0){
+        } else if (userDetailResponse.getUser().getMenuSafepeInvestmentWallet_status() == 0) {
             liLoan.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuMyOrders_status()==1){
+        if (userDetailResponse.getUser().getMenuMyOrders_status() == 1) {
             liMyOrders.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuMyOrders_status()==0){
+        } else if (userDetailResponse.getUser().getMenuMyOrders_status() == 0) {
             liMyOrders.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuGenealogy_status()==1){
+        if (userDetailResponse.getUser().getMenuGenealogy_status() == 1) {
             liGenelogy.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuGenealogy_status()==0){
+        } else if (userDetailResponse.getUser().getMenuGenealogy_status() == 0) {
             liGenelogy.setVisibility(View.GONE);
         }
 
-        if (userDetailResponse.getUser().getMenuRefer_status()==1){
+        if (userDetailResponse.getUser().getMenuRefer_status() == 1) {
             liReferEarn.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuRefer_status()==0){
+        } else if (userDetailResponse.getUser().getMenuRefer_status() == 0) {
             liReferEarn.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuKYC_status()==1){
+        if (userDetailResponse.getUser().getMenuKYC_status() == 1) {
             liUpdteKYC.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuKYC_status()==0){
+        } else if (userDetailResponse.getUser().getMenuKYC_status() == 0) {
             liUpdteKYC.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuContactUs_status()==1){
+        if (userDetailResponse.getUser().getMenuContactUs_status() == 1) {
             liContactUs.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuContactUs_status()==0){
+        } else if (userDetailResponse.getUser().getMenuContactUs_status() == 0) {
             liContactUs.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuSecurity_status()==1){
+        if (userDetailResponse.getUser().getMenuSecurity_status() == 1) {
             liLogoutParent.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuSecurity_status()==0){
+        } else if (userDetailResponse.getUser().getMenuSecurity_status() == 0) {
             liLogoutParent.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuChangePasscode_status()==1){
+        if (userDetailResponse.getUser().getMenuChangePasscode_status() == 1) {
             liChnangePasswlrd.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuChangePasscode_status()==0){
+        } else if (userDetailResponse.getUser().getMenuChangePasscode_status() == 0) {
             liChnangePasswlrd.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuChangePassword_status()==1){
+        if (userDetailResponse.getUser().getMenuChangePassword_status() == 1) {
             liChnangePassword.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuChangePassword_status()==0){
+        } else if (userDetailResponse.getUser().getMenuChangePassword_status() == 0) {
             liChnangePassword.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuLogout_status()==1){
+        if (userDetailResponse.getUser().getMenuLogout_status() == 1) {
             liSecurity.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuLogout_status()==0){
+        } else if (userDetailResponse.getUser().getMenuLogout_status() == 0) {
             liSecurity.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuLogoutAllDevice_status()==1){
+        if (userDetailResponse.getUser().getMenuLogoutAllDevice_status() == 1) {
             liLogoutAllDevices.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuLogoutAllDevice_status()==0){
+        } else if (userDetailResponse.getUser().getMenuLogoutAllDevice_status() == 0) {
             liLogoutAllDevices.setVisibility(View.GONE);
         }
-        if (userDetailResponse.getUser().getMenuLogoutLogout_status()==1){
+        if (userDetailResponse.getUser().getMenuLogoutLogout_status() == 1) {
             liLogout.setVisibility(View.VISIBLE);
-        } else if (userDetailResponse.getUser().getMenuLogoutLogout_status()==0){
+        } else if (userDetailResponse.getUser().getMenuLogoutLogout_status() == 0) {
             liLogout.setVisibility(View.GONE);
         }
 

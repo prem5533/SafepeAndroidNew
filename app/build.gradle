@@ -16,8 +16,8 @@ android {
         applicationId "com.safepayu.wallet"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 68
-        versionName "2.0.9"
+        versionCode 70
+        versionName "2.1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -127,6 +127,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.android.gms:play-services-auth-api-phone:17.0.0'
     implementation files('libs/httpmime-4.3.6.jar')
-
 }
 apply plugin: 'com.google.gms.google-services'

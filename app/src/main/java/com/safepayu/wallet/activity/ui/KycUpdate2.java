@@ -215,9 +215,10 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
 
         if (data != null) {
             Bitmap bitmap = null;
-            if (requestCode == USER_IMAGE) {
-            } else {
+            try {
                 bitmap = (Bitmap) data.getExtras().get("data");
+            } catch (Exception e) {
+                e.getMessage();
             }
             File extStore = new File(Environment.getExternalStorageDirectory() + File.separator + "SafePe" + File.separator + "Image");
             if (!extStore.exists()) {
@@ -230,7 +231,6 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
                 File myFile = new File(path);
                 myFile.createNewFile();
                 FileOutputStream out = new FileOutputStream(myFile);
-
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
                 out.flush();
                 out.close();
@@ -255,7 +255,7 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
                 File imgFile = new File(IMAGE_PATH_USER);
                 if (imgFile.exists()) {
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                    ivSelf.setRotation(270);
+                    ivSelf.setRotation(360);
                     ivSelf.setImageBitmap(myBitmap);
                     User = true;
                 }
