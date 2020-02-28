@@ -40,7 +40,7 @@
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="5dp"
                         android:gravity="center"
-                        android:text="Fixed Deposit Succesful"
+                        android:text="SafePe Investment Succesful"
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="#fff"
                         android:textSize="18sp" />
@@ -178,7 +178,7 @@
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
                                         android:fontFamily="@font/roboto_bold"
-                                        android:text="Account Type: Fixed Deposit"
+                                        android:text="Account Type: SafePe Investment"
                                         android:textColor="@color/black"
 
                                         android:textSize="14sp" />

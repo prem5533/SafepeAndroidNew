@@ -4,6 +4,7 @@ import com.safepayu.wallet.models.request.AddBeneficiaryRequest;
 import com.safepayu.wallet.models.request.BuyPackage;
 import com.safepayu.wallet.models.request.ChangePasswordRequest;
 import com.safepayu.wallet.models.request.CheckEmailMobileRequest;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.request.FDPayRequest;
 import com.safepayu.wallet.models.request.ForgetPasswordRequest;
 import com.safepayu.wallet.models.request.HashKeyRequest;
@@ -150,8 +151,6 @@ public interface ApiService {
 
     @POST("api/pefast.safepe.latepe/api/getBeneficiaryDetails")
     Single<GetBeneficiaryResponse> getBeneficiary();
-
-    ;
 
     @POST("api/pefast.safepe.latepe/api/transferWalletToBank")
     Single<TransferWalletToBankResponse> transferWalletToBank(@Body TransferWalletToBankRequest transferWalletToBankRequest);
@@ -301,6 +300,9 @@ public interface ApiService {
     @POST("api/pefast.safepe.latepe/api/investmentToWallet")
     Single<CommissionWalletTransferResponse> transferInvestmentToWallet(@Field("amount") String amount);
 
+    @POST("api/pefast.safepe.latepe/api/addExceptionLog ")
+    Single<BaseResponse> addExceptionLog (@Body ExceptionLogRequest exceptionLogRequest);
+
     //*************Flight Booking *******************//
     @GET("api/pefast.safepe.latepe/api/getFlightAirport")
     Single<AirportLocationResponse> getAirportLocation();
@@ -407,4 +409,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/fetchInvestmentPdf")
     Single<FlighPdfResponse> getFixedPDF(@Field("id") String id);
+
+    @POST("api/pefast.safepe.latepe/api/transferInvWalletToBank")
+    Single<TransferWalletToBankResponse> transferInvWalletToBank(@Body TransferWalletToBankRequest transferWalletToBankRequest);
 }

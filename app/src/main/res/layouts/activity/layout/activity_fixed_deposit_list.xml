@@ -102,7 +102,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/roboto_bold"
-                                android:text="You have no FD"
+                                android:text="You have no investment"
                                 android:textColor="@color/textcolor"
                                 android:textSize="18sp" />
 

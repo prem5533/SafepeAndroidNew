@@ -6,9 +6,6 @@
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
 
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -16,13 +13,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission
-        android:name="android.permission.CAMERA"
-        tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.hardware.camera" />
     <uses-permission android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:name=".BaseApp"
@@ -34,13 +30,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.safepe_investment.InvestmentProfileActivity"></activity>
-        <activity android:name=".activity.ui.KycUpdate2" />
-        <activity android:name=".activity.safepe_investment.CreateInvestmentDepositActivity" />
-        <activity android:name=".activity.safepe_investment.InvestmentDetailActivity"></activity>
-        <activity android:name=".activity.safepe_investment.AvailableBalanceActivity" />
-        <activity android:name=".activity.safepe_investment.InvestmentDepositActivity" />
+        <activity android:name=".activity.safepe_investment.InvestmentProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.safepe_investment.CreateInvestmentDepositActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.safepe_investment.InvestmentDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.safepe_investment.AvailableBalanceActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.safepe_investment.InvestmentDepositActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FingerprintActivity"
             android:screenOrientation="portrait" />
@@ -288,9 +289,6 @@
             android:name=".activity.KycUpdate"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".helper.UserImageCamera"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.WalletHistory"
             android:screenOrientation="portrait" />
         <activity
@@ -380,6 +378,11 @@
         <activity
             android:name=".activity.safepe_investment.TransferInvestmentToWallet"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.safepe_investment.TransferInvestmentToBank"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.loan.LoanActivity"
             android:screenOrientation="portrait" />

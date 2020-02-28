@@ -21,6 +21,7 @@ import com.safepayu.wallet.adapter.deposit.InstructionAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.response.AllListData;
 import com.safepayu.wallet.models.response.ResponseModel;
 
@@ -41,6 +42,9 @@ public class AvailableBalanceActivity extends AppCompatActivity implements View.
     public RecyclerView.Adapter mInterestTable, mInstruction;
     public List<AllListData> dataList = new ArrayList<>();
     public String depositAmount, fdInterest, balanceAmount,term_and_conditions;
+    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +150,7 @@ public class AvailableBalanceActivity extends AppCompatActivity implements View.
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(AvailableBalanceActivity.this,UserId,"AvailableBalanceActivity",e.getMessage()," 153","getInvestMent api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(AvailableBalanceActivity.this.findViewById(R.id.ll_parant), false, e.getCause());
                     }
                 }));

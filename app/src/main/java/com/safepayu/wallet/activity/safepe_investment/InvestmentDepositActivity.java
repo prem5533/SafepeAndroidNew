@@ -14,6 +14,7 @@ import com.safepayu.wallet.activity.WalletActivity;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.response.ResponseModel;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -26,6 +27,9 @@ public class InvestmentDepositActivity extends AppCompatActivity implements View
     private LoadingDialog loadingDialog;
     public TextView tv_total_deposit_amount, tv_fixed_deposit_amount, tv_wallet_amount, tv_fixed_deposit_interest_amount, tv_investment_wallet_amount, tv_safepe_wallet_interest_amount;
     public String depositAmount, fdInterest, balanceAmount;
+    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +125,7 @@ public class InvestmentDepositActivity extends AppCompatActivity implements View
                                 tv_investment_wallet_amount.setText("" + response.data.investment_total);
                                 tv_fixed_deposit_interest_amount.setText("Earn upto " + response.data.fb_interest + "% interest per day on your SafePe Investment");
                                 //  tv_safepe_wallet_interest_amount.setText(response.data.investment_interest);
-                                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().INVESTMENT_WALLET_BALANCE,String.valueOf(response.data.investment_total));
+                                BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().INVESTMENT_WALLET_BALANCE, String.valueOf(response.data.investment_total));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -133,6 +137,7 @@ public class InvestmentDepositActivity extends AppCompatActivity implements View
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(InvestmentDepositActivity.this,UserId,"InvestmentDepositActivity",e.getMessage()," 140","safepeInvestmentAccount api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(InvestmentDepositActivity.this.findViewById(R.id.ll_parant), false, e.getCause());
                     }
                 }));

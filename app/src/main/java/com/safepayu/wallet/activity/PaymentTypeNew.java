@@ -26,6 +26,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.request.HashKeyRequest;
 import com.safepayu.wallet.models.request.RechargeRequest;
 import com.safepayu.wallet.models.request.SendPaymentGatewayDetailsRequest;
@@ -80,6 +81,10 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
     private float merchant_payment_amount= (float) 1.0;
     private static DecimalFormat df2 = new DecimalFormat("#.##");
     private LinearLayout linearLayoutPayment,linearLayoutWallet;
+
+    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +186,8 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 e.printStackTrace();
             }
         }catch (Exception e){
+            logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 190","onCreate ",DeviceName);
+
             e.printStackTrace();
         }
 
@@ -250,6 +257,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                         tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                         btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                     }catch (Exception e){
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 261","checkBoxWallet ",DeviceName);
                         e.printStackTrace();
                     }
                 } else {
@@ -426,6 +434,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                             }catch (Exception e){
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),e.getMessage(),true);
                                 e.printStackTrace();
+                                logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 438","getWalletLimitLeft api ",DeviceName);
                             }
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),walletLimitResponse.getMessage(),false);
@@ -436,6 +445,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), false, e.getCause());
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 449","getWalletLimitLeft api ",DeviceName);
                     }
                 }));
 
@@ -485,6 +495,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     }
                 }catch (Exception e){
                     rechargeRequest.setPayment_mode("wallet");
+                    logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 499","passcode match ",DeviceName);
                     e.printStackTrace();
                 }
 
@@ -554,6 +565,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 569","doRecharge api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), true, e);
                     }
                 }));
@@ -602,6 +614,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 618","buyPackage api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), true, e);
                     }
                 }));
@@ -650,6 +663,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 438","saveInvestment api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), true, e);
                     }
                 }));
@@ -703,6 +717,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 438","getHasKey api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.busSeatLayout), true, e);
                     }
                 }));
@@ -833,6 +848,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 easepayid =jsonObject.getString("easepayid");
                 date =jsonObject.getString("addedon");
             }catch (Exception e){
+                logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 852","gateway response ",DeviceName);
                 e.printStackTrace();
             }
 
@@ -873,6 +889,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                         startActivity(intentStatus);
                         finish();
                     }catch (Exception e){
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 893","gateway response ",DeviceName);
                         e.printStackTrace();
                     }
 
@@ -913,6 +930,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                         }
                     }catch (Exception e){
                         rechargeRequest.setPayment_mode("bank");
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 934","gateway response ",DeviceName);
                         e.printStackTrace();
                     }
 
@@ -930,6 +948,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     finish();
                 }catch (Exception e){
                     e.printStackTrace();
+                    logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 952","gateway response ",DeviceName);
                 }
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),"Payment Failed\n"+result+"\n"+response,true);
             }
@@ -946,6 +965,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 startActivity(intentStatus);
                 finish();
             }catch (Exception e){
+                logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 969","gateway response ",DeviceName);
                 e.printStackTrace();
             }
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),"Payment Failed",false);
@@ -973,6 +993,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     @Override
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 997","addBankToWallet api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), true, e);
                     }
                 }));

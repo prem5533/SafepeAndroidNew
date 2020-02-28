@@ -265,7 +265,8 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="gone">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -299,7 +300,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/roboto_regular"
-                                    android:text="Earn upto 0.50% interest per day on your fixed deposits"
+                                    android:text="Earn upto 0.50% interest per day on your SafePe Investment"
                                     android:textColor="@color/grey_700"
                                     android:textSize="14sp" />
 

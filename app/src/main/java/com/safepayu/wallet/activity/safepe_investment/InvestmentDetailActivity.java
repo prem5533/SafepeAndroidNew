@@ -16,6 +16,7 @@ import com.safepayu.wallet.activity.ContactUs;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.response.booking.flight.FlighPdfResponse;
 import com.safepayu.wallet.utils.pdf.DownloadTask;
 
@@ -28,6 +29,9 @@ public class InvestmentDetailActivity extends AppCompatActivity implements View.
     private Button FD_back_btn;
     private String safeTransactionId,totalAmount,BonusCredit,PaymentMode,packageAmount,BonusAmount, BalanceAmount,Status,id;
     private LoadingDialog loadingDialog;
+    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +121,7 @@ public class InvestmentDetailActivity extends AppCompatActivity implements View.
                     Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
                 }catch (Exception e){
                     e.printStackTrace();
+                    logRequest = new ExceptionLogRequest(InvestmentDetailActivity.this,UserId,"InvestmentDetailActivity",e.getMessage()," 124","pdf ",DeviceName);
                     Toast.makeText(getApplicationContext(),"Could't downlad the PDF",Toast.LENGTH_LONG).show();
                 }
 
@@ -144,6 +149,7 @@ public class InvestmentDetailActivity extends AppCompatActivity implements View.
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(InvestmentDetailActivity.this,UserId,"InvestmentDetailActivity",e.getMessage()," 152","pdf api",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.fd_detail), false, e.getCause());
                     }
                 }));

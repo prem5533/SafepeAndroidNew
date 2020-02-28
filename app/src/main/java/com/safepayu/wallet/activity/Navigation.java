@@ -2358,7 +2358,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
             liFD.setVisibility(View.GONE);
         }
         if (userDetailResponse.getUser().getMenuSafepeInvestmentWallet_status()==1){
-            liLoan.setVisibility(View.VISIBLE);
+            liLoan.setVisibility(View.GONE);
         } else if (userDetailResponse.getUser().getMenuSafepeInvestmentWallet_status()==0){
             liLoan.setVisibility(View.GONE);
         }
