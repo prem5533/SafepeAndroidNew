@@ -130,7 +130,7 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
                     selectImage(AADHAR_FRONT);
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate2.this, new String[]{Manifest.permission.CAMERA,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
+                            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
                     }, 100);
                 }
                 break;
@@ -139,7 +139,7 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
                     selectImage(AADHAR_BACK);
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate2.this, new String[]{Manifest.permission.CAMERA,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
+                            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
                     }, 100);
                 }
                 break;
@@ -148,7 +148,7 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
                     selectImage(PAN);
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate2.this, new String[]{Manifest.permission.CAMERA,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
+                            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
                     }, 100);
                 }
 
@@ -158,20 +158,20 @@ public class KycUpdate2 extends AppCompatActivity implements View.OnClickListene
                     selectImage(USER_IMAGE);
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate2.this, new String[]{Manifest.permission.CAMERA,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
+                            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
                     }, 100);
                 }
                 break;
 
             case R.id.dob_kycLayout:
-
                 break;
         }
     }
 
     public boolean checkCameraPermission() {
         return (ContextCompat.checkSelfPermission(KycUpdate2.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(KycUpdate2.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+                && ContextCompat.checkSelfPermission(KycUpdate2.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(KycUpdate2.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
     }
 
     private void selectImage(int imageType) {

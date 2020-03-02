@@ -288,7 +288,7 @@ public interface ApiService {
     Single<ServiceChargeResponse> getServicesCharges();
 
     @POST("api/pefast.safepe.latepe/api/saveInvestment ")
-    Single<BuyPackageResponse> saveInvestment (@Body FDPayRequest fdPayRequest);
+    Single<BuyPackageResponse> saveInvestment(@Body FDPayRequest fdPayRequest);
 
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/getInvestmentRefer")
@@ -398,8 +398,8 @@ public interface ApiService {
 
     @Multipart
     @POST("api/pefast.safepe.latepe/api/registerKyc")
-    Single<ResponseModel> registerKyc(@Part MultipartBody.Part adharCard_img,@Part MultipartBody.Part adharCardBack_img,
-                                    @Part MultipartBody.Part panCard_img,@Part MultipartBody.Part User_img);
+    Single<ResponseModel> registerKyc(@Part MultipartBody.Part adharCard_img, @Part MultipartBody.Part adharCardBack_img,
+                                      @Part MultipartBody.Part panCard_img, @Part MultipartBody.Part User_img);
 
     @GET("api/pefast.safepe.latepe/api/getInvestmentProfile")
     Single<ResponseModel> getInvestmentProfile();
@@ -407,4 +407,6 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/fetchInvestmentPdf")
     Single<FlighPdfResponse> getFixedPDF(@Field("id") String id);
+
+    //*************SafePe Fixed Deposit
 }

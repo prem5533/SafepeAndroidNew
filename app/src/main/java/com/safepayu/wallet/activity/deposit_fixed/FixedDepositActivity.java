@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.safepe_investment.AvailableBalanceActivity;
@@ -14,8 +15,9 @@ import com.safepayu.wallet.activity.safepe_investment.InvestmentDepositActivity;
 import com.safepayu.wallet.activity.safepe_investment.InvestmentProfileActivity;
 
 public class FixedDepositActivity extends AppCompatActivity implements View.OnClickListener {
-    LinearLayout liTotalAmountFD,liFixedDeposit,llProfileVisibility;
-    private Button send_back_btn_fd;
+    public LinearLayout liTotalAmountFD, liFixedDeposit, llProfileVisibility;
+    public Button send_back_btn_fd;
+    public TextView tv_toolbar_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +27,11 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void findId() {
-        liTotalAmountFD = findViewById( R.id.ll_total_amount_FD);
-        liFixedDeposit = findViewById( R.id.ll_fixed_deposit);
-        llProfileVisibility = findViewById( R.id.ll_profile_visibility);
-        send_back_btn_fd = findViewById( R.id.send_back_btn_fd);
+        liTotalAmountFD = findViewById(R.id.ll_total_amount_FD);
+        liFixedDeposit = findViewById(R.id.ll_fixed_deposit);
+        llProfileVisibility = findViewById(R.id.ll_profile_visibility);
+        send_back_btn_fd = findViewById(R.id.send_back_btn_fd);
+        tv_toolbar_name = findViewById(R.id.tv_toolbar_name);
 
         liTotalAmountFD.setOnClickListener(this);
         liFixedDeposit.setOnClickListener(this);
@@ -38,9 +41,9 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ll_total_amount_FD:
-                startActivity(new Intent(FixedDepositActivity.this,FixedDepositListActivity.class));
+                startActivity(new Intent(FixedDepositActivity.this, FixedDepositListActivity.class));
                 break;
             case R.id.ll_fixed_deposit:
                 startActivity(new Intent(FixedDepositActivity.this, AvailableBalanceFDActivity.class)

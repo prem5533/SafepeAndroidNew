@@ -32,17 +32,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class AvailableBalanceFDActivity extends AppCompatActivity implements View.OnClickListener
-{
+public class AvailableBalanceFDActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public Button btn_create_deposit,ll_back;
+    public Button btn_create_deposit, ll_back;
 
     private LoadingDialog loadingDialog;
     public TextView tv_interest_rate, tv_fixed_deposit_amount;
     public RecyclerView rv_interest_table_rate, rv_instruction;
     public RecyclerView.Adapter mInterestTable, mInstruction;
     public List<AllListData> dataList = new ArrayList<>();
-    public String depositAmount, fdInterest, balanceAmount,term_and_conditions;
+    public String depositAmount, fdInterest, balanceAmount, term_and_conditions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +49,14 @@ public class AvailableBalanceFDActivity extends AppCompatActivity implements Vie
         setContentView(R.layout.activity_available_fd_balance);
 
         loadingDialog = new LoadingDialog(AvailableBalanceFDActivity.this);
+
        /* Intent intent = getIntent();
         if (intent != null) {
             depositAmount = intent.getStringExtra("depositAmount");
             fdInterest = intent.getStringExtra("fdInterest");
             balanceAmount = intent.getStringExtra("balanceAmount");
         }*/
-       // ll_back = findViewById(R.id.send_back_btn_fd);
+        // ll_back = findViewById(R.id.send_back_btn_fd);
         btn_create_deposit = findViewById(R.id.btn_create_deposit);
      /*   tv_interest_rate = findViewById(R.id.tv_interest_rate);
         tv_fixed_deposit_amount = findViewById(R.id.tv_fixed_deposit_amount);
@@ -75,6 +75,7 @@ public class AvailableBalanceFDActivity extends AppCompatActivity implements Vie
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
           /*  case R.id.tv_interest_rate:
                 callInterestTable();
                 break;
