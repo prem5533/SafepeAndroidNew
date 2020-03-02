@@ -143,13 +143,11 @@
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="5dp">
-
                         <LinearLayout
                             android:layout_height="50dp"
                             android:layout_width="50dp"
