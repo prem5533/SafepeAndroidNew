@@ -43,7 +43,7 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fdlist);
         findId();
-        getInvestment();
+        getFixedDeposit();
     }
 
 
@@ -70,10 +70,10 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
 
 
 
-    private void getInvestment() {
+    private void getFixedDeposit() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
-        BaseApp.getInstance().getDisposable().add(apiService.getInvestmentlist()
+        BaseApp.getInstance().getDisposable().add(apiService.getFixedDeposit()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<InvestmentResponse>() {

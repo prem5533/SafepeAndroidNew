@@ -407,4 +407,8 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/fetchInvestmentPdf")
     Single<FlighPdfResponse> getFixedPDF(@Field("id") String id);
+
+    //***************Safepe fixed deposit
+    @GET("api/pefast.safepe.latepe/api/getFixedDeposit")
+    Single<InvestmentResponse> getFixedDeposit();
 }
