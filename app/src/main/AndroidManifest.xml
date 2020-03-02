@@ -394,6 +394,9 @@
         <activity
             android:name=".activity.loan.LoanActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.deposit_fixed.FixedDepositDetailActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

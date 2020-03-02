@@ -42,7 +42,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.KycUpdate;
-import com.safepayu.wallet.activity.ui.KycUpdate2;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -236,7 +235,7 @@ public class UserImageCamera extends AppCompatActivity {
                         if (null != output) {
                             output.close();
                             Config.IMAGE_PATH_USER = file.getAbsolutePath();
-                            Intent intent = new Intent(UserImageCamera.this, KycUpdate2.class);
+                            Intent intent = new Intent(UserImageCamera.this, KycUpdate.class);
                             intent.putExtra("data", file.getAbsolutePath());
                             setResult(Activity.RESULT_OK, intent);
                             finish();

@@ -264,8 +264,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="15dp"
-                android:visibility="gone">
+                android:padding="15dp">
 
                 <ImageView
                     android:layout_width="20dp"

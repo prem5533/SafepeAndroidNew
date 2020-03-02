@@ -16,7 +16,7 @@ import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.safepe_investment.CreateInvestmentDepositActivity;
 import com.safepayu.wallet.activity.safepe_investment.InvestmentDetailActivity;
-import com.safepayu.wallet.adapter.MyFixedDepositAdapter;
+import com.safepayu.wallet.adapter.FixedDepositAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -26,10 +26,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class FixedDepositListActivity extends AppCompatActivity implements MyFixedDepositAdapter.OnFDSelectListener, View.OnClickListener {
+public class FixedDepositListActivity extends AppCompatActivity implements FixedDepositAdapter.OnFDSelectListener, View.OnClickListener {
 
     private RecyclerView recyclerView;
-    private MyFixedDepositAdapter myFixedDepositAdapter;
+    private FixedDepositAdapter myFixedDepositAdapter;
     private Dialog dialogFDeposit;
     private LoadingDialog loadingDialog;
     private Button send_back_btn_fd;
@@ -43,7 +43,7 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fdlist);
         findId();
-        getInvestment();
+        getFixedDeposit();
     }
 
 
@@ -67,25 +67,28 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
     }
 
 
-    private void getInvestment() {
+
+
+    private void getFixedDeposit() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
-        BaseApp.getInstance().getDisposable().add(apiService.getInvestmentlist()
+        BaseApp.getInstance().getDisposable().add(apiService.getFixedDepositList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<InvestmentResponse>() {
                     @Override
                     public void onSuccess(InvestmentResponse response) {
-                        if (response.isStatus()) {
+                        if (response.isStatus()){
                             loadingDialog.hideDialog();
 
                             investmentResponse = response;
-                            if (response.getData().getInvestment().isEmpty()) {
+                            if (response.getData().getInvestment().isEmpty()){
                                 fdEmpty.setVisibility(View.VISIBLE);
                                 recyclerView.setVisibility(View.GONE);
-                            } else {
+                            }
+                            else {
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-                                myFixedDepositAdapter = new MyFixedDepositAdapter(getApplicationContext(), response.getData().getInvestment(), FixedDepositListActivity.this);
+                                myFixedDepositAdapter = new FixedDepositAdapter(getApplicationContext(),response.getData().getInvestment(), FixedDepositListActivity.this);
                                 recyclerView.setAdapter(myFixedDepositAdapter);
                                 fdEmpty.setVisibility(View.GONE);
                                 recyclerView.setVisibility(View.VISIBLE);
@@ -93,7 +96,6 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
 
                         }
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
@@ -105,17 +107,17 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
 
     @Override
     public void onFDItemSelect(int position, InvestmentResponse.DataBean.InvestmentBean investmentBean) {
-        //  dialogFDeposit(InvestmentDepositListActivity.this, position,  investmentBean);
-        Intent intent = new Intent(FixedDepositListActivity.this, InvestmentDetailActivity.class);
-        intent.putExtra("SafepetransactionId", investmentBean.getSafepetransactionId());
-        intent.putExtra("Total_amount", String.valueOf(investmentBean.getTotal_amount()));
-        intent.putExtra("Bonus_credited", String.valueOf(investmentBean.getBonus_credited()));
-        intent.putExtra("Payment_mode", investmentBean.getPayment_mode());
-        intent.putExtra("Package_amount", String.valueOf(investmentBean.getPackage_amount()));
-        intent.putExtra("Bonus_amount", String.valueOf(investmentBean.getBonus_amount()));
-        intent.putExtra("Balance_amount", String.valueOf(investmentBean.getBalance_amount()));
-        intent.putExtra("status", String.valueOf(investmentBean.getStatus()));
-        intent.putExtra("id", String.valueOf(investmentBean.getId()));
+      //  dialogFDeposit(InvestmentDepositListActivity.this, position,  investmentBean);
+        Intent intent = new Intent(FixedDepositListActivity.this, FixedDepositDetailActivity.class);
+        intent.putExtra("SafepetransactionId",investmentBean.getSafepetransactionId());
+        intent.putExtra("Total_amount",String.valueOf(investmentBean.getTotal_amount()));
+        intent.putExtra("Bonus_credited",String.valueOf(investmentBean.getBonus_credited()));
+        intent.putExtra("Payment_mode",investmentBean.getPayment_mode());
+        intent.putExtra("Package_amount",String.valueOf(investmentBean.getPackage_amount()));
+        intent.putExtra("Bonus_amount",String.valueOf(investmentBean.getBonus_amount()));
+        intent.putExtra("Balance_amount",String.valueOf(investmentBean.getBalance_amount()));
+        intent.putExtra("status",String.valueOf(investmentBean.getStatus()));
+        intent.putExtra("id",String.valueOf(investmentBean.getId()));
         startActivity(intent);
     }
 
@@ -169,7 +171,7 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
             }
         });*//*
 
-     *//*     tvFDid.setText(investmentBean.getSafepetransactionId());
+    *//*     tvFDid.setText(investmentBean.getSafepetransactionId());
          tvFDAmount.setText("₹ " +investmentBean.getTotal_amount());
          tvtax.setText("Invest Credit: " +investmentBean.getBonus_credited());
          tvPaymentMode.setText("Payment Mode: " +investmentBean.getPayment_mode());
@@ -206,9 +208,9 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.send_back_btn_fd:
-                overridePendingTransition(R.anim.right_to_left, R.anim.slide_in);
+                overridePendingTransition(R.anim.right_to_left,R.anim.slide_in);
                 finish();
                 break;
             case R.id.please_invest_fd:

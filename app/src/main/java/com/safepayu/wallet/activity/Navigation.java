@@ -63,6 +63,7 @@ import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.bus.BusActivity;
 import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
 import com.safepayu.wallet.activity.deposit_fixed.FixedDepositActivity;
+import com.safepayu.wallet.activity.deposit_fixed.FixedDepositListActivity;
 import com.safepayu.wallet.activity.loan.LoanActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
@@ -72,7 +73,6 @@ import com.safepayu.wallet.activity.recharge.MobileRecharge;
 import com.safepayu.wallet.activity.recharge.PostpaidBillpay;
 import com.safepayu.wallet.activity.recharge.WaterBillPay;
 import com.safepayu.wallet.activity.safepe_investment.InvestmentDepositActivity;
-import com.safepayu.wallet.activity.safepe_investment.InvestmentWallet;
 import com.safepayu.wallet.adapter.OfferPagerAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -130,9 +130,9 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
-            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity, liLogoutParent, liChnangePassword, liFramemain, liFD,liLoan;
+            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity, liLogoutParent, liChnangePassword, liFramemain, liFD, liLoan;
     private TextView tv_home, tvProfile, tvPackageDetails, tvBuyPackage, tvBusinessWallet, tvMyWallet, tvShopping, tvChangePassword, tvMyOrders, tvHistory, tvGenelogy,
-            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security, tvChangePasswordChild,tvFixedDeposit,tvLoan;
+            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security, tvChangePasswordChild, tvFixedDeposit, tvLoan;
     public static Bitmap qrCodeImage;
     int NUM_PAGES, NumPage, currentPage = 0, CurrentP = 0;
     Timer timer;
@@ -716,7 +716,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
         } else {
             BadgeCountTV.setText("" + BadgeCount);
             BadgeCountTV.setVisibility(View.VISIBLE);
-            notification_icon.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.shake));
+            notification_icon.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake));
         }
 
     }
@@ -2006,7 +2006,6 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
         }
     }
 
-
     @Override
     protected void connectivityStatusChanged(Boolean isConnected, String message) {
         if (!isConnected) {
@@ -2064,7 +2063,6 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
                     }
                 }));
     }
-
 
     public void showDialogBlocked(Activity activity) {
         new AlertDialog.Builder(activity)
@@ -2417,5 +2415,4 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
 
 
     }
-
 }
