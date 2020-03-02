@@ -16,12 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
+import com.safepayu.wallet.activity.safepe_investment.AvailableBalanceActivity;
 import com.safepayu.wallet.activity.safepe_investment.CreateInvestmentDepositActivity;
 import com.safepayu.wallet.adapter.deposit.DepositRateAdapter;
 import com.safepayu.wallet.adapter.deposit.InstructionAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.response.AllListData;
 import com.safepayu.wallet.models.response.ResponseModel;
 
@@ -42,6 +44,9 @@ public class AvailableBalanceFDActivity extends AppCompatActivity implements Vie
     public RecyclerView.Adapter mInterestTable, mInstruction;
     public List<AllListData> dataList = new ArrayList<>();
     public String depositAmount, fdInterest, balanceAmount, term_and_conditions;
+    private String DeviceName = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,25 +55,27 @@ public class AvailableBalanceFDActivity extends AppCompatActivity implements Vie
 
         loadingDialog = new LoadingDialog(AvailableBalanceFDActivity.this);
 
-       /* Intent intent = getIntent();
+        Intent intent = getIntent();
         if (intent != null) {
             depositAmount = intent.getStringExtra("depositAmount");
             fdInterest = intent.getStringExtra("fdInterest");
             balanceAmount = intent.getStringExtra("balanceAmount");
-        }*/
-        // ll_back = findViewById(R.id.send_back_btn_fd);
+        }
+
+        ll_back = findViewById(R.id.send_back_btn_fd);
         btn_create_deposit = findViewById(R.id.btn_create_deposit);
-     /*   tv_interest_rate = findViewById(R.id.tv_interest_rate);
+        tv_interest_rate = findViewById(R.id.tv_interest_rate);
         tv_fixed_deposit_amount = findViewById(R.id.tv_fixed_deposit_amount);
         tv_fixed_deposit_amount.setText(depositAmount);
-        rv_instruction = findViewById(R.id.rv_instruction);
-        rv_instruction.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));*/
 
-       /* setPeriodData();
-        getInvestment();
+        rv_instruction = findViewById(R.id.rv_instruction);
+        rv_instruction.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        //setPeriodData();
+        getFixedDeposit();
 
         ll_back.setOnClickListener(this);
-        tv_interest_rate.setOnClickListener(this);*/
+        tv_interest_rate.setOnClickListener(this);
         btn_create_deposit.setOnClickListener(this);
     }
 
@@ -76,18 +83,19 @@ public class AvailableBalanceFDActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         switch (v.getId()) {
 
-          /*  case R.id.tv_interest_rate:
+            case R.id.tv_interest_rate:
                 callInterestTable();
                 break;
 
             case R.id.send_back_btn_fd:
                 finish();
-                break;*/
+                break;
 
             case R.id.btn_create_deposit:
-                startActivity(new Intent(AvailableBalanceFDActivity.this, CreateFixedDepositActivity.class));
-                      /*  putExtra("fdInterest", fdInterest).
-                        putExtra("balanceAmount", balanceAmount).putExtra("term_and_conditions",term_and_conditions));*/
+                startActivity(new Intent(AvailableBalanceFDActivity.this, CreateFixedDepositActivity.class).
+                        putExtra("fdInterest", fdInterest).
+                        putExtra("balanceAmount", balanceAmount).
+                        putExtra("term_and_conditions", term_and_conditions));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
         }
@@ -119,12 +127,12 @@ public class AvailableBalanceFDActivity extends AppCompatActivity implements Vie
         alertDialog.show();
     }
 
-    private void getInvestment() {
+    private void getFixedDeposit() {
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(AvailableBalanceFDActivity.this).create(ApiService.class);
 
-        BaseApp.getInstance().getDisposable().add(apiService.getInvestment()
+        BaseApp.getInstance().getDisposable().add(apiService.getFixedDeposit()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<ResponseModel>() {
@@ -147,7 +155,10 @@ public class AvailableBalanceFDActivity extends AppCompatActivity implements Vie
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        BaseApp.getInstance().toastHelper().showApiExpectation(AvailableBalanceFDActivity.this.findViewById(R.id.ll_parant), false, e.getCause());
+                        logRequest = new ExceptionLogRequest(AvailableBalanceFDActivity.this, UserId, "AvailableBalanceFDActivity",
+                                e.getMessage(), " 155", "getFixedDeposit api ", DeviceName);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(AvailableBalanceFDActivity.this.findViewById(R.id.ll_parant),
+                                false, e.getCause());
                     }
                 }));
     }

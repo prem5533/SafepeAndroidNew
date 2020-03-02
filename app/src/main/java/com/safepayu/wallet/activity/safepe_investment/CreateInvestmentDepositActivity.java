@@ -29,6 +29,7 @@ import com.safepayu.wallet.adapter.deposit.DepositInterestRateAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.response.AllListData;
 import com.safepayu.wallet.models.response.InvestmentReferResponse;
 
@@ -57,6 +58,9 @@ public class CreateInvestmentDepositActivity extends AppCompatActivity implement
     private TextView tvReferUserName, tvForReferralBtn, backToLoginBtn, tv_fixed_deposit_amount;
     public LinearLayout layoutBottomSheet, ll_alertDismiss;
     public BottomSheetBehavior sheetBehavior;
+    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,12 +142,9 @@ public class CreateInvestmentDepositActivity extends AppCompatActivity implement
             }
         });
 
-        tvForReferralBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                referralCode.setText("8376097766");
-                referralCode.setSelection(referralCode.getText().toString().length());
-            }
+        tvForReferralBtn.setOnClickListener(view -> {
+            referralCode.setText("8376097766");
+            referralCode.setSelection(referralCode.getText().toString().length());
         });
 
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -204,6 +205,7 @@ public class CreateInvestmentDepositActivity extends AppCompatActivity implement
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(CreateInvestmentDepositActivity.this,UserId,"CreateInvestmentDepositActivity",e.getMessage()," 211","getInvestmentRefer api ",DeviceName);
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         Toast.makeText(CreateInvestmentDepositActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }

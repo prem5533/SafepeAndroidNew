@@ -433,6 +433,4 @@ public class BuyMemberShip extends AppCompatActivity implements PackageListAdapt
             BankName=mData.getBankName();
         }
     }
-
-
 }

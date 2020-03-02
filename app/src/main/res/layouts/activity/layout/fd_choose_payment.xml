@@ -175,6 +175,7 @@
                                 android:textSize="14sp"
                                 android:layout_alignParentLeft="true"
                                 android:layout_marginLeft="10dp"
+                                android:id="@+id/taxText_Investment"
                                 android:text="GST:" />
 
                             <com.safepayu.wallet.custom_view.CustomTextView
@@ -248,7 +249,7 @@
                         android:layout_height="wrap_content"
                         app:fontCustom="@string/Roboto"
                         android:textSize="16sp"
-                        android:id="@+id/tv.taxDetails"
+                        android:id="@+id/tvTaxDetails_investment"
                         android:textStyle="normal"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
@@ -256,7 +257,7 @@
                         android:layout_marginRight="15dp"
                         android:textColor="@color/red_700"
                         android:gravity="left"
-                        android:text="@string/gst_charge_on_package" />
+                        android:text=" " />
 
                     <View
                         android:layout_width="match_parent"

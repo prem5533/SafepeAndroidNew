@@ -248,8 +248,6 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
         });
     }
 
-
-
     public void datePicker(){
         final Calendar c = Calendar.getInstance();
         int  mYear = c.get(Calendar.YEAR);
@@ -485,7 +483,7 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
                         intentStatus.putExtra("txnid","");
                         intentStatus.putExtra("Amount",Amount);
                         intentStatus.putExtra("Message",response.getMessage());
-                        intentStatus.putExtra("productinfo","SafePe Investment");
+                        intentStatus.putExtra("productinfo","Investment SafePe ");
 
                         startActivity(intentStatus);
                         finish();
@@ -698,7 +696,4 @@ public class MemberBankAddPackages  extends BaseActivity implements PasscodeClic
 
         }
     }
-
-
-
 }

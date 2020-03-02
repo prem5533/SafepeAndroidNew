@@ -37,6 +37,7 @@ import com.safepayu.wallet.enums.ButtonActions;
 import com.safepayu.wallet.listener.MobileEditTextWatcher;
 import com.safepayu.wallet.listener.SnackBarActionClickListener;
 import com.safepayu.wallet.models.request.CheckEmailMobileRequest;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.request.Register;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.BaseResponse1;
@@ -59,6 +60,9 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
     private String strReferalcode;
     private ImageView signup_logo;
     private CheckBox chTermCond;
+    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,11 +160,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     } catch (Exception e) {
                         e.printStackTrace();
 
-                        int index = mobileNo.getText().toString().indexOf(" ");
-                        checkEmailMobileRequest.setEmail("");
-                        checkEmailMobileRequest.setType("1");
-                        checkEmailMobileRequest.setMobile(mobileNo.getText().toString().substring(index));
-                        checkMobile(checkEmailMobileRequest);
+                        logRequest = new ExceptionLogRequest(NewAccount.this,UserId,"NewAccount",e.getMessage()," 163","mobile no text watcher ",DeviceName);
                     }
                 } else {
 
@@ -201,6 +201,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                         }
                     }
                 } catch (Exception e) {
+                    logRequest = new ExceptionLogRequest(NewAccount.this,UserId,"NewAccount",e.getMessage()," 204","refer code edit text watcher ",DeviceName);
                     e.printStackTrace();
                 }
             }
@@ -480,6 +481,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(NewAccount.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(NewAccount.this,UserId,"NewAccount",e.getMessage()," 484","register api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.newAccountLayout), true, e);
 
                     }
@@ -521,6 +523,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        logRequest = new ExceptionLogRequest(NewAccount.this,UserId,"NewAccount",e.getMessage()," 526","referral api",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.newAccountLayout), true, e);
                     }
                 }));
@@ -578,6 +581,7 @@ public class NewAccount extends BaseActivity implements View.OnClickListener, Sn
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(NewAccount.this,UserId,"NewAccount",e.getMessage()," 163","checkUserMobile api",DeviceName);
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.newAccountLayout), true, e);
                     }

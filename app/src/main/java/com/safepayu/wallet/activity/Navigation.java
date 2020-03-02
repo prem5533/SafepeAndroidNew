@@ -71,7 +71,6 @@ import com.safepayu.wallet.activity.recharge.LandlineBillPay;
 import com.safepayu.wallet.activity.recharge.MobileRecharge;
 import com.safepayu.wallet.activity.recharge.PostpaidBillpay;
 import com.safepayu.wallet.activity.recharge.WaterBillPay;
-import com.safepayu.wallet.activity.ui.KycUpdate2;
 import com.safepayu.wallet.activity.safepe_investment.InvestmentDepositActivity;
 import com.safepayu.wallet.activity.safepe_investment.InvestmentWallet;
 import com.safepayu.wallet.adapter.OfferPagerAdapter;
@@ -131,9 +130,9 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
-            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity, liLogoutParent, liChnangePassword, liFramemain, liFD, liLoan;
+            liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity, liLogoutParent, liChnangePassword, liFramemain, liFD,liLoan;
     private TextView tv_home, tvProfile, tvPackageDetails, tvBuyPackage, tvBusinessWallet, tvMyWallet, tvShopping, tvChangePassword, tvMyOrders, tvHistory, tvGenelogy,
-            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security, tvChangePasswordChild, tvFixedDeposit, tvLoan;
+            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security, tvChangePasswordChild,tvFixedDeposit,tvLoan;
     public static Bitmap qrCodeImage;
     int NUM_PAGES, NumPage, currentPage = 0, CurrentP = 0;
     Timer timer;
@@ -717,7 +716,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
         } else {
             BadgeCountTV.setText("" + BadgeCount);
             BadgeCountTV.setVisibility(View.VISIBLE);
-            notification_icon.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake));
+            notification_icon.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.shake));
         }
 
     }
@@ -1547,7 +1546,7 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
 
             case R.id.li_update_kyc:
                 drawer.closeDrawers();
-                startActivity(new Intent(Navigation.this, KycUpdate2.class));
+                startActivity(new Intent(Navigation.this, KycUpdate.class));
 
                 tvUpdateKYC.setTextColor(getResources().getColor(R.color.bue_A800));
                 tvProfile.setTextColor(getResources().getColor(R.color.black));

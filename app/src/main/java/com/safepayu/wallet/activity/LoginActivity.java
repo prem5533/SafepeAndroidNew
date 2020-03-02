@@ -181,7 +181,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             }
         });
 
-//        checkPermission();
+        try {
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().DEVICE_NAME,android.os.Build.MODEL);
+        }catch (Exception e){
+            BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().DEVICE_NAME,"NA");
+        }
         getAppVersion();
 
         //getHintPhoneNumber();

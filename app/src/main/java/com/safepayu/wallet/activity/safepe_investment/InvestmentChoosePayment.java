@@ -21,8 +21,10 @@ import com.safepayu.wallet.adapter.BuyMembershipAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.request.FDPayRequest;
 import com.safepayu.wallet.models.response.PackageListData;
+import com.safepayu.wallet.models.response.ServiceChargeResponse;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -45,6 +47,10 @@ public class InvestmentChoosePayment extends AppCompatActivity implements RadioG
     private Double totalPayableAmount;
     private BuyMembershipAdapter buyMembershipAdapter;
     public static FDPayRequest fdPayRequest;
+    double gst=0;
+    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +109,8 @@ public class InvestmentChoosePayment extends AppCompatActivity implements RadioG
                         overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                         intent.putExtra("RechargePaymentId",BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
                         intent.putExtra("Amount",String.valueOf(totalPayableAmount));
-                        intent.putExtra("PaymentType","Investment");
-                        intent.putExtra("PaymentFor","SafePe");
+                        intent.putExtra("PaymentType","SafePe");
+                        intent.putExtra("PaymentFor","Investment");
                         intent.putExtra("RechargeTypeId","0");
                         intent.putExtra("OperatorCode","");
                         intent.putExtra("CircleCode","0");
@@ -133,8 +139,6 @@ public class InvestmentChoosePayment extends AppCompatActivity implements RadioG
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.fdChoosePaymentLayout), "Please Select Payment Option", false);
                     }
                 }
-
-
             }
         });
 
@@ -146,15 +150,7 @@ public class InvestmentChoosePayment extends AppCompatActivity implements RadioG
             }
         });
 
-        double gst=Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().GST));
-        totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(Double.parseDouble(Amount),gst );
-        DecimalFormat df2 = new DecimalFormat("#.##");
-        totalPayableAmount= Double.parseDouble(df2.format(totalPayableAmount));
-        ((TextView) findViewById(R.id.mobile_fdChoosePaymentLayout)).setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
-        ((TextView) findViewById(R.id.tax_fdChoosePaymentLayout)).setText(gst+" %");
-        ((TextView) findViewById(R.id.amount_fdChoosePaymentLayout)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(Double.parseDouble(Amount)));
-        ((TextView) findViewById(R.id.totalAmount_fdChoosePaymentLayout)).setText(getResources().getString(R.string.currency) + BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount));
-        getPackages();
+        getServicesCharges();
     }
 
     @Override
@@ -175,6 +171,44 @@ public class InvestmentChoosePayment extends AppCompatActivity implements RadioG
                 TransactionType = "2";
                 break;
         }
+    }
+
+    private void getServicesCharges() {
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getServicesCharges()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ServiceChargeResponse>() {
+                    @Override
+                    public void onSuccess(ServiceChargeResponse response) {
+
+                        if (response.isStatus()) {
+                            for (int i = 0; i < response.getTax().size(); i++) {
+                                if (response.getTax().get(i).getTax_id() == 8) {
+                                    gst= Double.parseDouble(response.getTax().get(i).getTax_value());
+
+                                    totalPayableAmount = BaseApp.getInstance().commonUtils().getAmountWithTax(Double.parseDouble(Amount),gst );
+                                    DecimalFormat df2 = new DecimalFormat("#.##");
+                                    totalPayableAmount= Double.parseDouble(df2.format(totalPayableAmount));
+                                    ((TextView) findViewById(R.id.mobile_fdChoosePaymentLayout)).setText(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
+                                    ((TextView) findViewById(R.id.taxText_Investment)).setText(response.getTax().get(i).getTax_name());
+                                    ((TextView) findViewById(R.id.tax_fdChoosePaymentLayout)).setText(gst+" %");
+                                    ((TextView) findViewById(R.id.amount_fdChoosePaymentLayout)).setText(getResources().getString(R.string.currency) +" "+ BaseApp.getInstance().commonUtils().decimalFormat(Double.parseDouble(Amount)));
+                                    ((TextView) findViewById(R.id.totalAmount_fdChoosePaymentLayout)).setText(getResources().getString(R.string.currency) +" "+ BaseApp.getInstance().commonUtils().decimalFormat(totalPayableAmount));
+                                    ((TextView) findViewById(R.id.tvTaxDetails_investment)).setText("Additional "+gst+"% " +response.getTax().get(i).getTax_name()+ " will be charged from the total amount");
+                                }
+                            }
+                        }
+                        getPackages();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        logRequest = new ExceptionLogRequest(InvestmentChoosePayment.this,UserId,"InvestmentChoosePayment",e.getMessage()," 210","getServiceCharge api ",DeviceName);
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.mobileRechargeLayout), true, e);
+                    }
+                }));
     }
 
     private void getPackages() {

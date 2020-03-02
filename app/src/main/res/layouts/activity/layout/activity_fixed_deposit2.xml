@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fixedLayout"
+    android:id="@+id/ll_parant"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f4f5ff"
@@ -64,7 +64,8 @@
                     android:id="@+id/ll_profile_visibility"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
