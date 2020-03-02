@@ -150,16 +150,19 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
             public void onClick(View view) {
 
                 try {
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Goto Your Profile and Verify Your Email First", true);
-                    } else {
-                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
-                        } else {
-                            startActivity(new Intent(getApplicationContext(), AddBeneficiary.class));
-                            overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
-                        }
-                    }
+//                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
+//                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Goto Your Profile and Verify Your Email First", true);
+//                    } else {
+//                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+//                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
+//                        } else {
+//                            startActivity(new Intent(getApplicationContext(), AddBeneficiary.class));
+//                            overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+//                        }
+//                    }
+
+                    startActivity(new Intent(getApplicationContext(), AddBeneficiary.class));
+                    overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                 }catch (Exception e){
                     e.printStackTrace();
                     logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this,UserId,"TransferInvestmentToBank",e.getMessage()," 165","PACKAGE_PURCHASED ",DeviceName);

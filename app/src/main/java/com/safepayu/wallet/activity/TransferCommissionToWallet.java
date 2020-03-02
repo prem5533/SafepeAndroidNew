@@ -127,26 +127,27 @@ public class TransferCommissionToWallet extends BaseActivity implements Passcode
         }else {
 
             try {
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
-                    SendToWalletBtn.setVisibility(View.GONE);
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                    alertDialogBuilder.setTitle(Html.fromHtml("<font color='#3db7c2'>Commission</font>"));
-                    alertDialogBuilder
-                            .setMessage("Please Buy Membership To Enjoy App's Features")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-
-                    alertDialog.show();
-                } else {
-
-                    SendToWalletBtn.setVisibility(View.VISIBLE);
-                }
+//                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+//                    SendToWalletBtn.setVisibility(View.GONE);
+//                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+//                    alertDialogBuilder.setTitle(Html.fromHtml("<font color='#3db7c2'>Commission</font>"));
+//                    alertDialogBuilder
+//                            .setMessage("Please Buy Membership To Enjoy App's Features")
+//                            .setCancelable(false)
+//                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int id) {
+//
+//                                    dialog.cancel();
+//                                }
+//                            });
+//                    AlertDialog alertDialog = alertDialogBuilder.create();
+//
+//                    alertDialog.show();
+//                } else {
+//
+//                    SendToWalletBtn.setVisibility(View.VISIBLE);
+//                }
+                SendToWalletBtn.setVisibility(View.VISIBLE);
             }catch (Exception e){
                 SendToWalletBtn.setVisibility(View.GONE);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
