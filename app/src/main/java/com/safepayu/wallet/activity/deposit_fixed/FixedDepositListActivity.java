@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.safepe_investment.CreateInvestmentDepositActivity;
-import com.safepayu.wallet.activity.safepe_investment.InvestmentDetailActivity;
 import com.safepayu.wallet.adapter.FixedDepositAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
