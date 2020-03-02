@@ -35,7 +35,7 @@ public class FixedDepositListActivity extends AppCompatActivity implements Fixed
     private LinearLayout fdEmpty;
     private String depositAmount, fdInterest, balanceAmount;
     private InvestmentResponse investmentResponse;
-    private TextView tvFDid,tvFDAmount,tvtax,tvstatus,tvPaymentMode,operationText,tv_bonus_amount,tv_balance_amount,tv_contct_support,please_invest_fd,tv_download_pdf;
+    private TextView tvFDid, tvFDAmount, tvtax, tvstatus, tvPaymentMode, operationText, tv_bonus_amount, tv_balance_amount, tv_contct_support, please_invest_fd, tv_download_pdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,6 @@ public class FixedDepositListActivity extends AppCompatActivity implements Fixed
         findId();
         getFixedDeposit();
     }
-
 
 
     private void findId() {
@@ -72,7 +71,7 @@ public class FixedDepositListActivity extends AppCompatActivity implements Fixed
     private void getFixedDeposit() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
-        BaseApp.getInstance().getDisposable().add(apiService.getFixedDeposit()
+        BaseApp.getInstance().getDisposable().add(apiService.getFixedDepositList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<InvestmentResponse>() {
@@ -204,7 +203,6 @@ public class FixedDepositListActivity extends AppCompatActivity implements Fixed
         dialogFDeposit.show();
     }
 */
-
 
 
     @Override

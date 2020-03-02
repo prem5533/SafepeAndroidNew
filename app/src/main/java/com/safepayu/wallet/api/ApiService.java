@@ -413,7 +413,20 @@ public interface ApiService {
     @POST("api/pefast.safepe.latepe/api/transferInvWalletToBank")
     Single<TransferWalletToBankResponse> transferInvWalletToBank(@Body TransferWalletToBankRequest transferWalletToBankRequest);
 
+    //*************SafePe Fixed Deposit
+    @GET("api/pefast.safepe.latepe/api/safepeFixedDepostAccount")
+    Single<ResponseModel> safepeFixedDepostAccount();
+
+    @GET("api/pefast.safepe.latepe/api/getFixedDeposit")
+    Single<ResponseModel> getFixedDeposit();
+
+    @POST("api/pefast.safepe.latepe/api/saveFixedDeposit")
+    Single<BuyPackageResponse> saveFixedDeposit(@Body FDPayRequest fdPayRequest);
+
+    @GET("api/pefast.safepe.latepe/api/getFIxedDepositProfile")
+    Single<ResponseModel> getFIxedDepositProfile();
+
     //***************Safepe fixed deposit
     @GET("api/pefast.safepe.latepe/api/getFixedDeposit")
-    Single<InvestmentResponse> getFixedDeposit();
+    Single<InvestmentResponse> getFixedDepositList();
 }

@@ -139,8 +139,6 @@ public class InvestmentChoosePayment extends AppCompatActivity implements RadioG
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.fdChoosePaymentLayout), "Please Select Payment Option", false);
                     }
                 }
-
-
             }
         });
 

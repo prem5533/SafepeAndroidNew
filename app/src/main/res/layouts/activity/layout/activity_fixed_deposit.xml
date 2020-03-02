@@ -34,8 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -102,8 +102,9 @@
                                     android:layout_marginBottom="10dp"
                                     android:drawableRight="@mipmap/arrow_point_to_right"
                                     android:fontFamily="@font/roboto_bold"
-                                    android:textColor="@color/black"
-                                    android:textSize="20dp" />
+                                    android:text="Go to your Investment Profile"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="17dp" />
 
                             </LinearLayout>
 
@@ -113,7 +114,8 @@
                                 android:fontFamily="@font/roboto_regular"
                                 android:text="Go to your investment Profile"
                                 android:textColor="@color/grey_700"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:visibility="gone" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -312,9 +314,9 @@
                                     android:fontFamily="@font/roboto_regular"
                                     android:gravity="end"
                                     android:text="Know More"
-                                    android:visibility="gone"
                                     android:textColor="@color/light_blue_A700"
-                                    android:textSize="12dp" />
+                                    android:textSize="12dp"
+                                    android:visibility="gone" />
                             </LinearLayout>
 
                         </LinearLayout>

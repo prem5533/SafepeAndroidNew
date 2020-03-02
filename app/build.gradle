@@ -23,7 +23,6 @@ android {
     }
     buildTypes {
         release {
-
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -127,6 +126,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.android.gms:play-services-auth-api-phone:17.0.0'
     implementation files('libs/httpmime-4.3.6.jar')
-
 }
 apply plugin: 'com.google.gms.google-services'

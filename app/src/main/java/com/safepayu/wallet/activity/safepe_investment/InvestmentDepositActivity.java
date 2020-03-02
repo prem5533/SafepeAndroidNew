@@ -27,8 +27,8 @@ public class InvestmentDepositActivity extends AppCompatActivity implements View
     private LoadingDialog loadingDialog;
     public TextView tv_total_deposit_amount, tv_fixed_deposit_amount, tv_wallet_amount, tv_fixed_deposit_interest_amount, tv_investment_wallet_amount, tv_safepe_wallet_interest_amount;
     public String depositAmount, fdInterest, balanceAmount;
-    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
-    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    private String DeviceName = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
     ExceptionLogRequest logRequest;
 
     @Override
@@ -88,7 +88,7 @@ public class InvestmentDepositActivity extends AppCompatActivity implements View
                 break;
 
             case R.id.ll_profile:
-                startActivity(new Intent(InvestmentDepositActivity.this, InvestmentProfileActivity.class));
+                startActivity(new Intent(InvestmentDepositActivity.this, InvestmentProfileActivity.class).putExtra("TYPE", "INVESTMENT"));
                 overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
                 break;
             case R.id.ll_back:
@@ -137,7 +137,7 @@ public class InvestmentDepositActivity extends AppCompatActivity implements View
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        logRequest = new ExceptionLogRequest(InvestmentDepositActivity.this,UserId,"InvestmentDepositActivity",e.getMessage()," 140","safepeInvestmentAccount api ",DeviceName);
+                        logRequest = new ExceptionLogRequest(InvestmentDepositActivity.this, UserId, "InvestmentDepositActivity", e.getMessage(), " 140", "safepeInvestmentAccount api ", DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(InvestmentDepositActivity.this.findViewById(R.id.ll_parant), false, e.getCause());
                     }
                 }));

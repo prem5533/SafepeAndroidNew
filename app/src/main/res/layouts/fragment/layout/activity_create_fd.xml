@@ -1,68 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:background="#f4f5ff"
     tools:context=".activity.safepe_investment.CreateInvestmentDepositActivity">
-
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <include layout="@layout/common_toolbar" />
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="#196cfe"
-            android:orientation="vertical"
-            android:paddingTop="8dp">
+            android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:id="@+id/headerbar"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:background="@color/red_theme"
-                android:paddingBottom="5dp">
-
-                <Button
-                    android:id="@+id/send_back_btn_fd"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/ic_next_new" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="5dp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:gravity="center"
-                    android:text="Fixed Deposit"
-                    android:textColor="#fff"
-                    android:textSize="18sp" />
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-40dp">
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:elevation="5dp"
-            android:padding="5dp"
-            app:cardCornerRadius="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,7 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="Create Fixed Deposit"
+                    android:text="Create SafePe Fixed Deposit"
                     android:textColor="@color/black"
                     android:textSize="17dp" />
 
@@ -145,25 +101,24 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:layout_marginTop="10dp">
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/ic_referral_new"/>
+                        android:src="@drawable/ic_referral_new" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:fontFamily="@font/roboto_regular"
-                        android:text=" FD - "
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
                         android:gravity="center"
-                        android:layout_gravity="center"
-                        android:paddingLeft="2dp"/>
+                        android:paddingLeft="2dp"
+                        android:text=" SI - "
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -190,30 +145,30 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true">
+
                             <Button
+                                android:id="@+id/verify_already"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/verify_already"
                                 android:layout_alignParentRight="true"
                                 android:background="@null"
+                                android:fontFamily="@font/roboto_regular"
                                 android:text="Verified"
-                                android:textSize="12sp"
-                                android:textColor="#00C853"
                                 android:textAllCaps="false"
-                                android:visibility="gone"
-                                android:fontFamily="@font/roboto_regular" />
-
+                                android:textColor="#00C853"
+                                android:textSize="12sp"
+                                android:visibility="gone" />
 
                             <Button
+                                android:id="@+id/verify_referral"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/verify_referral"
                                 android:background="@null"
+                                android:fontFamily="@font/roboto_regular"
                                 android:text="Verify Referral"
-                                android:textSize="12sp"
-                                android:textColor="@color/bue_A800"
                                 android:textAllCaps="false"
-                                android:fontFamily="@font/roboto_regular" />
+                                android:textColor="@color/bue_A800"
+                                android:textSize="12sp" />
                         </FrameLayout>
                     </RelativeLayout>
                 </LinearLayout>
@@ -221,56 +176,56 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/divider"
-                    android:layout_marginTop="2dp"/>
+                    android:layout_marginTop="2dp"
+                    android:background="@color/divider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="Referral Name - "
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/black"/>
+                        android:text="Referral Name - "
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/refer_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text=""
                         android:fontFamily="@font/roboto_bold"
-                        android:textColor="@color/bue_A700"/>
+                        android:text=""
+                        android:textColor="@color/bue_A700"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginTop="10dp">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:text="If You Dont't Have Any Referral Code - "
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/grey_800"/>
+                        android:text="If You Dont't Have Any Referral Code - "
+                        android:textColor="@color/grey_800"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/forRefer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="Click Here"
                         android:fontFamily="@font/roboto_bold"
-                        android:textColor="@color/black"/>
+                        android:text="Click Here"
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -303,7 +258,8 @@
                         android:id="@+id/ll_interest_table"
                         android:layout_width="0sp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.3">
+                        android:layout_weight="0.3"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -372,9 +328,10 @@
                 </LinearLayout>
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-        </androidx.core.widget.NestedScrollView>
+        </ScrollView>
+
     </LinearLayout>
 
+    <include layout="@layout/layout_deposit_interest_table_dialog" />
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

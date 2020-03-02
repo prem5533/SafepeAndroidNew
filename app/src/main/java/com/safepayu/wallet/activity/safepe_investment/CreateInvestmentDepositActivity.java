@@ -142,12 +142,9 @@ public class CreateInvestmentDepositActivity extends AppCompatActivity implement
             }
         });
 
-        tvForReferralBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                referralCode.setText("8376097766");
-                referralCode.setSelection(referralCode.getText().toString().length());
-            }
+        tvForReferralBtn.setOnClickListener(view -> {
+            referralCode.setText("8376097766");
+            referralCode.setSelection(referralCode.getText().toString().length());
         });
 
         sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
