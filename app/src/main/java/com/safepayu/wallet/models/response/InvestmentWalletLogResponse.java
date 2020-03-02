@@ -88,7 +88,7 @@ public class InvestmentWalletLogResponse {
             private String transaction_no;
             private String description;
             private String operation;
-            private int amount;
+            private double amount;
             private String wallet_no;
             private String mode_payment;
             private String easy_pay_id;
@@ -140,11 +140,11 @@ public class InvestmentWalletLogResponse {
                 this.operation = operation;
             }
 
-            public int getAmount() {
+            public double getAmount() {
                 return amount;
             }
 
-            public void setAmount(int amount) {
+            public void setAmount(double amount) {
                 this.amount = amount;
             }
 

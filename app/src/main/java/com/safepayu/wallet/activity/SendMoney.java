@@ -34,6 +34,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.request.Login;
 import com.safepayu.wallet.models.request.SendOtpRequest;
 import com.safepayu.wallet.models.request.TransferWalletToBankRequest;
@@ -70,7 +71,9 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
     TransferWalletToBankResponse responseData;
     TransferWalletToBankRequest transferWalletToBankRequestDate;
     private CardView cardAmount;
-
+    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
     ArrayList<String> NameList, IdList, BenIdList;
     private static int SPLASH_TIME_OUT = 59000;
 
@@ -143,16 +146,21 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
         AddBankBenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Goto Your Profile and Verify Your Email First", true);
-                } else {
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
-                    } else {
-                        startActivity(new Intent(getApplicationContext(), AddBeneficiary.class));
-                        overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
-                    }
-                }
+               try {
+                   if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
+                       BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Goto Your Profile and Verify Your Email First", true);
+                   } else {
+                       if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+                           BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
+                       } else {
+                           startActivity(new Intent(getApplicationContext(), AddBeneficiary.class));
+                           overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                       }
+                   }
+               }catch (Exception e){
+                   e.printStackTrace();
+                   logRequest = new ExceptionLogRequest(SendMoney.this,UserId,"SendMoney",e.getMessage()," 162","check for package purchased ",DeviceName);
+               }
 
             }
         });
@@ -193,6 +201,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                     }catch (Exception e){
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
                         e.printStackTrace();
+                        logRequest = new ExceptionLogRequest(SendMoney.this,UserId,"SendMoney",e.getMessage()," 204","withdraw btn ",DeviceName);
                     }
                 }
 
@@ -216,16 +225,22 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 // TODO Auto-generated method stub
-                if (s.length() > 2) {
-                    cardAmount.setVisibility(View.VISIBLE);
-                    double amt = CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()),Double.parseDouble(tax));
-                    String text = AmountED.getText().toString().trim() + " - Tax = ";
-                    AmountTotalTV.setText(text + String.format("%.2f", amt));
-                    tvWithdrawalAmount.setText(getResources().getString(R.string.rupees)+" "+String.format("%.2f", Double.parseDouble(AmountED.getText().toString().trim())));
-                    tvTax.setText(" -  " +getResources().getString(R.string.rupees)+" "+ String.format("%.2f", minusAmount));
-                    tvTotalAmountsendmoney.setText(getResources().getString(R.string.rupees)+" "+String.format("%.2f", totalAmount));
-                } else {
-                    cardAmount.setVisibility(View.GONE);
+
+                try {
+                    if (s.length() > 2) {
+                        cardAmount.setVisibility(View.VISIBLE);
+                        double amt = CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()),Double.parseDouble(tax));
+                        String text = AmountED.getText().toString().trim() + " - Tax = ";
+                        AmountTotalTV.setText(text + String.format("%.2f", amt));
+                        tvWithdrawalAmount.setText(getResources().getString(R.string.rupees)+" "+String.format("%.2f", Double.parseDouble(AmountED.getText().toString().trim())));
+                        tvTax.setText(" -  " +getResources().getString(R.string.rupees)+" "+ String.format("%.2f", minusAmount));
+                        tvTotalAmountsendmoney.setText(getResources().getString(R.string.rupees)+" "+String.format("%.2f", totalAmount));
+                    } else {
+                        cardAmount.setVisibility(View.GONE);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    logRequest = new ExceptionLogRequest(SendMoney.this,UserId,"SendMoney",e.getMessage()," 243","edit text watcher ",DeviceName);
                 }
             }
 
@@ -254,6 +269,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
         }catch (Exception e){
             WalletBalance=0.0f;
             e.printStackTrace();
+            logRequest = new ExceptionLogRequest(SendMoney.this,UserId,"SendMoney",e.getMessage()," 272","wallet balance ",DeviceName);
         }
 
         tvWalletBalance.setText(getResources().getString(R.string.rupees)+" "+WalletBalance);
@@ -382,6 +398,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(SendMoney.this,UserId,"SendMoney",e.getMessage()," 401","getBeneficiary api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
                     }
                 }));
@@ -414,6 +431,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(SendMoney.this,UserId,"SendMoney",e.getMessage()," transferWalletToBank api","edit text watcher ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
                     }
                 }));
@@ -628,6 +646,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(SendMoney.this,UserId,"SendMoney",e.getMessage()," 649","resendOtp api",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
                     }
                 }));
@@ -659,6 +678,7 @@ public class SendMoney extends BaseActivity implements RadioGroup.OnCheckedChang
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(SendMoney.this,UserId,"SendMoney",e.getMessage()," 681","verifyOtp api",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
                     }
                 }));

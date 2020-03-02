@@ -13,6 +13,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.response.ResponseModel;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -29,6 +30,9 @@ public class InvestmentProfileActivity extends AppCompatActivity implements View
     public TextView tv_toolbar_name;
     public CircleImageView img_user;
     public TextView tv_fd_refer_id, tv_amount, tv_bonus_amount, tv_name, tv_mobile;
+    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,7 @@ public class InvestmentProfileActivity extends AppCompatActivity implements View
                                     Glide.with(InvestmentProfileActivity.this)
                                             .load(BASE_URL + response.data.image.trim())
                                             .into(img_user);
+                                    img_user.setRotation(270);
                                 }
                                 tv_fd_refer_id.setText(response.data.fdReferId);
                                 tv_amount.setText(response.data.amount);
@@ -93,6 +98,7 @@ public class InvestmentProfileActivity extends AppCompatActivity implements View
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(InvestmentProfileActivity.this,UserId,"InvestmentProfileActivity",e.getMessage()," 101","getInvestmentProfile api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(InvestmentProfileActivity.this.findViewById(R.id.ll_parant), false, e.getCause());
                     }
                 }));

@@ -24,6 +24,7 @@ import com.safepayu.wallet.adapter.InvestmentWalletAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.response.InvestmentWalletLogResponse;
 
 import java.util.ArrayList;
@@ -43,6 +44,10 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
     private InvestmentWalletLogResponse investmentWalletLogResponse;
     private List<InvestmentWalletLogResponse.DataBean.LogListBean> CreditList,DebitList;
     private Dialog dialogFDeposit;
+    private LinearLayout fdEmpty;
+    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,7 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
         liSendTowallet = findViewById(R.id.li_send_towallet);
         CreditListBtn = findViewById(R.id.creditLayout_investmentWallet);
         DebitListBtn = findViewById(R.id.debitLayout_investmentWallet);
+        fdEmpty = findViewById(R.id.fdEmptyWallet);
         recyclerViewCredit = findViewById(R.id.recycleCredit_investmentWallet);
         recyclerViewCredit.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -79,7 +85,12 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
                 recyclerViewCredit.setVisibility(View.VISIBLE);
                 recyclerViewDebit.setVisibility(View.GONE);
                 if (CreditList.size()==0){
+                    fdEmpty.setVisibility(View.VISIBLE);
+                    recyclerViewCredit.setVisibility(View.GONE);
+                    recyclerViewDebit.setVisibility(View.GONE);
                     Toast.makeText(InvestmentWallet.this, "No Credit List Found", Toast.LENGTH_SHORT).show();
+                }else {
+                    fdEmpty.setVisibility(View.GONE);
                 }
             }
         });
@@ -91,6 +102,11 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
                 recyclerViewDebit.setVisibility(View.VISIBLE);
                 if (DebitList.size()==0){
                     Toast.makeText(InvestmentWallet.this, "No Debit List Found", Toast.LENGTH_SHORT).show();
+                    fdEmpty.setVisibility(View.VISIBLE);
+                    recyclerViewCredit.setVisibility(View.GONE);
+                    recyclerViewDebit.setVisibility(View.GONE);
+                }else {
+                    fdEmpty.setVisibility(View.GONE);
                 }
             }
         });
@@ -98,7 +114,7 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
         liSendTowallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), TransferInvestmentToWallet.class));
+                startActivity(new Intent(getApplicationContext(), TransferInvestmentToBank.class));
                 overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
             }
         });
@@ -139,11 +155,13 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
                     liSendTowallet.setVisibility(View.VISIBLE);
                 }catch (Exception e){
                     e.printStackTrace();
+                    logRequest = new ExceptionLogRequest(InvestmentWallet.this,UserId,"InvestmentWallet",e.getMessage()," 158","onCreate ",DeviceName);
                     liSendTowallet.setVisibility(View.VISIBLE);
                 }
             }
         }catch (Exception e) {
             e.printStackTrace();
+            logRequest = new ExceptionLogRequest(InvestmentWallet.this,UserId,"InvestmentWallet",e.getMessage()," 164","onCreate ",DeviceName);
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentWallet),"Please Goto Your Profile and Verify Your Email First",true);
         }
     }
@@ -177,6 +195,11 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
 
                                 if (CreditList.size()==0){
                                     Toast.makeText(InvestmentWallet.this, "No Credit List Found", Toast.LENGTH_SHORT).show();
+                                    fdEmpty.setVisibility(View.VISIBLE);
+                                    recyclerViewCredit.setVisibility(View.GONE);
+                                    recyclerViewDebit.setVisibility(View.GONE);
+                                }else {
+                                    fdEmpty.setVisibility(View.GONE);
                                 }
                             }catch (Exception e){
                                 e.printStackTrace();
@@ -186,6 +209,7 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(InvestmentWallet.this,UserId,"InvestmentWallet",e.getMessage()," 212","getInvestmentLog api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.investmentWallet), false, e.getCause());
                     }
                 }));
@@ -255,13 +279,13 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
 
         tvtax.setText(logListBeanList.getCreated_at());
 
-        if (logListBeanList.getStatus()==0){
-            tvstatus.setText("Pending");
-            tvstatus.setTextColor(Color.parseColor("#FFBF00"));
-        } else if (logListBeanList.getStatus()==1){
+        if (logListBeanList.getStatus()==1){
             tvstatus.setText("Approved");
             tvstatus.setTextColor(Color.parseColor("#84DE02"));
         } else if (logListBeanList.getStatus()==2){
+            tvstatus.setText("Pending");
+            tvstatus.setTextColor(Color.parseColor("#FFBF00"));
+        }else {
             tvstatus.setText("Failed");
             tvstatus.setTextColor(Color.parseColor("#E32636"));
         }

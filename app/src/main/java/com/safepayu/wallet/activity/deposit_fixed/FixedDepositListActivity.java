@@ -16,7 +16,7 @@ import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.safepe_investment.CreateInvestmentDepositActivity;
 import com.safepayu.wallet.activity.safepe_investment.InvestmentDetailActivity;
-import com.safepayu.wallet.adapter.MyFixedDepositAdapter;
+import com.safepayu.wallet.adapter.FixedDepositAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -26,10 +26,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class FixedDepositListActivity extends AppCompatActivity implements MyFixedDepositAdapter.OnFDSelectListener, View.OnClickListener {
+public class FixedDepositListActivity extends AppCompatActivity implements FixedDepositAdapter.OnFDSelectListener, View.OnClickListener {
 
     private RecyclerView recyclerView;
-    private MyFixedDepositAdapter myFixedDepositAdapter;
+    private FixedDepositAdapter myFixedDepositAdapter;
     private Dialog dialogFDeposit;
     private LoadingDialog loadingDialog;
     private Button send_back_btn_fd;
@@ -89,7 +89,7 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
                             }
                             else {
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-                                myFixedDepositAdapter = new MyFixedDepositAdapter(getApplicationContext(),response.getData().getInvestment(), FixedDepositListActivity.this);
+                                myFixedDepositAdapter = new FixedDepositAdapter(getApplicationContext(),response.getData().getInvestment(), FixedDepositListActivity.this);
                                 recyclerView.setAdapter(myFixedDepositAdapter);
                                 fdEmpty.setVisibility(View.GONE);
                                 recyclerView.setVisibility(View.VISIBLE);
@@ -109,7 +109,7 @@ public class FixedDepositListActivity extends AppCompatActivity implements MyFix
     @Override
     public void onFDItemSelect(int position, InvestmentResponse.DataBean.InvestmentBean investmentBean) {
       //  dialogFDeposit(InvestmentDepositListActivity.this, position,  investmentBean);
-        Intent intent = new Intent(FixedDepositListActivity.this, InvestmentDetailActivity.class);
+        Intent intent = new Intent(FixedDepositListActivity.this, FixedDepositDetailActivity.class);
         intent.putExtra("SafepetransactionId",investmentBean.getSafepetransactionId());
         intent.putExtra("Total_amount",String.valueOf(investmentBean.getTotal_amount()));
         intent.putExtra("Bonus_credited",String.valueOf(investmentBean.getBonus_credited()));

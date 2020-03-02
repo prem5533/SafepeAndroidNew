@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,6 +26,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.request.HashKeyRequest;
 import com.safepayu.wallet.models.request.RechargeRequest;
 import com.safepayu.wallet.models.request.SendPaymentGatewayDetailsRequest;
@@ -80,6 +82,10 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
     private static DecimalFormat df2 = new DecimalFormat("#.##");
     private LinearLayout linearLayoutPayment,linearLayoutWallet;
 
+    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,8 +137,9 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
             WalletCashback=intent.getStringExtra("walletCashback");
             TotalDeductAmount=intent.getStringExtra("totalAmount");
 
+            Log.v("PaymentFor : ",PaymentFor);
             if (PaymentFor.equalsIgnoreCase("Wallet") || PaymentFor.equalsIgnoreCase("Buy Package")
-                                || PaymentFor.equalsIgnoreCase("Fixed")) {
+                                || PaymentFor.equalsIgnoreCase("Investment")) {
                 checkBoxWallet.setChecked(false);
                 checkBoxWallet.setClickable(false);
                 checkBoxWallet.setEnabled(false);
@@ -179,6 +186,8 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 e.printStackTrace();
             }
         }catch (Exception e){
+            logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 190","onCreate ",DeviceName);
+
             e.printStackTrace();
         }
 
@@ -192,7 +201,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     tvWalletDeductAmount.setVisibility(View.GONE);
                     tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                     tvGatewayText.setVisibility(View.VISIBLE);
-                    if (PaymentFor.equalsIgnoreCase("Buy Package")  || PaymentFor.equalsIgnoreCase("Fixed")){
+                    if (PaymentFor.equalsIgnoreCase("Buy Package")  || PaymentFor.equalsIgnoreCase("Investment")){
                         btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                         tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                     }else {
@@ -200,7 +209,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                         tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " +Float.parseFloat(String.valueOf(finalAmount)));
                     }
                 }else {
-                    if (!PaymentFor.equalsIgnoreCase("Buy Package")  || !PaymentFor.equalsIgnoreCase("Fixed")){
+                    if (!PaymentFor.equalsIgnoreCase("Buy Package")  || !PaymentFor.equalsIgnoreCase("Investment")){
                         checkBoxWallet.setChecked(true);
                         checkBoxGatewayPayment.setChecked(false);
                         tvWalletDeductAmount.setVisibility(View.VISIBLE);
@@ -248,6 +257,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                         tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                         btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                     }catch (Exception e){
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 261","checkBoxWallet ",DeviceName);
                         e.printStackTrace();
                     }
                 } else {
@@ -273,10 +283,10 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 if (checkBoxGatewayPayment.isChecked() && checkBoxWallet.isChecked()){
                     HashKeyRequest hashKeyRequest=new HashKeyRequest();
                     hashKeyRequest.setCustomer_firstName(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME));
-                    hashKeyRequest.setMerchant_productInfo(PaymentFor+""+PaymentTypeText);
+                    hashKeyRequest.setMerchant_productInfo(PaymentFor+" "+PaymentTypeText);
                     hashKeyRequest.setCustomer_email_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
                     hashKeyRequest.setType("0");
-                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
+                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
                         hashKeyRequest.setMerchant_payment_amount(Amount);
                     }else {
                         hashKeyRequest.setMerchant_payment_amount(""+Float.parseFloat(String.valueOf(balAmount)));
@@ -302,10 +312,10 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 }else if (checkBoxGatewayPayment.isChecked()){
                     HashKeyRequest hashKeyRequest=new HashKeyRequest();
                     hashKeyRequest.setCustomer_firstName(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_FIRST_NAME));
-                    hashKeyRequest.setMerchant_productInfo(PaymentFor+""+PaymentTypeText);
+                    hashKeyRequest.setMerchant_productInfo(PaymentFor+" "+PaymentTypeText);
                     hashKeyRequest.setCustomer_email_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
                     hashKeyRequest.setType("0");
-                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
+                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
                         hashKeyRequest.setMerchant_payment_amount(Amount);
                     }else {
                         hashKeyRequest.setMerchant_payment_amount(""+Float.parseFloat(String.valueOf(finalAmount)));
@@ -345,8 +355,8 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                                 tvTotalBalanceWallet.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format((int) Double.parseDouble(walletLimitResponse.getData().getWallet_balance())));
                                 tvWalletlimit.setText("* Today's Wallet Limit - Rs. " + new DecimalFormat("##.##").format(walletLimitResponse.getData().getLimit()));
 
-                                if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
-                                    if (amount>walletBal){
+                                if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
+                                    /*if (amount>walletBal){
                                         checkWalletBal=false;
                                         checkBoxWallet.setChecked(false);
                                         checkBoxGatewayPayment.setChecked(true);
@@ -354,7 +364,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                                         tvWalletDeductAmount.setVisibility(View.GONE);
                                         tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                                         tvGatewayText.setVisibility(View.VISIBLE);
-                                        if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
+                                        if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
                                             btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                             tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                         }else {
@@ -370,7 +380,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                                             tvWalletDeductAmount.setVisibility(View.GONE);
                                             tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                                             tvGatewayText.setVisibility(View.VISIBLE);
-                                            if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
+                                            if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
                                                 btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                                 tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                             }else {
@@ -389,6 +399,21 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                                             tvWalletDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                             btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                         }
+                                    }*/
+
+                                    checkWalletBal=false;
+                                    checkBoxWallet.setChecked(false);
+                                    checkBoxGatewayPayment.setChecked(true);
+
+                                    tvWalletDeductAmount.setVisibility(View.GONE);
+                                    tvGatewayDeductAmount.setVisibility(View.VISIBLE);
+                                    tvGatewayText.setVisibility(View.VISIBLE);
+                                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
+                                        btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
+                                    }else {
+                                        btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Float.parseFloat(String.valueOf(finalAmount)));
+                                        tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Float.parseFloat(String.valueOf(finalAmount)));
                                     }
                                 }else {
                                     if (amount>walletBal){
@@ -409,6 +434,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                             }catch (Exception e){
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),e.getMessage(),true);
                                 e.printStackTrace();
+                                logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 438","getWalletLimitLeft api ",DeviceName);
                             }
                         }else {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),walletLimitResponse.getMessage(),false);
@@ -419,6 +445,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), false, e.getCause());
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 449","getWalletLimitLeft api ",DeviceName);
                     }
                 }));
 
@@ -434,7 +461,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
     @Override
     public void onPasscodeMatch(boolean isPasscodeMatched) {
         if (isPasscodeMatched){
-            if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
+            if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
                 //BuyPackageMethod("","");
             }else {
                 RechargeRequest rechargeRequest=new RechargeRequest();
@@ -468,6 +495,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     }
                 }catch (Exception e){
                     rechargeRequest.setPayment_mode("wallet");
+                    logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 499","passcode match ",DeviceName);
                     e.printStackTrace();
                 }
 
@@ -537,6 +565,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 569","doRecharge api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), true, e);
                     }
                 }));
@@ -585,6 +614,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 618","buyPackage api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), true, e);
                     }
                 }));
@@ -633,6 +663,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 438","saveInvestment api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), true, e);
                     }
                 }));
@@ -686,6 +717,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 438","getHasKey api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.busSeatLayout), true, e);
                     }
                 }));
@@ -729,7 +761,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
         }
         //merchant_payment_amount = Float.parseFloat(Amount);
 
-        if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Fixed")){
+        if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
             merchant_payment_amount = Float.parseFloat(Amount);
         }else {
             if (checkBoxGatewayPayment.isChecked() && checkBoxWallet.isChecked()){
@@ -816,6 +848,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 easepayid =jsonObject.getString("easepayid");
                 date =jsonObject.getString("addedon");
             }catch (Exception e){
+                logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 852","gateway response ",DeviceName);
                 e.printStackTrace();
             }
 
@@ -837,7 +870,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
             } else if (PaymentFor.equalsIgnoreCase("Buy Package")){
                 sendPaymentGatewayDetailsRequest.setPackage_amount(Amount);
                 sendPaymentGatewayDetailsRequest.setPackage_id(OperatorCode);
-            }  else if (PaymentFor.equalsIgnoreCase("Fixed")){
+            }  else if (PaymentFor.equalsIgnoreCase("Investment")){
                 sendPaymentGatewayDetailsRequest.setPackage_amount("");
                 sendPaymentGatewayDetailsRequest.setPackage_id("");
             }else {
@@ -856,12 +889,13 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                         startActivity(intentStatus);
                         finish();
                     }catch (Exception e){
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 893","gateway response ",DeviceName);
                         e.printStackTrace();
                     }
 
                 } else if (PaymentFor.equalsIgnoreCase("Buy Package")){
                     BuyPackageMethod(txnid,easepayid);
-                }else if (PaymentFor.equalsIgnoreCase("Fixed")){
+                }else if (PaymentFor.equalsIgnoreCase("Investment")){
                     PayFixedDeposit(txnid,easepayid);
                 } else {
 
@@ -896,6 +930,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                         }
                     }catch (Exception e){
                         rechargeRequest.setPayment_mode("bank");
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 934","gateway response ",DeviceName);
                         e.printStackTrace();
                     }
 
@@ -913,6 +948,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     finish();
                 }catch (Exception e){
                     e.printStackTrace();
+                    logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 952","gateway response ",DeviceName);
                 }
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),"Payment Failed\n"+result+"\n"+response,true);
             }
@@ -929,6 +965,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 startActivity(intentStatus);
                 finish();
             }catch (Exception e){
+                logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 969","gateway response ",DeviceName);
                 e.printStackTrace();
             }
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.payment),"Payment Failed",false);
@@ -956,6 +993,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     @Override
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 997","addBankToWallet api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), true, e);
                     }
                 }));

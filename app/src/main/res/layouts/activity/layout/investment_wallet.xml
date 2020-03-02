@@ -171,7 +171,7 @@
                                 android:visibility="visible"
                                 android:gravity="center"
                                 android:padding="10dp"
-                                android:text="Send money to wallet"
+                                android:text="Send money to bank"
                                 android:textColor="@color/black"
                                 android:fontFamily="@font/roboto_bold"
                                 android:textSize="16sp" />
@@ -270,6 +270,34 @@
                         android:layout_height="wrap_content"
                         android:visibility="gone"
                         android:layout_marginTop="10dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/fdEmptyWallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="100dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginBottom="100dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/ic_note" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="You have no transaction history"
+                            android:textColor="@color/textcolor"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
 
 
                 </LinearLayout>

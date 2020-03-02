@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/withMoneyLayout"
+    android:background="#f4f5ff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:background="#196cfe"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <RelativeLayout
+                android:id="@+id/headerbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/red_theme"
+                android:paddingBottom="5dp">
+
+                <Button
+                    android:id="@+id/send_back_btn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/ic_next_new" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="Send Money"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-30dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:elevation="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15dp"
+                            android:paddingTop="15dp">
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                style="@style/TextAppearance.AppCompat.Large"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Wallet Balance"
+                                android:textSize="14sp"
+                                android:textColor="@color/black"
+                                android:textStyle="normal"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"/>
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Large"
+                                app:fontCustom="@string/Roboto"
+                                android:textSize="14sp"
+                                android:gravity="end"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/roboto_bold"
+                                android:textColor="@color/grey_800"
+                                android:id="@+id/walletBalance"
+                                android:text=""
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divider"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15dp"
+                            android:paddingTop="15dp">
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:textStyle="normal"
+                                app:fontCustom="@string/Roboto"
+                                android:textAllCaps="false"
+                                android:textSize="14sp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="10dp"
+                                android:text="Minimum Withdrawal Amount" />
+
+                            <com.safepayu.wallet.custom_view.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/minLimit_sendMoney"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                app:fontCustom="@string/Roboto"
+                                android:textSize="14sp"
+                                android:textColor="@color/red_500"
+                                android:textStyle="normal"
+                                android:gravity="center"
+                                android:text="0"
+                                android:fontFamily="@font/roboto_bold"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:paddingTop="10dp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/red_theme"
+                    android:layout_height="wrap_content"
+                    android:text="Select Beneficiary"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="10dp"/>
+
+                <RadioGroup
+                    android:id="@+id/radioGroupWithdraw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <RadioButton
+                        android:id="@+id/upiradiobtn"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="UPI"/>
+
+
+                    <RadioButton
+                        android:id="@+id/bankradiobtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/roboto_regular"
+                        android:buttonTint="@color/yellow_theme"
+                        android:text="BANK ACCOUNT"/>
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:id="@+id/benLayout_sendMoney">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/building_new"
+                        android:layout_marginLeft="5dp"/>
+
+                    <Spinner
+                        android:id="@+id/bankBenSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="5dp"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"/>
+
+                <LinearLayout
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/withdrawAmountlayout"
+                    android:orientation="vertical"
+                    android:layout_marginTop="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/rupee_new"
+                            android:layout_marginLeft="5dp"/>
+
+                        <EditText
+                            android:id="@+id/withdrawAmount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="0dp"
+                            android:background="@null"
+                            android:hint="Enter Amount"
+                            android:textColor="#000000"
+                            android:maxLength="7"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:imeOptions="actionDone"
+                            android:paddingLeft="15sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/divider"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="4dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="15dp">
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:id="@+id/calculatedamount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Enter amount"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/red_theme"
+                            android:paddingLeft="0dp"
+                            android:gravity="right"
+                            android:visibility="gone"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/card_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            app:cardCornerRadius="10dp"
+                            android:elevation="5dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:background="@color/white">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Amount reflect in your account"
+                                    android:textColor="@color/red_theme"
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:padding="10dp"
+                                    android:gravity="left" />
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height=".5dp"
+                                    android:background="@color/yellow"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"/>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Withdrawal Amount"
+                                        android:textSize="13sp"
+                                        android:textColor="@color/black"
+                                        android:padding="10dp"
+                                        android:fontFamily="@font/roboto_bold"
+                                        android:layout_weight="1"/>
+                                    <TextView
+                                        android:id="@+id/tv_withdrawalamount"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="10"
+                                        android:textSize="13sp"
+                                        android:textColor="@color/black"
+                                        android:padding="10dp"
+                                        android:fontFamily="@font/roboto_regular"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Transaction Fee"
+                                        android:textSize="13sp"
+                                        android:textColor="@color/black"
+                                        android:padding="10dp"
+                                        android:fontFamily="@font/roboto_bold"
+                                        android:layout_weight="1"/>
+                                    <TextView
+                                        android:id="@+id/tv_sendtax"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="10"
+                                        android:textSize="13sp"
+                                        android:textColor="@color/black"
+                                        android:padding="10dp"
+                                        android:fontFamily="@font/roboto_regular"/>
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height=".5dp"
+                                    android:background="@color/divider"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"/>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Total Amount"
+                                        android:textSize="13sp"
+                                        android:textColor="@color/black"
+                                        android:padding="10dp"
+                                        android:fontFamily="@font/roboto_bold"
+                                        android:layout_weight="1"/>
+                                    <TextView
+                                        android:id="@+id/tv_total_amountsendmoney"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="10"
+                                        android:textSize="13sp"
+                                        android:textColor="@color/black"
+                                        android:padding="10dp"
+                                        android:fontFamily="@font/roboto_regular"/>
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="10dp"
+                                    android:background="@color/white"/>
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnWithdraw"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/amount"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/blue_green_round_btn"
+                        android:fontFamily="@font/roboto_bold"
+                        android:padding="10dp"
+                        android:text="Withdraw Money"
+                        android:textAllCaps="false"
+                        android:textColor="#fff"
+                        android:textSize="17sp"/>
+
+                    <TextView
+                        android:id="@+id/transactionFeeText_sendMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/red"
+                        android:layout_gravity="center"
+                        android:text="Transaction fee: 2% or Minimum ₹ 10 "
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="14sp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"/>
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:elevation="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:id="@+id/BankBenAddBtn">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/plus_new"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"/>
+
+                        <TextView
+                            android:id="@+id/tv_bank_click_here"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add New Bank Account"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textColor="@color/red_theme" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:background="#f4f5ff"/>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</RelativeLayout>

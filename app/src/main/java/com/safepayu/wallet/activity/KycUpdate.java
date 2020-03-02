@@ -43,6 +43,7 @@ import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.DatePickerHidePreviousDate;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.request.KycRequest;
 import com.safepayu.wallet.models.response.BaseResponse;
 import com.safepayu.wallet.models.response.CountryListResponse;
@@ -82,6 +83,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
     private static final int PICK_IMAGE_AADHAAR = 2;
     private static final int PICK_IMAGE_AADHAAR_BACK = 3;
     private static final int PICK_IMAGE_CAMERA_2 = 4;
+    private static final int CHECK_CAMERA = 5;
     private Bitmap bitmap;
     private Uri uriAdharFrontFile,uriAdharBackFile,uriPanFile,uriUserFile,uriAll;
     private long totalSize = 0;
@@ -89,6 +91,13 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
     private File destination = null;
     public static final int MEDIA_TYPE_IMAGE = 1;
     private String textBase64Self = "", textBase64Pan = "", textBase64Aadhaar = "", textBase64AadhaarBack = "", StateName = "", StateId = "", StateCode = "";
+    private boolean checkFirst=false;
+    private String HindiCheck="SapfePe पहले कैमरा और पिक्चर क्वालिटी चेक करेगा।\n" + "कृपया जाँचने के लिए पहले एक चित्र लें।";
+    private String HindiDone="चेक किया गया है।\n" + "कैमरा क्वालिटी अच्छी है।\n" + "अब आप KYC के लिए अपनी प्रक्रिया शुरू कर सकते हैं।";
+    private int READ_STORAGE_PERMISSION_REQUEST_CODE=1;
+    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -106,7 +115,9 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
         findId();
+
     }
 
     @Override
@@ -236,7 +247,12 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
             case R.id.imageLayoutPan:
                 if (ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    selectImage(PICK_IMAGE_PAN);
+
+                    if (checkFirst){
+                        selectImage(PICK_IMAGE_PAN);
+                    }else {
+                        checkCamera();
+                    }
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -247,7 +263,12 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
             case R.id.imageLayoutAdhar:
                 if (ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    selectImage(PICK_IMAGE_AADHAAR);
+
+                    if (checkFirst){
+                        selectImage(PICK_IMAGE_AADHAAR);
+                    }else {
+                        checkCamera();
+                    }
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -258,7 +279,12 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
             case R.id.imageLayoutAdharBack:
                 if (ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    selectImage(PICK_IMAGE_AADHAAR_BACK);
+
+                    if (checkFirst){
+                        selectImage(PICK_IMAGE_AADHAAR_BACK);
+                    }else {
+                        checkCamera();
+                    }
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -269,7 +295,12 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
             case R.id.imageLayoutSelf:
                 if (ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    selectImage(PICK_IMAGE_CAMERA);
+
+                    if (checkFirst){
+                        selectImage(PICK_IMAGE_CAMERA);
+                    }else {
+                        checkCamera();
+                    }
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -292,18 +323,6 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
 
                 try {
-//                    if (imageType == PICK_IMAGE_CAMERA) {
-//                        int apiLevel=Integer.valueOf(android.os.Build.VERSION.SDK);
-//                        if (apiLevel>21){
-//                            Intent intent = new Intent(KycUpdate.this, UserImageCamera.class);
-//                            startActivityForResult(intent, PICK_IMAGE_CAMERA_2);
-//                        }else {
-//                            CallCameraIntent(imageType);
-//                        }
-//
-//                    }else {
-//                        CallCameraIntent(imageType);
-//                    }
                     CallCameraIntent(imageType);
                 }catch (Exception e){
                     e.printStackTrace();
@@ -316,6 +335,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
         } catch (Exception e) {
             Log.v("er2", "Camera Permission error");
             Toast.makeText(KycUpdate.this, "Camera Permission error", Toast.LENGTH_SHORT).show();
+            logRequest = new ExceptionLogRequest(KycUpdate.this,UserId,"KycUpdate",e.getMessage()," 336","select image method ",DeviceName);
             e.printStackTrace();
         }
     }
@@ -324,6 +344,8 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (imageType == PICK_IMAGE_CAMERA) {
             intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+        }else {
+            intent.putExtra("android.intent.extras.CAMERA_FACING", 0);
         }
 
         File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
@@ -396,27 +418,58 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
         }else {
             try {
 
+                if (!checkPermissionForReadExtertalStorage()){
+                    requestPermissionForReadExtertalStorage();
+                }
+
                 InputStream imageStream = null;
                 try {
-                    imageStream = getContentResolver().openInputStream(uriAll);
-                } catch (FileNotFoundException e) {
+                    try {
+                        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                            Log.v("TAG", "Permission is granted");
+                            //File write logic here
+                            imageStream = getContentResolver().openInputStream(uriAll);
+                        } else {
+                            Log.v("TAG", "Permission is Revoked");
+                            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                        }
+
+                    } catch (FileNotFoundException e) {
+                        Log.d("TAG", "File not found: " + e.getMessage());
+                    }
+                } catch (Exception e) {
+                    logRequest = new ExceptionLogRequest(KycUpdate.this,UserId,"KycUpdate",e.getMessage()," 441","onActivityResult ",DeviceName);
                     e.printStackTrace();
                 }
 
-                Bitmap bmp = BitmapFactory.decodeStream(imageStream);
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
+                Bitmap bmp = null;
                 try {
-                    stream.close();
-                    stream = null;
-                    long lengthbmp = byteArray.length;
-                    int i = (int) (long) lengthbmp;
-                    Log.v("size", (i / 1024) + " kb");
-                } catch (IOException e) {
+                    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        Log.v("TAG", "Permission is granted");
+                        //File write logic here
+                        bmp = BitmapFactory.decodeStream(imageStream);
 
-                    e.printStackTrace();
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        byte[] byteArray = stream.toByteArray();
+                        try {
+                            stream.close();
+                            stream = null;
+                            long lengthbmp = byteArray.length;
+                            int i = (int) (long) lengthbmp;
+                            Log.v("size", (i / 1024) + " kb");
+                        } catch (IOException e) {
+
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.v("TAG", "Permission is Revoked");
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    }
+
+                } catch (Exception e) {
+                    Log.d("TAG", "File not found: " + e.getMessage());
+                    logRequest = new ExceptionLogRequest(KycUpdate.this,UserId,"KycUpdate",e.getMessage()," 472","onActivityResult ",DeviceName);
                 }
 
                 Bitmap converetdImage = getResizedBitmap(bmp, 600);
@@ -469,10 +522,13 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
 
                     } catch (FileNotFoundException e) {
                         Log.d("TAG", "File not found: " + e.getMessage());
+                        logRequest = new ExceptionLogRequest(KycUpdate.this,UserId,"KycUpdate",e.getMessage()," 525","onActivityResult ",DeviceName);
                     } catch (IOException e) {
                         Log.d("TAG", "Error accessing file: " + e.getMessage());
+                        logRequest = new ExceptionLogRequest(KycUpdate.this,UserId,"KycUpdate",e.getMessage()," 528","onActivityResult ",DeviceName);
                     }
                 } catch (Exception e) {
+                    logRequest = new ExceptionLogRequest(KycUpdate.this,UserId,"KycUpdate",e.getMessage()," 529","onActivityResult ",DeviceName);
                     e.printStackTrace();
                 }
 
@@ -488,13 +544,36 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                 } else if (requestCode == PICK_IMAGE_AADHAAR_BACK) {
                     ivAadhaarBack.setImageBitmap(converetdImage);
                     textBase64AadhaarBack = "done";
+                }else if (requestCode == CHECK_CAMERA){
+                    checkFirst=true;
+                    showCheckDone("Checking Done.\nCamera Quality Is Good.\nNow You Can Start Your Process For KYC.\n\n\n"+HindiDone);
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
+                logRequest = new ExceptionLogRequest(KycUpdate.this,UserId,"KycUpdate",e.getMessage()," 549","onActivityResult ",DeviceName);
             }
         }
 
+    }
+
+    public boolean checkPermissionForReadExtertalStorage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int result = this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+            return result == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
+    }
+
+    public void requestPermissionForReadExtertalStorage() throws Exception {
+        try {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    READ_STORAGE_PERMISSION_REQUEST_CODE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logRequest = new ExceptionLogRequest(KycUpdate.this,UserId,"KycUpdate",e.getMessage()," 574","request permission ",DeviceName);
+            throw e;
+        }
     }
 
     private File getOutputMediaFile() {
@@ -673,6 +752,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(KycUpdate.this,UserId,"KycUpdate",e.getMessage()," 755","getKycCheck api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.kycLayout), false, e.getCause());
                     }
                 }));
@@ -699,7 +779,62 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                             finish();
                         } else {
                             dialog.dismiss();
+                            checkCamera();
                         }
+                    }
+                })
+                .setIcon(getResources().getDrawable(R.drawable.appicon_new))
+                .show();
+    }
+
+    public void checkCamera() {
+        new AlertDialog.Builder(KycUpdate.this)
+                .setTitle("SafePe - KYC Update")
+                .setMessage("SapfePe Will Check Camera And Image Quality First.\nPlease Click An Image First To Check.\n\n\n"+HindiCheck)
+                .setCancelable(false)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                //.setPositiveButton(android.R.string.yes, null)
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+                        dialog.dismiss();
+                        if (ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                                && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                            selectImage(CHECK_CAMERA);
+                        } else {
+                            ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE
+                            }, 100);
+                        }
+                    }
+                })
+                .setIcon(getResources().getDrawable(R.drawable.appicon_new))
+                .show();
+    }
+
+    public void showCheckDone(String Message) {
+        new AlertDialog.Builder(KycUpdate.this)
+                .setTitle("SafePe - KYC Update")
+                .setMessage(Message)
+                .setCancelable(false)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                //.setPositiveButton(android.R.string.yes, null)
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                //.setNegativeButton(android.R.string.no, null)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+                        dialog.dismiss();
                     }
                 })
                 .setIcon(getResources().getDrawable(R.drawable.appicon_new))
@@ -749,7 +884,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         Log.v("error",e.getMessage());
-
+                        logRequest = new ExceptionLogRequest(KycUpdate.this,UserId,"KycUpdate",e.getMessage(),"887","registerKyc api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(KycUpdate.this.findViewById(R.id.kycLayout), false, e.getCause());
                     }
                 }));
