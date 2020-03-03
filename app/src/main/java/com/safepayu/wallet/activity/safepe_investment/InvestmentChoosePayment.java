@@ -150,8 +150,8 @@ public class InvestmentChoosePayment extends AppCompatActivity implements RadioG
             }
         });
 
-        getServicesCharges();
-    }
+           getServicesCharges();
+}
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
