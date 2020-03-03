@@ -25,6 +25,7 @@ public class FDPayRequest {
     private String package_amount;
     private String refer;
     private String amount;
+    private String interestRateId;
 
 
     public String getTransaction_type() {
@@ -105,5 +106,9 @@ public class FDPayRequest {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public void setInterestRateId(String interestRateId) {
+        this.interestRateId = interestRateId;
     }
 }

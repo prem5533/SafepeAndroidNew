@@ -11,7 +11,7 @@ public class ResponseDataModel {
     public String fb_interest;
     public String fdbal_amount;
     public String wallet_amount;
-    public double investment_total;
+    public String investment_total;
 
     public String name;
     public String mobile;
@@ -22,6 +22,7 @@ public class ResponseDataModel {
     public int showprofile;
 
     public List<AllListData> bank;
+    public List<AllListData> log;
     public List<String> instruction;
     public String tnc;
 }

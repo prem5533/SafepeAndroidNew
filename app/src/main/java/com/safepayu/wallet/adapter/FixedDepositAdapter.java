@@ -68,7 +68,6 @@ public class FixedDepositAdapter extends RecyclerView.Adapter<FixedDepositAdapte
             tvStatus = itemView.findViewById(R.id.tv_fd_status);
             tvDepositAmount = itemView.findViewById(R.id.tv_deposit_amount);
 
-
             itemView.setOnClickListener(this);
         }
 
@@ -88,7 +87,6 @@ public class FixedDepositAdapter extends RecyclerView.Adapter<FixedDepositAdapte
                 tvStatus.setText("Failed");
                 tvStatus.setTextColor(Color.parseColor("#E32636"));
             }
-
         }
 
         @Override

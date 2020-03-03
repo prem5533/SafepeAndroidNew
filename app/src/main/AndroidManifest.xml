@@ -31,7 +31,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.deposit_fixed.FDMemberBankAddPackages"></activity>
+        <activity android:name=".activity.deposit_fixed.TransferFdToBank"></activity>
+        <activity android:name=".activity.deposit_fixed.FixedDepositWallet" />
+        <activity android:name=".activity.deposit_fixed.FDMemberBankAddPackages" />
         <activity
             android:name=".activity.safepe_investment.InvestmentProfileActivity"
             android:screenOrientation="portrait" />

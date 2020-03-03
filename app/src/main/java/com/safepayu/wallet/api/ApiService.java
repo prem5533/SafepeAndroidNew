@@ -429,4 +429,11 @@ public interface ApiService {
     //***************Safepe fixed deposit
     @GET("api/pefast.safepe.latepe/api/getFixedDeposit")
     Single<InvestmentResponse> getFixedDepositList();
+
+    @GET("api/pefast.safepe.latepe/api/getFixedDepositLog")
+    Single<InvestmentWalletLogResponse> getFixedDepositLog();
+
+    @FormUrlEncoded
+    @POST("api/pefast.safepe.latepe/api/getFDInterest")
+    Single<ResponseModel> getFDInterest(@Field("amount") String amount);
 }

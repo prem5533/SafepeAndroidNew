@@ -353,7 +353,7 @@
                         app:contentPadding="5dp">
 
                         <LinearLayout
-                            android:id="@+id/ll_investment_wallet"
+                            android:id="@+id/ll_fixed_deposit_wallet"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
@@ -400,7 +400,7 @@
                                         android:textSize="18dp" />
 
                                     <TextView
-                                        android:id="@+id/tv_investment_wallet_amount"
+                                        android:id="@+id/tv_fixed_deposit_wallet_amount"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="3dp"
