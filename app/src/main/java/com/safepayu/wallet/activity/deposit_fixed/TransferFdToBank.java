@@ -174,7 +174,7 @@ public class TransferFdToBank extends AppCompatActivity implements RadioGroup.On
         List<String> lables = new ArrayList<>();
         lables.add("Select Beneficiary Account");
         for (int i = 0; i < beneficiaryBeanList.size(); i++) {
-            lables.add(beneficiaryBeanList.get(i).getBank_account());
+            lables.add(beneficiaryBeanList.get(i).getName());
         }
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, lables);
@@ -185,7 +185,7 @@ public class TransferFdToBank extends AppCompatActivity implements RadioGroup.On
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (!(parent.getSelectedItem().toString().equalsIgnoreCase("Select FD Amount"))) {
+        if (!(parent.getSelectedItem().toString().equalsIgnoreCase("Select Beneficiary Account"))) {
             BenID = String.valueOf(beneficiaryBeanList.get(position - 1).getBenId());
         } else {
         }
