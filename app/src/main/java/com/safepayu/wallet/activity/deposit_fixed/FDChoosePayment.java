@@ -14,10 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
-import com.safepayu.wallet.activity.MemberBankAddPackages;
 import com.safepayu.wallet.activity.PaymentType;
 import com.safepayu.wallet.activity.PaymentTypeNew;
-import com.safepayu.wallet.activity.safepe_investment.InvestmentChoosePayment;
 import com.safepayu.wallet.adapter.BuyMembershipAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
@@ -44,7 +42,7 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
     private RecyclerView recycleBankList;
     private RadioGroup paymentMode;
     private CardView cardView;
-    private String TransactionType = "", BankName = "", Amount = "", ReferId = "";
+    private String TransactionType = "", BankName = "", Amount = "", ReferId = "", interestRateId = "";
     private Double totalPayableAmount;
     double gst = 0;
     private BuyMembershipAdapter buyMembershipAdapter;
@@ -72,6 +70,7 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
         try {
             Amount = getIntent().getStringExtra("AmountDeposit");
             ReferId = getIntent().getStringExtra("ReferId");
+            interestRateId = getIntent().getStringExtra("interestRateId");
         } catch (Exception e) {
             Amount = "0";
             e.printStackTrace();
@@ -98,6 +97,7 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
                     fdPayRequest.setPackage_amount(String.valueOf(totalPayableAmount));
                     fdPayRequest.setRefer(ReferId);
                     fdPayRequest.setAmount(Amount);
+                    fdPayRequest.setInterestRateId(interestRateId);
 
                     Intent intent;
                     if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN).equals("0")) {
@@ -130,6 +130,7 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
                         intent.putExtra("RealAmount", Amount);
                         intent.putExtra("Activity", "FD");
                         intent.putExtra("ReferId", ReferId);
+                        intent.putExtra("interestRateId",interestRateId);
                         startActivity(intent);
                         finish();
                     }

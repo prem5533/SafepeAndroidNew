@@ -1,12 +1,6 @@
 package com.safepayu.wallet.activity.deposit_fixed;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,11 +27,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.safepayu.wallet.BaseActivity;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.BuyMemberShip;
-import com.safepayu.wallet.activity.MemberBankAddPackages;
 import com.safepayu.wallet.activity.PaidOrderActivity;
 import com.safepayu.wallet.activity.PaymentType;
 import com.safepayu.wallet.activity.PaymentTypeNew;
@@ -71,7 +68,7 @@ public class FDMemberBankAddPackages extends BaseActivity implements PasscodeCli
     private EditText tv_referencenumber, tv_amountpaid, UPIorbankaccount, tvBankName;
     private Spinner BankTypeSpinner, TransferTypeSpinner, SpinnerWalletOption;
     private String[] TransferTypeCategories, bankcategories, WalletOptionCategories;
-    private String TransferTypeText = "", BankNameText = "", PackageID = "", TransactionType = "", textBase64 = "", Amount = "", RealAmount = "";
+    private String TransferTypeText = "", BankNameText = "", PackageID = "", TransactionType = "", textBase64 = "", Amount = "", RealAmount = "", interestRateId = "";
     private String WalletOptionText = "", PackageName = "", Activity = "", ReferId = "";
     private LoadingDialog loadingDialog;
     private boolean CheckNetConnection = false;
@@ -117,6 +114,7 @@ public class FDMemberBankAddPackages extends BaseActivity implements PasscodeCli
             Amount = getIntent().getStringExtra("Amount");
             PackageName = getIntent().getStringExtra("PackageName");
             BankNameText = getIntent().getStringExtra("BankName");
+            interestRateId = getIntent().getStringExtra("interestRateId");
             tv_amountpaid.setText(getResources().getString(R.string.rupees) + " " + Amount);
             tv_amountpaid.setEnabled(false);
             tvBankName.setText(BankNameText);
@@ -373,6 +371,7 @@ public class FDMemberBankAddPackages extends BaseActivity implements PasscodeCli
                                             fdPayRequest.setPackage_amount(Amount);
                                             fdPayRequest.setRefer(ReferId);
                                             fdPayRequest.setAmount(RealAmount);
+                                            fdPayRequest.setInterestRateId(interestRateId);
                                             if (CheckNetConnection) {
                                                 PayFixedDeposit(fdPayRequest);
                                             } else {
