@@ -14,6 +14,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.safepe_investment.AvailableBalanceActivity;
 import com.safepayu.wallet.activity.safepe_investment.InvestmentDepositActivity;
 import com.safepayu.wallet.activity.safepe_investment.InvestmentProfileActivity;
+import com.safepayu.wallet.activity.safepe_investment.InvestmentWallet;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -25,12 +26,12 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class FixedDepositActivity extends AppCompatActivity implements View.OnClickListener {
-    public LinearLayout liTotalAmountFD, liFixedDeposit, ll_profile_visibility;
+    public LinearLayout liTotalAmountFD, liFixedDeposit, ll_profile_visibility, ll_fixed_deposit_wallet;
     private LoadingDialog loadingDialog;
     public Button send_back_btn_fd;
     public TextView tv_toolbar_name;
     public TextView tv_total_deposit_amount, tv_fixed_deposit_amount, tv_wallet_amount, tv_fixed_deposit_interest_amount,
-            tv_investment_wallet_amount;
+            tv_fixed_deposit_wallet_amount;
     public String depositAmount, fdInterest, balanceAmount;
     private String DeviceName = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
     private String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
@@ -52,15 +53,18 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
         ll_profile_visibility = findViewById(R.id.ll_profile_visibility);
         send_back_btn_fd = findViewById(R.id.send_back_btn_fd);
         tv_toolbar_name = findViewById(R.id.tv_toolbar_name);
+        ll_fixed_deposit_wallet = findViewById(R.id.ll_fixed_deposit_wallet);
+        tv_fixed_deposit_wallet_amount = findViewById(R.id.tv_fixed_deposit_wallet_amount);
 
         tv_total_deposit_amount = findViewById(R.id.tv_total_deposit_amount);
         tv_fixed_deposit_amount = findViewById(R.id.tv_fixed_deposit_amount);
-        tv_wallet_amount = findViewById(R.id.tv_wallet_amount);
+     //   tv_wallet_amount = findViewById(R.id.tv_wallet_amount);
         tv_fixed_deposit_interest_amount = findViewById(R.id.tv_fixed_deposit_interest_amount);
 
         liTotalAmountFD.setOnClickListener(this);
         liFixedDeposit.setOnClickListener(this);
         ll_profile_visibility.setOnClickListener(this);
+        ll_fixed_deposit_wallet.setOnClickListener(this);
         send_back_btn_fd.setOnClickListener(this);
 
         safepeFixedDepostAccount();
@@ -89,7 +93,10 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
             case R.id.send_back_btn_fd:
                 finish();
                 break;
-
+            case R.id.ll_fixed_deposit_wallet:
+                startActivity(new Intent(FixedDepositActivity.this, FixedDepositWallet.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+                break;
         }
     }
 
@@ -117,8 +124,8 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
                                 balanceAmount = response.data.balance_amount;
                                 tv_total_deposit_amount.setText(response.data.balance_amount);
                                 tv_fixed_deposit_amount.setText(response.data.fdbal_amount);
-                                tv_wallet_amount.setText(String.valueOf(response.data.wallet_amount));
-                                tv_investment_wallet_amount.setText("" + response.data.investment_total);
+                              //  tv_wallet_amount.setText(response.data.wallet_amount);
+                                tv_fixed_deposit_wallet_amount.setText("" + response.data.investment_total);
                                 tv_fixed_deposit_interest_amount.setText("Earn upto " + response.data.fb_interest + "% interest per day on your SafePe Investment");
 
                                 BaseApp.getInstance().sharedPref().setString(BaseApp.getInstance().sharedPref().INVESTMENT_WALLET_BALANCE,

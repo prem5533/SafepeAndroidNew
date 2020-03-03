@@ -45,7 +45,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_regular"
                             android:gravity="center"
-                            android:text="SafePe Investment Interest Table"
+                            android:text="SafePe Fixed Deposit Interest Table"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -77,7 +77,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="SafePe Investment Amount"
+                        android:text="SafePe Fixed Deposit Amount"
                         android:textColor="@color/grey_700"
                         android:textSize="14sp" />
 
@@ -120,17 +120,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Your interest is calculated based on the duration for which you keep your investment"
+                        android:text="Your interest is calculated based on the duration for which you keep your Fixed Deposit"
                         android:textColor="@color/grey_700"
                         android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="Your interest is calculated based on the duration for which you keep your FD."
-                        android:textColor="@color/grey_700"
-                        android:textSize="14sp" />
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Please choose any one interest Rate and proceed"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
 
                 </LinearLayout>
 

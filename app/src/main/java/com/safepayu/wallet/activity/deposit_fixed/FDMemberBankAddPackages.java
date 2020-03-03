@@ -71,7 +71,7 @@ public class FDMemberBankAddPackages extends BaseActivity implements PasscodeCli
     private EditText tv_referencenumber, tv_amountpaid, UPIorbankaccount, tvBankName;
     private Spinner BankTypeSpinner, TransferTypeSpinner, SpinnerWalletOption;
     private String[] TransferTypeCategories, bankcategories, WalletOptionCategories;
-    private String TransferTypeText = "", BankNameText = "", PackageID = "", TransactionType = "", textBase64 = "", Amount = "", RealAmount = "";
+    private String TransferTypeText = "", BankNameText = "", PackageID = "", TransactionType = "", textBase64 = "", Amount = "", RealAmount = "", interestRateId = "";
     private String WalletOptionText = "", PackageName = "", Activity = "", ReferId = "";
     private LoadingDialog loadingDialog;
     private boolean CheckNetConnection = false;
@@ -117,6 +117,7 @@ public class FDMemberBankAddPackages extends BaseActivity implements PasscodeCli
             Amount = getIntent().getStringExtra("Amount");
             PackageName = getIntent().getStringExtra("PackageName");
             BankNameText = getIntent().getStringExtra("BankName");
+            interestRateId = getIntent().getStringExtra("interestRateId");
             tv_amountpaid.setText(getResources().getString(R.string.rupees) + " " + Amount);
             tv_amountpaid.setEnabled(false);
             tvBankName.setText(BankNameText);
@@ -373,6 +374,7 @@ public class FDMemberBankAddPackages extends BaseActivity implements PasscodeCli
                                             fdPayRequest.setPackage_amount(Amount);
                                             fdPayRequest.setRefer(ReferId);
                                             fdPayRequest.setAmount(RealAmount);
+                                            fdPayRequest.setInterestRateId(interestRateId);
                                             if (CheckNetConnection) {
                                                 PayFixedDeposit(fdPayRequest);
                                             } else {

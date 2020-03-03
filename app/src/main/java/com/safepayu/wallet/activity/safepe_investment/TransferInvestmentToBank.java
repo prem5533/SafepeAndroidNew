@@ -59,13 +59,13 @@ import static android.view.View.VISIBLE;
 public class TransferInvestmentToBank extends BaseActivity implements RadioGroup.OnCheckedChangeListener, PasscodeClickListener {
 
     Button BackBtn, WithDrawBtn;
-    private LinearLayout WithdrawAmountlayout, AddBankBenBtn,BenLayout;
-    private TextView AmountTotalTV, tvWithdrawalAmount, tvTax, tvTotalAmountsendmoney,tvWalletBalance,tvTransactionFee;
+    private LinearLayout WithdrawAmountlayout, AddBankBenBtn, BenLayout;
+    private TextView AmountTotalTV, tvWithdrawalAmount, tvTax, tvTotalAmountsendmoney, tvWalletBalance, tvTransactionFee;
     private TextView tvMinLimit;
     private Spinner BankBenSpinner;
     private EditText AmountED;
     private RadioGroup radioGroup;
-    private String Mode = "", BenID = "", Mobile = "",Limit="0",LimitMin="0";
+    private String Mode = "", BenID = "", Mobile = "", Limit = "0", LimitMin = "0";
     private LoadingDialog loadingDialog;
     private boolean CheckNet = false;
     Dialog dialogStatus;
@@ -73,7 +73,6 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
     TransferWalletToBankResponse responseData;
     TransferWalletToBankRequest transferWalletToBankRequestDate;
     private CardView cardAmount;
-
     ArrayList<String> NameList, IdList, BenIdList;
     private static int SPLASH_TIME_OUT = 59000;
 
@@ -84,10 +83,10 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
     private ImageView im_cross;
 
     private ApiService apiService;
-    double totalAmount = 0.0f, minusAmount = 0.0f,WalletBalance=0;
+    double totalAmount = 0.0f, minusAmount = 0.0f, WalletBalance = 0;
     int checkAmount = 0;
-    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
-    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    private String DeviceName = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
     ExceptionLogRequest logRequest;
 
     @Override
@@ -98,8 +97,8 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
         loadingDialog = new LoadingDialog(this);
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
-        Limit= BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT);
-        LimitMin=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT_MIN);
+        Limit = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT);
+        LimitMin = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT_MIN);
 
         AddBankBenBtn = findViewById(R.id.BankBenAddBtn);
         BackBtn = findViewById(R.id.send_back_btn);
@@ -114,12 +113,12 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
         AmountED = findViewById(R.id.withdrawAmount);
         cardAmount = findViewById(R.id.card_amount);
         tvWalletBalance = findViewById(R.id.walletBalance);
-        tvTransactionFee=findViewById(R.id.transactionFeeText_sendMoney);
-        tvMinLimit=findViewById(R.id.minLimit_sendMoney);
-        BenLayout=findViewById(R.id.benLayout_sendMoney);
+        tvTransactionFee = findViewById(R.id.transactionFeeText_sendMoney);
+        tvMinLimit = findViewById(R.id.minLimit_sendMoney);
+        BenLayout = findViewById(R.id.benLayout_sendMoney);
 
 
-        tvMinLimit.setText(getResources().getString(R.string.rupees)+" "+LimitMin);
+        tvMinLimit.setText(getResources().getString(R.string.rupees) + " " + LimitMin);
 
         BankBenSpinner.setVisibility(View.GONE);
         BenLayout.setVisibility(View.GONE);
@@ -141,9 +140,9 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
             }
         });
 
-        final String tax="2";
-        final String minCharge=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MIN_WITHDRAW_CHARGE);
-        tvTransactionFee.setText("Transaction fee: "+tax+"% or Minimum ₹ "+10);
+        final String tax = "2";
+        final String minCharge = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MIN_WITHDRAW_CHARGE);
+        tvTransactionFee.setText("Transaction fee: " + tax + "% or Minimum ₹ " + 10);
 
         AddBankBenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,22 +159,20 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
                             overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                         }
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
-                    logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this,UserId,"TransferInvestmentToBank",e.getMessage()," 165","PACKAGE_PURCHASED ",DeviceName);
+                    logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this, UserId, "TransferInvestmentToBank", e.getMessage(), " 165", "PACKAGE_PURCHASED ", DeviceName);
                 }
 
             }
         });
 
-        WithDrawBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        WithDrawBtn.setOnClickListener(view -> {
 
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Goto Your Profile and Verify Your Email First", true);
-                } else {
-                    try {
+            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Goto Your Profile and Verify Your Email First", true);
+            } else {
+                try {
 //                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
 //                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
 //                        } else {
@@ -191,24 +188,23 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
 //                            }
 //                        }
 
-                        try {
-                            if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")) {
-                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Withdraw Is Closed Today", true);
-                            } else {
-                                CheckValidate();
-                            }
-                        }catch (Exception e){
-                            logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this,UserId,"TransferInvestmentToBank",e.getMessage()," 201","IS_BLOCKED ",DeviceName);
+                    try {
+                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")) {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Withdraw Is Closed Today", true);
-                            e.printStackTrace();
+                        } else {
+                            CheckValidate();
                         }
-                    }catch (Exception e){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
+                    } catch (Exception e) {
+                        logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this, UserId, "TransferInvestmentToBank", e.getMessage(), " 201", "IS_BLOCKED ", DeviceName);
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Withdraw Is Closed Today", true);
                         e.printStackTrace();
                     }
+                } catch (Exception e) {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
+                    e.printStackTrace();
                 }
-
             }
+
         });
 
         BankBenSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -232,18 +228,18 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
                 try {
                     if (s.length() > 2) {
                         cardAmount.setVisibility(View.VISIBLE);
-                        double amt = CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()),Double.parseDouble(tax));
+                        double amt = CalculateAmount(Integer.parseInt(AmountED.getText().toString().trim()), Double.parseDouble(tax));
                         String text = AmountED.getText().toString().trim() + " - Tax = ";
                         AmountTotalTV.setText(text + String.format("%.2f", amt));
-                        tvWithdrawalAmount.setText(getResources().getString(R.string.rupees)+" "+String.format("%.2f", Double.parseDouble(AmountED.getText().toString().trim())));
-                        tvTax.setText(" -  " +getResources().getString(R.string.rupees)+" "+ String.format("%.2f", minusAmount));
-                        tvTotalAmountsendmoney.setText(getResources().getString(R.string.rupees)+" "+String.format("%.2f", totalAmount));
+                        tvWithdrawalAmount.setText(getResources().getString(R.string.rupees) + " " + String.format("%.2f", Double.parseDouble(AmountED.getText().toString().trim())));
+                        tvTax.setText(" -  " + getResources().getString(R.string.rupees) + " " + String.format("%.2f", minusAmount));
+                        tvTotalAmountsendmoney.setText(getResources().getString(R.string.rupees) + " " + String.format("%.2f", totalAmount));
                     } else {
                         cardAmount.setVisibility(View.GONE);
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
-                    logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this,UserId,"TransferInvestmentToBank",e.getMessage()," 246","amount edit text watcher ",DeviceName);
+                    logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this, UserId, "TransferInvestmentToBank", e.getMessage(), " 246", "amount edit text watcher ", DeviceName);
                 }
             }
 
@@ -264,29 +260,29 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
             Mobile = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE);
             getBenList();
         } catch (Exception e) {
-            logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this,UserId,"TransferInvestmentToBank",e.getMessage()," 267","onCreate ",DeviceName);
+            logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this, UserId, "TransferInvestmentToBank", e.getMessage(), " 267", "onCreate ", DeviceName);
             e.printStackTrace();
         }
 
         try {
-            WalletBalance= Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().INVESTMENT_WALLET_BALANCE));
-        }catch (Exception e){
-            WalletBalance=0.0f;
-            logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this,UserId,"TransferInvestmentToBank",e.getMessage()," 246","INVESTMENT_WALLET_BALANCE ",DeviceName);
+            WalletBalance = Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().INVESTMENT_WALLET_BALANCE));
+        } catch (Exception e) {
+            WalletBalance = 0.0f;
+            logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this, UserId, "TransferInvestmentToBank", e.getMessage(), " 246", "INVESTMENT_WALLET_BALANCE ", DeviceName);
             e.printStackTrace();
         }
 
-        tvWalletBalance.setText(getResources().getString(R.string.rupees)+" "+WalletBalance);
+        tvWalletBalance.setText(getResources().getString(R.string.rupees) + " " + WalletBalance);
     }
 
     private void CheckValidate() {
-        int Amount = 0,limit=0,limitMin=0;
+        int Amount = 0, limit = 0, limitMin = 0;
 
         try {
             Amount = Integer.parseInt(AmountED.getText().toString().trim());
-            limitMin = (int)Double.parseDouble(LimitMin)-1;
+            limitMin = (int) Double.parseDouble(LimitMin) - 1;
         } catch (Exception e) {
-            logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this,UserId,"TransferInvestmentToBank",e.getMessage()," 246","number format ",DeviceName);
+            logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this, UserId, "TransferInvestmentToBank", e.getMessage(), " 246", "number format ", DeviceName);
             e.printStackTrace();
         }
 
@@ -302,7 +298,7 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Select Any Beneficiary", false);
                     } else {
 
-                        if (Amount==(int)WalletBalance || Amount<(int)WalletBalance){
+                        if (Amount == (int) WalletBalance || Amount < (int) WalletBalance) {
                             TransferWalletToBankRequest transferWalletToBankRequest = new TransferWalletToBankRequest();
                             transferWalletToBankRequest.setAmount(String.valueOf(Amount));
                             transferWalletToBankRequest.setBeneId(BenID);
@@ -316,13 +312,13 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
 //                            }
                             PasscodeDialog passcodeDialog = new PasscodeDialog(TransferInvestmentToBank.this, TransferInvestmentToBank.this, "");
                             passcodeDialog.show();
-                        }else {
+                        } else {
                             showDialogFailed("Please Enter Amount Less Than Wallet Balance");
                         }
                     }
 
                 } else {
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Enter Amount Greater Than Rs "+LimitMin+".", true);
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Enter Amount Greater Than Rs " + LimitMin + ".", true);
                 }
             }
         } else {
@@ -394,7 +390,7 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), response.getMessage(), true);
                             }
                         } catch (Exception e) {
-                            logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this,UserId,"TransferInvestmentToBank",e.getMessage()," 397","getBeneficiary api ",DeviceName);
+                            logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this, UserId, "TransferInvestmentToBank", e.getMessage(), " 397", "getBeneficiary api ", DeviceName);
                             e.printStackTrace();
                         }
                     }
@@ -423,10 +419,10 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
                     @Override
                     public void onSuccess(TransferWalletToBankResponse response) {
                         loadingDialog.hideDialog();
-                        if (response.isStatus()){
+                        if (response.isStatus()) {
                             responseData = response;
                             ShowPending(response);
-                        }else {
+                        } else {
                             showDialogFailed(response.getMessage());
                         }
                     }
@@ -435,7 +431,7 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
                     public void onError(Throwable e) {
                         //Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
-                        logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this,UserId,"TransferInvestmentToBank",e.getMessage()," 438","transferInvWalletToBank api ",DeviceName);
+                        logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this, UserId, "TransferInvestmentToBank", e.getMessage(), " 438", "transferInvWalletToBank api ", DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.withMoneyLayout), true, e);
                     }
                 }));
@@ -536,81 +532,78 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
 
     /**
      * For static transaction show
-
-     CountDownTimer countDownTimer = new CountDownTimer(0, 1000) {
-    @Override
-    public void onTick(long millisUntilFinished) {
-    int seconds = (int) (millisUntilFinished / 1000);
-    int minutes = seconds / 60;
-    seconds = seconds % 60;
-    TImer.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
-    }
-
-    @Override
-    public void onFinish() {
-
-    Date c = Calendar.getInstance().getTime();
-
-    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
-
-    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
-
-    String currentDateandTime = sdf.format(new Date());
-
-    String txnID = sdf2.format(new Date())+generateRandom(6);
-
-
-    String formattedDate = df.format(c);
-
-    String utrId="93"+String.valueOf(generateRandom(10));
-
-
-    final Intent intentStatus = new Intent(TransferInvestmentToBank.this, PaidOrderActivity.class);
-
-    //            if (responseData.getStatusCode() == 1) {
-    //                intentStatus.putExtra("status", "success");
-    //            } else if (responseData.getStatusCode() == 2) {
-    //                //Toast.makeText(TransferInvestmentToBank.this, responseData.getMessage(), Toast.LENGTH_SHORT).show();
-    //                intentStatus.putExtra("status", "success");
-    //                //change status to pending on bank issue resolved
-    //            } else {
-    //                Toast.makeText(TransferInvestmentToBank.this, responseData.getMessage(), Toast.LENGTH_LONG).show();
-    //                intentStatus.putExtra("status", "failed");
-    //            }
-    intentStatus.putExtra("status", "success");
-    intentStatus.putExtra("txnid", txnID);
-    intentStatus.putExtra("Amount", AmountED.getText().toString().trim());
-    intentStatus.putExtra("date", currentDateandTime);
-    intentStatus.putExtra("productinfo", "Wallet To Bank Transaction");
-    intentStatus.putExtra("Message", "Transfer completed successfully");
-    intentStatus.putExtra("utr_id", utrId);
-    startActivity(intentStatus);
-    finish();
-    //dialogStatus.dismiss();
-
-    }
-    };
-
-     public static long generateRandom(int length) {
-     Random random = new Random();
-     char[] digits = new char[length];
-     digits[0] = (char) (random.nextInt(9) + '1');
-     for (int i = 1; i < length; i++) {
-     digits[i] = (char) (random.nextInt(10) + '0');
-     }
-     return Long.parseLong(new String(digits));
-     }
-
+     * <p>
+     * CountDownTimer countDownTimer = new CountDownTimer(0, 1000) {
+     *
+     * @Override public void onTick(long millisUntilFinished) {
+     * int seconds = (int) (millisUntilFinished / 1000);
+     * int minutes = seconds / 60;
+     * seconds = seconds % 60;
+     * TImer.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+     * }
+     * @Override public void onFinish() {
+     * <p>
+     * Date c = Calendar.getInstance().getTime();
+     * <p>
+     * SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+     * <p>
+     * SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+     * <p>
+     * SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+     * <p>
+     * String currentDateandTime = sdf.format(new Date());
+     * <p>
+     * String txnID = sdf2.format(new Date())+generateRandom(6);
+     * <p>
+     * <p>
+     * String formattedDate = df.format(c);
+     * <p>
+     * String utrId="93"+String.valueOf(generateRandom(10));
+     * <p>
+     * <p>
+     * final Intent intentStatus = new Intent(TransferInvestmentToBank.this, PaidOrderActivity.class);
+     * <p>
+     * //            if (responseData.getStatusCode() == 1) {
+     * //                intentStatus.putExtra("status", "success");
+     * //            } else if (responseData.getStatusCode() == 2) {
+     * //                //Toast.makeText(TransferInvestmentToBank.this, responseData.getMessage(), Toast.LENGTH_SHORT).show();
+     * //                intentStatus.putExtra("status", "success");
+     * //                //change status to pending on bank issue resolved
+     * //            } else {
+     * //                Toast.makeText(TransferInvestmentToBank.this, responseData.getMessage(), Toast.LENGTH_LONG).show();
+     * //                intentStatus.putExtra("status", "failed");
+     * //            }
+     * intentStatus.putExtra("status", "success");
+     * intentStatus.putExtra("txnid", txnID);
+     * intentStatus.putExtra("Amount", AmountED.getText().toString().trim());
+     * intentStatus.putExtra("date", currentDateandTime);
+     * intentStatus.putExtra("productinfo", "Wallet To Bank Transaction");
+     * intentStatus.putExtra("Message", "Transfer completed successfully");
+     * intentStatus.putExtra("utr_id", utrId);
+     * startActivity(intentStatus);
+     * finish();
+     * //dialogStatus.dismiss();
+     * <p>
+     * }
+     * };
+     * <p>
+     * public static long generateRandom(int length) {
+     * Random random = new Random();
+     * char[] digits = new char[length];
+     * digits[0] = (char) (random.nextInt(9) + '1');
+     * for (int i = 1; i < length; i++) {
+     * digits[i] = (char) (random.nextInt(10) + '0');
+     * }
+     * return Long.parseLong(new String(digits));
+     * }
      */
 
-    private double CalculateAmount(int amount,double tax) {
+    private double CalculateAmount(int amount, double tax) {
         minusAmount = ((((double) amount) / 100) * tax);
 
-        if (minusAmount>9){
+        if (minusAmount > 9) {
             totalAmount = (double) amount - minusAmount;
-        }else {
+        } else {
             minusAmount = Double.parseDouble("10");
             totalAmount = (double) amount - minusAmount;
         }
@@ -622,7 +615,7 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(Mobile, null);
 
-        SendOtpRequest sendOtpRequest=new SendOtpRequest();
+        SendOtpRequest sendOtpRequest = new SendOtpRequest();
         sendOtpRequest.setMobile(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
         sendOtpRequest.setType("3");
 
@@ -653,7 +646,7 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
 
     private void verifyOtp(String otp) {
 
-        @SuppressLint("HardwareIds")String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        @SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(Mobile, null);
@@ -682,7 +675,7 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
                 }));
     }
 
-    CountDownTimer countDownTimerOtp = new CountDownTimer(4*60000, 1000) {
+    CountDownTimer countDownTimerOtp = new CountDownTimer(4 * 60000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
             int seconds = (int) (millisUntilFinished / 1000);
@@ -752,7 +745,7 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
 
         dialog.setTitle("SafePe Alert")
                 .setCancelable(false)
-                .setMessage("\n"+Message+"\n")
+                .setMessage("\n" + Message + "\n")
 
                 // Specifying a listener allows you to take an action before dismissing the dialog.
                 // The dialog is automatically dismissed when a dialog button is clicked.

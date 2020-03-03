@@ -1,4 +1,8 @@
-package com.safepayu.wallet.activity.safepe_investment;
+package com.safepayu.wallet.activity.deposit_fixed;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -8,23 +12,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.ContactUs;
+import com.safepayu.wallet.activity.safepe_investment.InvestmentWallet;
+import com.safepayu.wallet.activity.safepe_investment.TransferInvestmentToBank;
 import com.safepayu.wallet.adapter.InvestmentWalletAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
 import com.safepayu.wallet.models.request.ExceptionLogRequest;
+import com.safepayu.wallet.models.response.InvestmentResponse;
 import com.safepayu.wallet.models.response.InvestmentWalletLogResponse;
 
 import java.util.ArrayList;
@@ -34,8 +40,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class InvestmentWallet extends AppCompatActivity implements InvestmentWalletAdapter.InvestmentWalletListener {
-
+public class FixedDepositWallet extends AppCompatActivity implements InvestmentWalletAdapter.InvestmentWalletListener, AdapterView.OnItemSelectedListener {
     private Button BackBtn;
     private TextView SendWallet, CommBalanceTV, WarningTextTv;
     private LoadingDialog loadingDialog;
@@ -45,14 +50,16 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
     private List<InvestmentWalletLogResponse.DataBean.LogListBean> CreditList, DebitList;
     private Dialog dialogFDeposit;
     private LinearLayout fdEmpty;
+    public Spinner sp_account_beneficiary;
     private String DeviceName = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
     private String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
     ExceptionLogRequest logRequest;
+    private List<InvestmentResponse.DataBean.InvestmentBean> investmentBeanList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.investment_wallet);
+        setContentView(R.layout.activity_fixed_deposit_wallet);
 
         loadingDialog = new LoadingDialog(this);
         SendWallet = findViewById(R.id.send_to_wallet);
@@ -63,6 +70,7 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
         CreditListBtn = findViewById(R.id.creditLayout_investmentWallet);
         DebitListBtn = findViewById(R.id.debitLayout_investmentWallet);
         fdEmpty = findViewById(R.id.fdEmptyWallet);
+        sp_account_beneficiary = findViewById(R.id.sp_account_beneficiary);
         recyclerViewCredit = findViewById(R.id.recycleCredit_investmentWallet);
         recyclerViewCredit.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -72,60 +80,45 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
         CreditList = new ArrayList<>();
         DebitList = new ArrayList<>();
 
-        BackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        BackBtn.setOnClickListener(view -> finish());
 
-        CreditListBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recyclerViewCredit.setVisibility(View.VISIBLE);
-                recyclerViewDebit.setVisibility(View.GONE);
-                if (CreditList.size() == 0) {
-                    fdEmpty.setVisibility(View.VISIBLE);
-                    recyclerViewCredit.setVisibility(View.GONE);
-                    recyclerViewDebit.setVisibility(View.GONE);
-                    Toast.makeText(InvestmentWallet.this, "No Credit List Found", Toast.LENGTH_SHORT).show();
-                } else {
-                    fdEmpty.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        DebitListBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        CreditListBtn.setOnClickListener(view -> {
+            recyclerViewCredit.setVisibility(View.VISIBLE);
+            recyclerViewDebit.setVisibility(View.GONE);
+            if (CreditList.size() == 0) {
+                fdEmpty.setVisibility(View.VISIBLE);
                 recyclerViewCredit.setVisibility(View.GONE);
-                recyclerViewDebit.setVisibility(View.VISIBLE);
-                if (DebitList.size() == 0) {
-                    Toast.makeText(InvestmentWallet.this, "No Debit List Found", Toast.LENGTH_SHORT).show();
-                    fdEmpty.setVisibility(View.VISIBLE);
-                    recyclerViewCredit.setVisibility(View.GONE);
-                    recyclerViewDebit.setVisibility(View.GONE);
-                } else {
-                    fdEmpty.setVisibility(View.GONE);
-                }
+                recyclerViewDebit.setVisibility(View.GONE);
+                Toast.makeText(FixedDepositWallet.this, "No Credit List Found", Toast.LENGTH_SHORT).show();
+            } else {
+                fdEmpty.setVisibility(View.GONE);
             }
         });
 
-        liSendTowallet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), TransferInvestmentToBank.class));
-                overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+        DebitListBtn.setOnClickListener(view -> {
+            recyclerViewCredit.setVisibility(View.GONE);
+            recyclerViewDebit.setVisibility(View.VISIBLE);
+            if (DebitList.size() == 0) {
+                Toast.makeText(FixedDepositWallet.this, "No Debit List Found", Toast.LENGTH_SHORT).show();
+                fdEmpty.setVisibility(View.VISIBLE);
+                recyclerViewCredit.setVisibility(View.GONE);
+                recyclerViewDebit.setVisibility(View.GONE);
+            } else {
+                fdEmpty.setVisibility(View.GONE);
             }
         });
 
+        liSendTowallet.setOnClickListener(view -> {
+            //  startActivity(new Intent(getApplicationContext(), TransferInvestmentToBank.class));
+            // overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+        });
         try {
             if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
                 liSendTowallet.setVisibility(View.GONE);
                 WarningTextTv.setVisibility(View.VISIBLE);
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentWallet), "Please Goto Your Profile and Verify Your Email First", true);
             } else {
-                getInvestment();
+                getFixedDepositLog();
                 try {
                     /*
                     if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
@@ -152,24 +145,28 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
                     }else {
 
                     } */
+
                     liSendTowallet.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    logRequest = new ExceptionLogRequest(InvestmentWallet.this, UserId, "InvestmentWallet", e.getMessage(), " 158", "onCreate ", DeviceName);
+                    logRequest = new ExceptionLogRequest(FixedDepositWallet.this, UserId, "InvestmentWallet", e.getMessage(), " 158", "onCreate ", DeviceName);
                     liSendTowallet.setVisibility(View.VISIBLE);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            logRequest = new ExceptionLogRequest(InvestmentWallet.this, UserId, "InvestmentWallet", e.getMessage(), " 164", "onCreate ", DeviceName);
+            logRequest = new ExceptionLogRequest(FixedDepositWallet.this, UserId, "InvestmentWallet", e.getMessage(), " 164", "onCreate ", DeviceName);
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentWallet), "Please Goto Your Profile and Verify Your Email First", true);
         }
+        getFixedDepositList();
+
+        sp_account_beneficiary.setOnItemSelectedListener(this);
     }
 
-    private void getInvestment() {
+    private void getFixedDepositLog() {
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
-        BaseApp.getInstance().getDisposable().add(apiService.getInvestmentLog()
+        BaseApp.getInstance().getDisposable().add(apiService.getFixedDepositLog()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<InvestmentWalletLogResponse>() {
@@ -187,14 +184,14 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
                                         DebitList.add(investmentWalletLogResponse.getData().getLogList().get(i));
                                     }
                                 }
-                                InvestmentWalletAdapter creditAdapter = new InvestmentWalletAdapter(InvestmentWallet.this, CreditList, InvestmentWallet.this);
+                                InvestmentWalletAdapter creditAdapter = new InvestmentWalletAdapter(FixedDepositWallet.this, CreditList, FixedDepositWallet.this);
                                 recyclerViewCredit.setAdapter(creditAdapter);
 
-                                InvestmentWalletAdapter debitAdapter = new InvestmentWalletAdapter(InvestmentWallet.this, DebitList, InvestmentWallet.this);
+                                InvestmentWalletAdapter debitAdapter = new InvestmentWalletAdapter(FixedDepositWallet.this, DebitList, FixedDepositWallet.this);
                                 recyclerViewDebit.setAdapter(debitAdapter);
 
                                 if (CreditList.size() == 0) {
-                                    Toast.makeText(InvestmentWallet.this, "No Credit List Found", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FixedDepositWallet.this, "No Credit List Found", Toast.LENGTH_SHORT).show();
                                     fdEmpty.setVisibility(View.VISIBLE);
                                     recyclerViewCredit.setVisibility(View.GONE);
                                     recyclerViewDebit.setVisibility(View.GONE);
@@ -210,12 +207,11 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        logRequest = new ExceptionLogRequest(InvestmentWallet.this, UserId, "InvestmentWallet", e.getMessage(), " 212", "getInvestmentLog api ", DeviceName);
+                        logRequest = new ExceptionLogRequest(FixedDepositWallet.this, UserId, "InvestmentWallet", e.getMessage(), " 212", "getInvestmentLog api ", DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.investmentWallet), false, e.getCause());
                     }
                 }));
     }
-
 
     @Override
     public void onInvestmentWalletClick(int position, InvestmentWalletLogResponse.DataBean.LogListBean logListBeanList) {
@@ -263,7 +259,7 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
         tv_contct_support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(InvestmentWallet.this, ContactUs.class));
+                startActivity(new Intent(FixedDepositWallet.this, ContactUs.class));
                 dialogFDeposit.dismiss();
                 finish();
             }
@@ -301,5 +297,58 @@ public class InvestmentWallet extends AppCompatActivity implements InvestmentWal
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(lp);
         dialogFDeposit.show();
+    }
+
+    private void getFixedDepositList() {
+        ApiService apiService = ApiClient.getClient(this).create(ApiService.class);
+        BaseApp.getInstance().getDisposable().add(apiService.getFixedDepositList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<InvestmentResponse>() {
+                    @Override
+                    public void onSuccess(InvestmentResponse response) {
+                        if (response.isStatus()) {
+                            for (int i = 0; i < response.getData().getInvestment().size(); i++) {
+                                investmentBeanList.add(response.getData().getInvestment().get(i));
+                            }
+                            populateStateSpinner();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.ll_parant), false, e.getCause());
+                    }
+                }));
+    }
+
+    private void populateStateSpinner() {
+        List<String> lables = new ArrayList<>();
+        lables.add("Select FD Amount");
+        for (int i = 0; i < investmentBeanList.size(); i++) {
+            lables.add("Rs. " + investmentBeanList.get(i).getBalance_amount() + " on " + investmentBeanList.get(i).getBuy_date());
+        }
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, lables);
+        spinnerAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_account_beneficiary.setAdapter(spinnerAdapter);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (!(parent.getSelectedItem().toString().equalsIgnoreCase("Select FD Amount"))) {
+            startActivity(new Intent(getApplicationContext(), TransferFdToBank.class).
+                    putExtra("FD_ID", String.valueOf(investmentBeanList.get(position - 1).getId())).
+                    putExtra("FD_AMOUNT", String.valueOf(investmentBeanList.get(position - 1).getBalance_amount())));
+            overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+        } else {
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

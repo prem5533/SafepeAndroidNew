@@ -25,13 +25,17 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.safepe_investment.InvestmentChoosePayment;
+import com.safepayu.wallet.adapter.FixedDepositRateAdapter;
 import com.safepayu.wallet.adapter.deposit.DepositInterestRateAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.interfaces.FixedDepositInterface;
 import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.response.AllListData;
 import com.safepayu.wallet.models.response.InvestmentReferResponse;
+import com.safepayu.wallet.models.response.ResponseModel;
+import com.safepayu.wallet.models.response.booking.bus.BusBookingResponse;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -42,7 +46,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class CreateFixedDepositActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
+public class CreateFixedDepositActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher, FixedDepositInterface {
 
     private LoadingDialog loadingDialog;
     public LinearLayout ll_interest_table;
@@ -56,9 +60,10 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
     private boolean referralCheck = false;
     private Button VerifyReffralBtn, verifyAlready;
     private TextView tvReferUserName, tvForReferralBtn, backToLoginBtn;
+    public String interestRateId = "";
     public LinearLayout layoutBottomSheet, ll_alertDismiss;
     public BottomSheetBehavior sheetBehavior;
-
+    public FixedDepositInterface fixedDepositInterface;
     private String DeviceName = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
     private String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
     ExceptionLogRequest logRequest;
@@ -67,7 +72,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_fd);
-
+        fixedDepositInterface = this;
         loadingDialog = new LoadingDialog(CreateFixedDepositActivity.this);
         Intent intent = getIntent();
         if (intent != null) {
@@ -105,6 +110,7 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
         VerifyReffralBtn.setOnClickListener(this);
         ed_amount.addTextChangedListener(this);
         tv_term_cond.setOnClickListener(this);
+        ll_alertDismiss.setOnClickListener(this);
 
 
         referralCode.addTextChangedListener(new TextWatcher() {
@@ -203,9 +209,9 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
                 break;
 
             case R.id.ll_interest_table:
-
                 dataList.clear();
-                setInterestData(ed_amount.getText().toString().trim());
+                getFDInterest(ed_amount.getText().toString().trim());
+
                 break;
 
             case R.id.ll_back:
@@ -232,10 +238,17 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
                         if (amt > 0) {
                             if (amt > 999 && amt < 500000 + 1) {
                                 if (referralCheck) {
-                                    Intent intent = new Intent(CreateFixedDepositActivity.this, FDChoosePayment.class);
-                                    intent.putExtra("AmountDeposit", ed_amount.getText().toString().trim());
-                                    intent.putExtra("ReferId", referralCode.getText().toString().trim());
-                                    startActivity(intent);
+                                    if (!interestRateId.equalsIgnoreCase("")) {
+                                        Intent intent = new Intent(CreateFixedDepositActivity.this, FDChoosePayment.class);
+                                        intent.putExtra("AmountDeposit", ed_amount.getText().toString().trim());
+                                        intent.putExtra("ReferId", referralCode.getText().toString().trim());
+                                        intent.putExtra("interestRateId", interestRateId);
+                                        startActivity(intent);
+                                    } else {
+
+                                        Toast.makeText(this, "Please Choose your interest rate!", Toast.LENGTH_LONG).show();
+                                    }
+
                                 } else {
                                     Toast.makeText(this, "Please Verify Your Referral Id", Toast.LENGTH_LONG).show();
                                 }
@@ -290,7 +303,8 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
     private void callInterestTable() {
 
         ViewGroup viewGroup = findViewById(android.R.id.content);
-        final View dialogView = LayoutInflater.from(this).inflate(R.layout.layout_deposit_interest_table_dialog, viewGroup, false);
+        final View dialogView = LayoutInflater.from(this).inflate(
+                R.layout.layout_deposit_interest_table_dialog, viewGroup, false);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView);
         final AlertDialog alertDialog = builder.create();
@@ -384,11 +398,48 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
 
         tv_fixed_deposit_amount.setText(ed_amount.getText().toString().trim());
         rv_deposit_interest_table_rate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
-        Collections.sort(dataList, AllListData.sortByGrpId);
 
-        mDepositInterestTable = new DepositInterestRateAdapter(this, dataList);
+        mDepositInterestTable = new FixedDepositRateAdapter(this, dataList, fixedDepositInterface);
         rv_deposit_interest_table_rate.setAdapter(mDepositInterestTable);
+    }
 
-        //loadingDialog.hideDialog();
+    private void getFDInterest(String balanceAmount) {
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        ApiService apiService = ApiClient.getClient(CreateFixedDepositActivity.this).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.getFDInterest(balanceAmount)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ResponseModel>() {
+                    @Override
+                    public void onSuccess(ResponseModel response) {
+                        loadingDialog.hideDialog();
+                        if (response.status) {
+                            for (int i = 0; i < response.data.log.size(); i++) {
+                                dataList.add(response.data.log.get(i));
+                            }
+                            if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                                sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                                callInterestBottomSheet();
+                            } else {
+                                sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                            }
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(CreateFixedDepositActivity.this.findViewById(R.id.ll_parant), response.message, false);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(CreateFixedDepositActivity.this.findViewById(R.id.ll_parant), false, e.getCause());
+                    }
+                }));
+    }
+
+    @Override
+    public void onClickInterestRate(String interestRateId) {
+        this.interestRateId = interestRateId;
+        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 }

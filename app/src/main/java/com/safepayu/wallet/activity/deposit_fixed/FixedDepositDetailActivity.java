@@ -25,12 +25,12 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class FixedDepositDetailActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView tvFDid,tvFDAmount,tvtax,tvstatus,tvPaymentMode,operationText,tv_bonus_amount,tv_balance_amount,tv_contct_support,please_invest_fd,tv_download_pdf;
+    private TextView tvFDid, tvFDAmount, tvtax, tvstatus, tvPaymentMode, operationText, tv_bonus_amount, tv_balance_amount, tv_contct_support, please_invest_fd, tv_download_pdf;
     private Button FD_back_btn;
-    private String safeTransactionId,totalAmount,BonusCredit,PaymentMode,packageAmount,BonusAmount, BalanceAmount,Status,id;
+    private String safeTransactionId, totalAmount, BonusCredit, PaymentMode, packageAmount, BonusAmount, BalanceAmount, Status, id;
     private LoadingDialog loadingDialog;
-    private String DeviceName=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
-    private String UserId=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    private String DeviceName = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
     ExceptionLogRequest logRequest;
 
     @Override
@@ -72,23 +72,21 @@ public class FixedDepositDetailActivity extends AppCompatActivity implements Vie
         tv_download_pdf.setOnClickListener(this);
 
         tvFDid.setText(safeTransactionId);
-        tvFDAmount.setText("₹ " +totalAmount);
-        tvtax.setText("Fixed Deposit Credit: " +BonusCredit);
-        tvPaymentMode.setText("Payment Mode: " +PaymentMode);
-        operationText.setText("Fixed Deposit Amount: ₹" +packageAmount);
-        tv_bonus_amount.setText("Bonus Amount: ₹" +BonusAmount);
-        tv_balance_amount.setText("Fixed Deposit Balance Amount: ₹" +BalanceAmount);
+        tvFDAmount.setText("₹ " + totalAmount);
+        tvtax.setText("Fixed Deposit Credit: " + BonusCredit);
+        tvPaymentMode.setText("Payment Mode: " + PaymentMode);
+        operationText.setText("Fixed Deposit Amount: ₹" + packageAmount);
+        tv_bonus_amount.setText("Bonus Amount: ₹" + BonusAmount);
+        tv_balance_amount.setText("Fixed Deposit Balance Amount: ₹" + BalanceAmount);
 
 
-        if (Integer.parseInt(Status)==0){
+        if (Integer.parseInt(Status) == 0) {
             tvstatus.setText("Pending");
             tvstatus.setTextColor(Color.parseColor("#FFBF00"));
-        }
-        else if (Integer.parseInt(Status)==1){
+        } else if (Integer.parseInt(Status) == 1) {
             tvstatus.setText("Approved");
             tvstatus.setTextColor(Color.parseColor("#84DE02"));
-        }
-        else if (Integer.parseInt(Status)==2){
+        } else if (Integer.parseInt(Status) == 2) {
             tvstatus.setText("Failed");
             tvstatus.setTextColor(Color.parseColor("#E32636"));
         }
@@ -97,7 +95,7 @@ public class FixedDepositDetailActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.FD_back_btn:
                 finish();
                 break;
@@ -119,10 +117,10 @@ public class FixedDepositDetailActivity extends AppCompatActivity implements Vie
 //                        getFixedDepositPdf();
 //                    }
                     Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
-                    logRequest = new ExceptionLogRequest(FixedDepositDetailActivity.this,UserId,"InvestmentDetailActivity",e.getMessage()," 124","pdf ",DeviceName);
-                    Toast.makeText(getApplicationContext(),"Could't downlad the PDF",Toast.LENGTH_LONG).show();
+                    logRequest = new ExceptionLogRequest(FixedDepositDetailActivity.this, UserId, "InvestmentDetailActivity", e.getMessage(), " 124", "pdf ", DeviceName);
+                    Toast.makeText(getApplicationContext(), "Could't downlad the PDF", Toast.LENGTH_LONG).show();
                 }
 
                 break;
@@ -135,7 +133,7 @@ public class FixedDepositDetailActivity extends AppCompatActivity implements Vie
         BaseApp.getInstance().getDisposable().add(apiService.getFixedPDF(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<FlighPdfResponse>(){
+                .subscribeWith(new DisposableSingleObserver<FlighPdfResponse>() {
                     @Override
                     public void onSuccess(FlighPdfResponse response) {
                         loadingDialog.hideDialog();
@@ -149,7 +147,7 @@ public class FixedDepositDetailActivity extends AppCompatActivity implements Vie
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
-                        logRequest = new ExceptionLogRequest(FixedDepositDetailActivity.this,UserId,"InvestmentDetailActivity",e.getMessage()," 152","pdf api",DeviceName);
+                        logRequest = new ExceptionLogRequest(FixedDepositDetailActivity.this, UserId, "InvestmentDetailActivity", e.getMessage(), " 152", "pdf api", DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.fd_detail), false, e.getCause());
                     }
                 }));

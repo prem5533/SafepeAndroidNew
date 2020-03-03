@@ -8,6 +8,10 @@ public class AllListData {
     public String r_rate;
     public String amount;
 
+    public String interestRateId;
+    public String from;
+    public String interestrate;
+
     public static Comparator<AllListData> sortByGrpId = (s1, s2) -> {
         int grp_id1 = Integer.parseInt(s1.id);
         int grp_id2 = Integer.parseInt(s2.id);
