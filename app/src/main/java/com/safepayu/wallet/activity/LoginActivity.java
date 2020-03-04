@@ -128,7 +128,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         // This code requires one time to get Hash keys do comment and share key
         AppSignatureHashHelper appSignatureHashHelper = new AppSignatureHashHelper(this);
-        //Log.v(TAG, "HashKey: " + appSignatureHashHelper.getAppSignatures().get(0));
+      //  Log.v(TAG, "HashKey: " + appSignatureHashHelper.getAppSignatures().get(0)); BAjuyQYAK4m
 
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);

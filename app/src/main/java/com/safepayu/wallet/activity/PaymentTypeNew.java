@@ -56,8 +56,10 @@ import io.reactivex.schedulers.Schedulers;
 import static android.view.View.GONE;
 import static com.safepayu.wallet.activity.BuyMemberShip.buyPackageFromDB;
 import static com.safepayu.wallet.activity.LoginActivity.finalAmount;
+import static com.safepayu.wallet.activity.deposit_fixed.FDChoosePayment.fixedDepositPayRequest;
 import static com.safepayu.wallet.activity.recharge.LandlineBillPay.OptionValue2;
 import static com.safepayu.wallet.activity.recharge.LandlineBillPay.StdCode;
+import static com.safepayu.wallet.activity.recharge.MobileRecharge.validityDate;
 import static com.safepayu.wallet.activity.safepe_investment.InvestmentChoosePayment.fdPayRequest;
 
 public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickListener {
@@ -139,7 +141,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
 
             Log.v("PaymentFor : ",PaymentFor);
             if (PaymentFor.equalsIgnoreCase("Wallet") || PaymentFor.equalsIgnoreCase("Buy Package")
-                                || PaymentFor.equalsIgnoreCase("Investment")) {
+                                || PaymentFor.equalsIgnoreCase("Investment") || PaymentFor.equalsIgnoreCase("Fixed")) {
                 checkBoxWallet.setChecked(false);
                 checkBoxWallet.setClickable(false);
                 checkBoxWallet.setEnabled(false);
@@ -201,7 +203,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     tvWalletDeductAmount.setVisibility(View.GONE);
                     tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                     tvGatewayText.setVisibility(View.VISIBLE);
-                    if (PaymentFor.equalsIgnoreCase("Buy Package")  || PaymentFor.equalsIgnoreCase("Investment")){
+                    if (PaymentFor.equalsIgnoreCase("Buy Package")  || PaymentFor.equalsIgnoreCase("Investment") || PaymentFor.equalsIgnoreCase("Fixed")){
                         btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                         tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                     }else {
@@ -209,7 +211,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                         tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " +Float.parseFloat(String.valueOf(finalAmount)));
                     }
                 }else {
-                    if (!PaymentFor.equalsIgnoreCase("Buy Package")  || !PaymentFor.equalsIgnoreCase("Investment")){
+                    if (!PaymentFor.equalsIgnoreCase("Buy Package")  || !PaymentFor.equalsIgnoreCase("Investment") || PaymentFor.equalsIgnoreCase("Fixed")){
                         checkBoxWallet.setChecked(true);
                         checkBoxGatewayPayment.setChecked(false);
                         tvWalletDeductAmount.setVisibility(View.VISIBLE);
@@ -286,7 +288,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     hashKeyRequest.setMerchant_productInfo(PaymentFor+" "+PaymentTypeText);
                     hashKeyRequest.setCustomer_email_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
                     hashKeyRequest.setType("0");
-                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
+                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment") || PaymentFor.equalsIgnoreCase("Fixed")){
                         hashKeyRequest.setMerchant_payment_amount(Amount);
                     }else {
                         hashKeyRequest.setMerchant_payment_amount(""+Float.parseFloat(String.valueOf(balAmount)));
@@ -315,7 +317,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     hashKeyRequest.setMerchant_productInfo(PaymentFor+" "+PaymentTypeText);
                     hashKeyRequest.setCustomer_email_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_EMAIL));
                     hashKeyRequest.setType("0");
-                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
+                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")  || PaymentFor.equalsIgnoreCase("Fixed")){
                         hashKeyRequest.setMerchant_payment_amount(Amount);
                     }else {
                         hashKeyRequest.setMerchant_payment_amount(""+Float.parseFloat(String.valueOf(finalAmount)));
@@ -355,7 +357,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                                 tvTotalBalanceWallet.setText(getResources().getString(R.string.rupees) + " " + NumberFormat.getIntegerInstance().format((int) Double.parseDouble(walletLimitResponse.getData().getWallet_balance())));
                                 tvWalletlimit.setText("* Today's Wallet Limit - Rs. " + new DecimalFormat("##.##").format(walletLimitResponse.getData().getLimit()));
 
-                                if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
+                                if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment") || PaymentFor.equalsIgnoreCase("Fixed")){
                                     /*if (amount>walletBal){
                                         checkWalletBal=false;
                                         checkBoxWallet.setChecked(false);
@@ -364,7 +366,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                                         tvWalletDeductAmount.setVisibility(View.GONE);
                                         tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                                         tvGatewayText.setVisibility(View.VISIBLE);
-                                        if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
+                                        if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment") || PaymentFor.equalsIgnoreCase("Fixed")){
                                             btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                             tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                         }else {
@@ -380,7 +382,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                                             tvWalletDeductAmount.setVisibility(View.GONE);
                                             tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                                             tvGatewayText.setVisibility(View.VISIBLE);
-                                            if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
+                                            if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment") || PaymentFor.equalsIgnoreCase("Fixed")){
                                                 btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                                 tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                             }else {
@@ -408,7 +410,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                                     tvWalletDeductAmount.setVisibility(View.GONE);
                                     tvGatewayDeductAmount.setVisibility(View.VISIBLE);
                                     tvGatewayText.setVisibility(View.VISIBLE);
-                                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
+                                    if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment") || PaymentFor.equalsIgnoreCase("Fixed")){
                                         btnBookingPayAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                         tvGatewayDeductAmount.setText(getResources().getString(R.string.rupees) + " " + Double.parseDouble(Amount));
                                     }else {
@@ -461,7 +463,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
     @Override
     public void onPasscodeMatch(boolean isPasscodeMatched) {
         if (isPasscodeMatched){
-            if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
+            if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment") || PaymentFor.equalsIgnoreCase("Fixed")){
                 //BuyPackageMethod("","");
             }else {
                 RechargeRequest rechargeRequest=new RechargeRequest();
@@ -474,6 +476,12 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 rechargeRequest.setTransaction_id("");
                 rechargeRequest.setNumber_type("");
                 rechargeRequest.setDescription(PaymentFor+" "+PaymentTypeText);
+
+                if (PaymentFor.equalsIgnoreCase("Mobile")){
+                    rechargeRequest.setValidityHours(validityDate);
+                }else {
+                    rechargeRequest.setValidityHours(" ");
+                }
 
                 if (RechargeTypeId.equals("7")){
                     rechargeRequest.setStdCode(StdCode);
@@ -498,6 +506,8 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 499","passcode match ",DeviceName);
                     e.printStackTrace();
                 }
+
+
 
                 doRecharge(rechargeRequest);
             }
@@ -621,7 +631,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
 
     }
 
-    private void PayFixedDeposit(final String txnid, final String easepayid){
+    private void PayInvestment(final String txnid, final String easepayid){
         fdPayRequest.setRefrence_no(easepayid);
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
@@ -665,6 +675,58 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                         loadingDialog.hideDialog();
                         logRequest = new ExceptionLogRequest(PaymentTypeNew.this,UserId,"PaymentTypeNew",e.getMessage()," 438","saveInvestment api ",DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.payment), true, e);
+                    }
+                }));
+
+    }
+
+    private void PayFixedDeposit(final String txnid, final String easepayid) {
+        fixedDepositPayRequest.setRefrence_no(easepayid);
+
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+
+        ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
+
+        BaseApp.getInstance().getDisposable().add(apiService.saveFixedDeposit(fixedDepositPayRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<BuyPackageResponse>() {
+                    @Override
+                    public void onSuccess(BuyPackageResponse response) {
+                        loadingDialog.hideDialog();
+                        String currentDate = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(new Date());
+                        Intent intentStatus = new Intent(PaymentTypeNew.this, PaidOrderActivity.class);
+                        if (response.isStatus()) {
+                            intentStatus.putExtra("status", "success");
+                            try {
+                                intentStatus.putExtra("toAccount", response.getData().getPaid_to_account());
+                                intentStatus.putExtra("fromAccount", response.getData().getPaid_from_account());
+                                intentStatus.putExtra("RefNo", response.getData().getRefrence_no());
+                                intentStatus.putExtra("date", response.getData().getCreated_at());
+                                intentStatus.putExtra("PayMode", response.getData().getPayment_mode());
+                                intentStatus.putExtra("Note", response.getData().getFootnote());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            intentStatus.putExtra("status", "failed");
+                            Toast.makeText(PaymentTypeNew.this, response.getMessage(), Toast.LENGTH_LONG).show();
+
+                        }
+                        intentStatus.putExtra("txnid", txnid);
+                        intentStatus.putExtra("Amount", Amount);
+                        intentStatus.putExtra("Message", response.getMessage());
+                        intentStatus.putExtra("productinfo", "Fixed Deposit");
+
+                        startActivity(intentStatus);
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.v("error", "onError: " + e.getMessage());
+                        loadingDialog.hideDialog();
+                        BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.memberBankAddPackages), true, e);
                     }
                 }));
 
@@ -761,7 +823,7 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
         }
         //merchant_payment_amount = Float.parseFloat(Amount);
 
-        if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment")){
+        if (PaymentFor.equalsIgnoreCase("Buy Package") || PaymentFor.equalsIgnoreCase("Investment") || PaymentFor.equalsIgnoreCase("Fixed")){
             merchant_payment_amount = Float.parseFloat(Amount);
         }else {
             if (checkBoxGatewayPayment.isChecked() && checkBoxWallet.isChecked()){
@@ -873,6 +935,9 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
             }  else if (PaymentFor.equalsIgnoreCase("Investment")){
                 sendPaymentGatewayDetailsRequest.setPackage_amount("");
                 sendPaymentGatewayDetailsRequest.setPackage_id("");
+            }else if (PaymentFor.equalsIgnoreCase("Fixed")){
+                sendPaymentGatewayDetailsRequest.setPackage_amount("");
+                sendPaymentGatewayDetailsRequest.setPackage_id("");
             }else {
                 sendPaymentGatewayDetailsRequest.setPackage_amount("");
                 sendPaymentGatewayDetailsRequest.setPackage_id("");
@@ -896,6 +961,8 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                 } else if (PaymentFor.equalsIgnoreCase("Buy Package")){
                     BuyPackageMethod(txnid,easepayid);
                 }else if (PaymentFor.equalsIgnoreCase("Investment")){
+                    PayInvestment(txnid,easepayid);
+                } else if (PaymentFor.equalsIgnoreCase("Fixed")){
                     PayFixedDeposit(txnid,easepayid);
                 } else {
 
@@ -916,6 +983,16 @@ public class PaymentTypeNew extends AppCompatActivity implements PasscodeClickLi
                     }else{
                         rechargeRequest.setStdCode("");
                         rechargeRequest.setOpvalue2("");
+                    }
+
+                    try {
+                        if (PaymentFor.equalsIgnoreCase("Mobile")){
+                            rechargeRequest.setValidityHours(validityDate);
+                        }else {
+                            rechargeRequest.setValidityHours(" ");
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
 
                     try {

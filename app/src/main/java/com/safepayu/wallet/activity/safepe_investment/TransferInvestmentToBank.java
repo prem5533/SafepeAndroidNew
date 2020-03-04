@@ -512,7 +512,7 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
             intentStatus.putExtra("txnid", responseData.getTransactionId());
             intentStatus.putExtra("Amount", AmountED.getText().toString().trim());
             intentStatus.putExtra("date", responseData.getDate());
-            intentStatus.putExtra("productinfo", "Investment Wallet To Bank Transaction");
+            intentStatus.putExtra("productinfo", "Investments Wallet To Bank Transaction");
             intentStatus.putExtra("Message", responseData.getMessage());
             intentStatus.putExtra("utr_id", responseData.getUtr());
             startActivity(intentStatus);

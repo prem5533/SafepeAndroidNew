@@ -47,7 +47,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.RechargeOffe
         this.notifyDataSetChanged();
     }
 
-    public List<Offer> getOffers(){//Toast.makeText(context,"50",Toast.LENGTH_SHORT).show();
+    public List<Offer> getOffers(){
         List<Offer> list = new ArrayList<>();
         for (Offer o : allOffers){
             if (o.getCategory().equals(offerType)){
