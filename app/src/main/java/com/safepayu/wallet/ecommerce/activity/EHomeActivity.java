@@ -28,12 +28,15 @@ import com.safepayu.wallet.activity.ForgotPasscode;
 import com.safepayu.wallet.activity.Geneology;
 import com.safepayu.wallet.activity.KycUpdate;
 import com.safepayu.wallet.activity.LoginActivity;
+import com.safepayu.wallet.activity.Navigation;
 import com.safepayu.wallet.activity.PackageDetails;
 import com.safepayu.wallet.activity.Profile;
 import com.safepayu.wallet.activity.RechargeHistory;
 import com.safepayu.wallet.activity.ReferAndEarn;
 import com.safepayu.wallet.activity.WalletActivity;
 import com.safepayu.wallet.activity.WalletHistory;
+import com.safepayu.wallet.activity.deposit_fixed.FixedDepositActivity;
+import com.safepayu.wallet.activity.safepe_investment.InvestmentDepositActivity;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
@@ -56,9 +59,9 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
             liReferEarn, liUpdteKYC, liContactUs, liLogout, liWalletHistory, liSecurity,liLogoutParent,liChnangePassword ,
-            liLogoutAllDevices, linearSecurityTab,linearLogoutTab;
+            liLogoutAllDevices, linearSecurityTab,linearLogoutTab,liFD, liLoan;
     private TextView tv_home, tvProfile, tvPackageDetails, tvBuyPackage, tvBusinessWallet, tvMyWallet, tvShopping, tvChangePassword, tvMyOrders, tvHistory, tvGenelogy,
-            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security,tvChangePasswordChild,tvLogoutTextParent;
+            tvReferEarn, tvUpdateKYC, tvContact, tvLogout, tvLogoutAlldevice, tvWalletHistory, tv_security,tvChangePasswordChild,tvLogoutTextParent,tvFixedDeposit, tvLoan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +149,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         imageUpSecurity = findViewById(R.id.image_up_arrow);
         imageDownLogout = findViewById(R.id.image_down_arrowLogout);
         imageUpLogout = findViewById(R.id.image_up_arrowLogout);
+        liFD = findViewById(R.id.li_fd);
+        liLoan = findViewById(R.id.li_loan);
 
         tv_home = findViewById(R.id.tv_home);
         tvProfile = findViewById(R.id.tv_profile);
@@ -168,6 +173,10 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         tvWalletHistory = findViewById(R.id.tv_historyWallet);
         tvShopping = findViewById(R.id.tv_shopping);
         tv_security = findViewById(R.id.tv_security);
+        tvFixedDeposit = findViewById(R.id.tv_fixed_deposit);
+        tvLoan = findViewById(R.id.tv_loan);
+
+
 
         //********************set listener&*****************
         liHome.setOnClickListener(this);
@@ -188,8 +197,12 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
         liLogout.setOnClickListener(this);
         liLogoutAllDevices.setOnClickListener(this);
         liWalletHistory.setOnClickListener(this);
+        liFD.setOnClickListener(this);
+        liLoan.setOnClickListener(this);
+
         linearSecurityTab.setVisibility(View.GONE);
         linearLogoutTab.setVisibility(View.GONE);
+
 
         imageDownSecurity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,6 +228,9 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+
 
 
                 tv_home.setTextColor(getResources().getColor(R.color.black));
@@ -235,6 +251,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tv_home.setTextColor(getResources().getColor(R.color.black));
                 tvLogout.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
             }
         });
@@ -315,6 +333,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvLogout.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -335,6 +355,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 drawer.closeDrawers();
                 securityTab();
                 break;
@@ -361,6 +383,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -381,6 +405,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -406,6 +432,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -426,6 +454,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -451,6 +481,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -471,6 +503,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -495,6 +529,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -515,6 +551,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -540,6 +578,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -560,6 +600,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -584,6 +626,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -604,6 +648,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -629,6 +675,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -648,6 +696,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -673,6 +723,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvLogout.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.white));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -692,6 +744,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -719,6 +773,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -739,6 +795,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -764,6 +822,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -784,6 +844,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -809,6 +871,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -829,6 +893,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -854,6 +920,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -874,6 +942,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
 
                 break;
@@ -900,6 +970,10 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -945,6 +1019,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvLogout.setTextColor(getResources().getColor(R.color.black));
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.white));
@@ -965,6 +1041,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 securityTab();
                 break;
 
@@ -990,6 +1068,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
@@ -1010,7 +1090,104 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
 
+                break;
+
+            case R.id.li_fd:
+                drawer.closeDrawers();
+                startActivity(new Intent(EHomeActivity.this, InvestmentDepositActivity.class));
+
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+                tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
+                tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
+                tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+
+                liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.white));
+                break;
+
+            case R.id.li_loan:
+                drawer.closeDrawers();
+                startActivity(new Intent(EHomeActivity.this, FixedDepositActivity.class));
+                tvLoan.setTextColor(getResources().getColor(R.color.bue_A800));
+                tvContact.setTextColor(getResources().getColor(R.color.black));
+                tvProfile.setTextColor(getResources().getColor(R.color.black));
+                tvPackageDetails.setTextColor(getResources().getColor(R.color.black));
+                tvBuyPackage.setTextColor(getResources().getColor(R.color.black));
+                tvBusinessWallet.setTextColor(getResources().getColor(R.color.black));
+                tvMyWallet.setTextColor(getResources().getColor(R.color.black));
+                tvShopping.setTextColor(getResources().getColor(R.color.black));
+                tvChangePassword.setTextColor(getResources().getColor(R.color.black));
+                tvMyOrders.setTextColor(getResources().getColor(R.color.black));
+                tvHistory.setTextColor(getResources().getColor(R.color.black));
+                tvGenelogy.setTextColor(getResources().getColor(R.color.black));
+                tvReferEarn.setTextColor(getResources().getColor(R.color.black));
+                tvUpdateKYC.setTextColor(getResources().getColor(R.color.black));
+                tv_home.setTextColor(getResources().getColor(R.color.black));
+                tvLogout.setTextColor(getResources().getColor(R.color.black));
+                tvLogoutAlldevice.setTextColor(getResources().getColor(R.color.black));
+                tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
+                tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
+
+                liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWalletHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liContactUs.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liProfile.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liPackageDetails.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liBuyPackage.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liCommission.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liWallet.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liShopping.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liChnangePasswlrd.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liMyOrders.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHistory.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liGenelogy.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liReferEarn.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liSecurity.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.white));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 break;
 
             case R.id.li_logout:
@@ -1023,7 +1200,6 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                 finish();
                 securityTab();
-
                 break;
 
             case R.id.li_logoutAlldevice:
@@ -1047,6 +1223,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvLogout.setTextColor(getResources().getColor(R.color.black));
                 tvWalletHistory.setTextColor(getResources().getColor(R.color.black));
                 tvChangePasswordChild.setTextColor(getResources().getColor(R.color.black));
+                tvLoan.setTextColor(getResources().getColor(R.color.black));
+                tvFixedDeposit.setTextColor(getResources().getColor(R.color.black));
 
                 liChnangePassword.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogoutAllDevices.setBackgroundColor(getResources().getColor(R.color.white));
@@ -1066,6 +1244,8 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 liUpdteKYC.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liHome.setBackgroundColor(getResources().getColor(R.color.nav_bg));
                 liLogout.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liLoan.setBackgroundColor(getResources().getColor(R.color.nav_bg));
+                liFD.setBackgroundColor(getResources().getColor(R.color.nav_bg));
 
                 showDialogLogoutAll(EHomeActivity.this);
 

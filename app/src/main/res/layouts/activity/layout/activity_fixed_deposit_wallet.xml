@@ -199,7 +199,6 @@
                                     android:id="@+id/sp_account_beneficiary"
                                     android:layout_width="match_parent"
                                     android:layout_height="35dp"
-                                    android:entries="@string/city"
                                     android:padding="1sp"
                                     android:popupBackground="@drawable/white_button_grayborder"
                                     android:spinnerMode="dropdown" />
