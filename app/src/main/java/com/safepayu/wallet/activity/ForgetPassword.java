@@ -13,6 +13,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -41,6 +42,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.helper.AppSignatureHashHelper;
 import com.safepayu.wallet.helper.OtpReceivedInterface;
 import com.safepayu.wallet.helper.SmsBroadcastReceiver;
 import com.safepayu.wallet.models.request.ForgetPasswordRequest;
@@ -59,7 +61,7 @@ import io.reactivex.schedulers.Schedulers;
 import static android.view.Gravity.CENTER_VERTICAL;
 
 public class ForgetPassword extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
-        OtpReceivedInterface, GoogleApiClient.OnConnectionFailedListener{
+        OtpReceivedInterface, GoogleApiClient.OnConnectionFailedListener {
 
     EditText edit_number, enter_otp, enter_password, confrimPasswordED;
     Button btn_request_otp, btn_continue, btn_conform_password, resend_btn;
@@ -90,6 +92,9 @@ public class ForgetPassword extends AppCompatActivity implements GoogleApiClient
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgot_password);
 
+      /*  AppSignatureHashHelper appSignatureHashHelper = new AppSignatureHashHelper(this);
+        Log.v("ForgetPassword ", "HashKey: " + appSignatureHashHelper.getAppSignatures().get(0));
+*/
         // init broadcast receiver
         mSmsBroadcastReceiver = new SmsBroadcastReceiver();
         //set google api client for hint request
@@ -235,7 +240,7 @@ public class ForgetPassword extends AppCompatActivity implements GoogleApiClient
         builder.setMessage(Message);
         // Must call show() prior to fetching text view
 
-        builder  .setIcon(getResources().getDrawable(R.drawable.appicon_new));
+        builder.setIcon(getResources().getDrawable(R.drawable.appicon_new));
         // Set a positive button for alert dialog
         //  builder.setPositiveButton("Say",null);
         // Specifying a listener allows you to take an action before dismissing the dialog.
@@ -258,8 +263,8 @@ public class ForgetPassword extends AppCompatActivity implements GoogleApiClient
 
         // Finally, display the alert dialog
         dialog.show();
-        TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
-        messageText.setGravity(Gravity.CENTER|CENTER_VERTICAL);
+        TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
+        messageText.setGravity(Gravity.CENTER | CENTER_VERTICAL);
         messageText.setPadding(40, 120, 40, 40);
         messageText.setTextSize(16);
         dialog.setCanceledOnTouchOutside(false);
@@ -313,10 +318,10 @@ public class ForgetPassword extends AppCompatActivity implements GoogleApiClient
         str_edit_conf_pass = enter_password.getText().toString().trim();
         String confrimPass = confrimPasswordED.getText().toString().trim();
 
-        if (TextUtils.isEmpty(enter_otp.getText().toString().trim())  || enter_otp.getText().toString().length()!=6){
+        if (TextUtils.isEmpty(enter_otp.getText().toString().trim()) || enter_otp.getText().toString().length() != 6) {
             enter_otp.setError("Please Enter OTP");
             enter_otp.requestFocus();
-        }else {
+        } else {
             if (TextUtils.isEmpty(str_edit_conf_pass)) {
 
                 enter_password.setError("Please Enter Password");
@@ -346,7 +351,7 @@ public class ForgetPassword extends AppCompatActivity implements GoogleApiClient
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(edit_number.getText().toString().trim(), null);
 
-        SendOtpRequest sendOtpRequest=new SendOtpRequest();
+        SendOtpRequest sendOtpRequest = new SendOtpRequest();
         sendOtpRequest.setMobile(edit_number.getText().toString().trim());
         sendOtpRequest.setType("2");
 
@@ -397,12 +402,14 @@ public class ForgetPassword extends AppCompatActivity implements GoogleApiClient
         SmsRetrieverClient mClient = SmsRetriever.getClient(this);
         Task<Void> mTask = mClient.startSmsRetriever();
         mTask.addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override public void onSuccess(Void aVoid) {
+            @Override
+            public void onSuccess(Void aVoid) {
 
             }
         });
         mTask.addOnFailureListener(new OnFailureListener() {
-            @Override public void onFailure(@NonNull Exception e) {
+            @Override
+            public void onFailure(@NonNull Exception e) {
                 Toast.makeText(ForgetPassword.this, "Error", Toast.LENGTH_LONG).show();
             }
         });
@@ -427,10 +434,10 @@ public class ForgetPassword extends AppCompatActivity implements GoogleApiClient
     public void onOtpReceived(String otp) {
         try {
             enter_otp.setText("");
-            otp=otp.substring(otp.indexOf(':')+2);
-
-            enter_otp.setText(otp.trim());
-        }catch (Exception e){
+            //   otp = otp.substring(otp.indexOf(':') + 2);
+            String OTP = otp.split("\n")[1];
+            enter_otp.setText(OTP.trim());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -443,7 +450,7 @@ public class ForgetPassword extends AppCompatActivity implements GoogleApiClient
     private void verifyOtp(String otp) {
 
 
-        @SuppressLint("HardwareIds")String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        @SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
@@ -488,38 +495,38 @@ public class ForgetPassword extends AppCompatActivity implements GoogleApiClient
                         if (response.isStatus()) {
                             Toast.makeText(ForgetPassword.this, response.getMessage(), Toast.LENGTH_SHORT).show();
                             finish();
-                        }else {
-                            String message="";
-                            try{
-                                ForgetPasswordResponse.DataBean dataBean=response.getData();
-                                if (dataBean!=null){
+                        } else {
+                            String message = "";
+                            try {
+                                ForgetPasswordResponse.DataBean dataBean = response.getData();
+                                if (dataBean != null) {
 
-                                    if (dataBean.getPassword().size()==1){
-                                        message=dataBean.getPassword().get(0)+"\n";
-                                    }else if (dataBean.getPassword().size()>1){
-                                        message=dataBean.getPassword().get(0)+"\n"+dataBean.getPassword().get(1)+"\n";
+                                    if (dataBean.getPassword().size() == 1) {
+                                        message = dataBean.getPassword().get(0) + "\n";
+                                    } else if (dataBean.getPassword().size() > 1) {
+                                        message = dataBean.getPassword().get(0) + "\n" + dataBean.getPassword().get(1) + "\n";
                                     }
 
-                                    if (dataBean.getPassword_confirmation().size()==1){
-                                        message=message+dataBean.getPassword_confirmation().get(0);
-                                    }else if (dataBean.getPassword_confirmation().size()>1){
-                                        message=message+dataBean.getPassword_confirmation().get(0)+"\n"+dataBean.getPassword_confirmation().get(1)+"\n";
+                                    if (dataBean.getPassword_confirmation().size() == 1) {
+                                        message = message + dataBean.getPassword_confirmation().get(0);
+                                    } else if (dataBean.getPassword_confirmation().size() > 1) {
+                                        message = message + dataBean.getPassword_confirmation().get(0) + "\n" + dataBean.getPassword_confirmation().get(1) + "\n";
                                     }
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             if (TextUtils.isEmpty(message)) {
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.forgetPasscodeId), response.getMessage(), true);
-                            }else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.forgetPasscodeId),  message, true);
+                            } else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.forgetPasscodeId), message, true);
                             }
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                      //  Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
+                        //  Log.e(BaseApp.getInstance().toastHelper().getTag(LoginActivity.class), "onError: " + e.getMessage());
                         loadingDialog.hideDialog();
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.forgetPasscodeId), true, e);
                     }

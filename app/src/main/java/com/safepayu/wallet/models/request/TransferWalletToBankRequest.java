@@ -10,6 +10,7 @@ public class TransferWalletToBankRequest {
 
     private String beneId;
     private String amount;
+    private String id;
 
     public String getBeneId() {
         return beneId;
@@ -25,5 +26,9 @@ public class TransferWalletToBankRequest {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

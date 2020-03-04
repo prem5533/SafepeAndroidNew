@@ -26,10 +26,10 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 case CommonStatusCodes.SUCCESS:
                     // Get SMS message contents'
                     String message = (String) extras.get(SmsRetriever.EXTRA_SMS_MESSAGE);
-                    Log.d(TAG, "onReceive: Otp "+message);
+                    Log.d(TAG, "onReceive: Otp " + message);
                     if (otpReceiveInterface != null) {
-                        String otp = message.replace("<#> Your otp code is : ", "");
-                        otpReceiveInterface.onOtpReceived(otp);
+                        String OTP = message.split(": ")[1];
+                        otpReceiveInterface.onOtpReceived(OTP);
                     }
                     break;
                 case CommonStatusCodes.TIMEOUT:

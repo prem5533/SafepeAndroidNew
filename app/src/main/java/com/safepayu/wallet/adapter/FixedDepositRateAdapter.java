@@ -39,13 +39,13 @@ public class FixedDepositRateAdapter extends RecyclerView.Adapter<FixedDepositRa
     public void onBindViewHolder(ViewHolder holder, final int position) {
         DecimalFormat df = new DecimalFormat("######.##");
         holder.tv_period.setText(modelArrayList.get(position).from);
-        holder.tv_interest_rate.setText("Interest @ " + modelArrayList.get(position).interestrate + "%");
+        holder.tv_interest_rate.setText("Interest @ " + modelArrayList.get(position).interestrate + "% pa");
         holder.tv_amount.setText(String.valueOf(df.format(Double.valueOf(modelArrayList.get(position).amount))));
 
         holder.ll_interest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fixedDepositInterface.onClickInterestRate(modelArrayList.get(position).interestRateId);
+                fixedDepositInterface.onClickInterestRate(modelArrayList.get(position).interestRateId,modelArrayList.get(position).interestrate);
             }
         });
     }

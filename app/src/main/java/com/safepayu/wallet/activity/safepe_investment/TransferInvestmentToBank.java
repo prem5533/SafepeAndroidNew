@@ -144,27 +144,24 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
         final String minCharge = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MIN_WITHDRAW_CHARGE);
         tvTransactionFee.setText("Transaction fee: " + tax + "% or Minimum ₹ " + 10);
 
-        AddBankBenBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        AddBankBenBtn.setOnClickListener(view -> {
 
-                try {
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Goto Your Profile and Verify Your Email First", true);
+            try {
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Goto Your Profile and Verify Your Email First", true);
+                } else {
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
                     } else {
-                        if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")) {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.withMoneyLayout), "Please Buy Membership To Enjoy App's Features", true);
-                        } else {
-                            startActivity(new Intent(getApplicationContext(), AddBeneficiary.class));
-                            overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
-                        }
+                        startActivity(new Intent(getApplicationContext(), AddBeneficiary.class));
+                        overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this, UserId, "TransferInvestmentToBank", e.getMessage(), " 165", "PACKAGE_PURCHASED ", DeviceName);
                 }
-
+            } catch (Exception e) {
+                e.printStackTrace();
+                logRequest = new ExceptionLogRequest(TransferInvestmentToBank.this, UserId, "TransferInvestmentToBank", e.getMessage(), " 165", "PACKAGE_PURCHASED ", DeviceName);
             }
+
         });
 
         WithDrawBtn.setOnClickListener(view -> {
@@ -406,12 +403,8 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
     }
 
     private void WithAmountMethod(TransferWalletToBankRequest transferWalletToBankRequest) {
-
-
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-
         BaseApp.getInstance().getDisposable().add(apiService.transferInvWalletToBank(transferWalletToBankRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

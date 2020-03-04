@@ -103,8 +103,6 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
 
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
 
-        tv_interest_rate.setText("Interest @ " + fdInterest + " %");
-
         ll_interest_table.setOnClickListener(this);
         btn_create_deposit.setOnClickListener(this);
         VerifyReffralBtn.setOnClickListener(this);
@@ -438,8 +436,9 @@ public class CreateFixedDepositActivity extends AppCompatActivity implements Vie
     }
 
     @Override
-    public void onClickInterestRate(String interestRateId) {
+    public void onClickInterestRate(String interestRateId, String interestrate) {
         this.interestRateId = interestRateId;
+        tv_interest_rate.setText("Interest @ " + interestrate + " % pa");
         sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 }

@@ -143,7 +143,7 @@ public class FixedDepositActivity extends AppCompatActivity implements View.OnCl
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
                         logRequest = new ExceptionLogRequest(FixedDepositActivity.this, UserId, "FixedDepositActivity", e.getMessage(),
-                                " 138", "safepeFixedDepostAccount api ", DeviceName);
+                                " 138", "getFixedDeposit api ", DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(FixedDepositActivity.this.findViewById(R.id.ll_parant),
                                 false, e.getCause());
                     }

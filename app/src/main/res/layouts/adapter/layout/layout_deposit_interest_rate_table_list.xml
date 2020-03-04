@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_regular"
                         android:gravity="start|center"
-                        android:text="Interest @ 4.0 %"
+                        android:text="Interest @ 4.0%"
                         android:textColor="@color/textcolor"
                         android:textSize="13dp" />
                 </LinearLayout>

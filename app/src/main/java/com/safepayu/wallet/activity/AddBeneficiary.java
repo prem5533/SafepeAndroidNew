@@ -67,7 +67,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class AddBeneficiary extends BaseActivity implements GoogleApiClient.ConnectionCallbacks,
-        OtpReceivedInterface, GoogleApiClient.OnConnectionFailedListener{
+        OtpReceivedInterface, GoogleApiClient.OnConnectionFailedListener {
 
     private Button BackBtn, AddBenBtn;
     private EditText AccountNameED, AccountNumberED, AccountConfirmED, IFSCED;
@@ -75,11 +75,11 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
     private boolean CheckNet = false;
     private ImageView showAccNo, HideAccNo;
     private ApiService apiService;
-    private String Mobile = "",BankName="",BankBranch="",BankAddress="";
+    private String Mobile = "", BankName = "", BankBranch = "", BankAddress = "";
     private AddBeneficiaryRequest addBeneficiaryRequest;
-    private boolean checkIfsc=false;
+    private boolean checkIfsc = false;
     //Otp Dialog
-    TextView TimerTV,VerifyIfscBtn;
+    TextView TimerTV, VerifyIfscBtn;
     EditText OtpED;
     Button continueButton, resendButton;
     private ImageView im_cross;
@@ -99,7 +99,7 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
             configuration.locale = new Locale("en");
             getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
             Locale.setDefault(configuration.locale);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -181,12 +181,12 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
         VerifyIfscBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(IFSCED.getText().toString().trim())){
+                if (TextUtils.isEmpty(IFSCED.getText().toString().trim())) {
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Please Enter IFSC Code", false);
-                }else {
-                    if (checkIfsc){
+                } else {
+                    if (checkIfsc) {
                         BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "IFSC Code Already Verified", false);
-                    }else {
+                    } else {
                         //new CheckIfscMethod().execute();
                         getifscVerify();
                     }
@@ -200,8 +200,8 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
 
                 // TODO Auto-generated method stub
 
-                if (checkIfsc){
-                    checkIfsc=false;
+                if (checkIfsc) {
+                    checkIfsc = false;
                     VerifyIfscBtn.setTextColor(getResources().getColor(R.color.red_theme));
                 }
 
@@ -220,7 +220,6 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
             }
         });
     }
-
 
     @Override
     protected int getLayoutResourceId() {
@@ -263,14 +262,14 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
                             addBeneficiaryRequest.setUpi("");
                             addBeneficiaryRequest.setPaytm("");
 
-                            if (checkIfsc){
+                            if (checkIfsc) {
                                 if (CheckNet) {
 
                                     showDetailDialog();
                                 } else {
                                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Check Your Internet Connection!", false);
                                 }
-                            }else {
+                            } else {
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Please Verify Your IFSC Code First", false);
                             }
                         }
@@ -312,7 +311,7 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         Login request = new Login(Mobile, null);
-        SendOtpRequest sendOtpRequest=new SendOtpRequest();
+        SendOtpRequest sendOtpRequest = new SendOtpRequest();
         sendOtpRequest.setMobile(Mobile);
         sendOtpRequest.setType("3");
 
@@ -373,7 +372,7 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
                 }));
     }
 
-    CountDownTimer countDownTimer = new CountDownTimer(4*60000, 1000) {
+    CountDownTimer countDownTimer = new CountDownTimer(4 * 60000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
             int seconds = (int) (millisUntilFinished / 1000);
@@ -458,10 +457,10 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
     public void onOtpReceived(String otp) {
         try {
             OtpED.setText("");
-            otp=otp.substring(otp.indexOf(':')+2);
+            otp = otp.substring(otp.indexOf(':') + 2);
 
             OtpED.setText(otp.trim());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -471,10 +470,10 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
         //Toast.makeText(this, "Time out, please resend", Toast.LENGTH_LONG).show();
     }
 
-    public void showDialogAfterAddBen(Activity activity,String Response) {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(activity);
+    public void showDialogAfterAddBen(Activity activity, String Response) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
         dialog.setTitle("SafePe Alert")
-                .setMessage("\n"+Response+"\nPlease Wait For Minimum Of 30 Mins After Adding Of Beneficiary")
+                .setMessage("\n" + Response + "\nPlease Wait For Minimum Of 30 Mins After Adding Of Beneficiary")
                 .setCancelable(false)
 
                 // Specifying a listener allows you to take an action before dismissing the dialog.
@@ -494,7 +493,7 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
     }
 
     private void getifscVerify() {
-         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+        loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(AddBeneficiary.this).create(ApiService.class);
 
         BaseApp.getInstance().getDisposable().add(apiService.getifscVerify(IFSCED.getText().toString().trim())
@@ -503,22 +502,22 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
                 .subscribeWith(new DisposableSingleObserver<VerifyIFSCResponse>() {
                     @Override
                     public void onSuccess(VerifyIFSCResponse response) {
-                         loadingDialog.hideDialog();
+                        loadingDialog.hideDialog();
                         if (response.isStatus()) {
                             try {
-                                BankName=response.getData().getBANK();
-                                BankAddress=response.getData().getADDRESS();
-                                BankBranch=response.getData().getBRANCH();
-                                checkIfsc=true;
+                                BankName = response.getData().getBANK();
+                                BankAddress = response.getData().getADDRESS();
+                                BankBranch = response.getData().getBRANCH();
+                                checkIfsc = true;
                                 VerifyIfscBtn.setTextColor(getResources().getColor(R.color.yellow_theme));
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), response.getMessage(), false);
                             } catch (Exception e) {
-                                checkIfsc=false;
+                                checkIfsc = false;
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), e.getMessage(), false);
                                 e.printStackTrace();
                             }
                         } else {
-                            checkIfsc=false;
+                            checkIfsc = false;
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), response.getMessage(), true);
                         }
                     }
@@ -538,8 +537,8 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
         dialog.setContentView(R.layout.ifsc_detail_dialog);
 
 
-        TextView tvAccName,tvAccNumber,tvBank,tvBranch,tvAddress;
-        Button CancelBtn,ProceedBtn;
+        TextView tvAccName, tvAccNumber, tvBank, tvBranch, tvAddress;
+        Button CancelBtn, ProceedBtn;
 
         CancelBtn = dialog.findViewById(R.id.cancelBtn_dialogBen);
         ProceedBtn = dialog.findViewById(R.id.bankAddBtn_dialogBen);
@@ -586,12 +585,14 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
         SmsRetrieverClient mClient = SmsRetriever.getClient(this);
         Task<Void> mTask = mClient.startSmsRetriever();
         mTask.addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override public void onSuccess(Void aVoid) {
+            @Override
+            public void onSuccess(Void aVoid) {
 
             }
         });
         mTask.addOnFailureListener(new OnFailureListener() {
-            @Override public void onFailure(@NonNull Exception e) {
+            @Override
+            public void onFailure(@NonNull Exception e) {
                 Toast.makeText(AddBeneficiary.this, "Error", Toast.LENGTH_LONG).show();
             }
         });
@@ -651,15 +652,15 @@ public class AddBeneficiary extends BaseActivity implements GoogleApiClient.Conn
 
             try {
 
-                if (TextUtils.isEmpty(new JSONObject(response).getString("IFSC"))){
-                    checkIfsc=false;
+                if (TextUtils.isEmpty(new JSONObject(response).getString("IFSC"))) {
+                    checkIfsc = false;
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Wrong IFSC Code", false);
-                }else {
-                    checkIfsc=true;
+                } else {
+                    checkIfsc = true;
                     BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "IFSC Code Verified", false);
                 }
             } catch (Exception e) {
-                checkIfsc=false;
+                checkIfsc = false;
                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.addBeneficiaryLayout), "Wrong IFSC Code", false);
                 e.printStackTrace();
             }
