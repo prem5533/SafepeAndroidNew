@@ -266,14 +266,11 @@ public class OtpVerification extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void onOtpReceived(String OTP) {
+    public void onOtpReceived(String OTP1) {
         try {
-            Toast.makeText(this, OTP, Toast.LENGTH_SHORT).show();
             otp.setText("");
-            OTP=OTP.substring(OTP.indexOf(':')+2);
-
-            otp.setText(OTP.trim());
-        }catch (Exception e){
+            otp.setText(OTP1.trim());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

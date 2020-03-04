@@ -409,12 +409,8 @@ public class TransferInvestmentToBank extends BaseActivity implements RadioGroup
     }
 
     private void WithAmountMethod(TransferWalletToBankRequest transferWalletToBankRequest) {
-
-
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
-
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-
         BaseApp.getInstance().getDisposable().add(apiService.transferInvWalletToBank(transferWalletToBankRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

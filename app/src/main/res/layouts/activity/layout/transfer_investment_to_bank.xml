@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/withMoneyLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/withMoneyLayout"
-    android:background="#f4f5ff">
+    android:background="#f4f5ff"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,8 +13,8 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_height="100dp"
             android:layout_width="match_parent"
+            android:layout_height="100dp"
             android:background="#196cfe"
             android:orientation="vertical"
             android:paddingTop="8dp">
@@ -39,9 +39,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
                     android:text="Send Money"
-                    android:fontFamily="@font/roboto_bold"
                     android:textColor="#fff"
                     android:textSize="18sp" />
             </RelativeLayout>
@@ -60,12 +60,12 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    app:cardCornerRadius="10dp"
-                    android:elevation="5dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="0dp">
+                    android:elevation="5dp"
+                    android:padding="5dp"
+                    app:cardCornerRadius="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -77,78 +77,79 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:paddingBottom="15dp"
-                            android:paddingTop="15dp">
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp">
 
                             <com.safepayu.wallet.custom_view.CustomTextView
                                 style="@style/TextAppearance.AppCompat.Large"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Wallet Balance"
-                                android:textSize="14sp"
-                                android:textColor="@color/black"
-                                android:textStyle="normal"
-                                app:fontCustom="@string/Roboto"
-                                android:textAllCaps="false"
                                 android:layout_alignParentLeft="true"
-                                android:layout_marginLeft="10dp"/>
+                                android:layout_marginLeft="10dp"
+                                android:text="Wallet Balance"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                app:fontCustom="@string/Roboto" />
 
                             <com.safepayu.wallet.custom_view.CustomTextView
+                                android:id="@+id/walletBalance"
+                                style="@style/TextAppearance.AppCompat.Large"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                style="@style/TextAppearance.AppCompat.Large"
-                                app:fontCustom="@string/Roboto"
-                                android:textSize="14sp"
-                                android:gravity="end"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/roboto_bold"
-                                android:textColor="@color/grey_800"
-                                android:id="@+id/walletBalance"
-                                android:text=""
                                 android:layout_alignParentRight="true"
-                                android:layout_marginRight="10dp"/>
+                                android:layout_marginRight="10dp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="end"
+                                android:text=""
+                                android:textColor="@color/grey_800"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:fontCustom="@string/Roboto" />
                         </LinearLayout>
+
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/divider"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"/>
+                            android:layout_marginRight="10dp"
+                            android:background="@color/divider" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:paddingBottom="15dp"
-                            android:paddingTop="15dp">
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp">
 
                             <com.safepayu.wallet.custom_view.CustomTextView
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
                                 style="@style/TextAppearance.AppCompat.Medium"
-                                android:textStyle="normal"
-                                app:fontCustom="@string/Roboto"
-                                android:textAllCaps="false"
-                                android:textSize="14sp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
                                 android:layout_marginLeft="10dp"
-                                android:text="Minimum Withdrawal Amount" />
+                                android:layout_weight="1"
+                                android:text="Minimum Withdrawal Amount"
+                                android:textAllCaps="false"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                app:fontCustom="@string/Roboto" />
 
                             <com.safepayu.wallet.custom_view.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
                                 android:id="@+id/minLimit_sendMoney"
                                 style="@style/TextAppearance.AppCompat.Medium"
-                                app:fontCustom="@string/Roboto"
-                                android:textSize="14sp"
-                                android:textColor="@color/red_500"
-                                android:textStyle="normal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"
+                                android:fontFamily="@font/roboto_bold"
                                 android:gravity="center"
                                 android:text="0"
-                                android:fontFamily="@font/roboto_bold"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginRight="10dp"/>
+                                android:textColor="@color/red_500"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                app:fontCustom="@string/Roboto" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -156,15 +157,15 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:paddingTop="10dp"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:layout_marginLeft="20dp"
-                    android:textColor="@color/red_theme"
                     android:layout_height="wrap_content"
-                    android:text="Select Beneficiary"
                     android:layout_gravity="left"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:paddingTop="10dp"
+                    android:text="Select Beneficiary"
+                    android:textColor="@color/red_theme"
+                    android:textSize="16sp" />
 
                 <RadioGroup
                     android:id="@+id/radioGroupWithdraw"
@@ -178,12 +179,12 @@
 
                     <RadioButton
                         android:id="@+id/upiradiobtn"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:onClick="onRadioButtonClicked"
-                        android:text="UPI"/>
+                        android:text="UPI"
+                        android:visibility="gone" />
 
 
                     <RadioButton
@@ -191,64 +192,65 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textSize="14sp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/roboto_regular"
                         android:buttonTint="@color/yellow_theme"
-                        android:text="BANK ACCOUNT"/>
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="BANK ACCOUNT"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
                 </RadioGroup>
 
                 <LinearLayout
+                    android:id="@+id/benLayout_sendMoney"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
                     android:gravity="center"
-                    android:id="@+id/benLayout_sendMoney">
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/building_new"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/building_new" />
 
                     <Spinner
                         android:id="@+id/bankBenSpinner"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginLeft="5dp" />
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/divider"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"/>
+                    android:layout_marginRight="15dp"
+                    android:background="@color/divider" />
 
                 <LinearLayout
-                    android:visibility="visible"
+                    android:id="@+id/withdrawAmountlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/withdrawAmountlayout"
+                    android:layout_marginTop="15dp"
                     android:orientation="vertical"
-                    android:layout_marginTop="15dp">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
                         android:layout_marginTop="20dp"
-                        android:gravity="center">
+                        android:layout_marginRight="15dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:src="@drawable/rupee_new"
-                            android:layout_marginLeft="5dp"/>
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/rupee_new" />
 
                         <EditText
                             android:id="@+id/withdrawAmount"
@@ -257,150 +259,164 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="0dp"
                             android:background="@null"
-                            android:hint="Enter Amount"
-                            android:textColor="#000000"
-                            android:maxLength="7"
-                            android:inputType="number"
-                            android:singleLine="true"
-                            android:imeOptions="actionDone"
-                            android:paddingLeft="15sp"
                             android:fontFamily="@font/roboto_regular"
+                            android:hint="Enter Amount"
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:maxLength="7"
+                            android:paddingLeft="15sp"
+                            android:singleLine="true"
+                            android:textColor="#000000"
                             android:textSize="15sp" />
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/divider"
                         android:layout_marginLeft="15dp"
+                        android:layout_marginTop="4dp"
                         android:layout_marginRight="15dp"
-                        android:layout_marginTop="4dp"/>
+                        android:background="@color/divider" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_margin="15dp">
+                        android:layout_margin="15dp"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:layout_weight="1"
                             android:id="@+id/calculatedamount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Enter amount"
-                            android:textSize="12sp"
+                            android:layout_weight="1"
                             android:fontFamily="@font/roboto_regular"
-                            android:textColor="@color/red_theme"
-                            android:paddingLeft="0dp"
                             android:gravity="right"
-                            android:visibility="gone"/>
+                            android:paddingLeft="0dp"
+                            android:text="Enter amount"
+                            android:textColor="@color/red_theme"
+                            android:textSize="12sp"
+                            android:visibility="gone" />
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/card_amount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:elevation="5dp"
                             android:padding="5dp"
-                            app:cardCornerRadius="10dp"
-                            android:elevation="5dp">
+                            app:cardCornerRadius="10dp">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:background="@color/white">
+                                android:background="@color/white"
+                                android:orientation="vertical">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:gravity="left"
+                                    android:padding="10dp"
                                     android:text="Amount reflect in your account"
                                     android:textColor="@color/red_theme"
-                                    android:textSize="15sp"
-                                    android:fontFamily="@font/roboto_bold"
-                                    android:padding="10dp"
-                                    android:gravity="left" />
+                                    android:textSize="15sp" />
+
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height=".5dp"
-                                    android:background="@color/yellow"
                                     android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"/>
+                                    android:layout_marginRight="5dp"
+                                    android:background="@color/yellow" />
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Withdrawal Amount"
-                                        android:textSize="13sp"
-                                        android:textColor="@color/black"
-                                        android:padding="10dp"
+                                        android:layout_weight="1"
                                         android:fontFamily="@font/roboto_bold"
-                                        android:layout_weight="1"/>
+                                        android:padding="10dp"
+                                        android:text="Withdrawal Amount"
+                                        android:textColor="@color/black"
+                                        android:textSize="13sp" />
+
                                     <TextView
                                         android:id="@+id/tv_withdrawalamount"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="10"
-                                        android:textSize="13sp"
-                                        android:textColor="@color/black"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:padding="10dp"
-                                        android:fontFamily="@font/roboto_regular"/>
+                                        android:text="10"
+                                        android:textColor="@color/black"
+                                        android:textSize="13sp" />
                                 </LinearLayout>
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Transaction Fee"
-                                        android:textSize="13sp"
-                                        android:textColor="@color/black"
-                                        android:padding="10dp"
+                                        android:layout_weight="1"
                                         android:fontFamily="@font/roboto_bold"
-                                        android:layout_weight="1"/>
+                                        android:padding="10dp"
+                                        android:text="Transaction Fee"
+                                        android:textColor="@color/black"
+                                        android:textSize="13sp" />
+
                                     <TextView
                                         android:id="@+id/tv_sendtax"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="10"
-                                        android:textSize="13sp"
-                                        android:textColor="@color/black"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:padding="10dp"
-                                        android:fontFamily="@font/roboto_regular"/>
+                                        android:text="10"
+                                        android:textColor="@color/black"
+                                        android:textSize="13sp" />
                                 </LinearLayout>
+
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height=".5dp"
-                                    android:background="@color/divider"
                                     android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"/>
+                                    android:layout_marginRight="10dp"
+                                    android:background="@color/divider" />
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Total Amount"
-                                        android:textSize="13sp"
-                                        android:textColor="@color/black"
-                                        android:padding="10dp"
+                                        android:layout_weight="1"
                                         android:fontFamily="@font/roboto_bold"
-                                        android:layout_weight="1"/>
+                                        android:padding="10dp"
+                                        android:text="Total Amount"
+                                        android:textColor="@color/black"
+                                        android:textSize="13sp" />
+
                                     <TextView
                                         android:id="@+id/tv_total_amountsendmoney"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="10"
-                                        android:textSize="13sp"
-                                        android:textColor="@color/black"
+                                        android:fontFamily="@font/roboto_regular"
                                         android:padding="10dp"
-                                        android:fontFamily="@font/roboto_regular"/>
+                                        android:text="10"
+                                        android:textColor="@color/black"
+                                        android:textSize="13sp" />
                                 </LinearLayout>
 
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="10dp"
-                                    android:background="@color/white"/>
+                                    android:background="@color/white" />
 
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
@@ -421,63 +437,63 @@
                         android:text="Withdraw Money"
                         android:textAllCaps="false"
                         android:textColor="#fff"
-                        android:textSize="17sp"/>
+                        android:textSize="17sp" />
 
                     <TextView
                         android:id="@+id/transactionFeeText_sendMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/red"
                         android:layout_gravity="center"
-                        android:text="Transaction fee: 2% or Minimum ₹ 10 "
-                        android:fontFamily="@font/roboto_regular"
-                        android:textSize="14sp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"/>
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Transaction fee: 2% or Minimum ₹ 10 "
+                        android:textColor="@color/red"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    app:cardCornerRadius="10dp"
-                    android:elevation="5dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="0dp">
+                    android:elevation="5dp"
+                    android:padding="5dp"
+                    app:cardCornerRadius="10dp">
 
                     <LinearLayout
+                        android:id="@+id/BankBenAddBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:gravity="center"
+                        android:orientation="horizontal"
                         android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:id="@+id/BankBenAddBtn">
+                        android:paddingBottom="10dp">
 
                         <ImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:src="@drawable/plus_new"
                             android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"/>
+                            android:layout_marginRight="5dp"
+                            android:src="@drawable/plus_new" />
 
                         <TextView
                             android:id="@+id/tv_bank_click_here"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Add New Bank Account"
-                            android:textSize="16sp"
                             android:fontFamily="@font/roboto_bold"
-                            android:textColor="@color/red_theme" />
+                            android:text="Add New Bank Account"
+                            android:textColor="@color/red_theme"
+                            android:textSize="16sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:background="#f4f5ff"/>
+                    android:background="#f4f5ff" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

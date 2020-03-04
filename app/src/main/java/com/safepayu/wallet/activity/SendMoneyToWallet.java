@@ -34,14 +34,14 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SendMoneyToWallet extends AppCompatActivity implements View.OnClickListener, PasscodeClickListener {
 
-    Button BackBtn,SendMoneyBtn;
-    private EditText MobileED,AmountED;
+    Button BackBtn, SendMoneyBtn;
+    private EditText MobileED, AmountED;
     private LoadingDialog loadingDialog;
-    private TextView tvReferUserName,tvLimitation,tvWalletAmount;
-    private boolean referralCheck=false;
-    private double WalletBalance=0.0f;
+    private TextView tvReferUserName, tvLimitation, tvWalletAmount;
+    private boolean referralCheck = false;
+    private double WalletBalance = 0.0f;
     SendToWalletRequest sendToWalletRequest;
-    String Mobile="",LimitText="",MinLimit="",MaxLimit="",walletAmount;
+    String Mobile = "", LimitText = "", MinLimit = "", MaxLimit = "", walletAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,36 +50,36 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
 
         loadingDialog = new LoadingDialog(this);
 
-        BackBtn=findViewById(R.id.sendmoney_back_btn);
-        MobileED=findViewById(R.id.mobile_num);
-        AmountED=findViewById(R.id.edit_send_money);
-        SendMoneyBtn=findViewById(R.id.send_money_button);
-        tvReferUserName=findViewById(R.id.user_name_sendToWallet);
-        tvLimitation=findViewById(R.id.maxMiValue);
-        tvWalletAmount=findViewById(R.id.wallet_amount);
+        BackBtn = findViewById(R.id.sendmoney_back_btn);
+        MobileED = findViewById(R.id.mobile_num);
+        AmountED = findViewById(R.id.edit_send_money);
+        SendMoneyBtn = findViewById(R.id.send_money_button);
+        tvReferUserName = findViewById(R.id.user_name_sendToWallet);
+        tvLimitation = findViewById(R.id.maxMiValue);
+        tvWalletAmount = findViewById(R.id.wallet_amount);
 
-        MinLimit=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT_MIN);
-        MaxLimit=BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT);
+        MinLimit = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT_MIN);
+        MaxLimit = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().LIMIT);
         walletAmount = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().WALLET_BALANCE);
-        LimitText="Enter Amount Between Rs "+MinLimit+" And Rs "+MaxLimit;
+        LimitText = "Enter Amount Between Rs " + MinLimit + " And Rs " + MaxLimit;
 
         tvLimitation.setText(LimitText);
-        tvWalletAmount.setText("₹ "+walletAmount);
+        tvWalletAmount.setText("₹ " + walletAmount);
 
         BackBtn.setOnClickListener(this);
         SendMoneyBtn.setOnClickListener(this);
 
-        try{
-            Mobile=getIntent().getStringExtra("Mobile");
+        try {
+            Mobile = getIntent().getStringExtra("Mobile");
 
-            if (Mobile==null || TextUtils.isEmpty(Mobile)){
+            if (Mobile == null || TextUtils.isEmpty(Mobile)) {
 
-            }else {
+            } else {
                 MobileED.setText(Mobile);
             }
 
-        }catch (Exception e){
-            Mobile="";
+        } catch (Exception e) {
+            Mobile = "";
             e.printStackTrace();
         }
 
@@ -90,16 +90,16 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
                 // TODO Auto-generated method stub
 
                 try {
-                    if (s.length()==10){
+                    if (s.length() == 10) {
                         getReferralDetails();
-                    }else {
+                    } else {
                         if (referralCheck) {
-                            referralCheck=false;
+                            referralCheck = false;
                             tvReferUserName.setText("");
                             tvReferUserName.setVisibility(View.GONE);
                         }
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -119,9 +119,9 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
 
 
         try {
-            WalletBalance= Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().WALLET_BALANCE));
-        }catch (Exception e){
-            WalletBalance=0.0f;
+            WalletBalance = Double.parseDouble(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().WALLET_BALANCE));
+        } catch (Exception e) {
+            WalletBalance = 0.0f;
             e.printStackTrace();
         }
 
@@ -137,9 +137,9 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
 
             case R.id.send_money_button:
 
-                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")){
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Goto Your Profile and Verify Your Email First",true);
-                }else {
+                if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().EMAIL_VERIFIED).equalsIgnoreCase("0")) {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), "Please Goto Your Profile and Verify Your Email First", true);
+                } else {
 //                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PACKAGE_PURCHASED).equalsIgnoreCase("0")){
 //                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Buy Membership To Enjoy App's Features",true);
 //                    }else {
@@ -150,9 +150,9 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
 //                        }
 //
 //                    }
-                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Transaction Is Closed Today",true);
-                    }else {
+                    if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().IS_BLOCKED).equalsIgnoreCase("0")) {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), "Transaction Is Closed Today", true);
+                    } else {
                         CheckValidate();
                     }
                 }
@@ -168,34 +168,34 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    private void CheckValidate(){
-        int AmountInt = 0,limit=0,limitMin=0;
-        String Mobile=MobileED.getText().toString().trim();
-        String Amount=AmountED.getText().toString().trim();
-        limit = (int)Double.parseDouble(MaxLimit)+1;
-        limitMin = (int)Double.parseDouble(MinLimit)-1;
-        try{
-            AmountInt= Integer.parseInt(Amount);
-        }catch (Exception e){
+    private void CheckValidate() {
+        int AmountInt = 0, limit = 0, limitMin = 0;
+        String Mobile = MobileED.getText().toString().trim();
+        String Amount = AmountED.getText().toString().trim();
+        limit = (int) Double.parseDouble(MaxLimit) + 1;
+        limitMin = (int) Double.parseDouble(MinLimit) - 1;
+        try {
+            AmountInt = Integer.parseInt(Amount);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (TextUtils.isEmpty(Mobile)){
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Enter Your Mobile Number",false);
-        }else {
-            if (TextUtils.isEmpty(Amount)){
-                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Enter Amount",false);
-            }else {
-                if (Mobile.length()==10){
+        if (TextUtils.isEmpty(Mobile)) {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), "Please Enter Your Mobile Number", false);
+        } else {
+            if (TextUtils.isEmpty(Amount)) {
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), "Please Enter Amount", false);
+            } else {
+                if (Mobile.length() == 10) {
 
-                    if (Integer.parseInt(Amount)<0 || Integer.parseInt(Amount)==0 ){
-                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Enter Correct Amount",false);
-                    }else {
-                        if (AmountInt < limit && AmountInt > limitMin){
+                    if (Integer.parseInt(Amount) < 0 || Integer.parseInt(Amount) == 0) {
+                        BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), "Please Enter Correct Amount", false);
+                    } else {
+                        if (AmountInt < limit && AmountInt > limitMin) {
 
-                            if (AmountInt==(int)WalletBalance || AmountInt<(int)WalletBalance){
-                                if (referralCheck){
-                                    sendToWalletRequest=new SendToWalletRequest();
+                            if (AmountInt == (int) WalletBalance || AmountInt < (int) WalletBalance) {
+                                if (referralCheck) {
+                                    sendToWalletRequest = new SendToWalletRequest();
                                     sendToWalletRequest.setAmount(Amount);
                                     sendToWalletRequest.setMobile(Mobile);
                                     sendToWalletRequest.setUser_id(BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID));
@@ -208,24 +208,24 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
 //                                    }
                                     PasscodeDialog passcodeDialog = new PasscodeDialog(SendMoneyToWallet.this, SendMoneyToWallet.this, "");
                                     passcodeDialog.show();
-                                }else {
-                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Transaction User Not Registered Or Blocked",true);
+                                } else {
+                                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), "Transaction User Not Registered Or Blocked", true);
                                 }
-                            }else {
-                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Enter Amount Less Than Wallet Balance",true);
+                            } else {
+                                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), "Please Enter Amount Less Than Wallet Balance", true);
                             }
-                        }else {
-                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Enter Amount Between Rs 100 And Rs 8000 ",true);
+                        } else {
+                            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), "Please Enter Amount Between Rs 100 And Rs 8000 ", true);
                         }
                     }
-                }else {
-                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Enter Valid Mobile Number",false);
+                } else {
+                    BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), "Please Enter Valid Mobile Number", false);
                 }
             }
         }
     }
 
-    private void WithAmountMethod(SendToWalletRequest sendToWalletRequest){
+    private void WithAmountMethod(SendToWalletRequest sendToWalletRequest) {
 
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
 
@@ -238,17 +238,17 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
                     @Override
                     public void onSuccess(SendToWalletResponse response) {
                         loadingDialog.hideDialog();
-                        Intent intentStatus=new Intent(SendMoneyToWallet.this,PaidOrderActivity.class);
+                        Intent intentStatus = new Intent(SendMoneyToWallet.this, PaidOrderActivity.class);
                         if (response.isStatus()) {
 
-                            intentStatus.putExtra("status","success");
-                            intentStatus.putExtra("txnid",response.getUtrId());
-                            intentStatus.putExtra("Amount",AmountED.getText().toString().trim());
-                            intentStatus.putExtra("date",response.getData());
-                            intentStatus.putExtra("productinfo","Wallet To Wallet Transaction");
+                            intentStatus.putExtra("status", "success");
+                            intentStatus.putExtra("txnid", response.getUtrId());
+                            intentStatus.putExtra("Amount", AmountED.getText().toString().trim());
+                            intentStatus.putExtra("date", response.getData());
+                            intentStatus.putExtra("productinfo", "Wallet To Wallet Transaction");
                             startActivity(intentStatus);
                             finish();
-                        }else {
+                        } else {
                             showDialogFailed(response.getMessage());
                         }
 
@@ -268,7 +268,7 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
-        BaseApp.getInstance().getDisposable().add(apiService.getReferralDetails("","2",MobileED.getText().toString().trim())
+        BaseApp.getInstance().getDisposable().add(apiService.getReferralDetails("", "2", MobileED.getText().toString().trim())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<ReferralCodeResponse>() {
@@ -277,20 +277,20 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
                         loadingDialog.hideDialog();
                         try {
                             if (response.isStatus()) {
-                                referralCheck=true;
+                                referralCheck = true;
                                 tvReferUserName.setText(response.getPackages());
                                 MobileED.setSelection(MobileED.getText().toString().length());
                                 tvReferUserName.setVisibility(View.VISIBLE);
                                 //
                             } else {
-                                referralCheck=false;
+                                referralCheck = false;
                                 BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), response.getMessage(), true);
                                 MobileED.setText("");
                                 tvReferUserName.setText("");
                                 tvReferUserName.setVisibility(View.GONE);
                                 MobileED.requestFocus();
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), e.getMessage(), true);
                             e.printStackTrace();
                         }
@@ -309,14 +309,14 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onPasscodeMatch(boolean isPasscodeMatched) {
-        if (isPasscodeMatched){
-            if (isNetworkAvailable()){
+        if (isPasscodeMatched) {
+            if (isNetworkAvailable()) {
                 WithAmountMethod(sendToWalletRequest);
-            }else {
-                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Please Check Your Internet Connection",false);
+            } else {
+                BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), "Please Check Your Internet Connection", false);
             }
-        }else {
-            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout),"Invalid Passcode",false);
+        } else {
+            BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.sendMoneyToWalletLayout), "Invalid Passcode", false);
         }
     }
 
@@ -325,7 +325,7 @@ public class SendMoneyToWallet extends AppCompatActivity implements View.OnClick
 
         dialog.setTitle("SafePe Alert")
                 .setCancelable(false)
-                .setMessage("\n"+Message+"\n")
+                .setMessage("\n" + Message + "\n")
 
                 // Specifying a listener allows you to take an action before dismissing the dialog.
                 // The dialog is automatically dismissed when a dialog button is clicked.

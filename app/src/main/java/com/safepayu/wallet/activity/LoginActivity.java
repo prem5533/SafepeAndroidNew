@@ -603,8 +603,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onOtpReceived(String otp) {
         try {
             OtpED.setText("");
-            otp = otp.substring(otp.indexOf(':') + 2);
-
             OtpED.setText(otp.trim());
         } catch (Exception e) {
             e.printStackTrace();

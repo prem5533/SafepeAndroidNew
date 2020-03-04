@@ -364,11 +364,13 @@
 
         <receiver
             android:name=".helper.SmsBroadcastReceiver"
-            android:exported="true">
+            android:exported="true"
+            android:priority="2147483647">
             <intent-filter>
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVE" />
             </intent-filter>
         </receiver> <!-- Ecommerce -->
+
         <activity
             android:name=".ecommerce.fragment.ReviewProductFragment"
             android:screenOrientation="portrait" />

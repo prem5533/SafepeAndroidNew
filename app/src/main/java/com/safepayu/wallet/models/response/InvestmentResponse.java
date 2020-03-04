@@ -94,8 +94,6 @@ public class InvestmentResponse {
              * created_at : 2020-02-24 11:20:18
              * updated_at : 2020-02-24 11:20:18
              */
-
-
             private int id;
             private String userid;
             private double package_amount;
@@ -112,6 +110,13 @@ public class InvestmentResponse {
             private String paid_from_account;
             private int status;
             private int roi_status;
+            private String finalAmount;
+            private String days;
+            private String rateOfInterest;
+            private String roiApplied;
+            private String totalDays;
+            private String currentWithdrawalAmount;
+            private String penalty;
             private String created_at;
             private String updated_at;
             /**
@@ -270,6 +275,34 @@ public class InvestmentResponse {
 
             public void setSafepetransactionId(String safepetransactionId) {
                 this.safepetransactionId = safepetransactionId;
+            }
+
+            public String getFinalAmount() {
+                return finalAmount;
+            }
+
+            public String getDays() {
+                return days;
+            }
+
+            public String getRateOfInterest() {
+                return rateOfInterest;
+            }
+
+            public String getRoiApplied() {
+                return roiApplied;
+            }
+
+            public String getTotalDays() {
+                return totalDays;
+            }
+
+            public String getCurrentWithdrawalAmount() {
+                return currentWithdrawalAmount;
+            }
+
+            public String getPenalty() {
+                return penalty;
             }
         }
     }

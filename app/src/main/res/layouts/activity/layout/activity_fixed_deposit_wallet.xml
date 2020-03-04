@@ -111,7 +111,7 @@
                                 android:fontFamily="@font/roboto_regular"
                                 android:gravity="center"
                                 android:paddingLeft="10dp"
-                                android:text="Investment Wallet Balance"
+                                android:text="Fixed Deposit Wallet Balance"
                                 android:textColor="@color/black"
                                 android:textSize="14sp" />
 
@@ -193,16 +193,18 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:padding="5dp"
                                 android:background="@drawable/white_button_grayborder">
 
-                                <Spinner
-                                    android:id="@+id/sp_account_beneficiary"
+                                <TextView
+                                    android:id="@+id/tv_fd_amount"
                                     android:layout_width="match_parent"
                                     android:layout_height="35dp"
-                                    android:entries="@string/city"
-                                    android:padding="1sp"
-                                    android:popupBackground="@drawable/white_button_grayborder"
-                                    android:spinnerMode="dropdown" />
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:gravity="start|center"
+                                    android:text="Select your FD Amount"
+                                    android:textColor="@color/black"
+                                    android:textSize="15dp" />
 
                             </RelativeLayout>
 
