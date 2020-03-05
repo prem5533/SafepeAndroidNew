@@ -74,7 +74,8 @@
                 android:layout_marginTop="20dp"
                 android:layout_toLeftOf="@+id/skipBtn"
                 android:padding="10dp"
-                android:background="@drawable/grey_round"/>
+                android:background="@drawable/grey_round"
+                android:visibility="gone"/>
         </RelativeLayout>
 
         <LinearLayout

@@ -249,11 +249,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
-                    if (checkFirst) {
-                        selectImage(PICK_IMAGE_PAN);
-                    } else {
-                        checkCamera();
-                    }
+                    selectImage(PICK_IMAGE_PAN);
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -266,11 +262,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
-                    if (checkFirst) {
-                        selectImage(PICK_IMAGE_AADHAAR);
-                    } else {
-                        checkCamera();
-                    }
+                    selectImage(PICK_IMAGE_AADHAAR);
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -283,11 +275,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
-                    if (checkFirst) {
-                        selectImage(PICK_IMAGE_AADHAAR_BACK);
-                    } else {
-                        checkCamera();
-                    }
+                    selectImage(PICK_IMAGE_AADHAAR_BACK);
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -300,11 +288,7 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                         && ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(KycUpdate.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
-                    if (checkFirst) {
-                        selectImage(PICK_IMAGE_CAMERA);
-                    } else {
-                        checkCamera();
-                    }
+                    selectImage(PICK_IMAGE_CAMERA);
                 } else {
                     ActivityCompat.requestPermissions(KycUpdate.this, new String[]{Manifest.permission.CAMERA,
                             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -781,7 +765,6 @@ public class KycUpdate extends BaseActivity implements View.OnClickListener {
                             finish();
                         } else {
                             dialog.dismiss();
-                            //checkCamera();
                         }
                     }
                 })

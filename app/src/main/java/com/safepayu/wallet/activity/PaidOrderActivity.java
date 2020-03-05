@@ -134,7 +134,7 @@ public class PaidOrderActivity extends AppCompatActivity {
         }
 
         try{
-            if (productinfo.contains("Package") || productinfo.contains("package") || productinfo.contains("Investment")){
+            if (productinfo.contains("Package") || productinfo.contains("package") || productinfo.contains("Investment") || productinfo.contains("Deposit")){
                 if (status.equalsIgnoreCase("success")){
                     tvRefNo.setText(RefNo);
                     tvPaidTo.setText(toAccount);

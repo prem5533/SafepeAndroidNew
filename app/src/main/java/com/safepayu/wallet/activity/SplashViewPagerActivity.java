@@ -45,6 +45,8 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
     Timer timer;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
+    private long timeStatus=0;
+    private CountDownTimer countDownTimer;
     private int dotscount;
 
     @Override
@@ -118,21 +120,25 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
     }
 
 
-    CountDownTimer countDownTimer = new CountDownTimer(10000, 1000) {
-        @Override
-        public void onTick(long millisUntilFinished) {
-            int seconds = (int) (millisUntilFinished / 1000);
-            int minutes = seconds / 60;
-            seconds = seconds % 60;
-            otpReadRemainingTime.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
-        }
+    private void callTimeSpan(long timeStatus){
+        countDownTimer = new CountDownTimer(timeStatus, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int seconds = (int) (millisUntilFinished / 1000);
+                int minutes = seconds / 60;
+                seconds = seconds % 60;
+                otpReadRemainingTime.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+            }
 
-        @Override
-        public void onFinish() {
-            startActivity(new Intent(SplashViewPagerActivity.this, Navigation.class));
-            finish();
-        }
-    };
+            @Override
+            public void onFinish() {
+                startActivity(new Intent(SplashViewPagerActivity.this, Navigation.class));
+                finish();
+            }
+        };
+
+        countDownTimer.start();
+    }
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -168,7 +174,9 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
                                 if(dotscount==1){
                                     tv_skip.setVisibility(View.GONE);
                                 }
-                                countDownTimer.start();
+                                timeStatus=promotionResponse.getTimeStatus();
+
+                                callTimeSpan(timeStatus);
                             }
                         }
                     }
