@@ -797,7 +797,7 @@
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/viewpager_booking"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"></androidx.viewpager.widget.ViewPager>
+                        android:layout_height="150dp"/>
 
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tab_layout_booking"

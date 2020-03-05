@@ -14,6 +14,12 @@ public class PromotionResponse {
     private boolean status;
     private String message;
     private List<DataBean> data;
+    /**
+     * timeStatus : 10000
+     */
+
+    private long timeStatus;
+
 
     public boolean isStatus() {
         return status;
@@ -37,6 +43,14 @@ public class PromotionResponse {
 
     public void setData(List<DataBean> data) {
         this.data = data;
+    }
+
+    public long getTimeStatus() {
+        return timeStatus;
+    }
+
+    public void setTimeStatus(long timeStatus) {
+        this.timeStatus = timeStatus;
     }
 
     public static class DataBean {

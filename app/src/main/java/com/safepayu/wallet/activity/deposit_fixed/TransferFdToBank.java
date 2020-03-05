@@ -359,7 +359,7 @@ public class TransferFdToBank extends AppCompatActivity implements RadioGroup.On
             intentStatus.putExtra("txnid", responseData.getTransactionId());
             intentStatus.putExtra("Amount", FD_AMOUNT);
             intentStatus.putExtra("date", responseData.getDate());
-            intentStatus.putExtra("productinfo", "Investment Wallet To Bank Transaction");
+            intentStatus.putExtra("productinfo", "Fixed Deposits Wallet To Bank Transaction");
             intentStatus.putExtra("Message", responseData.getMessage());
             intentStatus.putExtra("utr_id", responseData.getUtr());
             startActivity(intentStatus);
