@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Html;
 import android.view.View;
 import android.view.WindowManager;
@@ -37,7 +38,7 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
     private LinearLayout llPagerDots;
     private TextView[] dots;
     SplashPagerAdapter splashPagerAdapter;
-    private TextView tv_skip,tv_done,skipBtn;
+    private TextView tv_skip,tv_done,skipBtn,otpReadRemainingTime;
 
 
     int NUM_PAGES,currentPage = 0;
@@ -45,6 +46,7 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
     private int dotscount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,7 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
         tv_skip =  findViewById(R.id.tvskip);
         tv_done =  findViewById(R.id.tvdone);
         skipBtn =  findViewById(R.id.skipBtn);
+        otpReadRemainingTime =  findViewById(R.id.tvRemainingTime);
 
         tv_skip.setOnClickListener(this);
         tv_done.setOnClickListener(this);
@@ -115,6 +118,21 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
     }
 
 
+    CountDownTimer countDownTimer = new CountDownTimer(10000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            int seconds = (int) (millisUntilFinished / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+            otpReadRemainingTime.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        }
+
+        @Override
+        public void onFinish() {
+            startActivity(new Intent(SplashViewPagerActivity.this, Navigation.class));
+            finish();
+        }
+    };
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -150,6 +168,7 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
                                 if(dotscount==1){
                                     tv_skip.setVisibility(View.GONE);
                                 }
+                                countDownTimer.start();
                             }
                         }
                     }
@@ -228,12 +247,11 @@ public class SplashViewPagerActivity extends AppCompatActivity implements View.O
                 tab++;
                 intro_images.setCurrentItem(tab);
                 break;
+
             case R.id.tvdone:
-                startActivity(new Intent(SplashViewPagerActivity.this, Navigation.class));
-                finish();
-                break;
 
             case R.id.skipBtn:
+                countDownTimer.cancel();
                 startActivity(new Intent(SplashViewPagerActivity.this, Navigation.class));
                 finish();
                 break;

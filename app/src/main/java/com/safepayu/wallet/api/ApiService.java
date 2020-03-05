@@ -287,7 +287,7 @@ public interface ApiService {
     Single<ServiceChargeResponse> getServicesCharges();
 
     @POST("api/pefast.safepe.latepe/api/saveInvestment ")
-    Single<BuyPackageResponse> saveInvestment (@Body FDPayRequest fdPayRequest);
+    Single<BuyPackageResponse> saveInvestment(@Body FDPayRequest fdPayRequest);
 
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/getInvestmentRefer")
@@ -301,7 +301,7 @@ public interface ApiService {
     Single<CommissionWalletTransferResponse> transferInvestmentToWallet(@Field("amount") String amount);
 
     @POST("api/pefast.safepe.latepe/api/addExceptionLog ")
-    Single<BaseResponse> addExceptionLog (@Body ExceptionLogRequest exceptionLogRequest);
+    Single<BaseResponse> addExceptionLog(@Body ExceptionLogRequest exceptionLogRequest);
 
     //*************Flight Booking *******************//
     @GET("api/pefast.safepe.latepe/api/getFlightAirport")
@@ -400,8 +400,8 @@ public interface ApiService {
 
     @Multipart
     @POST("api/pefast.safepe.latepe/api/registerKyc")
-    Single<ResponseModel> registerKyc(@Part MultipartBody.Part adharCard_img,@Part MultipartBody.Part adharCardBack_img,
-                                    @Part MultipartBody.Part panCard_img,@Part MultipartBody.Part User_img);
+    Single<ResponseModel> registerKyc(@Part MultipartBody.Part adharCard_img, @Part MultipartBody.Part adharCardBack_img,
+                                      @Part MultipartBody.Part panCard_img, @Part MultipartBody.Part User_img);
 
     @GET("api/pefast.safepe.latepe/api/getInvestmentProfile")
     Single<ResponseModel> getInvestmentProfile();
@@ -436,4 +436,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/pefast.safepe.latepe/api/getFDInterest")
     Single<ResponseModel> getFDInterest(@Field("amount") String amount);
+
+    @POST("api/pefast.safepe.latepe/api/transferFDWalletToBank")
+    Single<TransferWalletToBankResponse> transferFDWalletToBank(@Body TransferWalletToBankRequest transferWalletToBankRequest);
 }

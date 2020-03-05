@@ -46,7 +46,7 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
     private Double totalPayableAmount;
     double gst = 0;
     private BuyMembershipAdapter buyMembershipAdapter;
-    public static FDPayRequest fdPayRequest;
+    public static FDPayRequest fixedDepositPayRequest;
     private String DeviceName = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
     private String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
     ExceptionLogRequest logRequest;
@@ -86,18 +86,18 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
 
                     String currentDate = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault()).format(new Date());
 
-                    fdPayRequest = new FDPayRequest();
-                    fdPayRequest.setTransaction_type(TransactionType);
-                    fdPayRequest.setBuy_date(currentDate);
-                    fdPayRequest.setPayment_mode("Payment Gateway");
-                    fdPayRequest.setDocument_attached("");
-                    fdPayRequest.setRefrence_no("");
-                    fdPayRequest.setPaid_to_account("By Admin");
-                    fdPayRequest.setPaid_from_account("");
-                    fdPayRequest.setPackage_amount(String.valueOf(totalPayableAmount));
-                    fdPayRequest.setRefer(ReferId);
-                    fdPayRequest.setAmount(Amount);
-                    fdPayRequest.setInterestRateId(interestRateId);
+                    fixedDepositPayRequest = new FDPayRequest();
+                    fixedDepositPayRequest.setTransaction_type(TransactionType);
+                    fixedDepositPayRequest.setBuy_date(currentDate);
+                    fixedDepositPayRequest.setPayment_mode("Payment Gateway");
+                    fixedDepositPayRequest.setDocument_attached("");
+                    fixedDepositPayRequest.setRefrence_no("");
+                    fixedDepositPayRequest.setPaid_to_account("By Admin");
+                    fixedDepositPayRequest.setPaid_from_account("");
+                    fixedDepositPayRequest.setPackage_amount(String.valueOf(totalPayableAmount));
+                    fixedDepositPayRequest.setRefer(ReferId);
+                    fixedDepositPayRequest.setAmount(Amount);
+                    fixedDepositPayRequest.setInterestRateId(interestRateId);
 
                     Intent intent;
                     if (BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().PAYMENT_SCREEN).equals("0")) {
@@ -108,8 +108,8 @@ public class FDChoosePayment extends AppCompatActivity implements RadioGroup.OnC
                     overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                     intent.putExtra("RechargePaymentId", BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().MOBILE));
                     intent.putExtra("Amount", String.valueOf(totalPayableAmount));
-                    intent.putExtra("PaymentType", "Investment");
-                    intent.putExtra("PaymentFor", "SafePe");
+                    intent.putExtra("PaymentType", "Deposits");
+                    intent.putExtra("PaymentFor", "Fixed");
                     intent.putExtra("RechargeTypeId", "0");
                     intent.putExtra("OperatorCode", "");
                     intent.putExtra("CircleCode", "0");

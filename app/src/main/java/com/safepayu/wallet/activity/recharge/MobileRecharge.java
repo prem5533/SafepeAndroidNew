@@ -76,8 +76,10 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
     private EditText MobileED;
     private RecyclerView RechargeHistoryListView;
     private String OperatorText,OperatorCode="0",OperatorId,OperatorCodeSelected="",Amount2Pay="";
+    public static String validityDate="";
     private boolean checkOnce=false;
     private ServiceHistoryAdapter historyAdapter;
+    private RechargePlanResponse responsePlan;
 
     private LoadingDialog loadingDialog;
     private ArrayList<String> OperatorNameList, IdList, OperatorCodeList,OperatorImage;
@@ -440,6 +442,76 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                                 intent = new Intent(MobileRecharge.this, PaymentType.class);
                             }
 
+                            try {
+                                validityDate="";
+                                outer: for (int j=0;j<5;j++){
+                                    if (j==0){
+                                        if (responsePlan.getData().getSPL()!=null && responsePlan.getData().getSPL().size()>0){
+                                            for (int i=0;i<responsePlan.getData().getSPL().size();i++){
+                                                if (responsePlan.getData().getSPL().get(i).getAmount().equalsIgnoreCase(String.valueOf(Amount))){
+                                                    validityDate=responsePlan.getData().getSPL().get(i).getValidity();
+                                                    break outer;
+                                                }
+                                            }
+                                        }
+                                    }else if (j==1){
+                                        if (responsePlan.getData().getDATA()!=null && responsePlan.getData().getDATA().size()>0){
+                                            for (int i=0;i<responsePlan.getData().getDATA().size();i++){
+                                                if (responsePlan.getData().getDATA().get(i).getAmount().equalsIgnoreCase(String.valueOf(Amount))){
+                                                    validityDate=responsePlan.getData().getDATA().get(i).getValidity();
+                                                    break outer;
+                                                }
+                                            }
+                                        }
+
+                                    }else if (j==2){
+                                        if (responsePlan.getData().getFTT()!=null && responsePlan.getData().getFTT().size()>0){
+                                            for (int i=0;i<responsePlan.getData().getFTT().size();i++){
+                                                if (responsePlan.getData().getFTT().get(i).getAmount().equalsIgnoreCase(String.valueOf(Amount))){
+                                                    validityDate=responsePlan.getData().getFTT().get(i).getValidity();
+                                                    break outer;
+                                                }
+                                            }
+                                        }
+
+                                    }else if (j==3){
+                                        if (responsePlan.getData().getTUP()!=null && responsePlan.getData().getTUP().size()>0){
+                                            for (int i=0;i<responsePlan.getData().getTUP().size();i++){
+                                                if (responsePlan.getData().getTUP().get(i).getAmount().equalsIgnoreCase(String.valueOf(Amount))){
+                                                    validityDate=responsePlan.getData().getTUP().get(i).getValidity();
+                                                    break outer;
+                                                }
+                                            }
+                                        }
+
+                                    }else if (j==4){
+                                        if (responsePlan.getData().getRMG()!=null && responsePlan.getData().getRMG().size()>0){
+                                            for (int i=0;i<responsePlan.getData().getRMG().size();i++){
+                                                if (responsePlan.getData().getRMG().get(i).getAmount().equalsIgnoreCase(String.valueOf(Amount))){
+                                                    validityDate=responsePlan.getData().getRMG().get(i).getValidity();
+                                                    break outer;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }catch (Exception e){
+                                validityDate="";
+                                e.printStackTrace();
+                            }
+
+                            if (!TextUtils.isEmpty(validityDate)){
+                                if ((validityDate.substring(validityDate.indexOf(" ")+1)).equalsIgnoreCase("Days") || (validityDate.substring(validityDate.indexOf(" ")+1)).equalsIgnoreCase("Day")){
+                                    String days=validityDate.substring(0,validityDate.indexOf(" "));
+                                    validityDate=String.valueOf(24*Integer.parseInt(days));
+                                }else if ((validityDate.substring(validityDate.indexOf(" ")+1)).equalsIgnoreCase("Hours") || (validityDate.substring(validityDate.indexOf(" ")+1)).equalsIgnoreCase("Hour")){
+                                    validityDate=validityDate.substring(0,validityDate.indexOf(" "));
+                                }else {
+                                    validityDate="";
+                                }
+
+                            }
+
                             overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
                             intent.putExtra("RechargePaymentId", Mobile);
                             intent.putExtra("Amount", String.valueOf(Amount));
@@ -590,6 +662,7 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
     }
 
     private void getCustomerOffer() {
+        offers.clear();
         loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
         ApiService apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
 
@@ -603,6 +676,19 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                         if (response.isStatus()) {
 
                             try {
+                                responsePlan=response;
+                                if (response.getData().getSPL().size()>0){
+                                    for (int i=0;i<response.getData().getSPL().size();i++){
+                                        Offer offer = new Offer();
+                                        offer.setCategory("SPECIAL");
+                                        offer.setSubCategory("");
+                                        offer.setValidity(response.getData().getSPL().get(i).getValidity());
+                                        offer.setShortdesc(response.getData().getSPL().get(i).getDetail());
+                                        offer.setAmount(response.getData().getSPL().get(i).getAmount());
+                                        offer.setTalktime(response.getData().getSPL().get(i).getTalktime());
+                                        offers.add(offer);
+                                    }
+                                }
 
                                 if (response.getData().getDATA().size()>0){
                                     for (int i=0;i<response.getData().getDATA().size();i++){
@@ -630,7 +716,6 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                                     }
                                 }
 
-
                                 if (response.getData().getTUP().size()>0){
                                     for (int i=0;i<response.getData().getTUP().size();i++){
                                         Offer offer = new Offer();
@@ -640,20 +725,6 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                                         offer.setShortdesc(response.getData().getTUP().get(i).getDetail());
                                         offer.setAmount(response.getData().getTUP().get(i).getAmount());
                                         offer.setTalktime(response.getData().getTUP().get(i).getTalktime());
-                                        offers.add(offer);
-                                    }
-                                }
-
-
-                                if (response.getData().getSPL().size()>0){
-                                    for (int i=0;i<response.getData().getSPL().size();i++){
-                                        Offer offer = new Offer();
-                                        offer.setCategory("SPECIAL");
-                                        offer.setSubCategory("");
-                                        offer.setValidity(response.getData().getSPL().get(i).getValidity());
-                                        offer.setShortdesc(response.getData().getSPL().get(i).getDetail());
-                                        offer.setAmount(response.getData().getSPL().get(i).getAmount());
-                                        offer.setTalktime(response.getData().getSPL().get(i).getTalktime());
                                         offers.add(offer);
                                     }
                                 }
@@ -670,7 +741,6 @@ public class MobileRecharge extends BaseActivity implements OfferAdapter.OnOffer
                                         offers.add(offer);
                                     }
                                 }
-
 
                                 SetOffersDialog(offers);
 

@@ -32,15 +32,15 @@ public class RechargeRequest {
     private String bank_amount;
     /**
      * stdCode : 22
-     *
-     */
-    /**
      * opvalue2 :
      * opvalue3 :
+     * validityHours : 2
      */
     private String stdCode;
     private String opvalue2;
     private String opvalue3;
+    private String validityHours;
+
 
     public String getTransaction_id() {
         return transaction_id;
@@ -160,5 +160,13 @@ public class RechargeRequest {
 
     public void setBank_amount(String bank_amount) {
         this.bank_amount = bank_amount;
+    }
+
+    public String getValidityHours() {
+        return validityHours;
+    }
+
+    public void setValidityHours(String validityHours) {
+        this.validityHours = validityHours;
     }
 }

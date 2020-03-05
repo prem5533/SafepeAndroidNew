@@ -1,18 +1,18 @@
 package com.safepayu.wallet.activity.deposit_fixed;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +23,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.safepayu.wallet.BaseApp;
 import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.ContactUs;
+import com.safepayu.wallet.adapter.FixedDepositBeneAdapter;
 import com.safepayu.wallet.adapter.InvestmentWalletAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.interfaces.FixedDepositInterface;
 import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.response.InvestmentResponse;
 import com.safepayu.wallet.models.response.InvestmentWalletLogResponse;
@@ -38,9 +40,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class FixedDepositWallet extends AppCompatActivity implements InvestmentWalletAdapter.InvestmentWalletListener, AdapterView.OnItemSelectedListener {
+public class FixedDepositWallet extends AppCompatActivity implements InvestmentWalletAdapter.InvestmentWalletListener, FixedDepositInterface {
     private Button BackBtn;
-    private TextView SendWallet, CommBalanceTV, WarningTextTv;
+    private TextView SendWallet, CommBalanceTV, WarningTextTv, tv_fd_amount;
     private LoadingDialog loadingDialog;
     private LinearLayout liSendTowallet, CreditListBtn, DebitListBtn;
     private RecyclerView recyclerViewCredit, recyclerViewDebit;
@@ -48,17 +50,21 @@ public class FixedDepositWallet extends AppCompatActivity implements InvestmentW
     private List<InvestmentWalletLogResponse.DataBean.LogListBean> CreditList, DebitList;
     private Dialog dialogFDeposit;
     private LinearLayout fdEmpty;
-    public Spinner sp_account_beneficiary;
+    public RecyclerView rv_beneficiary_list;
+    public RecyclerView.Adapter mBeneAdapter;
+    public FixedDepositInterface fixedDepositInterface;
+    public AlertDialog alertDialog;
     private String DeviceName = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
     private String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
     ExceptionLogRequest logRequest;
     private List<InvestmentResponse.DataBean.InvestmentBean> investmentBeanList = new ArrayList<>();
+    public String interestRateId, interestrate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fixed_deposit_wallet);
-
+        fixedDepositInterface = this;
         loadingDialog = new LoadingDialog(this);
         SendWallet = findViewById(R.id.send_to_wallet);
         BackBtn = findViewById(R.id.send_back_btn);
@@ -68,7 +74,7 @@ public class FixedDepositWallet extends AppCompatActivity implements InvestmentW
         CreditListBtn = findViewById(R.id.creditLayout_investmentWallet);
         DebitListBtn = findViewById(R.id.debitLayout_investmentWallet);
         fdEmpty = findViewById(R.id.fdEmptyWallet);
-        sp_account_beneficiary = findViewById(R.id.sp_account_beneficiary);
+        tv_fd_amount = findViewById(R.id.tv_fd_amount);
         recyclerViewCredit = findViewById(R.id.recycleCredit_investmentWallet);
         recyclerViewCredit.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -156,9 +162,13 @@ public class FixedDepositWallet extends AppCompatActivity implements InvestmentW
             logRequest = new ExceptionLogRequest(FixedDepositWallet.this, UserId, "InvestmentWallet", e.getMessage(), " 164", "onCreate ", DeviceName);
             BaseApp.getInstance().toastHelper().showSnackBar(findViewById(R.id.investmentWallet), "Please Goto Your Profile and Verify Your Email First", true);
         }
+        tv_fd_amount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callFixedDepositBeneList();
+            }
+        });
         getFixedDepositList();
-
-        sp_account_beneficiary.setOnItemSelectedListener(this);
     }
 
     private void getFixedDepositLog() {
@@ -217,10 +227,10 @@ public class FixedDepositWallet extends AppCompatActivity implements InvestmentW
         dialogDeposit(logListBeanList);
     }
 
-    private TextView tvFDid, tvFDAmount, tvtax, tvstatus, tvPaymentMode, operationText, tv_bonus_amount, tv_balance_amount;
-    private TextView tvDescription, tv_contct_support, tvCustomerId, tvHeading;
-    private Button FD_back_btn;
-    private LinearLayout DescriptionLayout;
+    public TextView tvFDid, tvFDAmount, tvtax, tvstatus, tvPaymentMode, operationText, tv_bonus_amount, tv_balance_amount;
+    public TextView tvDescription, tv_contct_support, tvCustomerId, tvHeading;
+    public Button FD_back_btn;
+    public LinearLayout DescriptionLayout;
 
     private void dialogDeposit(InvestmentWalletLogResponse.DataBean.LogListBean logListBeanList) {
         dialogFDeposit = new Dialog(this);
@@ -309,44 +319,63 @@ public class FixedDepositWallet extends AppCompatActivity implements InvestmentW
                             for (int i = 0; i < response.getData().getInvestment().size(); i++) {
                                 investmentBeanList.add(response.getData().getInvestment().get(i));
                             }
-                            populateStateSpinner();
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.hideDialog();
+                        loadingDialog.hideDialog();  logRequest = new ExceptionLogRequest(FixedDepositWallet.this, UserId, "InvestmentWallet",
+                                e.getMessage(), "314", "getFixedDeposit api ", DeviceName);
+
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.ll_parant), false, e.getCause());
                     }
                 }));
     }
 
-    private void populateStateSpinner() {
-        List<String> lables = new ArrayList<>();
-        lables.add("Select FD Amount");
-        for (int i = 0; i < investmentBeanList.size(); i++) {
-            lables.add("Rs. " + investmentBeanList.get(i).getBalance_amount() + " on " + investmentBeanList.get(i).getBuy_date());
-        }
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, lables);
-        spinnerAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp_account_beneficiary.setAdapter(spinnerAdapter);
+    private void callFixedDepositBeneList() {
+
+        ViewGroup viewGroup = findViewById(android.R.id.content);
+        final View dialogView = LayoutInflater.from(this).inflate(R.layout.layout_fixed_deposit_bene_list_dialog, viewGroup, false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+        alertDialog = builder.create();
+        alertDialog.setCancelable(true);
+        LinearLayout ll_alertDismiss = dialogView.findViewById(R.id.ll_alertDismiss);
+        rv_beneficiary_list = dialogView.findViewById(R.id.rv_beneficiary_list);
+        rv_beneficiary_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+
+        mBeneAdapter = new FixedDepositBeneAdapter(this, investmentBeanList, fixedDepositInterface);
+        rv_beneficiary_list.setAdapter(mBeneAdapter);
+
+        ll_alertDismiss.setOnClickListener(v -> {
+            alertDialog.dismiss();
+        });
+        alertDialog.show();
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (!(parent.getSelectedItem().toString().equalsIgnoreCase("Select FD Amount"))) {
-            startActivity(new Intent(getApplicationContext(), TransferFdToBank.class).
-                    putExtra("FD_ID", String.valueOf(investmentBeanList.get(position - 1).getId())).
-                    putExtra("FD_AMOUNT", String.valueOf(investmentBeanList.get(position - 1).getBalance_amount())));
-            overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
-        } else {
-        }
+    public void onClickInterestRate(String interestRateId, String interestrate) {
+        tv_fd_amount.setText("Rs. " + interestrate);
+        this.interestRateId = interestRateId;
+        this.interestrate = interestrate;
+        alertDialog.dismiss();
+        showCheckDone("Are You sure\nYou want to break your.\nFixed Deposit ???\n\n\n");
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
+    public void showCheckDone(String Message) {
+        new AlertDialog.Builder(FixedDepositWallet.this)
+                .setTitle("SafePe - Fixed Deposit")
+                .setMessage(Message)
+                .setCancelable(false)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    dialog.dismiss();
+                    startActivity(new Intent(getApplicationContext(), TransferFdToBank.class).
+                            putExtra("FD_ID", String.valueOf(interestRateId)).
+                            putExtra("FD_AMOUNT", String.valueOf(interestrate)));
+                    overridePendingTransition(R.xml.left_to_right, R.xml.right_to_left);
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .setIcon(getResources().getDrawable(R.drawable.appicon_new))
+                .show();
     }
 }

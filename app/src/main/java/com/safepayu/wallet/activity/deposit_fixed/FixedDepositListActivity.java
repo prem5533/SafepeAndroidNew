@@ -19,6 +19,7 @@ import com.safepayu.wallet.adapter.FixedDepositAdapter;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
+import com.safepayu.wallet.models.request.ExceptionLogRequest;
 import com.safepayu.wallet.models.response.InvestmentResponse;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -36,6 +37,9 @@ public class FixedDepositListActivity extends AppCompatActivity implements Fixed
     private String depositAmount, fdInterest, balanceAmount;
     private InvestmentResponse investmentResponse;
     private TextView tvFDid, tvFDAmount, tvtax, tvstatus, tvPaymentMode, operationText, tv_bonus_amount, tv_balance_amount, tv_contct_support, please_invest_fd, tv_download_pdf;
+    private String DeviceName = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().DEVICE_NAME);
+    private String UserId = BaseApp.getInstance().sharedPref().getString(BaseApp.getInstance().sharedPref().USER_ID);
+    ExceptionLogRequest logRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +100,8 @@ public class FixedDepositListActivity extends AppCompatActivity implements Fixed
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.hideDialog();
+                        logRequest = new ExceptionLogRequest(FixedDepositListActivity.this, UserId, "FixedDepositListActivity", e.getMessage(),
+                                " 105", "getFixedDeposit api ", DeviceName);
                         BaseApp.getInstance().toastHelper().showApiExpectation(findViewById(R.id.fixedLayout), false, e.getCause());
                     }
                 }));

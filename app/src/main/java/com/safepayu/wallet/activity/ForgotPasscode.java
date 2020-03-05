@@ -307,10 +307,8 @@ public class ForgotPasscode extends AppCompatActivity implements GoogleApiClient
     public void onOtpReceived(String otp) {
         try {
             enter_otp.setText("");
-            otp=otp.substring(otp.indexOf(':')+2);
-
             enter_otp.setText(otp.trim());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
