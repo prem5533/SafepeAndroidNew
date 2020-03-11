@@ -6,8 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#f4f5ff"
+    android:id="@+id/product_detail"
     tools:context=".ecommerce.activity.ProductDetailActivity">
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -18,20 +20,45 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="430dp">
+                android:layout_height="480dp">
 
 
-                    <Button
+                <Button
                 android:id="@+id/back_btn_product_detail"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:padding="10dp"
                 android:layout_margin="10dp"
-                android:background="@drawable/ic_next_new"
-                />
+                android:background="@drawable/ic_next_new" />
+
 
                 <Button
+                    android:id="@+id/btn_cart"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="right"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="75dp"
+                    android:background="@drawable/ic_cartecom" />
+                <Button
+                    android:id="@+id/cart_badge"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right|end|top"
+                    android:layout_marginRight="55dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:textColor="@android:color/white"
+                    android:text="0"
+                    android:textSize="10sp"
+                    android:background="@drawable/badge_count_background"/>
+
+                <Button
+                    android:id="@+id/redWish"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
@@ -40,6 +67,7 @@
                     android:layout_margin="10dp"
                     android:background="@drawable/ic_like_red" />
                 <Button
+                    android:id="@+id/grayWish"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
@@ -53,7 +81,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/viewpager__product_detil"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp">
+                    android:layout_height="450dp">
                 </androidx.viewpager.widget.ViewPager>
 
                 <com.google.android.material.tabs.TabLayout
@@ -89,34 +117,24 @@
                         android:id="@+id/tv_product_detail_offprice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="₹ 699"
+                        android:text=" "
                         android:gravity="start"
                         android:textColor="@color/red"
                         android:fontFamily="@font/roboto_regular"
                         android:textSize="15sp"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_marginTop="5dp" />
                     <TextView
                         android:id="@+id/tv_product_detail_actualprice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="₹ 899"
+                        android:text=""
                         android:gravity="start"
                         android:textColor="@color/black"
                         android:fontFamily="@font/roboto_regular"
                         android:textSize="15sp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/tv_product_detail_earn_point"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Earn 0 points"
-                        android:gravity="start"
-                        android:textColor="@color/yellow_theme"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textSize="13sp"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_marginTop="5dp" />
+
                 </LinearLayout>
 
 
@@ -141,10 +159,21 @@
                         android:textColor="@color/blue_800"
                         android:textSize="13sp"
                         android:fontFamily="@font/roboto_regular"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/tv_product_detail_earn_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Earn 0 points"
+                        android:gravity="start"
+                        android:textColor="@color/yellow_theme"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <RatingBar
+                    android:id="@+id/rating_product_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.AppCompat.RatingBar.Small"
@@ -157,35 +186,31 @@
                     android:layout_marginBottom="10dp"
                     />
                 <LinearLayout
+                    android:id="@+id/licolor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Color"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/roboto_regular" />
-                    <CheckBox
-                        android:id="@+id/cb_color"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:checked="true"
-                        android:buttonTint="@color/red"
-                        />
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/product_color_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
                 <View
+                    android:id="@+id/viewColor"
                     android:layout_width="match_parent"
                     android:layout_height=".5dp"
                     android:background="@color/divider"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     />
                 <LinearLayout
+                    android:id="@+id/liSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -208,20 +233,49 @@
                     android:id="@+id/product_size_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-10dp"/>
+                    android:layout_marginTop="-10dp"
+                    android:visibility="gone"/>
                 <View
+                    android:id="@+id/viewSize"
                 android:layout_width="match_parent"
                 android:layout_height=".5dp"
                 android:background="@color/divider"
                 android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     android:layout_marginBottom="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycleComboList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"/>
+                    <TextView
+                    android:id="@+id/tv_comboprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" "
+                    android:gravity="start"
+                    android:textColor="@color/red"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="15sp"
+                    android:layout_marginTop="5dp"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:text="Product Details"
                     android:fontFamily="@font/roboto_medium"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:layout_marginTop="5dp"/>
                 <TextView
                     android:id="@+id/tv_product_detail_"
                     android:layout_width="match_parent"
@@ -230,6 +284,37 @@
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore aliqua. Ut enim ad minim veniam."
                     android:fontFamily="@font/roboto_regular"
                     android:textColor="@color/textcolor"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"/>
+                <TextView
+                    android:id="@+id/tvPoffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Product Offer"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/black"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleProductOffer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:id="@+id/tvRelated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Related Product"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/black"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleProductRelated"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"/>
             </LinearLayout>

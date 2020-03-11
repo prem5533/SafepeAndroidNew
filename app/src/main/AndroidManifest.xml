@@ -31,7 +31,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.deposit_fixed.TransferFdToBank"></activity>
+        <activity android:name=".activity.KycForProfile"></activity>
+        <activity android:name=".activity.deposit_fixed.TransferFdToBank" />
         <activity android:name=".activity.deposit_fixed.FixedDepositWallet" />
         <activity android:name=".activity.deposit_fixed.FDMemberBankAddPackages" />
         <activity
@@ -54,11 +55,18 @@
         <activity android:name=".activity.deposit_fixed.AvailableBalanceFDActivity" />
         <activity android:name=".activity.deposit_fixed.FDChoosePayment" />
         <activity android:name=".activity.deposit_fixed.CreateFixedDepositActivity" />
+
         <activity
             android:name=".activity.FingerprintActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ecommerce.activity.EcomPaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.FingerprintActivity2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ecommerce.activity.CartActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ecommerce.activity.OrderDetailEcomActivity"
@@ -370,7 +378,6 @@
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVE" />
             </intent-filter>
         </receiver> <!-- Ecommerce -->
-
         <activity
             android:name=".ecommerce.fragment.ReviewProductFragment"
             android:screenOrientation="portrait" />

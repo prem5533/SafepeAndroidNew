@@ -41,8 +41,14 @@ public class WalletLimitResponse {
          * wallet_balance : 2488.00
          */
 
+
         private double limit;
         private String wallet_balance;
+        /**
+         * perBank : 10
+         */
+
+        private String perBank;
 
         public double getLimit() {
             return limit;
@@ -58,6 +64,14 @@ public class WalletLimitResponse {
 
         public void setWallet_balance(String wallet_balance) {
             this.wallet_balance = wallet_balance;
+        }
+
+        public String getPerBank() {
+            return perBank;
+        }
+
+        public void setPerBank(String perBank) {
+            this.perBank = perBank;
         }
     }
 

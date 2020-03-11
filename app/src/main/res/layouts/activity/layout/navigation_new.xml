@@ -341,7 +341,6 @@
                         android:fontFamily="@font/roboto_bold"
                         android:padding="6dp"
                         android:text="Recharge &amp; Bill Payment"
-                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
@@ -1147,7 +1146,6 @@
                         android:fontFamily="@font/roboto_bold"
                         android:padding="6dp"
                         android:text="Brand Vouchers"
-                        android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 

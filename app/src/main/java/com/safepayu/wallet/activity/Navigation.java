@@ -62,6 +62,7 @@ import com.safepayu.wallet.R;
 import com.safepayu.wallet.activity.booking.MetroActivity;
 import com.safepayu.wallet.activity.booking.bus.BusActivity;
 import com.safepayu.wallet.activity.booking.flight.FlightsActivity;
+import com.safepayu.wallet.activity.deposit_fixed.FixedDepositActivity;
 import com.safepayu.wallet.activity.loan.LoanActivity;
 import com.safepayu.wallet.activity.recharge.DthRecharge;
 import com.safepayu.wallet.activity.recharge.ElectricityPay;
@@ -99,7 +100,7 @@ import static com.safepayu.wallet.activity.Splash.promotionResponse1;
 
 public class Navigation extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    public static ImageView nav_icon, notification_icon;
+    public static ImageView nav_icon, notification_icon,chatBtn;
     private DrawerLayout drawer;
     private AlertDialog.Builder alertNetwork;
     private boolean doubleBackToExitPressedOnce = false;
@@ -244,6 +245,16 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
         notification_icon = findViewById(R.id.notification);
         nav_icon = findViewById(R.id.nav_icon);
         nav_icon.setOnClickListener(nav_iconListner);
+
+        /*chatBtn = findViewById(R.id.chat_home);
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(Navigation.this, ChatActivity.class));
+                overridePendingTransition(R.anim.left_to_right, R.anim.slide_out);
+            }
+        });*/
 
         BadgeCountTV = findViewById(R.id.cart_badge);
 
@@ -1738,8 +1749,8 @@ public class Navigation extends BaseActivity implements NavigationView.OnNavigat
                 break;
             case R.id.li_loan:
                 drawer.closeDrawers();
-                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(Navigation.this, FixedDepositActivity.class));
+                //Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Navigation.this, FixedDepositActivity.class));
                 tvLoan.setTextColor(getResources().getColor(R.color.bue_A800));
                 tvContact.setTextColor(getResources().getColor(R.color.black));
                 tvProfile.setTextColor(getResources().getColor(R.color.black));

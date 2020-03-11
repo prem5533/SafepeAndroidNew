@@ -122,7 +122,7 @@
                             android:id="@+id/tv_flight_detail_dep_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="Fri, 15 Nov 19"
+                            android:hint=""
                             android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/roboto_regular"

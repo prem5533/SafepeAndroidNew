@@ -12,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
             <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -41,35 +41,36 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"/>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="start|center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="1">
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/searchLayout_nav"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="10dp">
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/app_logo" />
-                        <TextView
-                            android:id="@+id/tv_toolbar_name"
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="SafePe"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/roboto_bold"
-                            android:layout_marginLeft="10dp"
-                            android:textSize="18sp" />
-                    </LinearLayout>
+                            android:layout_width="100dp"
+                            android:src="@drawable/white_logo_new"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            />
+                    </RelativeLayout>
 
                     <ImageView
-
+                        android:id="@+id/chat_ecom"
                         android:layout_height="40dp"
                         android:layout_width="40dp"
-                        android:src="@drawable/ic_like_white"
-                        android:padding="10dp"
-                        android:visibility="gone"/>
+                        android:src="@drawable/ic_chat_new"
+                        android:padding="10dp" />
+
+                    <ImageView
+                        android:id="@+id/location_ecom"
+                        android:layout_height="40dp"
+                        android:layout_width="40dp"
+                        android:src="@drawable/ic_pin"
+                        android:padding="10dp" />
                     <ImageView
                         android:id="@+id/favBtn_main"
                         android:layout_height="40dp"
@@ -77,6 +78,7 @@
                         android:src="@drawable/ic_like_white"
                         android:padding="10dp" />
                     <FrameLayout
+                        android:id="@+id/frame_cart"
                         style="?attr/actionButtonStyle"
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="wrap_content"
@@ -121,21 +123,21 @@
                 </LinearLayout>
             </LinearLayout>
 
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f4f5ff"
+                android:layout_marginBottom="0dp">
+
+                <FrameLayout
+                    android:id="@+id/content_frame"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#f4f5ff"
-                    android:layout_marginBottom="0dp">
-
-                    <FrameLayout
-                        android:id="@+id/content_frame"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_above="@+id/bottom_navigation"
-                        android:layout_below="@+id/app_bar"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-                </LinearLayout>
+                    android:layout_above="@+id/bottom_navigation"
+                    android:layout_below="@+id/app_bar"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
             </LinearLayout>
+        </LinearLayout>
 
 
     </RelativeLayout>

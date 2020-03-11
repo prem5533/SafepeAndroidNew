@@ -29,6 +29,15 @@ public class SendPaymentGatewayDetailsRequest {
     private String easy_pay_id;
     private String package_amount;
     private String package_id;
+    private String ecom;
+
+    public String getEcom() {
+        return ecom;
+    }
+
+    public void setEcom(String ecom) {
+        this.ecom = ecom;
+    }
 
     public String getUser_id() {
         return user_id;

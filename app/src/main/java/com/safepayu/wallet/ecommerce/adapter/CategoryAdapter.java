@@ -17,17 +17,13 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ProductViewHolder> {
 
 
-     private Context context;
+    private Context context;
     private List<CategoryModel> categoryList;
     private OnCategoryItemListener onCategoryItemListener;
+
     public interface OnCategoryItemListener{
         void onCtategory(int position);
     }
-
-   /* public CategoryAdapter(Context context, OnCategoryItemListener onCategoryItemListener) {
-        this.context = context;
-        this.onCategoryItemListener = onCategoryItemListener;
-    }*/
 
     public CategoryAdapter(Context context, List<CategoryModel> categoryList, OnCategoryItemListener onCategoryItemListener) {
         this.context = context;

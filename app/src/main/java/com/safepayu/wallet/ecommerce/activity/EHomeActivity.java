@@ -1,18 +1,36 @@
 package com.safepayu.wallet.ecommerce.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -40,21 +58,32 @@ import com.safepayu.wallet.activity.safepe_investment.InvestmentDepositActivity;
 import com.safepayu.wallet.api.ApiClient;
 import com.safepayu.wallet.api.ApiService;
 import com.safepayu.wallet.dialogs.LoadingDialog;
-import com.safepayu.wallet.ecommerce.fragment.CartFragment;
 import com.safepayu.wallet.ecommerce.fragment.HomeFragment;
 import com.safepayu.wallet.ecommerce.fragment.WishlistFragment;
 import com.safepayu.wallet.models.response.BaseResponse;
+
+import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class EHomeActivity extends AppCompatActivity implements View.OnClickListener{
+public class EHomeActivity extends AppCompatActivity implements View.OnClickListener , LocationListener {
 
     private ImageView CartBtn,NotificationBtn,NavIcon,imageDownSecurity, imageUpSecurity,imageDownLogout, imageUpLogout;
+    private ImageView chatEcomBtn,imCross;
+    public static ImageView locationBtn;
     private DrawerLayout drawer;
     private LoadingDialog loadingDialog;
-
+    public  Dialog dialog;
+    public static TextView tvLocation , tvSerch,tvCartBadge;
+    private EditText etSearchEcomm;
+    LocationManager locationManager;
+    Geocoder geocoder;
+    List<Address> listAddresses;
+    private LocationListenerOn locationListner;
+    private FrameLayout frameCartBtn;
 
     //for nav
     private LinearLayout liHome, liProfile, liPackageDetails, liBuyPackage, liCommission, liWallet, liShopping, liChnangePasswlrd, liMyOrders, liHistory, liGenelogy,
@@ -87,18 +116,26 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
 
     private void findId() {
         CartBtn = findViewById(R.id.cartBtn_main);
+        frameCartBtn = findViewById(R.id.frame_cart);
+        tvCartBadge = findViewById(R.id.cart_badge);
         NotificationBtn = findViewById(R.id.favBtn_main);
         NavIcon = findViewById(R.id.nav_iconEcommerce);
-
-
-
+        locationBtn = findViewById(R.id.location_ecom);
+        chatEcomBtn = findViewById(R.id.chat_ecom);
 
         loadingDialog = new LoadingDialog(this);
 
-        CartBtn.setOnClickListener(new View.OnClickListener() {
+        frameCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(new CartFragment());
+                startActivity(new Intent(getApplicationContext(), CartActivity.class));
+            }
+        });
+
+        chatEcomBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), ChatIssueList.class));
             }
         });
 
@@ -285,6 +322,92 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                 tvLogoutTextParent.setTextColor(getResources().getColor(R.color.black));
             }
         });
+    }
+
+    private void showPinDialog(EHomeActivity eHomeActivity) {
+        dialog = new Dialog(eHomeActivity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.show_dialog_pin);
+        dialog.setCancelable(false);
+
+        imCross = dialog.findViewById(R.id.imCross);
+        tvLocation = dialog.findViewById(R.id.tv_getLocation);
+        tvSerch = dialog.findViewById(R.id.tv_search_pin);
+        etSearchEcomm = dialog.findViewById(R.id.tv_search_ecomm);
+        imCross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        tvLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getCurrentLocation();
+
+            }
+        });
+        tvSerch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        lp.copyFrom(window.getAttributes());
+        //This makes the dialog take up the full width
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(lp);
+        dialog.show();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        // The absolute width of the available display size in pixels.
+        int displayWidth = displayMetrics.widthPixels;
+        // The absolute height of the available display size in pixels.
+        int displayHeight = displayMetrics.heightPixels;
+
+        // Initialize a new window manager layout parameters
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+
+        // Copy the alert dialog window attributes to new layout parameter instance
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+
+        // Set the alert dialog window width and height
+        // Set alert dialog width equal to screen width 90%
+        // int dialogWindowWidth = (int) (displayWidth * 0.9f);
+        // Set alert dialog height equal to screen height 90%
+        // int dialogWindowHeight = (int) (displayHeight * 0.9f);
+
+        // Set alert dialog width equal to screen width 70%
+        int dialogWindowWidth = (int) (displayWidth * 0.9f);
+        // Set alert dialog height equal to screen height 70%
+        int dialogWindowHeight = (int) (displayHeight * 0.7f);
+
+        // Set the width and height for the layout parameters
+        // This will bet the width and height of alert dialog
+        layoutParams.width = dialogWindowWidth;
+        layoutParams.height = dialogWindowHeight;
+
+        // Apply the newly created layout parameters to the alert dialog window
+        dialog.getWindow().setAttributes(layoutParams);
+    }
+
+    private void getCurrentLocation() {
+        try {
+            loadingDialog.showDialog(getResources().getString(R.string.loading_message), false);
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, this);
+        }
+        catch(SecurityException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void securityTab() {
@@ -1308,6 +1431,59 @@ public class EHomeActivity extends AppCompatActivity implements View.OnClickList
                         BaseApp.getInstance().toastHelper().showApiExpectation(drawer, false, e.getCause());
                     }
                 }));
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        String provider = locationManager.getBestProvider(new Criteria(), true);
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Location locations = locationManager.getLastKnownLocation(provider);
+        List<String> providerList = locationManager.getAllProviders();
+        if (null != location && null != providerList && providerList.size() > 0) {
+            double longitude = location.getLongitude();
+            double latitude = location.getLatitude();
+
+
+            geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+            try {
+                listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
+                if (null != listAddresses && listAddresses.size() > 0) {
+                    String address = listAddresses.get(0).getAddressLine(0);
+                    String postalCode = listAddresses.get(0).getPostalCode();
+                    etSearchEcomm.setText(address);
+                    loadingDialog.hideDialog();
+
+                }
+            } catch (Exception e) {
+                loadingDialog.hideDialog();
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Toast.makeText(EHomeActivity.this, "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 
    /* @Override
